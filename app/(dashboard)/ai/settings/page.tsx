@@ -3,7 +3,7 @@ import styles from './page.module.css';
 import React, { useState, useEffect, useCallback } from 'react';
 import { PageHeader, Card, Badge, Button, Spinner } from '@unerp/ui';
 import { ToggleLeft, ToggleRight, AlertTriangle, Bot, Cpu, Globe } from 'lucide-react';
-import { apiGet, apiPost } from '@/lib/api';
+import { useApiClient } from '@unerp/framework';
 
 interface AiConfig {
   enabled: boolean;
@@ -18,7 +18,8 @@ interface OllamaStatus {
   model: string;
 }
 
-export default function AiAdminPage() {
+export default function AiSettingsPage() {
+  const client = useApiClient();
   const [config, setConfig] = useState<AiConfig | null>(null);
   const [configLoading, setConfigLoading] = useState(true);
   const [configError, setConfigError] = useState<string | null>(null);
@@ -34,18 +35,18 @@ export default function AiAdminPage() {
     setConfigLoading(true);
     setConfigError(null);
     try {
-      const data = await apiGet<AiConfig>('/settings/ai/config');
+      const data = await client.get<AiConfig>('/ai/settings/config');
       setConfig(data);
     } catch {
       setConfigError('Could not load AI assistant configuration.');
     } finally {
       setConfigLoading(false);
     }
-  }, []);
+  }, [client]);
 
   const fetchEngineStatus = useCallback(async () => {
     try {
-      const data = await apiGet<OllamaStatus>('/settings/ai/engine/status');
+      const data = await client.get<OllamaStatus>('/ai/settings/engine/status');
       setEngineStatus(data);
       setEngineStatusError(null);
     } catch {
@@ -53,7 +54,7 @@ export default function AiAdminPage() {
     } finally {
       setEngineStatusLoading(false);
     }
-  }, []);
+  }, [client]);
 
   useEffect(() => {
     fetchConfig();
@@ -65,7 +66,7 @@ export default function AiAdminPage() {
     setToggling(true);
     setConfigError(null);
     try {
-      await apiPost('/admin/ai/config', { enabled: !config.enabled });
+      await client.post('/ai/settings/config', { enabled: !config.enabled });
     } catch {
       setConfigError('Failed to update AI assistant setting.');
     } finally {
@@ -78,7 +79,7 @@ export default function AiAdminPage() {
     setEngineActionLoading('start');
     setEngineActionError(null);
     try {
-      await apiPost('/admin/ai/engine/start');
+      await client.post('/ai/settings/engine/start');
     } catch {
       setEngineActionError('Failed to start the AI engine.');
     } finally {
@@ -91,7 +92,7 @@ export default function AiAdminPage() {
     setEngineActionLoading('stop');
     setEngineActionError(null);
     try {
-      await apiPost('/admin/ai/engine/stop');
+      await client.post('/ai/settings/engine/stop');
     } catch {
       setEngineActionError('Failed to stop the AI engine.');
     } finally {
@@ -103,17 +104,16 @@ export default function AiAdminPage() {
   return (
     <div className="ui-stack-6">
       <PageHeader
-        title="AI Assistant"
+        title="AI Copilot"
         description="Manage UniERP's AI copilot — the self-hosted assistant available across the app."
-        breadcrumbs={[{ label: 'Administration', href: '/settings' }, { label: 'AI Assistant' }]}
+        breadcrumbs={[{ label: 'Apps', href: '/apps' }, { label: 'AI Copilot', href: '/ai' }, { label: 'Settings' }]}
       />
 
-      <div className={styles.s1}>
-        {/* Kill switch card */}
+      <div className={styles.grid}>
         <Card>
           <div className="p-4 ui-stack-3">
             <div className="ui-flex-between">
-              <h3 className={styles.s2}>
+              <h3 className={styles.cardTitle}>
                 <Bot size={16} className="ui-text-primary" />
                 AI Assistant Enabled
               </h3>
@@ -132,14 +132,14 @@ export default function AiAdminPage() {
             </p>
 
             {configLoading ? (
-              <div className={styles.s3}>
+              <div className={styles.spinnerWrap}>
                 <Spinner size="md" />
               </div>
             ) : (
               <button
                 onClick={handleToggleEnabled}
                 disabled={toggling || !config}
-                style={{ cursor: toggling ? 'wait' : 'pointer', color: config?.enabled ? 'var(--color-primary)' : 'var(--color-text-secondary)' }} className={styles.s4}
+                style={{ cursor: toggling ? 'wait' : 'pointer', color: config?.enabled ? 'var(--color-primary)' : 'var(--color-text-secondary)' }} className={styles.toggleBtn}
               >
                 {toggling ? (
                   <Spinner size="sm" />
@@ -153,13 +153,13 @@ export default function AiAdminPage() {
             )}
 
             {configError && (
-              <div className={styles.s5}>{configError}</div>
+              <div className={styles.error}>{configError}</div>
             )}
 
             {!configLoading && config && !config.enabled && (
-              <div className={styles.s6}>
-                <AlertTriangle size={16} className={styles.s11} />
-                <span className={styles.s7}>
+              <div className={styles.warningBox}>
+                <AlertTriangle size={16} className={styles.warningIcon} />
+                <span className={styles.infoText}>
                   The AI assistant and floating widget are disabled for this organization.
                 </span>
               </div>
@@ -167,11 +167,10 @@ export default function AiAdminPage() {
           </div>
         </Card>
 
-        {/* Model info card (read-only) */}
         <Card>
           <div className="p-4 ui-stack-3">
-            <h3 className={styles.s2}>
-              <Globe size={16} className={styles.s12} />
+            <h3 className={styles.cardTitle}>
+              <Globe size={16} className={styles.infoIcon} />
               Model Configuration
             </h3>
             <p className="ui-text-xs-muted m-0">
@@ -182,18 +181,23 @@ export default function AiAdminPage() {
               <Spinner size="sm" />
             ) : (
               <div className="ui-stack-2">
-                <LabeledValue label="Model" value={config?.model || '—'} />
-                <LabeledValue label="Ollama Base URL" value={config?.baseUrl || '—'} />
+                <div className={styles.labeledRow}>
+                  <span className="ui-text-muted">Model</span>
+                  <code className={styles.infoText}>{config?.model || '—'}</code>
+                </div>
+                <div className={styles.labeledRow}>
+                  <span className="ui-text-muted">Ollama Base URL</span>
+                  <code className={styles.infoText}>{config?.baseUrl || '—'}</code>
+                </div>
               </div>
             )}
           </div>
         </Card>
 
-        {/* Engine control card (relocated from admin dashboard) */}
         <Card>
           <div className="p-4 ui-stack-3">
             <div className="ui-flex-between">
-              <h3 className={styles.s2}>
+              <h3 className={styles.cardTitle}>
                 <Cpu size={16} className="ui-text-muted" />
                 AI Engine (Ollama)
               </h3>
@@ -206,16 +210,16 @@ export default function AiAdminPage() {
               )}
             </div>
 
-            <div className={styles.s8}>
+            <div className={styles.engineMeta}>
               <span>Model: {engineStatus?.model || '—'}</span>
               <span>Ollama: {engineStatus?.baseUrl || '—'}</span>
             </div>
 
             {engineStatusError && (
-              <div className={styles.s5}>{engineStatusError}</div>
+              <div className={styles.error}>{engineStatusError}</div>
             )}
             {engineActionError && (
-              <div className={styles.s5}>{engineActionError}</div>
+              <div className={styles.error}>{engineActionError}</div>
             )}
 
             <div className="ui-flex ui-gap-2">
@@ -241,21 +245,12 @@ export default function AiAdminPage() {
               </Button>
             </div>
 
-            <p className={styles.s9}>
+            <p className={styles.engineNote}>
               Controls the local Ollama process. Only works when the API server and Ollama run on the same host.
             </p>
           </div>
         </Card>
       </div>
-    </div>
-  );
-}
-
-function LabeledValue({ label, value }: { label: string; value: string }) {
-  return (
-    <div className={styles.s10}>
-      <span className="ui-text-muted">{label}</span>
-      <code className={styles.s7}>{value}</code>
     </div>
   );
 }
