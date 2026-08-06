@@ -134,7 +134,7 @@
 
 .s16 {
   display: inline-block;
-  padding: 2px 10px;
+  padding: var(--space-half) var(--space-2-5);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
@@ -148,8 +148,8 @@
 .s18 {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2-5);
   border-radius: var(--radius-md);
   border: none;
   background: #05966918;
@@ -162,8 +162,8 @@
 .s19 {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2-5);
   border-radius: var(--radius-md);
   border: none;
   background: #dc262618;
