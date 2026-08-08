@@ -6,7 +6,7 @@ export {
   ModuleTabLayout as CrmTabLayout,
   type ModuleTab as CrmTab,
   type ModuleTabLayoutProps as CrmTabLayoutProps,
-} from "@unerp/ui/layout";
+} from "@kannan19302/ui/layout";
 
 import {
   BarChart3,
@@ -26,7 +26,7 @@ import {
   Brain,
   Calculator,
 } from "lucide-react";
-import type { ModuleTab } from "@unerp/ui/layout";
+import type { ModuleTab } from "@kannan19302/ui/layout";
 
 export const CRM_TABS: ModuleTab[] = [
   {

@@ -9,8 +9,8 @@ import {
   MapPin,
   ShieldCheck,
 } from "lucide-react";
-import { Card, Button, Badge, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { Card, Button, Badge, DataTable, ProtectedComponent, type Column } from "@kannan19302/ui";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 
 interface Threshold {

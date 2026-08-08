@@ -1,6 +1,6 @@
 "use client";
 
-import { FrameworkProvider } from "@unerp/framework";
+import { FrameworkProvider } from "@kannan19302/framework";
 import type { ReactNode } from "react";
 import { registeredModules } from "@/modules";
 

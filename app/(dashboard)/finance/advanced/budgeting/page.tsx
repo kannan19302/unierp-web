@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { PageHeader, Card, Button, Spinner, Badge, Modal, TextField, FormField, Select, KPICard, DataTable, type Column } from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, Modal, TextField, FormField, Select, KPICard, DataTable, type Column } from "@kannan19302/ui";
 import {
   Target,
   TrendingUp,
@@ -23,8 +23,8 @@ import {
   Check,
   Ban,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 const BUDGETING_TABS: SubTab[] = [
   {

@@ -18,7 +18,7 @@ import {
   ChevronRight,
   ExternalLink,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface AppDetail {
   id: string;

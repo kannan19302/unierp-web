@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, Select, useToast } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, Select, useToast } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { Calendar, Plus, Clock, MapPin } from "lucide-react";
 
 interface ScheduleEntry {

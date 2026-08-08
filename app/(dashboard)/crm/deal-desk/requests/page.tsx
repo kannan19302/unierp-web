@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, Button, Input, Table } from "@unerp/ui";
+import { DataTable, Card, PageHeader, Spinner, Badge, useToast, Button, Input } from "@kannan19302/ui";
 import {
   ClipboardList,
   Search,

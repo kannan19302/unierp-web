@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Modal, PageHeader } from "@unerp/ui";
-import { ListView, FormView, RouteGuard } from "@unerp/framework";
+import { Modal, PageHeader } from "@kannan19302/ui";
+import { ListView, FormView, RouteGuard } from "@kannan19302/framework";
 import { warehouseResource } from "@/modules/inventory";
 
 import { Package as InventoryModuleIcon } from "lucide-react";

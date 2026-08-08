@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@kannan19302/ui";
 import {
   User,
   AlertCircle,
@@ -19,7 +19,7 @@ import {
   Clock,
   Umbrella,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface EmployeeDocument {
   id: string;
@@ -106,7 +106,7 @@ export default function EmployeeDetailPage() {
         employeeCode: "EMP-001",
         firstName: "John",
         lastName: "Doe",
-        email: "john.doe@unerp.dev",
+        email: "john.doe@kannan19302.dev",
         phone: "+1-555-0100",
         designation: "Senior Software Engineer",
         departmentName: "Engineering",
@@ -595,7 +595,7 @@ export default function EmployeeDetailPage() {
                                                                 {lb.balance}
                                                               </span></>) },
                                   ];
-                                            return <DataTable columns={columns} data={leaveBalances} rowKey={(lb: any) => idx} />;
+                                            return <DataTable columns={columns} data={leaveBalances} rowKey={(lb: any, idx: number) => String(idx)} />;
                                           })()}</>
                 ) : (
                   <p className={styles.p22}>No leave balance records found.</p>

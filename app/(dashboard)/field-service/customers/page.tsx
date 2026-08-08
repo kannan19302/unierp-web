@@ -1,7 +1,7 @@
 "use client";
-import { PageHeader } from "@unerp/ui";
+import { PageHeader } from "@kannan19302/ui";
 import { useRouter } from "next/navigation";
-import { ListView, RouteGuard } from "@unerp/framework";
+import { ListView, RouteGuard } from "@kannan19302/framework";
 import { customerResource } from "@/modules/crm";
 
 export default function FieldServiceCustomersPage() {

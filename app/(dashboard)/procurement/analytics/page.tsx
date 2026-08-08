@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Spinner, Card, Table, DataTable } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { PageHeader, Spinner, Card, DataTable } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { ShoppingCart, BarChart3 } from "lucide-react";
 

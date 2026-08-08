@@ -5,7 +5,7 @@ import { DndContext, DragEndEvent, closestCorners } from "@dnd-kit/core";
 import { useDroppable } from "@dnd-kit/core";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { Card } from "@unerp/ui";
+import { Card } from "@kannan19302/ui";
 import { Building, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import styles from "./kanban-board.module.css";

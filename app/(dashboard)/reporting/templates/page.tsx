@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge } from "@kannan19302/ui";
 import { FileText, Plus, Layout, Settings } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 export default function ReportingTemplatesPage() {
   const client = useApiClient();

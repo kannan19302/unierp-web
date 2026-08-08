@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save, AlertCircle, RefreshCw } from "lucide-react";
-import { Card, Button } from "@unerp/ui";
+import { Card, Button } from "@kannan19302/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface FixedAssetCategory {

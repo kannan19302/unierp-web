@@ -1,4 +1,4 @@
-import { DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 import { useState } from "react";
 

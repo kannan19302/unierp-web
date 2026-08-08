@@ -10,7 +10,7 @@ import {
   RefreshCw,
   AlertTriangle,
 } from "lucide-react";
-import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 
 interface Lease {

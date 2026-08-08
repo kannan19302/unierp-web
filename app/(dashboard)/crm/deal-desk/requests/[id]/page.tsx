@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, Button } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button } from "@kannan19302/ui";
 import { CheckCircle, XCircle, ArrowUp, Info } from "lucide-react";
 import { apiGet, apiPost } from "../../../_components/api";
 import { useParams } from "next/navigation";

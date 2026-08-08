@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Badge, Spinner, Button, Modal, TextField, FormField, Textarea, DataTable, type Column, ProtectedComponent } from "@unerp/ui";
+import { Card, Badge, Spinner, Button, Modal, TextField, FormField, Textarea, DataTable, type Column, ProtectedComponent } from "@kannan19302/ui";
 import { Package, Plus, Edit2, Trash2 } from "lucide-react";
-import { PERMISSION_REGISTRY, getPermissionsByModule } from "@unerp/shared";
-import { useApiClient } from "@unerp/framework";
+import { PERMISSION_REGISTRY, getPermissionsByModule } from "@kannan19302/shared";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./PackagesTab.module.css";
 
 interface AccessPackageData {

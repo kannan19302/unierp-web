@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Button, Spinner, TextField, FormField, Textarea, Modal, EmptyState, ProtectedComponent } from "@unerp/ui";
+import { Card, Button, Spinner, TextField, FormField, Textarea, Modal, EmptyState, ProtectedComponent } from "@kannan19302/ui";
 import {
   Users,
   Plus,
@@ -12,7 +12,7 @@ import {
   ShieldAlert,
   CheckCircle,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./GroupsTab.module.css";
 
 interface UserGroup {

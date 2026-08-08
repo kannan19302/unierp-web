@@ -1,7 +1,7 @@
 "use client";
 import styles from "./SyncMonitorTab.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Button, Badge, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, Button, Badge, Spinner, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   Smartphone,
   RefreshCw,
@@ -10,7 +10,7 @@ import {
   Clock,
   X,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface SyncEntry {
   id: string;

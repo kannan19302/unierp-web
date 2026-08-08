@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, Button, Spinner, useToast, DataTable } from "@unerp/ui";
+import { Card, Button, Spinner, useToast, DataTable } from "@kannan19302/ui";
 import {
   Play,
   ShieldAlert,
@@ -9,7 +9,7 @@ import {
   AlertTriangle,
   RefreshCw,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./ComplianceTab.module.css";
 
 interface ComplianceCheck {

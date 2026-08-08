@@ -1,8 +1,8 @@
-import { Table, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 const CATEGORIES = [
@@ -129,17 +129,26 @@ export default function NotificationPreferencesPage() {
             <div className={styles.loading}>Loading preferences...</div>
           ) : (
             <>{(() => {
-                                  const columns = [
-                            { key: "col_0", header: "Category" , render: (row: any) => (<>{row.category}</>) },
-                            { key: "col_1", header: "{ch.label}" , render: (row: any) => (<><button
-                                                      onClick={() => toggle(idx, ch.key)}
-                                                      className={`${styles.toggle} ${isOn ? styles.toggleOn : ""}`}
-                                                    >
-                                                      <span className={styles.toggleThumb} />
-                                                    </button></>) },
-                          ];
-                                  return <DataTable columns={columns} data={prefs} rowKey={(row: any) => row.category} />;
-                              })()}</>
+              const dataTableColumns = [
+                { key: "category", header: "Category", render: (row: any) => <>{row.category}</> },
+                ...CHANNELS.map(ch => ({
+                  key: ch.key,
+                  header: ch.label,
+                  render: (row: any, idx: number) => {
+                    const isOn = (row as any)[ch.key];
+                    return (
+                      <button
+                        onClick={() => toggle(idx, ch.key)}
+                        className={`${styles.toggle} ${isOn ? styles.toggleOn : ""}`}
+                      >
+                        <span className={styles.toggleThumb} />
+                      </button>
+                    );
+                  }
+                }))
+              ];
+              return <DataTable columns={dataTableColumns} data={prefs} rowKey={(row: any) => row.category} />;
+            })()}</>
           )}
         </div>
       </div>

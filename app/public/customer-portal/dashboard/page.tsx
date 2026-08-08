@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Card, Button, Spinner, StatusBadge, useToast, Table, DataTable } from "@unerp/ui";
+import { Card, Button, Spinner, StatusBadge, useToast, DataTable } from "@kannan19302/ui";
 import {
   FileText,
   ShoppingCart,
@@ -365,7 +365,7 @@ export default function CustomerPortalDashboardPage() {
                         { key: "col_2", header: "Total" , render: (i: any) => (<>{i.currency}{Number(i.totalAmount).toFixed(2)}</>) },
                         { key: "col_3", header: "Paid" , render: (i: any) => (<>{i.currency}{Number(i.paidAmount).toFixed(2)}</>) },
                         { key: "col_4", header: "Due date" , render: (i: any) => (<>{new Date(i.dueDate).toLocaleDateString()}</>) },
-                        { key: "col_5", header: "Actions" , render: (i: any) => (<><div className={styles.s7}>
+                        { key: "col_5", header: "Actions" , render: (i: any) => { const outstanding = Number(i.totalAmount) - Number(i.paidAmount); return (<><div className={styles.s7}>
                                                   {i.status !== "PAID" && outstanding > 0 && (
                                                     <Button
                                                       size="sm"
@@ -386,7 +386,7 @@ export default function CustomerPortalDashboardPage() {
                                                   >
                                                     <Download size={14} /> PDF
                                                   </Button>
-                                                </div></>) },
+                                                </div></>); } },
                       ];
                               return <DataTable columns={columns} data={invoices}  />;
                           })()}</>

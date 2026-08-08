@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Modal, PageHeader } from "@unerp/ui";
-import { FormView, ListView, RouteGuard } from "@unerp/framework";
+import { Modal, PageHeader } from "@kannan19302/ui";
+import { FormView, ListView, RouteGuard } from "@kannan19302/framework";
 import { tenantResource } from "@/modules/super-admin";
 
 export default function TenantsPage() {

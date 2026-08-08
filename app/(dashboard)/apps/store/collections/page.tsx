@@ -2,9 +2,9 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Card, useToast } from "@unerp/ui";
+import { Card, useToast } from "@kannan19302/ui";
 import { ArrowLeft, Sparkles, ChevronRight, Loader2 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface AppCollection {
   id: string;

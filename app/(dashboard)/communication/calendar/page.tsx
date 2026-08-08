@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { PageHeader, Card, Spinner } from "@unerp/ui";
+import { PageHeader, Card, Spinner } from "@kannan19302/ui";
 import { api, CalendarEvent, Member } from "../../connect/connectData";
 import ConnectCalendar from "../../connect/Calendar";
 

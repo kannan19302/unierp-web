@@ -13,7 +13,7 @@ import {
 import { FinanceTabLayout } from "@/components/finance/FinanceTabLayout";
 import { SubTabBar } from "@/components/finance/SubTabBar";
 import { FinanceDemoDataCard } from "@/components/finance/FinanceDemoDataCard";
-import { Card } from "@unerp/ui";
+import { Card } from "@kannan19302/ui";
 
 import FinancialPeriodsPage from "../advanced/financial-periods/page";
 import ExchangeRatesPage from "../advanced/exchange-rates/page";

@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Modal, PageHeader } from "@unerp/ui";
+import { Modal, PageHeader } from "@kannan19302/ui";
 import { Users } from "lucide-react";
-import { FormView, ListView, RouteGuard } from "@unerp/framework";
+import { FormView, ListView, RouteGuard } from "@kannan19302/framework";
 import { employeeResource } from "@/modules/hr";
 
 export default function HrPage() {

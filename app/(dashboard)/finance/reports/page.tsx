@@ -10,8 +10,8 @@ import {
   FileText,
 } from "lucide-react";
 
-import { RouteGuard } from "@unerp/framework";
-import { Card } from "@unerp/ui";
+import { RouteGuard } from "@kannan19302/framework";
+import { Card } from "@kannan19302/ui";
 
 import ReportsPage from "../advanced/reports/page";
 import FinancialRatiosPage from "../advanced/financial-ratios/page";

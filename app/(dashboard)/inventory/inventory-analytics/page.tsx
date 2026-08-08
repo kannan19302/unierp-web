@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Card, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Badge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   Activity,
   TrendingDown,

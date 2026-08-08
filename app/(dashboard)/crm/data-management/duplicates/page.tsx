@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Card, PageHeader, Button, Input, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Input, DataTable } from "@kannan19302/ui";
 import { Search, Merge } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 

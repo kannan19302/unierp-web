@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { Badge, Button, Card, DataTable, Modal, Tabs, type Column } from "@unerp/ui";
+import { Badge, Button, Card, DataTable, Modal, Tabs, type Column } from "@kannan19302/ui";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   DetailView,
@@ -13,7 +13,7 @@ import {
   useResourceDoc,
   useResourceList,
   type FieldValues,
-} from "@unerp/framework";
+} from "@kannan19302/framework";
 import {
   productResource,
   productVariantResource,

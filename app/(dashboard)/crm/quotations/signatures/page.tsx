@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@kannan19302/ui";
 import { Search, FileSignature, ShieldCheck, FileText } from "lucide-react";
 import { apiGet, apiPost, ApiRequestError } from "../../../../../src/lib/api";
 

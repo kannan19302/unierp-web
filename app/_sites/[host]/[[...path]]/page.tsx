@@ -1,5 +1,5 @@
 import React from "react";
-import { UniERPClient } from "@unerp/sdk";
+import { UniERPClient } from "@kannan19302/sdk";
 import { notFound } from "next/navigation";
 import { PublicPageRenderer } from "@/components/builder/PublicPageRenderer";
 import { SiteChatWidget } from "@/components/site/SiteChatWidget";

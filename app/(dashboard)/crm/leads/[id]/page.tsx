@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Button, Modal, ChangeHistory, useToast } from "@unerp/ui";
+import { Button, Modal, ChangeHistory, useToast } from "@kannan19302/ui";
 import {
   DetailView,
   FormView,
   RouteGuard,
   useApiClient,
-} from "@unerp/framework";
+} from "@kannan19302/framework";
 import { leadResource } from "@/modules/crm";
 import styles from "./page.module.css";
 

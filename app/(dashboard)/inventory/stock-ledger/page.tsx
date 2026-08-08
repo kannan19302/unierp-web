@@ -1,6 +1,6 @@
 "use client";
-import { PageHeader } from "@unerp/ui";
-import { ListView, RouteGuard } from "@unerp/framework";
+import { PageHeader } from "@kannan19302/ui";
+import { ListView, RouteGuard } from "@kannan19302/framework";
 import { stockLedgerResource } from "@/modules/inventory";
 
 import { Package as InventoryModuleIcon } from "lucide-react";

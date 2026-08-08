@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, type SortOrder, Modal, TextField, FormField, Select, KPICard, Tabs } from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, type SortOrder, Modal, TextField, FormField, Select, KPICard, Tabs } from "@kannan19302/ui";
 import {
   FileText,
   Plus,
@@ -16,7 +16,7 @@ import {
   Trash2,
   Calendar,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 
 interface QuotationLineItem {
   id?: string;

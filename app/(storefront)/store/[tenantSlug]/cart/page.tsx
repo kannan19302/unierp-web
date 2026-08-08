@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, Button, Spinner } from "@unerp/ui";
+import { Card, Button, Spinner } from "@kannan19302/ui";
 import { ArrowLeft, ShoppingCart, Minus, Plus, Trash2 } from "lucide-react";
 import {
   storefrontGet,

@@ -16,8 +16,8 @@ import {
   BarChart3,
   List,
 } from "lucide-react";
-import { Card, PageHeader, Button, Spinner, DashboardChart, ViewSwitcher, StatCardRow, type ViewMode } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, PageHeader, Button, Spinner, DashboardChart, ViewSwitcher, StatCardRow, type ViewMode } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface POSTerminal {
   id: string;

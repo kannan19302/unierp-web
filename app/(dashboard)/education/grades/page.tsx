@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { PageHeader, Card, Button, Badge, KPICard, Table, DataTable } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, KPICard, DataTable } from "@kannan19302/ui";
 import { BookOpen, Award, Save, Users } from "lucide-react";
 
 const COURSES_MOCK = [

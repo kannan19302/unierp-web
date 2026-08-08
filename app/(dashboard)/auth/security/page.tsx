@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { PageHeader, Button, DataTable, Card, useToast } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { PageHeader, Button, DataTable, Card, useToast } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 import { Plus, Trash2, Save } from "lucide-react";
-import type { Column } from "@unerp/ui";
+import type { Column } from "@kannan19302/ui";
 
 interface IpAllowlistEntry {
   id: string;

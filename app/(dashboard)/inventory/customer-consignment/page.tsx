@@ -1,8 +1,8 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, DataTable, Pagination, type Column, StatCardRow } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, DataTable, Pagination, type Column, StatCardRow } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 import {
   Plus,

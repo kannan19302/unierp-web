@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
+import { PageHeader, Card, Badge, DataTable, type Column, KPICard, Spinner } from "@kannan19302/ui";
 import {
   DollarSign,
   TrendingUp,
@@ -10,7 +10,7 @@ import {
   ArrowUpDown,
   Percent,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface ProjectWipRow {

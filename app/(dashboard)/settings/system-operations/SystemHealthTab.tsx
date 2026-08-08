@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Badge, KPICard, Sparkline } from "@unerp/ui";
+import { Card, Badge, KPICard, Sparkline } from "@kannan19302/ui";
 import {
   Server,
   Cpu,
@@ -15,7 +15,7 @@ import {
   Zap,
   Clock,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./SystemHealthTab.module.css";
 
 interface SystemHealthData {

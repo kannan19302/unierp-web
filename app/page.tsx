@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { apiGet } from "../src/lib/api";
 import { PublicPageRenderer } from "../src/components/builder/PublicPageRenderer";
 import { TenantStarterHome } from "../src/components/site/TenantStarterHome";
-import { Spinner } from "@unerp/ui";
+import { Spinner } from "@kannan19302/ui";
 
 export default function HomePage() {
   const router = useRouter();

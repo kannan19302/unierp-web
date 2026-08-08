@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { Plus, Edit3, Trash2, RefreshCw, Zap, AlertCircle } from "lucide-react";
 import { Modal, inputStyle, labelStyle } from "../../_components/Modal";
 import { apiGet, apiSend } from "../../_components/api";

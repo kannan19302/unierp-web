@@ -1,4 +1,4 @@
-import { DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 
 import styles from "./page.module.css";
@@ -14,7 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface POSOrder {
   id: string;

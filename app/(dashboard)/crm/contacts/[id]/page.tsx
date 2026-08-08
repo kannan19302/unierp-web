@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Button, Modal, ChangeHistory } from "@unerp/ui";
-import { DetailView, FormView, RouteGuard } from "@unerp/framework";
+import { Button, Modal, ChangeHistory } from "@kannan19302/ui";
+import { DetailView, FormView, RouteGuard } from "@kannan19302/framework";
 import { contactResource } from "@/modules/crm";
 
 export default function ContactDetailPage() {

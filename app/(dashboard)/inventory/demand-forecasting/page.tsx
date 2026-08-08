@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 

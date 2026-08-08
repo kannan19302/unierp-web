@@ -9,14 +9,14 @@ import {
   Activity,
   ArrowUpDown,
 } from "lucide-react";
-import type { ModuleTab } from "@unerp/ui/layout";
+import type { ModuleTab } from "@kannan19302/ui/layout";
 export {
   ModuleTabLayout as SubscriptionsTabLayout,
   type ModuleTab as SubscriptionsTab,
   type ModuleTabLayoutProps as SubscriptionsTabLayoutProps,
   SubTabBar,
   type SubTab,
-} from "@unerp/ui/layout";
+} from "@kannan19302/ui/layout";
 
 export const SUBSCRIPTIONS_TABS: ModuleTab[] = [
   {

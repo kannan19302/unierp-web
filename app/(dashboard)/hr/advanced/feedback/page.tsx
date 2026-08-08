@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast } from "@kannan19302/ui";
 import { MessageSquare, Plus, Star, AlertTriangle } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface FeedbackResponse {

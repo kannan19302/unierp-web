@@ -2,7 +2,7 @@
 import styles from "./ActiveApprovalsTab.module.css";
 import React, { useState, useEffect } from "react";
 import { RefreshCw, CheckCircle, XCircle } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface ApprovalRequest {
   id: string;

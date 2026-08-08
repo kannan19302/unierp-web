@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Card, PageHeader, Spinner, Button, Badge, DataTable, type Column, type SortOrder } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable, type Column, type SortOrder } from "@kannan19302/ui";
 import { Calculator, Package, Tag, TrendingUp, Eye } from "lucide-react";
 
 const TABS = [

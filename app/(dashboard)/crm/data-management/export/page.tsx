@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Card, PageHeader, Button } from "@unerp/ui";
+import { Card, PageHeader, Button } from "@kannan19302/ui";
 import { Download } from "lucide-react";
 import { apiSend } from "../../_components/api";
 

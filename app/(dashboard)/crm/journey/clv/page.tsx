@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { DollarSign, TrendingUp, ShoppingCart, Users } from "lucide-react";
-import { PageHeader, Card, Spinner, DataTable, KPICard } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { PageHeader, Card, Spinner, DataTable, KPICard } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 
 interface ClvEntry {
   id: string;

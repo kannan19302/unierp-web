@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Spinner } from "@unerp/ui";
+import { Spinner } from "@kannan19302/ui";
 import { getCsrfToken } from "../../../../src/lib/api";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";

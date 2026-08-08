@@ -1,13 +1,40 @@
 {
-  "extends": "@unerp/config/typescript/nextjs.json",
+  "extends": "@kannan19302/config/typescript/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ],
-      "@unerp/ui": [
+      "@kannan19302/ui": [
         "../unierp-design-system/src/index.ts"
+      ],
+      "@kannan19302/ui/*": [
+        "../unierp-design-system/src/*"
+      ],
+      "@kannan19302/framework": [
+        "../unierp-framework/src/index.ts"
+      ],
+      "@kannan19302/framework/*": [
+        "../unierp-framework/src/*"
+      ],
+      "@kannan19302/shared/*": [
+        "../unierp-shared/src/*"
+      ],
+      "@kannan19302/shared": [
+        "../unierp-shared/src/index.ts"
+      ],
+      "@kannan19302/sdk": [
+        "../unierp-sdk/src/index.ts"
+      ],
+      "@kannan19302/contracts": [
+        "../unierp-contracts/src/index.ts"
+      ],
+      "@kannan19302/contracts/*": [
+        "../unierp-contracts/src/*"
+      ],
+      "@kannan19302/auth": [
+        "../unierp-auth/src/index.ts"
       ],
       "@/components/*": [
         "./src/components/*"

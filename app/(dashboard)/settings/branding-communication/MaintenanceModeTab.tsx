@@ -8,7 +8,7 @@ import {
   CheckCircle,
   ShieldAlert,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 export default function MaintenanceModeTab() {
   const client = useApiClient();

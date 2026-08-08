@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 const BASE = "/inventory/costing";

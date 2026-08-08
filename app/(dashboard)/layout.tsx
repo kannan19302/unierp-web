@@ -11,7 +11,7 @@ import styles from "./layout.module.css";
 export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { DemoBanner, Spinner, useTheme } from "@unerp/ui";
+import { DemoBanner, Spinner, useTheme } from "@kannan19302/ui";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -52,7 +52,7 @@ import { AppSidebar } from "@/components/shell/AppSidebar";
 import { AppHeader } from "@/components/shell/AppHeader";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 import { AICopilot } from "@/components/shell/AICopilot";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 const GLOBAL_SEARCH_ITEMS = [
   { name: "Dashboard", href: "/dashboard", icon: Home, type: "App" },

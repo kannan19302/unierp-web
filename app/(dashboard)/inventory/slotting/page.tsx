@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useCallback, useState, useEffect } from "react";
-import { PageHeader, Badge, ListPageTemplate, FormField, Select, type ListColumn } from "@unerp/ui";
+import { PageHeader, Badge, ListPageTemplate, FormField, Select, type ListColumn } from "@kannan19302/ui";
 import { AlertCircle, LayoutGrid } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 interface Recommendation {

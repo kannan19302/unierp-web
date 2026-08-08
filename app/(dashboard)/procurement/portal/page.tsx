@@ -12,8 +12,8 @@ import {
   ChevronDown,
   ChevronRight,
 } from "lucide-react";
-import { Card, Button, Badge, Table, DataTable } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, Badge, DataTable } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Vendor {
   id: string;

@@ -20,7 +20,7 @@ import {
   XCircle,
   Search,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 type TabId =
   | "eligibility"

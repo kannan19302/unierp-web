@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, Table, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable } from "@kannan19302/ui";
 import {
   Plus,
   Trash2,
@@ -17,7 +17,7 @@ import {
   CheckCircle,
   FileSpreadsheet,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Vendor {
   id: string;
@@ -394,7 +394,9 @@ export default function BlanketAgreementsPage() {
                                                             </div><div className={styles.p21}>
                                                               End: {new Date(ba.endDate).toLocaleDateString()}
                                                             </div></>) },
-                                    { key: "col_4", header: "Released Limit" , render: (ba: any) => (<><div className={styles.p22}>
+                                    { key: "col_4", header: "Released Limit" , render: (ba: any) => {
+                                      const percentConsumed = ba.agreementLimit > 0 ? (ba.releasedAmount / ba.agreementLimit) * 100 : 0;
+                                      return (<><div className={styles.p22}>
                                                               <div className={styles.p23}>
                                                                 <span>
                                                                   ${Number(ba.releasedAmount).toLocaleString()}
@@ -417,7 +419,8 @@ export default function BlanketAgreementsPage() {
                                                                   }}
                                                                 />
                                                               </div>
-                                                            </div></>) },
+                                                            </div></>);
+                                    } },
                                     { key: "col_5", header: "Status" , render: (ba: any) => (<><Badge
                                                               variant={
                                                                 ba.status === "ACTIVE" ? "success" : "default"
@@ -425,7 +428,9 @@ export default function BlanketAgreementsPage() {
                                                             >
                                                               {ba.status}
                                                             </Badge></>) },
-                                    { key: "col_6", header: "Actions" , render: (ba: any) => (<><div className="ui-flex-end ui-gap-2">
+                                    { key: "col_6", header: "Actions" , render: (ba: any) => {
+                                      const percentConsumed = ba.agreementLimit > 0 ? (ba.releasedAmount / ba.agreementLimit) * 100 : 0;
+                                      return (<><div className="ui-flex-end ui-gap-2">
                                                               <Button
                                                                 onClick={() => handleOpenReleaseModal(ba)}
                                                                 disabled={
@@ -438,7 +443,8 @@ export default function BlanketAgreementsPage() {
                                                               >
                                                                 Release PO
                                                               </Button>
-                                                            </div></>) },
+                                                            </div></>);
+                                    } },
                                   ];
                                           return <DataTable columns={columns} data={agreements} rowKey={(ba: any) => ba.id} />;
                                       })()}</>
@@ -773,7 +779,10 @@ export default function BlanketAgreementsPage() {
                                                                   {item.description}
                                                                 </div></>) },
                                     { key: "col_1", header: "Locked Price" , render: (item: any) => (<>${Number(item.unitPrice).toLocaleString()}</>) },
-                                    { key: "col_2", header: "Remaining / Max Qty" , render: (item: any) => (<><span
+                                    { key: "col_2", header: "Remaining / Max Qty" , render: (item: any) => {
+                                      const maxQty = item.quantity;
+                                      const remQty = item.quantity - (item.releasedQuantity || 0);
+                                      return (<><span
                                                                   style={{
                                                                     color:
                                                                       remQty <= 0
@@ -782,8 +791,12 @@ export default function BlanketAgreementsPage() {
                                                                   }}
                                                                 >
                                                                   {remQty}
-                                                                </span>{" "}/ {maxQty}</>) },
-                                    { key: "col_3", header: "Release Qty" , render: (item: any) => (<><input
+                                                                </span>{" "}/ {maxQty}</>);
+                                    } },
+                                    { key: "col_3", header: "Release Qty" , render: (item: any) => {
+                                      const maxQty = item.quantity;
+                                      const remQty = item.quantity - (item.releasedQuantity || 0);
+                                      return (<><input
                                                                   type="number"
                                                                   min={0}
                                                                   max={remQty}
@@ -797,9 +810,10 @@ export default function BlanketAgreementsPage() {
                                                                   }
                                                                   disabled={remQty <= 0}
                                                                   className={["ui-input", styles.p64].join(" ")}
-                                                                /></>) },
+                                                                /></>);
+                                    } },
                                   ];
-                                          return <DataTable columns={columns} data={selectedAgreement.lineItems} rowKey={(item: any) => item.id} />;
+                                          return <DataTable columns={columns} data={selectedAgreement.lineItems || []} rowKey={(item: any) => item.id} />;
                                       })()}</>
                 </div>
 

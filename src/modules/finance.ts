@@ -1,4 +1,4 @@
-import { defineModule, defineResource } from "@unerp/framework";
+import { defineModule, defineResource } from "@kannan19302/framework";
 import { apiPost } from "../lib/api";
 
 // ─────────────────────────────────────────────────
@@ -130,7 +130,7 @@ export const paymentResource = defineResource({
     },
     // Read-only, list-display-only projections from the API response — the
     // backend derives these from the invoice relation; they aren't part of
-    // the create payload (see createPaymentSchema in @unerp/shared).
+    // the create payload (see createPaymentSchema in @kannan19302/shared).
     {
       name: "invoiceNumber",
       label: "Invoice",

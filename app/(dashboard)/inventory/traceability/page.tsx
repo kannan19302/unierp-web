@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { Card, PageHeader, Button, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Badge } from "@kannan19302/ui";
 import { Search, ShieldAlert, ShieldCheck } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 export default function TraceabilityPage() {

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Modal, PageHeader, KPICard } from "@unerp/ui";
+import { Modal, PageHeader, KPICard } from "@kannan19302/ui";
 import { CheckCircle, Clock, DollarSign, AlertCircle } from "lucide-react";
-import { ListView, FormView, RouteGuard, useApiClient } from "@unerp/framework";
+import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import { contractResource } from "@/modules/crm";
 
 interface ContractStats {

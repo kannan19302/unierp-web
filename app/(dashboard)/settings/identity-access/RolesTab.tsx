@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, Badge, Spinner, Button, Modal, TextField, FormField, ProtectedComponent } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { Card, Badge, Spinner, Button, Modal, TextField, FormField, ProtectedComponent } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import {
   Shield,
   Plus,
@@ -18,7 +18,7 @@ import {
   getPermissionsByModule,
   getCategoriesForModule,
   getPermissionsByCategory,
-} from "@unerp/shared";
+} from "@kannan19302/shared";
 import styles from "./RolesTab.module.css";
 
 interface RoleData {

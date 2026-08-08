@@ -1,8 +1,8 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import { TrendingUp, Plus, DollarSign, Clock, CheckCircle } from "lucide-react";
 
 interface RevenueSchedule {

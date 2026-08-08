@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { DataTable, PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, Card, useToast, type Column, type SortOrder } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { DataTable, PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, Card, useToast, type Column, type SortOrder } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 import { apiGet, apiPost, apiPatch } from "../../../../src/lib/api";
 import {
   Tag,

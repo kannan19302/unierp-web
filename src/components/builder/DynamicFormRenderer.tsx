@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -530,141 +530,61 @@ export function DynamicFormRenderer({
             }}
           >
             <div style={{ overflowX: "auto" }}>
-              <Table
-                style={{
-                  width: "100%",
-                  borderCollapse: "collapse",
-                  textAlign: "left",
-                  fontSize: "var(--text-sm)",
-                }}
-              >
-                <thead style={{ background: "var(--color-bg-sunken)" }}>
-                  <tr>
-                    <th
-                      style={{
-                        width: "40px",
-                        padding: "var(--space-2)",
-                        borderBottom: "1px solid var(--color-border)",
-                        color: "var(--color-text-secondary)",
-                        fontWeight: "var(--weight-semibold)",
-                      }}
-                    >
-                      #
-                    </th>
-                    {cols.map((c, i) => (
-                      <th
-                        key={i}
+              <>{(() => {
+                const dataTableColumns = [
+                  { key: "col_num", header: "#", render: (row: any, idx: number) => idx + 1 },
+                  ...cols.map((c, i) => ({
+                    key: `col_${i}`,
+                    header: c.name,
+                    render: (row: any, idx: number) => (
+                      <input
+                        type={
+                          c.type === "Int" || c.type === "Currency"
+                            ? "number"
+                            : c.type === "Date"
+                              ? "date"
+                              : "text"
+                        }
                         style={{
+                          width: "100%",
+                          border: "none",
+                          background: "transparent",
                           padding: "var(--space-2)",
-                          borderBottom: "1px solid var(--color-border)",
-                          fontWeight: "var(--weight-semibold)",
-                          color: "var(--color-text-secondary)",
-                          minWidth: "120px",
+                          outline: "none",
+                          color: "var(--color-text)",
+                        }}
+                        value={row[c.name] || ""}
+                        disabled={f.readOnly}
+                        onChange={(e) =>
+                          handleRowChange(idx, c.name, e.target.value)
+                        }
+                        placeholder={`Enter ${c.name}...`}
+                      />
+                    )
+                  })),
+                  ...(!f.readOnly ? [{
+                    key: "col_actions",
+                    header: "",
+                    render: (row: any, idx: number) => (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveRow(idx)}
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          color: "var(--color-danger)",
+                          cursor: "pointer",
+                          fontSize: "var(--text-lg)",
+                          lineHeight: 1,
                         }}
                       >
-                        {c.name}
-                      </th>
-                    ))}
-                    {!f.readOnly && (
-                      <th
-                        style={{
-                          width: "40px",
-                          padding: "var(--space-2)",
-                          borderBottom: "1px solid var(--color-border)",
-                        }}
-                      ></th>
-                    )}
-                  </tr>
-                </thead>
-                <tbody>
-                  {tableValue.map((row, idx) => (
-                    <tr
-                      key={idx}
-                      style={{ borderBottom: "1px solid var(--color-border)" }}
-                    >
-                      <td
-                        style={{
-                          padding: "var(--space-2)",
-                          color: "var(--color-text-tertiary)",
-                        }}
-                      >
-                        {idx + 1}
-                      </td>
-                      {cols.map((c, i) => (
-                        <td
-                          key={i}
-                          style={{
-                            padding: "0",
-                            borderLeft: "1px solid var(--color-border-subtle)",
-                          }}
-                        >
-                          <input
-                            type={
-                              c.type === "Int" || c.type === "Currency"
-                                ? "number"
-                                : c.type === "Date"
-                                  ? "date"
-                                  : "text"
-                            }
-                            style={{
-                              width: "100%",
-                              border: "none",
-                              background: "transparent",
-                              padding: "var(--space-2)",
-                              outline: "none",
-                              color: "var(--color-text)",
-                            }}
-                            value={row[c.name] || ""}
-                            disabled={f.readOnly}
-                            onChange={(e) =>
-                              handleRowChange(idx, c.name, e.target.value)
-                            }
-                            placeholder={`Enter ${c.name}...`}
-                          />
-                        </td>
-                      ))}
-                      {!f.readOnly && (
-                        <td
-                          style={{
-                            padding: "var(--space-2)",
-                            textAlign: "center",
-                            borderLeft: "1px solid var(--color-border-subtle)",
-                          }}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => handleRemoveRow(idx)}
-                            style={{
-                              background: "transparent",
-                              border: "none",
-                              color: "var(--color-danger)",
-                              cursor: "pointer",
-                              fontSize: "var(--text-lg)",
-                              lineHeight: 1,
-                            }}
-                          >
-                            &times;
-                          </button>
-                        </td>
-                      )}
-                    </tr>
-                  ))}
-                  {tableValue.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={cols.length + 2}
-                        style={{
-                          padding: "var(--space-4)",
-                          textAlign: "center",
-                          color: "var(--color-text-tertiary)",
-                        }}
-                      >
-                        No rows added.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+                        &times;
+                      </button>
+                    )
+                  }] : [])
+                ];
+                return <DataTable columns={dataTableColumns} data={tableValue} rowKey={(row: any, idx: number) => String(idx)} emptyTitle="No rows added." />;
+              })()}</>
             </div>
             {!f.readOnly && (
               <div

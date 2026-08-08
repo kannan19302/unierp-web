@@ -9,8 +9,8 @@ import {
   BarChart3,
   Target,
 } from "lucide-react";
-import { PageHeader, Button, Card, Spinner, KPICard } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { PageHeader, Button, Card, Spinner, KPICard } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { useCrmKeyMigration, type CrmTab } from "@/components/crm/CrmTabLayout";
 
 const TAB_DEFINITIONS: CrmTab[] = [

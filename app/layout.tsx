@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 export const dynamic = "force-dynamic";
-import "@unerp/ui/styles";
+import "@kannan19302/ui/styles";
 // Imported from their subpaths, not the root barrel.
 //
 // The root barrel re-exports these modules with `export *`, and a star
@@ -14,8 +14,8 @@ import "@unerp/ui/styles";
 //
 // Subpath imports address the client module directly, so nothing crosses a
 // star re-export. That is what the subpath exports added in § 7.2 are for.
-import { ThemeProvider } from "@unerp/ui/theme";
-import { ToastProvider } from "@unerp/ui/notifications";
+import { ThemeProvider } from "@kannan19302/ui/theme";
+import { ToastProvider } from "@kannan19302/ui/notifications";
 import { CommandPalette } from "@/components/CommandPalette";
 import { QueryProvider } from "@/lib/query-provider";
 import { AppFrameworkProvider } from "@/lib/framework-provider";

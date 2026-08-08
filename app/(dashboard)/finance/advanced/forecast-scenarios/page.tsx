@@ -11,8 +11,8 @@ import {
   Loader2,
   BarChart3,
 } from "lucide-react";
-import { Card, Button, Badge } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, Badge } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface ForecastScenario {
   id: string;

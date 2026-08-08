@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
 import {
   Loader2,
   RefreshCw,
@@ -16,8 +16,8 @@ import {
   Calendar,
   CheckSquare,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 interface IntercompanyTransaction {
   id: string;

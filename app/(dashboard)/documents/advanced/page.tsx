@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Spinner, DataTable, type Column, StatCardRow, Button } from "@unerp/ui";
+import { PageHeader, Spinner, DataTable, type Column, StatCardRow, Button } from "@kannan19302/ui";
 import { apiGet } from "@/lib/api";
 import {
   FileText,

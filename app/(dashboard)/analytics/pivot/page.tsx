@@ -1,9 +1,9 @@
-import { Table, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { Layers, RefreshCw } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Report {
   id: string;
@@ -172,7 +172,7 @@ export default function AnalyticsPivotPage() {
                         { key: "col_2", header: "Value" , render: (p: any) => (<>${p.value.toLocaleString()}</>) },
                         { key: "col_3", header: "Transactions Count" , render: (p: any) => (<>{p.count}</>) },
                       ];
-                              return <DataTable columns={columns} data={pivotData} rowKey={(p: any) => idx} />;
+                              return <DataTable columns={columns} data={pivotData} rowKey={(p: any, idx: number) => String(idx)} />;
                           })()}</>
           </div>
         </div>

@@ -4,7 +4,7 @@ import type { CrmTab } from "@/components/crm/CrmTabLayout";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column, type SortOrder } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column, type SortOrder } from "@kannan19302/ui";
 import {
   Plus,
   X,
@@ -21,8 +21,8 @@ import {
   Trophy,
 } from "lucide-react";
 import { apiDelete, ApiRequestError } from "../../../../src/lib/api";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 interface CommissionRule {
   id: string;

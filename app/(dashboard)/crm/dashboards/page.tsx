@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, StatusBadge, Spinner, Button, Badge } from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Spinner, Button, Badge } from "@kannan19302/ui";
 import {
   LayoutDashboard,
   Plus,
@@ -14,7 +14,7 @@ import {
   Users,
   Lock,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 
 interface Dashboard {
   id: string;

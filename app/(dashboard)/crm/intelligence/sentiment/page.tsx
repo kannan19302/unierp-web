@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Button, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge } from "@kannan19302/ui";
 import {
   MessageSquare,
   ArrowLeft,
@@ -13,7 +13,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 export default function SentimentAnalysisPage() {

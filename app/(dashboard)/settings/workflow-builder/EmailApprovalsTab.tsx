@@ -21,7 +21,7 @@ export default function EmailApprovalsTab() {
               <div className="ui-heading-sm font-bold">
                 UniERP Approval Request
               </div>
-              <div className="ui-text-micro">notifications@unerp.dev</div>
+              <div className="ui-text-micro">notifications@kannan19302.dev</div>
             </div>
           </div>
           <div className={styles.p5}>

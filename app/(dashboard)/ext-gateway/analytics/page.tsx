@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, KPICard, Spinner } from "@unerp/ui";
+import { Card, KPICard, Spinner } from "@kannan19302/ui";
 import { BarChart3, CheckCircle, AlertTriangle, Activity } from "lucide-react";
 
 export default function ExtAnalyticsPage() {

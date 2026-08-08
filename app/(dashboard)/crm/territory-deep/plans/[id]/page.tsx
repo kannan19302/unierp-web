@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column } from "@kannan19302/ui";
 import { ArrowLeft, RefreshCw, Eye, Activity } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import { useParams, useRouter } from "next/navigation";
 
 export default function TerritoryPlanDetail() {

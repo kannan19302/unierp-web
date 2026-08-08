@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { apiGet, apiPost } from "../../../src/lib/api";
-import { Spinner, Button, Input, Select } from "@unerp/ui";
+import { Spinner, Button, Input, Select } from "@kannan19302/ui";
 import { Check, ChevronRight, Save, LogIn } from "lucide-react";
 import styles from "./page.module.css";
 import "../../landing.css";

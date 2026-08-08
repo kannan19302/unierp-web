@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Badge, Spinner, useToast, StatCardRow, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, Spinner, useToast, StatCardRow, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   Plus,
   Trash2,
@@ -13,7 +13,7 @@ import {
   Layers,
   Activity,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 
 interface WorkflowCondition {
   field: string;

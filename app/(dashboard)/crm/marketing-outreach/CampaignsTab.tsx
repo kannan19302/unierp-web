@@ -1,7 +1,7 @@
 "use client";
 import styles from "./CampaignsTab.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Button, Badge, Modal, Drawer, DataTable, type Column, FormField, Input, Select, Textarea, useToast } from "@unerp/ui";
+import { Card, Button, Badge, Modal, Drawer, DataTable, type Column, FormField, Input, Select, Textarea, useToast } from "@kannan19302/ui";
 import {
   Plus,
   Search,
@@ -10,7 +10,7 @@ import {
   TrendingUp,
   Layers,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface Campaign {
   id: string;

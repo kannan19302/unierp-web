@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Modal, PageHeader, ProtectedComponent } from "@unerp/ui";
+import { Button, Modal, PageHeader, ProtectedComponent } from "@kannan19302/ui";
 import { Plus, Users } from "lucide-react";
-import { ListView, FormView, RouteGuard } from "@unerp/framework";
+import { ListView, FormView, RouteGuard } from "@kannan19302/framework";
 import { customerResource } from "@/modules/crm";
 import { DuplicatesFinder } from "../_components/DuplicatesFinder";
 
 // Phase 2 framework migration: schema-driven page (see .ai/UI_FRAMEWORK_PLAN.md).
-// List/filter/sort/create logic lives in @unerp/framework + src/modules/crm.ts.
+// List/filter/sort/create logic lives in @kannan19302/framework + src/modules/crm.ts.
 
 export default function CustomersPage() {
   const router = useRouter();

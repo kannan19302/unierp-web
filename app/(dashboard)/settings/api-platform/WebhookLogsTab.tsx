@@ -1,7 +1,7 @@
 "use client";
 import styles from "./WebhookLogsTab.module.css";
 import React, { useState, useEffect } from "react";
-import { Badge, StatusBadge, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Badge, StatusBadge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 
 interface LogData {
   id: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, KPICard, Sparkline, MiniDonutChart, Badge, Spinner, DataTable, Button, type Column } from "@unerp/ui";
+import { Card, KPICard, Sparkline, MiniDonutChart, Badge, Spinner, DataTable, Button, type Column } from "@kannan19302/ui";
 import {
   Users,
   Shield,
@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { apiGet } from "@/lib/api";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import styles from "./page.module.css";
 

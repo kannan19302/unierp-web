@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Spinner, Badge, DataTable } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import type { Column } from "@unerp/ui";
+import { PageHeader, Card, Spinner, Badge, DataTable } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import type { Column } from "@kannan19302/ui";
 
 function VisitorAnalyticsPage() {
   const client = useApiClient();

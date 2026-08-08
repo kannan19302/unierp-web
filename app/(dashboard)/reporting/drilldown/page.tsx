@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, DataTable } from "@kannan19302/ui";
 import { ZoomIn, BarChart2, TrendingUp, Globe } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 export default function ReportingDrilldownPage() {
   const client = useApiClient();
@@ -133,7 +133,7 @@ export default function ReportingDrilldownPage() {
                     { key: "col_1", header: "Value" , render: (r: any) => (<>${r.value.toLocaleString()}</>) },
                     { key: "col_2", header: "Growth" , render: (r: any) => (<>{r.growth}</>) },
                   ];
-                          return <DataTable columns={columns} data={drillResults.results} rowKey={(r: any) => i} />;
+                          return <DataTable columns={columns} data={drillResults.results} rowKey={(r: any, i: number) => String(i)} />;
                       })()}</>
         </Card>
       )}

@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
-import { PageHeader, Button, StatusBadge, DataTable, StatCardRow, Modal, type Column } from "@unerp/ui";
+import { PageHeader, Button, StatusBadge, DataTable, StatCardRow, Modal, type Column } from "@kannan19302/ui";
 import {
   Plus,
   Eye,
@@ -12,7 +12,7 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
-import { RouteGuard } from "@unerp/framework";
+import { RouteGuard } from "@kannan19302/framework";
 
 import { apiGet, apiPost, apiPatch } from "../../../../src/lib/api";
 

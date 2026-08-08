@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@kannan19302/ui";
 import { RotateCcw, Eye } from "lucide-react";
 
 interface DeadLetter {

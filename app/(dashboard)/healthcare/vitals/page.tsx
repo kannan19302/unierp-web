@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { PageHeader, Card, KPICard, DashboardChart } from "@unerp/ui";
+import { PageHeader, Card, KPICard, DashboardChart } from "@kannan19302/ui";
 import { Activity, Heart, Thermometer, Wind } from "lucide-react";
 
 const BP_DATA = [

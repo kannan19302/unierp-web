@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { Settings, Check, FileCode } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Product {
   id: string;

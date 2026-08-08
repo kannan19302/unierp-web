@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Card, Badge, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
+import { Card, Badge, ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
 import { Zap, CheckCircle, Play, Lock } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 interface AutomationDashboard {

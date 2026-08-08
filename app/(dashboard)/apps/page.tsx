@@ -36,7 +36,7 @@ import {
   X,
   ChevronRight,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { OnboardingChecklist } from "../../../src/components/OnboardingChecklist";
 
 interface AppDefinition {

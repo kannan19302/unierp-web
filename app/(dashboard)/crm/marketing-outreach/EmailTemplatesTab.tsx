@@ -1,7 +1,7 @@
 "use client";
 import styles from "./EmailTemplatesTab.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Textarea, KPICard } from "@unerp/ui";
+import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Textarea, KPICard } from "@kannan19302/ui";
 import {
   Mail,
   Plus,
@@ -12,7 +12,7 @@ import {
   Eye,
   Send,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface EmailTemplate {
   id: string;

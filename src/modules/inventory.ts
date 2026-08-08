@@ -1,8 +1,8 @@
-import { defineModule, defineResource } from "@unerp/framework";
+import { defineModule, defineResource } from "@kannan19302/framework";
 
 // ─────────────────────────────────────────────────
 // Inventory module definition — the pilot adoption
-// of @unerp/framework. Pages under app/(dashboard)/
+// of @kannan19302/framework. Pages under app/(dashboard)/
 // inventory consume these schemas instead of
 // hand-rolling fetch/table/form code.
 // ─────────────────────────────────────────────────

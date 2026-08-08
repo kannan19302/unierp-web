@@ -13,9 +13,9 @@ import {
   Plus,
   FileText,
 } from "lucide-react";
-import { Card, PageHeader, Button, Spinner, DashboardChart, Modal, TextField, FormField, Select, StatCardRow, useToast, Table, DataTable } from "@unerp/ui";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
-import { useApiClient } from "@unerp/framework";
+import { Card, PageHeader, Button, Spinner, DashboardChart, Modal, TextField, FormField, Select, StatCardRow, useToast, DataTable } from "@kannan19302/ui";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
+import { useApiClient } from "@kannan19302/framework";
 
 const PROJECT_TABS: SubTab[] = [
   { id: "dashboard", label: "Dashboard", href: "/projects?tab=dashboard" },

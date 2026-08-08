@@ -1,6 +1,6 @@
 import React from "react";
 import { PublicPageRenderer } from "@/components/builder/PublicPageRenderer";
-import { UniERPClient } from "@unerp/sdk";
+import { UniERPClient } from "@kannan19302/sdk";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";

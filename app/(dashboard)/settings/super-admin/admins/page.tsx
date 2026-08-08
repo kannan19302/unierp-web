@@ -1,7 +1,7 @@
 "use client";
 
-import { PageHeader } from "@unerp/ui";
-import { ListView, RouteGuard } from "@unerp/framework";
+import { PageHeader } from "@kannan19302/ui";
+import { ListView, RouteGuard } from "@kannan19302/framework";
 import { adminUserResource } from "@/modules/super-admin";
 
 export default function AdminUsersListPage() {

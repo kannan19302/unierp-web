@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React from "react";
-import { PageHeader, Card, KPICard } from "@unerp/ui";
+import { PageHeader, Card, KPICard } from "@kannan19302/ui";
 import { Users, Key } from "lucide-react";
 
 export default function TenantsPage() {

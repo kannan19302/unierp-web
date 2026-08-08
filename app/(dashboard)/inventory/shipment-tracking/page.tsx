@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, Table, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable } from "@kannan19302/ui";
 import { AlertCircle, Truck, Package, CheckCircle, Plus } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 const STATUS_COLORS: Record<

@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Play, RefreshCw, CheckCircle, Pause, PlayCircle } from "lucide-react";
-import { ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./ScheduledTasksTab.module.css";
 
 interface CronTask {

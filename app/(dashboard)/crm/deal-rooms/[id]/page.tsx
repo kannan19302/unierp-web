@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styles from "./page.module.css";
 import { useParams } from "next/navigation";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, ProtectedComponent } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, ProtectedComponent } from "@kannan19302/ui";
 import { CheckCircle2, Circle, Plus, X, Users, FileText } from "lucide-react";
 import { apiGet, apiPost } from "../../../../../src/lib/api";
 import { ApiRequestError } from "../../../../../src/lib/api";

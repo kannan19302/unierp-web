@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, Button, Input, ListPageTemplate, type ListColumn, Table, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Input, ListPageTemplate, type ListColumn, DataTable } from "@kannan19302/ui";
 import {
   TrendingUp,
   TrendingDown,

@@ -21,7 +21,7 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: true,
-  // @unerp/ui and @unerp/framework must be TRANSPILED, not treated as external.
+  // @kannan19302/ui and @kannan19302/framework must be TRANSPILED, not treated as external.
   //
   // They ship CSS modules beside their compiled components. As server-external
   // packages Node `require()`s them raw and chokes on the first stylesheet —
@@ -47,14 +47,14 @@ const nextConfig = {
   // modules; that is fixed at the source now — the design system resolves CSS
   // modules at build time, so dist/ imports no CSS at all.
   transpilePackages: [
-    '@unerp/shared',
-    '@unerp/auth',
-    '@unerp/ui',
-    '@unerp/framework',
+    '@kannan19302/shared',
+    '@kannan19302/auth',
+    '@kannan19302/ui',
+    '@kannan19302/framework',
   ],
 
   experimental: {
-    // NOTE: '@unerp/ui' was previously listed here alongside being in
+    // NOTE: '@kannan19302/ui' was previously listed here alongside being in
     // transpilePackages. Applying both experimental.optimizePackageImports
     // (which rewrites the import graph to per-export deep imports) and
     // transpilePackages (which re-transpiles the whole package from source)

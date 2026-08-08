@@ -17,7 +17,7 @@ import {
   Building2,
   LayoutGrid,
 } from "lucide-react";
-import { useTheme, type ThemeSetting, type DensityName } from "@unerp/ui";
+import { useTheme, type ThemeSetting, type DensityName } from "@kannan19302/ui";
 import { AppSwitcher } from "./AppSwitcher";
 import { NotificationCenter } from "./NotificationCenter";
 import { ProfileHoverCard } from "./ProfileHoverCard";

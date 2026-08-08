@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, useToast } from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, useToast } from "@kannan19302/ui";
 import {
   ClipboardList,
   Plus,
@@ -10,7 +10,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface ServiceTicket {
   id: string;

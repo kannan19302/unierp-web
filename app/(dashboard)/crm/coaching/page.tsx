@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@kannan19302/ui";
 import { GraduationCap, Plus, X, BookOpen } from "lucide-react";
 import { apiGet, apiPost, ApiRequestError } from "../../../../src/lib/api";
 import styles from "./page.module.css";

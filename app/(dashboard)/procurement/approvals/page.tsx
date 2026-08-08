@@ -3,8 +3,8 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Badge, Button, DataTable, Spinner, Modal } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, PageHeader, Badge, Button, DataTable, Spinner, Modal } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   CheckSquare,
   AlertTriangle,

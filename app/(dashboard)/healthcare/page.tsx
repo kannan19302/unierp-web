@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, KPICard, DashboardChart } from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, KPICard, DashboardChart } from "@kannan19302/ui";
 import {
   Activity,
   Users,
@@ -14,7 +14,7 @@ import {
   Heart,
 } from "lucide-react";
 import Link from "next/link";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 const listLength = (value: unknown): number => {
   if (Array.isArray(value)) return value.length;

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { PageHeader, Button, Card } from "@unerp/ui";
+import { PageHeader, Button, Card } from "@kannan19302/ui";
 import {
   CreditCard,
   Layers,

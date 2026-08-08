@@ -2,7 +2,7 @@
 import styles from "./ApiMetricsTab.module.css";
 import React, { useState } from "react";
 import { BarChart3, Clock, AlertTriangle, CheckCircle } from "lucide-react";
-import { ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 
 export default function ApiMetricsTab() {
   const [apiMetrics] = useState([

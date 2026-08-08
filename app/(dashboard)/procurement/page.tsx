@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { Card, PageHeader, Spinner, DashboardChart, ViewSwitcher, KanbanBoard, StatCardRow, type ViewMode, type KanbanColumn, type KanbanItem } from "@unerp/ui";
+import { Card, PageHeader, Spinner, DashboardChart, ViewSwitcher, KanbanBoard, StatCardRow, type ViewMode, type KanbanColumn, type KanbanItem } from "@kannan19302/ui";
 import {
   ShoppingCart,
   Truck,
@@ -16,7 +16,7 @@ import {
   TrendingUp,
   AlertCircle,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface PurchaseOrder extends KanbanItem {
   poNumber: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
-import { PageHeader, Card } from "@unerp/ui";
+import { PageHeader, Card } from "@kannan19302/ui";
 import Link from "next/link";
 import { ArrowRight, Truck, MapPin, Download, Server } from "lucide-react";
 

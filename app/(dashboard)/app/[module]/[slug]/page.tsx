@@ -1,4 +1,3 @@
-import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 export const dynamic = "force-dynamic";
@@ -17,8 +16,8 @@ import {
 } from "lucide-react";
 import { DynamicFormRenderer } from "@/components/builder/DynamicFormRenderer";
 import { useToast } from "@/components/builder/ToastProvider";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { DataTable } from "@kannan19302/ui";
 type ViewMode = "list" | "form";
 type SortOrder = "asc" | "desc";
 
@@ -1218,35 +1217,14 @@ function RemoteAppPageRenderer({
       {state === "error" && <p className={styles.s78}>{message}</p>}
       {state === "ok" && (
         <div className={styles.s79}>
-          <Table className={styles.s80}>
-            <thead>
-              <tr>
-                {cols.map((c) => (
-                  <th key={c.key} className={styles.s81}>
-                    {c.label || c.key}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.length === 0 && (
-                <tr>
-                  <td colSpan={cols.length || 1} className={styles.s82}>
-                    No records.
-                  </td>
-                </tr>
-              )}
-              {rows.map((r, i) => (
-                <tr key={r.id || r._id || i}>
-                  {cols.map((c) => (
-                    <td key={c.key} className={styles.s83}>
-                      {formatRemoteCell(r[c.key])}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+            const dataTableColumns = cols.map(c => ({
+              key: c.key,
+              header: c.label || c.key,
+              render: (r: any) => <>{formatRemoteCell(r[c.key])}</>
+            }));
+            return <DataTable columns={dataTableColumns} data={rows} rowKey={(r: any, i: number) => r.id || r._id || String(i)} emptyTitle="No records." />;
+          })()}</>
         </div>
       )}
     </div>

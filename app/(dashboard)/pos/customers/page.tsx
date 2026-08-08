@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import {
   Users,
   Gift,

@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, DashboardChart, Spinner } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, DashboardChart, Spinner } from "@kannan19302/ui";
 import {
   Building2,
   DollarSign,
@@ -10,8 +10,8 @@ import {
   GitMerge,
   BarChart3,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 interface Entity {
   id: string;

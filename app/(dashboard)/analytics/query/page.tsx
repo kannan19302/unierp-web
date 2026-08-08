@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { Table, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 import {
   GitFork,
   Play,
@@ -15,7 +15,7 @@ import {
   Sparkles,
   Loader2,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface QueryField {
   table: string;
@@ -655,7 +655,7 @@ export default function VisualQueryBuilderPage() {
                                               const columns = [
                                         { key: "col_0", header: "{c}" , render: (row: any) => (<>{String(row[c] ?? "")}</>) },
                                       ];
-                                              return <DataTable columns={columns} data={results.rows} rowKey={(row: any) => i} />;
+                                              return <DataTable columns={columns} data={results.rows} rowKey={(row: any, i: number) => String(i)} />;
                                           })()}</>
                   </div>
                 ) : (

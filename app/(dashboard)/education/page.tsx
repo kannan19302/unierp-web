@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useMemo } from "react";
-import { PageHeader, Card, Button, Spinner, KPICard, DashboardChart } from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, KPICard, DashboardChart } from "@kannan19302/ui";
 import {
   GraduationCap,
   Users,
@@ -14,7 +14,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 export default function EducationDashboard() {
   const client = useApiClient();

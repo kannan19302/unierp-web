@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Button, Badge, KPICard, Spinner } from "@unerp/ui";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { PageHeader, Card, Button, Badge, KPICard, Spinner } from "@kannan19302/ui";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import {
   KanbanSquare,
   Lightbulb,
@@ -10,7 +10,7 @@ import {
   Map,
   AlertTriangle,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 const SUB_TABS: SubTab[] = [
   { id: "kanban", label: "Kanban", href: "/manufacturing/lean?tab=kanban" },

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { createRegistry } from "@unerp/framework";
-import type { ModuleDefinition } from "@unerp/framework";
+import { createRegistry } from "@kannan19302/framework";
+import type { ModuleDefinition } from "@kannan19302/framework";
 import { registeredModules } from "../index";
 import { blockchainModule } from "../blockchain";
 import { serviceManagementModule } from "../service-management";

@@ -11,8 +11,8 @@ import {
   Database,
   type LucideIcon,
 } from "lucide-react";
-import { useTheme, type ThemeSetting } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { useTheme, type ThemeSetting } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import { allApplications, getAppSpecificNavigation } from "@/navigation";
 import styles from "./CommandPalette.module.css";
 

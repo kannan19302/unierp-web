@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import { Card, PageHeader, Badge, useToast, Button, Input, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Badge, useToast, Button, Input, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { Shield, Activity, Plus, Layers } from "lucide-react";
 import { apiGet } from "../_components/api";
 

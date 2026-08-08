@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { MapPin, Plus, Pencil, Trash2, GripVertical } from "lucide-react";
-import { PageHeader, Button, Card, Spinner, DataTable, Modal, FormField } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { PageHeader, Button, Card, Spinner, DataTable, Modal, FormField } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 
 interface JourneyStage {
   id: string;

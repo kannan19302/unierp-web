@@ -11,8 +11,8 @@ import {
   TrendingUp,
   Layers,
 } from "lucide-react";
-import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface BudgetScenario {
   id: string;

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Spinner, KPICard, DashboardChart, Badge, FormField, Select } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { PageHeader, Card, Spinner, KPICard, DashboardChart, Badge, FormField, Select } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   TrendingUp,
   Package,

@@ -1,8 +1,8 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Card, PageHeader, Button, Badge, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { Card, PageHeader, Button, Badge, Spinner, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import { Globe, Trash2, X, Search, Download, Upload } from "lucide-react";
 
 interface LanguageInfo {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner } from "@kannan19302/ui";
 import {
   GraduationCap,
   Plus,
@@ -11,7 +11,7 @@ import {
   Users,
   Award,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface Training {

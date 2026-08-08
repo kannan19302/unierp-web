@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column } from "@kannan19302/ui";
 import {
   Plus,
   MapPin,
@@ -10,7 +10,7 @@ import {
   Target,
   ChevronRight,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import Link from "next/link";
 
 export default function TerritoryDeepDashboard() {

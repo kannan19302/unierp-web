@@ -1,9 +1,9 @@
 "use client";
 import styles from "./ApiKeysTab.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Spinner, ConfirmDialog } from "@unerp/ui";
+import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Spinner, ConfirmDialog } from "@kannan19302/ui";
 import { Key, Plus, Trash2, Copy, CheckCircle } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface ApiKeyData {
   id: string;

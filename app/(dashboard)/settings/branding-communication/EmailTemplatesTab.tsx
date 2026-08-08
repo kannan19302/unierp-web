@@ -1,9 +1,9 @@
 "use client";
 import styles from "./EmailTemplatesTab.module.css";
 import React, { useState, useEffect } from "react";
-import { Button, Modal } from "@unerp/ui";
+import { Button, Modal } from "@kannan19302/ui";
 import { Plus, Edit2, Trash2, RefreshCw } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface EmailTemplate {
   id: string;

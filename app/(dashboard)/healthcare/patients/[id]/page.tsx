@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Spinner, Badge, KPICard } from "@unerp/ui";
+import { PageHeader, Card, Spinner, Badge, KPICard } from "@kannan19302/ui";
 import {
   Users,
   Heart,
@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Patient {
   id: string;

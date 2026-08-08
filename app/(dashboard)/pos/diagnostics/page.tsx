@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { Store, Activity, RefreshCw, Wifi, Terminal } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface POSTerminal {
   id: string;

@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Badge, Button, Modal } from "@unerp/ui";
+import { Badge, Button, Modal } from "@kannan19302/ui";
 import {
   ArrowLeft,
   Code2,
@@ -16,7 +16,7 @@ import {
   Loader2,
   Shield,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Bundle {
   id: string;

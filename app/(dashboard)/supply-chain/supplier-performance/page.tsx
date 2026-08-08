@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { Plus, TrendingUp, Target, Star, BarChart3 } from "lucide-react";
 
 interface KpiDefinition {

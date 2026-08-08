@@ -2,14 +2,14 @@
 import styles from "./page.module.css";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Modal, PageHeader, Select } from "@unerp/ui";
+import { Modal, PageHeader, Select } from "@kannan19302/ui";
 import {
   ListView,
   FormView,
   RouteGuard,
   useResourceList,
   type FieldValues,
-} from "@unerp/framework";
+} from "@kannan19302/framework";
 import { categoryResource, productResource } from "@/modules/inventory";
 
 import { Package } from "lucide-react";

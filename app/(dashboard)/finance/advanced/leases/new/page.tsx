@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
-import { Card, Button } from "@unerp/ui";
+import { Card, Button } from "@kannan19302/ui";
 import { apiPost } from "@/lib/api";
 
 export default function NewLeasePage() {

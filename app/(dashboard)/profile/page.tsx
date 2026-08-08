@@ -18,8 +18,8 @@ import {
   Users,
   Briefcase,
 } from "lucide-react";
-import { useTheme, Table, DataTable } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { useTheme, DataTable } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { ProfileDirectorySection } from "./ProfileDirectorySection";
 
 interface ProfileUser {

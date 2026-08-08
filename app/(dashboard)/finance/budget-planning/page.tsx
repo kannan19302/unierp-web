@@ -12,8 +12,8 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { Card, useToast } from "@unerp/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { Card, useToast } from "@kannan19302/ui";
 
 import BudgetingPage from "../advanced/budgeting/page";
 import BudgetScenariosPage from "../advanced/budget-scenarios/page";

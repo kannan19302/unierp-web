@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     exclude: ["**/node_modules/**", "**/dist/**", "**/e2e/**", "**/.next/**"],
 
-    // @unerp/ui ships CSS modules beside its compiled components. Vitest
+    // @kannan19302/ui ships CSS modules beside its compiled components. Vitest
     // externalises node_modules by default, so Node `require()`d those
     // stylesheets and threw `SyntaxError: Unexpected token '.'` on the first
     // `.class` selector — the same failure the Next config solves with
@@ -14,10 +14,10 @@ export default defineConfig({
     server: {
       deps: {
         // Regex, not bare names: the design system is reached through several
-        // specifiers (@unerp/ui, @unerp/ui/theme, @unerp/ui/notifications) and
+        // specifiers (@kannan19302/ui, @kannan19302/ui/theme, @kannan19302/ui/notifications) and
         // an exact-name match misses every subpath, leaving them externalised
         // and back in Node's hands.
-        inline: [/@unerp\//],
+        inline: [/@kannan19302\//],
       },
     },
 

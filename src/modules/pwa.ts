@@ -1,4 +1,4 @@
-import { defineModule, defineResource } from "@unerp/framework";
+import { defineModule, defineResource } from "@kannan19302/framework";
 
 export const pwaEntity1Resource = defineResource({
   name: "pwa-entity-1",

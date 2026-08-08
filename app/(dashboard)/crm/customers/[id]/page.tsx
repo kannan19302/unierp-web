@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, PageHeader, Spinner, Button, StatusBadge, Badge, Modal, ListPageTemplate, type ListColumn, ChangeHistory } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, StatusBadge, Badge, Modal, ListPageTemplate, type ListColumn, ChangeHistory } from "@kannan19302/ui";
 import {
   ArrowLeft,
   Building,
@@ -24,7 +24,7 @@ import {
   X,
   RefreshCw,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 
 interface Address {
   street?: string;

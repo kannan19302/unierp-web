@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
-import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column, Input } from "@unerp/ui";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column, Input } from "@kannan19302/ui";
 import {
   Search,
   Bookmark,

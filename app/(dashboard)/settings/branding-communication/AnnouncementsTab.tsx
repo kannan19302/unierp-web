@@ -1,7 +1,7 @@
 "use client";
 import styles from "./AnnouncementsTab.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Button, Modal, TextField, FormField, Textarea, Select } from "@unerp/ui";
+import { Button, Modal, TextField, FormField, Textarea, Select } from "@kannan19302/ui";
 import {
   Plus,
   Edit3,
@@ -10,7 +10,7 @@ import {
   Info,
   AlertOctagon,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface Announcement {
   id: string;
@@ -34,7 +34,7 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
     priority: "high",
     isActive: true,
     expiresAt: "2026-06-26T00:00:00Z",
-    createdBy: "admin@unerp.dev",
+    createdBy: "admin@kannan19302.dev",
     createdAt: "2026-06-20T10:00:00Z",
   },
   {
@@ -46,7 +46,7 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
     priority: "normal",
     isActive: true,
     expiresAt: null,
-    createdBy: "admin@unerp.dev",
+    createdBy: "admin@kannan19302.dev",
     createdAt: "2026-06-19T08:00:00Z",
   },
   {
@@ -58,7 +58,7 @@ const MOCK_ANNOUNCEMENTS: Announcement[] = [
     priority: "high",
     isActive: true,
     expiresAt: "2026-07-01T00:00:00Z",
-    createdBy: "admin@unerp.dev",
+    createdBy: "admin@kannan19302.dev",
     createdAt: "2026-06-18T12:00:00Z",
   },
 ];

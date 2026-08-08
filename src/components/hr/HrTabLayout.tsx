@@ -22,7 +22,7 @@ import {
   Monitor,
   ClipboardCheck,
 } from "lucide-react";
-import type { ModuleTab } from "@unerp/ui/layout";
+import type { ModuleTab } from "@kannan19302/ui/layout";
 
 export {
   ModuleTabLayout as HrTabLayout,
@@ -30,7 +30,7 @@ export {
   type ModuleTabLayoutProps as HrTabLayoutProps,
   SubTabBar,
   type SubTab,
-} from "@unerp/ui/layout";
+} from "@kannan19302/ui/layout";
 
 export const HR_TABS: ModuleTab[] = [
   {

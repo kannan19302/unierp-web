@@ -10,7 +10,7 @@ import {
   DollarSign,
   Settings,
 } from "lucide-react";
-import type { ModuleTab } from "@unerp/ui/layout";
+import type { ModuleTab } from "@kannan19302/ui/layout";
 
 export {
   ModuleTabLayout as RealEstateTabLayout,
@@ -18,7 +18,7 @@ export {
   type ModuleTabLayoutProps as RealEstateTabLayoutProps,
   SubTabBar,
   type SubTab,
-} from "@unerp/ui/layout";
+} from "@kannan19302/ui/layout";
 
 export const REAL_ESTATE_TABS: ModuleTab[] = [
   {

@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Button, Badge, StatCardRow, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { PageHeader, Button, Badge, StatCardRow, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   Plus,
   AlertCircle,
@@ -9,8 +9,8 @@ import {
   Package,
   TrendingDown,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar } from "@kannan19302/ui/layout";
 import { useSearchParams } from "next/navigation";
 
 import { Package as InventoryModuleIcon } from "lucide-react";

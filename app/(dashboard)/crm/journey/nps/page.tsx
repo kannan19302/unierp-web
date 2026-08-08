@@ -10,8 +10,8 @@ import {
   Eye,
   Trash2,
 } from "lucide-react";
-import { PageHeader, Button, Card, Spinner, DataTable, KPICard, Modal, FormField } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { PageHeader, Button, Card, Spinner, DataTable, KPICard, Modal, FormField } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 
 interface NpsSurvey {
   id: string;

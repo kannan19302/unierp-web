@@ -11,7 +11,7 @@ import {
   MessageSquare,
   Info,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./AppHeader.module.css";
 
 const WS_BASE = process.env.NEXT_PUBLIC_WS_URL || "http://localhost:3001";

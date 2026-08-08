@@ -1,8 +1,8 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import { PageHeader, Card, KPICard, Badge } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { PageHeader, Card, KPICard, Badge } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import { TrendingUp, DollarSign, Percent, Scale } from "lucide-react";
 
 interface RatiosData {

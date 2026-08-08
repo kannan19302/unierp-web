@@ -11,7 +11,7 @@ import {
   RefreshCw,
   Layers,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface DiagnosticSensor {
   machineName: string;

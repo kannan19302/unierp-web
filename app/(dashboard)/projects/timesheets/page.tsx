@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Badge, DataTable, type Column, Spinner } from "@unerp/ui";
+import { PageHeader, Badge, DataTable, type Column, Spinner } from "@kannan19302/ui";
 import { Clock } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface TimesheetEntry {
   id: string;

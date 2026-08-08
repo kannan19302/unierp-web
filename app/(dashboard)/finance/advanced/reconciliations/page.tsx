@@ -2,10 +2,10 @@
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@kannan19302/ui";
 import { GitCompare, Link2, Unlink, FileText } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 interface BankAccount {
   id: string;

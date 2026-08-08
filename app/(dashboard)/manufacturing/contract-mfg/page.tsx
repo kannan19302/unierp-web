@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@kannan19302/ui";
 import {
   Factory,
   Truck,
@@ -9,7 +9,7 @@ import {
   DollarSign,
   ClipboardList,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Dashboard {
   activeManufacturers: number;

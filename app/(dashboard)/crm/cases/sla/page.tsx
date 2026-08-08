@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import { Card, PageHeader, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge } from "@kannan19302/ui";
 import { Calendar, Clock, BarChart3, AlertCircle } from "lucide-react";
 import { apiGet } from "../../_components/api";
 

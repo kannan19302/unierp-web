@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs, ChangeHistory, ProtectedComponent } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs, ChangeHistory, ProtectedComponent } from "@kannan19302/ui";
 import {
   Plus,
   Trash2,
@@ -13,7 +13,7 @@ import {
   History,
   ArrowUpCircle,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface CorporateCard {
   id: string;

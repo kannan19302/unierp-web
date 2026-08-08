@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column, type SortOrder } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column, type SortOrder } from "@kannan19302/ui";
 import {
   Plus,
   X,
@@ -15,7 +15,7 @@ import {
   Layers,
   Trash2,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 
 interface Territory {
   id: string;

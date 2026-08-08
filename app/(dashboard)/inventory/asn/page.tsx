@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, Table, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable } from "@kannan19302/ui";
 import { AlertCircle, Truck, CheckCircle, Plus, Package } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 const STATUS_COLORS: Record<
@@ -397,7 +397,7 @@ export default function AsnPage() {
                             { key: "col_2", header: "Received" , render: (item: any) => (<>{item.receivedQty}</>) },
                             { key: "col_3", header: "UOM" , render: (item: any) => (<>{item.uom}</>) },
                           ];
-                                  return <DataTable columns={columns} data={selectedAsn.lineItems} rowKey={(item: any) => item.id} />;
+                                  return <DataTable columns={columns} data={selectedAsn.lineItems || []} rowKey={(item: any) => item.id} />;
                               })()}</>
             </Card>
             {["ARRIVED", "RECEIVING"].includes(selectedAsn.status) && (

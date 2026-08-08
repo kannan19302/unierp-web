@@ -4,7 +4,7 @@ import styles from "./EmailServerTab.module.css";
 
 import React, { useState, useEffect } from "react";
 import { CheckCircle, RefreshCw, AlertCircle, Play } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 export default function EmailServerTab() {
   const client = useApiClient();
@@ -14,7 +14,7 @@ export default function EmailServerTab() {
     username: "",
     password: "",
     secure: false,
-    senderEmail: "noreply@unerp.dev",
+    senderEmail: "noreply@kannan19302.dev",
     senderName: "UniERP System",
     isActive: true,
   });

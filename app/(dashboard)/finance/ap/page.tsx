@@ -14,14 +14,14 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
-import { FormView, ListView, RouteGuard, useApiClient } from "@unerp/framework";
+import { FormView, ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   debitNoteResource,
   vendorBillPaymentResource,
   vendorBillResource,
 } from "@/modules/finance";
 import { vendorResource } from "@/modules/crm";
-import { Card, Modal, PageHeader, useToast } from "@unerp/ui";
+import { Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
 
 import PaymentBatchesPage from "../advanced/payment-batches/page";
 import PaymentTermsPage from "../advanced/payment-terms/page";

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, DataTable, Badge, Spinner, type Column } from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, type Column } from "@kannan19302/ui";
 import { Trash2 } from "lucide-react";
 
 interface PushSub {

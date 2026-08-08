@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import styles from "./page.module.css";
 import { useParams, useRouter } from "next/navigation";
-import { Card, Button, Modal, Badge, ChangeHistory, useToast } from "@unerp/ui";
+import { Card, Button, Modal, Badge, ChangeHistory, useToast } from "@kannan19302/ui";
 import {
   Clock,
   AlertTriangle,
@@ -16,7 +16,7 @@ import {
   FormView,
   RouteGuard,
   useApiClient,
-} from "@unerp/framework";
+} from "@kannan19302/framework";
 import { caseResource } from "@/modules/crm";
 
 function TimeLeft({

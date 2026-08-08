@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { PageHeader, Card, DataTable, type Column, Button, Badge, KPICard, Spinner } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { PageHeader, Card, DataTable, type Column, Button, Badge, KPICard, Spinner } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import { Globe, RefreshCw, Search } from "lucide-react";
 
 interface GlobalInventoryView {

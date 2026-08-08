@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { Plus, AlertCircle, ShieldAlert } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 

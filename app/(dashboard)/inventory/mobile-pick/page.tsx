@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Card, PageHeader, Button, Badge, Input } from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, Input } from "@kannan19302/ui";
 import {
   AlertCircle,
   CheckCircle2,
@@ -9,7 +9,7 @@ import {
   ScanLine,
   X,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 interface PickWaveItem {

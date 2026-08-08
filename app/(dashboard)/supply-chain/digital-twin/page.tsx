@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, FormField, TextField, Select, Spinner, Pagination, StatusBadge } from "@unerp/ui";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, FormField, TextField, Select, Spinner, Pagination, StatusBadge } from "@kannan19302/ui";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import { Cpu, GitCompare, BarChart3, Plus } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 const SUB_TABS: SubTab[] = [
   {

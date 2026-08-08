@@ -9,7 +9,7 @@ import {
   Plus,
   Sparkles,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface Project {
   id: string;

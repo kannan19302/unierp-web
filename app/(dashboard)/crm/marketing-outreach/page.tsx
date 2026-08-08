@@ -2,9 +2,9 @@
 
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PageHeader, Tabs, Spinner } from "@unerp/ui";
+import { PageHeader, Tabs, Spinner } from "@kannan19302/ui";
 import { Target, FileText, Zap, Mail } from "lucide-react";
-import { RouteGuard } from "@unerp/framework";
+import { RouteGuard } from "@kannan19302/framework";
 import CampaignsTab from "./CampaignsTab";
 import WebFormsTab from "./WebFormsTab";
 import SequencesTab from "./SequencesTab";

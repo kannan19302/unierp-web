@@ -1,4 +1,4 @@
-import { DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useToast } from "@/components/builder/ToastProvider";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface BuilderModule {
   id: string;

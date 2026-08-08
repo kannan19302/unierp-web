@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn, Table, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn, DataTable } from "@kannan19302/ui";
 import {
   Plus,
   Search,
@@ -13,7 +13,7 @@ import {
   RotateCcw,
   AlertCircle,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface SalesReturn {
   id: string;
@@ -476,7 +476,7 @@ export default function SalesReturnsPage() {
                                                                                                 minimumFractionDigits: 2,
                                                                                               })}</>) },
                                                           ];
-                                                                  return <DataTable columns={columns} data={lineItems} rowKey={(item: any) => index} />;
+                                                                  return <DataTable columns={columns} data={lineItems} rowKey={(item: any, index: number) => String(index)} />;
                                                               })()}</>
                       </div>
                     )}

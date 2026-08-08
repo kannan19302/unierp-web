@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Input } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Input } from "@kannan19302/ui";
 import { Shield, Search, RotateCw } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 

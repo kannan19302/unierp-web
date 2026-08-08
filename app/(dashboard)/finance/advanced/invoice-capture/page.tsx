@@ -20,8 +20,8 @@ import {
   FileUp,
   Loader2,
 } from "lucide-react";
-import { Card, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface APInvoiceCapture {
   id: string;

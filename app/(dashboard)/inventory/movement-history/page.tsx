@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { Card, PageHeader, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Button, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { Search, Printer } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 interface Movement {

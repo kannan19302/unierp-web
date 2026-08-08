@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge } from "@kannan19302/ui";
 import {
   Calculator,
   DollarSign,

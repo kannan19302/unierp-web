@@ -3,7 +3,7 @@ import "../../landing.css";
 import React, { useEffect, useRef, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Spinner } from "@unerp/ui";
+import { Spinner } from "@kannan19302/ui";
 import {
   AlertCircle,
   CheckCircle2,

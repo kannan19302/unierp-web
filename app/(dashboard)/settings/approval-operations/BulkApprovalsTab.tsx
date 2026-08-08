@@ -2,7 +2,7 @@
 import styles from "./BulkApprovalsTab.module.css";
 import React, { useState } from "react";
 import { Clock, CheckCircle, XCircle } from "lucide-react";
-import { ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 
 interface PendingApproval {
   id: string;

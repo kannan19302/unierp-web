@@ -1,4 +1,4 @@
-import { Table, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
@@ -16,8 +16,8 @@ import {
   Trash2,
   RotateCcw,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 interface DocSearchResult {
   id: string;

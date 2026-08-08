@@ -1,8 +1,8 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import {
   Layers,
   Users,

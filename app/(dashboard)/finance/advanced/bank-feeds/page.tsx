@@ -2,8 +2,8 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, StatusBadge } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, PageHeader, Button, StatusBadge } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   RefreshCw,
   Plus,

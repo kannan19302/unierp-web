@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Badge, Card, PageHeader, Spinner, Button, useToast } from "@unerp/ui";
+import { Badge, Card, PageHeader, Spinner, Button, useToast } from "@kannan19302/ui";
 import { ArrowLeft } from "lucide-react";
 
 export default function CpqPricingRuleDetailPage() {

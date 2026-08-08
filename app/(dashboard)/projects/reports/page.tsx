@@ -1,6 +1,6 @@
 "use client";
 
-import { PageHeader, Card } from "@unerp/ui";
+import { PageHeader, Card } from "@kannan19302/ui";
 import {
   BarChart3,
   TrendingUp,
@@ -9,7 +9,7 @@ import {
   Activity,
   LineChart,
 } from "lucide-react";
-import { RouteGuard } from "@unerp/framework";
+import { RouteGuard } from "@kannan19302/framework";
 import Link from "next/link";
 import styles from "./page.module.css";
 

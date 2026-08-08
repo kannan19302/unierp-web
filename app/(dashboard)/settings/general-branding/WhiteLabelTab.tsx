@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { Save, Upload, Smartphone, PaintBucket } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./WhiteLabelTab.module.css";
 
 const API_BASE = "/admin/platform";

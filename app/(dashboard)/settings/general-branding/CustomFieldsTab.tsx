@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Button, Modal, FormField, Select, TextField, Textarea, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Button, Modal, FormField, Select, TextField, Textarea, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   Settings2,
   Plus,
@@ -13,7 +13,7 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./CustomFieldsTab.module.css";
 
 const ENTITY_TYPES = [

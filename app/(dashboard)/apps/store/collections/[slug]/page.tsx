@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Card, Badge, Button, useToast } from "@unerp/ui";
+import { Card, Badge, Button, useToast } from "@kannan19302/ui";
 import {
   ArrowLeft,
   Download,
@@ -12,7 +12,7 @@ import {
   Shield,
   Loader2,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface CollectionApp {
   id: string;

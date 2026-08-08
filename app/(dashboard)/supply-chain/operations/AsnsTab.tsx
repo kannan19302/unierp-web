@@ -1,8 +1,8 @@
 "use client";
 import styles from "./operations.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, Drawer, Spinner, Table } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, Drawer, Spinner } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   ClipboardList,
   Plus,

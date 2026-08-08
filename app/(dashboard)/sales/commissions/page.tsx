@@ -2,7 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, DataTable, Modal, StatCardRow, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable, Modal, StatCardRow, type Column } from "@kannan19302/ui";
 import {
   Plus,
   DollarSign,
@@ -13,7 +13,7 @@ import {
   AlertCircle,
   Award,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface CommissionPlan {
   id: string;

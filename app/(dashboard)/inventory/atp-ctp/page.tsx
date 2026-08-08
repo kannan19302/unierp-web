@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
-import { PageHeader, Button, StatusBadge, DataTable, StatCardRow, Modal, Pagination, type Column } from "@unerp/ui";
+import { PageHeader, Button, StatusBadge, DataTable, StatCardRow, Modal, Pagination, type Column } from "@kannan19302/ui";
 import {
   Package as InventoryModuleIcon,
   BarChart3,
@@ -10,7 +10,7 @@ import {
   Play,
   AlertCircle,
 } from "lucide-react";
-import { RouteGuard } from "@unerp/framework";
+import { RouteGuard } from "@kannan19302/framework";
 
 import { apiGet, apiPost } from "../../../../src/lib/api";
 

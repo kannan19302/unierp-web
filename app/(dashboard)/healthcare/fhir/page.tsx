@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React from "react";
-import { PageHeader, Card, Badge, KPICard } from "@unerp/ui";
+import { PageHeader, Card, Badge, KPICard } from "@kannan19302/ui";
 import { Globe, Database, ExternalLink, Shield, Activity } from "lucide-react";
 
 export default function FHIRIntegrationPage() {

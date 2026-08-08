@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { ShieldCheck, Plus, Trash, Check, X } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Product {
   id: string;
@@ -74,7 +74,7 @@ export default function QualityManagement() {
     status: "PASSED",
     inspectedQty: "10",
     passedQty: "10",
-    inspectedBy: "admin@unerp.dev",
+    inspectedBy: "admin@kannan19302.dev",
   });
   const [inspectChecklist, setInspectChecklist] = useState<any[]>([
     {

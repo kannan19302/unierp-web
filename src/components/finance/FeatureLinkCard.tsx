@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronRight, type LucideIcon } from "lucide-react";
-import { Card } from "@unerp/ui";
+import { Card } from "@kannan19302/ui";
 
 interface FeatureLinkCardProps {
   icon: LucideIcon;

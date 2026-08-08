@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   TrendingUp,
   DollarSign,
@@ -15,7 +15,7 @@ import {
   Trash2,
   FileText,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface SavedReport {

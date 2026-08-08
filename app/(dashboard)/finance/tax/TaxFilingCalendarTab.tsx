@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useApiClient } from "@unerp/framework";
-import { Card, Button, Badge, DataTable } from "@unerp/ui";
+import { useApiClient } from "@kannan19302/framework";
+import { Card, Button, Badge, DataTable } from "@kannan19302/ui";
 import {
   Calendar,
   AlertCircle,

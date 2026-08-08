@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 
 import { SubTabBar } from "@/components/finance/SubTabBar";
-import { ListView, RouteGuard, useApiClient } from "@unerp/framework";
+import { ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import { bankAccountResource } from "@/modules/finance";
-import { Card, PageHeader, useToast } from "@unerp/ui";
+import { Card, PageHeader, useToast } from "@kannan19302/ui";
 
 import ReconciliationsPage from "../advanced/reconciliations/page";
 import BankFeedsPage from "../advanced/bank-feeds/page";

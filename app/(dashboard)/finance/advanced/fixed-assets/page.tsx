@@ -16,7 +16,7 @@ import {
   Eye,
   ArrowRight,
 } from "lucide-react";
-import { Card, Button, ListPageTemplate, type ListColumn, Modal } from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, Modal } from "@kannan19302/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface FixedAsset {

@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, TextField, FormField, Select, KPICard } from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, TextField, FormField, Select, KPICard } from "@kannan19302/ui";
 import { DollarSign, CreditCard, CheckCircle } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface StudentFee {
   id: string;

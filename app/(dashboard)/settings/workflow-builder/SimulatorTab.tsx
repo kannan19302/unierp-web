@@ -4,7 +4,7 @@ import styles from "./SimulatorTab.module.css";
 
 import React, { useState } from "react";
 import { GitFork, Activity, Play } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface SimulationStep {
   stepOrder: number;

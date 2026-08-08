@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Card, Button, Spinner } from "@unerp/ui";
+import { Card, Button, Spinner } from "@kannan19302/ui";
 import { LogIn, AlertCircle } from "lucide-react";
 import {
   portalPost,

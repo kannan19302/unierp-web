@@ -1,8 +1,8 @@
 "use client";
 import styles from "./page.module.css";
 import { useState, useEffect, useCallback } from "react";
-import { ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
 const BASE = "/api/inventory/vmi";

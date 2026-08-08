@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, Spinner, Table, DataTable } from "@unerp/ui";
+import { Button, Spinner, DataTable } from "@kannan19302/ui";
 import { Modal, inputStyle, labelStyle } from "./Modal";
 import { apiGet, apiSend } from "./api";
 import styles from "./DuplicatesFinder.module.css";

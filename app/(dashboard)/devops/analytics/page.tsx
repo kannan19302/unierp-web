@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, KPICard, Spinner, DataTable, type Column } from "@unerp/ui";
+import { Card, KPICard, Spinner, DataTable, type Column } from "@kannan19302/ui";
 import {
   BarChart3,
   TrendingUp,

@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { BookOpen, Plus, X, Loader2 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
-import { Card, Button, Table, DataTable } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
+import { Card, Button, DataTable } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 
 interface BiMetric {
   id: string;

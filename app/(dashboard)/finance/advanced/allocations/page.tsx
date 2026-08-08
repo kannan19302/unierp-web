@@ -15,8 +15,8 @@ import {
   Info,
   Settings,
 } from "lucide-react";
-import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import { apiGet, apiPost, apiPatch, apiDelete } from "@/lib/api";
 
 interface Account {

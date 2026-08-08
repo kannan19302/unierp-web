@@ -419,8 +419,8 @@ export default function TermsOfServicePage() {
               <Mail size={20} className={styles.s27} />
               <div>
                 <span className={styles.s24}>Compliance Operations</span>
-                <a href="mailto:legal@unerp.dev" className={styles.s25}>
-                  legal@unerp.dev
+                <a href="mailto:legal@kannan19302.dev" className={styles.s25}>
+                  legal@kannan19302.dev
                 </a>
               </div>
             </div>

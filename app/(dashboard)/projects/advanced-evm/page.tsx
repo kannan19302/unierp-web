@@ -8,9 +8,9 @@ import {
   DollarSign,
   Activity,
 } from "lucide-react";
-import { Card, PageHeader, Button, Spinner, StatCardRow, useToast } from "@unerp/ui";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
-import { useApiClient } from "@unerp/framework";
+import { Card, PageHeader, Button, Spinner, StatCardRow, useToast } from "@kannan19302/ui";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
+import { useApiClient } from "@kannan19302/framework";
 
 const SUB_TABS: SubTab[] = [
   { id: "kpi", label: "KPI", href: "/projects/advanced-evm?tab=kpi" },

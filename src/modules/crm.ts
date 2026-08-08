@@ -1,4 +1,4 @@
-import { defineModule, defineResource } from "@unerp/framework";
+import { defineModule, defineResource } from "@kannan19302/framework";
 
 // ─────────────────────────────────────────────────
 // CRM module definition — Phase 2 framework

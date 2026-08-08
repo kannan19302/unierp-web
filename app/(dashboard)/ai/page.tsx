@@ -15,8 +15,8 @@ import {
   Copy,
   Check,
 } from "lucide-react";
-import { Card, Button, Badge } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, Badge } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 type Mode = "chat" | "invoice" | "email" | "form" | "workflow";
 

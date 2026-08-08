@@ -11,8 +11,8 @@ import {
   Search,
   Sparkles,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 interface ReportWidget {
   id: string;
@@ -86,7 +86,7 @@ export default function AdvancedReportingPage() {
         queryConfig: JSON.stringify({ filter: "all" }),
         isScheduled: true,
         scheduleCron: "0 8 * * 1",
-        recipientEmails: "admin@unerp.dev",
+        recipientEmails: "admin@kannan19302.dev",
       });
       loadData();
     } catch {

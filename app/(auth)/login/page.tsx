@@ -4,7 +4,7 @@ import "../../landing.css";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Spinner } from "@unerp/ui";
+import { Spinner } from "@kannan19302/ui";
 import {
   Shield,
   Lock,
@@ -983,7 +983,7 @@ export default function LoginPage() {
               >
                 <div className={styles.s36}>
                   <span className={styles.s37}>Super Admin</span>
-                  <span className={styles.s38}>admin@unerp.dev</span>
+                  <span className={styles.s38}>admin@kannan19302.dev</span>
                 </div>
                 <span className={styles.s39}>
                   Full administration permission keys (*).

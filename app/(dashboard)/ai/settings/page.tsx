@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Badge, Button, Spinner } from "@unerp/ui";
+import { PageHeader, Card, Badge, Button, Spinner } from "@kannan19302/ui";
 import {
   ToggleLeft,
   ToggleRight,
@@ -10,7 +10,7 @@ import {
   Cpu,
   Globe,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface AiConfig {
   enabled: boolean;

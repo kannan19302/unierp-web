@@ -95,8 +95,8 @@ import {
   TicketPercent,
 } from "lucide-react";
 import type { SidebarItem } from "./types";
-import { getModuleDescriptor } from "@unerp/shared/module-registry";
-import type { NavItem as DescriptorNavItem } from "@unerp/shared/module-registry";
+import { getModuleDescriptor } from "@kannan19302/shared/module-registry";
+import type { NavItem as DescriptorNavItem } from "@kannan19302/shared/module-registry";
 import { resolveIcon } from "./iconMap";
 import "./descriptors";
 
@@ -142,7 +142,7 @@ function toSidebarItems(items: DescriptorNavItem[]): SidebarItem[] {
  * unchanged. The return type is `ModuleNav`.
  *
  * Resolution order: the data-driven `AppModuleDescriptor` registry
- * (`@unerp/shared/module-registry`) is tried first; any module not yet
+ * (`@kannan19302/shared/module-registry`) is tried first; any module not yet
  * migrated off the legacy branch chain below falls back to its hardcoded
  * branch exactly as before.
  */

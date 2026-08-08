@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn, StatCardRow, FormField, Input, Select } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar } from "@unerp/ui/layout";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn, StatCardRow, FormField, Input, Select } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar } from "@kannan19302/ui/layout";
 import { useSearchParams } from "next/navigation";
 
 import { Package as InventoryModuleIcon } from "lucide-react";

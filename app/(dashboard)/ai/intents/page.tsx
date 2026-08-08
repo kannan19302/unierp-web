@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Tag, Plus, X, Search, Loader2 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
-import { Card, Button } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
+import { Card, Button } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 
 interface IntentExample {
   id: string;

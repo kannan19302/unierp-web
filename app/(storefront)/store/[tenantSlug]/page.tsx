@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, Button, Badge, Spinner } from "@unerp/ui";
+import { Card, Button, Badge, Spinner } from "@kannan19302/ui";
 import { ShoppingCart, Store, PackageX } from "lucide-react";
 import {
   storefrontGet,

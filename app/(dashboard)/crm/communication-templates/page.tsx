@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent } from "@kannan19302/ui";
 import {
   Plus,
   Edit3,

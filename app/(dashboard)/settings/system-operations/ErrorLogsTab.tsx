@@ -9,7 +9,7 @@ import {
   Info,
   CheckCircle,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./ErrorLogsTab.module.css";
 
 interface LogEntry {

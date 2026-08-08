@@ -14,10 +14,10 @@ import {
   ShieldCheck,
   TrendingUp,
 } from "lucide-react";
-import { Card, PageHeader, Button, Spinner, DashboardChart, ViewSwitcher, StatCardRow } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, DashboardChart, ViewSwitcher, StatCardRow } from "@kannan19302/ui";
 
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import type { ModuleTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import type { ModuleTab } from "@kannan19302/ui/layout";
 
 const MANUFACTURING_TABS: ModuleTab[] = [
   {

@@ -1,4 +1,4 @@
-import { registerModule } from "@unerp/shared/module-registry";
+import { registerModule } from "@kannan19302/shared/module-registry";
 
 registerModule({
   slug: "pos",

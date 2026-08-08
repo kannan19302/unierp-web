@@ -2,8 +2,8 @@
 import styles from "./FeatureFlagsTab.module.css";
 import React, { useState, useEffect } from "react";
 import { ToggleLeft, ToggleRight, RefreshCw, CheckCircle } from "lucide-react";
-import { ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 
 interface FeatureFlag {
   key: string;

@@ -10,7 +10,7 @@ import {
   ShieldAlert,
   ArrowDownUp,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface BOMItem {
   id: string;
@@ -173,7 +173,7 @@ export default function BOMsPage() {
     try {
       await client.post("/manufacturing/ecos", {
         ...newECO,
-        requestedBy: "admin@unerp.dev",
+        requestedBy: "admin@kannan19302.dev",
       });
       setIsECOModalOpen(false);
       fetchData();

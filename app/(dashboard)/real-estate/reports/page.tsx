@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { PageHeader, KPICard, DashboardChart } from "@unerp/ui";
+import { PageHeader, KPICard, DashboardChart } from "@kannan19302/ui";
 import { Building2, DollarSign, Wrench, TrendingUp } from "lucide-react";
 const OCCUPANCY = [
   { name: "Q1", rate: 88 },

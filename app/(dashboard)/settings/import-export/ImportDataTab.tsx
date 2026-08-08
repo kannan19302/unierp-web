@@ -1,9 +1,9 @@
 "use client";
 import styles from "./ImportDataTab.module.css";
 import React, { useState, useCallback } from "react";
-import { Card, Button, Spinner, Badge, Stepper, FormField, Select, DataTable, type Column } from "@unerp/ui";
+import { Card, Button, Spinner, Badge, Stepper, FormField, Select, DataTable, type Column } from "@kannan19302/ui";
 import { Upload, CheckCircle, XCircle, ArrowRight } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface ValidationError {
   row: number;

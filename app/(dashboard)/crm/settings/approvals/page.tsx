@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   Plus,
   X,
@@ -14,7 +14,7 @@ import {
   Search,
   Shield,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 
 const APPROVAL_ENTITIES = [
   "QUOTATION",

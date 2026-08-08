@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Card, Modal, PageHeader, Button, Spinner, useToast } from "@unerp/ui";
-import { ListView, FormView, RouteGuard, useApiClient } from "@unerp/framework";
-import { DashboardChart } from "@unerp/ui/charts";
+import { Card, Modal, PageHeader, Button, Spinner, useToast } from "@kannan19302/ui";
+import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
+import { DashboardChart } from "@kannan19302/ui/charts";
 import { invoiceResource } from "@/modules/finance";
 import { MultiPageDashboard } from "@/components/dashboard/MultiPageDashboard";
 import {

@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { Activity, Plus, X, TrendingUp, TrendingDown } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface KpiValue {
   id: string;

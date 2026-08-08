@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, PageHeader, Button, Spinner, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge } from "@kannan19302/ui";
 import {
   Award,
   AlertCircle,
@@ -19,7 +19,7 @@ import {
   ShoppingBag,
   DollarSign,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Scorecard {
   vendorId: string;

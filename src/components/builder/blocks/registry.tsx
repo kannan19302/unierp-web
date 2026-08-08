@@ -7,7 +7,7 @@ import {
   HowItWorksBlock,
   PricingBlock,
   FaqBlock,
-} from "@unerp/ui";
+} from "@kannan19302/ui";
 import { CollectionBlock } from "./CollectionBlock";
 import {
   RichTextBlock,

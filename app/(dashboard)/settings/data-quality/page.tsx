@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
+import { ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
 import {
   SearchCheck,
   Loader2,
@@ -13,7 +13,7 @@ import {
   CheckCircle,
   AlertTriangle,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface DuplicateRecord {
   id: string;

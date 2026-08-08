@@ -1,4 +1,4 @@
-import { defineModule, defineResource } from "@unerp/framework";
+import { defineModule, defineResource } from "@kannan19302/framework";
 
 export const fixedAssetsEntity1Resource = defineResource({
   name: "fixed-assets-entity-1",

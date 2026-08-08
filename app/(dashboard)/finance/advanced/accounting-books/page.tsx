@@ -13,8 +13,8 @@ import {
   HelpCircle,
   AlertCircle,
 } from "lucide-react";
-import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface AccountingBook {
   id: string;

@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, Button, Modal, Badge, ListPageTemplate, type ListColumn, ChangeHistory, useToast } from "@unerp/ui";
+import { Card, Button, Modal, Badge, ListPageTemplate, type ListColumn, ChangeHistory, useToast } from "@kannan19302/ui";
 import {
   ArrowLeft,
   RefreshCw,
@@ -16,7 +16,7 @@ import {
   FormView,
   RouteGuard,
   useApiClient,
-} from "@unerp/framework";
+} from "@kannan19302/framework";
 import { vendorResource } from "@/modules/crm";
 
 export default function VendorDetailPage() {

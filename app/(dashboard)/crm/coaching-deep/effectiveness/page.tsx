@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, DataTable, type Column } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, DataTable, type Column } from "@kannan19302/ui";
 import { TrendingUp, ArrowLeft } from "lucide-react";
 import { apiGet, ApiRequestError } from "../../../../../src/lib/api";
 import { useRouter } from "next/navigation";

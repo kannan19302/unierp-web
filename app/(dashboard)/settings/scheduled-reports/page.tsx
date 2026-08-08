@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   FileText,
   Plus,
@@ -12,7 +12,7 @@ import {
   Clock,
   CheckCircle,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 /* ------------------------------------------------------------------ */

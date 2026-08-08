@@ -1,4 +1,4 @@
-import { defineModule, defineResource } from "@unerp/framework";
+import { defineModule, defineResource } from "@kannan19302/framework";
 
 export const blockchainEntity1Resource = defineResource({
   name: "blockchain-entity-1",

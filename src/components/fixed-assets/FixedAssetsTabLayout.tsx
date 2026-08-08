@@ -11,14 +11,14 @@ import {
   ClipboardCheck,
   Repeat,
 } from "lucide-react";
-import type { ModuleTab } from "@unerp/ui/layout";
+import type { ModuleTab } from "@kannan19302/ui/layout";
 export {
   ModuleTabLayout as FixedAssetsTabLayout,
   type ModuleTab as FixedAssetsTab,
   type ModuleTabLayoutProps as FixedAssetsTabLayoutProps,
   SubTabBar,
   type SubTab,
-} from "@unerp/ui/layout";
+} from "@kannan19302/ui/layout";
 
 export const FIXED_ASSETS_TABS: ModuleTab[] = [
   {

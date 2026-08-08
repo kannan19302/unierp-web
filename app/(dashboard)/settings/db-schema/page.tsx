@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
+import { ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
 import { Database, Search, RefreshCw, Layers } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface DbTableMetadata {
   tableName: string;

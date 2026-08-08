@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button, DataTable, Badge, Card, Spinner, Input, type Column } from "@unerp/ui";
+import { Button, DataTable, Badge, Card, Spinner, Input, type Column } from "@kannan19302/ui";
 
 interface ServiceTicket {
   id: string;

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Select, FormField, Badge, StatusBadge, Spinner, Pagination } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Select, FormField, Badge, StatusBadge, Spinner, Pagination } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import { Plus, Search, Zap } from "lucide-react";
 import Link from "next/link";
 

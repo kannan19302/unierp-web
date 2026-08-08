@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { Card, PageHeader, Spinner, DashboardChart, ViewSwitcher, KanbanBoard, StatCardRow, ListPageTemplate, type ListColumn, type ViewMode, type KanbanColumn, type KanbanItem } from "@unerp/ui";
+import { Card, PageHeader, Spinner, DashboardChart, ViewSwitcher, KanbanBoard, StatCardRow, ListPageTemplate, type ListColumn, type ViewMode, type KanbanColumn, type KanbanItem } from "@kannan19302/ui";
 import {
   ClipboardList,
   FileText,
@@ -17,7 +17,7 @@ import {
   ArrowRight,
   ShieldAlert,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface SalesOrder extends KanbanItem {
   orderNumber: string;

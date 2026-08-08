@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, StatusBadge, Spinner, ProtectedComponent, useToast, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Button, StatusBadge, Spinner, ProtectedComponent, useToast, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { Search, UserPlus, Ban, RotateCcw, Copy } from "lucide-react";
 import {
   apiGet,

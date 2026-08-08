@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import {
+import { 
   Plus,
   Eye,
   Play,
@@ -15,7 +15,7 @@ import {
   Percent,
   Search,
 } from "lucide-react";
-import { Card, Button, Badge, DataTable, PageHeader, Spinner, ConfirmDialog, KPICard } from "@unerp/ui";
+import { Card, Button, Badge, DataTable, PageHeader, Spinner, ConfirmDialog, KPICard } from "@kannan19302/ui";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 
 interface Subscription {

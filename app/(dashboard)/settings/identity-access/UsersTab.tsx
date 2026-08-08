@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Pagination, Drawer, ConfirmDialog, ProtectedComponent } from "@unerp/ui";
+import { Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Pagination, Drawer, ConfirmDialog, ProtectedComponent } from "@kannan19302/ui";
 import {
   UserPlus,
   Search,
@@ -16,7 +16,7 @@ import {
   Shield,
   Download,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./UsersTab.module.css";
 
 interface UserData {

@@ -2,7 +2,7 @@
 import styles from "./LoginPageTab.module.css";
 import React, { useState, useEffect } from "react";
 import { CheckCircle } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 export default function LoginPageTab() {
   const client = useApiClient();

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner, Table } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@kannan19302/ui";
 import {
   CalendarClock,
   Play,
@@ -10,7 +10,7 @@ import {
   Layers,
   Search,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface Workstation {
@@ -293,7 +293,7 @@ export default function SchedulingPage() {
                             { key: "col_2", header: "Unit Cost" , render: (item: any) => (<>{fmtCurrency(item.unitCost)}</>) },
                             { key: "col_3", header: "Total" , render: (item: any) => (<>{fmtCurrency(item.totalCost)}</>) },
                           ];
-                                  return <DataTable columns={columns} data={bomCost.itemCosts} rowKey={(item: any) => i} />;
+                                  return <DataTable columns={columns} data={bomCost.itemCosts} rowKey={(item: any, i: number) => String(i)} />;
                               })()}</>
             </div>
           )}

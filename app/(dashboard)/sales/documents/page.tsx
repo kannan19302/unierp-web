@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { Card, PageHeader, Spinner, useToast, Badge, DataTable } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 
 export default function SalesDocumentsPage() {
   const client = useApiClient();

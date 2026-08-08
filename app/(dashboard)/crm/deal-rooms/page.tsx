@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@kannan19302/ui";
 import { DoorOpen, Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { apiGet, apiPost, ApiRequestError } from "../../../../src/lib/api";

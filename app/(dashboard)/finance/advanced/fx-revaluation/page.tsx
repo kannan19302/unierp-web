@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   Loader2,
   RefreshCw,
@@ -15,7 +15,7 @@ import {
   FileText,
   CheckCircle2,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface FxRevaluationDetail {
   id: string;

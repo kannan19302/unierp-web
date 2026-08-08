@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { PageHeader, KPICard, DashboardChart } from "@unerp/ui";
+import { PageHeader, KPICard, DashboardChart } from "@kannan19302/ui";
 import { ClipboardList, Clock, Users, ShieldAlert } from "lucide-react";
-import { RouteGuard } from "@unerp/framework";
+import { RouteGuard } from "@kannan19302/framework";
 const FIXED_RATE = [
   { name: "Jan", rate: 82 },
   { name: "Feb", rate: 85 },

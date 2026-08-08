@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import { Card, PageHeader, Spinner, Button, Badge, useToast, DataTable, type Column, type SortOrder } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, useToast, DataTable, type Column, type SortOrder } from "@kannan19302/ui";
 import {
   CheckCircle,
   XCircle,
@@ -13,7 +13,7 @@ import {
   Search,
   Filter,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface ApprovalRequest {
   id: string;

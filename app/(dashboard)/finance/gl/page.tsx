@@ -17,9 +17,9 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
-import { ListView, RouteGuard, useApiClient } from "@unerp/framework";
+import { ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import { accountResource, journalResource } from "@/modules/finance";
-import { Card, PageHeader, useToast } from "@unerp/ui";
+import { Card, PageHeader, useToast } from "@kannan19302/ui";
 
 import FinancialPeriodsPage from "../advanced/financial-periods/page";
 import CloseTasksPage from "../advanced/close-tasks/page";

@@ -4,7 +4,7 @@ import "../../landing.css";
 import React, { useState, useMemo, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Spinner } from "@unerp/ui";
+import { Spinner } from "@kannan19302/ui";
 import {
   Lock,
   ChevronRight,

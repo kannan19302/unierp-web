@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, useToast, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, useToast, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   Mail,
   RefreshCw,

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Trash2, Plus, ArrowLeft } from "lucide-react";
-import { Card, Button, FormField, Input, Select, PageHeader } from "@unerp/ui";
+import { Card, Button, FormField, Input, Select, PageHeader } from "@kannan19302/ui";
 import { apiPost } from "@/lib/api";
 
 interface LineItemForm {

@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { ShieldAlert, AlertTriangle, Plus, CheckCircle, X } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface Risk {
   id: string;

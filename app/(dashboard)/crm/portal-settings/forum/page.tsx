@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@kannan19302/ui";
 import {
   MessageSquare,
   Plus,

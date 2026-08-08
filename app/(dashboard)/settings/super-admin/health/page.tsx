@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Card, PageHeader, Spinner } from "@unerp/ui";
+import { Card, PageHeader, Spinner } from "@kannan19302/ui";
 import { Server, Database, Cpu, RefreshCw } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface HealthData {

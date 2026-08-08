@@ -2,8 +2,8 @@
 
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import { PageHeader, Card, KPICard, DashboardChart } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { PageHeader, Card, KPICard, DashboardChart } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import { DollarSign, TrendingUp, Landmark, Wallet } from "lucide-react";
 
 interface CashAccount {

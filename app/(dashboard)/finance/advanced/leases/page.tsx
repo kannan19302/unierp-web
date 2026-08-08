@@ -10,7 +10,7 @@ import {
   AlertCircle,
   Search,
 } from "lucide-react";
-import { Card, Button, Badge, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
 import { apiGet } from "@/lib/api";
 
 interface Lease {

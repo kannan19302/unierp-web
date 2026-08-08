@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Activity, MapPin, Plus } from "lucide-react";
-import { PageHeader, Button, Card, Spinner, Modal, FormField } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { PageHeader, Button, Card, Spinner, Modal, FormField } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 
 interface JourneyEvent {
   id: string;

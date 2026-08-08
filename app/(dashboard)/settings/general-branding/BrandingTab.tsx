@@ -9,7 +9,7 @@ import {
   X,
   ImagePlus,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import { resizeImageFile } from "../../../../src/lib/imageResize";
 
 /** Logos are stored as a data URI (same convention as the avatar upload) — cap the final payload. */

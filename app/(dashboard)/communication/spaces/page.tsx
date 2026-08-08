@@ -1,8 +1,8 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { Users, Plus, Hash, Search, ArrowRight } from "lucide-react";
 import Link from "next/link";
 

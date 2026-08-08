@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { PageHeader, Button, Card, FormField, Input, Select } from "@unerp/ui";
+import { PageHeader, Button, Card, FormField, Input, Select } from "@kannan19302/ui";
 import { Cpu, Send } from "lucide-react";
 
 export default function MachineTranslationPage() {

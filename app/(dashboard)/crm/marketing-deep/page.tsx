@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PageHeader, Tabs, Spinner, Card, Badge, DataTable } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { PageHeader, Tabs, Spinner, Card, Badge, DataTable } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { BarChart3, Calendar, Target, DollarSign } from "lucide-react";
-import type { Column } from "@unerp/ui";
+import type { Column } from "@kannan19302/ui";
 
 const TAB_KEYS = ["roi", "calendar"] as const;
 type TabKey = (typeof TAB_KEYS)[number];

@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Modal, PageHeader, ProtectedComponent } from "@unerp/ui";
+import { Button, Modal, PageHeader, ProtectedComponent } from "@kannan19302/ui";
 import { Users } from "lucide-react";
-import { ListView, FormView, RouteGuard } from "@unerp/framework";
+import { ListView, FormView, RouteGuard } from "@kannan19302/framework";
 import { leadResource } from "@/modules/crm";
 import { DuplicatesFinder } from "../_components/DuplicatesFinder";
 

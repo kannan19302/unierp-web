@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Percent, Plus, Edit2, Trash2 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, DataTable } from "@unerp/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { useToast, DataTable } from "@kannan19302/ui";
 
 export default function POSDiscountRulesPage() {
   const client = useApiClient();

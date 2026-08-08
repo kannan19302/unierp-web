@@ -1,8 +1,8 @@
 "use client";
 import styles from "./inventory.module.css";
 import React, { useState, useMemo } from "react";
-import { PageHeader, Button, Spinner, StatusBadge, DashboardChart, ViewSwitcher, type ViewMode, Modal, StatCardRow, ListPageTemplate, DetailPageTemplate, type ListColumn, TextField, FormField, Input } from "@unerp/ui";
-import { RouteGuard } from "@unerp/framework";
+import { PageHeader, Button, Spinner, StatusBadge, DashboardChart, ViewSwitcher, type ViewMode, Modal, StatCardRow, ListPageTemplate, DetailPageTemplate, type ListColumn, TextField, FormField, Input } from "@kannan19302/ui";
+import { RouteGuard } from "@kannan19302/framework";
 import {
   useProducts,
   useWarehouses,

@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 import React from "react";
 import Link from "next/link";
-import { Card, PageHeader, StatusBadge } from "@unerp/ui";
+import { Card, PageHeader, StatusBadge } from "@kannan19302/ui";
 import {
   BarChart3,
   PieChart,

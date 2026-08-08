@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./page.module.css";
-import { Card, PageHeader, Button, Spinner, Badge, useToast } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast } from "@kannan19302/ui";
 import { Building2, Search, Link2 } from "lucide-react";
 import { apiGet, apiPut, ApiRequestError } from "../../../../src/lib/api";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Button, Input, Badge, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Button, Input, Badge, DataTable } from "@kannan19302/ui";
 import { Users, TrendingUp, DollarSign, Target } from "lucide-react";
 import { apiGet, apiPost } from "../../_components/api";
 

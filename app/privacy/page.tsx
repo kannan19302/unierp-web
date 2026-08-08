@@ -189,10 +189,10 @@ export default function PrivacyPolicyPage() {
               regime, a Data Processing Addendum (DPA) governing our processor
               obligations is available on request to{" "}
               <a
-                href="mailto:legal@unerp.dev"
+                href="mailto:legal@kannan19302.dev"
                 style={{ color: "var(--color-primary)" }}
               >
-                legal@unerp.dev
+                legal@kannan19302.dev
               </a>
               .
             </p>
@@ -418,8 +418,8 @@ export default function PrivacyPolicyPage() {
               <Mail size={20} className={styles.s25} />
               <div>
                 <span className={styles.s22}>Data Protection Desk</span>
-                <a href="mailto:privacy@unerp.dev" className={styles.s23}>
-                  privacy@unerp.dev
+                <a href="mailto:privacy@kannan19302.dev" className={styles.s23}>
+                  privacy@kannan19302.dev
                 </a>
               </div>
             </div>

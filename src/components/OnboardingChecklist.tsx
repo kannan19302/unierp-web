@@ -12,7 +12,7 @@ import {
   AlertCircle,
   Loader2,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 /**
  * Single source of truth for the onboarding checklist widget — replaces the

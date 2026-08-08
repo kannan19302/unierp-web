@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, KPICard } from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, KPICard } from "@kannan19302/ui";
 import { Pill, Plus, AlertTriangle, Package, Search } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Drug {
   id: string;

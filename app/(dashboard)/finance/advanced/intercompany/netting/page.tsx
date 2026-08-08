@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@kannan19302/ui";
 import {
   Loader2,
   RefreshCw,
@@ -13,7 +13,7 @@ import {
   ArrowRightLeft,
   Info,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface Invoice {
   id: string;

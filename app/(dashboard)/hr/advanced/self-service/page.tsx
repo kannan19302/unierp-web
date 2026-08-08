@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import {
   User,
   Phone,
@@ -11,7 +11,7 @@ import {
   FileText,
   ClipboardList,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface SelfServiceData {

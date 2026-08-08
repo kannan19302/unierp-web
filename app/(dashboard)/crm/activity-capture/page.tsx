@@ -3,9 +3,9 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { PageHeader, Tabs, Spinner, Button, Card } from "@unerp/ui";
+import { PageHeader, Tabs, Spinner, Button, Card } from "@kannan19302/ui";
 import { Activity, Mail, Calendar, Settings, Link2 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 const TAB_KEYS = ["timeline", "settings"] as const;
 type TabKey = (typeof TAB_KEYS)[number];

@@ -14,14 +14,14 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
-import { FormView, ListView, RouteGuard, useApiClient } from "@unerp/framework";
+import { FormView, ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   invoiceResource,
   paymentResource,
   creditNoteResource,
 } from "@/modules/finance";
 import { customerResource } from "@/modules/crm";
-import { Button, Card, Modal, PageHeader, useToast } from "@unerp/ui";
+import { Button, Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
 
 import ArAgingPage from "../advanced/ar-aging/page";
 import ArAutomationPage from "../advanced/ar-automation/page";

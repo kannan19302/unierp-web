@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { PageHeader, KPICard, DashboardChart } from "@unerp/ui";
+import { PageHeader, KPICard, DashboardChart } from "@kannan19302/ui";
 import {
   Users,
   Calendar,

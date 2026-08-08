@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useCallback, useEffect, useState } from "react";
-import { PageHeader, Card, Button, ProtectedComponent, useToast, Spinner, TextField, FormField, Select } from "@unerp/ui";
+import { PageHeader, Card, Button, ProtectedComponent, useToast, Spinner, TextField, FormField, Select } from "@kannan19302/ui";
 import { Store, Save } from "lucide-react";
-import { ApiRequestError, RouteGuard, useApiClient } from "@unerp/framework";
+import { ApiRequestError, RouteGuard, useApiClient } from "@kannan19302/framework";
 
 const MANAGE_PERMISSION = "ecommerce.storefront.manage";
 

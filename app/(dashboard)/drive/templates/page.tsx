@@ -1,4 +1,4 @@
-import { Table, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -11,7 +11,7 @@ import {
   RefreshCw,
   Search,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface GeneratedDocument {

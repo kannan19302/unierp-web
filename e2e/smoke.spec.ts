@@ -9,10 +9,10 @@ import { test, expect, Page } from "@playwright/test";
  *  - any 5xx API response observed while the page loads
  *
  * Requires the dev stack (web:3000, api:3001, seeded DB). Run:
- *   pnpm --filter @unerp/web test:e2e -- smoke
+ *   pnpm --filter @kannan19302/web test:e2e -- smoke
  */
 
-const ADMIN_EMAIL = process.env.E2E_EMAIL || "admin@unerp.dev";
+const ADMIN_EMAIL = process.env.E2E_EMAIL || "admin@kannan19302.dev";
 const ADMIN_PASSWORD = process.env.E2E_PASSWORD || "admin123";
 
 // One representative page per major module surface. Add a route here whenever a

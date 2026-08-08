@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Card, PageHeader } from "@unerp/ui";
+import { Card, PageHeader } from "@kannan19302/ui";
 import {
   Clock,
   Monitor,

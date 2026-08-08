@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, StatusBadge, Button, Spinner, Modal, FormField, Input, Select, Textarea, useToast } from "@unerp/ui";
+import { Card, StatusBadge, Button, Spinner, Modal, FormField, Input, Select, Textarea, useToast } from "@kannan19302/ui";
 import { CheckSquare, Plus, AlertTriangle } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./SurveysTab.module.css";
 
 interface SurveyQuestion {

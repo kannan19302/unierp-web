@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { PageHeader, KPICard, DashboardChart, Card, DataTable, type Column, Spinner, Badge } from "@unerp/ui";
-import { useApiClient } from "@unerp/framework";
+import { PageHeader, KPICard, DashboardChart, Card, DataTable, type Column, Spinner, Badge } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import {
   LayoutDashboard,
   Truck,

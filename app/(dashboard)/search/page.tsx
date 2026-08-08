@@ -2,8 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { Search, Save, Clock, TrendingUp } from "lucide-react";
-import { DataTable, Table } from "@unerp/ui";
-import type { Column, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
+import type { Column, DataTable } from "@kannan19302/ui";
 
 interface SearchResult {
   entity: string;

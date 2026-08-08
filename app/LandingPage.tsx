@@ -28,7 +28,7 @@ import {
   RefreshCw,
   Plus,
 } from "lucide-react";
-import { useTheme, Table, DataTable } from "@unerp/ui";
+import { useTheme, DataTable } from "@kannan19302/ui";
 import "./landing.css";
 
 /* ═══════════════════════════════════════════════════════════════

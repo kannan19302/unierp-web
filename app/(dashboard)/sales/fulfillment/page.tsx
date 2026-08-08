@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, DataTable, type Column } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, DataTable, type Column } from "@kannan19302/ui";
 import {
   Truck,
   AlertTriangle,

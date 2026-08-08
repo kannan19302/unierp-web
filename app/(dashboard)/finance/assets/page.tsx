@@ -9,8 +9,8 @@ import {
   Trash2,
   AlertTriangle,
 } from "lucide-react";
-import { RouteGuard } from "@unerp/framework";
-import { Card, useToast } from "@unerp/ui";
+import { RouteGuard } from "@kannan19302/framework";
+import { Card, useToast } from "@kannan19302/ui";
 import { apiGet } from "@/lib/api";
 
 import FixedAssetsPage from "../advanced/fixed-assets/page";

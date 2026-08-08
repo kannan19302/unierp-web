@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Button, Spinner, DataTable, type Column } from "@unerp/ui";
+import { PageHeader, Button, Spinner, DataTable, type Column } from "@kannan19302/ui";
 import { apiGet } from "@/lib/api";
 import { Plus, Eye } from "lucide-react";
 

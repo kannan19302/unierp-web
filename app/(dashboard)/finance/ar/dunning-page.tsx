@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, PageHeader, DataTable, type Column } from "@unerp/ui";
+import { Card, PageHeader, DataTable, type Column } from "@kannan19302/ui";
 import {
   Bell,
   Layers,

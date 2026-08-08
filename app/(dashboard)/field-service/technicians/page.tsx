@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React from "react";
-import { PageHeader, Card, KPICard } from "@unerp/ui";
+import { PageHeader, Card, KPICard } from "@kannan19302/ui";
 import { Users, Wrench } from "lucide-react";
-import { RouteGuard } from "@unerp/framework";
+import { RouteGuard } from "@kannan19302/framework";
 
 export default function TechniciansPage() {
   const techs = [

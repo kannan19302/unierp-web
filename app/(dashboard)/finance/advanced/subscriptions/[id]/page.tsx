@@ -16,7 +16,7 @@ import {
   Activity,
   Clock,
 } from "lucide-react";
-import { Card, Button, Badge, DataTable, FormField, Input, Spinner, ChangeHistory, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, Button, Badge, DataTable, FormField, Input, Spinner, ChangeHistory, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface SubscriptionLine {

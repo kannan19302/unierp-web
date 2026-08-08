@@ -1,15 +1,15 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Badge, Spinner, Button, Tooltip, Drawer, Disclosure, EmptyState, Table } from "@unerp/ui";
+import { DataTable, PageHeader, Card, Badge, Spinner, Button, Tooltip, Drawer, Disclosure, EmptyState } from "@kannan19302/ui";
 import { Check, X, Minus, Shield, Search, ArrowLeft } from "lucide-react";
 import {
   PERMISSION_REGISTRY,
   getPermissionsByModule,
   getCategoriesForModule,
   getPermissionsByCategory,
-} from "@unerp/shared";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+} from "@kannan19302/shared";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface RoleData {
   id: string;

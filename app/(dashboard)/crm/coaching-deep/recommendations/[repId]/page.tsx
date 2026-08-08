@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast } from "@kannan19302/ui";
 import { Lightbulb, ArrowLeft } from "lucide-react";
 import { apiGet, ApiRequestError } from "../../../../../../src/lib/api";
 import { useParams, useRouter } from "next/navigation";

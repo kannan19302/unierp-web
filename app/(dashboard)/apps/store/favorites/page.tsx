@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Card, Badge, Button } from "@unerp/ui";
+import { Card, Badge, Button } from "@kannan19302/ui";
 import {
   ArrowLeft,
   Heart,
@@ -12,7 +12,7 @@ import {
   Loader2,
   Trash2,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface FavoriteApp {
   id: string;

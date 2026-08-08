@@ -1,7 +1,7 @@
 "use client";
 import styles from "./BattlecardsTab.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, Spinner, Button, Modal, FormField, Input, Textarea } from "@unerp/ui";
+import { Card, Spinner, Button, Modal, FormField, Input, Textarea } from "@kannan19302/ui";
 import {
   Swords,
   Plus,
@@ -12,7 +12,7 @@ import {
   Trophy,
   MessageSquare,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface Battlecard {
   id: string;

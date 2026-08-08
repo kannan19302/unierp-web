@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, Input, Textarea, Select, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, Input, Textarea, Select, type Column } from "@kannan19302/ui";
 import { Sparkles, RefreshCw, Check, Trash2, Edit2 } from "lucide-react";
 import {
   apiGet,

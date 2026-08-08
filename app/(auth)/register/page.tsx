@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Spinner } from "@unerp/ui";
+import { Spinner } from "@kannan19302/ui";
 import {
   Building,
   Lock,

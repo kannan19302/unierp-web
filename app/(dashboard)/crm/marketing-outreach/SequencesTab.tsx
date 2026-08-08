@@ -1,7 +1,7 @@
 "use client";
 import styles from "./SequencesTab.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, Button, Badge, Spinner, Modal, FormField, Input, Textarea, useToast } from "@unerp/ui";
+import { Card, Button, Badge, Spinner, Modal, FormField, Input, Textarea, useToast } from "@kannan19302/ui";
 import {
   Plus,
   Mail,
@@ -13,7 +13,7 @@ import {
   Trash2,
   Search,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface SequenceStep {
   templateId: string;

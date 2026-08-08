@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
-import { Card, PageHeader, Spinner, Button, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button } from "@kannan19302/ui";
 import {
   LayoutDashboard,
   X,
@@ -15,7 +15,7 @@ import {
   Award,
   Activity,
 } from "lucide-react";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface Widget {

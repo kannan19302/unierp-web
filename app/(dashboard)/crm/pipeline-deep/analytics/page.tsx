@@ -1,8 +1,8 @@
-import { DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 
 import { useState, useEffect } from "react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 export default function PipelineAnalyticsPage() {
   const api = useApiClient();

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@kannan19302/ui";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import {
   ShieldCheck,
   AlertTriangle,
@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   FileText,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 const SUB_TABS: SubTab[] = [
   {

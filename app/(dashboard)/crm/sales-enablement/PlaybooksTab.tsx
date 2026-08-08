@@ -1,7 +1,7 @@
 "use client";
 import styles from "./PlaybooksTab.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, StatusBadge, Spinner, Button, Modal, FormField, Input, Textarea } from "@unerp/ui";
+import { Card, StatusBadge, Spinner, Button, Modal, FormField, Input, Textarea } from "@kannan19302/ui";
 import {
   BookOpen,
   Plus,
@@ -12,7 +12,7 @@ import {
   ToggleLeft,
   ToggleRight,
 } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface Playbook {
   id: string;

@@ -1,11 +1,11 @@
-import { Table, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 
 import styles from "./page.module.css";
 
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import {
   Store,
   RotateCcw,

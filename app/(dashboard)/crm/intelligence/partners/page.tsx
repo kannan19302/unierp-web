@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@kannan19302/ui";
 import {
   Users,
   ArrowLeft,
@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface PartnerPerf {

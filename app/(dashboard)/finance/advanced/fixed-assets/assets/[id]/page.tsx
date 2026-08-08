@@ -17,7 +17,7 @@ import {
   User,
   MapPin,
 } from "lucide-react";
-import { Card, Button, ChangeHistory, ProtectedComponent, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, Button, ChangeHistory, ProtectedComponent, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface AssetDepreciation {

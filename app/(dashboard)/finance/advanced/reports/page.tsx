@@ -15,8 +15,8 @@ import {
   BookOpen,
   Clock,
 } from "lucide-react";
-import { Card, Button, StatusBadge, PageHeader, ListPageTemplate, type ListColumn, useToast } from "@unerp/ui";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { Card, Button, StatusBadge, PageHeader, ListPageTemplate, type ListColumn, useToast } from "@kannan19302/ui";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 type ReportType =
   | "pnl"

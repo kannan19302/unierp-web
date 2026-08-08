@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Badge } from "@unerp/ui";
+import { Card, PageHeader, Badge } from "@kannan19302/ui";
 import {
   TrendingUp,
   Users,
@@ -26,8 +26,8 @@ import { useApiQuery } from "../../../src/lib/hooks/useApi";
 import GridLayout, { useContainerWidth, type Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { RouteGuard, useApiClient } from "@unerp/framework";
-import { SubTabBar, type SubTab } from "@unerp/ui/layout";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 import styles from "./page.module.css";
 
 const DASHBOARD_TABS: SubTab[] = [

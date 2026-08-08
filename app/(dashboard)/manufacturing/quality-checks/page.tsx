@@ -1,9 +1,9 @@
-import { Table, DataTable } from "@unerp/ui";
+import { DataTable } from "@kannan19302/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { ClipboardCheck, Plus, X, CheckCircle, XCircle } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 
 interface QCTemplate {
   id: string;

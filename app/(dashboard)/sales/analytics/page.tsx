@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, DataTable, StatCardRow, type Column } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, DataTable, StatCardRow, type Column } from "@kannan19302/ui";
 import {
   BarChart4,
   DollarSign,
@@ -12,7 +12,7 @@ import {
   RefreshCw,
   Download,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface SalesAnalytics {
   periodRevenue: number;

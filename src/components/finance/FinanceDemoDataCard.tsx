@@ -9,7 +9,7 @@ import {
   Sparkles,
   AlertCircle,
 } from "lucide-react";
-import { Card, Badge, Button } from "@unerp/ui";
+import { Card, Badge, Button } from "@kannan19302/ui";
 
 import { api } from "@/lib/api";
 

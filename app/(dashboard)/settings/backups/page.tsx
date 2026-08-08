@@ -1,9 +1,9 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, ProtectedComponent, useToast } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, ProtectedComponent, useToast } from "@kannan19302/ui";
 import { Database, Plus, RefreshCw, ShieldAlert } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface BackupRecord {
   id: string;

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Card, PageHeader, Button, DashboardKPICard } from "@unerp/ui";
+import { Card, PageHeader, Button, DashboardKPICard } from "@kannan19302/ui";
 import {
   Brain,
   TrendingUp,

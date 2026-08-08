@@ -10,7 +10,7 @@ import {
   ArrowLeft,
   RefreshCw,
 } from "lucide-react";
-import { Card, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { apiGet } from "@/lib/api";
 
 interface FixedAsset {

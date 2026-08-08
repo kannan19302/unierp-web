@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { PageHeader, Spinner } from "@unerp/ui";
+import { PageHeader, Spinner } from "@kannan19302/ui";
 import { Edit3, Trash2 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
 interface MilestoneTemplate {

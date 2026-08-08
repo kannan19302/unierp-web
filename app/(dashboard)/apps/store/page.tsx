@@ -32,7 +32,7 @@ import {
   SlidersHorizontal,
   LayoutGrid as LayoutGridIcon,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface MarketplaceApp {
   id: string;

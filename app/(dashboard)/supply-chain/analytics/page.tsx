@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { PageHeader, KPICard, DashboardChart, Card } from "@unerp/ui";
+import { PageHeader, KPICard, DashboardChart, Card } from "@kannan19302/ui";
 import {
   Truck,
   Clock,

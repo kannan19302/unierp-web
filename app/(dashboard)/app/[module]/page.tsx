@@ -15,7 +15,7 @@ import {
   Stethoscope,
   PanelLeft,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface ModulePage {
   slug: string;

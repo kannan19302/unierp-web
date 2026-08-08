@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@kannan19302/ui";
 import {
   FileText,
   AlertCircle,
@@ -15,7 +15,7 @@ import {
   Calendar,
   Clock,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface InvoiceLineItem {
   id: string;
@@ -508,7 +508,7 @@ export default function InvoiceDetailPage() {
                                 { key: "col_2", header: "Unit Price", render: (item: any) => (<>${Number(item.unitPrice).toLocaleString()}</>) },
                                 { key: "col_3", header: "Total", render: (item: any) => (<>${Number(item.totalAmount).toLocaleString()}</>) },
                               ];
-                                        return <DataTable columns={columns} data={invoice.lineItems} rowKey={(item: any) => item.id} />;
+                                        return <DataTable columns={columns} data={invoice.lineItems || []} rowKey={(item: any) => item.id} />;
                                       })()}</>
 
                 <div className={styles.totalsPanel}>

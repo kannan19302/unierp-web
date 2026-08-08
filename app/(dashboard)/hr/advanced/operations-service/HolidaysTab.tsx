@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, Button, Spinner, Modal, FormField, Input, Select, useToast, DataTable } from "@unerp/ui";
+import { Card, Button, Spinner, Modal, FormField, Input, Select, useToast, DataTable } from "@kannan19302/ui";
 import { Plus, Calendar, Globe, AlertTriangle } from "lucide-react";
-import { useApiClient } from "@unerp/framework";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./HolidaysTab.module.css";
 
 interface Holiday {

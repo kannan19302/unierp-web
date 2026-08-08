@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, ListPageTemplate, type ListColumn } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { ArrowLeft, RefreshCw, Users, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { apiGet, apiSend } from "../../_components/api";

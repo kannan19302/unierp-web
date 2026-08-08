@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@kannan19302/ui";
 import {
   FileText,
   AlertCircle,
@@ -17,7 +17,7 @@ import {
   Layers,
   FileCheck,
 } from "lucide-react";
-import { RouteGuard, useApiClient } from "@unerp/framework";
+import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface PurchaseOrderItem {
   id: string;
@@ -348,7 +348,7 @@ export default function PurchaseOrderDetailPage() {
                                 { key: "col_3", header: "Unit Price", render: (item: any) => (<>${Number(item.unitPrice).toLocaleString()}</>) },
                                 { key: "col_4", header: "Total Amount", render: (item: any) => (<>${Number(item.totalAmount).toLocaleString()}</>) },
                               ];
-                                        return <DataTable columns={columns} data={po.lineItems} rowKey={(item: any) => item.id} />;
+                                        return <DataTable columns={columns} data={po.lineItems || []} rowKey={(item: any) => item.id} />;
                                       })()}</>
 
                 <div className={styles.p36}>
@@ -428,7 +428,7 @@ export default function PurchaseOrderDetailPage() {
                                                 { key: "col_7", header: "Ordered", render: (item: any) => (<></>) },
                                                 { key: "col_8", header: "Invoiced", render: (item: any) => (<></>) },
                                               ];
-                                                        return <DataTable columns={columns} data={matchReport.items} rowKey={(item: any) => idx} />;
+                                                        return <DataTable columns={columns} data={matchReport.items} rowKey={(item: any, idx: number) => String(idx)} />;
                                                       })()}</>
                     </div>
                   </>

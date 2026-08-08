@@ -1,8 +1,8 @@
 "use client";
 import styles from "./operations.module.css";
 import React, { useState, useEffect } from "react";
-import { Card, StatusBadge, DataTable, type Column, KPICard, Spinner, Badge } from "@unerp/ui";
-import { useApiClient, RouteGuard } from "@unerp/framework";
+import { Card, StatusBadge, DataTable, type Column, KPICard, Spinner, Badge } from "@kannan19302/ui";
+import { useApiClient, RouteGuard } from "@kannan19302/framework";
 import { MapPin, Truck, Package, Search, RefreshCw } from "lucide-react";
 
 interface InboundShipment {

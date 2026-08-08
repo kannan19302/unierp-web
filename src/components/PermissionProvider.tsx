@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { PermissionContext } from "@unerp/ui";
+import { PermissionContext } from "@kannan19302/ui";
 import { apiGet } from "@/lib/api";
 
 interface MeResponse {
@@ -11,7 +11,7 @@ interface MeResponse {
 /**
  * App-wide permission provider.
  *
- * Feeds `PermissionContext` (defined in `@unerp/ui`'s protected-component.tsx)
+ * Feeds `PermissionContext` (defined in `@kannan19302/ui`'s protected-component.tsx)
  * with the logged-in user's effective permissions, so `usePermission()` /
  * `<ProtectedComponent>` reflect real RBAC instead of always resolving to
  * `false` (the context's default value is `permissions: []`).
