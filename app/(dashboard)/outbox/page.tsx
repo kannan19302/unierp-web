@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  KPICard,
-  Spinner,
-  DataTable,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, KPICard, Spinner, DataTable, Button, type Column } from "@unerp/ui";
 import {
   Inbox,
   AlertTriangle,
@@ -58,7 +51,7 @@ export default function OutboxPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) =>
+      render: (r: any) =>
         r.status === "PENDING_REVIEW" ? (
           <span className="ui-badge ui-badge-warning">Pending Review</span>
         ) : (
@@ -69,7 +62,7 @@ export default function OutboxPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { Send, RefreshCw, Inbox } from "lucide-react";
 import { apiGet, apiPost, ApiRequestError } from "../../../../../src/lib/api";
 
@@ -90,7 +80,7 @@ export default function RevenueIntelligenceDigestPage() {
     {
       key: "recipient",
       header: "Recipient",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <div className="font-semibold">{r.recipientUserId}</div>
           <div className="ui-text-xs-muted">
@@ -104,13 +94,13 @@ export default function RevenueIntelligenceDigestPage() {
     {
       key: "openAlertCount",
       header: "Open Alerts",
-      render: (r) => r.openAlertCount,
+      render: (r: any) => r.openAlertCount,
     },
-    { key: "newAlertCount", header: "New", render: (r) => r.newAlertCount },
+    { key: "newAlertCount", header: "New", render: (r: any) => r.newAlertCount },
     {
       key: "criticalCount",
       header: "Critical",
-      render: (r) =>
+      render: (r: any) =>
         r.criticalCount > 0 ? (
           <Badge variant="danger">{r.criticalCount}</Badge>
         ) : (
@@ -120,17 +110,17 @@ export default function RevenueIntelligenceDigestPage() {
     {
       key: "atRiskDealCount",
       header: "Deals at Risk",
-      render: (r) => r.atRiskDealCount,
+      render: (r: any) => r.atRiskDealCount,
     },
     {
       key: "atRiskPipelineValue",
       header: "Pipeline Value at Risk",
-      render: (r) => `$${Number(r.atRiskPipelineValue).toLocaleString()}`,
+      render: (r: any) => `$${Number(r.atRiskPipelineValue).toLocaleString()}`,
     },
     {
       key: "sentAt",
       header: "Sent",
-      render: (r) => new Date(r.sentAt).toLocaleString(),
+      render: (r: any) => new Date(r.sentAt).toLocaleString(),
     },
   ];
 
@@ -188,7 +178,7 @@ export default function RevenueIntelligenceDigestPage() {
           <DataTable<DigestRun>
             columns={columns}
             data={runs}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
           />
         )}
       </Card>

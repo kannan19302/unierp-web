@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { Plus, Eye, Activity } from "lucide-react";
 
 interface Environment {
@@ -47,7 +40,7 @@ export default function EnvironmentsPage() {
     {
       key: "type",
       header: "Type",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.type === "PRODUCTION" ? "danger" : "info"}>
           {r.type}
         </Badge>
@@ -56,7 +49,7 @@ export default function EnvironmentsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "ACTIVE" ? "success" : "warning"}>
           {r.status}
         </Badge>
@@ -65,7 +58,7 @@ export default function EnvironmentsPage() {
     {
       key: "healthStatus",
       header: "Health",
-      render: (r) =>
+      render: (r: any) =>
         r.healthStatus ? (
           <Badge variant={r.healthStatus === "HEALTHY" ? "success" : "danger"}>
             {r.healthStatus}
@@ -74,11 +67,11 @@ export default function EnvironmentsPage() {
           "-"
         ),
     },
-    { key: "region", header: "Region", render: (r) => r.region || "-" },
+    { key: "region", header: "Region", render: (r: any) => r.region || "-" },
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

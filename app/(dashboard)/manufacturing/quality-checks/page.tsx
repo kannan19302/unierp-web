@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -176,44 +176,25 @@ export default function QualityChecksPage() {
         </button>
       </div>
       {tab === "checks" && (
-        <Table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Template</th>
-              <th>Product</th>
-              <th>Qty</th>
-              <th>Passed</th>
-              <th>Failed</th>
-              <th>Notes</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {checks.map((c) => (
-              <tr key={c.id}>
-                <td>
-                  {c.status === "PASSED" ? (
-                    <CheckCircle size={16} className="ui-text-success" />
-                  ) : (
-                    <XCircle size={16} className="ui-text-danger" />
-                  )}
-                </td>
-                <td>{c.template?.name || c.templateId}</td>
-                <td>{c.productId}</td>
-                <td>{c.checkedQty}</td>
-                <td>{c.passedQty}</td>
-                <td>{c.failedQty}</td>
-                <td className={styles.notesCell}>{c.notes || "-"}</td>
-                <td>
-                  {c.checkedAt
-                    ? new Date(c.checkedAt).toLocaleDateString()
-                    : "-"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                      const columns = [
+                { key: "col_0", header: "Status" , render: (c: any) => (<>{c.status === "PASSED" ? (
+                                  <CheckCircle size={16} className="ui-text-success" />
+                                ) : (
+                                  <XCircle size={16} className="ui-text-danger" />
+                                )}</>) },
+                { key: "col_1", header: "Template" , render: (c: any) => (<>{c.template?.name || c.templateId}</>) },
+                { key: "col_2", header: "Product" , render: (c: any) => (<>{c.productId}</>) },
+                { key: "col_3", header: "Qty" , render: (c: any) => (<>{c.checkedQty}</>) },
+                { key: "col_4", header: "Passed" , render: (c: any) => (<>{c.passedQty}</>) },
+                { key: "col_5", header: "Failed" , render: (c: any) => (<>{c.failedQty}</>) },
+                { key: "col_6", header: "Notes" , render: (c: any) => (<>{c.notes || "-"}</>) },
+                { key: "col_7", header: "Date" , render: (c: any) => (<>{c.checkedAt
+                                  ? new Date(c.checkedAt).toLocaleDateString()
+                                  : "-"}</>) },
+              ];
+                      return <DataTable columns={columns} data={checks} rowKey={(c: any) => c.id} />;
+                  })()}</>
       )}
       {tab === "templates" && (
         <div className="ui-stack-3">

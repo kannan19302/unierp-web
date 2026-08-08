@@ -405,29 +405,29 @@ export default function WorkingCapitalPage() {
                       {
                         key: "supplierName",
                         header: "Supplier",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "invoiceAmount",
                         header: "Invoice",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "discountRate",
                         header: "Rate %",
-                        render: (v) => `${Number(v).toFixed(1)}%`,
+                        render: (v: any) => `${Number(v).toFixed(1)}%`,
                       },
                       {
                         key: "discountAmount",
                         header: "Discount",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "ACCEPTED" ? "ui-badge-green" : v === "PENDING" ? "ui-badge-yellow" : "ui-badge-gray"}`}
                           >
@@ -568,29 +568,29 @@ export default function WorkingCapitalPage() {
                       {
                         key: "programName",
                         header: "Program",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "fundedAmount",
                         header: "Funded",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "availableLimit",
                         header: "Limit",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "interestRate",
                         header: "Rate %",
-                        render: (v) => `${Number(v).toFixed(2)}%`,
+                        render: (v: any) => `${Number(v).toFixed(2)}%`,
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "ACTIVE" ? "ui-badge-green" : "ui-badge-gray"}`}
                           >
@@ -709,29 +709,29 @@ export default function WorkingCapitalPage() {
                       {
                         key: "facilityName",
                         header: "Facility",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "invoiceAmount",
                         header: "Invoice",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "advanceRate",
                         header: "Advance %",
-                        render: (v) => `${Number(v)}%`,
+                        render: (v: any) => `${Number(v)}%`,
                       },
                       {
                         key: "advanceAmount",
                         header: "Advance Amount",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "ACTIVE" ? "ui-badge-green" : v === "CLOSED" ? "ui-badge-gray" : "ui-badge-yellow"}`}
                           >
@@ -742,7 +742,7 @@ export default function WorkingCapitalPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v) => (
+                        render: (v: any) => (
                           <button
                             onClick={() => handleAdvanceInvoice(String(v))}
                             className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded hover:bg-blue-100"

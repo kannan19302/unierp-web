@@ -332,7 +332,7 @@ export default function CustomerStatementPage() {
                       {
                         key: "date",
                         header: "Date",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="ui-text-muted">
                             {new Date(String(v)).toLocaleDateString()}
                           </span>
@@ -341,7 +341,7 @@ export default function CustomerStatementPage() {
                       {
                         key: "invoiceNumber",
                         header: "Invoice #",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s17}>{String(v)}</span>
                         ),
                       },
@@ -349,7 +349,7 @@ export default function CustomerStatementPage() {
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             style={{
                               background:
@@ -374,12 +374,12 @@ export default function CustomerStatementPage() {
                       {
                         key: "dueDate",
                         header: "Due Date",
-                        render: (v) => new Date(String(v)).toLocaleDateString(),
+                        render: (v: any) => new Date(String(v)).toLocaleDateString(),
                       },
                       {
                         key: "debit",
                         header: "Charges",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s19}>
                             {Number(v) > 0 ? fmt(Number(v)) : "—"}
                           </span>
@@ -388,7 +388,7 @@ export default function CustomerStatementPage() {
                       {
                         key: "credit",
                         header: "Payments",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s20}>
                             {Number(v) > 0 ? fmt(Number(v)) : "—"}
                           </span>
@@ -397,7 +397,7 @@ export default function CustomerStatementPage() {
                       {
                         key: "balance",
                         header: "Balance",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             style={{
                               color:

@@ -1,13 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { FileText, Folder, Download, Star } from "lucide-react";
 
@@ -49,7 +42,7 @@ export default function StarredPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-3">
           {r.type === "folder" ? (
             <Folder size={16} className="ui-text-primary" />
@@ -65,7 +58,7 @@ export default function StarredPage() {
       key: "updatedAt",
       header: "Modified",
       sortable: true,
-      render: (r) => new Date(r.updatedAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.updatedAt).toLocaleDateString(),
     },
     {
       key: "actions",
@@ -112,7 +105,7 @@ export default function StarredPage() {
         <DataTable
           columns={columns}
           data={items}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No starred items"
           emptyMessage="Star files and folders to quickly find them here."
           emptyIcon={<Star size={48} />}

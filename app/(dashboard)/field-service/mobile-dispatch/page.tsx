@@ -1,15 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, KPICard } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   Smartphone,
@@ -115,12 +106,12 @@ export default function MobileDispatchPage() {
     {
       key: "name",
       header: "Technician",
-      render: (r) => <span className="ui-heading-sm">{r.name}</span>,
+      render: (r: any) => <span className="ui-heading-sm">{r.name}</span>,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => {
+      render: (r: any) => {
         const v: Record<string, "success" | "warning" | "info" | "default"> = {
           AVAILABLE: "success",
           BUSY: "warning",
@@ -138,7 +129,7 @@ export default function MobileDispatchPage() {
     {
       key: "rating",
       header: "Rating",
-      render: (r) => (
+      render: (r: any) => (
         <span className="flex items-center gap-1">
           <Star size={14} />
           {r.rating.toFixed(1)}
@@ -148,7 +139,7 @@ export default function MobileDispatchPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <Button
             size="sm"
@@ -194,7 +185,7 @@ export default function MobileDispatchPage() {
           <DataTable
             columns={statusColumns}
             data={statuses}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No technicians"
             emptyMessage="Add technicians to see their status."
             emptyIcon={<Smartphone size={48} />}
@@ -236,7 +227,7 @@ export default function MobileDispatchPage() {
                   {
                     key: "title",
                     header: "Job",
-                    render: (r) => (
+                    render: (r: any) => (
                       <div>
                         <span className="ui-heading-sm">
                           {r.ticket?.title || "N/A"}
@@ -250,7 +241,7 @@ export default function MobileDispatchPage() {
                   {
                     key: "priority",
                     header: "Priority",
-                    render: (r) => (
+                    render: (r: any) => (
                       <Badge
                         variant={
                           r.ticket?.priority === "HIGH" ||
@@ -266,7 +257,7 @@ export default function MobileDispatchPage() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (r) => (
+                    render: (r: any) => (
                       <Badge
                         variant={
                           r.status === "COMPLETED"
@@ -283,7 +274,7 @@ export default function MobileDispatchPage() {
                   {
                     key: "location",
                     header: "Location",
-                    render: (r) => (
+                    render: (r: any) => (
                       <span className="flex items-center gap-1">
                         <MapPin size={14} />
                         {r.ticket?.location || "—"}
@@ -292,7 +283,7 @@ export default function MobileDispatchPage() {
                   },
                 ]}
                 data={todayJobs}
-                rowKey={(r) => r.id}
+                rowKey={(r: any) => r.id}
                 emptyTitle="No jobs today"
                 emptyMessage="No assignments for today."
                 emptyIcon={<AlertTriangle size={48} />}

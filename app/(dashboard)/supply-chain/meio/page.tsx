@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Spinner } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { Layers, GitBranch, BarChart3 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
@@ -47,12 +39,12 @@ export default function MeioPage() {
     {
       key: "modelName",
       header: "Model Name",
-      render: (r) => <span className="ui-link">{r.modelName}</span>,
+      render: (r: any) => <span className="ui-link">{r.modelName}</span>,
     },
     {
       key: "modelType",
       header: "Type",
-      render: (r) => <Badge variant="info">{r.modelType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.modelType}</Badge>,
     },
   ];
 
@@ -83,7 +75,7 @@ export default function MeioPage() {
               columns={columns}
               data={models}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No models"
               emptyMessage="Build your first MEIO model."
               emptyIcon={<GitBranch size={48} />}

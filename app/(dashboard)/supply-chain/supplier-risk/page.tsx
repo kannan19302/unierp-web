@@ -1,21 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Select,
-  FormField,
-  Badge,
-  StatusBadge,
-  KPICard,
-  Spinner,
-  Pagination,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Select, FormField, Badge, StatusBadge, KPICard, Spinner, Pagination } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, Shield, Search, AlertTriangle } from "lucide-react";
 
@@ -79,12 +64,12 @@ export default function SupplierRiskPage() {
     {
       key: "vendorName",
       header: "Vendor",
-      render: (r) => r.vendorName || r.vendorId,
+      render: (r: any) => r.vendorName || r.vendorId,
     },
     {
       key: "overallRiskScore",
       header: "Risk Score",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={riskVariant(r.overallRiskScore)}>
           {r.overallRiskScore}
         </Badge>
@@ -93,29 +78,29 @@ export default function SupplierRiskPage() {
     {
       key: "riskCategory",
       header: "Category",
-      render: (r) => <StatusBadge status={r.riskCategory} />,
+      render: (r: any) => <StatusBadge status={r.riskCategory} />,
     },
     {
       key: "financialHealth",
       header: "Financial",
-      render: (r) =>
+      render: (r: any) =>
         r.financialHealth != null ? `${r.financialHealth}/100` : "—",
     },
     {
       key: "qualityRisk",
       header: "Quality",
-      render: (r) => (r.qualityRisk != null ? `${r.qualityRisk}/100` : "—"),
+      render: (r: any) => (r.qualityRisk != null ? `${r.qualityRisk}/100` : "—"),
     },
     {
       key: "operationalRisk",
       header: "Operational",
-      render: (r) =>
+      render: (r: any) =>
         r.operationalRisk != null ? `${r.operationalRisk}/100` : "—",
     },
     {
       key: "alerts",
       header: "Open Alerts",
-      render: (r) => r.alerts?.length || 0,
+      render: (r: any) => r.alerts?.length || 0,
     },
   ];
 
@@ -164,7 +149,7 @@ export default function SupplierRiskPage() {
           columns={columns}
           data={data}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No risk profiles"
           emptyMessage="Create supplier risk profiles to start monitoring."
           emptyIcon={<Shield size={48} />}

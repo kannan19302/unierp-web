@@ -1,15 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Badge,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Badge, KPICard, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Globe, RefreshCw, Search } from "lucide-react";
 
@@ -86,7 +77,7 @@ export default function GlobalInventoryPage() {
     {
       key: "lastUpdated",
       header: "Last Updated",
-      render: (r) => new Date(r.lastUpdated).toLocaleString(),
+      render: (r: any) => new Date(r.lastUpdated).toLocaleString(),
     },
   ];
 
@@ -137,7 +128,7 @@ export default function GlobalInventoryPage() {
           columns={columns}
           data={filtered}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No inventory data"
           emptyMessage="Global inventory view will populate as products and stock are created."
           emptyIcon={<Globe size={48} />}

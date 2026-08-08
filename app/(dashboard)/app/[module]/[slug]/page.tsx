@@ -320,51 +320,55 @@ function CustomAppPageContent() {
           </div>
         ) : (
           <div className="builder-table-wrapper">
-            <Table className={styles.s14}>
-              <thead>
-                <tr className="border-b">
-                  <th className={styles.s15}>ID</th>
-                  {listColumns.map((col: any) => (
-                    <th
-                      key={col.name}
+            <DataTable
+              columns={[
+                {
+                  key: "id",
+                  header: "ID",
+                  render: (row: any) => <>{row.id.substring(0, 8)}</>
+                },
+                ...listColumns.map((col: any) => ({
+                  key: col.name,
+                  header: (
+                    <span
                       onClick={() => handleSort(col.name)}
-                      className={styles.s16}
+                      className={styles.s17}
+                      style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
                     >
-                      <span className={styles.s17}>
-                        {col.label}
-                        <ArrowUpDown
-                          size={12}
-                          style={{
-                            opacity: sortBy === col.name ? 1 : 0.3,
-                            transform:
-                              sortBy === col.name && sortOrder === "desc"
-                                ? "scaleY(-1)"
-                                : "none",
-                          }}
-                          className={styles.s85}
-                        />
-                      </span>
-                    </th>
-                  ))}
-                  <th className={styles.s18}>Created</th>
-                  <th className="p-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {records.map((row: any) => (
-                  <tr key={row.id} className="border-b">
-                    <td className={styles.s19}>{row.id.substring(0, 8)}</td>
-                    {listColumns.map((col: any) => (
-                      <td key={col.name} className="p-3">
-                        {typeof row.data[col.name] === "object"
-                          ? JSON.stringify(row.data[col.name])
-                          : String(row.data[col.name] ?? "-")}
-                      </td>
-                    ))}
-                    <td className={styles.s20}>
-                      {new Date(row.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="p-3">
+                      {col.label}
+                      <ArrowUpDown
+                        size={12}
+                        style={{
+                          opacity: sortBy === col.name ? 1 : 0.3,
+                          transform:
+                            sortBy === col.name && sortOrder === "desc"
+                              ? "scaleY(-1)"
+                              : "none",
+                        }}
+                        className={styles.s85}
+                      />
+                    </span>
+                  ),
+                  render: (row: any) => (
+                    <>
+                      {typeof row.data[col.name] === "object"
+                        ? JSON.stringify(row.data[col.name])
+                        : String(row.data[col.name] ?? "-")}
+                    </>
+                  )
+                })),
+                {
+                  key: "created",
+                  header: "Created",
+                  render: (row: any) => (
+                    <>{new Date(row.createdAt).toLocaleDateString()}</>
+                  )
+                },
+                {
+                  key: "actions",
+                  header: "",
+                  render: (row: any) => (
+                    <>
                       {deleteConfirmId === row.id ? (
                         <div className="delete-confirm-bar">
                           <span className="confirm-text">Delete?</span>
@@ -402,11 +406,13 @@ function CustomAppPageContent() {
                           </button>
                         </div>
                       )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+                    </>
+                  )
+                }
+              ]}
+              data={records}
+              rowKey={(row: any) => row.id}
+            />
           </div>
         )}
 
@@ -886,39 +892,33 @@ function RuntimeTableWidget({
           <div className={styles.s38}>No records found.</div>
         ) : (
           <div className="builder-table-wrapper">
-            <Table className={styles.s44}>
-              <thead>
-                <tr className={styles.s45}>
-                  <th className={styles.s46}>ID</th>
-                  {columns.map((col: any) => (
-                    <th key={col.name} className={styles.s46}>
-                      {col.label || col.name}
-                    </th>
-                  ))}
-                  <th className={styles.s47}>Created</th>
-                </tr>
-              </thead>
-              <tbody>
-                {records.map((row: any) => (
-                  <tr
-                    key={row.id}
-                    className="hover:bg-muted/10 transition-colors border-b"
-                  >
-                    <td className={styles.s48}>{row.id.substring(0, 6)}</td>
-                    {columns.map((col: any) => (
-                      <td key={col.name} className="p-2">
-                        {typeof row.data[col.name] === "object"
-                          ? JSON.stringify(row.data[col.name])
-                          : String(row.data[col.name] ?? "-")}
-                      </td>
-                    ))}
-                    <td className={styles.s49}>
-                      {new Date(row.createdAt).toLocaleDateString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <DataTable
+              columns={[
+                {
+                  key: "id",
+                  header: "ID",
+                  render: (row: any) => <>{row.id.substring(0, 6)}</>
+                },
+                ...columns.map((col: any) => ({
+                  key: col.name,
+                  header: col.label || col.name,
+                  render: (row: any) => (
+                    <>
+                      {typeof row.data[col.name] === "object"
+                        ? JSON.stringify(row.data[col.name])
+                        : String(row.data[col.name] ?? "-")}
+                    </>
+                  )
+                })),
+                {
+                  key: "created",
+                  header: "Created",
+                  render: (row: any) => <>{new Date(row.createdAt).toLocaleDateString()}</>
+                }
+              ]}
+              data={records}
+              rowKey={(row: any) => row.id}
+            />
           </div>
         )}
 

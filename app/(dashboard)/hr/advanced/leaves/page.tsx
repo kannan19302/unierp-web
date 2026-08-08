@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   Coffee,
   Plus,
@@ -564,13 +555,13 @@ export default function LeavesPage() {
                       {
                         key: "allocated",
                         header: "Allocated",
-                        render: (v) => `${v}d`,
+                        render: (v: any) => `${v}d`,
                       },
-                      { key: "used", header: "Used", render: (v) => `${v}d` },
+                      { key: "used", header: "Used", render: (v: any) => `${v}d` },
                       {
                         key: "remaining",
                         header: "Remaining",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.remaining}>{String(v)}d</span>
                         ),
                       },
@@ -592,19 +583,19 @@ export default function LeavesPage() {
                       {
                         key: "leaveType",
                         header: "Type",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.leaveType}>{String(v)}</span>
                         ),
                       },
                       {
                         key: "annualAllocation",
                         header: "Allocation",
-                        render: (v) => `${v} days`,
+                        render: (v: any) => `${v} days`,
                       },
                       {
                         key: "carryForwardLimit",
                         header: "Carry Forward Limit",
-                        render: (v) => `${v ?? 0} days`,
+                        render: (v: any) => `${v ?? 0} days`,
                       },
                     ] as ListColumn[]
                   }

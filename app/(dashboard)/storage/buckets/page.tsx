@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import React from "react";
@@ -20,40 +20,23 @@ export default function StorageBucketsPage() {
       </div>
 
       <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-        <Table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-gray-500 font-medium text-xs uppercase border-b">
-            <tr>
-              <th className="p-3">Bucket Name</th>
-              <th className="p-3">Provider</th>
-              <th className="p-3">Region</th>
-              <th className="p-3">Quota</th>
-              <th className="p-3">Current Usage</th>
-              <th className="p-3">Versioning</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y text-gray-700">
-            <tr>
-              <td className="p-3 font-mono text-xs font-semibold">
-                unerp-doc-vault-prod
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded font-medium">
-                  AWS S3
-                </span>
-              </td>
-              <td className="p-3 font-mono text-xs">us-east-1</td>
-              <td className="p-3">500 GB</td>
-              <td className="p-3 font-medium text-blue-600">
-                124.5 GB (24.9%)
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
-                  ENABLED
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Bucket Name", render: (row: any) => (<>{row.col_0}</>) },
+                { key: "col_1", header: "Provider", render: (row: any) => (<>{row.col_1}</>) },
+                { key: "col_2", header: "Region", render: (row: any) => (<>{row.col_2}</>) },
+                { key: "col_3", header: "Quota", render: (row: any) => (<>{row.col_3}</>) },
+                { key: "col_4", header: "Current Usage", render: (row: any) => (<>{row.col_4}</>) },
+                { key: "col_5", header: "Versioning", render: (row: any) => (<>{row.col_5}</>) },
+              ];
+                        return <DataTable columns={columns} data={[
+                { col_0: ( <>unerp-doc-vault-prod</> ), col_1: ( <><span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded font-medium">
+                                AWS S3
+                              </span></> ), col_2: ( <>us-east-1</> ), col_3: ( <>500 GB</> ), col_4: ( <>124.5 GB (24.9%)</> ), col_5: ( <><span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
+                                ENABLED
+                              </span></> ),  },
+              ]} rowKey={(row: any, i: any) => String(i)} />;
+                      })()}</>
       </div>
     </div>
   );

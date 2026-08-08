@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Tabs,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, TrendingUp, Target, Star, BarChart3 } from "lucide-react";
 
@@ -128,25 +114,25 @@ export default function SupplierPerformancePage() {
       key: "category",
       header: "Category",
       sortable: true,
-      render: (row) => <Badge variant="info">{row.category}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.category}</Badge>,
     },
     {
       key: "target",
       header: "Target",
       sortable: true,
-      render: (row) => `${row.target}${row.unit}`,
+      render: (row: any) => `${row.target}${row.unit}`,
     },
     {
       key: "weight",
       header: "Weight",
       sortable: true,
-      render: (row) => `${row.weight}%`,
+      render: (row: any) => `${row.weight}%`,
     },
     {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-flex ui-gap-1" onClick={(e) => e.stopPropagation()}>
           <button className="ui-btn-icon" title="Edit">
             <svg
@@ -186,14 +172,14 @@ export default function SupplierPerformancePage() {
       key: "overallScore",
       header: "Overall Score",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-bold">{row.overallScore}%</span>
       ),
     },
     {
       key: "rating",
       header: "Rating",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={ratingVariant(row.rating)}>{row.rating}</Badge>
       ),
     },
@@ -201,7 +187,7 @@ export default function SupplierPerformancePage() {
       key: "date",
       header: "Date",
       sortable: true,
-      render: (row) => new Date(row.date).toLocaleDateString(),
+      render: (row: any) => new Date(row.date).toLocaleDateString(),
     },
   ];
 
@@ -255,7 +241,7 @@ export default function SupplierPerformancePage() {
           <DataTable
             columns={kpiColumns}
             data={kpis}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No KPIs defined"
             emptyMessage="Add KPIs to start tracking supplier performance."
             emptyIcon={<Target size={48} />}
@@ -292,7 +278,7 @@ export default function SupplierPerformancePage() {
           <DataTable
             columns={scoreColumns}
             data={filteredScorecards}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No scorecards"
             emptyMessage="Calculate a scorecard to begin tracking performance."
             emptyIcon={<Star size={48} />}

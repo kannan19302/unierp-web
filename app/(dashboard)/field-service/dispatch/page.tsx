@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, useToast } from "@unerp/ui";
 import { MapPin, Plus, Calendar, Clock, AlertTriangle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -82,7 +68,7 @@ export default function DispatchBoardPage() {
     {
       key: "ticket",
       header: "Ticket",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <span className="ui-heading-sm">
             {row.ticket?.title || row.ticketId.slice(0, 8)}
@@ -94,14 +80,14 @@ export default function DispatchBoardPage() {
     {
       key: "tech",
       header: "Technician",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="info">Tech: {row.technicianId.slice(0, 8)}</Badge>
       ),
     },
     {
       key: "time",
       header: "Scheduled Time",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.scheduledTime
             ? new Date(row.scheduledTime).toLocaleString()
@@ -112,7 +98,7 @@ export default function DispatchBoardPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "COMPLETED" ? "success" : "warning"}>
           {row.status}
         </Badge>
@@ -167,7 +153,7 @@ export default function DispatchBoardPage() {
           <DataTable
             columns={columns}
             data={dispatches}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No dispatches"
             emptyMessage="Create a dispatch assignment."
             emptyIcon={<MapPin size={48} />}

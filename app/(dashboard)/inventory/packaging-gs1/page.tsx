@@ -235,7 +235,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String(v).slice(-8)}
                     </span>
@@ -244,7 +244,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "level",
                   header: "Level",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs font-medium ${LEVEL_COLORS[String(v)] ?? "bg-gray-100 text-gray-700"}`}
                     >
@@ -255,7 +255,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "unitsPerLevel",
                   header: "Units/Level",
-                  render: (v) => <strong>{String(v)}</strong>,
+                  render: (v: any) => <strong>{String(v)}</strong>,
                 },
                 {
                   key: "lengthMm",
@@ -266,12 +266,12 @@ export default function PackagingGs1Page() {
                 {
                   key: "grossWeightKg",
                   header: "Weight",
-                  render: (v) => (v ? `${Number(v).toFixed(3)} kg` : "—"),
+                  render: (v: any) => (v ? `${Number(v).toFixed(3)} kg` : "—"),
                 },
                 {
                   key: "barcodes",
                   header: "Barcodes",
-                  render: (v) => String((v as any)?.length ?? 0),
+                  render: (v: any) => String((v as any)?.length ?? 0),
                 },
               ] as ListColumn[]
             }
@@ -290,12 +290,12 @@ export default function PackagingGs1Page() {
                 {
                   key: "barcodeValue",
                   header: "Barcode Value",
-                  render: (v) => <span className="font-mono">{String(v)}</span>,
+                  render: (v: any) => <span className="font-mono">{String(v)}</span>,
                 },
                 {
                   key: "symbology",
                   header: "Symbology",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="px-2 py-0.5 rounded text-xs bg-blue-50 text-blue-700">
                       {String(v)}
                     </span>
@@ -304,7 +304,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "isPrimary",
                   header: "Primary",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? (
                       <span className="text-green-600 font-medium">✓</span>
                     ) : (
@@ -314,7 +314,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "packagingSpecId",
                   header: "Spec",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className={styles.s1}>
                       {String(v ?? "").slice(-8)}
                     </span>
@@ -373,7 +373,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "sscc",
                   header: "SSCC",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">{String(v)}</span>
                   ),
                 },
@@ -381,12 +381,12 @@ export default function PackagingGs1Page() {
                 {
                   key: "allocatedAt",
                   header: "Allocated",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
                 {
                   key: "usedAt",
                   header: "Used",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? (
                       <span className="text-green-600 text-xs">
                         {new Date(String(v)).toLocaleDateString()}
@@ -398,7 +398,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "shipmentRef",
                   header: "Shipment Ref",
-                  render: (v) => String(v ?? "—"),
+                  render: (v: any) => String(v ?? "—"),
                 },
               ] as ListColumn[]
             }

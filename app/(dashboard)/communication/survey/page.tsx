@@ -1,17 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column } from "@unerp/ui";
 import {
   ClipboardList,
   Plus,
@@ -77,7 +67,7 @@ export default function SurveyPage() {
     {
       key: "title",
       header: "Survey",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="font-medium">{r.title}</span>
           <Badge variant="default" className="ml-2">
@@ -86,21 +76,21 @@ export default function SurveyPage() {
         </div>
       ),
     },
-    { key: "status", header: "Status", render: (r) => statusBadge(r.status) },
+    { key: "status", header: "Status", render: (r: any) => statusBadge(r.status) },
     {
       key: "questions",
       header: "Questions",
-      render: (r) => r._count?.questions || 0,
+      render: (r: any) => r._count?.questions || 0,
     },
     {
       key: "responses",
       header: "Responses",
-      render: (r) => r.responseCount || 0,
+      render: (r: any) => r.responseCount || 0,
     },
     {
       key: "publishedAt",
       header: "Published",
-      render: (r) =>
+      render: (r: any) =>
         r.publishedAt ? new Date(r.publishedAt).toLocaleDateString() : "-",
     },
     {
@@ -186,7 +176,7 @@ export default function SurveyPage() {
             <DataTable
               columns={columns}
               data={surveys}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No surveys yet"
               emptyIcon={<ClipboardList size={48} />}
             />

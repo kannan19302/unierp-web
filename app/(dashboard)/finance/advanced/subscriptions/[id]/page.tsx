@@ -16,18 +16,7 @@ import {
   Activity,
   Clock,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  FormField,
-  Input,
-  Spinner,
-  ChangeHistory,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, Button, Badge, DataTable, FormField, Input, Spinner, ChangeHistory, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface SubscriptionLine {
@@ -449,18 +438,18 @@ export default function SubscriptionDetailPage() {
                     {
                       key: "unitAmount",
                       header: "Unit Price",
-                      render: (v) => fmt(Number(v), sub.currency),
+                      render: (v: any) => fmt(Number(v), sub.currency),
                     },
                     { key: "quantity", header: "Qty" },
                     {
                       key: "taxRate",
                       header: "Tax Rate",
-                      render: (v) => `${v}%`,
+                      render: (v: any) => `${v}%`,
                     },
                     {
                       key: "totalAmount",
                       header: "Total",
-                      render: (v) => fmt(Number(v), sub.currency),
+                      render: (v: any) => fmt(Number(v), sub.currency),
                     },
                   ] as ListColumn[]
                 }

@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   ShieldCheck,
@@ -489,12 +480,12 @@ export default function BenefitsPage() {
                   {
                     key: "enrollmentDate",
                     header: "Enrolled Date",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => <StatusBadge status={String(v)} />,
+                    render: (v: any) => <StatusBadge status={String(v)} />,
                   },
                 ];
                 return (

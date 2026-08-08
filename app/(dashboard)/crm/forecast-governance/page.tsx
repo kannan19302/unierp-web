@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, Button, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Table, DataTable } from "@unerp/ui";
 import {
   TrendingUp,
   TrendingDown,
@@ -110,69 +110,42 @@ export default function ForecastGovernancePage() {
       <div className="ui-grid-2">
         <Card title="Forecast Categories">
           <div className="ui-table-wrapper">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Deals</th>
-                  <th>Amount</th>
-                  <th>Weighted</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categories?.categories?.map((c: any) => (
-                  <tr key={c.category}>
-                    <td>
-                      <Badge
-                        variant={
-                          c.category === "Commit"
-                            ? "success"
-                            : c.category === "Best Case"
-                              ? "warning"
-                              : "default"
-                        }
-                      >
-                        {c.category}
-                      </Badge>
-                    </td>
-                    <td>{c.dealCount}</td>
-                    <td>${c.totalAmount.toLocaleString()}</td>
-                    <td>${c.weightedAmount.toLocaleString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Category" , render: (c: any) => (<><Badge
+                                              variant={
+                                                c.category === "Commit"
+                                                  ? "success"
+                                                  : c.category === "Best Case"
+                                                    ? "warning"
+                                                    : "default"
+                                              }
+                                            >
+                                              {c.category}
+                                            </Badge></>) },
+                        { key: "col_1", header: "Deals" , render: (c: any) => (<>{c.dealCount}</>) },
+                        { key: "col_2", header: "Amount" , render: (c: any) => (<>${c.totalAmount.toLocaleString()}</>) },
+                        { key: "col_3", header: "Weighted" , render: (c: any) => (<>${c.weightedAmount.toLocaleString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={categories?.categories} rowKey={(c: any) => c.category} />;
+                          })()}</>
           </div>
         </Card>
 
         <Card title="Forecast Trend">
           <div className="ui-table-wrapper">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Period</th>
-                  <th>Commit</th>
-                  <th>Best Case</th>
-                  <th>Pipeline</th>
-                  <th>Closed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {trend.map((t: any) => (
-                  <tr key={t.period}>
-                    <td>{t.period}</td>
-                    <td>${(t.commit || 0).toLocaleString()}</td>
-                    <td>${(t.bestCase || 0).toLocaleString()}</td>
-                    <td>${(t.pipeline || 0).toLocaleString()}</td>
-                    <td>
-                      <Badge variant="success">
-                        ${(t.closedWon || 0).toLocaleString()}
-                      </Badge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Period" , render: (t: any) => (<>{t.period}</>) },
+                        { key: "col_1", header: "Commit" , render: (t: any) => (<>${(t.commit || 0).toLocaleString()}</>) },
+                        { key: "col_2", header: "Best Case" , render: (t: any) => (<>${(t.bestCase || 0).toLocaleString()}</>) },
+                        { key: "col_3", header: "Pipeline" , render: (t: any) => (<>${(t.pipeline || 0).toLocaleString()}</>) },
+                        { key: "col_4", header: "Closed" , render: (t: any) => (<><Badge variant="success">
+                                              ${(t.closedWon || 0).toLocaleString()}
+                                            </Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={trend} rowKey={(t: any) => t.period} />;
+                          })()}</>
           </div>
         </Card>
       </div>
@@ -180,46 +153,26 @@ export default function ForecastGovernancePage() {
       <div className="ui-grid-2">
         <Card title="Forecast Accuracy">
           <div className="ui-table-wrapper">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Period</th>
-                  <th>Forecasted</th>
-                  <th>Actual</th>
-                  <th>Accuracy</th>
-                  <th>Variance</th>
-                </tr>
-              </thead>
-              <tbody>
-                {accuracy.map((a: any) => (
-                  <tr key={a.period}>
-                    <td>{a.period}</td>
-                    <td>${(a.forecastedAmount || 0).toLocaleString()}</td>
-                    <td>${(a.actualAmount || 0).toLocaleString()}</td>
-                    <td>
-                      <Badge
-                        variant={
-                          a.accuracyPct >= 80
-                            ? "success"
-                            : a.accuracyPct >= 50
-                              ? "warning"
-                              : "danger"
-                        }
-                      >
-                        {a.accuracyPct}%
-                      </Badge>
-                    </td>
-                    <td
-                      className={
-                        a.variance >= 0 ? "ui-text-success" : "ui-text-error"
-                      }
-                    >
-                      ${(a.variance || 0).toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Period" , render: (a: any) => (<>{a.period}</>) },
+                        { key: "col_1", header: "Forecasted" , render: (a: any) => (<>${(a.forecastedAmount || 0).toLocaleString()}</>) },
+                        { key: "col_2", header: "Actual" , render: (a: any) => (<>${(a.actualAmount || 0).toLocaleString()}</>) },
+                        { key: "col_3", header: "Accuracy" , render: (a: any) => (<><Badge
+                                              variant={
+                                                a.accuracyPct >= 80
+                                                  ? "success"
+                                                  : a.accuracyPct >= 50
+                                                    ? "warning"
+                                                    : "danger"
+                                              }
+                                            >
+                                              {a.accuracyPct}%
+                                            </Badge></>) },
+                        { key: "col_4", header: "Variance" , render: (a: any) => (<>${(a.variance || 0).toLocaleString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={accuracy} rowKey={(a: any) => a.period} />;
+                          })()}</>
           </div>
         </Card>
 

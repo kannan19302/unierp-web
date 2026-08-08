@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Spinner,
-  Badge,
-  Button,
-  DataTable,
-  Modal,
-} from "@unerp/ui";
+import { PageHeader, Card, Spinner, Badge, Button, DataTable, Modal } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, Play, CheckCircle } from "lucide-react";
 import type { Column } from "@unerp/ui";
@@ -63,7 +55,7 @@ function ABTestsPage() {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (row) => {
+      render: (row: any) => {
         const v = (row as any).status;
         return (
           <Badge variant={v === "RUNNING" ? "info" : "success"}>{v}</Badge>
@@ -73,12 +65,12 @@ function ABTestsPage() {
     {
       key: "winner",
       header: "Winner",
-      render: (row) => (row as any).winner || "-",
+      render: (row: any) => (row as any).winner || "-",
     },
     {
       key: "openedRateA",
       header: "Open Rate A",
-      render: (row) => {
+      render: (row: any) => {
         const v = (row as any).openedRateA;
         return v ? `${v}%` : "-";
       },
@@ -86,7 +78,7 @@ function ABTestsPage() {
     {
       key: "openedRateB",
       header: "Open Rate B",
-      render: (row) => {
+      render: (row: any) => {
         const v = (row as any).openedRateB;
         return v ? `${v}%` : "-";
       },
@@ -95,13 +87,13 @@ function ABTestsPage() {
     {
       key: "startedAt",
       header: "Started",
-      render: (row) =>
+      render: (row: any) =>
         new Date((row as any).startedAt as string).toLocaleDateString(),
     },
     {
       key: "id",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const r = row as any;
         return r.status === "RUNNING" ? (
           <Button

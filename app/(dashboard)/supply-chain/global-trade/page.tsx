@@ -1,20 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Select,
-  FormField,
-  Badge,
-  StatusBadge,
-  Tabs,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Select, FormField, Badge, StatusBadge, Tabs, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, Search, Globe } from "lucide-react";
 import Link from "next/link";
@@ -114,7 +100,7 @@ export default function GlobalTradePage() {
     {
       key: "declarationNumber",
       header: "Declaration #",
-      render: (r) => <span className="ui-link">{r.declarationNumber}</span>,
+      render: (r: any) => <span className="ui-link">{r.declarationNumber}</span>,
     },
     { key: "supplierName", header: "Supplier" },
     { key: "portOfEntry", header: "Port of Entry" },
@@ -122,13 +108,13 @@ export default function GlobalTradePage() {
     {
       key: "invoiceValue",
       header: "Invoice Value",
-      render: (r) =>
+      render: (r: any) =>
         r.invoiceValue ? `$${Number(r.invoiceValue).toLocaleString()}` : "—",
     },
     {
       key: "totalLandedCost",
       header: "Landed Cost",
-      render: (r) =>
+      render: (r: any) =>
         r.totalLandedCost
           ? `$${Number(r.totalLandedCost).toLocaleString()}`
           : "—",
@@ -136,12 +122,12 @@ export default function GlobalTradePage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -182,7 +168,7 @@ export default function GlobalTradePage() {
           <DataTable
             columns={impColumns}
             data={imports}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No import declarations"
             emptyIcon={<Globe size={48} />}
           />
@@ -211,7 +197,7 @@ export default function GlobalTradePage() {
               ] as Column<HsCode>[]
             }
             data={hsCodes}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No HS codes"
           />
         )}

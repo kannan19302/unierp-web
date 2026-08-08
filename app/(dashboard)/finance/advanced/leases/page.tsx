@@ -10,14 +10,7 @@ import {
   AlertCircle,
   Search,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import { apiGet } from "@/lib/api";
 
 interface Lease {
@@ -206,7 +199,7 @@ export default function LeasesPage() {
             {
               key: "leaseType",
               header: "Type",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge
                   variant={(v as string) === "FINANCE" ? "primary" : "info"}
                 >
@@ -217,21 +210,21 @@ export default function LeasesPage() {
             {
               key: "startDate",
               header: "Start",
-              render: (v) => (
+              render: (v: any) => (
                 <span>{new Date(v as string).toLocaleDateString()}</span>
               ),
             },
             {
               key: "endDate",
               header: "End",
-              render: (v) => (
+              render: (v: any) => (
                 <span>{new Date(v as string).toLocaleDateString()}</span>
               ),
             },
             {
               key: "presentValue",
               header: "Present Value",
-              render: (v) => (
+              render: (v: any) => (
                 <span className={styles.s1}>
                   {v != null ? fmt(Number(v)) : "—"}
                 </span>
@@ -240,7 +233,7 @@ export default function LeasesPage() {
             {
               key: "carryingAmount",
               header: "Carrying Amount",
-              render: (v) => (
+              render: (v: any) => (
                 <span className={styles.s1}>
                   {v != null ? fmt(Number(v)) : "—"}
                 </span>
@@ -249,7 +242,7 @@ export default function LeasesPage() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge
                   variant={
                     (v as string) === "ACTIVE"
@@ -268,7 +261,7 @@ export default function LeasesPage() {
             {
               key: "id",
               header: "Actions",
-              render: (v) => (
+              render: (v: any) => (
                 <Link
                   href={`/finance/advanced/leases/${v as string}`}
                   className="text-blue-600 hover:underline text-xs"

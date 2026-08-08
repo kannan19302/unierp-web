@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -347,19 +339,19 @@ export default function CustomFieldsPage() {
                 {
                   key: "fieldName",
                   header: "Field Name",
-                  render: (v) => (
+                  render: (v: any) => (
                     <code className={styles.style5}>{String(v)}</code>
                   ),
                 },
                 {
                   key: "fieldType",
                   header: "Type",
-                  render: (v) => <Badge>{String(v)}</Badge>,
+                  render: (v: any) => <Badge>{String(v)}</Badge>,
                 },
                 {
                   key: "isRequired",
                   header: "Required",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? (
                       <Badge variant="info">Yes</Badge>
                     ) : (
@@ -369,12 +361,12 @@ export default function CustomFieldsPage() {
                 {
                   key: "section",
                   header: "Section",
-                  render: (v) => String(v || "-"),
+                  render: (v: any) => String(v || "-"),
                 },
                 {
                   key: "isActive",
                   header: "Active",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? (
                       <ToggleRight size={20} className="ui-text-success" />
                     ) : (
@@ -384,7 +376,7 @@ export default function CustomFieldsPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v) => (
+                  render: (v: any) => (
                     <div className={styles.style8}>
                       <button className={styles.style9}>
                         <Edit3 size={16} />

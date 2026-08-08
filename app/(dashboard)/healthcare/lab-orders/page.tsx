@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, Table, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -215,71 +215,50 @@ export default function HealthcareLabOrdersPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Test</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Ordered</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((o: any) => (
-                <tr key={o.id}>
-                  <td className="font-medium">
-                    {o.patient?.firstName} {o.patient?.lastName}
-                  </td>
-                  <td>{o.testName}</td>
-                  <td>
-                    <span
-                      className={`ui-badge ${o.priority === "STAT" ? "ui-badge-danger" : o.priority === "URGENT" ? "ui-badge-warning" : "ui-badge-info"}`}
-                    >
-                      {o.priority}
-                    </span>
-                  </td>
-                  <td>
-                    <span
-                      className={`ui-badge ${o.status === "COMPLETED" ? "ui-badge-success" : o.status === "CANCELLED" ? "ui-badge-danger" : "ui-badge-info"}`}
-                    >
-                      {o.status}
-                    </span>
-                  </td>
-                  <td>{new Date(o.orderedAt).toLocaleDateString()}</td>
-                  <td>
-                    <div className="flex gap-1">
-                      {o.status === "ORDERED" && (
-                        <button
-                          className="ui-btn ui-btn-sm ui-btn-outline"
-                          onClick={() => updateStatus(o.id, "COLLECTED")}
-                        >
-                          Collect
-                        </button>
-                      )}
-                      {o.status === "COLLECTED" && (
-                        <button
-                          className="ui-btn ui-btn-sm ui-btn-outline"
-                          onClick={() => updateStatus(o.id, "PROCESSING")}
-                        >
-                          Process
-                        </button>
-                      )}
-                      {o.status === "PROCESSING" && (
-                        <button
-                          className="ui-btn ui-btn-sm ui-btn-outline"
-                          onClick={() => updateStatus(o.id, "COMPLETED")}
-                        >
-                          Complete
-                        </button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Patient" , render: (o: any) => (<>{o.patient?.firstName}{o.patient?.lastName}</>) },
+                        { key: "col_1", header: "Test" , render: (o: any) => (<>{o.testName}</>) },
+                        { key: "col_2", header: "Priority" , render: (o: any) => (<><span
+                                            className={`ui-badge ${o.priority === "STAT" ? "ui-badge-danger" : o.priority === "URGENT" ? "ui-badge-warning" : "ui-badge-info"}`}
+                                          >
+                                            {o.priority}
+                                          </span></>) },
+                        { key: "col_3", header: "Status" , render: (o: any) => (<><span
+                                            className={`ui-badge ${o.status === "COMPLETED" ? "ui-badge-success" : o.status === "CANCELLED" ? "ui-badge-danger" : "ui-badge-info"}`}
+                                          >
+                                            {o.status}
+                                          </span></>) },
+                        { key: "col_4", header: "Ordered" , render: (o: any) => (<>{new Date(o.orderedAt).toLocaleDateString()}</>) },
+                        { key: "col_5", header: "Actions" , render: (o: any) => (<><div className="flex gap-1">
+                                            {o.status === "ORDERED" && (
+                                              <button
+                                                className="ui-btn ui-btn-sm ui-btn-outline"
+                                                onClick={() => updateStatus(o.id, "COLLECTED")}
+                                              >
+                                                Collect
+                                              </button>
+                                            )}
+                                            {o.status === "COLLECTED" && (
+                                              <button
+                                                className="ui-btn ui-btn-sm ui-btn-outline"
+                                                onClick={() => updateStatus(o.id, "PROCESSING")}
+                                              >
+                                                Process
+                                              </button>
+                                            )}
+                                            {o.status === "PROCESSING" && (
+                                              <button
+                                                className="ui-btn ui-btn-sm ui-btn-outline"
+                                                onClick={() => updateStatus(o.id, "COMPLETED")}
+                                              >
+                                                Complete
+                                              </button>
+                                            )}
+                                          </div></>) },
+                      ];
+                              return <DataTable columns={columns} data={orders} rowKey={(o: any) => o.id} />;
+                          })()}</>
         </div>
       )}
     </div>

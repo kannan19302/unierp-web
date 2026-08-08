@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  DataTable,
-  StatCardRow,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, DataTable, StatCardRow, type Column } from "@unerp/ui";
 import {
   BarChart4,
   DollarSign,
@@ -68,7 +60,7 @@ export default function SalesAnalyticsPage() {
       key: "revenue",
       header: "Revenue",
       sortable: true,
-      render: (row) => `$${row.revenue.toLocaleString()}`,
+      render: (row: any) => `$${row.revenue.toLocaleString()}`,
     },
   ];
 

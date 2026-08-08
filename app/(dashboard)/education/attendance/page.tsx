@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  KPICard,
-  DashboardChart,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, KPICard, DashboardChart } from "@unerp/ui";
 import { ClipboardCheck, Users, Calendar, CheckCircle, X } from "lucide-react";
 
 const STUDENTS_MOCK = [

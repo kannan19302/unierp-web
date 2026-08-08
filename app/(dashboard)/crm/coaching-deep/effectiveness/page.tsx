@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, DataTable, type Column } from "@unerp/ui";
 import { TrendingUp, ArrowLeft } from "lucide-react";
 import { apiGet, ApiRequestError } from "../../../../../src/lib/api";
 import { useRouter } from "next/navigation";
@@ -64,7 +56,7 @@ export default function EffectivenessPage() {
       key: "improvement",
       header: "Improvement",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.improvement >= 0 ? "success" : "danger"}>
           {r.improvement > 0 ? "+" : ""}
           {r.improvement}%

@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { RotateCcw, Archive, Trash2, Eye } from "lucide-react";
 
 interface DlqEntry {
@@ -48,12 +41,12 @@ export default function DlqPage() {
     {
       key: "failedAttempts",
       header: "Attempts",
-      render: (r) => `${r.failedAttempts}/${r.maxRequeues}`,
+      render: (r: any) => `${r.failedAttempts}/${r.maxRequeues}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "PENDING_REVIEW" ? "warning" : "info"}>
           {r.status}
         </Badge>
@@ -62,12 +55,12 @@ export default function DlqPage() {
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Calculator, Plus, Trash2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, Table, DataTable } from "@unerp/ui";
 
 export default function EcommerceTaxPage() {
   const client = useApiClient();
@@ -136,37 +136,22 @@ export default function EcommerceTaxPage() {
                 + Rate
               </button>
             </div>
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Rate</th>
-                  <th>Country</th>
-                  <th>Region</th>
-                  <th>Priority</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(c.rates || []).map((r: any) => (
-                  <tr key={r.id}>
-                    <td>{r.name}</td>
-                    <td>{r.rate}%</td>
-                    <td>{r.country || "All"}</td>
-                    <td>{r.region || "All"}</td>
-                    <td>{r.priority}</td>
-                    <td>
-                      <button
-                        className="ui-btn-icon ui-text-error"
-                        onClick={() => delRate(r.id)}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                        const columns = [
+                  { key: "col_0", header: "Name" , render: (r: any) => (<>{r.name}</>) },
+                  { key: "col_1", header: "Rate" , render: (r: any) => (<>{r.rate}%</>) },
+                  { key: "col_2", header: "Country" , render: (r: any) => (<>{r.country || "All"}</>) },
+                  { key: "col_3", header: "Region" , render: (r: any) => (<>{r.region || "All"}</>) },
+                  { key: "col_4", header: "Priority" , render: (r: any) => (<>{r.priority}</>) },
+                  { key: "col_5", header: "Actions" , render: (r: any) => (<><button
+                                        className="ui-btn-icon ui-text-error"
+                                        onClick={() => delRate(r.id)}
+                                      >
+                                        <Trash2 size={14} />
+                                      </button></>) },
+                ];
+                        return <DataTable columns={columns} data={(c.rates || [])} rowKey={(r: any) => r.id} />;
+                    })()}</>
           </div>
         ))}
         {showClassModal && (

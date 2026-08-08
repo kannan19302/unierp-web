@@ -143,7 +143,7 @@ function DamageReportsTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs">
           {String((row as unknown as { status: string }).status)}
         </span>
@@ -152,7 +152,7 @@ function DamageReportsTab() {
     {
       key: "actions",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const r = row as unknown as { id: string; status: string };
         return r.status === "DRAFT" ? (
           <button
@@ -387,7 +387,7 @@ function ClaimsTab() {
     {
       key: "amount",
       header: "Amount",
-      render: (row) => {
+      render: (row: any) => {
         const c = row as unknown as { currency: string; claimedAmount: number };
         return `${c.currency} ${c.claimedAmount}`;
       },
@@ -395,7 +395,7 @@ function ClaimsTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <span className="px-2 py-0.5 bg-orange-50 text-orange-700 rounded text-xs">
           {String((row as unknown as { status: string }).status)}
         </span>
@@ -404,7 +404,7 @@ function ClaimsTab() {
     {
       key: "updateStatus",
       header: "Update Status",
-      render: (row) => {
+      render: (row: any) => {
         const c = row as unknown as { id: string };
         return (
           <div className="flex gap-2">
@@ -494,7 +494,7 @@ function EventsTab() {
     {
       key: "occurredAt",
       header: "Occurred At",
-      render: (row) => {
+      render: (row: any) => {
         const ev = row as unknown as { occurredAt: string };
         return (
           <span className="text-xs text-gray-500">

@@ -9,13 +9,7 @@ import {
   Loader2,
   AlertTriangle,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  useToast,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface BankAccount {
@@ -404,21 +398,21 @@ export default function TreasuryPage() {
                   {
                     key: "name",
                     header: "Portfolio Name",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-bold">{v as string}</span>
                     ),
                   },
                   {
                     key: "assetClass",
                     header: "Asset Class",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="ui-text-xs-muted">{v as string}</span>
                     ),
                   },
                   {
                     key: "yieldRate",
                     header: "Yield Rate",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-medium">
                         +{Number(v).toFixed(2)}%
                       </span>
@@ -427,7 +421,7 @@ export default function TreasuryPage() {
                   {
                     key: "currentValue",
                     header: "Current Value",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.s5}>
                         ${Number(v).toLocaleString()}
                       </span>

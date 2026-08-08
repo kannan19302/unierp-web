@@ -2,15 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { GitCompare, CheckCircle, AlertTriangle, FileText } from "lucide-react";
 
@@ -52,7 +44,7 @@ export default function AccountReconciliationPage() {
     {
       key: "account",
       header: "Account",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <span className="ui-heading-sm">{row.accountCode}</span>
           <span className={styles.s1}>{row.accountName}</span>
@@ -63,7 +55,7 @@ export default function AccountReconciliationPage() {
       key: "glBalance",
       header: "GL Balance",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">{fmtCurrency(row.glBalance)}</span>
       ),
     },
@@ -71,7 +63,7 @@ export default function AccountReconciliationPage() {
       key: "subLedgerBalance",
       header: "Sub-Ledger",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">{fmtCurrency(row.subLedgerBalance)}</span>
       ),
     },
@@ -79,7 +71,7 @@ export default function AccountReconciliationPage() {
       key: "difference",
       header: "Difference",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span
           className={`${styles.difference} ${row.difference === 0 ? styles.differenceBalanced : styles.differenceUnbalanced}`}
         >
@@ -90,7 +82,7 @@ export default function AccountReconciliationPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "MATCHED" ? "success" : "danger"}>
           {row.status}
         </Badge>
@@ -141,7 +133,7 @@ export default function AccountReconciliationPage() {
           columns={columns}
           data={items}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No reconciliation data"
           emptyMessage="Only accounts with an independent sub-ledger (Receivable/Payable) are reconciled here."
           emptyIcon={<GitCompare size={48} />}

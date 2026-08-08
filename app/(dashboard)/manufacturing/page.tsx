@@ -14,15 +14,7 @@ import {
   ShieldCheck,
   TrendingUp,
 } from "lucide-react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  DashboardChart,
-  ViewSwitcher,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, DashboardChart, ViewSwitcher, StatCardRow } from "@unerp/ui";
 
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import type { ModuleTab } from "@unerp/ui/layout";

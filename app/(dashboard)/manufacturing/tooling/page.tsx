@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import {
   Wrench,

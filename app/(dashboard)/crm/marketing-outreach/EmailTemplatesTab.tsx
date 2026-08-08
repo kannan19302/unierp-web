@@ -1,19 +1,7 @@
 "use client";
 import styles from "./EmailTemplatesTab.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Textarea,
-  KPICard,
-} from "@unerp/ui";
+import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Textarea, KPICard } from "@unerp/ui";
 import {
   Mail,
   Plus,
@@ -134,7 +122,7 @@ export default function EmailTemplatesTab() {
     {
       key: "name",
       header: "Template",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.style0}>
             <Mail size={16} />
@@ -149,7 +137,7 @@ export default function EmailTemplatesTab() {
     {
       key: "category",
       header: "Category",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={(categoryColors[row.category] || "default") as any}>
           {row.category}
         </Badge>
@@ -158,7 +146,7 @@ export default function EmailTemplatesTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.isActive ? "success" : "default"}>
           {row.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -169,7 +157,7 @@ export default function EmailTemplatesTab() {
       header: "",
       align: "right" as const,
       width: "100px",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.style2}>
           <button
             title="Preview"
@@ -246,7 +234,7 @@ export default function EmailTemplatesTab() {
           columns={columns}
           data={filtered}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           onRowClick={(r) => {
             setSelected(r);
             setPreviewOpen(true);

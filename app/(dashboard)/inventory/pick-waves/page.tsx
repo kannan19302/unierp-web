@@ -1,16 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  Input,
-  FormField,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, Input, FormField, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, AlertCircle, PackageCheck } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -59,7 +50,7 @@ const makeWaveColumns = (
   {
     key: "status",
     header: "Status",
-    render: (v) => (
+    render: (v: any) => (
       <Badge variant={v === "COMPLETED" ? "success" : "warning"}>
         {String(v)}
       </Badge>

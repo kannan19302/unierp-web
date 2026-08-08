@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
 import { Upload, XCircle, FileText } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -166,58 +166,38 @@ export default function ImportPage() {
         {logs.length === 0 ? (
           <p className="text-sm text-gray-400">No imports yet.</p>
         ) : (
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="text-left border-b text-gray-500">
-                <th className="pb-2">File</th>
-                <th className="pb-2">Type</th>
-                <th className="pb-2">Rows</th>
-                <th className="pb-2">Success</th>
-                <th className="pb-2">Errors</th>
-                <th className="pb-2">Status</th>
-                <th className="pb-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map((log) => (
-                <tr key={log.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2">
-                    <FileText className="w-4 h-4 inline mr-1" />
-                    {log.fileName}
-                  </td>
-                  <td className="py-2">{log.importType}</td>
-                  <td className="py-2">{log.totalRows}</td>
-                  <td className="py-2 text-green-600">{log.successRows}</td>
-                  <td className="py-2 text-red-600">{log.errorRows}</td>
-                  <td className="py-2">
-                    <Badge
-                      variant={
-                        log.status === "COMPLETED"
-                          ? "success"
-                          : log.status === "FAILED"
-                            ? "danger"
-                            : "warning"
-                      }
-                    >
-                      {log.status}
-                    </Badge>
-                  </td>
-                  <td className="py-2">
-                    {(log.status === "PENDING" ||
-                      log.status === "PROCESSING") && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => cancelImport(log.id)}
-                      >
-                        <XCircle className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "File", render: (log: any) => (<><FileText className="w-4 h-4 inline mr-1" />
+                                          {log.fileName}</>) },
+                        { key: "col_1", header: "Type", render: (log: any) => (<>{log.importType}</>) },
+                        { key: "col_2", header: "Rows", render: (log: any) => (<>{log.totalRows}</>) },
+                        { key: "col_3", header: "Success", render: (log: any) => (<>{log.successRows}</>) },
+                        { key: "col_4", header: "Errors", render: (log: any) => (<>{log.errorRows}</>) },
+                        { key: "col_5", header: "Status", render: (log: any) => (<><Badge
+                                            variant={
+                                              log.status === "COMPLETED"
+                                                ? "success"
+                                                : log.status === "FAILED"
+                                                  ? "danger"
+                                                  : "warning"
+                                            }
+                                          >
+                                            {log.status}
+                                          </Badge></>) },
+                        { key: "col_6", header: "Actions", render: (log: any) => (<>{(log.status === "PENDING" ||
+                                            log.status === "PROCESSING") && (
+                                            <Button
+                                              variant="ghost"
+                                              size="sm"
+                                              onClick={() => cancelImport(log.id)}
+                                            >
+                                              <XCircle className="w-4 h-4" />
+                                            </Button>
+                                          )}</>) },
+                      ];
+                                return <DataTable columns={columns} data={logs} rowKey={(log: any) => log.id} />;
+                              })()}</>
         )}
       </Card>
     </div>

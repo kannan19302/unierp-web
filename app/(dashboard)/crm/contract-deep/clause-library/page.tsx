@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 
@@ -30,43 +30,20 @@ export default function ClauseLibraryPage() {
         <button className="ui-btn">+ New Clause</button>
       </div>
       <div className="overflow-x-auto">
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-3 font-medium">Title</th>
-              <th className="py-2 px-3 font-medium">Category</th>
-              <th className="py-2 px-3 font-medium">Standard</th>
-              <th className="py-2 px-3 font-medium">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clauses.map((c: any) => (
-              <tr key={c.id} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-3 font-medium">{c.title}</td>
-                <td className="py-2 px-3">{c.category}</td>
-                <td className="py-2 px-3">{c.isStandard ? "Yes" : "No"}</td>
-                <td className="py-2 px-3 space-x-2">
-                  <button className="text-blue-600 hover:underline">
-                    Edit
-                  </button>
-                  <button className="text-red-600 hover:underline">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {clauses.length === 0 && (
-              <tr>
-                <td
-                  colSpan={4}
-                  className="py-4 text-center text-muted-foreground"
-                >
-                  No clauses in library
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Title", render: (c: any) => (<>{c.title}</>) },
+                { key: "col_1", header: "Category", render: (c: any) => (<>{c.category}</>) },
+                { key: "col_2", header: "Standard", render: (c: any) => (<>{c.isStandard ? "Yes" : "No"}</>) },
+                { key: "col_3", header: "Actions", render: (c: any) => (<><button className="text-blue-600 hover:underline">
+                                  Edit
+                                </button>
+                                <button className="text-red-600 hover:underline">
+                                  Delete
+                                </button></>) },
+              ];
+                        return <DataTable columns={columns} data={clauses} rowKey={(c: any) => c.id} />;
+                      })()}</>
       </div>
     </div>
   );

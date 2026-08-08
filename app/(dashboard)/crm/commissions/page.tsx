@@ -4,17 +4,7 @@ import type { CrmTab } from "@/components/crm/CrmTabLayout";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  type Column,
-  type SortOrder,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column, type SortOrder } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -285,23 +275,23 @@ export default function CommissionsPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => <span className="font-semibold">{r.name}</span>,
+      render: (r: any) => <span className="font-semibold">{r.name}</span>,
     },
-    { key: "type", header: "Type", render: (r) => getTypeBadge(r.type) },
+    { key: "type", header: "Type", render: (r: any) => getTypeBadge(r.type) },
     {
       key: "rate",
       header: "Rate",
       align: "right",
       sortable: true,
-      render: (r) =>
+      render: (r: any) =>
         r.type === "PERCENTAGE" ? `${r.rate}%` : `$${r.rate.toLocaleString()}`,
     },
-    { key: "appliesTo", header: "Applies To", render: (r) => r.appliesTo },
+    { key: "appliesTo", header: "Applies To", render: (r: any) => r.appliesTo },
     {
       key: "isActive",
       header: "Active",
       align: "center",
-      render: (r) =>
+      render: (r: any) =>
         r.isActive ? (
           <Badge variant="success">Active</Badge>
         ) : (
@@ -312,14 +302,14 @@ export default function CommissionsPage() {
       key: "entries",
       header: "Entries",
       align: "right",
-      render: (r) => r._count?.entries || 0,
+      render: (r: any) => r._count?.entries || 0,
     },
     {
       key: "actions",
       header: "Actions",
       align: "center",
       width: "80px",
-      render: (r) => (
+      render: (r: any) => (
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -338,22 +328,22 @@ export default function CommissionsPage() {
     {
       key: "userName",
       header: "User",
-      render: (e) => (
+      render: (e: any) => (
         <span className="font-semibold">{e.userName || e.userId}</span>
       ),
     },
     {
       key: "opportunityName",
       header: "Opportunity",
-      render: (e) => e.opportunityName || e.opportunityId,
+      render: (e: any) => e.opportunityName || e.opportunityId,
     },
-    { key: "ruleName", header: "Rule", render: (e) => e.ruleName || e.ruleId },
+    { key: "ruleName", header: "Rule", render: (e: any) => e.ruleName || e.ruleId },
     {
       key: "amount",
       header: "Amount",
       align: "right",
       sortable: true,
-      render: (e) => (
+      render: (e: any) => (
         <span className={styles.p21}>${e.amount.toLocaleString()}</span>
       ),
     },
@@ -361,12 +351,12 @@ export default function CommissionsPage() {
       key: "status",
       header: "Status",
       align: "center",
-      render: (e) => getStatusBadge(e.status),
+      render: (e: any) => getStatusBadge(e.status),
     },
     {
       key: "period",
       header: "Period",
-      render: (e) => (
+      render: (e: any) => (
         <span className="text-xs">
           {e.periodStart} - {e.periodEnd}
         </span>
@@ -471,7 +461,7 @@ export default function CommissionsPage() {
             <DataTable<CommissionRule>
               columns={ruleColumns}
               data={sortedRules}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               sortBy={ruleSortBy}
               sortOrder={ruleSortOrder}
               onSortChange={(key, order) => {
@@ -487,7 +477,7 @@ export default function CommissionsPage() {
             <DataTable<CommissionEntry>
               columns={entryColumns}
               data={sortedEntries}
-              rowKey={(e) => e.id}
+              rowKey={(e: any) => e.id}
               sortBy={entrySortBy}
               sortOrder={entrySortOrder}
               onSortChange={(key, order) => {

@@ -458,12 +458,12 @@ export default function AutomationRulesPage() {
                 {
                   key: "trigger",
                   header: "Trigger",
-                  render: (v) => <span className={styles.p2}>{String(v)}</span>,
+                  render: (v: any) => <span className={styles.p2}>{String(v)}</span>,
                 },
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => {
+                  render: (v: any) => {
                     const s = statusColors[String(v) as Status];
                     return (
                       <span
@@ -479,13 +479,13 @@ export default function AutomationRulesPage() {
                 {
                   key: "lastRun",
                   header: "Last Run",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? new Date(String(v)).toLocaleString() : "—",
                 },
                 {
                   key: "avgExecTime",
                   header: "Avg Time",
-                  render: (v) => (v != null ? `${v}ms` : "—"),
+                  render: (v: any) => (v != null ? `${v}ms` : "—"),
                 },
                 {
                   key: "id",
@@ -547,12 +547,12 @@ export default function AutomationRulesPage() {
                 {
                   key: "ruleId",
                   header: "Rule ID",
-                  render: (v) => <span className={styles.p3}>{String(v)}</span>,
+                  render: (v: any) => <span className={styles.p3}>{String(v)}</span>,
                 },
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       style={{
                         background:
@@ -575,12 +575,12 @@ export default function AutomationRulesPage() {
                 {
                   key: "duration",
                   header: "Duration",
-                  render: (v) => `${v}ms`,
+                  render: (v: any) => `${v}ms`,
                 },
                 {
                   key: "timestamp",
                   header: "Timestamp",
-                  render: (v) => new Date(String(v)).toLocaleString(),
+                  render: (v: any) => new Date(String(v)).toLocaleString(),
                 },
               ] as ListColumn[]
             }

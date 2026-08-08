@@ -290,7 +290,7 @@ function LevelsTab() {
             {
               key: "productId",
               header: "Product",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -298,24 +298,24 @@ function LevelsTab() {
             {
               key: "minQty",
               header: "Min",
-              render: (v) => Number(v).toFixed(2),
+              render: (v: any) => Number(v).toFixed(2),
             },
             {
               key: "maxQty",
               header: "Max",
-              render: (v) => Number(v).toFixed(2),
+              render: (v: any) => Number(v).toFixed(2),
             },
             {
               key: "reorderQty",
               header: "Reorder Qty",
-              render: (v) => (v != null ? Number(v).toFixed(2) : "—"),
+              render: (v: any) => (v != null ? Number(v).toFixed(2) : "—"),
             },
             { key: "method", header: "Method" },
             { key: "leadTimeDays", header: "Lead Days" },
             {
               key: "active",
               header: "Active",
-              render: (v) => (v ? "✅" : "❌"),
+              render: (v: any) => (v ? "✅" : "❌"),
             },
             {
               key: "id",
@@ -447,21 +447,21 @@ function RunTab() {
               {
                 key: "runNumber",
                 header: "Run #",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="font-mono text-xs">{String(v)}</span>
                 ),
               },
               {
                 key: "warehouseId",
                 header: "Warehouse",
-                render: (v) => String(v ?? "All"),
+                render: (v: any) => String(v ?? "All"),
               },
               { key: "levelsScanned", header: "Levels Scanned" },
               { key: "suggestionsCreated", header: "Suggestions" },
               {
                 key: "completedAt",
                 header: "Completed At",
-                render: (v) => (v ? new Date(String(v)).toLocaleString() : "—"),
+                render: (v: any) => (v ? new Date(String(v)).toLocaleString() : "—"),
               },
             ] as ListColumn[]
           }
@@ -533,14 +533,14 @@ function SuggestionsTab() {
             {
               key: "suggestionNumber",
               header: "Suggestion #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "productId",
               header: "Product",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -548,24 +548,24 @@ function SuggestionsTab() {
             {
               key: "currentStock",
               header: "Current Stock",
-              render: (v) => Number(v).toFixed(2),
+              render: (v: any) => Number(v).toFixed(2),
             },
             {
               key: "suggestedQty",
               header: "Suggested Qty",
-              render: (v) => <strong>{Number(v).toFixed(2)}</strong>,
+              render: (v: any) => <strong>{Number(v).toFixed(2)}</strong>,
             },
             { key: "method", header: "Method" },
             {
               key: "neededByDate",
               header: "Needed By",
-              render: (v) =>
+              render: (v: any) =>
                 v ? new Date(String(v)).toLocaleDateString() : "—",
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => <Badge label={String(v)} colorMap={SUGG_COLORS} />,
+              render: (v: any) => <Badge label={String(v)} colorMap={SUGG_COLORS} />,
             },
             {
               key: "id",

@@ -1,15 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Badge,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Badge, KPICard, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { BarChart3, TrendingUp, DollarSign, Activity } from "lucide-react";
 
@@ -84,32 +75,32 @@ export default function IntelligencePage() {
     {
       key: "category",
       header: "Category",
-      render: (r) => <Badge>{r.category.replace(/_/g, " ")}</Badge>,
+      render: (r: any) => <Badge>{r.category.replace(/_/g, " ")}</Badge>,
     },
     { key: "reportPeriod", header: "Period" },
     {
       key: "totalSpend",
       header: "Total Spend",
-      render: (r) =>
+      render: (r: any) =>
         r.totalSpend ? `$${Number(r.totalSpend).toLocaleString()}` : "—",
     },
     {
       key: "totalSavings",
       header: "Savings",
-      render: (r) =>
+      render: (r: any) =>
         r.totalSavings ? `$${Number(r.totalSavings).toLocaleString()}` : "—",
     },
     {
       key: "savingsPct",
       header: "Savings %",
-      render: (r) => (r.savingsPct ? `${r.savingsPct}%` : "—"),
+      render: (r: any) => (r.savingsPct ? `${r.savingsPct}%` : "—"),
     },
     { key: "poCount", header: "POs" },
     { key: "supplierCount", header: "Suppliers" },
     {
       key: "createdAt",
       header: "Generated",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -173,7 +164,7 @@ export default function IntelligencePage() {
         <DataTable
           columns={columns}
           data={data}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No intelligence reports"
           emptyMessage="Generate your first spend analysis or supplier concentration report."
           emptyIcon={<BarChart3 size={48} />}

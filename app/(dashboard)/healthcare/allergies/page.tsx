@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
@@ -52,32 +52,19 @@ export default function HealthcareAllergiesPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Allergen</th>
-                <th>Severity</th>
-                <th>Reaction</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allergies.map((a: any) => (
-                <tr key={a.id}>
-                  <td className="font-medium">{a.patientName}</td>
-                  <td>{a.allergen}</td>
-                  <td>
-                    <span
-                      className={`ui-badge ${a.severity === "SEVERE" ? "ui-badge-danger" : a.severity === "MODERATE" ? "ui-badge-warning" : "ui-badge-info"}`}
-                    >
-                      {a.severity}
-                    </span>
-                  </td>
-                  <td>{a.reaction || "-"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Patient" , render: (a: any) => (<>{a.patientName}</>) },
+                        { key: "col_1", header: "Allergen" , render: (a: any) => (<>{a.allergen}</>) },
+                        { key: "col_2", header: "Severity" , render: (a: any) => (<><span
+                                            className={`ui-badge ${a.severity === "SEVERE" ? "ui-badge-danger" : a.severity === "MODERATE" ? "ui-badge-warning" : "ui-badge-info"}`}
+                                          >
+                                            {a.severity}
+                                          </span></>) },
+                        { key: "col_3", header: "Reaction" , render: (a: any) => (<>{a.reaction || "-"}</>) },
+                      ];
+                              return <DataTable columns={columns} data={allergies} rowKey={(a: any) => a.id} />;
+                          })()}</>
         </div>
       )}
     </div>

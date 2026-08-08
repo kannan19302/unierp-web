@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -42,84 +42,43 @@ export default function PipelineInspectionPage() {
     <div className="space-y-6">
       <div className="ui-card p-6">
         <h1 className="text-2xl font-bold mb-4">Inspection Configs</h1>
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Name</th>
-              <th className="py-2 px-2">Schedule</th>
-              <th className="py-2 px-2">Rules</th>
-              <th className="py-2 px-2">Enabled</th>
-              <th className="py-2 px-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {configs.map((c: any) => (
-              <tr key={c.id} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2">{c.name}</td>
-                <td className="py-2 px-2">{c.schedule}</td>
-                <td className="py-2 px-2">{(c.rules || []).length}</td>
-                <td className="py-2 px-2">
-                  <span
-                    className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${c.enabled ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
-                  >
-                    {c.enabled ? "Yes" : "No"}
-                  </span>
-                </td>
-                <td className="py-2 px-2">
-                  <button
-                    className="text-xs text-blue-600 hover:underline"
-                    onClick={() => runInspection(c.id)}
-                    disabled={running === c.id}
-                  >
-                    {running === c.id ? "Running..." : "Run"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Name", render: (c: any) => (<>{c.name}</>) },
+                { key: "col_1", header: "Schedule", render: (c: any) => (<>{c.schedule}</>) },
+                { key: "col_2", header: "Rules", render: (c: any) => (<>{(c.rules || []).length}</>) },
+                { key: "col_3", header: "Enabled", render: (c: any) => (<><span
+                                  className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${c.enabled ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
+                                >
+                                  {c.enabled ? "Yes" : "No"}
+                                </span></>) },
+                { key: "col_4", header: "Actions", render: (c: any) => (<><button
+                                  className="text-xs text-blue-600 hover:underline"
+                                  onClick={() => runInspection(c.id)}
+                                  disabled={running === c.id}
+                                >
+                                  {running === c.id ? "Running..." : "Run"}
+                                </button></>) },
+              ];
+                        return <DataTable columns={columns} data={configs} rowKey={(c: any) => c.id} />;
+                      })()}</>
       </div>
 
       <div className="ui-card p-6">
         <h2 className="text-xl font-bold mb-4">Recent Inspection Results</h2>
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Scanned</th>
-              <th className="py-2 px-2">Findings</th>
-              <th className="py-2 px-2">Status</th>
-              <th className="py-2 px-2">Completed</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results.map((r: any) => (
-              <tr key={r.id} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2">{r.totalScanned}</td>
-                <td className="py-2 px-2">{r.totalFindings}</td>
-                <td className="py-2 px-2">
-                  <span className="inline-block px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                    {r.status}
-                  </span>
-                </td>
-                <td className="py-2 px-2">
-                  {r.completedAt
-                    ? new Date(r.completedAt).toLocaleString()
-                    : "—"}
-                </td>
-              </tr>
-            ))}
-            {results.length === 0 && (
-              <tr>
-                <td
-                  colSpan={4}
-                  className="py-4 text-center text-muted-foreground"
-                >
-                  No results yet
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Scanned", render: (r: any) => (<>{r.totalScanned}</>) },
+                { key: "col_1", header: "Findings", render: (r: any) => (<>{r.totalFindings}</>) },
+                { key: "col_2", header: "Status", render: (r: any) => (<><span className="inline-block px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                  {r.status}
+                                </span></>) },
+                { key: "col_3", header: "Completed", render: (r: any) => (<>{r.completedAt
+                                  ? new Date(r.completedAt).toLocaleString()
+                                  : "—"}</>) },
+              ];
+                        return <DataTable columns={columns} data={results} rowKey={(r: any) => r.id} />;
+                      })()}</>
       </div>
     </div>
   );

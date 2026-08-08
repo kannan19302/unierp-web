@@ -588,7 +588,7 @@ export default function AdminAlertsTab() {
                 {
                   key: "metric",
                   header: "Metric",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className={styles.s27}>
                       {String(v).replace(/_/g, " ")}
                     </span>
@@ -597,18 +597,18 @@ export default function AdminAlertsTab() {
                 {
                   key: "operator",
                   header: "Operator",
-                  render: (v) =>
+                  render: (v: any) =>
                     OPERATORS.find((o) => o.value === v)?.label || String(v),
                 },
                 {
                   key: "value",
                   header: "Value",
-                  render: (v) => <span className="font-mono">{String(v)}</span>,
+                  render: (v: any) => <span className="font-mono">{String(v)}</span>,
                 },
                 {
                   key: "severity",
                   header: "Severity",
-                  render: (v) => {
+                  render: (v: any) => {
                     const sev = SEVERITY_CFG[v as keyof typeof SEVERITY_CFG];
                     return (
                       <span
@@ -646,12 +646,12 @@ export default function AdminAlertsTab() {
                 {
                   key: "cooldownMinutes",
                   header: "Cooldown",
-                  render: (v) => `${v}m`,
+                  render: (v: any) => `${v}m`,
                 },
                 {
                   key: "lastFiredAt",
                   header: "Last Fired",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? new Date(String(v)).toLocaleString() : "Never",
                 },
                 {

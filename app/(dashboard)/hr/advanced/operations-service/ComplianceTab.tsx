@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, Button, Spinner, useToast, Table } from "@unerp/ui";
+import { Card, Button, Spinner, useToast, DataTable } from "@unerp/ui";
 import {
   Play,
   ShieldAlert,
@@ -126,59 +126,33 @@ export default function ComplianceTab() {
         </div>
       ) : (
         <Card padding="none" className="builder-table-wrapper">
-          <Table className={styles.s7}>
-            <thead>
-              <tr className={styles.s8}>
-                <th className="p-4">Audit Area</th>
-                <th className="p-4">Check Message</th>
-                <th className="p-4">Status</th>
-                <th className={styles.s9}>Scanned At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {checks.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className={styles.s10}>
-                    No compliance records logged. Trigger a scan above to audit
-                    employee profiles.
-                  </td>
-                </tr>
-              ) : (
-                checks.map((c) => (
-                  <tr key={c.id} className="border-b">
-                    <td className={styles.s11}>
-                      {c.checkType.replace("_", " ")}
-                    </td>
-                    <td className="p-4">{c.message}</td>
-                    <td className="p-4">
-                      <span
-                        className={styles.dyn0}
-                        style={{
-                          background:
-                            c.status === "PASSED"
-                              ? "var(--color-success-light)"
-                              : c.status === "WARNING"
-                                ? "var(--color-warning-light)"
-                                : "var(--color-danger-light)",
-                          color:
-                            c.status === "PASSED"
-                              ? "var(--color-success-text)"
-                              : c.status === "WARNING"
-                                ? "var(--color-warning-text)"
-                                : "var(--color-danger-text)",
-                        }}
-                      >
-                        {c.status}
-                      </span>
-                    </td>
-                    <td className={styles.s12}>
-                      {new Date(c.checkedAt).toLocaleString()}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Audit Area", render: (c: any) => (<>{c.checkType.replace("_", " ")}</>) },
+                        { key: "col_1", header: "Check Message", render: (c: any) => (<>{c.message}</>) },
+                        { key: "col_2", header: "Status", render: (c: any) => (<><span
+                                              className={styles.dyn0}
+                                              style={{
+                                                background:
+                                                  c.status === "PASSED"
+                                                    ? "var(--color-success-light)"
+                                                    : c.status === "WARNING"
+                                                      ? "var(--color-warning-light)"
+                                                      : "var(--color-danger-light)",
+                                                color:
+                                                  c.status === "PASSED"
+                                                    ? "var(--color-success-text)"
+                                                    : c.status === "WARNING"
+                                                      ? "var(--color-warning-text)"
+                                                      : "var(--color-danger-text)",
+                                              }}
+                                            >
+                                              {c.status}
+                                            </span></>) },
+                        { key: "col_3", header: "Scanned At", render: (c: any) => (<>{new Date(c.checkedAt).toLocaleString()}</>) },
+                      ];
+                                return <DataTable columns={columns} data={checks} rowKey={(c: any) => c.id} />;
+                              })()}</>
         </Card>
       )}
     </div>

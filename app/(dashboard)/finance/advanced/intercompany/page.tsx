@@ -77,7 +77,7 @@ export default function IntercompanyPage() {
     {
       key: "status",
       header: "Status",
-      render: (val) => (
+      render: (val: any) => (
         <span
           className={`ui-badge ui-badge-${val === "ELIMINATED" || val === "MATCHED" ? "success" : "warning"}`}
         >

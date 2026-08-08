@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -52,34 +52,16 @@ export default function CompliancePage() {
             Contracts Expiring Within 30 Days
           </h2>
           <div className="overflow-x-auto">
-            <Table className="w-full text-sm">
-              <thead>
-                <tr className="border-b text-left">
-                  <th className="py-2 px-3 font-medium">Contract</th>
-                  <th className="py-2 px-3 font-medium">Customer</th>
-                  <th className="py-2 px-3 font-medium">End Date</th>
-                  <th className="py-2 px-3 font-medium">Value</th>
-                  <th className="py-2 px-3 font-medium">Auto-Renew</th>
-                </tr>
-              </thead>
-              <tbody>
-                {risk.contracts.map((c: any) => (
-                  <tr key={c.id} className="border-b hover:bg-muted/50">
-                    <td className="py-2 px-3">
-                      {c.contractNumber} - {c.title}
-                    </td>
-                    <td className="py-2 px-3">{c.customer?.name || "-"}</td>
-                    <td className="py-2 px-3">
-                      {new Date(c.endDate).toLocaleDateString()}
-                    </td>
-                    <td className="py-2 px-3">
-                      {c.currency} {Number(c.value).toLocaleString()}
-                    </td>
-                    <td className="py-2 px-3">{c.autoRenew ? "Yes" : "No"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Contract", render: (c: any) => (<>{c.contractNumber} - {c.title}</>) },
+                        { key: "col_1", header: "Customer", render: (c: any) => (<>{c.customer?.name || "-"}</>) },
+                        { key: "col_2", header: "End Date", render: (c: any) => (<>{new Date(c.endDate).toLocaleDateString()}</>) },
+                        { key: "col_3", header: "Value", render: (c: any) => (<>{c.currency} {Number(c.value).toLocaleString()}</>) },
+                        { key: "col_4", header: "Auto-Renew", render: (c: any) => (<>{c.autoRenew ? "Yes" : "No"}</>) },
+                      ];
+                                return <DataTable columns={columns} data={risk.contracts} rowKey={(c: any) => c.id} />;
+                              })()}</>
           </div>
         </div>
       )}

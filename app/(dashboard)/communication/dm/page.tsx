@@ -1,18 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  FormField,
-  Select,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, FormField, Select } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { MessageSquare, Plus, Search, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -79,7 +68,7 @@ export default function DirectMessagesPage() {
     {
       key: "name",
       header: "Direct Message Chat",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             {row.name
@@ -99,7 +88,7 @@ export default function DirectMessagesPage() {
     {
       key: "unreads",
       header: "Status",
-      render: (row) =>
+      render: (row: any) =>
         row.unreadCount > 0 ? (
           <Badge variant="danger">{row.unreadCount} Unread</Badge>
         ) : (
@@ -110,7 +99,7 @@ export default function DirectMessagesPage() {
       key: "action",
       header: "Action",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <Link href={`/connect?chat=${row.id}`}>
           <Button variant="secondary">
             Open Chat <ArrowRight size={12} className={styles.s2} />
@@ -148,7 +137,7 @@ export default function DirectMessagesPage() {
           <DataTable
             columns={columns}
             data={conversations}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No conversations found"
             emptyMessage="Create a direct conversation to start messaging."
             emptyIcon={<MessageSquare size={48} />}

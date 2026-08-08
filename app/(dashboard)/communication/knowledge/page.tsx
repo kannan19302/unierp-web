@@ -1,17 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column } from "@unerp/ui";
 import {
   BookOpen,
   Plus,
@@ -73,7 +63,7 @@ export default function KnowledgeBasePage() {
     {
       key: "title",
       header: "Title",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="font-medium">{r.title}</span>
           {r.category && (
@@ -87,7 +77,7 @@ export default function KnowledgeBasePage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "PUBLISHED" ? "success" : "warning"}>
           {r.status}
         </Badge>
@@ -96,7 +86,7 @@ export default function KnowledgeBasePage() {
     {
       key: "viewCount",
       header: "Views",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-1">
           <Eye size={14} />
           {r.viewCount}
@@ -106,7 +96,7 @@ export default function KnowledgeBasePage() {
     {
       key: "ratings",
       header: "Rating",
-      render: (r) => {
+      render: (r: any) => {
         const avg = r.ratings?.length
           ? (
               r.ratings.reduce((s: number, rt: any) => s + rt.rating, 0) /
@@ -124,12 +114,12 @@ export default function KnowledgeBasePage() {
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-flex ui-gap-1">
           <Button variant="ghost" size="sm">
             <Eye size={14} />
@@ -209,7 +199,7 @@ export default function KnowledgeBasePage() {
             <DataTable
               columns={columns}
               data={articles}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No articles yet"
               emptyIcon={<BookOpen size={48} />}
             />

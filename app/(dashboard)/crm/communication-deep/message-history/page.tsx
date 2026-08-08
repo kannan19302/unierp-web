@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 
@@ -50,44 +50,16 @@ export default function MessageHistoryPage() {
       </div>
       {loaded && (
         <div className="overflow-x-auto">
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="border-b text-left">
-                <th className="py-2 px-3 font-medium">Date</th>
-                <th className="py-2 px-3 font-medium">Channel</th>
-                <th className="py-2 px-3 font-medium">Recipient</th>
-                <th className="py-2 px-3 font-medium">Subject</th>
-                <th className="py-2 px-3 font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {messages.map((m: any) => (
-                <tr key={m.id} className="border-b hover:bg-muted/50">
-                  <td className="py-2 px-3">
-                    {new Date(m.sentAt).toLocaleString()}
-                  </td>
-                  <td className="py-2 px-3">
-                    {m.channel?.name || m.channelId}
-                  </td>
-                  <td className="py-2 px-3">{m.recipient}</td>
-                  <td className="py-2 px-3 max-w-xs truncate">
-                    {m.subject || "-"}
-                  </td>
-                  <td className="py-2 px-3">{m.status}</td>
-                </tr>
-              ))}
-              {messages.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={5}
-                    className="py-4 text-center text-muted-foreground"
-                  >
-                    No messages found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Date", render: (m: any) => (<>{new Date(m.sentAt).toLocaleString()}</>) },
+                    { key: "col_1", header: "Channel", render: (m: any) => (<>{m.channel?.name || m.channelId}</>) },
+                    { key: "col_2", header: "Recipient", render: (m: any) => (<>{m.recipient}</>) },
+                    { key: "col_3", header: "Subject", render: (m: any) => (<>{m.subject || "-"}</>) },
+                    { key: "col_4", header: "Status", render: (m: any) => (<>{m.status}</>) },
+                  ];
+                            return <DataTable columns={columns} data={messages} rowKey={(m: any) => m.id} />;
+                          })()}</>
         </div>
       )}
     </div>

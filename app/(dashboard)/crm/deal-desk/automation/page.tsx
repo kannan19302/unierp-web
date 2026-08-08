@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  useToast,
-  Button,
-  Input, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Input, DataTable } from "@unerp/ui";
 import { Settings, Plus, Trash2, Play, Edit3 } from "lucide-react";
 import { apiGet, apiPost, apiPut, apiSend } from "../../_components/api";
 
@@ -273,84 +267,51 @@ export default function DealAutomationPage() {
 
       <Card title={`Rules (${rules.length})`}>
         <div className="ui-table-wrapper">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Trigger</th>
-                <th>Conditions</th>
-                <th>Actions</th>
-                <th>Priority</th>
-                <th>Active</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rules.map((r: any) => (
-                <tr key={r.id}>
-                  <td>
-                    <strong>{r.name}</strong>
-                  </td>
-                  <td>
-                    <Badge variant="info">{r.triggerEvent}</Badge>
-                  </td>
-                  <td>
-                    {Array.isArray(r.conditions)
-                      ? `${r.conditions.length} conditions`
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {Array.isArray(r.actions)
-                      ? `${r.actions.length} actions`
-                      : "N/A"}
-                  </td>
-                  <td>{r.priority}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={r.isActive}
-                      onChange={() => handleToggle(r.id, r.isActive)}
-                      style={{ cursor: "pointer" }}
-                    />
-                  </td>
-                  <td>
-                    <div className="ui-action-cell">
-                      <Button
-                        variant="ghost"
-                        onClick={() => {
-                          setEditingId(r.id);
-                          setFormData({
-                            name: r.name,
-                            description: r.description || "",
-                            triggerEvent: r.triggerEvent,
-                            conditions: JSON.stringify(r.conditions, null, 2),
-                            actions: JSON.stringify(r.actions, null, 2),
-                            priority: r.priority,
-                          });
-                          setShowForm(true);
-                        }}
-                      >
-                        <Edit3 size={16} />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleDelete(r.id)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {rules.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="ui-text-center">
-                    No automation rules configured. Create one to get started.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Name", render: (r: any) => (<><strong>{r.name}</strong></>) },
+                    { key: "col_1", header: "Trigger", render: (r: any) => (<><Badge variant="info">{r.triggerEvent}</Badge></>) },
+                    { key: "col_2", header: "Conditions", render: (r: any) => (<>{Array.isArray(r.conditions)
+                                        ? `${r.conditions.length} conditions`
+                                        : "N/A"}</>) },
+                    { key: "col_3", header: "Actions", render: (r: any) => (<>{Array.isArray(r.actions)
+                                        ? `${r.actions.length} actions`
+                                        : "N/A"}</>) },
+                    { key: "col_4", header: "Priority", render: (r: any) => (<>{r.priority}</>) },
+                    { key: "col_5", header: "Active", render: (r: any) => (<><input
+                                        type="checkbox"
+                                        checked={r.isActive}
+                                        onChange={() => handleToggle(r.id, r.isActive)}
+                                        style={{ cursor: "pointer" }}
+                                      /></>) },
+                    { key: "col_6", header: "Actions", render: (r: any) => (<><div className="ui-action-cell">
+                                        <Button
+                                          variant="ghost"
+                                          onClick={() => {
+                                            setEditingId(r.id);
+                                            setFormData({
+                                              name: r.name,
+                                              description: r.description || "",
+                                              triggerEvent: r.triggerEvent,
+                                              conditions: JSON.stringify(r.conditions, null, 2),
+                                              actions: JSON.stringify(r.actions, null, 2),
+                                              priority: r.priority,
+                                            });
+                                            setShowForm(true);
+                                          }}
+                                        >
+                                          <Edit3 size={16} />
+                                        </Button>
+                                        <Button
+                                          variant="ghost"
+                                          onClick={() => handleDelete(r.id)}
+                                        >
+                                          <Trash2 size={16} />
+                                        </Button>
+                                      </div></>) },
+                  ];
+                            return <DataTable columns={columns} data={rules} rowKey={(r: any) => r.id} />;
+                          })()}</>
         </div>
       </Card>
     </div>

@@ -1,14 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
 import { ArrowLeftRight, DollarSign, Package, Truck } from "lucide-react";
 
 interface VendorReturn {
@@ -63,13 +55,13 @@ export default function VendorReturnsTab() {
     {
       key: "shipmentNumber",
       header: "Shipment #",
-      render: (r) => <span className="font-mono">{r.shipmentNumber}</span>,
+      render: (r: any) => <span className="font-mono">{r.shipmentNumber}</span>,
     },
-    { key: "carrier", header: "Carrier", render: (r) => r.carrier || "—" },
+    { key: "carrier", header: "Carrier", render: (r: any) => r.carrier || "—" },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "DELIVERED"
@@ -87,13 +79,13 @@ export default function VendorReturnsTab() {
       key: "creditAmount",
       header: "Credit",
       align: "right",
-      render: (r) =>
+      render: (r: any) =>
         r.creditAmount ? `$${Number(r.creditAmount).toLocaleString()}` : "—",
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 

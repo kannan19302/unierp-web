@@ -1,14 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner, useToast } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus } from "lucide-react";
 
@@ -56,14 +48,14 @@ export default function CategoriesPage() {
     {
       key: "name",
       header: "Name",
-      render: (r) => (
+      render: (r: any) => (
         <span style={{ paddingLeft: `${r.depth * 20}px` }}>
           {r.depth > 0 ? "└ " : ""}
           {r.name}
         </span>
       ),
     },
-    { key: "sortOrder", header: "Sort Order", render: (r) => r.sortOrder },
+    { key: "sortOrder", header: "Sort Order", render: (r: any) => r.sortOrder },
   ];
 
   if (loading) return <Spinner />;

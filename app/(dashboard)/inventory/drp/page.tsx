@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  Spinner,
-  StatusBadge,
-  Modal,
-  FormField,
-  Input,
-  DataTable,
-  Pagination,
-  type Column,
-  Card,
-} from "@unerp/ui";
+import { PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, DataTable, Pagination, type Column, Card } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 import { apiGet, apiPost } from "@/lib/api";
 import {
@@ -140,32 +128,32 @@ export default function DrpPlanningPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "horizonDays",
       header: "Horizon",
-      render: (row) => `${row.horizonDays} days`,
+      render: (row: any) => `${row.horizonDays} days`,
     },
     {
       key: "startDate",
       header: "Start Date",
-      render: (row) => new Date(row.startDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.startDate).toLocaleDateString(),
     },
     {
       key: "endDate",
       header: "End Date",
-      render: (row) => new Date(row.endDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.endDate).toLocaleDateString(),
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (row) => new Date(row.createdAt).toLocaleDateString(),
+      render: (row: any) => new Date(row.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           {row.status === "DRAFT" && (
             <Button
@@ -195,7 +183,7 @@ export default function DrpPlanningPage() {
     {
       key: "product",
       header: "Product",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <span className="ui-heading-sm">
             {row.product?.name || row.productId}
@@ -207,12 +195,12 @@ export default function DrpPlanningPage() {
     {
       key: "sourceWarehouse",
       header: "Source Warehouse",
-      render: (row) => row.sourceWarehouse?.name || row.sourceWarehouseId,
+      render: (row: any) => row.sourceWarehouse?.name || row.sourceWarehouseId,
     },
     {
       key: "destWarehouse",
       header: "Dest Warehouse",
-      render: (row) => row.destWarehouse?.name || row.destWarehouseId,
+      render: (row: any) => row.destWarehouse?.name || row.destWarehouseId,
     },
     { key: "forecastDemand", header: "Forecast Demand" },
     { key: "projectedStock", header: "Projected Stock" },
@@ -224,12 +212,12 @@ export default function DrpPlanningPage() {
     {
       key: "priority",
       header: "Priority",
-      render: (row) => <StatusBadge status={row.priority} />,
+      render: (row: any) => <StatusBadge status={row.priority} />,
     },
     {
       key: "actions",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <Button variant="ghost" size="sm" onClick={(e) => e.stopPropagation()}>
           <Eye size={14} />
         </Button>
@@ -278,7 +266,7 @@ export default function DrpPlanningPage() {
           <DataTable
             columns={runColumns}
             data={runs}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No runs"
             emptyMessage="Create a new DRP run to start planning."
             emptyIcon={<GitBranch size={48} />}
@@ -301,7 +289,7 @@ export default function DrpPlanningPage() {
           <DataTable
             columns={planColumns}
             data={plans}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No plans"
             emptyMessage="Execute a DRP run to generate plans."
             emptyIcon={<BarChart3 size={48} />}

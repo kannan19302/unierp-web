@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  KPICard,
-  Spinner,
-  DataTable,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, KPICard, Spinner, DataTable, Button, type Column } from "@unerp/ui";
 import {
   Server,
   Globe,
@@ -82,7 +75,7 @@ export default function DevopsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={`ui-badge ui-badge-${r.status === "SUCCESS" ? "success" : r.status === "FAILED" ? "danger" : "warning"}`}
         >

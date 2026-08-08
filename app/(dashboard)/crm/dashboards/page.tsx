@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Spinner,
-  Button,
-  Badge,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Spinner, Button, Badge } from "@unerp/ui";
 import {
   LayoutDashboard,
   Plus,

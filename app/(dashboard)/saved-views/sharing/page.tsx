@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import React from "react";
@@ -22,30 +22,19 @@ export default function SavedViewSharingPage() {
       </div>
 
       <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-        <Table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-gray-500 font-medium text-xs uppercase border-b">
-            <tr>
-              <th className="p-3">View ID</th>
-              <th className="p-3">Shared With</th>
-              <th className="p-3">Permission</th>
-              <th className="p-3">Shared At</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y text-gray-700">
-            <tr>
-              <td className="p-3 font-mono text-xs font-semibold">
-                vw_q1_pipeline_open
-              </td>
-              <td className="p-3">role:SALES_MANAGER</td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
-                  EDIT
-                </span>
-              </td>
-              <td className="p-3 text-xs text-gray-500">2026-07-26</td>
-            </tr>
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "View ID", render: (row: any) => (<>{row.col_0}</>) },
+                { key: "col_1", header: "Shared With", render: (row: any) => (<>{row.col_1}</>) },
+                { key: "col_2", header: "Permission", render: (row: any) => (<>{row.col_2}</>) },
+                { key: "col_3", header: "Shared At", render: (row: any) => (<>{row.col_3}</>) },
+              ];
+                        return <DataTable columns={columns} data={[
+                { col_0: ( <>vw_q1_pipeline_open</> ), col_1: ( <>role:SALES_MANAGER</> ), col_2: ( <><span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
+                                EDIT
+                              </span></> ), col_3: ( <>2026-07-26</> ),  },
+              ]} rowKey={(row: any, i: any) => String(i)} />;
+                      })()}</>
       </div>
     </div>
   );

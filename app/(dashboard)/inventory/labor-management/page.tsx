@@ -1,11 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  Card,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import { Users, Clock, TrendingUp, Calendar } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -127,7 +122,7 @@ export default function LaborManagementPage() {
     {
       key: "avgEfficiencyPct",
       header: "Avg Efficiency",
-      render: (row) => {
+      render: (row: any) => {
         const r = row as unknown as { avgEfficiencyPct: number | null };
         return r.avgEfficiencyPct != null
           ? `${Math.round(Number(r.avgEfficiencyPct))}%`
@@ -142,7 +137,7 @@ export default function LaborManagementPage() {
     {
       key: "avgEfficiencyPct",
       header: "Efficiency",
-      render: (row) => {
+      render: (row: any) => {
         const w = row as unknown as { avgEfficiencyPct: number | null };
         return w.avgEfficiencyPct != null
           ? `${Math.round(Number(w.avgEfficiencyPct))}%`
@@ -156,19 +151,19 @@ export default function LaborManagementPage() {
     {
       key: "standardMins",
       header: "Std Minutes",
-      render: (row) =>
+      render: (row: any) =>
         Number((row as unknown as LaborStandard).standardMins).toFixed(1),
     },
     {
       key: "description",
       header: "Description",
-      render: (row) =>
+      render: (row: any) =>
         String((row as unknown as LaborStandard).description ?? "—"),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const s = row as unknown as LaborStandard;
         return (
           <button
@@ -187,12 +182,12 @@ export default function LaborManagementPage() {
     {
       key: "dayOfWeek",
       header: "Day",
-      render: (row) => DAY_NAMES[(row as unknown as ShiftTemplate).dayOfWeek],
+      render: (row: any) => DAY_NAMES[(row as unknown as ShiftTemplate).dayOfWeek],
     },
     {
       key: "hours",
       header: "Hours",
-      render: (row) => {
+      render: (row: any) => {
         const s = row as unknown as ShiftTemplate;
         return `${s.startTime}–${s.endTime}`;
       },

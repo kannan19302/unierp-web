@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { PageHeader,
-  Card,
-  Badge,
-  Spinner,
-  Button,
-  Tooltip,
-  Drawer,
-  Disclosure,
-  EmptyState, Table } from "@unerp/ui";
+import { PageHeader, Card, Badge, Spinner, Button, Tooltip, Drawer, Disclosure, EmptyState, Table } from "@unerp/ui";
 import { Check, X, Minus, Shield, Search, ArrowLeft } from "lucide-react";
 import {
   PERMISSION_REGISTRY,
@@ -141,43 +133,40 @@ export default function MatrixPage() {
           </Card>
         ) : (
           <Card padding="none" className="builder-table-wrapper">
-            <Table className={styles.s3}>
-              <thead>
-                <tr className={styles.s4}>
-                  <th className={styles.s5}>Role</th>
-                  {modules.map((mod) => {
-                    const categories = getCategoriesForModule(mod);
-                    return (
-                      <th key={mod} className={styles.s6}>
+            <DataTable
+              columns={[
+                {
+                  key: "role",
+                  header: "Role",
+                  render: (role: RoleData) => (
+                    <div className="ui-hstack-2">
+                      <span className={styles.s9}>{role.name}</span>
+                      {role.isSystem && <Badge variant="warning">Sys</Badge>}
+                    </div>
+                  )
+                },
+                ...modules.map(mod => {
+                  const categories = getCategoriesForModule(mod);
+                  const hasCategories = categories.length > 0;
+                  return {
+                    key: mod,
+                    header: (
+                      <>
                         {mod}
                         {categories.length > 0 && (
                           <div className={styles.s7}>
                             ({categories.length} categories)
                           </div>
                         )}
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {roles.map((role) => (
-                  <tr key={role.id}>
-                    <td className={styles.s8}>
-                      <div className="ui-hstack-2">
-                        <span className={styles.s9}>{role.name}</span>
-                        {role.isSystem && <Badge variant="warning">Sys</Badge>}
-                      </div>
-                    </td>
-                    {modules.map((mod) => {
+                      </>
+                    ),
+                    render: (role: RoleData) => {
                       const level = getAccessLevel(role, mod);
                       const config = levelConfig[level];
                       const modPerms = getPermissionsByModule(mod);
                       const count = modPerms.filter((p) =>
                         role.permissions.includes(p.code),
                       ).length;
-                      const hasCategories =
-                        getCategoriesForModule(mod).length > 0;
                       const cellInner = (
                         <div
                           style={{ background: config.bg, color: config.color }}
@@ -187,8 +176,7 @@ export default function MatrixPage() {
                         </div>
                       );
                       return (
-                        <td
-                          key={mod}
+                        <div
                           style={{
                             background:
                               level === "full"
@@ -219,13 +207,15 @@ export default function MatrixPage() {
                               {cellInner}
                             </Tooltip>
                           )}
-                        </td>
+                        </div>
                       );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+                    }
+                  }
+                })
+              ]}
+              data={roles}
+              rowKey={(role: any) => role.id}
+            />
 
             {/* Legend */}
             <div className={styles.s13}>

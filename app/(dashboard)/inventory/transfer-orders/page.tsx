@@ -415,24 +415,24 @@ export default function TransferOrdersPage() {
                   {
                     key: "transferNumber",
                     header: "Order #",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono">{String(v)}</span>
                     ),
                   },
                   {
                     key: "fromWarehouseId",
                     header: "From",
-                    render: (v) => String(v).slice(0, 8),
+                    render: (v: any) => String(v).slice(0, 8),
                   },
                   {
                     key: "toWarehouseId",
                     header: "To",
-                    render: (v) => String(v).slice(0, 8),
+                    render: (v: any) => String(v).slice(0, 8),
                   },
                   {
                     key: "priority",
                     header: "Priority",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="px-2 py-0.5 bg-gray-100 rounded text-xs">
                         {String(v)}
                       </span>
@@ -441,7 +441,7 @@ export default function TransferOrdersPage() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`px-2 py-1 rounded text-xs ${STATUS_COLORS[String(v)] ?? ""}`}
                       >
@@ -452,13 +452,13 @@ export default function TransferOrdersPage() {
                   {
                     key: "expectedDate",
                     header: "Expected",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? new Date(String(v)).toLocaleDateString() : "-",
                   },
                   {
                     key: "_count",
                     header: "Lines",
-                    render: (v) => String((v as any)?.lines ?? 0),
+                    render: (v: any) => String((v as any)?.lines ?? 0),
                   },
                   {
                     key: "id",

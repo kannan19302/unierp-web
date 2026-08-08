@@ -83,20 +83,20 @@ export default function ClvPage() {
                   {
                     key: "customer",
                     header: "Customer",
-                    render: (row) => row.customer?.name || "Unknown",
+                    render: (row: any) => row.customer?.name || "Unknown",
                     sortable: true,
                   },
                   {
                     key: "clvAmount",
                     header: "CLV",
-                    render: (row) =>
+                    render: (row: any) =>
                       `$${Number(row.clvAmount).toLocaleString()}`,
                     sortable: true,
                   },
                   {
                     key: "averageOrderValue",
                     header: "Avg Order Value",
-                    render: (row) =>
+                    render: (row: any) =>
                       `$${Number(row.averageOrderValue).toLocaleString()}`,
                   },
                   { key: "totalOrders", header: "Orders", sortable: true },
@@ -108,13 +108,13 @@ export default function ClvPage() {
                   {
                     key: "totalRevenue",
                     header: "Total Revenue",
-                    render: (row) =>
+                    render: (row: any) =>
                       `$${Number(row.totalRevenue).toLocaleString()}`,
                   },
                   {
                     key: "calculatedAt",
                     header: "Calculated",
-                    render: (row) =>
+                    render: (row: any) =>
                       new Date(row.calculatedAt).toLocaleDateString(),
                   },
                 ]}

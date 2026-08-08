@@ -9,14 +9,7 @@ import {
   MapPin,
   ShieldCheck,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, Button, Badge, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 
@@ -174,7 +167,7 @@ export default function EconomicNexusMonitoringPage() {
       key: "state",
       header: "State",
       sortable: true,
-      render: (s) => (
+      render: (s: any) => (
         <span className="font-medium flex items-center gap-1">
           <MapPin size={12} />
           {s.state}
@@ -185,24 +178,24 @@ export default function EconomicNexusMonitoringPage() {
       key: "totalRevenue",
       header: "TTM Revenue",
       sortable: true,
-      render: (s) =>
+      render: (s: any) =>
         `$${Number(s.totalRevenue).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
     },
     {
       key: "revenueThreshold",
       header: "Threshold",
-      render: (s) => `$${Number(s.revenueThreshold).toLocaleString("en-US")}`,
+      render: (s: any) => `$${Number(s.revenueThreshold).toLocaleString("en-US")}`,
     },
     {
       key: "revenuePct",
       header: "% of Threshold",
       sortable: true,
-      render: (s) => `${Number(s.revenuePct).toFixed(1)}%`,
+      render: (s: any) => `${Number(s.revenuePct).toFixed(1)}%`,
     },
     {
       key: "transactionCount",
       header: "Transactions",
-      render: (s) =>
+      render: (s: any) =>
         s.transactionThreshold
           ? `${s.transactionCount} / ${s.transactionThreshold}`
           : String(s.transactionCount),
@@ -211,7 +204,7 @@ export default function EconomicNexusMonitoringPage() {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (s) => (
+      render: (s: any) => (
         <Badge variant={statusVariant[s.status]}>{s.status}</Badge>
       ),
     },
@@ -219,7 +212,7 @@ export default function EconomicNexusMonitoringPage() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (s) =>
+      render: (s: any) =>
         s.status !== "REGISTERED" &&
         (s.status === "EXCEEDED" || s.status === "APPROACHING") ? (
           <Button
@@ -242,19 +235,19 @@ export default function EconomicNexusMonitoringPage() {
     {
       key: "revenueThreshold",
       header: "Revenue Threshold",
-      render: (t) => `$${Number(t.revenueThreshold).toLocaleString("en-US")}`,
+      render: (t: any) => `$${Number(t.revenueThreshold).toLocaleString("en-US")}`,
     },
     {
       key: "transactionThreshold",
       header: "Transaction Threshold",
-      render: (t) =>
+      render: (t: any) =>
         t.transactionThreshold != null ? t.transactionThreshold : "None",
     },
     { key: "measurementPeriod", header: "Measurement Period" },
     {
       key: "isActive",
       header: "Active",
-      render: (t) => (
+      render: (t: any) => (
         <Badge variant={t.isActive ? "success" : "default"}>
           {t.isActive ? "Yes" : "No"}
         </Badge>
@@ -267,24 +260,24 @@ export default function EconomicNexusMonitoringPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={statusVariant[r.status]}>{r.status}</Badge>
       ),
     },
     {
       key: "registrationNumber",
       header: "Registration #",
-      render: (r) => r.registrationNumber || "—",
+      render: (r: any) => r.registrationNumber || "—",
     },
     {
       key: "filingFrequency",
       header: "Filing Frequency",
-      render: (r) => r.filingFrequency || "—",
+      render: (r: any) => r.filingFrequency || "—",
     },
     {
       key: "effectiveDate",
       header: "Effective Date",
-      render: (r) =>
+      render: (r: any) =>
         r.effectiveDate ? new Date(r.effectiveDate).toLocaleDateString() : "—",
     },
   ];
@@ -397,7 +390,7 @@ export default function EconomicNexusMonitoringPage() {
           columns={snapshotColumns}
           data={snapshots}
           loading={loading}
-          rowKey={(s) => s.id}
+          rowKey={(s: any) => s.id}
           emptyTitle="No monitoring snapshots yet"
           emptyMessage='Click "Recompute" to calculate trailing-12-month sales by state against configured thresholds.'
           emptyIcon={<Info size={48} />}
@@ -407,7 +400,7 @@ export default function EconomicNexusMonitoringPage() {
           columns={thresholdColumns}
           data={thresholds}
           loading={loading}
-          rowKey={(t) => t.id}
+          rowKey={(t: any) => t.id}
           emptyTitle="No thresholds configured"
           emptyMessage='Click "Seed Reference Thresholds" to load default US state economic-nexus rules.'
           emptyIcon={<Info size={48} />}
@@ -417,7 +410,7 @@ export default function EconomicNexusMonitoringPage() {
           columns={registrationColumns}
           data={registrations}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No nexus registrations on file"
           emptyMessage="Register a state from the Monitor tab once its threshold is exceeded."
           emptyIcon={<Info size={48} />}

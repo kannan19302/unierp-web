@@ -234,7 +234,7 @@ function CapasTab() {
           {
             key: "capaNumber",
             header: "CAPA #",
-            render: (v) => (
+            render: (v: any) => (
               <span className="font-mono text-blue-600 font-medium">
                 {String(v)}
               </span>
@@ -245,7 +245,7 @@ function CapasTab() {
           {
             key: "priority",
             header: "Priority",
-            render: (v) => (
+            render: (v: any) => (
               <span
                 className={`font-semibold text-xs ${priorityColor[String(v)] ?? "text-gray-500"}`}
               >
@@ -256,12 +256,12 @@ function CapasTab() {
           {
             key: "status",
             header: "Status",
-            render: (v) => statusBadge(String(v)),
+            render: (v: any) => statusBadge(String(v)),
           },
           {
             key: "actions",
             header: "Actions Done",
-            render: (v) => {
+            render: (v: any) => {
               const arr = (v as any[]) ?? [];
               return `${arr.filter((a: any) => a.status === "COMPLETE").length}/${arr.length}`;
             },
@@ -269,7 +269,7 @@ function CapasTab() {
           {
             key: "dueDate",
             header: "Due Date",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
         ] as ListColumn[]
       }
@@ -314,25 +314,25 @@ function CalibrationsTab() {
           {
             key: "serialNumber",
             header: "Serial #",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           { key: "calibrationType", header: "Type" },
           {
             key: "status",
             header: "Status",
-            render: (v) => statusBadge(String(v)),
+            render: (v: any) => statusBadge(String(v)),
           },
           {
             key: "scheduledDate",
             header: "Scheduled",
-            render: (v) => new Date(String(v)).toLocaleDateString(),
+            render: (v: any) => new Date(String(v)).toLocaleDateString(),
           },
           {
             key: "nextDueDate",
             header: "Next Due",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
-          { key: "result", header: "Result", render: (v) => String(v ?? "—") },
+          { key: "result", header: "Result", render: (v: any) => String(v ?? "—") },
         ] as ListColumn[]
       }
       data={records as unknown as Record<string, unknown>[]}
@@ -375,7 +375,7 @@ function DeviationsTab() {
           {
             key: "deviationNumber",
             header: "Deviation #",
-            render: (v) => (
+            render: (v: any) => (
               <span className="font-mono text-blue-600 font-medium">
                 {String(v)}
               </span>
@@ -386,19 +386,19 @@ function DeviationsTab() {
           {
             key: "severity",
             header: "Severity",
-            render: (v) => severityBadge(String(v)),
+            render: (v: any) => severityBadge(String(v)),
           },
           {
             key: "status",
             header: "Status",
-            render: (v) => statusBadge(String(v)),
+            render: (v: any) => statusBadge(String(v)),
           },
           {
             key: "detectedAt",
             header: "Detected",
-            render: (v) => new Date(String(v)).toLocaleDateString(),
+            render: (v: any) => new Date(String(v)).toLocaleDateString(),
           },
-          { key: "area", header: "Area", render: (v) => String(v ?? "—") },
+          { key: "area", header: "Area", render: (v: any) => String(v ?? "—") },
         ] as ListColumn[]
       }
       data={records as unknown as Record<string, unknown>[]}
@@ -442,7 +442,7 @@ function SopsTab() {
           {
             key: "docNumber",
             header: "Doc #",
-            render: (v) => (
+            render: (v: any) => (
               <span className="font-mono text-blue-600 font-medium">
                 {String(v)}
               </span>
@@ -453,23 +453,23 @@ function SopsTab() {
           {
             key: "department",
             header: "Dept",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           { key: "version", header: "Version" },
           {
             key: "status",
             header: "Status",
-            render: (v) => statusBadge(String(v)),
+            render: (v: any) => statusBadge(String(v)),
           },
           {
             key: "effectiveDate",
             header: "Effective",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
           {
             key: "reviewDate",
             header: "Review Due",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
         ] as ListColumn[]
       }

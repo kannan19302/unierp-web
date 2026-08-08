@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -26,54 +26,22 @@ export default function PartnerContractsPage() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Partner Contracts</h1>
       </div>
-      <Table className="w-full text-sm">
-        <thead>
-          <tr className="border-b text-left">
-            <th className="py-2 px-2">Contract #</th>
-            <th className="py-2 px-2">Name</th>
-            <th className="py-2 px-2">Type</th>
-            <th className="py-2 px-2">Status</th>
-            <th className="py-2 px-2">Value</th>
-            <th className="py-2 px-2">Start</th>
-            <th className="py-2 px-2">End</th>
-          </tr>
-        </thead>
-        <tbody>
-          {contracts.map((c: any) => (
-            <tr key={c.id} className="border-b hover:bg-muted/50">
-              <td className="py-2 px-2">{c.contractNumber}</td>
-              <td className="py-2 px-2">{c.name}</td>
-              <td className="py-2 px-2">{c.type}</td>
-              <td className="py-2 px-2">
-                <span
-                  className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${c.status === "ACTIVE" ? "bg-green-100 text-green-800" : c.status === "EXPIRED" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}`}
-                >
-                  {c.status}
-                </span>
-              </td>
-              <td className="py-2 px-2">
-                {c.currency} {c.value?.toLocaleString()}
-              </td>
-              <td className="py-2 px-2">
-                {new Date(c.startDate).toLocaleDateString()}
-              </td>
-              <td className="py-2 px-2">
-                {c.endDate ? new Date(c.endDate).toLocaleDateString() : "—"}
-              </td>
-            </tr>
-          ))}
-          {contracts.length === 0 && (
-            <tr>
-              <td
-                colSpan={7}
-                className="py-4 text-center text-muted-foreground"
-              >
-                No contracts found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+      <>{(() => {
+                    const columns = [
+            { key: "col_0", header: "Contract #", render: (c: any) => (<>{c.contractNumber}</>) },
+            { key: "col_1", header: "Name", render: (c: any) => (<>{c.name}</>) },
+            { key: "col_2", header: "Type", render: (c: any) => (<>{c.type}</>) },
+            { key: "col_3", header: "Status", render: (c: any) => (<><span
+                            className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${c.status === "ACTIVE" ? "bg-green-100 text-green-800" : c.status === "EXPIRED" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}`}
+                          >
+                            {c.status}
+                          </span></>) },
+            { key: "col_4", header: "Value", render: (c: any) => (<>{c.currency} {c.value?.toLocaleString()}</>) },
+            { key: "col_5", header: "Start", render: (c: any) => (<>{new Date(c.startDate).toLocaleDateString()}</>) },
+            { key: "col_6", header: "End", render: (c: any) => (<>{c.endDate ? new Date(c.endDate).toLocaleDateString() : "—"}</>) },
+          ];
+                    return <DataTable columns={columns} data={contracts} rowKey={(c: any) => c.id} />;
+                  })()}</>
     </div>
   );
 }

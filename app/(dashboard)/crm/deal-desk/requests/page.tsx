@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  useToast,
-  Button,
-  Input, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Input, Table } from "@unerp/ui";
 import {
   ClipboardList,
   Search,
@@ -93,89 +87,107 @@ export default function DealDeskRequestsPage() {
 
       <Card>
         <div className="ui-table-wrapper">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Opportunity</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Discount</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((r: any) => (
-                <tr key={r.id}>
-                  <td
+          <DataTable
+            columns={[
+              {
+                key: "opportunity",
+                header: "Opportunity",
+                render: (r: any) => (
+                  <div
                     className="ui-text-link"
+                    style={{ cursor: "pointer" }}
                     onClick={() =>
                       (window.location.href = `/crm/deal-desk/requests/${r.id}`)
                     }
                   >
                     {r.opportunity?.name || "N/A"}
-                  </td>
-                  <td>
-                    <Badge variant="info">{r.requestType}</Badge>
-                  </td>
-                  <td>
-                    ${Number(r.opportunity?.amount || 0).toLocaleString()}
-                  </td>
-                  <td>{r.discountRequest ? `${r.discountRequest}%` : "-"}</td>
-                  <td>
-                    <Badge
-                      variant={
-                        r.priority === "URGENT"
+                  </div>
+                )
+              },
+              {
+                key: "type",
+                header: "Type",
+                render: (r: any) => (
+                  <Badge variant="info">{r.requestType}</Badge>
+                )
+              },
+              {
+                key: "amount",
+                header: "Amount",
+                render: (r: any) => (
+                  <>${Number(r.opportunity?.amount || 0).toLocaleString()}</>
+                )
+              },
+              {
+                key: "discount",
+                header: "Discount",
+                render: (r: any) => (
+                  <>{r.discountRequest ? `${r.discountRequest}%` : "-"}</>
+                )
+              },
+              {
+                key: "priority",
+                header: "Priority",
+                render: (r: any) => (
+                  <Badge
+                    variant={
+                      r.priority === "URGENT"
+                        ? "danger"
+                        : r.priority === "HIGH"
+                          ? "warning"
+                          : "default"
+                    }
+                  >
+                    {r.priority}
+                  </Badge>
+                )
+              },
+              {
+                key: "status",
+                header: "Status",
+                render: (r: any) => (
+                  <Badge
+                    variant={
+                      r.status === "APPROVED"
+                        ? "success"
+                        : r.status === "REJECTED"
                           ? "danger"
-                          : r.priority === "HIGH"
+                          : r.status === "PENDING"
                             ? "warning"
-                            : "default"
+                            : "info"
+                    }
+                  >
+                    {r.status}
+                  </Badge>
+                )
+              },
+              {
+                key: "created",
+                header: "Created",
+                render: (r: any) => (
+                  <>{new Date(r.createdAt).toLocaleDateString()}</>
+                )
+              },
+              {
+                key: "actions",
+                header: "Actions",
+                render: (r: any) => (
+                  <div className="ui-action-cell">
+                    <Button
+                      variant="ghost"
+                      onClick={() =>
+                        (window.location.href = `/crm/deal-desk/requests/${r.id}`)
                       }
                     >
-                      {r.priority}
-                    </Badge>
-                  </td>
-                  <td>
-                    <Badge
-                      variant={
-                        r.status === "APPROVED"
-                          ? "success"
-                          : r.status === "REJECTED"
-                            ? "danger"
-                            : r.status === "PENDING"
-                              ? "warning"
-                              : "info"
-                      }
-                    >
-                      {r.status}
-                    </Badge>
-                  </td>
-                  <td>{new Date(r.createdAt).toLocaleDateString()}</td>
-                  <td>
-                    <div className="ui-action-cell">
-                      <Button
-                        variant="ghost"
-                        onClick={() =>
-                          (window.location.href = `/crm/deal-desk/requests/${r.id}`)
-                        }
-                      >
-                        View
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {requests.length === 0 && (
-                <tr>
-                  <td colSpan={8} className="ui-text-center">
-                    No requests found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+                      View
+                    </Button>
+                  </div>
+                )
+              }
+            ]}
+            data={requests}
+            rowKey={(r: any) => String(r.id)}
+          />
         </div>
         {total > 50 && (
           <div className="ui-pagination">

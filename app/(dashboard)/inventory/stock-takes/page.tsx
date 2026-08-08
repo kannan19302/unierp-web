@@ -333,23 +333,23 @@ export default function StockTakesPage() {
                 {
                   key: "stockTakeNumber",
                   header: "Stock Take #",
-                  render: (v) => <span className="font-mono">{String(v)}</span>,
+                  render: (v: any) => <span className="font-mono">{String(v)}</span>,
                 },
                 {
                   key: "warehouseId",
                   header: "Warehouse",
-                  render: (v) => String(v).slice(0, 8),
+                  render: (v: any) => String(v).slice(0, 8),
                 },
                 { key: "countType", header: "Type" },
                 {
                   key: "countDate",
                   header: "Count Date",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs ${STATUS_COLORS[String(v)] ?? ""}`}
                     >
@@ -360,7 +360,7 @@ export default function StockTakesPage() {
                 {
                   key: "_count",
                   header: "Sheets",
-                  render: (v) => String((v as any)?.sheets ?? 0),
+                  render: (v: any) => String((v as any)?.sheets ?? 0),
                 },
                 {
                   key: "id",
@@ -459,7 +459,7 @@ export default function StockTakesPage() {
                   {
                     key: "productId",
                     header: "Product",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">
                         {String(v).slice(0, 10)}
                       </span>
@@ -470,7 +470,7 @@ export default function StockTakesPage() {
                   {
                     key: "varianceQty",
                     header: "Variance",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={
                           Number(v) < 0
@@ -486,17 +486,17 @@ export default function StockTakesPage() {
                   {
                     key: "variancePct",
                     header: "Variance %",
-                    render: (v) => `${Number(v).toFixed(1)}%`,
+                    render: (v: any) => `${Number(v).toFixed(1)}%`,
                   },
                   {
                     key: "varianceValue",
                     header: "Value",
-                    render: (v) => (v ? `$${Number(v).toFixed(2)}` : "-"),
+                    render: (v: any) => (v ? `$${Number(v).toFixed(2)}` : "-"),
                   },
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`px-2 py-0.5 rounded text-xs ${STATUS_COLORS[String(v)] ?? ""}`}
                       >
@@ -552,31 +552,31 @@ export default function StockTakesPage() {
                 {
                   key: "stockTakeNumber",
                   header: "Stock Take #",
-                  render: (v) => <span className="font-mono">{String(v)}</span>,
+                  render: (v: any) => <span className="font-mono">{String(v)}</span>,
                 },
                 {
                   key: "warehouseId",
                   header: "Warehouse",
-                  render: (v) => String(v).slice(0, 8),
+                  render: (v: any) => String(v).slice(0, 8),
                 },
                 {
                   key: "postedAt",
                   header: "Posted At",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? new Date(String(v)).toLocaleDateString() : "-",
                 },
                 { key: "totalLines", header: "Total Lines" },
                 {
                   key: "varianceLines",
                   header: "Variance Lines",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="text-red-600">{String(v)}</span>
                   ),
                 },
                 {
                   key: "accuracyRate",
                   header: "Accuracy Rate",
-                  render: (v) => (
+                  render: (v: any) => (
                     <div className={styles.s3}>
                       <div className={styles.s4}>
                         <div style={{ width: `${v}%` }} className={styles.s5} />

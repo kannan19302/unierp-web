@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Clock, Play, Calendar, Mail } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -133,54 +133,24 @@ export default function ReportingJobsPage() {
             No scheduled report jobs.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Job Name</th>
-                <th style={{ padding: "12px" }}>Cron Schedule</th>
-                <th style={{ padding: "12px" }}>Format</th>
-                <th style={{ padding: "12px" }}>Last Execution</th>
-                <th style={{ padding: "12px" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs.map((j) => (
-                <tr key={j.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {j.jobName}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <code>{j.cronSchedule}</code>
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="info">{j.outputFormat}</Badge>
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--color-text-secondary)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    {j.lastRunAt
-                      ? new Date(j.lastRunAt).toLocaleString()
-                      : "Never"}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleRunNow(j.id)}
-                    >
-                      <Play size={12} style={{ marginRight: "6px" }} /> Run Now
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Job Name" , render: (j: any) => (<>{j.jobName}</>) },
+                        { key: "col_1", header: "Cron Schedule" , render: (j: any) => (<><code>{j.cronSchedule}</code></>) },
+                        { key: "col_2", header: "Format" , render: (j: any) => (<><Badge variant="info">{j.outputFormat}</Badge></>) },
+                        { key: "col_3", header: "Last Execution" , render: (j: any) => (<>{j.lastRunAt
+                                            ? new Date(j.lastRunAt).toLocaleString()
+                                            : "Never"}</>) },
+                        { key: "col_4", header: "Action" , render: (j: any) => (<><Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => handleRunNow(j.id)}
+                                          >
+                                            <Play size={12} style={{ marginRight: "6px" }} /> Run Now
+                                          </Button></>) },
+                      ];
+                              return <DataTable columns={columns} data={jobs} rowKey={(j: any) => j.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

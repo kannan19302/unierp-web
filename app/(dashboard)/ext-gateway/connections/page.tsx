@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { Plus, Eye, Plug, Trash2 } from "lucide-react";
 
 interface Connection {
@@ -52,12 +45,12 @@ export default function ConnectionsPage() {
     {
       key: "rateLimitPerMin",
       header: "Rate Limit",
-      render: (r) => `${r.rateLimitPerMin}/min`,
+      render: (r: any) => `${r.rateLimitPerMin}/min`,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "ACTIVE"
@@ -74,7 +67,7 @@ export default function ConnectionsPage() {
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

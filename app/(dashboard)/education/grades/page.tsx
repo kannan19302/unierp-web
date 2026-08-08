@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { PageHeader, Card, Button, Badge, KPICard, Table } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, KPICard, Table, DataTable } from "@unerp/ui";
 import { BookOpen, Award, Save, Users } from "lucide-react";
 
 const COURSES_MOCK = [
@@ -127,71 +127,43 @@ export default function GradeBookPage() {
 
       <Card>
         <div className={styles.s3}>
-          <Table className={styles.s4}>
-            <thead>
-              <tr className={styles.s5}>
-                <th className={styles.s6}>Student</th>
-                {assessments.map((a) => (
-                  <th key={a} className={styles.s7}>
-                    {a}
-                  </th>
-                ))}
-                <th className={styles.s8}>Avg</th>
-                <th className={styles.s8}>Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              {STUDENTS_MOCK.map((student) => {
-                const avg = getAverage(student.id);
-                const letter = getLetterGrade(avg);
-                return (
-                  <tr key={student.id} className={styles.s9}>
-                    <td className="p-3">
-                      <div className="font-medium">{student.name}</div>
-                      <div className="ui-text-xs-tertiary">{student.roll}</div>
-                    </td>
-                    {assessments.map((assessment) => (
-                      <td key={assessment} className={styles.s10}>
-                        <input
-                          type="number"
-                          min="0"
-                          max="100"
-                          value={getGrade(student.id, assessment) || ""}
-                          onChange={(e) =>
-                            setGradeValue(
-                              student.id,
-                              assessment,
-                              Number(e.target.value),
-                            )
-                          }
-                          placeholder="—"
-                          className={styles.s11}
-                        />
-                      </td>
-                    ))}
-                    <td className={styles.s12}>{avg > 0 ? `${avg}%` : "—"}</td>
-                    <td className={styles.s13}>
-                      <Badge
-                        variant={
-                          letter === "A"
-                            ? "success"
-                            : letter === "B"
-                              ? "info"
-                              : letter === "C"
-                                ? "warning"
-                                : letter === "F"
-                                  ? "danger"
-                                  : "default"
-                        }
-                      >
-                        {letter}
-                      </Badge>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+          <>{(() => {
+                          const columns = [
+                    { key: "col_0", header: "Student" , render: (student: any) => (<><div className="font-medium">{student.name}</div><div className="ui-text-xs-tertiary">{student.roll}</div></>) },
+                    { key: "col_1", header: "{a}" , render: (student: any) => (<><input
+                                            type="number"
+                                            min="0"
+                                            max="100"
+                                            value={getGrade(student.id, assessment) || ""}
+                                            onChange={(e) =>
+                                              setGradeValue(
+                                                student.id,
+                                                assessment,
+                                                Number(e.target.value),
+                                              )
+                                            }
+                                            placeholder="—"
+                                            className={styles.s11}
+                                          /></>) },
+                    { key: "col_2", header: "Avg" , render: (student: any) => (<>{avg > 0 ? `${avg}%` : "—"}</>) },
+                    { key: "col_3", header: "Grade" , render: (student: any) => (<><Badge
+                                          variant={
+                                            letter === "A"
+                                              ? "success"
+                                              : letter === "B"
+                                                ? "info"
+                                                : letter === "C"
+                                                  ? "warning"
+                                                  : letter === "F"
+                                                    ? "danger"
+                                                    : "default"
+                                          }
+                                        >
+                                          {letter}
+                                        </Badge></>) },
+                  ];
+                          return <DataTable columns={columns} data={STUDENTS_MOCK} rowKey={(student: any) => student.id} />;
+                      })()}</>
         </div>
       </Card>
     </div>

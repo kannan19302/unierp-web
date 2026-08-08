@@ -275,7 +275,7 @@ function RunsTab() {
           {
             key: "runNumber",
             header: "Run #",
-            render: (v) => (
+            render: (v: any) => (
               <span className="font-mono text-xs">{String(v)}</span>
             ),
           },
@@ -291,14 +291,14 @@ function RunsTab() {
           {
             key: "warehouseId",
             header: "Warehouse",
-            render: (v) => (
+            render: (v: any) => (
               <span className="text-xs">{String(v ?? "All")}</span>
             ),
           },
           {
             key: "status",
             header: "Status",
-            render: (v) => {
+            render: (v: any) => {
               const s = String(v);
               return (
                 <span
@@ -453,66 +453,66 @@ function ItemsTab() {
             {
               key: "productId",
               header: "Product",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "warehouseId",
               header: "Warehouse",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs">{String(v ?? "All")}</span>
               ),
             },
             {
               key: "totalRevenue",
               header: "Revenue",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs">{Number(v).toLocaleString()}</span>
               ),
             },
             {
               key: "totalQuantitySold",
               header: "Qty Sold",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs">{Number(v).toLocaleString()}</span>
               ),
             },
             {
               key: "revenueShare",
               header: "Rev Share",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs">{(Number(v) * 100).toFixed(2)}%</span>
               ),
             },
             {
               key: "cumulativeShare",
               header: "Cum Share",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs">{(Number(v) * 100).toFixed(2)}%</span>
               ),
             },
             {
               key: "abcClass",
               header: "ABC",
-              render: (v) => <Badge label={String(v)} colorMap={ABC_COLORS} />,
+              render: (v: any) => <Badge label={String(v)} colorMap={ABC_COLORS} />,
             },
             {
               key: "xyzClass",
               header: "XYZ",
-              render: (v) => <Badge label={String(v)} colorMap={XYZ_COLORS} />,
+              render: (v: any) => <Badge label={String(v)} colorMap={XYZ_COLORS} />,
             },
             {
               key: "combinedClass",
               header: "Class",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono font-bold text-sm">{String(v)}</span>
               ),
             },
             {
               key: "demandCv",
               header: "CV",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs">
                   {v != null ? Number(v).toFixed(3) : "—"}
                 </span>
@@ -700,7 +700,7 @@ function PoliciesTab() {
             {
               key: "combinedClass",
               header: "Class",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono font-bold">{String(v)}</span>
               ),
             },
@@ -709,22 +709,22 @@ function PoliciesTab() {
             {
               key: "safetyStockMultiplier",
               header: "Safety Stock ×",
-              render: (v) => `${Number(v).toFixed(2)}×`,
+              render: (v: any) => `${Number(v).toFixed(2)}×`,
             },
             {
               key: "preferredZone",
               header: "Zone",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             {
               key: "active",
               header: "Active",
-              render: (v) => (v ? "✅" : "❌"),
+              render: (v: any) => (v ? "✅" : "❌"),
             },
             {
               key: "id",
               header: "Actions",
-              render: (v) => (
+              render: (v: any) => (
                 <button
                   onClick={() => deleteP(String(v))}
                   className="px-2 py-1 text-xs border border-red-300 text-red-600 rounded hover:bg-red-50"
@@ -913,7 +913,7 @@ function SnapshotsTab() {
               {
                 key: "snapshotMonth",
                 header: "Month",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="font-mono text-xs">
                     {String(v).slice(0, 7)}
                   </span>
@@ -922,29 +922,29 @@ function SnapshotsTab() {
               {
                 key: "quantitySold",
                 header: "Qty Sold",
-                render: (v) => Number(v).toLocaleString(),
+                render: (v: any) => Number(v).toLocaleString(),
               },
               {
                 key: "revenue",
                 header: "Revenue",
-                render: (v) => Number(v).toLocaleString(),
+                render: (v: any) => Number(v).toLocaleString(),
               },
               { key: "transactionCount", header: "Transactions" },
               {
                 key: "avgSellingPrice",
                 header: "Avg Price",
-                render: (v) => (v != null ? Number(v).toFixed(2) : "—"),
+                render: (v: any) => (v != null ? Number(v).toFixed(2) : "—"),
               },
               {
                 key: "abcClass",
                 header: "ABC",
-                render: (v) =>
+                render: (v: any) =>
                   v ? <Badge label={String(v)} colorMap={ABC_COLORS} /> : "—",
               },
               {
                 key: "xyzClass",
                 header: "XYZ",
-                render: (v) =>
+                render: (v: any) =>
                   v ? <Badge label={String(v)} colorMap={XYZ_COLORS} /> : "—",
               },
             ] as ListColumn[]

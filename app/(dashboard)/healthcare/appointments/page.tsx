@@ -1,20 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import { Calendar, Plus, Clock, Users, CheckCircle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -86,7 +73,7 @@ export default function AppointmentsPage() {
     {
       key: "patient",
       header: "Patient",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-heading-sm">
           {row.patient
             ? `${row.patient.firstName} ${row.patient.lastName}`
@@ -97,7 +84,7 @@ export default function AppointmentsPage() {
     {
       key: "practitioner",
       header: "Practitioner",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.practitioner?.specialty || row.practitionerId.slice(0, 8)}
         </span>
@@ -106,7 +93,7 @@ export default function AppointmentsPage() {
     {
       key: "time",
       header: "Time",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="text-sm">
             {row.startTime ? new Date(row.startTime).toLocaleDateString() : "—"}
@@ -132,14 +119,14 @@ export default function AppointmentsPage() {
     {
       key: "notes",
       header: "Notes",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">{row.notes || "—"}</span>
       ),
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             (row.status || "SCHEDULED") === "COMPLETED"
@@ -232,7 +219,7 @@ export default function AppointmentsPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No appointments"
             emptyMessage="Book appointments to start."
             emptyIcon={<Calendar size={48} />}

@@ -1,14 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner, useToast } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus } from "lucide-react";
 
@@ -46,23 +38,23 @@ export default function TemplatesPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => <span className="ui-text-medium">{r.name}</span>,
+      render: (r: any) => <span className="ui-text-medium">{r.name}</span>,
     },
     {
       key: "category",
       header: "Category",
-      render: (r) => r.category || <span className="ui-text-muted">—</span>,
+      render: (r: any) => r.category || <span className="ui-text-muted">—</span>,
     },
     {
       key: "variables",
       header: "Variables",
-      render: (r) => <span>{r.variables?.length || 0} vars</span>,
+      render: (r: any) => <span>{r.variables?.length || 0} vars</span>,
     },
     {
       key: "createdAt",
       header: "Created",
       sortable: true,
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 

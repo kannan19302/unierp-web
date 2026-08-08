@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 
@@ -30,64 +30,33 @@ export default function SocialPostsPage() {
         <button className="ui-btn">+ New Post</button>
       </div>
       <div className="overflow-x-auto">
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-3 font-medium">Platform</th>
-              <th className="py-2 px-3 font-medium">Content</th>
-              <th className="py-2 px-3 font-medium">Status</th>
-              <th className="py-2 px-3 font-medium">Scheduled</th>
-              <th className="py-2 px-3 font-medium">Published</th>
-              <th className="py-2 px-3 font-medium">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map((p: any) => (
-              <tr key={p.id} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-3">{p.platform}</td>
-                <td className="py-2 px-3 max-w-xs truncate">{p.content}</td>
-                <td className="py-2 px-3">
-                  <span
-                    className={`px-2 py-0.5 rounded text-xs ${p.status === "PUBLISHED" ? "bg-green-100 text-green-700" : p.status === "SCHEDULED" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"}`}
-                  >
-                    {p.status}
-                  </span>
-                </td>
-                <td className="py-2 px-3">
-                  {p.scheduledAt
-                    ? new Date(p.scheduledAt).toLocaleDateString()
-                    : "-"}
-                </td>
-                <td className="py-2 px-3">
-                  {p.publishedAt
-                    ? new Date(p.publishedAt).toLocaleDateString()
-                    : "-"}
-                </td>
-                <td className="py-2 px-3 space-x-2">
-                  <button className="text-blue-600 hover:underline">
-                    Edit
-                  </button>
-                  <button className="text-green-600 hover:underline">
-                    Publish
-                  </button>
-                  <button className="text-red-600 hover:underline">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {posts.length === 0 && (
-              <tr>
-                <td
-                  colSpan={6}
-                  className="py-4 text-center text-muted-foreground"
-                >
-                  No social posts found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Platform", render: (p: any) => (<>{p.platform}</>) },
+                { key: "col_1", header: "Content", render: (p: any) => (<>{p.content}</>) },
+                { key: "col_2", header: "Status", render: (p: any) => (<><span
+                                  className={`px-2 py-0.5 rounded text-xs ${p.status === "PUBLISHED" ? "bg-green-100 text-green-700" : p.status === "SCHEDULED" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"}`}
+                                >
+                                  {p.status}
+                                </span></>) },
+                { key: "col_3", header: "Scheduled", render: (p: any) => (<>{p.scheduledAt
+                                  ? new Date(p.scheduledAt).toLocaleDateString()
+                                  : "-"}</>) },
+                { key: "col_4", header: "Published", render: (p: any) => (<>{p.publishedAt
+                                  ? new Date(p.publishedAt).toLocaleDateString()
+                                  : "-"}</>) },
+                { key: "col_5", header: "Actions", render: (p: any) => (<><button className="text-blue-600 hover:underline">
+                                  Edit
+                                </button>
+                                <button className="text-green-600 hover:underline">
+                                  Publish
+                                </button>
+                                <button className="text-red-600 hover:underline">
+                                  Delete
+                                </button></>) },
+              ];
+                        return <DataTable columns={columns} data={posts} rowKey={(p: any) => p.id} />;
+                      })()}</>
       </div>
     </div>
   );

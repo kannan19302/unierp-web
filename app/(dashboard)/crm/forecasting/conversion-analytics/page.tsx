@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, DataTable, type Column } from "@unerp/ui";
 import { Filter, TrendingUp } from "lucide-react";
 import { apiGet, ApiRequestError } from "../../../../../src/lib/api";
 import styles from "./page.module.css";
@@ -102,38 +94,38 @@ export default function ConversionAnalyticsPage() {
           : breakdown === "campaign"
             ? "Campaign"
             : "Rep",
-      render: (r) => <div className="font-semibold">{r.groupLabel}</div>,
+      render: (r: any) => <div className="font-semibold">{r.groupLabel}</div>,
     },
-    { key: "totalLeads", header: "Leads", render: (r) => r.totalLeads },
+    { key: "totalLeads", header: "Leads", render: (r: any) => r.totalLeads },
     {
       key: "qualifiedLeads",
       header: "Qualified",
-      render: (r) => r.qualifiedLeads,
+      render: (r: any) => r.qualifiedLeads,
     },
     {
       key: "convertedLeads",
       header: "Converted",
-      render: (r) => r.convertedLeads,
+      render: (r: any) => r.convertedLeads,
     },
     {
       key: "wonOpportunities",
       header: "Won",
-      render: (r) => r.wonOpportunities,
+      render: (r: any) => r.wonOpportunities,
     },
     {
       key: "leadToQualifiedRate",
       header: "Lead→Qualified",
-      render: (r) => `${r.leadToQualifiedRate}%`,
+      render: (r: any) => `${r.leadToQualifiedRate}%`,
     },
     {
       key: "qualifiedToConvertedRate",
       header: "Qualified→Converted",
-      render: (r) => `${r.qualifiedToConvertedRate}%`,
+      render: (r: any) => `${r.qualifiedToConvertedRate}%`,
     },
     {
       key: "overallLeadToWonRate",
       header: "Overall Lead→Won",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.overallLeadToWonRate >= 10
@@ -150,21 +142,21 @@ export default function ConversionAnalyticsPage() {
   ];
 
   const trendColumns: Column<TrendBucket>[] = [
-    { key: "weekStart", header: "Week Of", render: (t) => t.weekStart },
+    { key: "weekStart", header: "Week Of", render: (t: any) => t.weekStart },
     {
       key: "leadsCreated",
       header: "Leads Created",
-      render: (t) => t.leadsCreated,
+      render: (t: any) => t.leadsCreated,
     },
     {
       key: "leadsConverted",
       header: "Leads Converted",
-      render: (t) => t.leadsConverted,
+      render: (t: any) => t.leadsConverted,
     },
     {
       key: "opportunitiesWon",
       header: "Opportunities Won",
-      render: (t) => t.opportunitiesWon,
+      render: (t: any) => t.opportunitiesWon,
     },
   ];
 
@@ -265,7 +257,7 @@ export default function ConversionAnalyticsPage() {
               <DataTable<FunnelGroupRow>
                 columns={columns}
                 data={activeRows}
-                rowKey={(r) => r.groupLabel}
+                rowKey={(r: any) => r.groupLabel}
               />
             )}
           </Card>
@@ -275,7 +267,7 @@ export default function ConversionAnalyticsPage() {
             <DataTable<TrendBucket>
               columns={trendColumns}
               data={trend}
-              rowKey={(t) => t.weekStart}
+              rowKey={(t: any) => t.weekStart}
             />
           </Card>
         </>

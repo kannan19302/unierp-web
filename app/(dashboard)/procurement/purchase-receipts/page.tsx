@@ -3,12 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { PageHeader, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, AlertCircle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 

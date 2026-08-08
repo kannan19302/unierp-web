@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { Trophy, Plus, X, Play, Square, Trash2 } from "lucide-react";
 import {
   apiGet,
@@ -143,7 +133,7 @@ export default function ContestsPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <Link
           href={`/crm/gamification-deep/contests/${r.id}`}
           className="ui-link"
@@ -156,20 +146,20 @@ export default function ContestsPage() {
       key: "contestType",
       header: "Type",
       sortable: true,
-      render: (r) => <Badge variant="info">{r.contestType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.contestType}</Badge>,
     },
     { key: "prize", header: "Prize", sortable: true },
     {
       key: "_count",
       header: "Entries",
       sortable: true,
-      render: (r) => r._count?.entries ?? 0,
+      render: (r: any) => r._count?.entries ?? 0,
     },
     {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "ACTIVE"
@@ -186,7 +176,7 @@ export default function ContestsPage() {
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-flex-row" style={{ gap: "var(--space-1)" }}>
           {r.status === "DRAFT" && (
             <button

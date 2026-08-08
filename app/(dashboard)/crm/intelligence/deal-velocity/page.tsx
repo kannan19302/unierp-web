@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  StatusBadge,
-  DataTable,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, StatusBadge, DataTable } from "@unerp/ui";
 import { TrendingUp, AlertTriangle, Clock } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import styles from "./page.module.css";

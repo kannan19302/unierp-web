@@ -86,17 +86,17 @@ export default function DbSchemaPage() {
               {
                 key: "tableName",
                 header: "Postgres Table Name",
-                render: (v) => <span className={styles.s5}>{String(v)}</span>,
+                render: (v: any) => <span className={styles.s5}>{String(v)}</span>,
               },
               {
                 key: "rowCount",
                 header: "Row Count Estimate",
-                render: (v) => `${Number(v).toLocaleString()} rows`,
+                render: (v: any) => `${Number(v).toLocaleString()} rows`,
               },
               {
                 key: "status",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <span className={styles.s6}>
                     <Layers size={10} />
                     {String(v)}

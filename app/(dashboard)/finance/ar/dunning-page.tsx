@@ -103,27 +103,27 @@ const RECENT_RUNS = [
 ];
 
 const LEVEL_COLUMNS: Column<DunningLevel>[] = [
-  { key: "level", header: "Level", render: (row) => row.level },
+  { key: "level", header: "Level", render: (row: any) => row.level },
   {
     key: "daysOverdue",
     header: "Days Overdue",
-    render: (row) => row.daysOverdue,
+    render: (row: any) => row.daysOverdue,
   },
-  { key: "template", header: "Template", render: (row) => row.template },
-  { key: "action", header: "Action", render: (row) => row.action },
+  { key: "template", header: "Template", render: (row: any) => row.template },
+  { key: "action", header: "Action", render: (row: any) => row.action },
 ];
 
 const RUN_COLUMNS: Column<DunningRun>[] = [
-  { key: "id", header: "Run ID", render: (row) => row.id },
-  { key: "date", header: "Date", render: (row) => row.date },
-  { key: "level", header: "Level", render: (row) => row.level },
-  { key: "sent", header: "Sent", render: (row) => row.sent },
-  { key: "opened", header: "Opened", render: (row) => row.opened },
+  { key: "id", header: "Run ID", render: (row: any) => row.id },
+  { key: "date", header: "Date", render: (row: any) => row.date },
+  { key: "level", header: "Level", render: (row: any) => row.level },
+  { key: "sent", header: "Sent", render: (row: any) => row.sent },
+  { key: "opened", header: "Opened", render: (row: any) => row.opened },
   {
     key: "amount",
     header: "Amount",
     align: "right" as const,
-    render: (row) => `$${row.amount.toLocaleString()}`,
+    render: (row: any) => `$${row.amount.toLocaleString()}`,
   },
 ];
 
@@ -220,7 +220,7 @@ export default function DunningPage() {
         <DataTable
           columns={LEVEL_COLUMNS}
           data={DUNNING_LEVELS}
-          rowKey={(row) => row.level}
+          rowKey={(row: any) => row.level}
           emptyTitle="No dunning levels configured"
           emptyMessage="Set up escalation levels to begin automated collections."
         />
@@ -240,7 +240,7 @@ export default function DunningPage() {
         <DataTable
           columns={RUN_COLUMNS}
           data={RECENT_RUNS}
-          rowKey={(row) => row.id}
+          rowKey={(row: any) => row.id}
           emptyTitle="No dunning runs yet"
           emptyMessage="Runs will appear here once a dunning campaign executes."
         />

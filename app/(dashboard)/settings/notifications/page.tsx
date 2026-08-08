@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -128,41 +128,18 @@ export default function NotificationPreferencesPage() {
           {loading ? (
             <div className={styles.loading}>Loading preferences...</div>
           ) : (
-            <Table className={styles.table}>
-              <thead>
-                <tr className="border-b">
-                  <th className={styles.categoryHeading}>Category</th>
-                  {CHANNELS.map((ch) => (
-                    <th key={ch.key} className={styles.channelHeading}>
-                      {ch.label}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {prefs.map((row, idx) => (
-                  <tr
-                    key={row.category}
-                    className={idx < prefs.length - 1 ? styles.row : undefined}
-                  >
-                    <td className={styles.categoryCell}>{row.category}</td>
-                    {CHANNELS.map((ch) => {
-                      const isOn = (row as any)[ch.key];
-                      return (
-                        <td key={ch.key} className={styles.channelCell}>
-                          <button
-                            onClick={() => toggle(idx, ch.key)}
-                            className={`${styles.toggle} ${isOn ? styles.toggleOn : ""}`}
-                          >
-                            <span className={styles.toggleThumb} />
-                          </button>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Category" , render: (row: any) => (<>{row.category}</>) },
+                            { key: "col_1", header: "{ch.label}" , render: (row: any) => (<><button
+                                                      onClick={() => toggle(idx, ch.key)}
+                                                      className={`${styles.toggle} ${isOn ? styles.toggleOn : ""}`}
+                                                    >
+                                                      <span className={styles.toggleThumb} />
+                                                    </button></>) },
+                          ];
+                                  return <DataTable columns={columns} data={prefs} rowKey={(row: any) => row.category} />;
+                              })()}</>
           )}
         </div>
       </div>

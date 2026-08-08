@@ -448,19 +448,19 @@ export default function ARAutomationPage() {
                       {
                         key: "levelName",
                         header: "Level Name",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "daysOverdue",
                         header: "Trigger (days)",
-                        render: (v) => `+${v}d`,
+                        render: (v: any) => `+${v}d`,
                       },
                       {
                         key: "feeAmount",
                         header: "Late Fee",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s17}>
                             ${Number(v).toFixed(2)}
                           </span>
@@ -469,7 +469,7 @@ export default function ARAutomationPage() {
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`${styles.statusPill} ${v === "ACTIVE" ? styles.statusActive : styles.statusInactive}`}
                           >
@@ -535,12 +535,12 @@ export default function ARAutomationPage() {
                       {
                         key: "runDate",
                         header: "Run Date",
-                        render: (v) => new Date(String(v)).toLocaleString(),
+                        render: (v: any) => new Date(String(v)).toLocaleString(),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`${styles.statusPill} ${v === "COMPLETED" ? styles.statusActive : styles.statusWarning}`}
                           >
@@ -551,7 +551,7 @@ export default function ARAutomationPage() {
                       {
                         key: "totalInvoices",
                         header: "Invoices Processed",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">{String(v)}</span>
                         ),
                       },

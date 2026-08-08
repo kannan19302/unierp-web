@@ -9,13 +9,7 @@ import {
   Loader2,
   AlertTriangle,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  useToast,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface TaxFiling {
@@ -211,7 +205,7 @@ export default function TaxFilingPage() {
                 {
                   key: "filingType",
                   header: "Return Type",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-bold">{v as string}</span>
                   ),
                 },
@@ -230,7 +224,7 @@ export default function TaxFilingPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) =>
+                  render: (v: any) =>
                     (v as string) === "FILED" ? (
                       <span
                         className={`dark:text-green-400 bg-green-50 dark:bg-green-900/20 py-1 ${styles.s6}`}

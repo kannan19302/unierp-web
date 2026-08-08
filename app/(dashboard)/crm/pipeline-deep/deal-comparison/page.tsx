@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState } from "react";
@@ -49,40 +49,21 @@ export default function PipelineDealComparisonPage() {
       </div>
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
       {deals.length > 0 && (
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Name</th>
-              <th className="py-2 px-2">Stage</th>
-              <th className="py-2 px-2">Amount</th>
-              <th className="py-2 px-2">Probability</th>
-              <th className="py-2 px-2">Weighted</th>
-              <th className="py-2 px-2">Customer</th>
-              <th className="py-2 px-2">Rep</th>
-              <th className="py-2 px-2">Close</th>
-            </tr>
-          </thead>
-          <tbody>
-            {deals.map((d: any) => (
-              <tr key={d.id} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2 font-medium">{d.name}</td>
-                <td className="py-2 px-2">{d.stage}</td>
-                <td className="py-2 px-2">${d.amount?.toLocaleString()}</td>
-                <td className="py-2 px-2">{d.probability}%</td>
-                <td className="py-2 px-2">
-                  ${d.weightedAmount?.toLocaleString()}
-                </td>
-                <td className="py-2 px-2">{d.customerName}</td>
-                <td className="py-2 px-2">{d.assignedToName}</td>
-                <td className="py-2 px-2">
-                  {d.expectedCloseDate
-                    ? new Date(d.expectedCloseDate).toLocaleDateString()
-                    : "—"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Name", render: (d: any) => (<>{d.name}</>) },
+                { key: "col_1", header: "Stage", render: (d: any) => (<>{d.stage}</>) },
+                { key: "col_2", header: "Amount", render: (d: any) => (<>${d.amount?.toLocaleString()}</>) },
+                { key: "col_3", header: "Probability", render: (d: any) => (<>{d.probability}%</>) },
+                { key: "col_4", header: "Weighted", render: (d: any) => (<>${d.weightedAmount?.toLocaleString()}</>) },
+                { key: "col_5", header: "Customer", render: (d: any) => (<>{d.customerName}</>) },
+                { key: "col_6", header: "Rep", render: (d: any) => (<>{d.assignedToName}</>) },
+                { key: "col_7", header: "Close", render: (d: any) => (<>{d.expectedCloseDate
+                                  ? new Date(d.expectedCloseDate).toLocaleDateString()
+                                  : "—"}</>) },
+              ];
+                        return <DataTable columns={columns} data={deals} rowKey={(d: any) => d.id} />;
+                      })()}</>
       )}
     </div>
   );

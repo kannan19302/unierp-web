@@ -28,7 +28,7 @@ import {
   RefreshCw,
   Plus,
 } from "lucide-react";
-import { useTheme, Table } from "@unerp/ui";
+import { useTheme, Table, DataTable } from "@unerp/ui";
 import "./landing.css";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1513,32 +1513,19 @@ export default function LandingPage() {
                       </button>
                     </div>
                     <div className="playground-table-container">
-                      <Table className="playground-table">
-                        <thead>
-                          <tr>
-                            <th>Invoice ID</th>
-                            <th>Description / Client</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {getFinanceInvoices().map((inv) => (
-                            <tr key={inv.id}>
-                              <td className="font-mono">{inv.id}</td>
-                              <td>{inv.customer}</td>
-                              <td>${inv.amount.toLocaleString()}</td>
-                              <td>
-                                <span
-                                  className={`status-badge ${inv.status.toLowerCase()}`}
-                                >
-                                  {inv.status}
-                                </span>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
+                      {(() => {
+                                                  const columns = [
+                                            { key: "col_0", header: "Invoice ID" , render: (inv: any) => (<>{inv.id}</>) },
+                                            { key: "col_1", header: "Description / Client" , render: (inv: any) => (<>{inv.customer}</>) },
+                                            { key: "col_2", header: "Amount" , render: (inv: any) => (<>${inv.amount.toLocaleString()}</>) },
+                                            { key: "col_3", header: "Status" , render: (inv: any) => (<><span
+                                                                            className={`status-badge ${inv.status.toLowerCase()}`}
+                                                                          >
+                                                                            {inv.status}
+                                                                          </span></>) },
+                                          ];
+                                                  return <DataTable columns={columns} data={getFinanceInvoices()} rowKey={(inv: any) => inv.id} />;
+                                              })()}
                     </div>
                     <div className="playground-ledger-balance">
                       <div className="ledger-block">
@@ -1745,34 +1732,20 @@ export default function LandingPage() {
                       </div>
                     )}
                     <div className="playground-table-container">
-                      <Table className="playground-table">
-                        <thead>
-                          <tr>
-                            <th>SKU</th>
-                            <th>Product Name</th>
-                            <th>Warehouse / Location</th>
-                            <th>Qty</th>
-                            <th>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {getInventoryItems().map((item) => (
-                            <tr key={item.sku}>
-                              <td className="font-mono">{item.sku}</td>
-                              <td>{item.name}</td>
-                              <td>{item.warehouse}</td>
-                              <td>{item.qty.toLocaleString()} units</td>
-                              <td>
-                                <span
-                                  className={`status-badge ${item.status.toLowerCase().replace(" ", "-")}`}
-                                >
-                                  {item.status}
-                                </span>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
+                      {(() => {
+                                                  const columns = [
+                                            { key: "col_0", header: "SKU" , render: (item: any) => (<>{item.sku}</>) },
+                                            { key: "col_1", header: "Product Name" , render: (item: any) => (<>{item.name}</>) },
+                                            { key: "col_2", header: "Warehouse / Location" , render: (item: any) => (<>{item.warehouse}</>) },
+                                            { key: "col_3", header: "Qty" , render: (item: any) => (<>{item.qty.toLocaleString()}units</>) },
+                                            { key: "col_4", header: "Status" , render: (item: any) => (<><span
+                                                                            className={`status-badge ${item.status.toLowerCase().replace(" ", "-")}`}
+                                                                          >
+                                                                            {item.status}
+                                                                          </span></>) },
+                                          ];
+                                                  return <DataTable columns={columns} data={getInventoryItems()} rowKey={(item: any) => item.sku} />;
+                                              })()}
                     </div>
                   </div>
                 )}

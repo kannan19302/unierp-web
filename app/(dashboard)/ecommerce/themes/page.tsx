@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Palette, Plus, CheckCircle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function EcommerceThemesPage() {
   const client = useApiClient();
@@ -89,51 +89,28 @@ export default function EcommerceThemesPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Active</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={4} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                items.map((i) => (
-                  <tr key={i.id}>
-                    <td>{i.name}</td>
-                    <td>
-                      {i.isActive ? (
-                        <span className="ui-badge-success">
-                          <CheckCircle size={14} /> Active
-                        </span>
-                      ) : (
-                        <span className="ui-badge">Inactive</span>
-                      )}
-                    </td>
-                    <td>{new Date(i.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      {!i.isActive && (
-                        <button
-                          className="ui-btn"
-                          onClick={() => activate(i.id)}
-                        >
-                          Activate
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Name", render: (i: any) => (<>{i.name}</>) },
+                    { key: "col_1", header: "Active", render: (i: any) => (<>{i.isActive ? (
+                                          <span className="ui-badge-success">
+                                            <CheckCircle size={14} /> Active
+                                          </span>
+                                        ) : (
+                                          <span className="ui-badge">Inactive</span>
+                                        )}</>) },
+                    { key: "col_2", header: "Created", render: (i: any) => (<>{new Date(i.createdAt).toLocaleDateString()}</>) },
+                    { key: "col_3", header: "Actions", render: (i: any) => (<>{!i.isActive && (
+                                          <button
+                                            className="ui-btn"
+                                            onClick={() => activate(i.id)}
+                                          >
+                                            Activate
+                                          </button>
+                                        )}</>) },
+                  ];
+                            return <DataTable columns={columns} data={items} rowKey={(i: any) => i.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

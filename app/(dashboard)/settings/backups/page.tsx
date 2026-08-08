@@ -1,16 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  ProtectedComponent,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, ProtectedComponent, useToast } from "@unerp/ui";
 import { Database, Plus, RefreshCw, ShieldAlert } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -74,7 +65,7 @@ export default function BackupPage() {
     {
       key: "filename",
       header: "Backup Entry",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <span className={styles.p1}>{row.filename}</span>
           {row.source === "SIMULATED" && (
@@ -86,21 +77,21 @@ export default function BackupPage() {
     {
       key: "sizeBytes",
       header: "Size",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-xs">{formatSize(row.sizeBytes)}</span>
       ),
     },
     {
       key: "createdBy",
       header: "Recorded By",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">{row.createdBy}</span>
       ),
     },
     {
       key: "createdAt",
       header: "Recorded At",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {new Date(row.createdAt).toLocaleString()}
         </span>
@@ -170,7 +161,7 @@ export default function BackupPage() {
               columns={columns}
               data={backups}
               loading={loading}
-              rowKey={(row) => row.id}
+              rowKey={(row: any) => row.id}
               emptyTitle="No backup entries"
               emptyMessage="Simulate a backup run to see an entry appear here."
               emptyIcon={<Database size={48} />}

@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -103,35 +103,18 @@ export default function NotificationPreferencesPage() {
       </div>
       {loading && <div className="text-gray-500">Loading...</div>}
       {!loading && (
-        <Table className="ui-table w-full">
-          <thead>
-            <tr>
-              <th>Category</th>
-              {CHANNELS.map((ch) => (
-                <th key={ch} className="text-center capitalize">
-                  {ch === "inApp" ? "In-App" : ch}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {CATEGORIES.map((cat) => (
-              <tr key={cat}>
-                <td className="font-medium">{cat}</td>
-                {CHANNELS.map((ch) => (
-                  <td key={ch} className="text-center">
-                    <input
-                      type="checkbox"
-                      className="toggle"
-                      checked={getPref(cat, ch)}
-                      onChange={() => togglePref(cat, ch)}
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                      const columns = [
+                { key: "col_0", header: "Category" , render: (cat: any) => (<>{cat}</>) },
+                { key: "col_1", header: "{ch === \"inApp\" ? \"In-App\" : ch}" , render: (cat: any) => (<><input
+                                    type="checkbox"
+                                    className="toggle"
+                                    checked={getPref(cat, ch)}
+                                    onChange={() => togglePref(cat, ch)}
+                                  /></>) },
+              ];
+                      return <DataTable columns={columns} data={CATEGORIES} rowKey={(cat: any) => cat} />;
+                  })()}</>
       )}
     </div>
   );

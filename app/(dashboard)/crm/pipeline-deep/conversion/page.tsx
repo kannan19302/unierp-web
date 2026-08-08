@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -30,76 +30,31 @@ export default function PipelineConversionPage() {
     <div className="space-y-6">
       <div className="ui-card p-4">
         <h1 className="text-xl font-bold mb-4">Stage Conversion Rates</h1>
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Stage</th>
-              <th className="py-2 px-2">Entered</th>
-              <th className="py-2 px-2">Won</th>
-              <th className="py-2 px-2">Lost</th>
-              <th className="py-2 px-2">→Win %</th>
-              <th className="py-2 px-2">→Lost %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {conversion.map((s: any) => (
-              <tr key={s.stage} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2 font-medium">{s.stage}</td>
-                <td className="py-2 px-2">{s.entered}</td>
-                <td className="py-2 px-2">{s.won}</td>
-                <td className="py-2 px-2">{s.lost}</td>
-                <td className="py-2 px-2">{s.conversionToWin}%</td>
-                <td className="py-2 px-2">{s.conversionToLoss}%</td>
-              </tr>
-            ))}
-            {conversion.length === 0 && (
-              <tr>
-                <td
-                  colSpan={6}
-                  className="py-4 text-center text-muted-foreground"
-                >
-                  No data
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Stage", render: (s: any) => (<>{s.stage}</>) },
+                { key: "col_1", header: "Entered", render: (s: any) => (<>{s.entered}</>) },
+                { key: "col_2", header: "Won", render: (s: any) => (<>{s.won}</>) },
+                { key: "col_3", header: "Lost", render: (s: any) => (<>{s.lost}</>) },
+                { key: "col_4", header: "→Win %", render: (s: any) => (<>{s.conversionToWin}%</>) },
+                { key: "col_5", header: "→Lost %", render: (s: any) => (<>{s.conversionToLoss}%</>) },
+              ];
+                        return <DataTable columns={columns} data={conversion} rowKey={(s: any) => s.stage} />;
+                      })()}</>
       </div>
 
       <div className="ui-card p-4">
         <h2 className="text-xl font-bold mb-4">Stage Duration Analysis</h2>
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Stage</th>
-              <th className="py-2 px-2">Deals</th>
-              <th className="py-2 px-2">Avg Days</th>
-              <th className="py-2 px-2">Min Days</th>
-              <th className="py-2 px-2">Max Days</th>
-            </tr>
-          </thead>
-          <tbody>
-            {duration.map((s: any) => (
-              <tr key={s.stage} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2 font-medium">{s.stage}</td>
-                <td className="py-2 px-2">{s.count}</td>
-                <td className="py-2 px-2">{s.avgDays}</td>
-                <td className="py-2 px-2">{s.minDays}</td>
-                <td className="py-2 px-2">{s.maxDays}</td>
-              </tr>
-            ))}
-            {duration.length === 0 && (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="py-4 text-center text-muted-foreground"
-                >
-                  No data
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Stage", render: (s: any) => (<>{s.stage}</>) },
+                { key: "col_1", header: "Deals", render: (s: any) => (<>{s.count}</>) },
+                { key: "col_2", header: "Avg Days", render: (s: any) => (<>{s.avgDays}</>) },
+                { key: "col_3", header: "Min Days", render: (s: any) => (<>{s.minDays}</>) },
+                { key: "col_4", header: "Max Days", render: (s: any) => (<>{s.maxDays}</>) },
+              ];
+                        return <DataTable columns={columns} data={duration} rowKey={(s: any) => s.stage} />;
+                      })()}</>
       </div>
     </div>
   );

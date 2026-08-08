@@ -2,19 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Tabs,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs } from "@unerp/ui";
 import {
   ShieldCheck,
   Plus,
@@ -182,12 +170,12 @@ export default function ExpensePoliciesPage() {
     {
       key: "category",
       header: "Category",
-      render: (r) => <Badge variant="info">{r.category}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.category}</Badge>,
     },
     {
       key: "max",
       header: "Max Per Item",
-      render: (r) =>
+      render: (r: any) =>
         r.maxAmountPerItem != null
           ? `$${Number(r.maxAmountPerItem).toFixed(2)}`
           : "—",
@@ -195,12 +183,12 @@ export default function ExpensePoliciesPage() {
     {
       key: "receipt",
       header: "Receipt Required Above",
-      render: (r) => `$${Number(r.receiptRequiredAbove).toFixed(2)}`,
+      render: (r: any) => `$${Number(r.receiptRequiredAbove).toFixed(2)}`,
     },
     {
       key: "active",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.isActive ? "success" : "default"}>
           {r.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -210,7 +198,7 @@ export default function ExpensePoliciesPage() {
       key: "actions",
       header: "",
       align: "right" as const,
-      render: (r) => (
+      render: (r: any) => (
         <Button variant="danger" onClick={() => deletePolicy(r.id)}>
           <Trash2 size={13} />
         </Button>
@@ -222,17 +210,17 @@ export default function ExpensePoliciesPage() {
     {
       key: "rate",
       header: "Rate / Mile",
-      render: (r) => `$${Number(r.ratePerMile).toFixed(4)}`,
+      render: (r: any) => `$${Number(r.ratePerMile).toFixed(4)}`,
     },
     {
       key: "effective",
       header: "Effective From",
-      render: (r) => new Date(r.effectiveDate).toLocaleDateString(),
+      render: (r: any) => new Date(r.effectiveDate).toLocaleDateString(),
     },
     {
       key: "end",
       header: "Ends",
-      render: (r) =>
+      render: (r: any) =>
         r.endDate ? new Date(r.endDate).toLocaleDateString() : "—",
     },
   ];
@@ -242,12 +230,12 @@ export default function ExpensePoliciesPage() {
     {
       key: "rate",
       header: "Daily Rate",
-      render: (r) => `${r.currency} ${Number(r.dailyRate).toFixed(2)}`,
+      render: (r: any) => `${r.currency} ${Number(r.dailyRate).toFixed(2)}`,
     },
     {
       key: "active",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.isActive ? "success" : "default"}>
           {r.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -259,14 +247,14 @@ export default function ExpensePoliciesPage() {
     {
       key: "provider",
       header: "Provider",
-      render: (r) => <Badge variant="info">{r.provider}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.provider}</Badge>,
     },
-    { key: "last4", header: "Card", render: (r) => `•••• ${r.last4}` },
-    { key: "employee", header: "Employee", render: (r) => r.employeeId },
+    { key: "last4", header: "Card", render: (r: any) => `•••• ${r.last4}` },
+    { key: "employee", header: "Employee", render: (r: any) => r.employeeId },
     {
       key: "active",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-flex ui-gap-1">
           <Badge variant={r.isActive ? "success" : "default"}>
             {r.isActive ? "Active" : "Inactive"}
@@ -279,7 +267,7 @@ export default function ExpensePoliciesPage() {
       key: "actions",
       header: "",
       align: "right" as const,
-      render: (r) => (
+      render: (r: any) => (
         <Link
           href={`/finance/advanced/corporate-cards/${r.id}`}
           onClick={(e) => e.stopPropagation()}
@@ -298,23 +286,23 @@ export default function ExpensePoliciesPage() {
       key: "amount",
       header: "Amount",
       align: "right" as const,
-      render: (r) => `$${Number(r.amount).toFixed(2)}`,
+      render: (r: any) => `$${Number(r.amount).toFixed(2)}`,
     },
     {
       key: "date",
       header: "Date",
-      render: (r) => new Date(r.transactionDate).toLocaleDateString(),
+      render: (r: any) => new Date(r.transactionDate).toLocaleDateString(),
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <Badge variant="warning">{r.status}</Badge>,
+      render: (r: any) => <Badge variant="warning">{r.status}</Badge>,
     },
     {
       key: "actions",
       header: "",
       align: "right" as const,
-      render: (r) => (
+      render: (r: any) => (
         <Button variant="secondary" onClick={() => ignoreTransaction(r.id)}>
           Ignore
         </Button>
@@ -356,7 +344,7 @@ export default function ExpensePoliciesPage() {
             <DataTable
               columns={policyColumns}
               data={policies}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No policies"
               emptyMessage="No category spending policies configured."
               emptyIcon={<ShieldCheck size={48} />}
@@ -374,7 +362,7 @@ export default function ExpensePoliciesPage() {
             <DataTable
               columns={mileageColumns}
               data={mileageRates}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No mileage rates"
               emptyMessage="Configure a mileage reimbursement rate."
               emptyIcon={<Car size={48} />}
@@ -392,7 +380,7 @@ export default function ExpensePoliciesPage() {
             <DataTable
               columns={perDiemColumns}
               data={perDiemRates}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No per-diem rates"
               emptyMessage="Configure a per-diem daily rate for a location."
               emptyIcon={<CalendarClock size={48} />}
@@ -411,7 +399,7 @@ export default function ExpensePoliciesPage() {
               <DataTable
                 columns={cardColumns}
                 data={cards}
-                rowKey={(r) => r.id}
+                rowKey={(r: any) => r.id}
                 emptyTitle="No corporate cards"
                 emptyMessage="Register a corporate card to import transactions."
                 emptyIcon={<CreditCard size={48} />}
@@ -422,7 +410,7 @@ export default function ExpensePoliciesPage() {
               <DataTable
                 columns={txnColumns}
                 data={unmatched}
-                rowKey={(r) => r.id}
+                rowKey={(r: any) => r.id}
                 emptyTitle="Nothing unmatched"
                 emptyMessage="All card transactions are matched or ignored."
                 emptyIcon={<CreditCard size={48} />}

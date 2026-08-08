@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Video, Plus, Search, Calendar, Play } from "lucide-react";
 import Link from "next/link";
@@ -76,7 +66,7 @@ export default function MeetingsPage() {
     {
       key: "topic",
       header: "Topic",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <Video size={16} />
@@ -88,7 +78,7 @@ export default function MeetingsPage() {
     {
       key: "time",
       header: "Scheduled Time",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.startTime ? new Date(row.startTime).toLocaleString() : "—"}
         </span>
@@ -97,14 +87,14 @@ export default function MeetingsPage() {
     {
       key: "duration",
       header: "Duration",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="info">{row.durationMinutes} Minutes</Badge>
       ),
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.active ? "success" : "default"}>
           {row.active ? "Live" : "Scheduled"}
         </Badge>
@@ -114,7 +104,7 @@ export default function MeetingsPage() {
       key: "action",
       header: "Action",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <Link href={`/connect?meeting=${row.id}`}>
           <Button variant={row.active ? "primary" : "secondary"}>
             {row.active ? <Play size={12} className="mr-2" /> : null} Join call
@@ -152,7 +142,7 @@ export default function MeetingsPage() {
           <DataTable
             columns={columns}
             data={meetings}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No meetings scheduled"
             emptyMessage="Schedule a meeting or start a live video call."
             emptyIcon={<Video size={48} />}

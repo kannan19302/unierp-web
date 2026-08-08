@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  StatCardRow,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, StatCardRow, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, AlertCircle, BarChart3 } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -66,7 +58,7 @@ const makeColumns = (
   {
     key: "status",
     header: "Status",
-    render: (v) => (
+    render: (v: any) => (
       <Badge
         variant={
           v === "ACTIVE" ? "warning" : v === "FULFILLED" ? "success" : "default"

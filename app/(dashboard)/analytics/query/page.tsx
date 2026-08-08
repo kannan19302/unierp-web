@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 import {
   GitFork,
   Play,
@@ -651,28 +651,12 @@ export default function VisualQueryBuilderPage() {
 
                 {viewMode === "table" ? (
                   <div className="builder-table-wrapper">
-                    <Table className={styles.s37}>
-                      <thead>
-                        <tr>
-                          {results.columns.map((c) => (
-                            <th key={c} className={styles.s38}>
-                              {c}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {results.rows.map((row, i) => (
-                          <tr key={i} className="border-b">
-                            {results.columns.map((c) => (
-                              <td key={c} className={styles.s39}>
-                                {String(row[c] ?? "")}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                    <>{(() => {
+                                              const columns = [
+                                        { key: "col_0", header: "{c}" , render: (row: any) => (<>{String(row[c] ?? "")}</>) },
+                                      ];
+                                              return <DataTable columns={columns} data={results.rows} rowKey={(row: any) => i} />;
+                                          })()}</>
                   </div>
                 ) : (
                   <div className={styles.s40}>

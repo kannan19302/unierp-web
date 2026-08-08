@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { Search, Save, Clock, TrendingUp } from "lucide-react";
 import { DataTable, Table } from "@unerp/ui";
-import type { Column } from "@unerp/ui";
+import type { Column, DataTable } from "@unerp/ui";
 
 interface SearchResult {
   entity: string;
@@ -93,32 +93,17 @@ export default function SearchPage() {
         <div className="text-gray-500">No results found for "{query}"</div>
       )}
       {results.length > 0 && (
-        <Table className="ui-table w-full">
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Name</th>
-              <th>Detail</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results.map((r, i) => (
-              <tr key={`${r.entity}-${r.id}-${i}`}>
-                <td>
-                  <span className="badge badge-sm">{r.group}</span>
-                </td>
-                <td className="font-medium">{r.title}</td>
-                <td className="text-gray-500">{r.subtitle}</td>
-                <td>
-                  <a href={r.href} className="ui-btn ui-btn-ghost btn-sm">
-                    View
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                      const columns = [
+                { key: "col_0", header: "Type" , render: (r: any) => (<><span className="badge badge-sm">{r.group}</span></>) },
+                { key: "col_1", header: "Name" , render: (r: any) => (<>{r.title}</>) },
+                { key: "col_2", header: "Detail" , render: (r: any) => (<>{r.subtitle}</>) },
+                { key: "col_3", header: "Action" , render: (r: any) => (<><a href={r.href} className="ui-btn ui-btn-ghost btn-sm">
+                                  View
+                                </a></>) },
+              ];
+                      return <DataTable columns={columns} data={results} rowKey={(r: any) => `${r.entity}-${r.id}-${i}`} />;
+                  })()}</>
       )}
     </div>
   );

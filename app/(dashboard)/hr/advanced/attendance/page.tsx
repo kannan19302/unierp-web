@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Clock, LogIn, Cpu } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import styles from "./page.module.css";
@@ -173,29 +166,29 @@ export default function AttendancePage() {
                   {
                     key: "date",
                     header: "Date",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "checkIn",
                     header: "Check In",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? new Date(String(v)).toLocaleTimeString() : "--",
                   },
                   {
                     key: "checkOut",
                     header: "Check Out",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? new Date(String(v)).toLocaleTimeString() : "--",
                   },
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => <StatusBadge status={String(v)} />,
+                    render: (v: any) => <StatusBadge status={String(v)} />,
                   },
                   {
                     key: "overtime",
                     header: "Overtime",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={Number(v) > 0 ? styles.overtime : undefined}
                       >

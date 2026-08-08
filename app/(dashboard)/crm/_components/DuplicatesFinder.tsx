@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, Spinner, Table } from "@unerp/ui";
+import { Button, Spinner, Table, DataTable } from "@unerp/ui";
 import { Modal, inputStyle, labelStyle } from "./Modal";
 import { apiGet, apiSend } from "./api";
 import styles from "./DuplicatesFinder.module.css";
@@ -183,50 +183,29 @@ function MergeReviewModal({
         </select>
       </div>
       <div className="builder-table-wrapper">
-        <Table className={styles.table}>
-          <thead>
-            <tr className={styles.tableHead}>
-              <th className={styles.cell}>Field</th>
-              {records.map((r) => (
-                <th key={r.id} className={styles.cell}>
-                  {(r.firstName as string) || (r.name as string) || r.id}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {fields.map((f) => (
-              <tr key={f} className="border-b">
-                <td className={styles.fieldCell}>{f}</td>
-                {records.map((r) => {
-                  const selected = fieldChoices[f] ?? winnerId;
-                  const value = r[f] as unknown;
-                  return (
-                    <td key={r.id} className="p-2">
-                      <label className={styles.choice}>
-                        <input
-                          type="radio"
-                          name={`field-${f}`}
-                          checked={selected === r.id}
-                          onChange={() =>
-                            setFieldChoices((prev) => ({ ...prev, [f]: r.id }))
-                          }
-                        />
-                        <span className={styles.breakWord}>
-                          {value == null ? (
-                            <em className="ui-text-tertiary">—</em>
-                          ) : (
-                            String(value)
-                          )}
-                        </span>
-                      </label>
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                      const columns = [
+                { key: "col_0", header: "Field" , render: (f: any) => (<>{f}</>) },
+                { key: "col_1", header: "{(r.firstName as string) || (r.name as string) || r.id}" , render: (f: any) => (<><label className={styles.choice}>
+                                      <input
+                                        type="radio"
+                                        name={`field-${f}`}
+                                        checked={selected === r.id}
+                                        onChange={() =>
+                                          setFieldChoices((prev) => ({ ...prev, [f]: r.id }))
+                                        }
+                                      />
+                                      <span className={styles.breakWord}>
+                                        {value == null ? (
+                                          <em className="ui-text-tertiary">—</em>
+                                        ) : (
+                                          String(value)
+                                        )}
+                                      </span>
+                                    </label></>) },
+              ];
+                      return <DataTable columns={columns} data={fields} rowKey={(f: any) => f} />;
+                  })()}</>
       </div>
       <div className={styles.footer}>
         <Button variant="outline" onClick={onClose}>

@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
 import {
   Factory,
   Truck,
@@ -78,17 +69,17 @@ export default function ContractMfgPage() {
     {
       key: "contractMfg",
       header: "Manufacturer",
-      render: (r) => r.contractMfg.name,
+      render: (r: any) => r.contractMfg.name,
     },
     {
       key: "totalAmount",
       header: "Amount",
-      render: (r) => `$${Number(r.totalAmount).toLocaleString()}`,
+      render: (r: any) => `$${Number(r.totalAmount).toLocaleString()}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "RECEIVED" ? "success" : "default"}>
           {r.status}
         </Badge>
@@ -137,7 +128,7 @@ export default function ContractMfgPage() {
               <DataTable
                 columns={poColumns}
                 data={dashboard.activePOs}
-                rowKey={(r) => r.id}
+                rowKey={(r: any) => r.id}
               />
             ) : (
               <p className="ui-text-tertiary">No active outsourcing POs.</p>

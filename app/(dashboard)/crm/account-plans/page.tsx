@@ -2,16 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import {
-  Card,
-  PageHeader,
-  Badge,
-  useToast,
-  Button,
-  Input,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Badge, useToast, Button, Input, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Shield, Activity, Plus, Layers } from "lucide-react";
 import { apiGet } from "../_components/api";
 
@@ -158,12 +149,12 @@ export default function AccountPlansPage() {
     {
       key: "objectives",
       header: "Objectives",
-      render: (v) => String(v || "None"),
+      render: (v: any) => String(v || "None"),
     },
     {
       key: "status",
       header: "Status",
-      render: (v) => <Badge variant="success">{String(v)}</Badge>,
+      render: (v: any) => <Badge variant="success">{String(v)}</Badge>,
     },
   ];
 

@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
@@ -52,38 +52,21 @@ export default function HealthcareMedicalRecordsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Title</th>
-                <th>Type</th>
-                <th>Diagnosis</th>
-                <th>Signed</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {records.map((r: any) => (
-                <tr key={r.id}>
-                  <td className="font-medium">{r.patientName}</td>
-                  <td>{r.title}</td>
-                  <td>
-                    <span className="ui-badge ui-badge-info">
-                      {r.recordType}
-                    </span>
-                  </td>
-                  <td>{r.diagnosis || "-"}</td>
-                  <td>
-                    {r.signedBy
-                      ? `${r.signedBy} ${r.signedAt ? new Date(r.signedAt).toLocaleDateString() : ""}`
-                      : "Unsigned"}
-                  </td>
-                  <td>{new Date(r.createdAt).toLocaleDateString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Patient" , render: (r: any) => (<>{r.patientName}</>) },
+                        { key: "col_1", header: "Title" , render: (r: any) => (<>{r.title}</>) },
+                        { key: "col_2", header: "Type" , render: (r: any) => (<><span className="ui-badge ui-badge-info">
+                                            {r.recordType}
+                                          </span></>) },
+                        { key: "col_3", header: "Diagnosis" , render: (r: any) => (<>{r.diagnosis || "-"}</>) },
+                        { key: "col_4", header: "Signed" , render: (r: any) => (<>{r.signedBy
+                                            ? `${r.signedBy} ${r.signedAt ? new Date(r.signedAt).toLocaleDateString() : ""}`
+                                            : "Unsigned"}</>) },
+                        { key: "col_5", header: "Date" , render: (r: any) => (<>{new Date(r.createdAt).toLocaleDateString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={records} rowKey={(r: any) => r.id} />;
+                          })()}</>
         </div>
       )}
     </div>

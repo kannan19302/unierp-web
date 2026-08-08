@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { Trophy, RefreshCw, Award, Flame, Plus, X } from "lucide-react";
 import { apiGet, apiPost, ApiRequestError } from "../../../../src/lib/api";
 import styles from "./page.module.css";
@@ -191,7 +181,7 @@ export default function GamificationPage() {
     {
       key: "rank",
       header: "Rank",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.rank <= 3 ? "success" : "default"}>#{r.rank}</Badge>
       ),
     },
@@ -202,7 +192,7 @@ export default function GamificationPage() {
       key: "revenue",
       header: "Revenue",
       align: "right",
-      render: (r) => `$${Number(r.revenue).toLocaleString()}`,
+      render: (r: any) => `$${Number(r.revenue).toLocaleString()}`,
     },
     { key: "activityCount", header: "Activities", align: "right" },
   ];
@@ -214,7 +204,7 @@ export default function GamificationPage() {
       key: "currentStreak",
       header: "Current Streak",
       align: "right",
-      render: (r) => (
+      render: (r: any) => (
         <span className={styles.streak}>
           {r.currentStreak > 0 && (
             <Flame size={14} color="var(--color-warning)" />
@@ -227,7 +217,7 @@ export default function GamificationPage() {
       key: "bestStreak",
       header: "Best Streak",
       align: "right",
-      render: (r) => `${r.bestStreak}d`,
+      render: (r: any) => `${r.bestStreak}d`,
     },
   ];
 
@@ -235,7 +225,7 @@ export default function GamificationPage() {
     {
       key: "name",
       header: "Badge",
-      render: (b) => (
+      render: (b: any) => (
         <div className="ui-hstack-2">
           <Award size={16} color="var(--color-warning)" />{" "}
           <strong>{b.name}</strong>
@@ -245,7 +235,7 @@ export default function GamificationPage() {
     {
       key: "criteriaType",
       header: "Criteria",
-      render: (b) =>
+      render: (b: any) =>
         `${b.criteriaType.replace(/_/g, " ")} ≥ ${b.criteriaValue}`,
     },
     { key: "periodScope", header: "Scope" },
@@ -253,12 +243,12 @@ export default function GamificationPage() {
       key: "awards",
       header: "Awarded",
       align: "right",
-      render: (b) => b._count?.awards ?? 0,
+      render: (b: any) => b._count?.awards ?? 0,
     },
     {
       key: "isActive",
       header: "Status",
-      render: (b) => (
+      render: (b: any) => (
         <Badge variant={b.isActive ? "success" : "default"}>
           {b.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -338,7 +328,7 @@ export default function GamificationPage() {
             <DataTable<LeaderboardRow>
               columns={leaderboardColumns}
               data={leaderboard}
-              rowKey={(r) => r.userId}
+              rowKey={(r: any) => r.userId}
             />
           )}
         </Card>
@@ -371,7 +361,7 @@ export default function GamificationPage() {
             <DataTable<StreakRow>
               columns={streakColumns}
               data={streaks}
-              rowKey={(r) => `${r.userId}-${r.streakType}`}
+              rowKey={(r: any) => `${r.userId}-${r.streakType}`}
             />
           )}
         </Card>
@@ -416,7 +406,7 @@ export default function GamificationPage() {
             <DataTable<BadgeDef>
               columns={badgeColumns}
               data={badges}
-              rowKey={(b) => b.id}
+              rowKey={(b: any) => b.id}
             />
           )}
         </Card>

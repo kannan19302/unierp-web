@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { ZoomIn, BarChart2, TrendingUp, Globe } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -127,38 +127,14 @@ export default function ReportingDrilldownPage() {
             Drilldown Results — {drillResults.dimension} /{" "}
             {drillResults.metricKey}
           </h3>
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Segment</th>
-                <th style={{ padding: "12px" }}>Value</th>
-                <th style={{ padding: "12px" }}>Growth</th>
-              </tr>
-            </thead>
-            <tbody>
-              {drillResults.results.map((r: any, i: number) => (
-                <tr key={i} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {r.label}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    ${r.value.toLocaleString()}
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--chart-9)",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {r.growth}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                          const columns = [
+                    { key: "col_0", header: "Segment" , render: (r: any) => (<>{r.label}</>) },
+                    { key: "col_1", header: "Value" , render: (r: any) => (<>${r.value.toLocaleString()}</>) },
+                    { key: "col_2", header: "Growth" , render: (r: any) => (<>{r.growth}</>) },
+                  ];
+                          return <DataTable columns={columns} data={drillResults.results} rowKey={(r: any) => i} />;
+                      })()}</>
         </Card>
       )}
 

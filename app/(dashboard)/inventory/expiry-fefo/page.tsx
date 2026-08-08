@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { AlertCircle, Search, AlertTriangle } from "lucide-react";
 
@@ -78,14 +71,14 @@ export default function ExpiryFefoPage() {
     {
       key: "batchNo",
       header: "Batch",
-      render: (v) => <span className="font-mono">{String(v)}</span>,
+      render: (v: any) => <span className="font-mono">{String(v)}</span>,
     },
     { key: "productName", header: "Product" },
     { key: "quantity", header: "Quantity" },
     {
       key: "daysUntilExpiry",
       header: "Days Until Expiry",
-      render: (v) => {
+      render: (v: any) => {
         const days = v as number | null;
         return (
           <Badge variant={(days ?? 99) <= 7 ? "warning" : "default"}>

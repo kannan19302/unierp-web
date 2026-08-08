@@ -1,20 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  Spinner,
-  StatusBadge,
-  Modal,
-  FormField,
-  Input,
-  DataTable,
-  Pagination,
-  type Column,
-  StatCardRow,
-  Select,
-} from "@unerp/ui";
+import { PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, DataTable, Pagination, type Column, StatCardRow, Select } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 import {
@@ -136,12 +123,12 @@ export default function EdiTransactionsPage() {
     {
       key: "ediType",
       header: "EDI Type",
-      render: (row) => <StatusBadge status={row.ediType} />,
+      render: (row: any) => <StatusBadge status={row.ediType} />,
     },
     {
       key: "direction",
       header: "Direction",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-hstack-1">
           {row.direction === "INBOUND" ? (
             <Download size={12} className="ui-text-info" />
@@ -155,27 +142,27 @@ export default function EdiTransactionsPage() {
     {
       key: "senderId",
       header: "Sender",
-      render: (row) => row.sender?.name || row.senderId,
+      render: (row: any) => row.sender?.name || row.senderId,
     },
     {
       key: "receiverId",
       header: "Receiver",
-      render: (row) => row.receiver?.name || row.receiverId,
+      render: (row: any) => row.receiver?.name || row.receiverId,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (row) => new Date(row.createdAt).toLocaleDateString(),
+      render: (row: any) => new Date(row.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <Button
             variant="ghost"
@@ -277,7 +264,7 @@ export default function EdiTransactionsPage() {
         <DataTable
           columns={columns}
           data={transactions}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No EDI transactions"
           emptyMessage="Create a new EDI transaction to get started."
           emptyIcon={<FileJson size={48} />}

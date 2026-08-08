@@ -1,21 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  DashboardChart,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, DashboardChart } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   Cpu,
@@ -126,27 +111,27 @@ export default function ManufacturingIndustryHub() {
     {
       key: "name",
       header: "Control Chart Name",
-      render: (row) => <strong>{row.name}</strong>,
+      render: (row: any) => <strong>{row.name}</strong>,
     },
     {
       key: "chartType",
       header: "SPC Chart Type",
-      render: (row) => <Badge variant="info">{row.chartType}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.chartType}</Badge>,
     },
     {
       key: "nominalValue",
       header: "Nominal Target",
-      render: (row) => row.nominalValue.toFixed(2),
+      render: (row: any) => row.nominalValue.toFixed(2),
     },
     {
       key: "limits",
       header: "Control Limits [LCL - UCL]",
-      render: (row) => `${row.lcl.toFixed(2)} — ${row.ucl.toFixed(2)}`,
+      render: (row: any) => `${row.lcl.toFixed(2)} — ${row.ucl.toFixed(2)}`,
     },
     {
       key: "status",
       header: "Process Control Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
   ];
 

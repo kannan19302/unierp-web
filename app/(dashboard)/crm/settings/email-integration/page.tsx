@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ProtectedComponent,
-  useToast,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, useToast, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Mail,
   RefreshCw,
@@ -222,7 +212,7 @@ export default function EmailIntegrationSettingsPage() {
                 {
                   key: "provider",
                   header: "Provider",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-semibold">
                       {v === "GOOGLE" ? "Gmail" : "Outlook"}
                     </span>
@@ -259,7 +249,7 @@ export default function EmailIntegrationSettingsPage() {
                 {
                   key: "lastSyncedAt",
                   header: "Last Synced",
-                  render: (v) => fmtDate(v as string | null),
+                  render: (v: any) => fmtDate(v as string | null),
                 },
                 {
                   key: "lastSyncMessages",

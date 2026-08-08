@@ -1,14 +1,7 @@
 "use client";
 import styles from "./SyncMonitorTab.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  Spinner,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, Button, Badge, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Smartphone,
   RefreshCw,
@@ -276,7 +269,7 @@ export default function SyncMonitorTab() {
               {
                 key: "status",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <div className="ui-hstack-2">
                     {statusIcon(String(v))}
                     <span className={styles.s7}>{String(v)}</span>
@@ -286,7 +279,7 @@ export default function SyncMonitorTab() {
               {
                 key: "clientId",
                 header: "Client",
-                render: (v) => (
+                render: (v: any) => (
                   <div className="ui-hstack-2">
                     <Smartphone size={14} className="ui-text-tertiary" />
                     <span className="text-xs">{String(v)}</span>
@@ -296,24 +289,24 @@ export default function SyncMonitorTab() {
               {
                 key: "operation",
                 header: "Operation",
-                render: (v) => <Badge variant="info">{String(v)}</Badge>,
+                render: (v: any) => <Badge variant="info">{String(v)}</Badge>,
               },
               {
                 key: "entityType",
                 header: "Entity",
-                render: (v) => <span className="font-medium">{String(v)}</span>,
+                render: (v: any) => <span className="font-medium">{String(v)}</span>,
               },
               {
                 key: "errorMessage",
                 header: "Error",
-                render: (v) => (
+                render: (v: any) => (
                   <span className={styles.s8}>{v ? String(v) : "—"}</span>
                 ),
               },
               {
                 key: "createdAt",
                 header: "Time",
-                render: (v) => <span className={styles.s9}>{String(v)}</span>,
+                render: (v: any) => <span className={styles.s9}>{String(v)}</span>,
               },
               {
                 key: "id",

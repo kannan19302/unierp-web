@@ -1,13 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import {
   Loader2,
   RefreshCw,
@@ -296,7 +290,7 @@ export default function IntercompanyNettingPage() {
                   {
                     key: "invoiceNumber",
                     header: "Invoice #",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">{v as string}</span>
                     ),
                   },
@@ -304,14 +298,14 @@ export default function IntercompanyNettingPage() {
                   {
                     key: "totalAmount",
                     header: "Amount",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.s4}>{fmt(Number(v))}</span>
                     ),
                   },
                   {
                     key: "dueDate",
                     header: "Due Date",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span>{new Date(v as string).toLocaleDateString()}</span>
                     ),
                   },
@@ -340,20 +334,20 @@ export default function IntercompanyNettingPage() {
                   {
                     key: "id",
                     header: "Schedule ID",
-                    render: (v) => <span>{(v as string).substring(0, 8)}</span>,
+                    render: (v: any) => <span>{(v as string).substring(0, 8)}</span>,
                   },
                   { key: "orgId", header: "Subsidiary" },
                   {
                     key: "amount",
                     header: "Amount",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.s5}>{fmt(Number(v))}</span>
                     ),
                   },
                   {
                     key: "dueDate",
                     header: "Due Date",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span>{new Date(v as string).toLocaleDateString()}</span>
                     ),
                   },

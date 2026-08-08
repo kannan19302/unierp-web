@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Badge, Spinner, Card, Table } from "@unerp/ui";
+import { PageHeader, Badge, Spinner, Card, Table, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart } from "lucide-react";
@@ -110,45 +110,21 @@ export default function DebitNotesPage() {
         <Spinner />
       ) : (
         <Card>
-          <Table className="ui-table" style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th>DN #</th>
-                <th>Vendor</th>
-                <th>Amount</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(data || []).map((dn: any) => (
-                <tr key={dn.id}>
-                  <td>{dn.dnNumber || dn.id}</td>
-                  <td>{dn.vendor?.name || "—"}</td>
-                  <td>${Number(dn.amount || 0).toLocaleString()}</td>
-                  <td>{dn.reason || "—"}</td>
-                  <td>
-                    <Badge variant={statusVariant(dn.status)}>
-                      {dn.status}
-                    </Badge>
-                  </td>
-                  <td>
-                    {dn.createdAt
-                      ? new Date(dn.createdAt).toLocaleDateString()
-                      : "—"}
-                  </td>
-                </tr>
-              ))}
-              {(!data || data.length === 0) && (
-                <tr>
-                  <td colSpan={6} style={{ textAlign: "center", padding: 24 }}>
-                    No debit notes found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "DN #" , render: (dn: any) => (<>{dn.dnNumber || dn.id}</>) },
+                        { key: "col_1", header: "Vendor" , render: (dn: any) => (<>{dn.vendor?.name || "—"}</>) },
+                        { key: "col_2", header: "Amount" , render: (dn: any) => (<>${Number(dn.amount || 0).toLocaleString()}</>) },
+                        { key: "col_3", header: "Reason" , render: (dn: any) => (<>{dn.reason || "—"}</>) },
+                        { key: "col_4", header: "Status" , render: (dn: any) => (<><Badge variant={statusVariant(dn.status)}>
+                                            {dn.status}
+                                          </Badge></>) },
+                        { key: "col_5", header: "Date" , render: (dn: any) => (<>{dn.createdAt
+                                            ? new Date(dn.createdAt).toLocaleDateString()
+                                            : "—"}</>) },
+                      ];
+                              return <DataTable columns={columns} data={(data || [])} rowKey={(dn: any) => dn.id} />;
+                          })()}</>
         </Card>
       )}
     </RouteGuard>

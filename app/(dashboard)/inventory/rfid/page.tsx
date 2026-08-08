@@ -1,19 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import {
-  DataTable,
-  PageHeader,
-  Button,
-  Spinner,
-  StatusBadge,
-  Modal,
-  FormField,
-  Input,
-  Card,
-  useToast,
-  type Column,
-  type SortOrder,
-} from "@unerp/ui";
+import { DataTable, PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, Card, useToast, type Column, type SortOrder } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 import { apiGet, apiPost, apiPatch } from "../../../../src/lib/api";
 import {
@@ -263,7 +250,7 @@ export default function RfidTagsPage() {
       key: "epc",
       header: "EPC",
       sortable: true,
-      render: (t) => (
+      render: (t: any) => (
         <span className="font-mono text-xs font-semibold">{t.epc}</span>
       ),
     },
@@ -272,26 +259,26 @@ export default function RfidTagsPage() {
       key: "product",
       header: "Product",
       sortable: false,
-      render: (t) =>
+      render: (t: any) =>
         t.product?.name || <span className="ui-text-muted">—</span>,
     },
     {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (t) => <StatusBadge status={t.status} />,
+      render: (t: any) => <StatusBadge status={t.status} />,
     },
     {
       key: "lastLocation",
       header: "Last Location",
       sortable: true,
-      render: (t) => t.lastLocation || <span className="ui-text-muted">—</span>,
+      render: (t: any) => t.lastLocation || <span className="ui-text-muted">—</span>,
     },
     {
       key: "lastRead",
       header: "Last Read",
       sortable: true,
-      render: (t) =>
+      render: (t: any) =>
         t.lastRead ? (
           new Date(t.lastRead).toLocaleString()
         ) : (
@@ -302,7 +289,7 @@ export default function RfidTagsPage() {
       key: "actions",
       header: "Actions",
       sortable: false,
-      render: (t) => (
+      render: (t: any) => (
         <div className="ui-hstack-2">
           <button
             title="View read events"
@@ -428,7 +415,7 @@ export default function RfidTagsPage() {
               <DataTable<RfidTag>
                 columns={columns}
                 data={tags}
-                rowKey={(t) => t.id}
+                rowKey={(t: any) => t.id}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
                 onSortChange={handleSortChange}

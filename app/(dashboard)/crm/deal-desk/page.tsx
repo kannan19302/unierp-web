@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, Button, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Table, DataTable } from "@unerp/ui";
 import {
   ClipboardList,
   AlertTriangle,
@@ -94,44 +94,29 @@ export default function DealDeskPage() {
       <div className="ui-grid-2">
         <Card title="Open Requests">
           <div className="ui-table-wrapper">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Priority</th>
-                  <th>Created</th>
-                </tr>
-              </thead>
-              <tbody>
-                {dashboard?.openRequests?.map((r: any) => (
-                  <tr key={r.id}>
-                    <td>{r.requestType}</td>
-                    <td>
-                      <Badge
-                        variant={r.status === "PENDING" ? "warning" : "info"}
-                      >
-                        {r.status}
-                      </Badge>
-                    </td>
-                    <td>
-                      <Badge
-                        variant={
-                          r.priority === "URGENT"
-                            ? "danger"
-                            : r.priority === "HIGH"
-                              ? "warning"
-                              : "default"
-                        }
-                      >
-                        {r.priority}
-                      </Badge>
-                    </td>
-                    <td>{new Date(r.createdAt).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Type" , render: (r: any) => (<>{r.requestType}</>) },
+                        { key: "col_1", header: "Status" , render: (r: any) => (<><Badge
+                                              variant={r.status === "PENDING" ? "warning" : "info"}
+                                            >
+                                              {r.status}
+                                            </Badge></>) },
+                        { key: "col_2", header: "Priority" , render: (r: any) => (<><Badge
+                                              variant={
+                                                r.priority === "URGENT"
+                                                  ? "danger"
+                                                  : r.priority === "HIGH"
+                                                    ? "warning"
+                                                    : "default"
+                                              }
+                                            >
+                                              {r.priority}
+                                            </Badge></>) },
+                        { key: "col_3", header: "Created" , render: (r: any) => (<>{new Date(r.createdAt).toLocaleDateString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={dashboard?.openRequests} rowKey={(r: any) => r.id} />;
+                          })()}</>
           </div>
           <div className="ui-card-actions">
             <Button
@@ -145,38 +130,25 @@ export default function DealDeskPage() {
 
         <Card title="Recent Activity">
           <div className="ui-table-wrapper">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Opportunity</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Updated</th>
-                </tr>
-              </thead>
-              <tbody>
-                {dashboard?.recentActivity?.map((r: any) => (
-                  <tr key={r.id}>
-                    <td>{r.opportunityName || "N/A"}</td>
-                    <td>{r.requestType}</td>
-                    <td>
-                      <Badge
-                        variant={
-                          r.status === "APPROVED"
-                            ? "success"
-                            : r.status === "REJECTED"
-                              ? "danger"
-                              : "warning"
-                        }
-                      >
-                        {r.status}
-                      </Badge>
-                    </td>
-                    <td>{new Date(r.updatedAt).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Opportunity" , render: (r: any) => (<>{r.opportunityName || "N/A"}</>) },
+                        { key: "col_1", header: "Type" , render: (r: any) => (<>{r.requestType}</>) },
+                        { key: "col_2", header: "Status" , render: (r: any) => (<><Badge
+                                              variant={
+                                                r.status === "APPROVED"
+                                                  ? "success"
+                                                  : r.status === "REJECTED"
+                                                    ? "danger"
+                                                    : "warning"
+                                              }
+                                            >
+                                              {r.status}
+                                            </Badge></>) },
+                        { key: "col_3", header: "Updated" , render: (r: any) => (<>{new Date(r.updatedAt).toLocaleDateString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={dashboard?.recentActivity} rowKey={(r: any) => r.id} />;
+                          })()}</>
           </div>
         </Card>
       </div>

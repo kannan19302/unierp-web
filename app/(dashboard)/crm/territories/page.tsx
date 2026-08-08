@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  type Column,
-  type SortOrder,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column, type SortOrder } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -172,7 +162,7 @@ export default function TerritoriesPage() {
       key: "territoryName",
       header: "Territory",
       sortable: true,
-      render: (p) => <span className="font-semibold">{p.territoryName}</span>,
+      render: (p: any) => <span className="font-semibold">{p.territoryName}</span>,
     },
     { key: "memberCount", header: "Members", align: "right", sortable: true },
     { key: "dealCount", header: "Deals", align: "right", sortable: true },
@@ -181,7 +171,7 @@ export default function TerritoriesPage() {
       header: "Revenue",
       align: "right",
       sortable: true,
-      render: (p) => (
+      render: (p: any) => (
         <span className={styles.style0}>${p.revenue.toLocaleString()}</span>
       ),
     },
@@ -353,7 +343,7 @@ export default function TerritoriesPage() {
             <DataTable<TerritoryPerformance>
               columns={perfColumns}
               data={sortedPerf}
-              rowKey={(p) => p.territoryId}
+              rowKey={(p: any) => p.territoryId}
               sortBy={perfSortBy}
               sortOrder={perfSortOrder}
               onSortChange={handlePerfSortChange}

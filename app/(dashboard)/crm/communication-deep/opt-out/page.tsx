@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 
@@ -30,40 +30,16 @@ export default function OptOutPage() {
         <button className="ui-btn">+ Add Opt-Out</button>
       </div>
       <div className="overflow-x-auto">
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-3 font-medium">Entity Type</th>
-              <th className="py-2 px-3 font-medium">Entity ID</th>
-              <th className="py-2 px-3 font-medium">Channel</th>
-              <th className="py-2 px-3 font-medium">Reason</th>
-              <th className="py-2 px-3 font-medium">Opted Out</th>
-            </tr>
-          </thead>
-          <tbody>
-            {optOuts.map((o: any) => (
-              <tr key={o.id} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-3">{o.entityType}</td>
-                <td className="py-2 px-3">{o.entityId}</td>
-                <td className="py-2 px-3">{o.channel}</td>
-                <td className="py-2 px-3">{o.reason || "-"}</td>
-                <td className="py-2 px-3">
-                  {new Date(o.optedOutAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-            {optOuts.length === 0 && (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="py-4 text-center text-muted-foreground"
-                >
-                  No opt-outs recorded
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Entity Type", render: (o: any) => (<>{o.entityType}</>) },
+                { key: "col_1", header: "Entity ID", render: (o: any) => (<>{o.entityId}</>) },
+                { key: "col_2", header: "Channel", render: (o: any) => (<>{o.channel}</>) },
+                { key: "col_3", header: "Reason", render: (o: any) => (<>{o.reason || "-"}</>) },
+                { key: "col_4", header: "Opted Out", render: (o: any) => (<>{new Date(o.optedOutAt).toLocaleDateString()}</>) },
+              ];
+                        return <DataTable columns={columns} data={optOuts} rowKey={(o: any) => o.id} />;
+                      })()}</>
       </div>
     </div>
   );

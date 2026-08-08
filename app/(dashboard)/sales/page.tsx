@@ -4,20 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  DashboardChart,
-  ViewSwitcher,
-  KanbanBoard,
-  StatCardRow,
-  ListPageTemplate,
-  type ListColumn,
-  type ViewMode,
-  type KanbanColumn,
-  type KanbanItem,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, DashboardChart, ViewSwitcher, KanbanBoard, StatCardRow, ListPageTemplate, type ListColumn, type ViewMode, type KanbanColumn, type KanbanItem } from "@unerp/ui";
 import {
   ClipboardList,
   FileText,
@@ -451,12 +438,12 @@ export default function SalesDashboard() {
                     {
                       key: "totalAmount",
                       header: "Amount",
-                      render: (v) => `$${Number(v).toLocaleString()}`,
+                      render: (v: any) => `$${Number(v).toLocaleString()}`,
                     },
                     {
                       key: "paymentStatus",
                       header: "Payment",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           style={{
                             color:
@@ -472,7 +459,7 @@ export default function SalesDashboard() {
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           style={{
                             background:

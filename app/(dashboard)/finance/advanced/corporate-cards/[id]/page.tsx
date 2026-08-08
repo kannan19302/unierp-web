@@ -2,21 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Tabs,
-  ChangeHistory,
-  ProtectedComponent,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs, ChangeHistory, ProtectedComponent } from "@unerp/ui";
 import {
   Plus,
   Trash2,
@@ -239,30 +225,30 @@ export default function CorporateCardDetailPage() {
     {
       key: "scope",
       header: "Scope",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant="info">
           {r.scopeType}
           {r.scopeId ? `: ${r.scopeId}` : ""}
         </Badge>
       ),
     },
-    { key: "period", header: "Period", render: (r) => r.period },
+    { key: "period", header: "Period", render: (r: any) => r.period },
     {
       key: "cap",
       header: "Cap",
       align: "right" as const,
-      render: (r) => `$${Number(r.amountCap).toFixed(2)}`,
+      render: (r: any) => `$${Number(r.amountCap).toFixed(2)}`,
     },
     {
       key: "spend",
       header: "Current Spend",
       align: "right" as const,
-      render: (r) => `$${Number(r.currentSpend).toFixed(2)}`,
+      render: (r: any) => `$${Number(r.currentSpend).toFixed(2)}`,
     },
     {
       key: "breaches",
       header: "Breaches",
-      render: (r) =>
+      render: (r: any) =>
         r.breachCount > 0 ? (
           <Badge variant="danger">{r.breachCount}</Badge>
         ) : (
@@ -272,7 +258,7 @@ export default function CorporateCardDetailPage() {
     {
       key: "active",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.isActive ? "success" : "default"}>
           {r.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -282,7 +268,7 @@ export default function CorporateCardDetailPage() {
       key: "actions",
       header: "",
       align: "right" as const,
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-flex-end ui-gap-2">
           <ProtectedComponent permission="finance.corporate-card-limit.request-increase">
             <Button
@@ -325,25 +311,25 @@ export default function CorporateCardDetailPage() {
     {
       key: "category",
       header: "Category",
-      render: (r) => <Badge variant="info">{r.mccCategory}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.mccCategory}</Badge>,
     },
-    { key: "period", header: "Period", render: (r) => r.period },
+    { key: "period", header: "Period", render: (r: any) => r.period },
     {
       key: "cap",
       header: "Cap",
       align: "right" as const,
-      render: (r) => `$${Number(r.amountCap).toFixed(2)}`,
+      render: (r: any) => `$${Number(r.amountCap).toFixed(2)}`,
     },
     {
       key: "spend",
       header: "Current Spend",
       align: "right" as const,
-      render: (r) => `$${Number(r.currentSpend).toFixed(2)}`,
+      render: (r: any) => `$${Number(r.currentSpend).toFixed(2)}`,
     },
     {
       key: "breaches",
       header: "Breaches",
-      render: (r) =>
+      render: (r: any) =>
         r.breachCount > 0 ? (
           <Badge variant="danger">{r.breachCount}</Badge>
         ) : (
@@ -354,7 +340,7 @@ export default function CorporateCardDetailPage() {
       key: "actions",
       header: "",
       align: "right" as const,
-      render: (r) => (
+      render: (r: any) => (
         <ProtectedComponent permission="finance.corporate-card-limit.update">
           <Button
             variant="danger"
@@ -374,7 +360,7 @@ export default function CorporateCardDetailPage() {
     {
       key: "action",
       header: "Action",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.action === "BREACH" ? "danger" : "info"}>
           {r.action}
         </Badge>
@@ -383,12 +369,12 @@ export default function CorporateCardDetailPage() {
     {
       key: "user",
       header: "Changed By",
-      render: (r) => r.changedByUserId || "system",
+      render: (r: any) => r.changedByUserId || "system",
     },
     {
       key: "date",
       header: "When",
-      render: (r) => new Date(r.createdAt).toLocaleString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleString(),
     },
   ];
 
@@ -462,7 +448,7 @@ export default function CorporateCardDetailPage() {
             <DataTable
               columns={limitColumns}
               data={spendLimits}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No spend limits"
               emptyMessage="Add a card, employee, or department spend limit."
               emptyIcon={<ShieldCheck size={48} />}
@@ -485,7 +471,7 @@ export default function CorporateCardDetailPage() {
             <DataTable
               columns={categoryColumns}
               data={categoryLimits}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No category limits"
               emptyMessage="Add an MCC-category spending cap for this card."
               emptyIcon={<ShieldCheck size={48} />}
@@ -554,7 +540,7 @@ export default function CorporateCardDetailPage() {
             <DataTable
               columns={auditColumns}
               data={auditRows}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No audit entries"
               emptyMessage="No changes recorded yet for this limit."
               emptyIcon={<TrendingUp size={48} />}

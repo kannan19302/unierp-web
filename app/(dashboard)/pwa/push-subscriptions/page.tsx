@@ -36,23 +36,23 @@ export default function PushSubscriptionsPage() {
 
   const columns: Column<PushSub>[] = [
     { key: "userId", header: "User" },
-    { key: "deviceType", header: "Device", render: (r) => r.deviceType || "-" },
-    { key: "browser", header: "Browser", render: (r) => r.browser || "-" },
-    { key: "platform", header: "Platform", render: (r) => r.platform || "-" },
+    { key: "deviceType", header: "Device", render: (r: any) => r.deviceType || "-" },
+    { key: "browser", header: "Browser", render: (r: any) => r.browser || "-" },
+    { key: "platform", header: "Platform", render: (r: any) => r.platform || "-" },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "ACTIVE" ? "success" : "danger"}>
           {r.status}
         </Badge>
       ),
     },
-    { key: "tags", header: "Tags", render: (r) => r.tags?.join(", ") || "-" },
+    { key: "tags", header: "Tags", render: (r: any) => r.tags?.join(", ") || "-" },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <button
           onClick={(e) => {
             e.stopPropagation();

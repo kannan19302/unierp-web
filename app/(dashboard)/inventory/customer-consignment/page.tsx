@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  Spinner,
-  StatusBadge,
-  Modal,
-  FormField,
-  Input,
-  DataTable,
-  Pagination,
-  type Column,
-  StatCardRow,
-} from "@unerp/ui";
+import { PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, DataTable, Pagination, type Column, StatCardRow } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 import {
@@ -163,12 +151,12 @@ export default function CustomerConsignmentPage() {
     {
       key: "customer",
       header: "Customer",
-      render: (row) => row.customer?.name || row.customerId,
+      render: (row: any) => row.customer?.name || row.customerId,
     },
     {
       key: "product",
       header: "Product",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <span className="ui-heading-sm">
             {row.product?.name || row.productId}
@@ -180,28 +168,28 @@ export default function CustomerConsignmentPage() {
     {
       key: "warehouse",
       header: "Warehouse",
-      render: (row) => row.warehouse?.name || row.warehouseId,
+      render: (row: any) => row.warehouse?.name || row.warehouseId,
     },
     { key: "quantityOnHand", header: "On Hand" },
     {
       key: "unitPrice",
       header: "Unit Price",
-      render: (row) => `$${Number(row.unitPrice).toFixed(2)}`,
+      render: (row: any) => `$${Number(row.unitPrice).toFixed(2)}`,
     },
     {
       key: "totalValue",
       header: "Total Value",
-      render: (row) => `$${Number(row.totalValue).toLocaleString()}`,
+      render: (row: any) => `$${Number(row.totalValue).toLocaleString()}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "lastConsumed",
       header: "Last Consumed",
-      render: (row) =>
+      render: (row: any) =>
         row.lastConsumed
           ? new Date(row.lastConsumed).toLocaleDateString()
           : "—",
@@ -209,7 +197,7 @@ export default function CustomerConsignmentPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <Button
             variant="ghost"
@@ -318,7 +306,7 @@ export default function CustomerConsignmentPage() {
         <DataTable
           columns={columns}
           data={consignments}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No consignments found"
           emptyMessage="Create a new customer consignment to get started."
           emptyIcon={<Handshake size={48} />}

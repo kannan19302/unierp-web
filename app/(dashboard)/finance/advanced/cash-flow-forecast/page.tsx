@@ -289,7 +289,7 @@ export default function CashFlowForecastPage() {
                       {
                         key: "weekStart",
                         header: "Week Start",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">
                             {new Date(String(v)).toLocaleDateString()}
                           </span>
@@ -298,21 +298,21 @@ export default function CashFlowForecastPage() {
                       {
                         key: "projectedInflow",
                         header: "Inflow (AR)",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s6}>{fmt(Number(v))}</span>
                         ),
                       },
                       {
                         key: "projectedOutflow",
                         header: "Outflow (AP)",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s7}>{fmt(Number(v))}</span>
                         ),
                       },
                       {
                         key: "adjustments",
                         header: "Adjustments",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={
                               Number(v) !== 0
@@ -328,7 +328,7 @@ export default function CashFlowForecastPage() {
                       {
                         key: "net",
                         header: "Net Cash Flow",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`${styles.netCash} ${Number(v) > 0 ? styles.cashPositive : styles.cashNegative}`}
                           >
@@ -340,7 +340,7 @@ export default function CashFlowForecastPage() {
                       {
                         key: "cumulativeBalance",
                         header: "Pool Balance",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`${styles.poolBalance} ${Number(v) > 0 ? styles.balancePositive : styles.cashNegative}`}
                           >
@@ -351,7 +351,7 @@ export default function CashFlowForecastPage() {
                       {
                         key: "comments",
                         header: "Comments",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s8}>{String(v || "—")}</span>
                         ),
                       },

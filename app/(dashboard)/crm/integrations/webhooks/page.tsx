@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -21,44 +21,20 @@ export default function WebhooksPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Webhook Configs</h1>
-      <Table className="w-full text-sm">
-        <thead>
-          <tr className="border-b text-left">
-            <th className="py-2 px-2">Name</th>
-            <th className="py-2 px-2">URL</th>
-            <th className="py-2 px-2">Events</th>
-            <th className="py-2 px-2">Status</th>
-            <th className="py-2 px-2">Max Retries</th>
-          </tr>
-        </thead>
-        <tbody>
-          {webhooks.map((w: any) => (
-            <tr key={w.id} className="border-b hover:bg-muted/50">
-              <td className="py-2 px-2">{w.name}</td>
-              <td className="py-2 px-2 max-w-[200px] truncate">{w.url}</td>
-              <td className="py-2 px-2">{w.events?.join(", ")}</td>
-              <td className="py-2 px-2">
-                <span
-                  className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${w.enabled ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
-                >
-                  {w.enabled ? "Enabled" : "Disabled"}
-                </span>
-              </td>
-              <td className="py-2 px-2">{w.maxRetries}</td>
-            </tr>
-          ))}
-          {webhooks.length === 0 && (
-            <tr>
-              <td
-                colSpan={5}
-                className="py-4 text-center text-muted-foreground"
-              >
-                No webhooks configured
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+      <>{(() => {
+                    const columns = [
+            { key: "col_0", header: "Name", render: (w: any) => (<>{w.name}</>) },
+            { key: "col_1", header: "URL", render: (w: any) => (<>{w.url}</>) },
+            { key: "col_2", header: "Events", render: (w: any) => (<>{w.events?.join(", ")}</>) },
+            { key: "col_3", header: "Status", render: (w: any) => (<><span
+                            className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${w.enabled ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
+                          >
+                            {w.enabled ? "Enabled" : "Disabled"}
+                          </span></>) },
+            { key: "col_4", header: "Max Retries", render: (w: any) => (<>{w.maxRetries}</>) },
+          ];
+                    return <DataTable columns={columns} data={webhooks} rowKey={(w: any) => w.id} />;
+                  })()}</>
     </div>
   );
 }

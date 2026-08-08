@@ -94,12 +94,12 @@ export default function FeatureFlagsTab() {
             {
               key: "description",
               header: "Description",
-              render: (v) => <span className={styles.s3}>{String(v)}</span>,
+              render: (v: any) => <span className={styles.s3}>{String(v)}</span>,
             },
             {
               key: "enabled",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   style={{
                     background: v

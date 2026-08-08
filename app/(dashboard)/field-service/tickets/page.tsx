@@ -1,21 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, useToast } from "@unerp/ui";
 import {
   ClipboardList,
   Plus,
@@ -108,7 +94,7 @@ export default function ServiceTicketsPage() {
     {
       key: "title",
       header: "Ticket",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <Link href={`/field-service/tickets/${row.id}`} className={styles.s1}>
             {row.title}
@@ -120,14 +106,14 @@ export default function ServiceTicketsPage() {
     {
       key: "priority",
       header: "Priority",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={getPriorityVariant(row.priority)}>{row.priority}</Badge>
       ),
     },
     {
       key: "sla",
       header: "SLA Deadline",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.slaDeadline
             ? new Date(row.slaDeadline).toLocaleDateString()
@@ -138,7 +124,7 @@ export default function ServiceTicketsPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={getStatusVariant(row.status)}>{row.status}</Badge>
       ),
     },
@@ -203,7 +189,7 @@ export default function ServiceTicketsPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No tickets"
             emptyMessage="Create service tickets to start dispatching."
             emptyIcon={<ClipboardList size={48} />}

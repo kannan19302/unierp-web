@@ -2,17 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  DashboardChart,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, DashboardChart, Spinner } from "@unerp/ui";
 import {
   Building2,
   DollarSign,
@@ -108,7 +98,7 @@ export default function ConsolidationPage() {
     {
       key: "name",
       header: "Entity",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <Building2 size={16} />
@@ -124,13 +114,13 @@ export default function ConsolidationPage() {
       key: "revenue",
       header: "Revenue",
       align: "right" as const,
-      render: (row) => <span className="text-sm">{fmtFull(row.revenue)}</span>,
+      render: (row: any) => <span className="text-sm">{fmtFull(row.revenue)}</span>,
     },
     {
       key: "expenses",
       header: "Expenses",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">{fmtFull(row.expenses)}</span>
       ),
     },
@@ -138,7 +128,7 @@ export default function ConsolidationPage() {
       key: "netIncome",
       header: "Net Income",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span
           style={{
             color:
@@ -156,12 +146,12 @@ export default function ConsolidationPage() {
       key: "assets",
       header: "Total Assets",
       align: "right" as const,
-      render: (row) => <span className="text-sm">{fmtFull(row.assets)}</span>,
+      render: (row: any) => <span className="text-sm">{fmtFull(row.assets)}</span>,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "ACTIVE" ? "success" : "default"}>
           {row.status}
         </Badge>
@@ -261,7 +251,7 @@ export default function ConsolidationPage() {
             <DataTable
               columns={columns}
               data={entities}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No entities"
               emptyMessage="Add subsidiary organizations for consolidation."
               emptyIcon={<Building2 size={48} />}

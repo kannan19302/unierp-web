@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Calculator, Plus, Edit2, Trash2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSTaxRulesPage() {
   const client = useApiClient();
@@ -101,55 +101,32 @@ export default function POSTaxRulesPage() {
           </div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Rate</th>
-                <th>Type</th>
-                <th>Applies To</th>
-                <th>Default</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                items.map((i) => (
-                  <tr key={i.id}>
-                    <td>{i.name}</td>
-                    <td>{i.rate}%</td>
-                    <td>{i.type}</td>
-                    <td>{i.appliesTo}</td>
-                    <td>{i.isDefault ? "Yes" : "-"}</td>
-                    <td className="ui-hstack-1">
-                      <button
-                        className="ui-btn-icon"
-                        onClick={() => {
-                          setEditId(i.id);
-                          setForm(i);
-                          setShowModal(true);
-                        }}
-                      >
-                        <Edit2 size={14} />
-                      </button>
-                      <button
-                        className="ui-btn-icon ui-text-error"
-                        onClick={() => remove(i.id)}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Name", render: (i: any) => (<>{i.name}</>) },
+                    { key: "col_1", header: "Rate", render: (i: any) => (<>{i.rate}%</>) },
+                    { key: "col_2", header: "Type", render: (i: any) => (<>{i.type}</>) },
+                    { key: "col_3", header: "Applies To", render: (i: any) => (<>{i.appliesTo}</>) },
+                    { key: "col_4", header: "Default", render: (i: any) => (<>{i.isDefault ? "Yes" : "-"}</>) },
+                    { key: "col_5", header: "Actions", render: (i: any) => (<><button
+                                          className="ui-btn-icon"
+                                          onClick={() => {
+                                            setEditId(i.id);
+                                            setForm(i);
+                                            setShowModal(true);
+                                          }}
+                                        >
+                                          <Edit2 size={14} />
+                                        </button>
+                                        <button
+                                          className="ui-btn-icon ui-text-error"
+                                          onClick={() => remove(i.id)}
+                                        >
+                                          <Trash2 size={14} />
+                                        </button></>) },
+                  ];
+                            return <DataTable columns={columns} data={items} rowKey={(i: any) => i.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

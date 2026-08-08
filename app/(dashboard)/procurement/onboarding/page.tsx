@@ -1,16 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Badge,
-  StatusBadge,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Badge, StatusBadge } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, Search, UserPlus } from "lucide-react";
 
@@ -77,25 +67,25 @@ export default function OnboardingPage() {
     {
       key: "step",
       header: "Current Step",
-      render: (r) =>
+      render: (r: any) =>
         r.step ? <Badge>{r.step.replace(/_/g, " ")}</Badge> : "—",
     },
     { key: "assignedTo", header: "Assigned To" },
     {
       key: "startedAt",
       header: "Started",
-      render: (r) => new Date(r.startedAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.startedAt).toLocaleDateString(),
     },
     {
       key: "completedAt",
       header: "Completed",
-      render: (r) =>
+      render: (r: any) =>
         r.completedAt ? new Date(r.completedAt).toLocaleDateString() : "—",
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
   ];
 
@@ -121,7 +111,7 @@ export default function OnboardingPage() {
           columns={columns}
           data={data}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No onboarding workflows"
           emptyMessage="Start a supplier onboarding workflow."
           emptyIcon={<UserPlus size={48} />}

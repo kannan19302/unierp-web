@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Gift, Plus, Search, Eye } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSGiftCardsPage() {
   const client = useApiClient();
@@ -150,60 +150,33 @@ export default function POSGiftCardsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Balance</th>
-                  <th>Status</th>
-                  <th>Issued To</th>
-                  <th>Expires</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={6} className="text-center p-4">
-                      Loading...
-                    </td>
-                  </tr>
-                ) : (
-                  cards.map((c) => (
-                    <tr key={c.id}>
-                      <td>{c.code}</td>
-                      <td>${Number(c.currentBalance).toFixed(2)}</td>
-                      <td>
-                        <span
-                          className={`ui-badge-${c.status === "ACTIVE" ? "success" : ""}`}
-                        >
-                          {c.status}
-                        </span>
-                      </td>
-                      <td>{c.issuedTo || "-"}</td>
-                      <td>
-                        {c.expiresAt
-                          ? new Date(c.expiresAt).toLocaleDateString()
-                          : "-"}
-                      </td>
-                      <td>
-                        <button
-                          className="ui-btn-icon"
-                          onClick={async () => {
-                            const d = await client.get<any>(
-                              `/pos/exp/gift-cards/${c.id}`,
-                            );
-                            setSelected(d);
-                          }}
-                        >
-                          <Eye size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Code", render: (c: any) => (<>{c.code}</>) },
+                            { key: "col_1", header: "Balance", render: (c: any) => (<>${Number(c.currentBalance).toFixed(2)}</>) },
+                            { key: "col_2", header: "Status", render: (c: any) => (<><span
+                                                    className={`ui-badge-${c.status === "ACTIVE" ? "success" : ""}`}
+                                                  >
+                                                    {c.status}
+                                                  </span></>) },
+                            { key: "col_3", header: "Issued To", render: (c: any) => (<>{c.issuedTo || "-"}</>) },
+                            { key: "col_4", header: "Expires", render: (c: any) => (<>{c.expiresAt
+                                                    ? new Date(c.expiresAt).toLocaleDateString()
+                                                    : "-"}</>) },
+                            { key: "col_5", header: "Actions", render: (c: any) => (<><button
+                                                    className="ui-btn-icon"
+                                                    onClick={async () => {
+                                                      const d = await client.get<any>(
+                                                        `/pos/exp/gift-cards/${c.id}`,
+                                                      );
+                                                      setSelected(d);
+                                                    }}
+                                                  >
+                                                    <Eye size={14} />
+                                                  </button></>) },
+                          ];
+                                    return <DataTable columns={columns} data={cards} rowKey={(c: any) => c.id} />;
+                                  })()}</>
           </div>
         )}
         {showModal && (

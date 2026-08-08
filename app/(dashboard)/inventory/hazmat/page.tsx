@@ -155,7 +155,7 @@ function Classifications() {
     {
       key: "hazardClass",
       header: "Hazard Class",
-      render: (row) =>
+      render: (row: any) =>
         classLabel(
           String((row as unknown as { hazardClass: string }).hazardClass),
         ),
@@ -163,7 +163,7 @@ function Classifications() {
     {
       key: "packingGroup",
       header: "Packing Grp",
-      render: (row) =>
+      render: (row: any) =>
         String(
           (row as unknown as { packingGroup?: string }).packingGroup ?? "—",
         ),
@@ -172,7 +172,7 @@ function Classifications() {
     {
       key: "sds",
       header: "SDS",
-      render: (row) =>
+      render: (row: any) =>
         String(
           ((row as unknown as { sdsRecords?: unknown[] }).sdsRecords ?? [])
             .length,
@@ -382,19 +382,19 @@ function Manifests() {
     {
       key: "carrierName",
       header: "Carrier",
-      render: (row) =>
+      render: (row: any) =>
         String((row as unknown as { carrierName?: string }).carrierName ?? "—"),
     },
     {
       key: "status",
       header: "Status",
-      render: (row) =>
+      render: (row: any) =>
         statusBadge(String((row as unknown as { status: string }).status)),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const m = row as unknown as { id: string; status: string };
         return (
           <div className="flex gap-1 flex-wrap">
@@ -606,7 +606,7 @@ function Incidents() {
     {
       key: "incidentDate",
       header: "Date",
-      render: (row) =>
+      render: (row: any) =>
         new Date(
           String((row as unknown as { incidentDate: string }).incidentDate),
         ).toLocaleDateString(),
@@ -614,7 +614,7 @@ function Incidents() {
     {
       key: "severity",
       header: "Severity",
-      render: (row) => {
+      render: (row: any) => {
         const inc = row as unknown as { severity: string };
         const colorMap: Record<string, string> = {
           CRITICAL: "bg-red-100 text-red-800",
@@ -635,7 +635,7 @@ function Incidents() {
     {
       key: "status",
       header: "Status",
-      render: (row) => {
+      render: (row: any) => {
         const inc = row as unknown as { closedAt?: string };
         return inc.closedAt ? statusBadge("APPROVED") : statusBadge("PENDING");
       },
@@ -643,7 +643,7 @@ function Incidents() {
     {
       key: "actions",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const inc = row as unknown as { id: string; closedAt?: string };
         return !inc.closedAt ? (
           <button
@@ -759,7 +759,7 @@ function ComplianceReport() {
     {
       key: "hazardClass",
       header: "Hazard Class",
-      render: (row) =>
+      render: (row: any) =>
         classLabel(
           String((row as unknown as { hazardClass: string }).hazardClass),
         ),
@@ -769,7 +769,7 @@ function ComplianceReport() {
     {
       key: "currentSds",
       header: "Current",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-green-700">
           {String((row as unknown as { currentSds: number }).currentSds)}
         </span>
@@ -778,7 +778,7 @@ function ComplianceReport() {
     {
       key: "expiredSds",
       header: "Expired",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-red-600">
           {String((row as unknown as { expiredSds: number }).expiredSds)}
         </span>
@@ -787,7 +787,7 @@ function ComplianceReport() {
     {
       key: "unacknowledgedSds",
       header: "Unacknowledged",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-orange-600">
           {String(
             (row as unknown as { unacknowledgedSds: number }).unacknowledgedSds,
@@ -798,7 +798,7 @@ function ComplianceReport() {
     {
       key: "compliant",
       header: "Compliant",
-      render: (row) =>
+      render: (row: any) =>
         (row as unknown as { compliant: boolean }).compliant ? (
           <span className="text-green-600 font-semibold">✓</span>
         ) : (

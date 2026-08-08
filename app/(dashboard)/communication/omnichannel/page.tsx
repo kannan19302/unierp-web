@@ -1,17 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column } from "@unerp/ui";
 import {
   Radio,
   MessageSquare,
@@ -80,7 +70,7 @@ export default function OmnichannelPage() {
     {
       key: "contactName",
       header: "Contact",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="font-medium">{r.contactName}</span>
           {r.tags?.length > 0 && (
@@ -98,7 +88,7 @@ export default function OmnichannelPage() {
     {
       key: "platform",
       header: "Channel",
-      render: (r) => (
+      render: (r: any) => (
         <span>
           {platformIcon(r.platform)} {r.platform}
         </span>
@@ -107,7 +97,7 @@ export default function OmnichannelPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "ACTIVE"
@@ -124,7 +114,7 @@ export default function OmnichannelPage() {
     {
       key: "assignedTo",
       header: "Assigned",
-      render: (r) =>
+      render: (r: any) =>
         r.assignedTo ? (
           <div className="flex items-center gap-1">
             <UserCheck size={14} />
@@ -137,7 +127,7 @@ export default function OmnichannelPage() {
     {
       key: "lastMessageAt",
       header: "Last Activity",
-      render: (r) => new Date(r.lastMessageAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.lastMessageAt).toLocaleDateString(),
     },
     {
       key: "actions",
@@ -213,7 +203,7 @@ export default function OmnichannelPage() {
             <DataTable
               columns={columns}
               data={conversations}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No conversations"
               emptyIcon={<Radio size={48} />}
             />

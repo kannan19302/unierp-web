@@ -1,22 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Pagination,
-  Drawer,
-  ConfirmDialog,
-  ProtectedComponent,
-} from "@unerp/ui";
+import { Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Pagination, Drawer, ConfirmDialog, ProtectedComponent } from "@unerp/ui";
 import {
   UserPlus,
   Search,
@@ -207,7 +192,7 @@ export default function UsersTab() {
       key: "user",
       header: "User",
       width: "35%",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div
             className={styles.s1}
@@ -237,7 +222,7 @@ export default function UsersTab() {
     {
       key: "roles",
       header: "Roles",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s3}>
           {row.roles.slice(0, 2).map((r) => (
             <Badge key={r.id} variant="info">
@@ -253,12 +238,12 @@ export default function UsersTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "lastLoginAt",
       header: "Last Active",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-tertiary">{timeAgo(row.lastLoginAt)}</span>
       ),
     },
@@ -267,7 +252,7 @@ export default function UsersTab() {
       header: "",
       align: "right" as const,
       width: "100px",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s4}>
           <ProtectedComponent permission="admin.user.update">
             <IconButton
@@ -402,7 +387,7 @@ export default function UsersTab() {
           columns={columns}
           data={filteredUsers}
           loading={loading}
-          rowKey={(row) => row.id}
+          rowKey={(row: any) => row.id}
           onRowClick={(row) => {
             setSelectedUser(row);
             setDrawerOpen(true);

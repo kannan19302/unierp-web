@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Spinner,
-  StatusBadge,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Spinner, StatusBadge } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { Target, BarChart3 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
@@ -52,12 +43,12 @@ export default function SustainabilityPage() {
     {
       key: "targetName",
       header: "Target",
-      render: (r) => <span className="ui-link">{r.targetName}</span>,
+      render: (r: any) => <span className="ui-link">{r.targetName}</span>,
     },
     {
       key: "targetType",
       header: "Type",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.targetType === "REDUCTION" ? "success" : "primary"}>
           {r.targetType}
         </Badge>
@@ -66,7 +57,7 @@ export default function SustainabilityPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
   ];
 
@@ -97,7 +88,7 @@ export default function SustainabilityPage() {
               columns={columns}
               data={targets}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No targets"
               emptyMessage="Set your first sustainability target."
               emptyIcon={<Target size={48} />}

@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState } from "react";
 
@@ -59,26 +59,15 @@ export default function CommunicationAnalyticsPage() {
         <div>
           <h2 className="text-lg font-semibold mb-3">Multi-Channel Overview</h2>
           <div className="overflow-x-auto">
-            <Table className="w-full text-sm">
-              <thead>
-                <tr className="border-b text-left">
-                  <th className="py-2 px-3 font-medium">Channel</th>
-                  <th className="py-2 px-3 font-medium">Type</th>
-                  <th className="py-2 px-3 font-medium">Total</th>
-                  <th className="py-2 px-3 font-medium">Failed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(dash.byChannel || []).map((c: any) => (
-                  <tr key={c.channelId} className="border-b">
-                    <td className="py-2 px-3">{c.channelName}</td>
-                    <td className="py-2 px-3">{c.channelType}</td>
-                    <td className="py-2 px-3">{c.total}</td>
-                    <td className="py-2 px-3 text-red-600">{c.failed}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Channel", render: (c: any) => (<>{c.channelName}</>) },
+                        { key: "col_1", header: "Type", render: (c: any) => (<>{c.channelType}</>) },
+                        { key: "col_2", header: "Total", render: (c: any) => (<>{c.total}</>) },
+                        { key: "col_3", header: "Failed", render: (c: any) => (<>{c.failed}</>) },
+                      ];
+                                return <DataTable columns={columns} data={(dash.byChannel || [])} rowKey={(c: any) => c.channelId} />;
+                              })()}</>
           </div>
           <div className="mt-4 text-sm text-muted-foreground">
             Templates: {dash.templates} | Social Posts:{" "}

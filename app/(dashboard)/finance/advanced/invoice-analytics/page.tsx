@@ -14,13 +14,7 @@ import {
   Users,
   Calendar,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface MonthlyTrend {
@@ -169,28 +163,28 @@ export default function InvoiceAnalyticsPage() {
                     {
                       key: "month",
                       header: "Month",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-medium">{v as string}</span>
                       ),
                     },
                     {
                       key: "invoiced",
                       header: "Invoiced",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s4}>{fmt(v as number)}</span>
                       ),
                     },
                     {
                       key: "paid",
                       header: "Collected",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s5}>{fmt(v as number)}</span>
                       ),
                     },
                     {
                       key: "count",
                       header: "Invoices",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s6}>{v as number}</span>
                       ),
                     },
@@ -248,28 +242,28 @@ export default function InvoiceAnalyticsPage() {
                     {
                       key: "name",
                       header: "Customer",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-medium">{v as string}</span>
                       ),
                     },
                     {
                       key: "invoiced",
                       header: "Total Invoiced",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s4}>{fmt(v as number)}</span>
                       ),
                     },
                     {
                       key: "paid",
                       header: "Paid",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s5}>{fmt(v as number)}</span>
                       ),
                     },
                     {
                       key: "count",
                       header: "Invoices",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s6}>{v as number}</span>
                       ),
                     },

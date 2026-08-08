@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState } from "react";
 
@@ -39,28 +39,15 @@ export default function VersionHistoryPage() {
             <div>
               <h2 className="text-lg font-semibold mb-3">Versions</h2>
               <div className="overflow-x-auto">
-                <Table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b text-left">
-                      <th className="py-2 px-3 font-medium">Version</th>
-                      <th className="py-2 px-3 font-medium">Change Summary</th>
-                      <th className="py-2 px-3 font-medium">Created By</th>
-                      <th className="py-2 px-3 font-medium">Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {history.versions.map((v: any) => (
-                      <tr key={v.id} className="border-b hover:bg-muted/50">
-                        <td className="py-2 px-3">v{v.versionNumber}</td>
-                        <td className="py-2 px-3">{v.changeSummary}</td>
-                        <td className="py-2 px-3">{v.createdBy}</td>
-                        <td className="py-2 px-3">
-                          {new Date(v.createdAt).toLocaleDateString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <>{(() => {
+                                        const columns = [
+                                { key: "col_0", header: "Version", render: (v: any) => (<>v{v.versionNumber}</>) },
+                                { key: "col_1", header: "Change Summary", render: (v: any) => (<>{v.changeSummary}</>) },
+                                { key: "col_2", header: "Created By", render: (v: any) => (<>{v.createdBy}</>) },
+                                { key: "col_3", header: "Date", render: (v: any) => (<>{new Date(v.createdAt).toLocaleDateString()}</>) },
+                              ];
+                                        return <DataTable columns={columns} data={history.versions} rowKey={(v: any) => v.id} />;
+                                      })()}</>
               </div>
             </div>
           )}
@@ -68,28 +55,15 @@ export default function VersionHistoryPage() {
             <div>
               <h2 className="text-lg font-semibold mb-3">Amendments</h2>
               <div className="overflow-x-auto">
-                <Table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b text-left">
-                      <th className="py-2 px-3 font-medium">Number</th>
-                      <th className="py-2 px-3 font-medium">Title</th>
-                      <th className="py-2 px-3 font-medium">Created By</th>
-                      <th className="py-2 px-3 font-medium">Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {history.amendments.map((a: any) => (
-                      <tr key={a.id} className="border-b hover:bg-muted/50">
-                        <td className="py-2 px-3">{a.amendmentNumber}</td>
-                        <td className="py-2 px-3">{a.title}</td>
-                        <td className="py-2 px-3">{a.createdBy}</td>
-                        <td className="py-2 px-3">
-                          {new Date(a.createdAt).toLocaleDateString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <>{(() => {
+                                        const columns = [
+                                { key: "col_0", header: "Number", render: (a: any) => (<>{a.amendmentNumber}</>) },
+                                { key: "col_1", header: "Title", render: (a: any) => (<>{a.title}</>) },
+                                { key: "col_2", header: "Created By", render: (a: any) => (<>{a.createdBy}</>) },
+                                { key: "col_3", header: "Date", render: (a: any) => (<>{new Date(a.createdAt).toLocaleDateString()}</>) },
+                              ];
+                                        return <DataTable columns={columns} data={history.amendments} rowKey={(a: any) => a.id} />;
+                                      })()}</>
               </div>
             </div>
           )}

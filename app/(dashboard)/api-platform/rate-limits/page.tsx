@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import React from "react";
@@ -22,52 +22,28 @@ export default function ApiRateLimitsPage() {
       </div>
 
       <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-        <Table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-gray-500 font-medium text-xs uppercase border-b">
-            <tr>
-              <th className="p-3">Rule Name</th>
-              <th className="p-3">Endpoint Pattern</th>
-              <th className="p-3">Limit / Min</th>
-              <th className="p-3">Burst Limit</th>
-              <th className="p-3">Client Tier</th>
-              <th className="p-3">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y text-gray-700">
-            <tr>
-              <td className="p-3 font-semibold">Standard REST API Rule</td>
-              <td className="p-3 font-mono text-xs">/api/v1/*</td>
-              <td className="p-3 font-medium">60 req/min</td>
-              <td className="p-3">100</td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded font-medium">
-                  STANDARD
-                </span>
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
-                  ACTIVE
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <td className="p-3 font-semibold">High-Throughput Partner API</td>
-              <td className="p-3 font-mono text-xs">/api/v1/orders/*</td>
-              <td className="p-3 font-medium">1,000 req/min</td>
-              <td className="p-3">2,500</td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded font-medium">
-                  ENTERPRISE
-                </span>
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
-                  ACTIVE
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Rule Name", render: (row: any) => (<>{row.col_0}</>) },
+                { key: "col_1", header: "Endpoint Pattern", render: (row: any) => (<>{row.col_1}</>) },
+                { key: "col_2", header: "Limit / Min", render: (row: any) => (<>{row.col_2}</>) },
+                { key: "col_3", header: "Burst Limit", render: (row: any) => (<>{row.col_3}</>) },
+                { key: "col_4", header: "Client Tier", render: (row: any) => (<>{row.col_4}</>) },
+                { key: "col_5", header: "Status", render: (row: any) => (<>{row.col_5}</>) },
+              ];
+                        return <DataTable columns={columns} data={[
+                { col_0: ( <>Standard REST API Rule</> ), col_1: ( <>/api/v1/*</> ), col_2: ( <>60 req/min</> ), col_3: ( <>100</> ), col_4: ( <><span className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded font-medium">
+                                STANDARD
+                              </span></> ), col_5: ( <><span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
+                                ACTIVE
+                              </span></> ),  },
+                { col_0: ( <>High-Throughput Partner API</> ), col_1: ( <>/api/v1/orders/*</> ), col_2: ( <>1,000 req/min</> ), col_3: ( <>2,500</> ), col_4: ( <><span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded font-medium">
+                                ENTERPRISE
+                              </span></> ), col_5: ( <><span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
+                                ACTIVE
+                              </span></> ),  },
+              ]} rowKey={(row: any, i: any) => String(i)} />;
+                      })()}</>
       </div>
     </div>
   );

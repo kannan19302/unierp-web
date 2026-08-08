@@ -548,24 +548,24 @@ export default function AiAnalyticsPage() {
                       {
                         key: "scenarioName",
                         header: "Scenario",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "type",
                         header: "Type",
-                        render: (v) => String(v).replace(/_/g, " "),
+                        render: (v: any) => String(v).replace(/_/g, " "),
                       },
                       {
                         key: "linesCount",
                         header: "Lines",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "active",
                         header: "Active",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <span className="text-green-600 font-medium">
                               Yes
@@ -624,24 +624,24 @@ export default function AiAnalyticsPage() {
                       {
                         key: "accountName",
                         header: "Account",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "period",
                         header: "Period",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "forecastAmount",
                         header: "Forecast",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "actualAmount",
                         header: "Actual",
-                        render: (v) => (v !== null ? fmt(Number(v)) : "—"),
+                        render: (v: any) => (v !== null ? fmt(Number(v)) : "—"),
                       },
                     ] as ListColumn[]
                   }
@@ -736,26 +736,26 @@ export default function AiAnalyticsPage() {
                       {
                         key: "runName",
                         header: "Run",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "modelUsed",
                         header: "Model",
-                        render: (v) => String(v).replace(/_/g, " "),
+                        render: (v: any) => String(v).replace(/_/g, " "),
                       },
                       {
                         key: "anomaliesFound",
                         header: "Anomalies",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">{String(v)}</span>
                         ),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "COMPLETED" ? "ui-badge-green" : v === "RUNNING" ? "ui-badge-blue" : "ui-badge-yellow"}`}
                           >
@@ -787,24 +787,24 @@ export default function AiAnalyticsPage() {
                       {
                         key: "accountName",
                         header: "Account",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "expectedValue",
                         header: "Expected",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "actualValue",
                         header: "Actual",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "deviation",
                         header: "Deviation",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`font-semibold ${Math.abs(Number(v)) > 0.5 ? "text-red-600" : "text-amber-600"}`}
                           >
@@ -815,7 +815,7 @@ export default function AiAnalyticsPage() {
                       {
                         key: "severity",
                         header: "Severity",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "HIGH" ? "bg-red-100 text-red-700" : v === "MEDIUM" ? "bg-yellow-100 text-yellow-700" : "bg-blue-100 text-blue-700"}`}
                           >
@@ -826,7 +826,7 @@ export default function AiAnalyticsPage() {
                       {
                         key: "reviewed",
                         header: "Reviewed",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <Check size={16} className="text-green-600" />
                           ) : (
@@ -877,14 +877,14 @@ export default function AiAnalyticsPage() {
                       {
                         key: "invoiceText",
                         header: "Invoice Description",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "suggestedAccount",
                         header: "Suggested GL Account",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold text-blue-700">
                             {String(v)}
                           </span>
@@ -893,7 +893,7 @@ export default function AiAnalyticsPage() {
                       {
                         key: "confidence",
                         header: "Confidence",
-                        render: (v) => (
+                        render: (v: any) => (
                           <div className="flex items-center gap-2">
                             <div className="w-16 bg-gray-200 h-2 rounded-full">
                               <div
@@ -910,7 +910,7 @@ export default function AiAnalyticsPage() {
                       {
                         key: "accepted",
                         header: "Status",
-                        render: (v) => {
+                        render: (v: any) => {
                           if (v === true)
                             return (
                               <span className="text-green-600 font-medium text-xs">
@@ -1019,14 +1019,14 @@ export default function AiAnalyticsPage() {
                       {
                         key: "query",
                         header: "Query",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "sqlGenerated",
                         header: "Generated SQL",
-                        render: (v) => (
+                        render: (v: any) => (
                           <code className="text-xs bg-gray-100 px-1 py-0.5 rounded">
                             {String(v)}
                           </code>
@@ -1035,12 +1035,12 @@ export default function AiAnalyticsPage() {
                       {
                         key: "resultSummary",
                         header: "Result",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "executedAt",
                         header: "Executed",
-                        render: (v) => new Date(String(v)).toLocaleString(),
+                        render: (v: any) => new Date(String(v)).toLocaleString(),
                       },
                     ] as ListColumn[]
                   }

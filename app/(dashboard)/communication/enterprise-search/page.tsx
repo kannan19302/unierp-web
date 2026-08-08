@@ -1,18 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-  Input,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column, Input } from "@unerp/ui";
 import {
   Search,
   Bookmark,
@@ -100,7 +89,7 @@ export default function EnterpriseSearchPage() {
     {
       key: "title",
       header: "Result",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-2">
           <span className="text-muted">{typeIcon(r.type)}</span>
           <span className="font-medium">{r.title}</span>
@@ -113,7 +102,7 @@ export default function EnterpriseSearchPage() {
     {
       key: "createdAt",
       header: "Date",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -167,7 +156,7 @@ export default function EnterpriseSearchPage() {
                   <DataTable
                     columns={columns}
                     data={results}
-                    rowKey={(r) => `${r.type}-${r.id}`}
+                    rowKey={(r: any) => `${r.type}-${r.id}`}
                     emptyTitle="No results"
                   />
                 </Card>
@@ -185,17 +174,17 @@ export default function EnterpriseSearchPage() {
                   {
                     key: "scope",
                     header: "Scope",
-                    render: (r) => <Badge>{r.scope}</Badge>,
+                    render: (r: any) => <Badge>{r.scope}</Badge>,
                   },
                   {
                     key: "createdAt",
                     header: "Saved",
-                    render: (r) => new Date(r.createdAt).toLocaleDateString(),
+                    render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
                   },
                 ] as Column<SavedSearch>[]
               }
               data={savedSearches}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No saved searches"
               emptyIcon={<Bookmark size={48} />}
             />

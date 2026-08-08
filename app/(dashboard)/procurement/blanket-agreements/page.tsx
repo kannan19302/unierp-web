@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, Table, DataTable } from "@unerp/ui";
 import {
   Plus,
   Trash2,
@@ -382,102 +382,66 @@ export default function BlanketAgreementsPage() {
             </div>
           ) : (
             <div className="builder-table-wrapper">
-              <Table className={styles.p14}>
-                <thead>
-                  <tr className={styles.p15}>
-                    <th className="py-3 px-4">Agreement No.</th>
-                    <th className="py-3 px-4">Contract Title</th>
-                    <th className="py-3 px-4">Supplier</th>
-                    <th className="py-3 px-4">Duration</th>
-                    <th className="py-3 px-4">Released Limit</th>
-                    <th className="py-3 px-4">Status</th>
-                    <th className={styles.p16}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {agreements.map((ba) => {
-                    const percentConsumed =
-                      Number(ba.agreementLimit) > 0
-                        ? (Number(ba.releasedAmount) /
-                            Number(ba.agreementLimit)) *
-                          100
-                        : 0;
-                    return (
-                      <tr key={ba.id} className={styles.p17}>
-                        <td className={styles.p18}>{ba.agreementNumber}</td>
-                        <td className="p-4">
-                          <div className="font-medium">{ba.title}</div>
-                          {ba.notes && (
-                            <div className={styles.p19}>{ba.notes}</div>
-                          )}
-                        </td>
-                        <td className="p-4">
-                          {ba.vendorName || "Selected Supplier"}
-                        </td>
-                        <td className={styles.p20}>
-                          <div>
-                            Start: {new Date(ba.startDate).toLocaleDateString()}
-                          </div>
-                          <div className={styles.p21}>
-                            End: {new Date(ba.endDate).toLocaleDateString()}
-                          </div>
-                        </td>
-                        <td className="p-4">
-                          <div className={styles.p22}>
-                            <div className={styles.p23}>
-                              <span>
-                                ${Number(ba.releasedAmount).toLocaleString()}
-                              </span>
-                              <span className="ui-text-muted">
-                                / ${Number(ba.agreementLimit).toLocaleString()}
-                              </span>
-                            </div>
-                            {/* Progress bar */}
-                            <div className={styles.p24}>
-                              <div
-                                style={{
-                                  width: `${Math.min(percentConsumed, 100)}%`,
-                                  background:
-                                    percentConsumed >= 90
-                                      ? "var(--color-danger)"
-                                      : percentConsumed >= 70
-                                        ? "var(--color-warning)"
-                                        : "var(--color-success)",
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </td>
-                        <td className="p-4">
-                          <Badge
-                            variant={
-                              ba.status === "ACTIVE" ? "success" : "default"
-                            }
-                          >
-                            {ba.status}
-                          </Badge>
-                        </td>
-                        <td className={styles.p26}>
-                          <div className="ui-flex-end ui-gap-2">
-                            <Button
-                              onClick={() => handleOpenReleaseModal(ba)}
-                              disabled={
-                                ba.status !== "ACTIVE" || percentConsumed >= 100
-                              }
-                              className={[
-                                "ui-btn ui-btn-primary",
-                                styles.p27,
-                              ].join(" ")}
-                            >
-                              Release PO
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                          const columns = [
+                                    { key: "col_0", header: "Agreement No." , render: (ba: any) => (<>{ba.agreementNumber}</>) },
+                                    { key: "col_1", header: "Contract Title" , render: (ba: any) => (<><div className="font-medium">{ba.title}</div>{ba.notes && (
+                                                              <div className={styles.p19}>{ba.notes}</div>
+                                                            )}</>) },
+                                    { key: "col_2", header: "Supplier" , render: (ba: any) => (<>{ba.vendorName || "Selected Supplier"}</>) },
+                                    { key: "col_3", header: "Duration" , render: (ba: any) => (<><div>
+                                                              Start: {new Date(ba.startDate).toLocaleDateString()}
+                                                            </div><div className={styles.p21}>
+                                                              End: {new Date(ba.endDate).toLocaleDateString()}
+                                                            </div></>) },
+                                    { key: "col_4", header: "Released Limit" , render: (ba: any) => (<><div className={styles.p22}>
+                                                              <div className={styles.p23}>
+                                                                <span>
+                                                                  ${Number(ba.releasedAmount).toLocaleString()}
+                                                                </span>
+                                                                <span className="ui-text-muted">
+                                                                  / ${Number(ba.agreementLimit).toLocaleString()}
+                                                                </span>
+                                                              </div>
+                                                              {/* Progress bar */}
+                                                              <div className={styles.p24}>
+                                                                <div
+                                                                  style={{
+                                                                    width: `${Math.min(percentConsumed, 100)}%`,
+                                                                    background:
+                                                                      percentConsumed >= 90
+                                                                        ? "var(--color-danger)"
+                                                                        : percentConsumed >= 70
+                                                                          ? "var(--color-warning)"
+                                                                          : "var(--color-success)",
+                                                                  }}
+                                                                />
+                                                              </div>
+                                                            </div></>) },
+                                    { key: "col_5", header: "Status" , render: (ba: any) => (<><Badge
+                                                              variant={
+                                                                ba.status === "ACTIVE" ? "success" : "default"
+                                                              }
+                                                            >
+                                                              {ba.status}
+                                                            </Badge></>) },
+                                    { key: "col_6", header: "Actions" , render: (ba: any) => (<><div className="ui-flex-end ui-gap-2">
+                                                              <Button
+                                                                onClick={() => handleOpenReleaseModal(ba)}
+                                                                disabled={
+                                                                  ba.status !== "ACTIVE" || percentConsumed >= 100
+                                                                }
+                                                                className={[
+                                                                  "ui-btn ui-btn-primary",
+                                                                  styles.p27,
+                                                                ].join(" ")}
+                                                              >
+                                                                Release PO
+                                                              </Button>
+                                                            </div></>) },
+                                  ];
+                                          return <DataTable columns={columns} data={agreements} rowKey={(ba: any) => ba.id} />;
+                                      })()}</>
             </div>
           )}
         </Card>
@@ -801,68 +765,42 @@ export default function BlanketAgreementsPage() {
                 </div>
 
                 <div className={styles.p58}>
-                  <Table className={styles.p59}>
-                    <thead>
-                      <tr className={styles.p60}>
-                        <th className="p-3">Description</th>
-                        <th className="p-3">Locked Price</th>
-                        <th className="p-3">Remaining / Max Qty</th>
-                        <th className={styles.p61}>Release Qty</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {selectedAgreement.lineItems?.map((item) => {
-                        const maxQty = Number(item.quantity);
-                        const relQty = Number(item.releasedQty);
-                        const remQty = maxQty - relQty;
-                        return (
-                          <tr key={item.id} className={styles.p62}>
-                            <td className="p-3">
-                              <div className="font-bold">
-                                {item.productName || "Custom"}
-                              </div>
-                              <div className="ui-text-micro ui-text-muted">
-                                {item.description}
-                              </div>
-                            </td>
-                            <td className="p-3">
-                              ${Number(item.unitPrice).toLocaleString()}
-                            </td>
-                            <td className="p-3">
-                              <span
-                                style={{
-                                  color:
-                                    remQty <= 0
-                                      ? "var(--color-danger)"
-                                      : "inherit",
-                                }}
-                              >
-                                {remQty}
-                              </span>{" "}
-                              / {maxQty}
-                            </td>
-                            <td className="p-3">
-                              <input
-                                type="number"
-                                min={0}
-                                max={remQty}
-                                required
-                                value={releaseQuantities[item.id] || 0}
-                                onChange={(e) =>
-                                  handleReleaseQuantityChange(
-                                    item.id,
-                                    Number(e.target.value),
-                                  )
-                                }
-                                disabled={remQty <= 0}
-                                className={["ui-input", styles.p64].join(" ")}
-                              />
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
+                  <>{(() => {
+                                          const columns = [
+                                    { key: "col_0", header: "Description" , render: (item: any) => (<><div className="font-bold">
+                                                                  {item.productName || "Custom"}
+                                                                </div><div className="ui-text-micro ui-text-muted">
+                                                                  {item.description}
+                                                                </div></>) },
+                                    { key: "col_1", header: "Locked Price" , render: (item: any) => (<>${Number(item.unitPrice).toLocaleString()}</>) },
+                                    { key: "col_2", header: "Remaining / Max Qty" , render: (item: any) => (<><span
+                                                                  style={{
+                                                                    color:
+                                                                      remQty <= 0
+                                                                        ? "var(--color-danger)"
+                                                                        : "inherit",
+                                                                  }}
+                                                                >
+                                                                  {remQty}
+                                                                </span>{" "}/ {maxQty}</>) },
+                                    { key: "col_3", header: "Release Qty" , render: (item: any) => (<><input
+                                                                  type="number"
+                                                                  min={0}
+                                                                  max={remQty}
+                                                                  required
+                                                                  value={releaseQuantities[item.id] || 0}
+                                                                  onChange={(e) =>
+                                                                    handleReleaseQuantityChange(
+                                                                      item.id,
+                                                                      Number(e.target.value),
+                                                                    )
+                                                                  }
+                                                                  disabled={remQty <= 0}
+                                                                  className={["ui-input", styles.p64].join(" ")}
+                                                                /></>) },
+                                  ];
+                                          return <DataTable columns={columns} data={selectedAgreement.lineItems} rowKey={(item: any) => item.id} />;
+                                      })()}</>
                 </div>
 
                 {/* Estimate Release cost */}

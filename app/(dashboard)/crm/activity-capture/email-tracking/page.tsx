@@ -30,7 +30,7 @@ function EmailTrackingPage() {
       key: "eventType",
       header: "Event",
       sortable: true,
-      render: (row) => {
+      render: (row: any) => {
         const v = (row as any).eventType as string;
         return (
           <Badge
@@ -52,7 +52,7 @@ function EmailTrackingPage() {
     {
       key: "linkUrl",
       header: "Link",
-      render: (row) => {
+      render: (row: any) => {
         const v = (row as any).linkUrl as string | undefined;
         return v ? (
           <span className="ui-text-truncate" style={{ maxWidth: 200 }}>
@@ -67,7 +67,7 @@ function EmailTrackingPage() {
       key: "occurredAt",
       header: "Time",
       sortable: true,
-      render: (row) =>
+      render: (row: any) =>
         new Date((row as any).occurredAt as string).toLocaleString(),
     },
   ];

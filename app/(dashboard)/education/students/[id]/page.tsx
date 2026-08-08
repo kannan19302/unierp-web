@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  KPICard,
-  ChangeHistory,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, KPICard, ChangeHistory } from "@unerp/ui";
 import {
   GraduationCap,
   BookOpen,

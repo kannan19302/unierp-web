@@ -1,13 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Search, Printer } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -116,13 +110,13 @@ export default function MovementHistoryPage() {
                 {
                   key: "timestamp",
                   header: "Date",
-                  render: (v) => new Date(String(v)).toLocaleString(),
+                  render: (v: any) => new Date(String(v)).toLocaleString(),
                 },
                 { key: "productName", header: "Product" },
                 {
                   key: "voucherNumber",
                   header: "Voucher",
-                  render: (v) => <span className="font-mono">{String(v)}</span>,
+                  render: (v: any) => <span className="font-mono">{String(v)}</span>,
                 },
                 { key: "qtyIn", header: "In" },
                 { key: "qtyOut", header: "Out" },

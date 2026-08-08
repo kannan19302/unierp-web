@@ -3,15 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Badge,
-  Button,
-  DataTable,
-  Spinner,
-  Modal,
-} from "@unerp/ui";
+import { Card, PageHeader, Badge, Button, DataTable, Spinner, Modal } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   CheckSquare,
@@ -675,7 +667,7 @@ export default function ProcurementApprovalsPage() {
                   <DataTable
                     columns={pendingReqColumns}
                     data={pendingRequisitions}
-                    rowKey={(r) => r.id}
+                    rowKey={(r: any) => r.id}
                     emptyTitle="No pending requisitions"
                     emptyMessage="All requisitions have been reviewed."
                   />
@@ -694,7 +686,7 @@ export default function ProcurementApprovalsPage() {
                   <DataTable
                     columns={pendingPoColumns}
                     data={pendingPurchaseOrders}
-                    rowKey={(r) => r.id}
+                    rowKey={(r: any) => r.id}
                     emptyTitle="No pending purchase orders"
                     emptyMessage="All purchase orders have been reviewed."
                   />
@@ -723,7 +715,7 @@ export default function ProcurementApprovalsPage() {
                   <DataTable
                     columns={pendingReqColumns}
                     data={myRequisitions}
-                    rowKey={(r) => r.id}
+                    rowKey={(r: any) => r.id}
                     emptyTitle="No pending requisitions assigned to you"
                     emptyMessage="You have no items awaiting your approval."
                   />
@@ -740,7 +732,7 @@ export default function ProcurementApprovalsPage() {
                   <DataTable
                     columns={pendingPoColumns}
                     data={myPurchaseOrders}
-                    rowKey={(r) => r.id}
+                    rowKey={(r: any) => r.id}
                     emptyTitle="No pending purchase orders assigned to you"
                     emptyMessage="You have no purchase orders awaiting your approval."
                   />
@@ -785,7 +777,7 @@ export default function ProcurementApprovalsPage() {
             <DataTable
               columns={historyColumns}
               data={historyItems}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No approval history"
               emptyMessage="Completed approvals will appear here."
             />

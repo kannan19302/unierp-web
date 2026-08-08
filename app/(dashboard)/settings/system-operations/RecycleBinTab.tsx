@@ -272,7 +272,7 @@ export default function RecycleBinTab() {
               {
                 key: "entityType",
                 header: "Entity Type",
-                render: (v) => (
+                render: (v: any) => (
                   <span
                     className={styles.s16}
                     style={{
@@ -287,18 +287,18 @@ export default function RecycleBinTab() {
               {
                 key: "entityName",
                 header: "Entity Name",
-                render: (v) => <span className={styles.s17}>{String(v)}</span>,
+                render: (v: any) => <span className={styles.s17}>{String(v)}</span>,
               },
               { key: "deletedBy", header: "Deleted By" },
               {
                 key: "deletedAt",
                 header: "Deleted At",
-                render: (v) => relativeTime(String(v)),
+                render: (v: any) => relativeTime(String(v)),
               },
               {
                 key: "expiresAt",
                 header: "Expires At",
-                render: (v) => new Date(String(v)).toLocaleDateString(),
+                render: (v: any) => new Date(String(v)).toLocaleDateString(),
               },
               {
                 key: "id",

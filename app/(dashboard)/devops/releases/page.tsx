@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { Plus, Eye, Rocket, CheckCircle } from "lucide-react";
 
 interface Release {
@@ -59,20 +52,20 @@ export default function ReleasesPage() {
     {
       key: "releaseType",
       header: "Type",
-      render: (r) => <Badge variant="info">{r.releaseType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.releaseType}</Badge>,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={variantForStatus(r.status)}>{r.status}</Badge>
       ),
     },
-    { key: "branch", header: "Branch", render: (r) => r.branch || "-" },
+    { key: "branch", header: "Branch", render: (r: any) => r.branch || "-" },
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

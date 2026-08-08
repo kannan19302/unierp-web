@@ -1,16 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Badge,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Badge, KPICard } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, BarChart3 } from "lucide-react";
 
@@ -90,25 +80,25 @@ export default function WarehouseKpisPage() {
     {
       key: "kpiDate",
       header: "Date",
-      render: (r) => new Date(r.kpiDate).toLocaleDateString(),
+      render: (r: any) => new Date(r.kpiDate).toLocaleDateString(),
     },
     { key: "linesPicked", header: "Lines Picked" },
     { key: "ordersShipped", header: "Shipped" },
     {
       key: "picksPerHour",
       header: "Picks/hr",
-      render: (r) => Number(r.picksPerHour || 0).toFixed(1),
+      render: (r: any) => Number(r.picksPerHour || 0).toFixed(1),
     },
     {
       key: "orderAccuracyPct",
       header: "Accuracy %",
-      render: (r) => `${Number(r.orderAccuracyPct || 0).toFixed(1)}%`,
+      render: (r: any) => `${Number(r.orderAccuracyPct || 0).toFixed(1)}%`,
     },
     { key: "activeWorkers", header: "Workers" },
     {
       key: "laborCostPerOrder",
       header: "Cost/Order",
-      render: (r) => `$${Number(r.laborCostPerOrder || 0).toFixed(2)}`,
+      render: (r: any) => `$${Number(r.laborCostPerOrder || 0).toFixed(2)}`,
     },
   ];
 
@@ -154,7 +144,7 @@ export default function WarehouseKpisPage() {
           columns={columns}
           data={data}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No KPIs recorded"
           emptyMessage="Record your first warehouse KPI snapshot."
           emptyIcon={<BarChart3 size={48} />}

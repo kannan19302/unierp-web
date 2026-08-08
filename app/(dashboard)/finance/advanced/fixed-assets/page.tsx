@@ -16,13 +16,7 @@ import {
   Eye,
   ArrowRight,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  Modal,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, Modal } from "@unerp/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface FixedAsset {
@@ -324,7 +318,7 @@ export default function FixedAssetsDashboard() {
                   {
                     key: "assetCode",
                     header: "Asset Code",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">{String(v)}</span>
                     ),
                   },
@@ -332,17 +326,17 @@ export default function FixedAssetsDashboard() {
                   {
                     key: "category",
                     header: "Category",
-                    render: (v) => String((v as any)?.name || "Unassigned"),
+                    render: (v: any) => String((v as any)?.name || "Unassigned"),
                   },
                   {
                     key: "purchaseValue",
                     header: "Cost",
-                    render: (v) => `$${Number(v).toFixed(2)}`,
+                    render: (v: any) => `$${Number(v).toFixed(2)}`,
                   },
                   {
                     key: "currentValue",
                     header: "NBV",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.s17}>
                         ${Number(v).toFixed(2)}
                       </span>
@@ -351,7 +345,7 @@ export default function FixedAssetsDashboard() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`px-2 py-0.5 rounded-full text-xs font-semibold ${v === "ACTIVE" ? "bg-green-100 text-green-700" : v === "UNDER_MAINTENANCE" ? "bg-amber-100 text-amber-700" : "bg-gray-100 text-gray-700"}`}
                       >
@@ -362,7 +356,7 @@ export default function FixedAssetsDashboard() {
                   {
                     key: "id",
                     header: "",
-                    render: (v) => (
+                    render: (v: any) => (
                       <Link
                         href={`/finance/advanced/fixed-assets/assets/${String(v)}`}
                         className={`ui-btn ui-btn-secondary ${styles.s18}`}

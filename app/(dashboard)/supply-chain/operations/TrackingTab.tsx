@@ -1,15 +1,7 @@
 "use client";
 import styles from "./operations.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  StatusBadge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner,
-  Badge,
-} from "@unerp/ui";
+import { Card, StatusBadge, DataTable, type Column, KPICard, Spinner, Badge } from "@unerp/ui";
 import { useApiClient, RouteGuard } from "@unerp/framework";
 import { MapPin, Truck, Package, Search, RefreshCw } from "lucide-react";
 
@@ -134,7 +126,7 @@ export default function TrackingTab() {
     {
       key: "shipment",
       header: "Shipment",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="ui-heading-sm">{row.shipmentNumber}</div>
           <div className="ui-text-xs-tertiary">
@@ -152,7 +144,7 @@ export default function TrackingTab() {
     {
       key: "progress",
       header: "Progress",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <div className={styles.progressBarTrack}>
             <div
@@ -171,7 +163,7 @@ export default function TrackingTab() {
     {
       key: "eta",
       header: "ETA / Arrival",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {row.eta ? new Date(row.eta).toLocaleDateString() : "—"}
         </span>
@@ -180,7 +172,7 @@ export default function TrackingTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
   ];
 
@@ -247,7 +239,7 @@ export default function TrackingTab() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No active shipments to track"
             emptyMessage="Inbound and outbound shipments with tracking details will appear here."
             emptyIcon={<MapPin size={48} />}

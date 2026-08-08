@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Badge, Spinner, Card, Table } from "@unerp/ui";
+import { PageHeader, Badge, Spinner, Card, Table, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart } from "lucide-react";
@@ -111,49 +111,20 @@ export default function PaymentSchedulesPage() {
         <Spinner />
       ) : (
         <Card>
-          <Table className="ui-table" style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th>Schedule #</th>
-                <th>PO Reference</th>
-                <th>Vendor</th>
-                <th>Amount Due</th>
-                <th>Due Date</th>
-                <th>Paid Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(data || []).map((s: any) => (
-                <tr key={s.id}>
-                  <td>{s.scheduleNumber || s.id}</td>
-                  <td>
-                    {s.poReference || s.purchaseOrder?.orderNumber || "—"}
-                  </td>
-                  <td>{s.vendor?.name || "—"}</td>
-                  <td>${Number(s.amountDue || 0).toLocaleString()}</td>
-                  <td>
-                    {s.dueDate ? new Date(s.dueDate).toLocaleDateString() : "—"}
-                  </td>
-                  <td>
-                    {s.paidDate
-                      ? new Date(s.paidDate).toLocaleDateString()
-                      : "—"}
-                  </td>
-                  <td>
-                    <Badge variant={statusVariant(s.status)}>{s.status}</Badge>
-                  </td>
-                </tr>
-              ))}
-              {(!data || data.length === 0) && (
-                <tr>
-                  <td colSpan={7} style={{ textAlign: "center", padding: 24 }}>
-                    No payment schedules found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Schedule #" , render: (s: any) => (<>{s.scheduleNumber || s.id}</>) },
+                        { key: "col_1", header: "PO Reference" , render: (s: any) => (<>{s.poReference || s.purchaseOrder?.orderNumber || "—"}</>) },
+                        { key: "col_2", header: "Vendor" , render: (s: any) => (<>{s.vendor?.name || "—"}</>) },
+                        { key: "col_3", header: "Amount Due" , render: (s: any) => (<>${Number(s.amountDue || 0).toLocaleString()}</>) },
+                        { key: "col_4", header: "Due Date" , render: (s: any) => (<>{s.dueDate ? new Date(s.dueDate).toLocaleDateString() : "—"}</>) },
+                        { key: "col_5", header: "Paid Date" , render: (s: any) => (<>{s.paidDate
+                                            ? new Date(s.paidDate).toLocaleDateString()
+                                            : "—"}</>) },
+                        { key: "col_6", header: "Status" , render: (s: any) => (<><Badge variant={statusVariant(s.status)}>{s.status}</Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={(data || [])} rowKey={(s: any) => s.id} />;
+                          })()}</>
         </Card>
       )}
     </RouteGuard>

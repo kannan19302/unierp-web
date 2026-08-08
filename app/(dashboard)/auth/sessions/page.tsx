@@ -45,34 +45,34 @@ export default function SessionsPage() {
     {
       key: "device",
       header: "Device",
-      render: (r) => (
+      render: (r: any) => (
         <span className="ui-flex-row ui-gap-2 u-items-center">
           <Monitor size={14} />
           {r.device ?? "Unknown"}
         </span>
       ),
     },
-    { key: "browser", header: "Browser", render: (r) => r.browser ?? "-" },
+    { key: "browser", header: "Browser", render: (r: any) => r.browser ?? "-" },
     {
       key: "ipAddress",
       header: "IP Address",
-      render: (r) => r.ipAddress ?? "-",
+      render: (r: any) => r.ipAddress ?? "-",
     },
-    { key: "location", header: "Location", render: (r) => r.location ?? "-" },
+    { key: "location", header: "Location", render: (r: any) => r.location ?? "-" },
     {
       key: "startedAt",
       header: "Started",
-      render: (r) => new Date(r.startedAt).toLocaleString(),
+      render: (r: any) => new Date(r.startedAt).toLocaleString(),
     },
     {
       key: "lastActivityAt",
       header: "Last Active",
-      render: (r) => new Date(r.lastActivityAt).toLocaleString(),
+      render: (r: any) => new Date(r.lastActivityAt).toLocaleString(),
     },
     {
       key: "isCurrent",
       header: "",
-      render: (r) =>
+      render: (r: any) =>
         r.isCurrent ? (
           <span className="ui-badge ui-badge-info">Current</span>
         ) : null,
@@ -80,7 +80,7 @@ export default function SessionsPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) =>
+      render: (r: any) =>
         r.isCurrent ? null : (
           <Button
             size="sm"

@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   CalendarDays,
   Plus,
@@ -317,7 +309,7 @@ export default function ShiftsPage() {
               {
                 key: "employeeId",
                 header: "Employee",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="font-semibold">{getEmpName(String(v))}</span>
                 ),
               },
@@ -340,7 +332,7 @@ export default function ShiftsPage() {
               {
                 key: "note",
                 header: "Note",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="ui-text-muted">{v ? String(v) : "--"}</span>
                 ),
               },

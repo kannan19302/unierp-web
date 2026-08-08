@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import React from "react";
@@ -22,61 +22,31 @@ export default function PeopleSuccessionPage() {
       </div>
 
       <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-        <Table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-gray-500 font-medium text-xs uppercase border-b">
-            <tr>
-              <th className="p-3">Position</th>
-              <th className="p-3">Readiness</th>
-              <th className="p-3">Risk of Loss</th>
-              <th className="p-3">Impact of Loss</th>
-              <th className="p-3">Successor Bench</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y text-gray-700">
-            <tr>
-              <td className="p-3 font-semibold">Chief Technology Officer</td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
-                  READY_NOW
-                </span>
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded font-medium">
-                  MEDIUM
-                </span>
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded font-medium">
-                  CRITICAL
-                </span>
-              </td>
-              <td className="p-3 text-xs text-gray-500">
-                2 Candidates Identified
-              </td>
-            </tr>
-            <tr>
-              <td className="p-3 font-semibold">VP of Global Sales</td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
-                  1_YEAR
-                </span>
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
-                  LOW
-                </span>
-              </td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded font-medium">
-                  HIGH
-                </span>
-              </td>
-              <td className="p-3 text-xs text-gray-500">
-                3 Candidates Identified
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Position", render: (row: any) => (<>{row.col_0}</>) },
+                { key: "col_1", header: "Readiness", render: (row: any) => (<>{row.col_1}</>) },
+                { key: "col_2", header: "Risk of Loss", render: (row: any) => (<>{row.col_2}</>) },
+                { key: "col_3", header: "Impact of Loss", render: (row: any) => (<>{row.col_3}</>) },
+                { key: "col_4", header: "Successor Bench", render: (row: any) => (<>{row.col_4}</>) },
+              ];
+                        return <DataTable columns={columns} data={[
+                { col_0: ( <>Chief Technology Officer</> ), col_1: ( <><span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
+                                READY_NOW
+                              </span></> ), col_2: ( <><span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded font-medium">
+                                MEDIUM
+                              </span></> ), col_3: ( <><span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded font-medium">
+                                CRITICAL
+                              </span></> ), col_4: ( <>2 Candidates Identified</> ),  },
+                { col_0: ( <>VP of Global Sales</> ), col_1: ( <><span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
+                                1_YEAR
+                              </span></> ), col_2: ( <><span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
+                                LOW
+                              </span></> ), col_3: ( <><span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded font-medium">
+                                HIGH
+                              </span></> ), col_4: ( <>3 Candidates Identified</> ),  },
+              ]} rowKey={(row: any, i: any) => String(i)} />;
+                      })()}</>
       </div>
     </div>
   );

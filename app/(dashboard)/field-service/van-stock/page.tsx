@@ -1,18 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Truck, Plus, AlertTriangle, Package } from "lucide-react";
 
@@ -124,7 +112,7 @@ export default function VanStockPage() {
     {
       key: "item",
       header: "Item",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="ui-heading-sm">{r.itemName}</span>
           <div className="ui-text-xs-tertiary">
@@ -137,7 +125,7 @@ export default function VanStockPage() {
     {
       key: "qty",
       header: "On Van",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={
             r.quantityOnVan <= r.reorderPoint ? "text-red-600 font-bold" : ""
@@ -150,7 +138,7 @@ export default function VanStockPage() {
     {
       key: "min",
       header: "Min / Max",
-      render: (r) => (
+      render: (r: any) => (
         <span className="text-xs">
           {r.minStockLevel} / {r.maxStockLevel}
         </span>
@@ -159,12 +147,12 @@ export default function VanStockPage() {
     {
       key: "reorder",
       header: "Reorder At",
-      render: (r) => <span>{r.reorderPoint}</span>,
+      render: (r: any) => <span>{r.reorderPoint}</span>,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.quantityOnVan <= r.reorderPoint
@@ -185,7 +173,7 @@ export default function VanStockPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-1">
           <Button
             size="sm"
@@ -253,7 +241,7 @@ export default function VanStockPage() {
           <DataTable
             columns={columns}
             data={items}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No van stock"
             emptyMessage="Add items to technician vans."
             emptyIcon={<Truck size={48} />}

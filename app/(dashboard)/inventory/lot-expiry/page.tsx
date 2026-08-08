@@ -225,7 +225,7 @@ function LotsTab() {
               {
                 key: "lotNumber",
                 header: "Lot #",
-                render: (v) => <span className="font-mono">{String(v)}</span>,
+                render: (v: any) => <span className="font-mono">{String(v)}</span>,
               },
               { key: "productId", header: "Product" },
               { key: "warehouseId", header: "Warehouse" },
@@ -233,12 +233,12 @@ function LotsTab() {
               {
                 key: "expiryDate",
                 header: "Expiry",
-                render: (v) => new Date(String(v)).toLocaleDateString(),
+                render: (v: any) => new Date(String(v)).toLocaleDateString(),
               },
               {
                 key: "status",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <span
                     className={`px-2 py-0.5 rounded text-xs ${statusBadge[String(v)] ?? ""}`}
                   >
@@ -353,17 +353,17 @@ function FEFOTab() {
                 {
                   key: "lotNumber",
                   header: "Lot #",
-                  render: (v) => <span className="font-mono">{String(v)}</span>,
+                  render: (v: any) => <span className="font-mono">{String(v)}</span>,
                 },
                 {
                   key: "expiryDate",
                   header: "Expiry Date",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
                 {
                   key: "qty",
                   header: "Pick Qty",
-                  render: (v) => <strong>{String(v)}</strong>,
+                  render: (v: any) => <strong>{String(v)}</strong>,
                 },
               ] as ListColumn[]
             }
@@ -425,7 +425,7 @@ function AlertsTab() {
             {
               key: "alertLevel",
               header: "Level",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   className={`px-2 py-0.5 rounded text-xs ${levelColor[String(v)] ?? ""}`}
                 >
@@ -437,12 +437,12 @@ function AlertsTab() {
             {
               key: "alertedAt",
               header: "Alerted At",
-              render: (v) => new Date(String(v)).toLocaleString(),
+              render: (v: any) => new Date(String(v)).toLocaleString(),
             },
             {
               key: "id",
               header: "Action",
-              render: (v) => (
+              render: (v: any) => (
                 <button
                   onClick={() => dismiss(String(v))}
                   className="text-xs text-gray-500 hover:underline"
@@ -567,7 +567,7 @@ function DisposalsTab() {
             {
               key: "disposalNumber",
               header: "Disposal #",
-              render: (v) => <span className="font-mono">{String(v)}</span>,
+              render: (v: any) => <span className="font-mono">{String(v)}</span>,
             },
             { key: "disposalMethod", header: "Method" },
             { key: "qtyDisposed", header: "Qty" },
@@ -575,7 +575,7 @@ function DisposalsTab() {
             {
               key: "disposedAt",
               header: "Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
           ] as ListColumn[]
         }

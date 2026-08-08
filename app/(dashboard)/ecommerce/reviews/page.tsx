@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Star, Check, X } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function EcommerceReviewsPage() {
   const client = useApiClient();
@@ -75,68 +75,39 @@ export default function EcommerceReviewsPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Customer</th>
-                <th>Rating</th>
-                <th>Comment</th>
-                <th>Verified</th>
-                <th>Approved</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                items.map((i) => (
-                  <tr key={i.id}>
-                    <td>{i.customerName || "Anonymous"}</td>
-                    <td>
-                      {"★".repeat(i.rating)}
-                      {"☆".repeat(5 - i.rating)}
-                    </td>
-                    <td className="max-w-xs truncate">{i.comment || "-"}</td>
-                    <td>
-                      {i.isVerified ? (
-                        <span className="ui-badge-success">Yes</span>
-                      ) : (
-                        "No"
-                      )}
-                    </td>
-                    <td>
-                      {i.isApproved ? (
-                        <span className="ui-badge-success">Yes</span>
-                      ) : (
-                        <span className="ui-badge">No</span>
-                      )}
-                    </td>
-                    <td className="ui-hstack-1">
-                      {!i.isApproved && (
-                        <button
-                          className="ui-btn-icon ui-text-success"
-                          onClick={() => moderate(i.id, true)}
-                        >
-                          <Check size={14} />
-                        </button>
-                      )}
-                      <button
-                        className="ui-btn-icon ui-text-error"
-                        onClick={() => moderate(i.id, false)}
-                      >
-                        <X size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Customer", render: (i: any) => (<>{i.customerName || "Anonymous"}</>) },
+                    { key: "col_1", header: "Rating", render: (i: any) => (<>{"★".repeat(i.rating)}
+                                        {"☆".repeat(5 - i.rating)}</>) },
+                    { key: "col_2", header: "Comment", render: (i: any) => (<>{i.comment || "-"}</>) },
+                    { key: "col_3", header: "Verified", render: (i: any) => (<>{i.isVerified ? (
+                                          <span className="ui-badge-success">Yes</span>
+                                        ) : (
+                                          "No"
+                                        )}</>) },
+                    { key: "col_4", header: "Approved", render: (i: any) => (<>{i.isApproved ? (
+                                          <span className="ui-badge-success">Yes</span>
+                                        ) : (
+                                          <span className="ui-badge">No</span>
+                                        )}</>) },
+                    { key: "col_5", header: "Actions", render: (i: any) => (<>{!i.isApproved && (
+                                          <button
+                                            className="ui-btn-icon ui-text-success"
+                                            onClick={() => moderate(i.id, true)}
+                                          >
+                                            <Check size={14} />
+                                          </button>
+                                        )}
+                                        <button
+                                          className="ui-btn-icon ui-text-error"
+                                          onClick={() => moderate(i.id, false)}
+                                        >
+                                          <X size={14} />
+                                        </button></>) },
+                  ];
+                            return <DataTable columns={columns} data={items} rowKey={(i: any) => i.id} />;
+                          })()}</>
         </div>
       </div>
     </RouteGuard>

@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   User,
   Phone,
@@ -261,7 +253,7 @@ export default function SelfServicePage() {
                     {
                       key: "createdAt",
                       header: "Period",
-                      render: (v) =>
+                      render: (v: any) =>
                         new Date(String(v)).toLocaleDateString(undefined, {
                           month: "long",
                           year: "numeric",
@@ -270,12 +262,12 @@ export default function SelfServicePage() {
                     {
                       key: "grossSalary",
                       header: "Gross Salary",
-                      render: (v) => `$${Number(v).toFixed(2)}`,
+                      render: (v: any) => `$${Number(v).toFixed(2)}`,
                     },
                     {
                       key: "deductions",
                       header: "Tax Deductions",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s16}>
                           -${Number(v).toFixed(2)}
                         </span>
@@ -284,7 +276,7 @@ export default function SelfServicePage() {
                     {
                       key: "netSalary",
                       header: "Net Paid",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className={styles.s17}>
                           ${Number(v).toFixed(2)}
                         </span>
@@ -312,18 +304,18 @@ export default function SelfServicePage() {
                     {
                       key: "startDate",
                       header: "Start Date",
-                      render: (v) => new Date(String(v)).toLocaleDateString(),
+                      render: (v: any) => new Date(String(v)).toLocaleDateString(),
                     },
                     {
                       key: "endDate",
                       header: "End Date",
-                      render: (v) => new Date(String(v)).toLocaleDateString(),
+                      render: (v: any) => new Date(String(v)).toLocaleDateString(),
                     },
                     { key: "reason", header: "Reason" },
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => <StatusBadge status={String(v)} />,
+                      render: (v: any) => <StatusBadge status={String(v)} />,
                     },
                   ] as ListColumn[]
                 }

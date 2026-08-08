@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Button,
-  Modal,
-  FormField,
-  Select,
-  TextField,
-  Textarea,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Button, Modal, FormField, Select, TextField, Textarea, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Settings2,
   Plus,
@@ -275,7 +266,7 @@ export default function CustomFieldsTab() {
               {
                 key: "fieldName",
                 header: "Field Name",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="font-semibold">{String(v)}</span>
                 ),
               },
@@ -283,23 +274,23 @@ export default function CustomFieldsTab() {
               {
                 key: "fieldType",
                 header: "Type",
-                render: (v) => <span className={styles.s5}>{String(v)}</span>,
+                render: (v: any) => <span className={styles.s5}>{String(v)}</span>,
               },
               {
                 key: "isRequired",
                 header: "Required",
-                render: (v) => (v ? "Yes" : "No"),
+                render: (v: any) => (v ? "Yes" : "No"),
               },
               {
                 key: "section",
                 header: "Section",
-                render: (v) => (v ? String(v) : "—"),
+                render: (v: any) => (v ? String(v) : "—"),
               },
               { key: "sortOrder", header: "Sort" },
               {
                 key: "isActive",
                 header: "Active",
-                render: (v) => (
+                render: (v: any) => (
                   <span
                     className={styles.s6}
                     style={{

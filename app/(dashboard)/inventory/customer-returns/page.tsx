@@ -348,19 +348,19 @@ function RmasTab() {
             {
               key: "rmaNumber",
               header: "RMA #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "customerId",
               header: "Customer",
-              render: (v) => <span className="text-xs">{String(v)}</span>,
+              render: (v: any) => <span className="text-xs">{String(v)}</span>,
             },
             {
               key: "returnReason",
               header: "Reason",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs truncate block max-w-xs">
                   {String(v)}
                 </span>
@@ -369,14 +369,14 @@ function RmasTab() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} colorMap={STATUS_COLORS} />
               ),
             },
             {
               key: "lines",
               header: "Lines",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="text-xs text-center block">
                   {Array.isArray(v) ? v.length : 0}
                 </span>
@@ -507,29 +507,29 @@ function InspectionTab() {
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">{String(v)}</span>
                   ),
                 },
                 {
                   key: "lotNumber",
                   header: "Lot",
-                  render: (v) => String(v ?? "—"),
+                  render: (v: any) => String(v ?? "—"),
                 },
                 {
                   key: "quantityRequested",
                   header: "Qty Req",
-                  render: (v) => Number(v).toFixed(2),
+                  render: (v: any) => Number(v).toFixed(2),
                 },
                 {
                   key: "quantityReceived",
                   header: "Qty Recv",
-                  render: (v) => Number(v).toFixed(2),
+                  render: (v: any) => Number(v).toFixed(2),
                 },
                 {
                   key: "disposition",
                   header: "Disposition",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? (
                       <Badge label={String(v)} colorMap={DISP_COLORS} />
                     ) : (
@@ -539,7 +539,7 @@ function InspectionTab() {
                 {
                   key: "id",
                   header: "Set Disposition",
-                  render: (v) => (
+                  render: (v: any) => (
                     <select
                       className="border rounded p-1 text-xs"
                       defaultValue=""
@@ -709,14 +709,14 @@ function CreditsTab() {
             {
               key: "creditNumber",
               header: "Credit #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "rmaId",
               header: "RMA",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -724,7 +724,7 @@ function CreditsTab() {
             {
               key: "creditAmount",
               header: "Amount",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-semibold">
                   {Number(v).toLocaleString()}
                 </span>
@@ -734,14 +734,14 @@ function CreditsTab() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} colorMap={CREDIT_COLORS} />
               ),
             },
             {
               key: "issuedAt",
               header: "Issued At",
-              render: (v) =>
+              render: (v: any) =>
                 v ? new Date(String(v)).toLocaleDateString() : "—",
             },
             {
@@ -880,14 +880,14 @@ function RestocksTab() {
             {
               key: "rmaLineId",
               header: "RMA Line",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "productId",
               header: "Product",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -895,17 +895,17 @@ function RestocksTab() {
             {
               key: "binLocationId",
               header: "Bin",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             {
               key: "quantityRestocked",
               header: "Qty Restocked",
-              render: (v) => Number(v).toFixed(2),
+              render: (v: any) => Number(v).toFixed(2),
             },
             {
               key: "restockedAt",
               header: "Restocked At",
-              render: (v) => new Date(String(v)).toLocaleString(),
+              render: (v: any) => new Date(String(v)).toLocaleString(),
             },
           ] as ListColumn[]
         }

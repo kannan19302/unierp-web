@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Zap, TrendingUp, Check, ArrowRight } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -175,44 +175,16 @@ export default function SaasPortalSubscriptionPage() {
             No previous plan upgrades recorded.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Date</th>
-                <th style={{ padding: "12px" }}>From Tier</th>
-                <th style={{ padding: "12px" }}>To Tier</th>
-                <th style={{ padding: "12px" }}>Prorated Charge</th>
-                <th style={{ padding: "12px" }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {upgrades.map((u) => (
-                <tr key={u.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px" }}>
-                    {new Date(u.effectiveDate).toLocaleDateString()}
-                  </td>
-                  <td style={{ padding: "12px" }}>{u.fromTier}</td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      fontWeight: 600,
-                      color: "var(--color-primary)",
-                    }}
-                  >
-                    {u.toTier}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    ${Number(u.proratedCharge).toFixed(2)}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="success">{u.status}</Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Date" , render: (u: any) => (<>{new Date(u.effectiveDate).toLocaleDateString()}</>) },
+                        { key: "col_1", header: "From Tier" , render: (u: any) => (<>{u.fromTier}</>) },
+                        { key: "col_2", header: "To Tier" , render: (u: any) => (<>{u.toTier}</>) },
+                        { key: "col_3", header: "Prorated Charge" , render: (u: any) => (<>${Number(u.proratedCharge).toFixed(2)}</>) },
+                        { key: "col_4", header: "Status" , render: (u: any) => (<><Badge variant="success">{u.status}</Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={upgrades} rowKey={(u: any) => u.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

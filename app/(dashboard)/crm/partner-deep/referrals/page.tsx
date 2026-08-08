@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -24,40 +24,16 @@ export default function PartnerReferralsPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Partner Referrals</h1>
-      <Table className="w-full text-sm">
-        <thead>
-          <tr className="border-b text-left">
-            <th className="py-2 px-2">Company</th>
-            <th className="py-2 px-2">Contact</th>
-            <th className="py-2 px-2">Email</th>
-            <th className="py-2 px-2">Value</th>
-            <th className="py-2 px-2">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {referrals.map((r: any) => (
-            <tr key={r.id} className="border-b hover:bg-muted/50">
-              <td className="py-2 px-2">{r.companyName}</td>
-              <td className="py-2 px-2">{r.contactName}</td>
-              <td className="py-2 px-2">{r.contactEmail}</td>
-              <td className="py-2 px-2">
-                {r.currency} {r.estimatedValue?.toLocaleString()}
-              </td>
-              <td className="py-2 px-2">{r.status}</td>
-            </tr>
-          ))}
-          {referrals.length === 0 && (
-            <tr>
-              <td
-                colSpan={5}
-                className="py-4 text-center text-muted-foreground"
-              >
-                No referrals found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+      <>{(() => {
+                    const columns = [
+            { key: "col_0", header: "Company", render: (r: any) => (<>{r.companyName}</>) },
+            { key: "col_1", header: "Contact", render: (r: any) => (<>{r.contactName}</>) },
+            { key: "col_2", header: "Email", render: (r: any) => (<>{r.contactEmail}</>) },
+            { key: "col_3", header: "Value", render: (r: any) => (<>{r.currency} {r.estimatedValue?.toLocaleString()}</>) },
+            { key: "col_4", header: "Status", render: (r: any) => (<>{r.status}</>) },
+          ];
+                    return <DataTable columns={columns} data={referrals} rowKey={(r: any) => r.id} />;
+                  })()}</>
     </div>
   );
 }

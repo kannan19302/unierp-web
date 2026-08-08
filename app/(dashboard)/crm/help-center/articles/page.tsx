@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
 import { Search, Eye, ThumbsUp, Trash2, Edit3 } from "lucide-react";
 import Link from "next/link";
 import { apiGet, apiSend } from "../../_components/api";
@@ -75,78 +75,53 @@ export default function ArticlesPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Status</th>
-                  <th>Category</th>
-                  <th>Views</th>
-                  <th>Helpful</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {articles.map((art) => (
-                  <tr key={art.id}>
-                    <td>
-                      <Link
-                        href={`/crm/help-center/articles/${art.id}`}
-                        className="ui-link"
-                      >
-                        {art.title}
-                      </Link>
-                    </td>
-                    <td>
-                      <Badge
-                        variant={
-                          art.status === "PUBLISHED"
-                            ? "success"
-                            : art.status === "DRAFT"
-                              ? "warning"
-                              : "default"
-                        }
-                      >
-                        {art.status}
-                      </Badge>
-                    </td>
-                    <td className="ui-text-sm text-muted">
-                      {art.category?.name || "-"}
-                    </td>
-                    <td>
-                      <Eye size={12} /> {art.viewCount}
-                    </td>
-                    <td>
-                      <ThumbsUp size={12} /> {art.helpfulCount}
-                    </td>
-                    <td>
-                      <div className="ui-flex ui-gap-1">
-                        <Link href={`/crm/help-center/articles/${art.id}`}>
-                          <button className="ui-btn-icon">
-                            <Eye size={14} />
-                          </button>
-                        </Link>
-                        {art.status !== "PUBLISHED" && (
-                          <button
-                            className="ui-btn-icon"
-                            onClick={() => publishArticle(art.id)}
-                            title="Publish"
-                          >
-                            <Edit3 size={14} />
-                          </button>
-                        )}
-                        <button
-                          className="ui-btn-icon"
-                          onClick={() => bulkDelete(art.id)}
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Title", render: (art: any) => (<><Link
+                                                  href={`/crm/help-center/articles/${art.id}`}
+                                                  className="ui-link"
+                                                >
+                                                  {art.title}
+                                                </Link></>) },
+                            { key: "col_1", header: "Status", render: (art: any) => (<><Badge
+                                                  variant={
+                                                    art.status === "PUBLISHED"
+                                                      ? "success"
+                                                      : art.status === "DRAFT"
+                                                        ? "warning"
+                                                        : "default"
+                                                  }
+                                                >
+                                                  {art.status}
+                                                </Badge></>) },
+                            { key: "col_2", header: "Category", render: (art: any) => (<>{art.category?.name || "-"}</>) },
+                            { key: "col_3", header: "Views", render: (art: any) => (<><Eye size={12} /> {art.viewCount}</>) },
+                            { key: "col_4", header: "Helpful", render: (art: any) => (<><ThumbsUp size={12} /> {art.helpfulCount}</>) },
+                            { key: "col_5", header: "Actions", render: (art: any) => (<><div className="ui-flex ui-gap-1">
+                                                  <Link href={`/crm/help-center/articles/${art.id}`}>
+                                                    <button className="ui-btn-icon">
+                                                      <Eye size={14} />
+                                                    </button>
+                                                  </Link>
+                                                  {art.status !== "PUBLISHED" && (
+                                                    <button
+                                                      className="ui-btn-icon"
+                                                      onClick={() => publishArticle(art.id)}
+                                                      title="Publish"
+                                                    >
+                                                      <Edit3 size={14} />
+                                                    </button>
+                                                  )}
+                                                  <button
+                                                    className="ui-btn-icon"
+                                                    onClick={() => bulkDelete(art.id)}
+                                                  >
+                                                    <Trash2 size={14} />
+                                                  </button>
+                                                </div></>) },
+                          ];
+                                    return <DataTable columns={columns} data={articles} rowKey={(art: any) => art.id} />;
+                                  })()}</>
           </div>
         </Card>
       )}

@@ -1,19 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import {
-  DataTable,
-  PageHeader,
-  Button,
-  Spinner,
-  StatusBadge,
-  Modal,
-  FormField,
-  Input,
-  Card,
-  useToast,
-  type Column,
-  type SortOrder,
-} from "@unerp/ui";
+import { DataTable, PageHeader, Button, Spinner, StatusBadge, Modal, FormField, Input, Card, useToast, type Column, type SortOrder } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 import { apiGet, apiPost, apiPatch } from "../../../../src/lib/api";
 import {
@@ -241,7 +228,7 @@ export default function SubinventoryPage() {
       key: "code",
       header: "Code",
       sortable: true,
-      render: (s) => (
+      render: (s: any) => (
         <span className="font-mono text-xs font-semibold">{s.code}</span>
       ),
     },
@@ -250,32 +237,32 @@ export default function SubinventoryPage() {
       key: "warehouse",
       header: "Warehouse",
       sortable: false,
-      render: (s) =>
+      render: (s: any) =>
         s.warehouse?.name || <span className="ui-text-muted">—</span>,
     },
     {
       key: "type",
       header: "Type",
       sortable: true,
-      render: (s) => <StatusBadge status={s.type} />,
+      render: (s: any) => <StatusBadge status={s.type} />,
     },
     {
       key: "description",
       header: "Description",
       sortable: false,
-      render: (s) => s.description || <span className="ui-text-muted">—</span>,
+      render: (s: any) => s.description || <span className="ui-text-muted">—</span>,
     },
     {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (s) => <StatusBadge status={s.status} />,
+      render: (s: any) => <StatusBadge status={s.status} />,
     },
     {
       key: "actions",
       header: "Actions",
       sortable: false,
-      render: (s) => (
+      render: (s: any) => (
         <div className="ui-hstack-2">
           <button
             title="Edit"
@@ -397,7 +384,7 @@ export default function SubinventoryPage() {
               <DataTable<Subinventory>
                 columns={columns}
                 data={subinventories}
-                rowKey={(s) => s.id}
+                rowKey={(s: any) => s.id}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
                 onSortChange={handleSortChange}

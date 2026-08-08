@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Share2, Eye, Filter, Layers } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -116,38 +116,14 @@ export default function ReportingViewerPage() {
             No active interactive sessions.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Report Title</th>
-                <th style={{ padding: "12px" }}>Mode</th>
-                <th style={{ padding: "12px" }}>Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessions.map((s) => (
-                <tr key={s.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {s.reportTitle}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="info">{s.interactiveMode}</Badge>
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--color-text-secondary)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    {new Date(s.createdAt).toLocaleString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Report Title" , render: (s: any) => (<>{s.reportTitle}</>) },
+                        { key: "col_1", header: "Mode" , render: (s: any) => (<><Badge variant="info">{s.interactiveMode}</Badge></>) },
+                        { key: "col_2", header: "Created" , render: (s: any) => (<>{new Date(s.createdAt).toLocaleString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={sessions} rowKey={(s: any) => s.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

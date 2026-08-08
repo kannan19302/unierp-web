@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Badge,
-  Card,
-  PageHeader,
-  Button,
-  useToast,
-  DataTable,
-  Input,
-  type Column,
-} from "@unerp/ui";
+import { Badge, Card, PageHeader, Button, useToast, DataTable, Input, type Column } from "@unerp/ui";
 import { Calculator, BarChart3, History, Layers } from "lucide-react";
 
 export default function CpqQuoteAnalysisPage() {

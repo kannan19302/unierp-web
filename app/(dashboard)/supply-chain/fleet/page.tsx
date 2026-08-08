@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Spinner,
-  StatusBadge,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Spinner, StatusBadge } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { Truck, Plus, BarChart3 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
@@ -52,17 +43,17 @@ export default function FleetPage() {
     {
       key: "vin",
       header: "VIN / ID",
-      render: (r) => <span className="ui-link">{r.vin ?? r.id}</span>,
+      render: (r: any) => <span className="ui-link">{r.vin ?? r.id}</span>,
     },
     {
       key: "makeModel",
       header: "Make & Model",
-      render: (r) => `${r.make ?? ""} ${r.model ?? ""}`,
+      render: (r: any) => `${r.make ?? ""} ${r.model ?? ""}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status ?? "ACTIVE"} />,
+      render: (r: any) => <StatusBadge status={r.status ?? "ACTIVE"} />,
     },
   ];
 
@@ -93,7 +84,7 @@ export default function FleetPage() {
               columns={columns}
               data={vehicles}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No vehicles"
               emptyMessage="Add your first fleet vehicle."
               emptyIcon={<Truck size={48} />}

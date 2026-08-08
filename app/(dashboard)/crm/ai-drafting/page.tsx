@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  Input,
-  Textarea,
-  Select,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, Input, Textarea, Select, type Column } from "@unerp/ui";
 import { Sparkles, RefreshCw, Check, Trash2, Edit2 } from "lucide-react";
 import {
   apiGet,
@@ -184,7 +172,7 @@ export default function AiDraftingPage() {
     {
       key: "draftType",
       header: "Type",
-      render: (d) => (
+      render: (d: any) => (
         <div>
           <div className="font-semibold">{DRAFT_KIND_LABEL[d.draftType]}</div>
           <div className="ui-text-xs-muted">{d.contextId}</div>
@@ -194,13 +182,13 @@ export default function AiDraftingPage() {
     {
       key: "tone",
       header: "Tone",
-      render: (d) => <Badge variant="default">{d.tone}</Badge>,
+      render: (d: any) => <Badge variant="default">{d.tone}</Badge>,
     },
-    { key: "subject", header: "Subject", render: (d) => d.subject ?? "—" },
+    { key: "subject", header: "Subject", render: (d: any) => d.subject ?? "—" },
     {
       key: "body",
       header: "Preview",
-      render: (d) => (
+      render: (d: any) => (
         <span className="ui-text-sm-muted">
           {d.body.slice(0, 90)}
           {d.body.length > 90 ? "…" : ""}
@@ -210,14 +198,14 @@ export default function AiDraftingPage() {
     {
       key: "status",
       header: "Status",
-      render: (d) => (
+      render: (d: any) => (
         <Badge variant={statusVariant(d.status)}>{d.status}</Badge>
       ),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (d) => (
+      render: (d: any) => (
         <div className="ui-flex ui-gap-2">
           <Button
             variant="ghost"
@@ -362,7 +350,7 @@ export default function AiDraftingPage() {
           <DataTable<AiDraft>
             columns={columns}
             data={drafts}
-            rowKey={(d) => d.id}
+            rowKey={(d: any) => d.id}
           />
         )}
       </Card>

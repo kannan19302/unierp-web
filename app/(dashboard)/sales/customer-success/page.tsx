@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { ShieldCheck, TrendingUp, AlertTriangle, Users } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -209,67 +209,37 @@ export default function CustomerSuccessPage() {
             one.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px 16px" }}>Plan Name</th>
-                <th style={{ padding: "12px 16px" }}>Customer ID</th>
-                <th style={{ padding: "12px 16px" }}>Health Score</th>
-                <th style={{ padding: "12px 16px" }}>Risk Level</th>
-                <th style={{ padding: "12px 16px" }}>ARR</th>
-                <th style={{ padding: "12px 16px" }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {plans.map((p) => (
-                <tr key={p.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px 16px", fontWeight: 500 }}>
-                    {p.name}
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px 16px",
-                      color: "var(--color-text-secondary)",
-                    }}
-                  >
-                    {p.customerId}
-                  </td>
-                  <td style={{ padding: "12px 16px" }}>
-                    <Badge
-                      variant={
-                        p.healthScore >= 80
-                          ? "success"
-                          : p.healthScore >= 50
-                            ? "warning"
-                            : "danger"
-                      }
-                    >
-                      {p.healthScore}/100
-                    </Badge>
-                  </td>
-                  <td style={{ padding: "12px 16px" }}>
-                    <Badge
-                      variant={
-                        p.churnRiskLevel === "LOW"
-                          ? "success"
-                          : p.churnRiskLevel === "MEDIUM"
-                            ? "warning"
-                            : "danger"
-                      }
-                    >
-                      {p.churnRiskLevel}
-                    </Badge>
-                  </td>
-                  <td style={{ padding: "12px 16px" }}>
-                    ${Number(p.arr || 0).toLocaleString()}
-                  </td>
-                  <td style={{ padding: "12px 16px" }}>{p.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Plan Name" , render: (p: any) => (<>{p.name}</>) },
+                        { key: "col_1", header: "Customer ID" , render: (p: any) => (<>{p.customerId}</>) },
+                        { key: "col_2", header: "Health Score" , render: (p: any) => (<><Badge
+                                            variant={
+                                              p.healthScore >= 80
+                                                ? "success"
+                                                : p.healthScore >= 50
+                                                  ? "warning"
+                                                  : "danger"
+                                            }
+                                          >
+                                            {p.healthScore}/100
+                                          </Badge></>) },
+                        { key: "col_3", header: "Risk Level" , render: (p: any) => (<><Badge
+                                            variant={
+                                              p.churnRiskLevel === "LOW"
+                                                ? "success"
+                                                : p.churnRiskLevel === "MEDIUM"
+                                                  ? "warning"
+                                                  : "danger"
+                                            }
+                                          >
+                                            {p.churnRiskLevel}
+                                          </Badge></>) },
+                        { key: "col_4", header: "ARR" , render: (p: any) => (<>${Number(p.arr || 0).toLocaleString()}</>) },
+                        { key: "col_5", header: "Status" , render: (p: any) => (<>{p.status}</>) },
+                      ];
+                              return <DataTable columns={columns} data={plans} rowKey={(p: any) => p.id} />;
+                          })()}</>
         )}
       </Card>
 

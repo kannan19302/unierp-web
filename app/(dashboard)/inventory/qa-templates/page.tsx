@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, AlertCircle, ShieldAlert } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -26,12 +19,12 @@ const columns: ListColumn[] = [
   {
     key: "checklist",
     header: "Checklist Items",
-    render: (v) => String((v as unknown[])?.length ?? 0),
+    render: (v: any) => String((v as unknown[])?.length ?? 0),
   },
   {
     key: "isActive",
     header: "Status",
-    render: (v) => (
+    render: (v: any) => (
       <Badge variant={v ? "success" : "default"}>
         {v ? "Active" : "Inactive"}
       </Badge>

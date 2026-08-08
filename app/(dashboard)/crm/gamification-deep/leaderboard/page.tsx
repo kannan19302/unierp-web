@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  useToast,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, DataTable, type Column } from "@unerp/ui";
 import { TrendingUp } from "lucide-react";
 import { apiGet, ApiRequestError } from "../../../../../src/lib/api";
 
@@ -57,13 +50,13 @@ export default function LeaderboardPage() {
       key: "revenue",
       header: "Revenue",
       sortable: true,
-      render: (r) => `$${Number(r.revenue).toLocaleString()}`,
+      render: (r: any) => `$${Number(r.revenue).toLocaleString()}`,
     },
     {
       key: "score",
       header: "Score",
       sortable: true,
-      render: (r) => Number(r.score).toLocaleString(),
+      render: (r: any) => Number(r.score).toLocaleString(),
     },
   ];
 

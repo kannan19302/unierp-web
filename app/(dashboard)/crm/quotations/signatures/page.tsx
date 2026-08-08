@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { Search, FileSignature, ShieldCheck, FileText } from "lucide-react";
 import { apiGet, apiPost, ApiRequestError } from "../../../../../src/lib/api";
 
@@ -138,7 +128,7 @@ export default function QuoteSignaturesPage() {
     {
       key: "signerName",
       header: "Signer",
-      render: (s) => (
+      render: (s: any) => (
         <div>
           <div className="font-semibold">{s.signerName}</div>
           <div className="ui-text-xs-muted">{s.signerEmail}</div>
@@ -148,7 +138,7 @@ export default function QuoteSignaturesPage() {
     {
       key: "status",
       header: "Status",
-      render: (s) => (
+      render: (s: any) => (
         <Badge
           variant={
             s.status === "SIGNED"
@@ -165,12 +155,12 @@ export default function QuoteSignaturesPage() {
     {
       key: "signedAt",
       header: "Signed At",
-      render: (s) => (s.signedAt ? new Date(s.signedAt).toLocaleString() : "—"),
+      render: (s: any) => (s.signedAt ? new Date(s.signedAt).toLocaleString() : "—"),
     },
     {
       key: "certificate",
       header: "Certificate",
-      render: (s) =>
+      render: (s: any) =>
         s.certificate ? (
           <Badge variant="info">{s.certificate.certificateNumber}</Badge>
         ) : (
@@ -181,7 +171,7 @@ export default function QuoteSignaturesPage() {
       key: "actions",
       header: "",
       align: "right",
-      render: (s) =>
+      render: (s: any) =>
         s.status === "SIGNED" ? (
           <Button
             variant="secondary"
@@ -274,7 +264,7 @@ export default function QuoteSignaturesPage() {
           <DataTable<QuotationSignature>
             columns={columns}
             data={signatures}
-            rowKey={(s) => s.id}
+            rowKey={(s: any) => s.id}
           />
         ) : null}
       </Card>

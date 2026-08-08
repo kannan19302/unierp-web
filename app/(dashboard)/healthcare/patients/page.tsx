@@ -1,20 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import { Users, Plus, Search, Heart } from "lucide-react";
 import Link from "next/link";
 import { useApiClient } from "@unerp/framework";
@@ -100,7 +87,7 @@ export default function PatientRegistryPage() {
     {
       key: "patient",
       header: "Patient",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             {row.firstName[0]}
@@ -118,7 +105,7 @@ export default function PatientRegistryPage() {
     {
       key: "gender",
       header: "Gender",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.gender === "MALE" ? "info" : "warning"}>
           {row.gender}
         </Badge>
@@ -127,7 +114,7 @@ export default function PatientRegistryPage() {
     {
       key: "dob",
       header: "Date of Birth",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.dateOfBirth
             ? new Date(row.dateOfBirth).toLocaleDateString()
@@ -138,14 +125,14 @@ export default function PatientRegistryPage() {
     {
       key: "phone",
       header: "Phone",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">{row.phone || "—"}</span>
       ),
     },
     {
       key: "allergies",
       header: "Allergies",
-      render: (row) =>
+      render: (row: any) =>
         row.allergies ? (
           <Badge variant="danger">{row.allergies}</Badge>
         ) : (
@@ -215,7 +202,7 @@ export default function PatientRegistryPage() {
         <DataTable
           columns={columns}
           data={filtered}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No patients"
           emptyMessage="Add patients to start managing medical records."
           emptyIcon={<Users size={48} />}

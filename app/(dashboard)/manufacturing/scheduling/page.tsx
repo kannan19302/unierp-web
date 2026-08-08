@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner, Table } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner, Table } from "@unerp/ui";
 import {
   CalendarClock,
   Play,
@@ -147,7 +140,7 @@ export default function SchedulingPage() {
     {
       key: "workOrderId",
       header: "Work Order",
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">
           {workOrderNumber(row.workOrderId)}
         </span>
@@ -157,14 +150,14 @@ export default function SchedulingPage() {
     {
       key: "workstationId",
       header: "Workstation",
-      render: (row) => workstationName(row.workstationId),
+      render: (row: any) => workstationName(row.workstationId),
     },
     {
       key: "startTime",
       header: "Start",
-      render: (row) => fmtTime(row.startTime),
+      render: (row: any) => fmtTime(row.startTime),
     },
-    { key: "endTime", header: "End", render: (row) => fmtTime(row.endTime) },
+    { key: "endTime", header: "End", render: (row: any) => fmtTime(row.endTime) },
   ];
 
   if (loading) {
@@ -253,7 +246,7 @@ export default function SchedulingPage() {
               <DataTable
                 columns={columns}
                 data={result.schedule}
-                rowKey={(r, i) => `${r.workOrderId}-${i}`}
+                rowKey={(r: any, i: any) => `${r.workOrderId}-${i}`}
                 emptyTitle="No scheduled operations"
                 emptyMessage="Run scheduling to sequence work orders across workstations."
                 emptyIcon={<CalendarClock size={48} />}
@@ -293,30 +286,15 @@ export default function SchedulingPage() {
                   </div>
                 </div>
               </div>
-              <Table className={styles.p7}>
-                <thead>
-                  <tr className="border-b">
-                    <th className={styles.p8}>Product</th>
-                    <th className={styles.p9}>Qty</th>
-                    <th className={styles.p10}>Unit Cost</th>
-                    <th className={styles.p11}>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bomCost.itemCosts.map((item, i) => (
-                    <tr key={i} className="border-b">
-                      <td className="p-2">{item.productId}</td>
-                      <td className={styles.p12}>{item.quantity}</td>
-                      <td className={styles.p13}>
-                        {fmtCurrency(item.unitCost)}
-                      </td>
-                      <td className={styles.p14}>
-                        {fmtCurrency(item.totalCost)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Product" , render: (item: any) => (<>{item.productId}</>) },
+                            { key: "col_1", header: "Qty" , render: (item: any) => (<>{item.quantity}</>) },
+                            { key: "col_2", header: "Unit Cost" , render: (item: any) => (<>{fmtCurrency(item.unitCost)}</>) },
+                            { key: "col_3", header: "Total" , render: (item: any) => (<>{fmtCurrency(item.totalCost)}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={bomCost.itemCosts} rowKey={(item: any) => i} />;
+                              })()}</>
             </div>
           )}
           {!bomCost && !bomLoading && (

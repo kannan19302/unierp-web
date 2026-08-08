@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
 import { Plus, Play, XCircle, ListChecks } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -183,64 +183,44 @@ export default function BulkOperationsPage() {
         {ops.length === 0 ? (
           <p className="text-sm text-gray-400">No bulk operations yet.</p>
         ) : (
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="text-left border-b text-gray-500">
-                <th className="pb-2">Type</th>
-                <th className="pb-2">Entity</th>
-                <th className="pb-2">Progress</th>
-                <th className="pb-2">Status</th>
-                <th className="pb-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ops.map((op) => (
-                <tr key={op.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2">
-                    <ListChecks className="w-4 h-4 inline mr-1" />
-                    {op.operationType}
-                  </td>
-                  <td className="py-2">{op.entityType}</td>
-                  <td className="py-2">
-                    {op.processedItems}/{op.totalItems}
-                  </td>
-                  <td className="py-2">
-                    <Badge
-                      variant={
-                        op.status === "COMPLETED"
-                          ? "success"
-                          : op.status === "FAILED" || op.status === "CANCELLED"
-                            ? "danger"
-                            : "warning"
-                      }
-                    >
-                      {op.status}
-                    </Badge>
-                  </td>
-                  <td className="py-2">
-                    {op.status === "PENDING" && (
-                      <div className="flex gap-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => executeOp(op.id)}
-                        >
-                          <Play className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => cancelOp(op.id)}
-                        >
-                          <XCircle className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Type", render: (op: any) => (<><ListChecks className="w-4 h-4 inline mr-1" />
+                                          {op.operationType}</>) },
+                        { key: "col_1", header: "Entity", render: (op: any) => (<>{op.entityType}</>) },
+                        { key: "col_2", header: "Progress", render: (op: any) => (<>{op.processedItems}/{op.totalItems}</>) },
+                        { key: "col_3", header: "Status", render: (op: any) => (<><Badge
+                                            variant={
+                                              op.status === "COMPLETED"
+                                                ? "success"
+                                                : op.status === "FAILED" || op.status === "CANCELLED"
+                                                  ? "danger"
+                                                  : "warning"
+                                            }
+                                          >
+                                            {op.status}
+                                          </Badge></>) },
+                        { key: "col_4", header: "Actions", render: (op: any) => (<>{op.status === "PENDING" && (
+                                            <div className="flex gap-1">
+                                              <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => executeOp(op.id)}
+                                              >
+                                                <Play className="w-4 h-4" />
+                                              </Button>
+                                              <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => cancelOp(op.id)}
+                                              >
+                                                <XCircle className="w-4 h-4" />
+                                              </Button>
+                                            </div>
+                                          )}</>) },
+                      ];
+                                return <DataTable columns={columns} data={ops} rowKey={(op: any) => op.id} />;
+                              })()}</>
         )}
       </Card>
     </div>

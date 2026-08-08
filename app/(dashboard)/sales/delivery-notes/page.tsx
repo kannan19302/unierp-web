@@ -3,14 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Truck, Search, X, AlertCircle, Layers, MapPin } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -196,7 +189,7 @@ export default function DeliveryNotesPage() {
                   {
                     key: "deliveryNumber",
                     header: "Note Number",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.p8}>{String(v)}</span>
                     ),
                   },
@@ -204,24 +197,24 @@ export default function DeliveryNotesPage() {
                   {
                     key: "carrierName",
                     header: "Carrier Partner",
-                    render: (v) => String(v || "Self-Pickup"),
+                    render: (v: any) => String(v || "Self-Pickup"),
                   },
                   {
                     key: "trackingNumber",
                     header: "Tracking Reference",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono">{String(v || "N/A")}</span>
                     ),
                   },
                   {
                     key: "createdAt",
                     header: "Dispatch Date",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         style={{
                           background:

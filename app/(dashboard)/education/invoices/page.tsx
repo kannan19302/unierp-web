@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, Table, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -180,55 +180,33 @@ export default function EducationInvoicesPage() {
       ) : (
         <>
           <div className="ui-card">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Invoice #</th>
-                  <th>Student</th>
-                  <th>Total</th>
-                  <th>Paid</th>
-                  <th>Due</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoices.map((inv: any) => (
-                  <tr key={inv.id}>
-                    <td className="font-medium">{inv.invoiceNumber}</td>
-                    <td>
-                      {inv.student?.firstName} {inv.student?.lastName}
-                    </td>
-                    <td>${inv.totalAmount}</td>
-                    <td>${inv.paidAmount}</td>
-                    <td>
-                      {inv.dueDate
-                        ? new Date(inv.dueDate).toLocaleDateString()
-                        : "-"}
-                    </td>
-                    <td>
-                      <span
-                        className={`ui-badge ${inv.status === "PAID" ? "ui-badge-success" : inv.status === "OVERDUE" ? "ui-badge-danger" : inv.status === "PARTIAL" ? "ui-badge-warning" : "ui-badge-info"}`}
-                      >
-                        {inv.status}
-                      </span>
-                    </td>
-                    <td>
-                      {inv.status !== "PAID" && (
-                        <button
-                          className="ui-btn ui-btn-sm ui-btn-outline"
-                          onClick={() =>
-                            setPayForm({ ...payForm, invoiceId: inv.id })
-                          }
-                        >
-                          Pay
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Invoice #" , render: (inv: any) => (<>{inv.invoiceNumber}</>) },
+                            { key: "col_1", header: "Student" , render: (inv: any) => (<>{inv.student?.firstName}{inv.student?.lastName}</>) },
+                            { key: "col_2", header: "Total" , render: (inv: any) => (<>${inv.totalAmount}</>) },
+                            { key: "col_3", header: "Paid" , render: (inv: any) => (<>${inv.paidAmount}</>) },
+                            { key: "col_4", header: "Due" , render: (inv: any) => (<>{inv.dueDate
+                                                  ? new Date(inv.dueDate).toLocaleDateString()
+                                                  : "-"}</>) },
+                            { key: "col_5", header: "Status" , render: (inv: any) => (<><span
+                                                  className={`ui-badge ${inv.status === "PAID" ? "ui-badge-success" : inv.status === "OVERDUE" ? "ui-badge-danger" : inv.status === "PARTIAL" ? "ui-badge-warning" : "ui-badge-info"}`}
+                                                >
+                                                  {inv.status}
+                                                </span></>) },
+                            { key: "col_6", header: "Actions" , render: (inv: any) => (<>{inv.status !== "PAID" && (
+                                                  <button
+                                                    className="ui-btn ui-btn-sm ui-btn-outline"
+                                                    onClick={() =>
+                                                      setPayForm({ ...payForm, invoiceId: inv.id })
+                                                    }
+                                                  >
+                                                    Pay
+                                                  </button>
+                                                )}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={invoices} rowKey={(inv: any) => inv.id} />;
+                              })()}</>
           </div>
           {payForm.invoiceId && (
             <div className="ui-card p-4 mt-4">

@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card,
-  Button,
-  Spinner,
-  Modal,
-  FormField,
-  Input,
-  Select,
-  useToast, Table } from "@unerp/ui";
+import { Card, Button, Spinner, Modal, FormField, Input, Select, useToast, DataTable } from "@unerp/ui";
 import { Plus, Calendar, Globe, AlertTriangle } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 import styles from "./HolidaysTab.module.css";
@@ -92,48 +85,25 @@ export default function HolidaysTab() {
         </div>
       ) : (
         <Card padding="none">
-          <Table className={styles.s0}>
-            <thead>
-              <tr className={styles.s1}>
-                <th className="p-4">Holiday Name</th>
-                <th className="p-4">Date</th>
-                <th className={styles.s2}>Region Scope</th>
-              </tr>
-            </thead>
-            <tbody>
-              {holidays.length === 0 ? (
-                <tr>
-                  <td colSpan={3} className={styles.s3}>
-                    No public holidays registered. Set holidays to exclude them
-                    from leave calculations.
-                  </td>
-                </tr>
-              ) : (
-                holidays.map((h) => (
-                  <tr key={h.id} className="border-b">
-                    <td className={styles.s4}>{h.name}</td>
-                    <td className="p-4">
-                      <div className={styles.s5}>
-                        <Calendar size={14} className="text-muted-foreground" />
-                        {new Date(h.date).toLocaleDateString(undefined, {
-                          weekday: "long",
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </div>
-                    </td>
-                    <td className={styles.s6}>
-                      <div className={styles.s7}>
-                        <Globe size={12} className="text-muted-foreground" />
-                        {h.region}
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Holiday Name", render: (h: any) => (<>{h.name}</>) },
+                        { key: "col_1", header: "Date", render: (h: any) => (<><div className={styles.s5}>
+                                              <Calendar size={14} className="text-muted-foreground" />
+                                              {new Date(h.date).toLocaleDateString(undefined, {
+                                                weekday: "long",
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                              })}
+                                            </div></>) },
+                        { key: "col_2", header: "Region Scope", render: (h: any) => (<><div className={styles.s7}>
+                                              <Globe size={12} className="text-muted-foreground" />
+                                              {h.region}
+                                            </div></>) },
+                      ];
+                                return <DataTable columns={columns} data={holidays} rowKey={(h: any) => h.id} />;
+                              })()}</>
         </Card>
       )}
 

@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  KPICard,
-  Spinner,
-  DataTable,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, KPICard, Spinner, DataTable, Button, type Column } from "@unerp/ui";
 import { Plug, Globe, Webhook, Activity, Eye, Plus } from "lucide-react";
 
 interface Connection {
@@ -62,7 +55,7 @@ export default function ExtGatewayPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={`ui-badge ui-badge-${r.status === "ACTIVE" ? "success" : r.status === "ERROR" ? "danger" : "warning"}`}
         >
@@ -74,7 +67,7 @@ export default function ExtGatewayPage() {
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <button
           onClick={(e) => {
             e.stopPropagation();

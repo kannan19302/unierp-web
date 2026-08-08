@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, AlertCircle, Truck } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -121,19 +114,19 @@ export default function ConsignmentPage() {
     {
       key: "product",
       header: "Product",
-      render: (v) => (v as ConsignmentStock["product"])?.name ?? "—",
+      render: (v: any) => (v as ConsignmentStock["product"])?.name ?? "—",
     },
     {
       key: "warehouse",
       header: "Warehouse",
-      render: (v) => (v as ConsignmentStock["warehouse"])?.name ?? "—",
+      render: (v: any) => (v as ConsignmentStock["warehouse"])?.name ?? "—",
     },
     { key: "quantityOnHand", header: "On Hand" },
-    { key: "unitCost", header: "Unit Cost", render: (v) => `$${v}` },
+    { key: "unitCost", header: "Unit Cost", render: (v: any) => `$${v}` },
     {
       key: "status",
       header: "Status",
-      render: (v) => <Badge variant="success">{String(v)}</Badge>,
+      render: (v: any) => <Badge variant="success">{String(v)}</Badge>,
     },
   ];
 
@@ -141,15 +134,15 @@ export default function ConsignmentPage() {
     {
       key: "consignmentStock",
       header: "Supplier",
-      render: (v) =>
+      render: (v: any) =>
         (v as Consumption["consignmentStock"])?.supplierName ?? "—",
     },
     { key: "quantity", header: "Quantity" },
-    { key: "totalCost", header: "Total Cost", render: (v) => `$${v}` },
+    { key: "totalCost", header: "Total Cost", render: (v: any) => `$${v}` },
     {
       key: "id",
       header: "Actions",
-      render: (v) => (
+      render: (v: any) => (
         <div className="text-right">
           <button
             onClick={() => handleMarkBilled(String(v))}

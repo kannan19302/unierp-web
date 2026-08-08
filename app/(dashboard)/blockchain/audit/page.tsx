@@ -43,20 +43,20 @@ export default function AuditPage() {
     {
       key: "entityType",
       header: "Entity Type",
-      render: (r) => <span className="ui-badge">{r.entityType}</span>,
+      render: (r: any) => <span className="ui-badge">{r.entityType}</span>,
     },
     {
       key: "entityId",
       header: "Entity ID",
-      render: (r) => (
+      render: (r: any) => (
         <code className="u-text-xs">{r.entityId.substring(0, 12)}...</code>
       ),
     },
-    { key: "action", header: "Action", render: (r) => r.action },
+    { key: "action", header: "Action", render: (r: any) => r.action },
     {
       key: "transactionHash",
       header: "Tx Hash",
-      render: (r) =>
+      render: (r: any) =>
         r.transactionHash ? (
           <code className="u-text-xs">
             {r.transactionHash.substring(0, 16)}...
@@ -68,12 +68,12 @@ export default function AuditPage() {
     {
       key: "performedBy",
       header: "Performed By",
-      render: (r) => r.performedBy.substring(0, 8),
+      render: (r: any) => r.performedBy.substring(0, 8),
     },
     {
       key: "timestamp",
       header: "Timestamp",
-      render: (r) => new Date(r.timestamp).toLocaleString(),
+      render: (r: any) => new Date(r.timestamp).toLocaleString(),
     },
   ];
 

@@ -1,20 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import {
   RefreshCw,
   Plus,
@@ -146,7 +133,7 @@ export default function RecurringInvoicesPage() {
     {
       key: "template",
       header: "Schedule",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <RefreshCw size={16} />
@@ -167,12 +154,12 @@ export default function RecurringInvoicesPage() {
     {
       key: "frequency",
       header: "Frequency",
-      render: (row) => <Badge variant="info">{row.frequency}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.frequency}</Badge>,
     },
     {
       key: "nextRunDate",
       header: "Next Run",
-      render: (row) => (
+      render: (row: any) => (
         <span className={styles.s2}>
           <Calendar size={12} />{" "}
           {new Date(row.nextRunDate).toLocaleDateString()}
@@ -182,7 +169,7 @@ export default function RecurringInvoicesPage() {
     {
       key: "lastRunDate",
       header: "Last Run",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-tertiary">
           {row.lastRunDate
             ? new Date(row.lastRunDate).toLocaleDateString()
@@ -193,7 +180,7 @@ export default function RecurringInvoicesPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "ACTIVE" ? "success" : "warning"}>
           {row.status}
         </Badge>
@@ -261,7 +248,7 @@ export default function RecurringInvoicesPage() {
             columns={columns}
             data={schedules}
             loading={loading}
-            rowKey={(row) => row.id}
+            rowKey={(row: any) => row.id}
             emptyTitle="No recurring schedules"
             emptyMessage="Create your first recurring invoice schedule to automate billing."
             emptyIcon={<RefreshCw size={48} />}

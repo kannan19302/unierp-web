@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { RotateCcw, Eye, Check, X } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSRefundsPage() {
   const client = useApiClient();
@@ -115,56 +115,31 @@ export default function POSRefundsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Refund #</th>
-                  <th>Status</th>
-                  <th>Amount</th>
-                  <th>Method</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={6} className="text-center p-4">
-                      Loading...
-                    </td>
-                  </tr>
-                ) : (
-                  refunds.map((r) => (
-                    <tr key={r.id}>
-                      <td>{r.refundNumber}</td>
-                      <td>
-                        <span
-                          className={`ui-badge-${r.status === "APPROVED" ? "success" : r.status === "PENDING" ? "warning" : r.status === "REJECTED" ? "error" : ""}`}
-                        >
-                          {r.status}
-                        </span>
-                      </td>
-                      <td>${Number(r.refundAmount).toFixed(2)}</td>
-                      <td>{r.refundMethod || "-"}</td>
-                      <td>{new Date(r.createdAt).toLocaleString()}</td>
-                      <td>
-                        <button
-                          className="ui-btn-icon"
-                          onClick={async () => {
-                            const d = await client.get<any>(
-                              `/pos/exp/refunds/${r.id}`,
-                            );
-                            setSelected(d);
-                          }}
-                        >
-                          <Eye size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Refund #", render: (r: any) => (<>{r.refundNumber}</>) },
+                            { key: "col_1", header: "Status", render: (r: any) => (<><span
+                                                    className={`ui-badge-${r.status === "APPROVED" ? "success" : r.status === "PENDING" ? "warning" : r.status === "REJECTED" ? "error" : ""}`}
+                                                  >
+                                                    {r.status}
+                                                  </span></>) },
+                            { key: "col_2", header: "Amount", render: (r: any) => (<>${Number(r.refundAmount).toFixed(2)}</>) },
+                            { key: "col_3", header: "Method", render: (r: any) => (<>{r.refundMethod || "-"}</>) },
+                            { key: "col_4", header: "Date", render: (r: any) => (<>{new Date(r.createdAt).toLocaleString()}</>) },
+                            { key: "col_5", header: "Actions", render: (r: any) => (<><button
+                                                    className="ui-btn-icon"
+                                                    onClick={async () => {
+                                                      const d = await client.get<any>(
+                                                        `/pos/exp/refunds/${r.id}`,
+                                                      );
+                                                      setSelected(d);
+                                                    }}
+                                                  >
+                                                    <Eye size={14} />
+                                                  </button></>) },
+                          ];
+                                    return <DataTable columns={columns} data={refunds} rowKey={(r: any) => r.id} />;
+                                  })()}</>
           </div>
         )}
       </div>

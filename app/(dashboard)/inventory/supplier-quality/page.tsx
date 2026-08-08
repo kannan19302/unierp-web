@@ -193,27 +193,27 @@ export default function SupplierQualityPage() {
                     {
                       key: "vendor",
                       header: "Vendor",
-                      render: (v) => String((v as any)?.name ?? ""),
+                      render: (v: any) => String((v as any)?.name ?? ""),
                     },
                     {
                       key: "periodStart",
                       header: "Period",
-                      render: (v) => new Date(String(v)).toLocaleDateString(),
+                      render: (v: any) => new Date(String(v)).toLocaleDateString(),
                     },
                     {
                       key: "qualityScore",
                       header: "Quality",
-                      render: (v) => (v != null ? Number(v).toFixed(0) : "—"),
+                      render: (v: any) => (v != null ? Number(v).toFixed(0) : "—"),
                     },
                     {
                       key: "deliveryScore",
                       header: "Delivery",
-                      render: (v) => (v != null ? Number(v).toFixed(0) : "—"),
+                      render: (v: any) => (v != null ? Number(v).toFixed(0) : "—"),
                     },
                     {
                       key: "overallScore",
                       header: "Overall",
-                      render: (v) => (
+                      render: (v: any) => (
                         <strong>
                           {v != null ? Number(v).toFixed(1) : "—"}
                         </strong>
@@ -251,20 +251,20 @@ export default function SupplierQualityPage() {
                   {
                     key: "ncrNumber",
                     header: "NCR#",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">{String(v)}</span>
                     ),
                   },
                   {
                     key: "vendor",
                     header: "Vendor",
-                    render: (v) => String((v as any)?.name ?? ""),
+                    render: (v: any) => String((v as any)?.name ?? ""),
                   },
                   { key: "defectType", header: "Defect" },
                   {
                     key: "severity",
                     header: "Severity",
-                    render: (v) => (
+                    render: (v: any) => (
                       <Badge variant={SEVERITY_VARIANT[String(v)] ?? "default"}>
                         {String(v)}
                       </Badge>
@@ -274,7 +274,7 @@ export default function SupplierQualityPage() {
                   {
                     key: "_count",
                     header: "CARs",
-                    render: (v) => String((v as any)?.carRequests ?? 0),
+                    render: (v: any) => String((v as any)?.carRequests ?? 0),
                   },
                   {
                     key: "id",

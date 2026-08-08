@@ -4,12 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ChangeHistory, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@unerp/ui";
 import {
   FileText,
   AlertCircle,
@@ -336,43 +331,25 @@ export default function PurchaseOrderDetailPage() {
             {/* Tab Content 1: PO Items */}
             {activeTab === "details" ? (
               <div className="builder-table-wrapper">
-                <Table className={styles.p22}>
-                  <thead>
-                    <tr className={styles.p23}>
-                      <th className={styles.p24}>Description</th>
-                      <th className={styles.p25}>Ordered Qty</th>
-                      <th className={styles.p26}>Received Qty</th>
-                      <th className={styles.p27}>Unit Price</th>
-                      <th className={styles.p28}>Total Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {po.lineItems?.map((item) => (
-                      <tr key={item.id} className={styles.p29}>
-                        <td className={styles.p30}>{item.description}</td>
-                        <td className={styles.p31}>{Number(item.quantity)}</td>
-                        <td className={styles.p32}>
-                          <span
-                            style={{
-                              color:
-                                Number(item.receivedQty) < Number(item.quantity)
-                                  ? "var(--color-warning)"
-                                  : "var(--color-success)",
-                            }}
-                          >
-                            {Number(item.receivedQty)}
-                          </span>
-                        </td>
-                        <td className={styles.p34}>
-                          ${Number(item.unitPrice).toLocaleString()}
-                        </td>
-                        <td className={styles.p35}>
-                          ${Number(item.totalAmount).toLocaleString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <>{(() => {
+                                        const columns = [
+                                { key: "col_0", header: "Description", render: (item: any) => (<>{item.description}</>) },
+                                { key: "col_1", header: "Ordered Qty", render: (item: any) => (<>{Number(item.quantity)}</>) },
+                                { key: "col_2", header: "Received Qty", render: (item: any) => (<><span
+                                                          style={{
+                                                            color:
+                                                              Number(item.receivedQty) < Number(item.quantity)
+                                                                ? "var(--color-warning)"
+                                                                : "var(--color-success)",
+                                                          }}
+                                                        >
+                                                          {Number(item.receivedQty)}
+                                                        </span></>) },
+                                { key: "col_3", header: "Unit Price", render: (item: any) => (<>${Number(item.unitPrice).toLocaleString()}</>) },
+                                { key: "col_4", header: "Total Amount", render: (item: any) => (<>${Number(item.totalAmount).toLocaleString()}</>) },
+                              ];
+                                        return <DataTable columns={columns} data={po.lineItems} rowKey={(item: any) => item.id} />;
+                                      })()}</>
 
                 <div className={styles.p36}>
                   <div className="ui-text-xs-muted">
@@ -429,97 +406,30 @@ export default function PurchaseOrderDetailPage() {
                     </div>
 
                     <div className="builder-table-wrapper">
-                      <Table className={styles.p45}>
-                        <thead>
-                          <tr className={styles.p46}>
-                            <th className="p-3" rowSpan={2}>
-                              Item Description
-                            </th>
-                            <th className={styles.p47} colSpan={3}>
-                              Quantities Comparison
-                            </th>
-                            <th className={styles.p48} colSpan={2}>
-                              Unit Prices Comparison
-                            </th>
-                            <th className={styles.p49} rowSpan={2}>
-                              Audit Status
-                            </th>
-                          </tr>
-                          <tr className={styles.p50}>
-                            <th className={styles.p51}>Ordered (PO)</th>
-                            <th className={styles.p52}>Received (GRN)</th>
-                            <th className={styles.p53}>Invoiced (Bill)</th>
-                            <th className={styles.p54}>Ordered</th>
-                            <th className={styles.p55}>Invoiced</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {matchReport.items.map((item, idx) => (
-                            <tr key={idx} className={styles.p56}>
-                              <td className={styles.p57}>{item.description}</td>
-
-                              {/* Qty Audit */}
-                              <td className={styles.p58}>{item.orderedQty}</td>
-                              <td
-                                style={{
-                                  background: item.qtyMatch
-                                    ? "transparent"
-                                    : "var(--color-danger-light)",
-                                  color: item.qtyMatch
-                                    ? "inherit"
-                                    : "var(--color-danger)",
-                                }}
-                              >
-                                {item.receivedQty}
-                              </td>
-                              <td
-                                style={{
-                                  background: item.qtyMatch
-                                    ? "transparent"
-                                    : "var(--color-danger-light)",
-                                  color: item.qtyMatch
-                                    ? "inherit"
-                                    : "var(--color-danger)",
-                                }}
-                              >
-                                {item.invoicedQty}
-                              </td>
-
-                              {/* Price Audit */}
-                              <td className={styles.p61}>
-                                ${item.orderedUnitPrice}
-                              </td>
-                              <td
-                                style={{
-                                  background: item.priceMatch
-                                    ? "transparent"
-                                    : "var(--color-danger-light)",
-                                  color: item.priceMatch
-                                    ? "inherit"
-                                    : "var(--color-danger)",
-                                }}
-                              >
-                                ${item.invoicedUnitPrice}
-                              </td>
-
-                              {/* Check badges */}
-                              <td className={styles.p63}>
-                                <Badge
-                                  variant={
-                                    item.qtyMatch && item.priceMatch
-                                      ? "success"
-                                      : "danger"
-                                  }
-                                >
-                                  {item.qtyMatch && item.priceMatch
-                                    ? "OK"
-                                    : "DISCREPANCY"}
-                                </Badge>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
+                      <>{(() => {
+                                                        const columns = [
+                                                { key: "col_0", header: "Item Description", render: (item: any) => (<>{item.description}</>) },
+                                                { key: "col_1", header: "Quantities Comparison", render: (item: any) => (<>{item.orderedQty}</>) },
+                                                { key: "col_2", header: "Unit Prices Comparison", render: (item: any) => (<>{item.receivedQty}</>) },
+                                                { key: "col_3", header: "Audit Status", render: (item: any) => (<>{item.invoicedQty}</>) },
+                                                { key: "col_4", header: "Ordered (PO)", render: (item: any) => (<>${item.orderedUnitPrice}</>) },
+                                                { key: "col_5", header: "Received (GRN)", render: (item: any) => (<>${item.invoicedUnitPrice}</>) },
+                                                { key: "col_6", header: "Invoiced (Bill)", render: (item: any) => (<><Badge
+                                                                                variant={
+                                                                                  item.qtyMatch && item.priceMatch
+                                                                                    ? "success"
+                                                                                    : "danger"
+                                                                                }
+                                                                              >
+                                                                                {item.qtyMatch && item.priceMatch
+                                                                                  ? "OK"
+                                                                                  : "DISCREPANCY"}
+                                                                              </Badge></>) },
+                                                { key: "col_7", header: "Ordered", render: (item: any) => (<></>) },
+                                                { key: "col_8", header: "Invoiced", render: (item: any) => (<></>) },
+                                              ];
+                                                        return <DataTable columns={columns} data={matchReport.items} rowKey={(item: any) => idx} />;
+                                                      })()}</>
                     </div>
                   </>
                 )}

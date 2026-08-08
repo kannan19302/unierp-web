@@ -241,14 +241,14 @@ function TasksTab() {
             {
               key: "taskNumber",
               header: "Task #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "taskType",
               header: "Type",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} color={taskTypeColor(String(v))} />
               ),
             },
@@ -256,7 +256,7 @@ function TasksTab() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} color={taskStatusColor(String(v))} />
               ),
             },
@@ -268,12 +268,12 @@ function TasksTab() {
             {
               key: "productId",
               header: "Product",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             {
               key: "assignedTo",
               header: "Assigned",
-              render: (v) => String(v ?? "Unassigned"),
+              render: (v: any) => String(v ?? "Unassigned"),
             },
           ] as ListColumn[]
         }
@@ -322,7 +322,7 @@ function BinTransfersTab() {
             {
               key: "transferNumber",
               header: "Transfer #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -330,14 +330,14 @@ function BinTransfersTab() {
             {
               key: "fromBin",
               header: "From Bin",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "toBin",
               header: "To Bin",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -349,7 +349,7 @@ function BinTransfersTab() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge
                   label={String(v)}
                   color={transferStatusColor(String(v))}
@@ -359,7 +359,7 @@ function BinTransfersTab() {
             {
               key: "reason",
               header: "Reason",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
           ] as ListColumn[]
         }
@@ -410,7 +410,7 @@ function GrnTab() {
             {
               key: "grnNumber",
               header: "GRN #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -418,29 +418,29 @@ function GrnTab() {
             {
               key: "receivedDate",
               header: "Received Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
             {
               key: "supplierId",
               header: "Supplier",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             {
               key: "totalCartons",
               header: "Cartons",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} color={grnStatusColor(String(v))} />
               ),
             },
             {
               key: "vehicleNumber",
               header: "Vehicle",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
           ] as ListColumn[]
         }
@@ -489,25 +489,25 @@ function PackingTab() {
             {
               key: "sessionNumber",
               header: "Session #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "workerId",
               header: "Worker",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             { key: "totalCartons", header: "Cartons" },
             {
               key: "totalWeight",
               header: "Total Weight",
-              render: (v) => (v != null ? `${v} kg` : "—"),
+              render: (v: any) => (v != null ? `${v} kg` : "—"),
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge
                   label={String(v)}
                   color={packingStatusColor(String(v))}
@@ -517,7 +517,7 @@ function PackingTab() {
             {
               key: "completedAt",
               header: "Completed At",
-              render: (v) => (v ? new Date(String(v)).toLocaleString() : "—"),
+              render: (v: any) => (v ? new Date(String(v)).toLocaleString() : "—"),
             },
           ] as ListColumn[]
         }

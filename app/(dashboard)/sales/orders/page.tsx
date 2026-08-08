@@ -3,15 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   Search,
@@ -501,20 +493,20 @@ export default function SalesOrdersHub() {
                 {
                   key: "orderNumber",
                   header: "Order ID",
-                  render: (v) => <span className={styles.p9}>{String(v)}</span>,
+                  render: (v: any) => <span className={styles.p9}>{String(v)}</span>,
                 },
                 { key: "customerName", header: "Customer" },
                 {
                   key: "salesChannel",
                   header: "Channel",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className={styles.p10}>{String(v)}</span>
                   ),
                 },
                 {
                   key: "status",
                   header: "Fulfillment",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Badge
                       variant={
                         v === "CONFIRMED"
@@ -533,12 +525,12 @@ export default function SalesOrdersHub() {
                 {
                   key: "totalAmount",
                   header: "Amount",
-                  render: (v) => <strong>${Number(v).toLocaleString()}</strong>,
+                  render: (v: any) => <strong>${Number(v).toLocaleString()}</strong>,
                 },
                 {
                   key: "paymentStatus",
                   header: "Payment",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       style={{
                         background:

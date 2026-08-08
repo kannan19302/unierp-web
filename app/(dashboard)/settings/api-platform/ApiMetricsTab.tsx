@@ -97,12 +97,12 @@ export default function ApiMetricsTab() {
             {
               key: "endpoint",
               header: "Endpoint",
-              render: (v) => <code className={styles.s4}>{String(v)}</code>,
+              render: (v: any) => <code className={styles.s4}>{String(v)}</code>,
             },
             {
               key: "calls24h",
               header: "Calls (24h)",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-semibold">
                   {Number(v).toLocaleString()}
                 </span>
@@ -111,7 +111,7 @@ export default function ApiMetricsTab() {
             {
               key: "avgLatencyMs",
               header: "Avg Latency",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   style={{
                     color:
@@ -129,7 +129,7 @@ export default function ApiMetricsTab() {
             {
               key: "p99LatencyMs",
               header: "P99 Latency",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   style={{
                     color:
@@ -147,7 +147,7 @@ export default function ApiMetricsTab() {
             {
               key: "errorRate",
               header: "Error Rate",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   style={{
                     color:

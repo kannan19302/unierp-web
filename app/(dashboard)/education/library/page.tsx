@@ -2,20 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import {
@@ -128,7 +115,7 @@ export default function LibraryPage() {
     {
       key: "book",
       header: "Book",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <BookOpen size={18} />
@@ -143,17 +130,17 @@ export default function LibraryPage() {
     {
       key: "isbn",
       header: "ISBN",
-      render: (row) => <code className={styles.s2}>{row.isbn}</code>,
+      render: (row: any) => <code className={styles.s2}>{row.isbn}</code>,
     },
     {
       key: "qty",
       header: "Total Qty",
-      render: (row) => <span className="text-sm">{row.quantity}</span>,
+      render: (row: any) => <span className="text-sm">{row.quantity}</span>,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.quantity > 0 ? "success" : "danger"}>
           {row.quantity > 0 ? "Available" : "All Out"}
         </Badge>
@@ -235,7 +222,7 @@ export default function LibraryPage() {
             <DataTable
               columns={bookColumns}
               data={books}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No books"
               emptyMessage="Add books to your library register."
               emptyIcon={<BookOpen size={48} />}
@@ -290,7 +277,7 @@ export default function LibraryPage() {
                 ] as Column<BookTransaction>[]
               }
               data={transactions}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No transactions"
               emptyMessage="Book checkout/return records will appear here."
               emptyIcon={<ArrowLeftRight size={48} />}

@@ -580,7 +580,7 @@ export default function InvoiceCapturePage() {
                   {
                     key: "fileName",
                     header: "File Name",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-medium text-gray-900 max-w-[200px] truncate block">
                         {String(v)}
                       </span>
@@ -615,7 +615,7 @@ export default function InvoiceCapturePage() {
                   {
                     key: "confidenceScore",
                     header: "Confidence",
-                    render: (v) => {
+                    render: (v: any) => {
                       const confidenceNum = Number(v) * 100;
                       const confidenceColor =
                         confidenceNum >= 90
@@ -641,7 +641,7 @@ export default function InvoiceCapturePage() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => {
+                    render: (v: any) => {
                       const statusClass =
                         v === "PROCESSED"
                           ? "bg-emerald-50 text-emerald-700 border-emerald-200"

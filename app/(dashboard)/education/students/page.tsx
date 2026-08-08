@@ -1,20 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import {
   GraduationCap,
   Plus,
@@ -104,7 +91,7 @@ export default function StudentRegistryPage() {
     {
       key: "student",
       header: "Student",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             {row.firstName[0]}
@@ -122,7 +109,7 @@ export default function StudentRegistryPage() {
     {
       key: "dob",
       header: "Date of Birth",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.dateOfBirth
             ? new Date(row.dateOfBirth).toLocaleDateString()
@@ -133,7 +120,7 @@ export default function StudentRegistryPage() {
     {
       key: "contact",
       header: "Parent Contact",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">{row.parentContact || "—"}</span>
       ),
     },
@@ -206,7 +193,7 @@ export default function StudentRegistryPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No students found"
             emptyMessage="Add students to start managing your academic roster."
             emptyIcon={<GraduationCap size={48} />}

@@ -10,13 +10,7 @@ import {
   Loader2,
   AlertTriangle,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  useToast,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface TaxRule {
@@ -310,7 +304,7 @@ export default function TaxEnginePage() {
                   {
                     key: "name",
                     header: "Rule Name",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-medium">{v as string}</span>
                     ),
                   },
@@ -327,7 +321,7 @@ export default function TaxEnginePage() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) =>
+                    render: (v: any) =>
                       v === "ACTIVE" ? (
                         <CheckCircle2 className="h-4 w-4 text-green-500 inline" />
                       ) : (
@@ -382,14 +376,14 @@ export default function TaxEnginePage() {
                   {
                     key: "name",
                     header: "Tax Name",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-medium">{v as string}</span>
                     ),
                   },
                   {
                     key: "rate",
                     header: "Rate (%)",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-medium">
                         {Number(v).toFixed(2)}%
                       </span>
@@ -398,7 +392,7 @@ export default function TaxEnginePage() {
                   {
                     key: "threshold",
                     header: "Threshold ($)",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="ui-text-muted">
                         ${Number(v || 0).toFixed(2)}
                       </span>

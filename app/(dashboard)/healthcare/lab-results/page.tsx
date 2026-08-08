@@ -1,16 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, KPICard } from "@unerp/ui";
 import { Pill, Plus, AlertTriangle, Package, Search } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -61,7 +52,7 @@ export default function LabResultsPage() {
     {
       key: "drug",
       header: "Drug",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div
             style={{
@@ -86,17 +77,17 @@ export default function LabResultsPage() {
     {
       key: "batch",
       header: "Batch #",
-      render: (row) => <code className={styles.s2}>{row.batchNumber}</code>,
+      render: (row: any) => <code className={styles.s2}>{row.batchNumber}</code>,
     },
     {
       key: "qty",
       header: "Quantity",
-      render: (row) => <span className="text-sm">{row.quantity}</span>,
+      render: (row: any) => <span className="text-sm">{row.quantity}</span>,
     },
     {
       key: "expiry",
       header: "Expiry",
-      render: (row) => {
+      render: (row: any) => {
         const isExpiring =
           row.expiryDate &&
           new Date(row.expiryDate) < new Date(Date.now() + 90 * 86400000);
@@ -122,7 +113,7 @@ export default function LabResultsPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => {
+      render: (row: any) => {
         const expired = row.expiryDate && new Date(row.expiryDate) < new Date();
         return (
           <Badge
@@ -204,7 +195,7 @@ export default function LabResultsPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No drugs registered"
             emptyMessage="Add drugs to your pharmacy register."
             emptyIcon={<Pill size={48} />}

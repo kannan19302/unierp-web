@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatCardRow,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatCardRow, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Search, AlertCircle, DollarSign } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -28,7 +21,7 @@ const columns: ListColumn[] = [
   {
     key: "sku",
     header: "SKU",
-    render: (v) => <span className={styles.s1}>{String(v)}</span>,
+    render: (v: any) => <span className={styles.s1}>{String(v)}</span>,
   },
   { key: "name", header: "Item Name" },
   {
@@ -42,17 +35,17 @@ const columns: ListColumn[] = [
   {
     key: "costingMethod",
     header: "Cost Method",
-    render: (v) => <Badge variant="info">{String(v)}</Badge>,
+    render: (v: any) => <Badge variant="info">{String(v)}</Badge>,
   },
   {
     key: "unitCost",
     header: "Valuation Rate",
-    render: (v) => `$${Number(v).toFixed(2)}`,
+    render: (v: any) => `$${Number(v).toFixed(2)}`,
   },
   {
     key: "value",
     header: "Total Stock Value",
-    render: (v) => <span className={styles.s2}>${Number(v).toFixed(2)}</span>,
+    render: (v: any) => <span className={styles.s2}>${Number(v).toFixed(2)}</span>,
   },
 ];
 

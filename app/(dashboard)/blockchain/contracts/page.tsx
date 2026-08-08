@@ -64,7 +64,7 @@ export default function ContractsPage() {
     {
       key: "name",
       header: "Name",
-      render: (r) => (
+      render: (r: any) => (
         <span className="ui-flex-row ui-gap-2">
           <FileCode size={14} />
           {r.name}
@@ -74,25 +74,25 @@ export default function ContractsPage() {
     {
       key: "address",
       header: "Address",
-      render: (r) => (
+      render: (r: any) => (
         <code className="u-text-xs">{r.address.substring(0, 20)}...</code>
       ),
     },
     {
       key: "network",
       header: "Network",
-      render: (r) => <span className="ui-badge">{r.network}</span>,
+      render: (r: any) => <span className="ui-badge">{r.network}</span>,
     },
-    { key: "version", header: "Version", render: (r) => r.version },
+    { key: "version", header: "Version", render: (r: any) => r.version },
     {
       key: "deployedAt",
       header: "Deployed",
-      render: (r) => new Date(r.deployedAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.deployedAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <Button
           size="sm"
           variant="ghost"

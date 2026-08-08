@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useRef, Suspense } from "react";
@@ -779,95 +779,40 @@ function DrivePageContent() {
             <h3 className={styles.p23}>Files</h3>
 
             <div className={["ui-card", styles.p24].filter(Boolean).join(" ")}>
-              <Table className={styles.p25}>
-                <thead>
-                  <tr className={styles.p26}>
-                    <th className={styles.p27}>Name</th>
-                    <th className={styles.p28}>Status</th>
-                    <th className={styles.p29}>Last Modified</th>
-                    <th className={styles.p30}>File Size</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {documents.map((doc) => {
-                    const latestVersion = doc.versions && doc.versions[0];
-                    const size = latestVersion
-                      ? formatBytes(latestVersion.fileSize)
-                      : "--";
-
-                    return (
-                      <tr
-                        key={doc.id}
-                        onClick={() =>
-                          setSelectedItem({ type: "document", data: doc })
-                        }
-                        onDoubleClick={() => {
-                          if (latestVersion) {
-                            handleDownloadFile(latestVersion.id, doc.name);
-                          }
-                        }}
-                        style={{
-                          backgroundColor:
-                            selectedItem?.type === "document" &&
-                            selectedItem.data.id === doc.id
-                              ? "var(--color-primary-light)"
-                              : "transparent",
-                        }}
-                        className={styles.s5}
-                      >
-                        <td className="py-3 px-4">
-                          <div className="ui-hstack-3">
-                            <FileText size={18} className={styles.p31} />
-                            <div className={styles.p32}>
-                              <p className={styles.p33}>{doc.name}</p>
-                              <div className={styles.p34}>
-                                {doc.starred && (
-                                  <Star size={10} className={styles.p35} />
-                                )}
-                                {doc.legalHold && (
-                                  <Shield
-                                    size={10}
-                                    className="ui-text-danger"
-                                  />
-                                )}
-                                <span className={styles.p36}>
-                                  <Lock size={8} /> AES-256
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4">
-                          {doc.signatureStatus === "SIGNED" ? (
-                            <span className={styles.p37}>Signed</span>
-                          ) : doc.signatureStatus === "PENDING" ? (
-                            <span className={styles.p38}>Pending Sign</span>
-                          ) : (
-                            <span className={styles.p39}>Standard</span>
-                          )}
-                        </td>
-                        <td className={styles.p40}>
-                          {new Date(doc.updatedAt).toLocaleString()}
-                        </td>
-                        <td className={styles.p41}>{size}</td>
-                      </tr>
-                    );
-                  })}
-
-                  {documents.length === 0 && folders.length === 0 && (
-                    <tr>
-                      <td colSpan={4} className={styles.p42}>
-                        <div className={styles.p43}>
-                          <HardDrive size={36} className={styles.p44} />
-                          <span className="text-sm">
-                            No folders or files in this view.
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+              {(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Name" , render: (doc: any) => (<><div className="ui-hstack-3">
+                                                      <FileText size={18} className={styles.p31} />
+                                                      <div className={styles.p32}>
+                                                        <p className={styles.p33}>{doc.name}</p>
+                                                        <div className={styles.p34}>
+                                                          {doc.starred && (
+                                                            <Star size={10} className={styles.p35} />
+                                                          )}
+                                                          {doc.legalHold && (
+                                                            <Shield
+                                                              size={10}
+                                                              className="ui-text-danger"
+                                                            />
+                                                          )}
+                                                          <span className={styles.p36}>
+                                                            <Lock size={8} /> AES-256
+                                                          </span>
+                                                        </div>
+                                                      </div>
+                                                    </div></>) },
+                            { key: "col_1", header: "Status" , render: (doc: any) => (<>{doc.signatureStatus === "SIGNED" ? (
+                                                      <span className={styles.p37}>Signed</span>
+                                                    ) : doc.signatureStatus === "PENDING" ? (
+                                                      <span className={styles.p38}>Pending Sign</span>
+                                                    ) : (
+                                                      <span className={styles.p39}>Standard</span>
+                                                    )}</>) },
+                            { key: "col_2", header: "Last Modified" , render: (doc: any) => (<>{new Date(doc.updatedAt).toLocaleString()}</>) },
+                            { key: "col_3", header: "File Size" , render: (doc: any) => (<>{size}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={documents} rowKey={(doc: any) => doc.id} />;
+                              })()}
             </div>
           </div>
         </div>

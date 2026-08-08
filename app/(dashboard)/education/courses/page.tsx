@@ -1,20 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import { BookOpen, Plus, Search, Users, Award } from "lucide-react";
 import Link from "next/link";
 import { RouteGuard, useApiClient } from "@unerp/framework";
@@ -89,7 +76,7 @@ export default function CourseCatalogPage() {
     {
       key: "course",
       header: "Course",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <BookOpen size={18} />
@@ -106,17 +93,17 @@ export default function CourseCatalogPage() {
     {
       key: "code",
       header: "Code",
-      render: (row) => <code className={styles.s3}>{row.code}</code>,
+      render: (row: any) => <code className={styles.s3}>{row.code}</code>,
     },
     {
       key: "credits",
       header: "Credits",
-      render: (row) => <Badge variant="info">{row.credits} Credits</Badge>,
+      render: (row: any) => <Badge variant="info">{row.credits} Credits</Badge>,
     },
     {
       key: "description",
       header: "Description",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">{row.description || "—"}</span>
       ),
     },
@@ -183,7 +170,7 @@ export default function CourseCatalogPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No courses found"
             emptyMessage="Create courses to build your academic catalog."
             emptyIcon={<BookOpen size={48} />}

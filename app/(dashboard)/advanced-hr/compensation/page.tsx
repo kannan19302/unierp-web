@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { DollarSign, Layers, Shield } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -135,45 +135,16 @@ export default function AdvancedHrCompensationPage() {
             No compensation bands defined.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Band Name</th>
-                <th style={{ padding: "12px" }}>Level</th>
-                <th style={{ padding: "12px" }}>Min</th>
-                <th style={{ padding: "12px" }}>Mid</th>
-                <th style={{ padding: "12px" }}>Max</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bands.map((b) => (
-                <tr key={b.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {b.bandName}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="info">{b.jobLevel}</Badge>
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--color-text-secondary)",
-                    }}
-                  >
-                    ${Number(b.minSalary).toLocaleString()}
-                  </td>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    ${Number(b.midSalary).toLocaleString()}
-                  </td>
-                  <td style={{ padding: "12px", color: "var(--chart-9)" }}>
-                    ${Number(b.maxSalary).toLocaleString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Band Name" , render: (b: any) => (<>{b.bandName}</>) },
+                        { key: "col_1", header: "Level" , render: (b: any) => (<><Badge variant="info">{b.jobLevel}</Badge></>) },
+                        { key: "col_2", header: "Min" , render: (b: any) => (<>${Number(b.minSalary).toLocaleString()}</>) },
+                        { key: "col_3", header: "Mid" , render: (b: any) => (<>${Number(b.midSalary).toLocaleString()}</>) },
+                        { key: "col_4", header: "Max" , render: (b: any) => (<>${Number(b.maxSalary).toLocaleString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={bands} rowKey={(b: any) => b.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

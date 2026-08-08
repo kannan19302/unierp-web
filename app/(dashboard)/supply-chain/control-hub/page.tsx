@@ -1,23 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  DashboardChart,
-  ViewSwitcher,
-  type ViewMode,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, DashboardChart, ViewSwitcher, type ViewMode } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   Truck,
@@ -138,27 +121,27 @@ export default function SupplyChainControlHub() {
     {
       key: "lcNumber",
       header: "LC Reference",
-      render: (row) => <strong>{row.lcNumber}</strong>,
+      render: (row: any) => <strong>{row.lcNumber}</strong>,
     },
     {
       key: "lcType",
       header: "LC Type",
-      render: (row) => <Badge variant="info">{row.lcType}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.lcType}</Badge>,
     },
     {
       key: "bank",
       header: "Issuing Bank",
-      render: (row) => row.issuingBank || "N/A",
+      render: (row: any) => row.issuingBank || "N/A",
     },
     {
       key: "amount",
       header: "Amount",
-      render: (row) => `${row.currency} ${Number(row.amount).toLocaleString()}`,
+      render: (row: any) => `${row.currency} ${Number(row.amount).toLocaleString()}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
   ];
 

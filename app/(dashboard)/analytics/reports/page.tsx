@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -106,41 +106,23 @@ export default function ReportsPage() {
           <Plus size={18} /> New Report
         </button>
       </div>
-      <Table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Source</th>
-            <th>Filters</th>
-            <th>Sort</th>
-            <th>Created</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {reports.map((r) => (
-            <tr key={r.id}>
-              <td className={styles.nameCell}>{r.reportName}</td>
-              <td>
-                <span className={styles.sourceBadge}>{r.source}</span>
-              </td>
-              <td className={styles.filterCell}>
-                {Object.keys(r.filters || {}).length} conditions
-              </td>
-              <td>{r.sortBy ? `${r.sortBy} (${r.sortOrder})` : "-"}</td>
-              <td>{new Date(r.createdAt).toLocaleDateString()}</td>
-              <td>
-                <button
-                  onClick={() => handleDelete(r.id)}
-                  className={styles.iconBtn}
-                >
-                  <Trash2 size={14} />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <>{(() => {
+                  const columns = [
+            { key: "col_0", header: "Name" , render: (r: any) => (<>{r.reportName}</>) },
+            { key: "col_1", header: "Source" , render: (r: any) => (<><span className={styles.sourceBadge}>{r.source}</span></>) },
+            { key: "col_2", header: "Filters" , render: (r: any) => (<>{Object.keys(r.filters || {}).length}conditions
+                        </>) },
+            { key: "col_3", header: "Sort" , render: (r: any) => (<>{r.sortBy ? `${r.sortBy} (${r.sortOrder})` : "-"}</>) },
+            { key: "col_4", header: "Created" , render: (r: any) => (<>{new Date(r.createdAt).toLocaleDateString()}</>) },
+            { key: "col_5", header: "" , render: (r: any) => (<><button
+                            onClick={() => handleDelete(r.id)}
+                            className={styles.iconBtn}
+                          >
+                            <Trash2 size={14} />
+                          </button></>) },
+          ];
+                  return <DataTable columns={columns} data={reports} rowKey={(r: any) => r.id} />;
+              })()}</>
       {reports.length === 0 && !loading && (
         <div className="ui-text-muted">No saved reports yet.</div>
       )}

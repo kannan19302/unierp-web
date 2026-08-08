@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState } from "react";
 
@@ -36,40 +36,16 @@ export default function ObligationsPage() {
       </div>
       {loaded && (
         <div className="overflow-x-auto">
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="border-b text-left">
-                <th className="py-2 px-3 font-medium">Description</th>
-                <th className="py-2 px-3 font-medium">Owner</th>
-                <th className="py-2 px-3 font-medium">Due Date</th>
-                <th className="py-2 px-3 font-medium">Priority</th>
-                <th className="py-2 px-3 font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {obligations.map((o: any) => (
-                <tr key={o.id} className="border-b hover:bg-muted/50">
-                  <td className="py-2 px-3">{o.description}</td>
-                  <td className="py-2 px-3">{o.owner}</td>
-                  <td className="py-2 px-3">
-                    {o.dueDate ? new Date(o.dueDate).toLocaleDateString() : "-"}
-                  </td>
-                  <td className="py-2 px-3">{o.priority}</td>
-                  <td className="py-2 px-3">{o.status}</td>
-                </tr>
-              ))}
-              {obligations.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={5}
-                    className="py-4 text-center text-muted-foreground"
-                  >
-                    No obligations found for this contract
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Description", render: (o: any) => (<>{o.description}</>) },
+                    { key: "col_1", header: "Owner", render: (o: any) => (<>{o.owner}</>) },
+                    { key: "col_2", header: "Due Date", render: (o: any) => (<>{o.dueDate ? new Date(o.dueDate).toLocaleDateString() : "-"}</>) },
+                    { key: "col_3", header: "Priority", render: (o: any) => (<>{o.priority}</>) },
+                    { key: "col_4", header: "Status", render: (o: any) => (<>{o.status}</>) },
+                  ];
+                            return <DataTable columns={columns} data={obligations} rowKey={(o: any) => o.id} />;
+                          })()}</>
         </div>
       )}
     </div>

@@ -1,18 +1,7 @@
 "use client";
 import styles from "./operations.module.css";
 import React, { useState, useEffect } from "react";
-import { Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  Drawer,
-  Spinner, Table } from "@unerp/ui";
+import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, Drawer, Spinner, Table } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   ClipboardList,
@@ -190,7 +179,7 @@ export default function AsnsTab() {
     {
       key: "asnNumber",
       header: "ASN Number",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <ClipboardList size={16} className="text-primary" />
           <span className="font-semibold text-sm">{row.asnNumber}</span>
@@ -200,17 +189,17 @@ export default function AsnsTab() {
     {
       key: "vendorId",
       header: "Vendor ID",
-      render: (row) => <span className="text-sm">{row.vendorId}</span>,
+      render: (row: any) => <span className="text-sm">{row.vendorId}</span>,
     },
     {
       key: "warehouseId",
       header: "Warehouse ID",
-      render: (row) => <span className="text-sm">{row.warehouseId}</span>,
+      render: (row: any) => <span className="text-sm">{row.warehouseId}</span>,
     },
     {
       key: "expectedArrival",
       header: "Expected Arrival",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {row.expectedArrival
             ? new Date(row.expectedArrival).toLocaleDateString()
@@ -221,7 +210,7 @@ export default function AsnsTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.status === "RECEIVED"
@@ -239,7 +228,7 @@ export default function AsnsTab() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (row) => (
+      render: (row: any) => (
         <div
           className="ui-hstack-2 ui-justify-end"
           onClick={(e) => e.stopPropagation()}
@@ -317,7 +306,7 @@ export default function AsnsTab() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             onRowClick={openDetailsDrawer}
             emptyTitle="No Advance Shipping Notices"
             emptyMessage="Create ASNs to manage pre-arrival shipping notifications from vendors."
@@ -664,34 +653,16 @@ export default function AsnsTab() {
 
               <div className="ui-heading-md">Expected Line Items</div>
               <Card padding="none">
-                <Table className="ui-table w-full">
-                  <thead>
-                    <tr>
-                      <th className="text-left py-2 px-3">Product ID</th>
-                      <th className="text-right py-2 px-3">Expected Qty</th>
-                      <th className="text-right py-2 px-3">Received Qty</th>
-                      <th className="text-left py-2 px-3">UOM</th>
-                      <th className="text-left py-2 px-3">Lot Number</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {selectedAsn.lineItems.map((item) => (
-                      <tr key={item.id} className="border-t border-border">
-                        <td className="py-2 px-3 text-sm">{item.productId}</td>
-                        <td className="py-2 px-3 text-right text-sm">
-                          {item.expectedQty}
-                        </td>
-                        <td className="py-2 px-3 text-right text-sm font-semibold">
-                          {item.receivedQty}
-                        </td>
-                        <td className="py-2 px-3 text-sm">{item.uom}</td>
-                        <td className="py-2 px-3 text-sm">
-                          {item.lotNumber || "—"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Product ID" , render: (item: any) => (<>{item.productId}</>) },
+                                { key: "col_1", header: "Expected Qty" , render: (item: any) => (<>{item.expectedQty}</>) },
+                                { key: "col_2", header: "Received Qty" , render: (item: any) => (<>{item.receivedQty}</>) },
+                                { key: "col_3", header: "UOM" , render: (item: any) => (<>{item.uom}</>) },
+                                { key: "col_4", header: "Lot Number" , render: (item: any) => (<>{item.lotNumber || "—"}</>) },
+                              ];
+                                      return <DataTable columns={columns} data={selectedAsn.lineItems} rowKey={(item: any) => item.id} />;
+                                  })()}</>
               </Card>
             </div>
           )}

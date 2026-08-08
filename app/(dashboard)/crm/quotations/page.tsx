@@ -1,23 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  type SortOrder,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  Tabs,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, type SortOrder, Modal, TextField, FormField, Select, KPICard, Tabs } from "@unerp/ui";
 import {
   FileText,
   Plus,
@@ -259,7 +243,7 @@ export default function CrmQuotationsPage() {
     {
       key: "quotation",
       header: "Quotation",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.style0}>
             <FileText size={16} />
@@ -276,7 +260,7 @@ export default function CrmQuotationsPage() {
       header: "Amount",
       align: "right" as const,
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmtCurrency(row.totalAmount)}</span>
       ),
     },
@@ -284,7 +268,7 @@ export default function CrmQuotationsPage() {
       key: "issueDate",
       header: "Issued",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {new Date(row.issueDate).toLocaleDateString()}
         </span>
@@ -294,7 +278,7 @@ export default function CrmQuotationsPage() {
       key: "validUntil",
       header: "Valid Until",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {row.validUntil ? new Date(row.validUntil).toLocaleDateString() : "—"}
         </span>
@@ -304,14 +288,14 @@ export default function CrmQuotationsPage() {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "actions",
       header: "",
       align: "right" as const,
       width: "120px",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.style1}>
           <button
             title="View"
@@ -462,7 +446,7 @@ export default function CrmQuotationsPage() {
             columns={columns}
             data={data}
             loading={loading}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             onRowClick={(r) => {
               setSelected(r);
               setDetailOpen(true);

@@ -1,18 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Wrench, Plus, DollarSign, AlertTriangle } from "lucide-react";
 interface Maintenance {
@@ -83,7 +71,7 @@ export default function MaintenancePage() {
     {
       key: "desc",
       header: "Work Order",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="ui-heading-sm">{row.description}</div>
           <div className="ui-text-xs-tertiary">
@@ -96,7 +84,7 @@ export default function MaintenancePage() {
       key: "cost",
       header: "Cost",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">
           {row.cost ? fmtCurrency(row.cost) : "—"}
         </span>
@@ -105,7 +93,7 @@ export default function MaintenancePage() {
     {
       key: "date",
       header: "Date",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-xs">
           {row.createdAt ? new Date(row.createdAt).toLocaleDateString() : "—"}
         </span>
@@ -114,7 +102,7 @@ export default function MaintenancePage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             (row.status || "OPEN") === "COMPLETED" ? "success" : "warning"
@@ -171,7 +159,7 @@ export default function MaintenancePage() {
           <DataTable
             columns={columns}
             data={items}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No work orders"
             emptyMessage="Create maintenance work orders."
             emptyIcon={<Wrench size={48} />}

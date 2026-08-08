@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -129,44 +129,23 @@ export default function WorkCentersPage() {
           ))}
         </select>
       </div>
-      <Table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Available</th>
-            <th>Utilized</th>
-            <th>Overtime</th>
-            <th>Utilization</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {capacities.map((c) => {
-            const utilPct =
-              c.availableHours > 0
-                ? Math.round((c.utilizedHours / c.availableHours) * 100)
-                : 0;
-            return (
-              <tr key={c.id}>
-                <td>{new Date(c.date).toLocaleDateString()}</td>
-                <td>{c.availableHours}h</td>
-                <td>{c.utilizedHours}h</td>
-                <td>{c.overtimeHours > 0 ? `${c.overtimeHours}h` : "-"}</td>
-                <td>
-                  <span
-                    className={
-                      utilPct > 90 ? styles.highUtil : styles.normalUtil
-                    }
-                  >
-                    {utilPct}%
-                  </span>
-                </td>
-                <td className={styles.notesCell}>{c.notes || "-"}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+      <>{(() => {
+                  const columns = [
+            { key: "col_0", header: "Date" , render: (c: any) => (<>{new Date(c.date).toLocaleDateString()}</>) },
+            { key: "col_1", header: "Available" , render: (c: any) => (<>{c.availableHours}h</>) },
+            { key: "col_2", header: "Utilized" , render: (c: any) => (<>{c.utilizedHours}h</>) },
+            { key: "col_3", header: "Overtime" , render: (c: any) => (<>{c.overtimeHours > 0 ? `${c.overtimeHours}h` : "-"}</>) },
+            { key: "col_4", header: "Utilization" , render: (c: any) => (<><span
+                              className={
+                                utilPct > 90 ? styles.highUtil : styles.normalUtil
+                              }
+                            >
+                              {utilPct}%
+                            </span></>) },
+            { key: "col_5", header: "Notes" , render: (c: any) => (<>{c.notes || "-"}</>) },
+          ];
+                  return <DataTable columns={columns} data={capacities} rowKey={(c: any) => c.id} />;
+              })()}</>
       {capacities.length === 0 && !loading && (
         <div className="ui-text-muted">No capacity records yet.</div>
       )}

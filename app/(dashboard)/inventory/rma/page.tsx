@@ -1,20 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Select,
-  FormField,
-  Badge,
-  StatusBadge,
-  Spinner,
-  Pagination,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Select, FormField, Badge, StatusBadge, Spinner, Pagination } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, Search, Eye, Trash2, RotateCcw } from "lucide-react";
 import Link from "next/link";
@@ -108,7 +94,7 @@ export default function RmaPage() {
     {
       key: "rmaNumber",
       header: "RMA #",
-      render: (r) => (
+      render: (r: any) => (
         <Link href={`/inventory/rma/${r.id}`} className="ui-link">
           {r.rmaNumber}
         </Link>
@@ -117,7 +103,7 @@ export default function RmaPage() {
     {
       key: "source",
       header: "Source",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.source === "CUSTOMER_RETURN" ? "info" : "warning"}>
           {r.source.replace("_", " ")}
         </Badge>
@@ -129,7 +115,7 @@ export default function RmaPage() {
     {
       key: "priority",
       header: "Priority",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.priority === "HIGH"
@@ -147,12 +133,12 @@ export default function RmaPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -181,7 +167,7 @@ export default function RmaPage() {
           columns={columns}
           data={filtered}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No RMAs"
           emptyMessage="Create your first RMA to start tracking returns."
           emptyIcon={<RotateCcw size={48} />}

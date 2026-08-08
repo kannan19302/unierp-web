@@ -10,13 +10,7 @@ import {
   RefreshCw,
   AlertTriangle,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { apiGet, apiPost, apiPatch } from "@/lib/api";
 
 interface Lease {
@@ -342,7 +336,7 @@ export default function LeaseDetailPage() {
               {
                 key: "periodStart",
                 header: "Period",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="font-mono text-xs">
                     {periodLabel(String(v))}
                   </span>
@@ -351,27 +345,27 @@ export default function LeaseDetailPage() {
               {
                 key: "paymentAmount",
                 header: "Payment",
-                render: (v) => fmt(Number(v)),
+                render: (v: any) => fmt(Number(v)),
               },
               {
                 key: "interestExpense",
                 header: "Interest",
-                render: (v) => (v != null ? fmt(Number(v)) : "—"),
+                render: (v: any) => (v != null ? fmt(Number(v)) : "—"),
               },
               {
                 key: "principalRepayment",
                 header: "Principal",
-                render: (v) => (v != null ? fmt(Number(v)) : "—"),
+                render: (v: any) => (v != null ? fmt(Number(v)) : "—"),
               },
               {
                 key: "rouAmortization",
                 header: "ROU Amort.",
-                render: (v) => (v != null ? fmt(Number(v)) : "—"),
+                render: (v: any) => (v != null ? fmt(Number(v)) : "—"),
               },
               {
                 key: "journalPosted",
                 header: "GL Status",
-                render: (v) =>
+                render: (v: any) =>
                   v ? (
                     <span className="flex items-center gap-1 text-green-600 text-xs">
                       <CheckCircle size={12} /> Posted

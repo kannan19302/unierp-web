@@ -125,44 +125,58 @@ export default function ForecastAccuracyPage() {
 
       <Card title="Period-over-Period Accuracy">
         <div className="ui-table-wrapper">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Period</th>
-                <th>Forecasted</th>
-                <th>Actual</th>
-                <th>Accuracy</th>
-                <th>Variance</th>
-                <th>Trend</th>
-              </tr>
-            </thead>
-            <tbody>
-              {accuracy.map((a: any) => (
-                <tr key={a.period}>
-                  <td>{a.period}</td>
-                  <td>${(a.forecastedAmount || 0).toLocaleString()}</td>
-                  <td>${(a.actualAmount || 0).toLocaleString()}</td>
-                  <td>
-                    <Badge
-                      variant={
-                        a.accuracyPct >= 80
-                          ? "success"
-                          : a.accuracyPct >= 50
-                            ? "warning"
-                            : "danger"
-                      }
-                    >
-                      {a.accuracyPct}%
-                    </Badge>
-                  </td>
-                  <td
+          <DataTable
+            columns={[
+              {
+                key: "period",
+                header: "Period",
+                render: (a: any) => <>{a.period}</>
+              },
+              {
+                key: "forecasted",
+                header: "Forecasted",
+                render: (a: any) => <>${(a.forecastedAmount || 0).toLocaleString()}</>
+              },
+              {
+                key: "actual",
+                header: "Actual",
+                render: (a: any) => <>${(a.actualAmount || 0).toLocaleString()}</>
+              },
+              {
+                key: "accuracy",
+                header: "Accuracy",
+                render: (a: any) => (
+                  <Badge
+                    variant={
+                      a.accuracyPct >= 80
+                        ? "success"
+                        : a.accuracyPct >= 50
+                          ? "warning"
+                          : "danger"
+                    }
+                  >
+                    {a.accuracyPct}%
+                  </Badge>
+                )
+              },
+              {
+                key: "variance",
+                header: "Variance",
+                render: (a: any) => (
+                  <div
                     className={
                       a.variance >= 0 ? "ui-text-success" : "ui-text-error"
                     }
                   >
                     ${(a.variance || 0).toLocaleString()}
-                  </td>
-                  <td>
+                  </div>
+                )
+              },
+              {
+                key: "trend",
+                header: "Trend",
+                render: (a: any) => (
+                  <>
                     {a.accuracyPct >= 80 ? (
                       <TrendingUp size={16} className="ui-text-success" />
                     ) : a.accuracyPct >= 50 ? (
@@ -170,11 +184,13 @@ export default function ForecastAccuracyPage() {
                     ) : (
                       <TrendingDown size={16} className="ui-text-error" />
                     )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+                  </>
+                )
+              }
+            ]}
+            data={accuracy}
+            rowKey={(a: any) => a.period}
+          />
         </div>
       </Card>
     </div>

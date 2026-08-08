@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast } from "@unerp/ui";
 import { Calendar, Plus, AlertTriangle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 interface PMRule {
@@ -82,19 +70,19 @@ export default function PreventiveMaintenancePage() {
     {
       key: "name",
       header: "Maintenance Plan",
-      render: (row) => <span className="ui-heading-sm">{row.name}</span>,
+      render: (row: any) => <span className="ui-heading-sm">{row.name}</span>,
     },
     {
       key: "interval",
       header: "Interval",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="info">Every {row.intervalDays} Days</Badge>
       ),
     },
     {
       key: "lastRun",
       header: "Last Run",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.lastRun ? new Date(row.lastRun).toLocaleDateString() : "—"}
         </span>
@@ -103,7 +91,7 @@ export default function PreventiveMaintenancePage() {
     {
       key: "nextRun",
       header: "Next Scheduled",
-      render: (row) => (
+      render: (row: any) => (
         <span className={styles.s1}>
           {row.nextRun ? new Date(row.nextRun).toLocaleDateString() : "—"}
         </span>
@@ -149,7 +137,7 @@ export default function PreventiveMaintenancePage() {
           <DataTable
             columns={columns}
             data={rules}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No maintenance rules"
             emptyMessage="Create recurring maintenance schedules."
             emptyIcon={<Calendar size={48} />}

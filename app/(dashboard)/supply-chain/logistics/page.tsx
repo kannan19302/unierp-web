@@ -1,18 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Badge,
-  StatusBadge,
-  Tabs,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Badge, StatusBadge, Tabs, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, Truck, Search } from "lucide-react";
 import Link from "next/link";
@@ -117,12 +105,12 @@ export default function LogisticsPage() {
     {
       key: "buildNumber",
       header: "Load #",
-      render: (r) => <span className="ui-link">{r.buildNumber}</span>,
+      render: (r: any) => <span className="ui-link">{r.buildNumber}</span>,
     },
     {
       key: "loadType",
       header: "Type",
-      render: (r) => <Badge>{r.loadType}</Badge>,
+      render: (r: any) => <Badge>{r.loadType}</Badge>,
     },
     { key: "carrierName", header: "Carrier" },
     { key: "originName", header: "Origin" },
@@ -130,14 +118,14 @@ export default function LogisticsPage() {
     {
       key: "estimatedCost",
       header: "Est. Cost",
-      render: (r) =>
+      render: (r: any) =>
         r.estimatedCost ? `$${Number(r.estimatedCost).toLocaleString()}` : "—",
     },
     { key: "bolNumber", header: "BOL" },
     {
       key: "scheduledPickup",
       header: "Pickup",
-      render: (r) =>
+      render: (r: any) =>
         r.scheduledPickup
           ? new Date(r.scheduledPickup).toLocaleDateString()
           : "—",
@@ -145,7 +133,7 @@ export default function LogisticsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
   ];
 
@@ -154,19 +142,19 @@ export default function LogisticsPage() {
     {
       key: "appointmentType",
       header: "Type",
-      render: (r) => <Badge>{r.appointmentType}</Badge>,
+      render: (r: any) => <Badge>{r.appointmentType}</Badge>,
     },
     { key: "carrierName", header: "Carrier" },
     { key: "dockDoor", header: "Door" },
     {
       key: "scheduledStart",
       header: "Start",
-      render: (r) => new Date(r.scheduledStart).toLocaleString(),
+      render: (r: any) => new Date(r.scheduledStart).toLocaleString(),
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
   ];
 
@@ -207,7 +195,7 @@ export default function LogisticsPage() {
           <DataTable
             columns={loadColumns}
             data={loads}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No load builds"
             emptyIcon={<Truck size={48} />}
           />
@@ -216,7 +204,7 @@ export default function LogisticsPage() {
           <DataTable
             columns={apptColumns}
             data={appts}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No appointments"
           />
         )}
@@ -233,7 +221,7 @@ export default function LogisticsPage() {
               },
             ]}
             data={pods}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No delivery confirmations"
           />
         )}

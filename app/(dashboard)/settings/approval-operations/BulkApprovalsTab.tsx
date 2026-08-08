@@ -173,23 +173,23 @@ export default function BulkApprovalsTab() {
             {
               key: "entityType",
               header: "Type",
-              render: (v) => <span className={styles.s5}>{String(v)}</span>,
+              render: (v: any) => <span className={styles.s5}>{String(v)}</span>,
             },
             {
               key: "entityId",
               header: "ID",
-              render: (v) => <span className="font-semibold">{String(v)}</span>,
+              render: (v: any) => <span className="font-semibold">{String(v)}</span>,
             },
             { key: "description", header: "Description" },
             {
               key: "requestedBy",
               header: "Requested By",
-              render: (v) => <span className="ui-text-muted">{String(v)}</span>,
+              render: (v: any) => <span className="ui-text-muted">{String(v)}</span>,
             },
             {
               key: "amount",
               header: "Amount",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-bold">
                   {Number(v) > 0 ? `$${Number(v).toLocaleString()}` : "—"}
                 </span>
@@ -198,7 +198,7 @@ export default function BulkApprovalsTab() {
             {
               key: "priority",
               header: "Priority",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   style={{ color: priorityColor(String(v)) }}
                   className={styles.s6}
@@ -210,7 +210,7 @@ export default function BulkApprovalsTab() {
             {
               key: "slaDeadline",
               header: "SLA",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   style={{
                     color:

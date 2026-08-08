@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Users, TrendingDown, Clock, Star } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -162,34 +162,17 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
             No snapshots. Click Generate to capture current state.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Period</th>
-                <th style={{ padding: "12px" }}>Headcount</th>
-                <th style={{ padding: "12px" }}>Attrition</th>
-                <th style={{ padding: "12px" }}>Tenure</th>
-                <th style={{ padding: "12px" }}>Engagement</th>
-              </tr>
-            </thead>
-            <tbody>
-              {snapshots.map((s) => (
-                <tr key={s.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {s.reportingPeriod}
-                  </td>
-                  <td style={{ padding: "12px" }}>{s.headcount}</td>
-                  <td style={{ padding: "12px", color: "var(--chart-4)" }}>
-                    {s.attritionRate}%
-                  </td>
-                  <td style={{ padding: "12px" }}>{s.avgTenureYears} yrs</td>
-                  <td style={{ padding: "12px" }}>{s.engagementScore}/100</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Period" , render: (s: any) => (<>{s.reportingPeriod}</>) },
+                        { key: "col_1", header: "Headcount" , render: (s: any) => (<>{s.headcount}</>) },
+                        { key: "col_2", header: "Attrition" , render: (s: any) => (<>{s.attritionRate}%
+                                        </>) },
+                        { key: "col_3", header: "Tenure" , render: (s: any) => (<>{s.avgTenureYears}yrs</>) },
+                        { key: "col_4", header: "Engagement" , render: (s: any) => (<>{s.engagementScore}/100</>) },
+                      ];
+                              return <DataTable columns={columns} data={snapshots} rowKey={(s: any) => s.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

@@ -206,7 +206,7 @@ function ProfilesTab() {
             {
               key: "method",
               header: "Method",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="px-2 py-0.5 bg-purple-50 text-purple-700 rounded text-xs">
                   {String(v)}
                 </span>
@@ -215,7 +215,7 @@ function ProfilesTab() {
             {
               key: "standardCost",
               header: "Std Cost",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             { key: "currency", header: "Currency" },
           ] as ListColumn[]
@@ -320,12 +320,12 @@ function CostLayersTab() {
             {
               key: "receiptDate",
               header: "Receipt Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
             {
               key: "receiptRef",
               header: "Ref",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             { key: "unitCost", header: "Unit Cost" },
             { key: "qtyReceived", header: "Rcvd Qty" },
@@ -333,7 +333,7 @@ function CostLayersTab() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs">
                   {String(v)}
                 </span>
@@ -561,7 +561,7 @@ function AdjustmentsTab() {
             {
               key: "adjustmentNumber",
               header: "Adj #",
-              render: (v) => <span className="font-mono">{String(v)}</span>,
+              render: (v: any) => <span className="font-mono">{String(v)}</span>,
             },
             { key: "adjustmentType", header: "Type" },
             { key: "amount", header: "Amount" },
@@ -569,7 +569,7 @@ function AdjustmentsTab() {
             {
               key: "adjustedAt",
               header: "Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
           ] as ListColumn[]
         }
@@ -617,7 +617,7 @@ function ValuationTab() {
             {
               key: "method",
               header: "Method",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="px-2 py-0.5 bg-purple-50 text-purple-700 rounded text-xs">
                   {String(v)}
                 </span>
@@ -626,12 +626,12 @@ function ValuationTab() {
             {
               key: "totalQty",
               header: "Total Qty",
-              render: (v) => Number(v).toFixed(2),
+              render: (v: any) => Number(v).toFixed(2),
             },
             {
               key: "totalValue",
               header: "Total Value",
-              render: (v) => <strong>{Number(v).toFixed(2)}</strong>,
+              render: (v: any) => <strong>{Number(v).toFixed(2)}</strong>,
             },
             {
               key: "totalQty",

@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { Plus, Eye, Star } from "lucide-react";
 
 interface Template {
@@ -45,23 +38,23 @@ export default function TemplatesPage() {
     {
       key: "category",
       header: "Category",
-      render: (r) => <Badge variant="info">{r.category}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.category}</Badge>,
     },
     {
       key: "isBuiltIn",
       header: "Built-in",
-      render: (r) =>
+      render: (r: any) =>
         r.isBuiltIn ? <Star size={14} className="text-yellow-500" /> : "-",
     },
     {
       key: "description",
       header: "Description",
-      render: (r) => r.description?.slice(0, 60) || "-",
+      render: (r: any) => r.description?.slice(0, 60) || "-",
     },
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <button
           onClick={(e) => {
             e.stopPropagation();

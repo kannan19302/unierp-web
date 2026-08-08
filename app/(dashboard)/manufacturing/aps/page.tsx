@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import {
   CalendarClock,
@@ -93,7 +84,7 @@ export default function ApsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "COMPLETED" ? "success" : "default"}>
           {r.status}
         </Badge>
@@ -102,7 +93,7 @@ export default function ApsPage() {
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -156,7 +147,7 @@ export default function ApsPage() {
             <DataTable
               columns={scheduleColumns}
               data={dashboard.recentSchedules}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
             />
           </Card>
         )}

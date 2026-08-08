@@ -1,19 +1,7 @@
 "use client";
 import styles from "./ApiKeysTab.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Spinner,
-  ConfirmDialog,
-} from "@unerp/ui";
+import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Spinner, ConfirmDialog } from "@unerp/ui";
 import { Key, Plus, Trash2, Copy, CheckCircle } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -94,7 +82,7 @@ export default function ApiKeysTab() {
     {
       key: "name",
       header: "API Key",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <Key size={16} />
@@ -127,7 +115,7 @@ export default function ApiKeysTab() {
     {
       key: "scopes",
       header: "Scopes",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s3}>
           {row.scopes.slice(0, 2).map((s) => (
             <Badge key={s} variant="info">
@@ -143,12 +131,12 @@ export default function ApiKeysTab() {
     {
       key: "rateLimit",
       header: "Rate Limit",
-      render: (row) => <span className="text-sm">{row.rateLimit}/min</span>,
+      render: (row: any) => <span className="text-sm">{row.rateLimit}/min</span>,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "ACTIVE" ? "success" : "danger"}>
           {row.status}
         </Badge>
@@ -157,7 +145,7 @@ export default function ApiKeysTab() {
     {
       key: "createdAt",
       header: "Created",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-tertiary">
           {new Date(row.createdAt).toLocaleDateString()}
         </span>
@@ -168,7 +156,7 @@ export default function ApiKeysTab() {
       header: "",
       align: "right" as const,
       width: "60px",
-      render: (row) => (
+      render: (row: any) => (
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -196,7 +184,7 @@ export default function ApiKeysTab() {
           columns={columns}
           data={keys}
           loading={loading}
-          rowKey={(row) => row.id}
+          rowKey={(row: any) => row.id}
           emptyTitle="No API keys"
           emptyMessage="Create your first API key to enable external integrations."
           emptyIcon={<Key size={48} />}

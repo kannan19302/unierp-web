@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -25,40 +25,17 @@ export default function TierRequirementsPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Tier Requirements</h1>
-      <Table className="w-full text-sm">
-        <thead>
-          <tr className="border-b text-left">
-            <th className="py-2 px-2">Tier</th>
-            <th className="py-2 px-2">Metric</th>
-            <th className="py-2 px-2">Min</th>
-            <th className="py-2 px-2">Max</th>
-            <th className="py-2 px-2">Unit</th>
-            <th className="py-2 px-2">Weight</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requirements.map((r: any) => (
-            <tr key={r.id} className="border-b hover:bg-muted/50">
-              <td className="py-2 px-2">{r.tier?.name || r.tierId}</td>
-              <td className="py-2 px-2">{r.metric}</td>
-              <td className="py-2 px-2">{r.minValue}</td>
-              <td className="py-2 px-2">{r.maxValue ?? "—"}</td>
-              <td className="py-2 px-2">{r.unit}</td>
-              <td className="py-2 px-2">{r.weight}</td>
-            </tr>
-          ))}
-          {requirements.length === 0 && (
-            <tr>
-              <td
-                colSpan={6}
-                className="py-4 text-center text-muted-foreground"
-              >
-                No requirements defined
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+      <>{(() => {
+                    const columns = [
+            { key: "col_0", header: "Tier", render: (r: any) => (<>{r.tier?.name || r.tierId}</>) },
+            { key: "col_1", header: "Metric", render: (r: any) => (<>{r.metric}</>) },
+            { key: "col_2", header: "Min", render: (r: any) => (<>{r.minValue}</>) },
+            { key: "col_3", header: "Max", render: (r: any) => (<>{r.maxValue ?? "—"}</>) },
+            { key: "col_4", header: "Unit", render: (r: any) => (<>{r.unit}</>) },
+            { key: "col_5", header: "Weight", render: (r: any) => (<>{r.weight}</>) },
+          ];
+                    return <DataTable columns={columns} data={requirements} rowKey={(r: any) => r.id} />;
+                  })()}</>
     </div>
   );
 }

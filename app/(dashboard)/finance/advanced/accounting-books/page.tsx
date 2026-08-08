@@ -13,13 +13,7 @@ import {
   HelpCircle,
   AlertCircle,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface AccountingBook {
@@ -621,7 +615,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "code",
                           header: "Code",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span className={styles.s45}>{String(v)}</span>
                           ),
                         },
@@ -629,14 +623,14 @@ export default function AccountingBooksPage() {
                         {
                           key: "type",
                           header: "Type",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span className={styles.s46}>{String(v)}</span>
                           ),
                         },
                         {
                           key: "debit",
                           header: "Debit",
-                          render: (v) =>
+                          render: (v: any) =>
                             Number(v).toLocaleString(undefined, {
                               minimumFractionDigits: 2,
                             }),
@@ -644,7 +638,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "credit",
                           header: "Credit",
-                          render: (v) =>
+                          render: (v: any) =>
                             Number(v).toLocaleString(undefined, {
                               minimumFractionDigits: 2,
                             }),
@@ -652,7 +646,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "balance",
                           header: "Balance",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span
                               className={`${styles.balance} ${Number(v) >= 0 ? styles.balancePositive : styles.balanceNegative}`}
                             >
@@ -716,7 +710,7 @@ export default function AccountingBooksPage() {
                       {
                         key: "code",
                         header: "Code",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s52}>{String(v)}</span>
                         ),
                       },
@@ -724,7 +718,7 @@ export default function AccountingBooksPage() {
                       {
                         key: "book1Balance",
                         header: variance.book1.name,
-                        render: (v) =>
+                        render: (v: any) =>
                           Number(v).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                           }),
@@ -732,7 +726,7 @@ export default function AccountingBooksPage() {
                       {
                         key: "book2Balance",
                         header: variance.book2.name,
-                        render: (v) =>
+                        render: (v: any) =>
                           Number(v).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                           }),
@@ -740,7 +734,7 @@ export default function AccountingBooksPage() {
                       {
                         key: "variance",
                         header: "Variance",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`${styles.variance} ${Number(v) > 0 ? styles.variancePositive : styles.varianceNegative}`}
                           >
@@ -789,7 +783,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "sourceBook",
                           header: "Source Book",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span>
                               <strong>{(v as any)?.name}</strong>{" "}
                               <span className={styles.s56}>
@@ -801,7 +795,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "destinationBook",
                           header: "Destination Book",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span>
                               <strong>{(v as any)?.name}</strong>{" "}
                               <span className={styles.s57}>
@@ -813,7 +807,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "ruleType",
                           header: "Rule Type",
-                          render: (v) => (
+                          render: (v: any) => (
                             <Badge variant="info" size="sm">
                               {String(v)}
                             </Badge>
@@ -822,7 +816,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "sourceAccount",
                           header: "Source Account",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span className={styles.s58}>
                               {(v as any)
                                 ? `${(v as any).code} - ${(v as any).name}`
@@ -846,14 +840,14 @@ export default function AccountingBooksPage() {
                         {
                           key: "multiplier",
                           header: "Multiplier",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span className="font-mono">{Number(v)}x</span>
                           ),
                         },
                         {
                           key: "id",
                           header: "Actions",
-                          render: (v) => (
+                          render: (v: any) => (
                             <button
                               onClick={() => handleDeleteRule(String(v))}
                               className={styles.s60}

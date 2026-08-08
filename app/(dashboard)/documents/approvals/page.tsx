@@ -1,13 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Spinner,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Spinner, useToast } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 
@@ -53,13 +46,13 @@ export default function ApprovalsPage() {
     {
       key: "document",
       header: "Document",
-      render: (r) => r.document?.name || "—",
+      render: (r: any) => r.document?.name || "—",
     },
-    { key: "approverId", header: "Approver", render: (r) => r.approverId },
+    { key: "approverId", header: "Approver", render: (r: any) => r.approverId },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <span className="ui-hstack-2">
           {statusIcon(r.status)} {r.status}
         </span>
@@ -68,13 +61,13 @@ export default function ApprovalsPage() {
     {
       key: "comment",
       header: "Comment",
-      render: (r) => r.comment || <span className="ui-text-muted">—</span>,
+      render: (r: any) => r.comment || <span className="ui-text-muted">—</span>,
     },
     {
       key: "createdAt",
       header: "Requested",
       sortable: true,
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 

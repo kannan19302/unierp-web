@@ -504,19 +504,19 @@ export default function EsgAccountingPage() {
                       {
                         key: "scope",
                         header: "Scope",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">Scope {String(v)}</span>
                         ),
                       },
                       {
                         key: "category",
                         header: "Category",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "tons",
                         header: "tCO2e",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">
                             {fmtNum(Number(v))}
                           </span>
@@ -525,12 +525,12 @@ export default function EsgAccountingPage() {
                       {
                         key: "period",
                         header: "Period",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "verified",
                         header: "Verified",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <span className="text-green-600 font-medium">
                               Yes
@@ -563,24 +563,24 @@ export default function EsgAccountingPage() {
                       {
                         key: "projectName",
                         header: "Project",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "credits",
                         header: "Credits",
-                        render: (v) => fmtNum(Number(v)),
+                        render: (v: any) => fmtNum(Number(v)),
                       },
                       {
                         key: "vintage",
                         header: "Vintage",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "retired",
                         header: "Retired",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <span className="text-green-600 font-medium">
                               Yes
@@ -794,20 +794,20 @@ export default function EsgAccountingPage() {
                       {
                         key: "kpiName",
                         header: "KPI",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
-                      { key: "unit", header: "Unit", render: (v) => String(v) },
+                      { key: "unit", header: "Unit", render: (v: any) => String(v) },
                       {
                         key: "targetValue",
                         header: "Target",
-                        render: (v) => fmtNum(Number(v)),
+                        render: (v: any) => fmtNum(Number(v)),
                       },
                       {
                         key: "category",
                         header: "Category",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-green-100 text-green-700">
                             {String(v)}
                           </span>
@@ -837,14 +837,14 @@ export default function EsgAccountingPage() {
                       {
                         key: "kpiName",
                         header: "KPI",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "value",
                         header: "Value",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">
                             {fmtNum(Number(v))}
                           </span>
@@ -853,7 +853,7 @@ export default function EsgAccountingPage() {
                       {
                         key: "period",
                         header: "Period",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                     ] as ListColumn[]
                   }
@@ -962,14 +962,14 @@ export default function EsgAccountingPage() {
                       {
                         key: "templateName",
                         header: "Template",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "framework",
                         header: "Framework",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs px-2 py-0.5 bg-gray-100 rounded-full">
                             {String(v)}
                           </span>
@@ -978,13 +978,13 @@ export default function EsgAccountingPage() {
                       {
                         key: "lastGenerated",
                         header: "Last Generated",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? new Date(String(v)).toLocaleDateString() : "—",
                       },
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v) => (
+                        render: (v: any) => (
                           <button
                             onClick={() => handleGenerateReport(String(v))}
                             className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded hover:bg-blue-100"
@@ -1017,24 +1017,24 @@ export default function EsgAccountingPage() {
                       {
                         key: "standard",
                         header: "Standard",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "requirement",
                         header: "Requirement",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "mappedKpi",
                         header: "Mapped KPI",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "MAPPED" ? "ui-badge-green" : "ui-badge-yellow"}`}
                           >
@@ -1170,29 +1170,29 @@ export default function EsgAccountingPage() {
                       {
                         key: "targetName",
                         header: "Target",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "targetYear",
                         header: "Year",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "baselineValue",
                         header: "Baseline",
-                        render: (v) => fmtNum(Number(v)),
+                        render: (v: any) => fmtNum(Number(v)),
                       },
                       {
                         key: "targetValue",
                         header: "Target",
-                        render: (v) => fmtNum(Number(v)),
+                        render: (v: any) => fmtNum(Number(v)),
                       },
                       {
                         key: "category",
                         header: "Category",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs px-2 py-0.5 bg-gray-100 rounded-full">
                             {String(v)}
                           </span>
@@ -1201,7 +1201,7 @@ export default function EsgAccountingPage() {
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "ACTIVE" ? "ui-badge-green" : v === "ACHIEVED" ? "ui-badge-blue" : "ui-badge-gray"}`}
                           >

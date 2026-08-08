@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  useToast,
-  Button,
-  Input,
-  ListPageTemplate,
-  type ListColumn, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Input, ListPageTemplate, type ListColumn, Table, DataTable } from "@unerp/ui";
 import {
   TrendingUp,
   TrendingDown,
@@ -378,12 +370,12 @@ export default function ForecastingPage() {
                   {
                     key: "pipelineAmount",
                     header: "Pipeline Amount",
-                    render: (v) => fmtCurrency(Number(v)),
+                    render: (v: any) => fmtCurrency(Number(v)),
                   },
                   {
                     key: "weightedAmount",
                     header: "Weighted Forecast",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">
                         {fmtCurrency(Number(v))}
                       </span>
@@ -406,79 +398,19 @@ export default function ForecastingPage() {
           <h3 className={`${styles.sectionTitle} ${styles.titleWithIcon}`}>
             <Award size={18} /> Rep Leaderboard
           </h3>
-          <Table className={styles.dataTable}>
-            <thead>
-              <tr className={styles.tableHeaderRow}>
-                {[
-                  {
-                    key: "name" as const,
-                    label: "Rep",
-                    align: "left" as const,
-                  },
-                  {
-                    key: "dealsWon" as const,
-                    label: "Deals Won",
-                    align: "right" as const,
-                  },
-                  {
-                    key: "revenue" as const,
-                    label: "Revenue",
-                    align: "right" as const,
-                  },
-                  {
-                    key: "avgDealSize" as const,
-                    label: "Avg Deal Size",
-                    align: "right" as const,
-                  },
-                  {
-                    key: "avgCycleTimeDays" as const,
-                    label: "Avg Cycle (days)",
-                    align: "right" as const,
-                  },
-                ].map((col) => (
-                  <th
-                    key={col.key}
-                    onClick={() => toggleSort(col.key)}
-                    className={`${styles.sortHeader} ${col.align === "right" ? styles.alignRight : styles.alignLeft}`}
-                  >
-                    {col.label} <SortIcon field={col.key} />
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sortedReps.map((rep, idx) => (
-                <tr
-                  key={rep.id}
-                  className={idx === 0 ? styles.leaderRow : styles.tableRow}
-                >
-                  <td className={`${styles.tableCell} ${styles.repName}`}>
-                    {idx === 0 && (
-                      <Award size={14} className="ui-text-warning" />
-                    )}
-                    {rep.name}
-                  </td>
-                  <td className={`${styles.tableCell} ${styles.alignRight}`}>
-                    {rep.dealsWon}
-                  </td>
-                  <td
-                    className={`${styles.tableCell} ${styles.alignRight} ${styles.emphasized}`}
-                  >
-                    {fmtCurrency(rep.revenue)}
-                  </td>
-                  <td className={`${styles.tableCell} ${styles.alignRight}`}>
-                    {fmtCurrency(rep.avgDealSize)}
-                  </td>
-                  <td
-                    className={`${styles.tableCell} ${styles.alignRight} ${styles.cycleCell}`}
-                  >
-                    <Clock size={12} className="ui-text-muted" />{" "}
-                    {rep.avgCycleTimeDays}d
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                          const columns = [
+                    { key: "col_0", header: "{col.label}<SortIcon field={col.key} />" , render: (rep: any) => (<>{idx === 0 && (
+                                        <Award size={14} className="ui-text-warning" />
+                                      )}{rep.name}</>) },
+                    { key: "col_1", header: "Col 1" , render: (rep: any) => (<>{rep.dealsWon}</>) },
+                    { key: "col_2", header: "Col 2" , render: (rep: any) => (<>{fmtCurrency(rep.revenue)}</>) },
+                    { key: "col_3", header: "Col 3" , render: (rep: any) => (<>{fmtCurrency(rep.avgDealSize)}</>) },
+                    { key: "col_4", header: "Col 4" , render: (rep: any) => (<><Clock size={12} className="ui-text-muted" />{" "}{rep.avgCycleTimeDays}d
+                                    </>) },
+                  ];
+                          return <DataTable columns={columns} data={sortedReps} rowKey={(rep: any) => rep.id} />;
+                      })()}</>
         </div>
       </Card>
 
@@ -493,91 +425,47 @@ export default function ForecastingPage() {
               No forecast snapshots created yet.
             </div>
           ) : (
-            <Table className={styles.dataTable}>
-              <thead>
-                <tr className={styles.tableHeaderRow}>
-                  <th className={`${styles.tableHeader} ${styles.alignLeft}`}>
-                    Snapshot Name
-                  </th>
-                  <th className={`${styles.tableHeader} ${styles.alignRight}`}>
-                    Quota
-                  </th>
-                  <th className={`${styles.tableHeader} ${styles.alignRight}`}>
-                    Pipeline
-                  </th>
-                  <th className={`${styles.tableHeader} ${styles.alignRight}`}>
-                    Won
-                  </th>
-                  <th className={`${styles.tableHeader} ${styles.alignRight}`}>
-                    Override Forecast
-                  </th>
-                  <th className={`${styles.tableHeader} ${styles.alignCenter}`}>
-                    Status
-                  </th>
-                  <th className={`${styles.tableHeader} ${styles.alignCenter}`}>
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {snapshots.map((snap) => (
-                  <tr key={snap.id} className="border-b">
-                    <td
-                      className={`${styles.tableCell} ${styles.snapshotName}`}
-                    >
-                      {snap.name}
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.alignRight}`}>
-                      {fmtCurrency(Number(snap.quotaAmount))}
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.alignRight}`}>
-                      {fmtCurrency(Number(snap.pipelineAmount))}
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.alignRight}`}>
-                      {fmtCurrency(Number(snap.wonAmount))}
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.alignRight}`}>
-                      {snap.status === "FROZEN" ? (
-                        <span>{fmtCurrency(Number(snap.forecastAmount))}</span>
-                      ) : (
-                        <div className="ui-flex-end ui-gap-2">
-                          <Input
-                            type="number"
-                            defaultValue={snap.forecastAmount}
-                            onBlur={(e) =>
-                              handleAdjustForecast(
-                                snap.id,
-                                parseFloat(e.target.value),
-                              )
-                            }
-                            className={styles.forecastInput}
-                          />
-                        </div>
-                      )}
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.alignCenter}`}>
-                      <Badge
-                        variant={
-                          snap.status === "FROZEN" ? "default" : "success"
-                        }
-                      >
-                        {snap.status}
-                      </Badge>
-                    </td>
-                    <td className={`${styles.tableCell} ${styles.alignCenter}`}>
-                      {snap.status !== "FROZEN" && (
-                        <Button
-                          size="sm"
-                          onClick={() => handleFreezeSnapshot(snap.id)}
-                        >
-                          Freeze
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Snapshot Name" , render: (snap: any) => (<>{snap.name}</>) },
+                            { key: "col_1", header: "Quota" , render: (snap: any) => (<>{fmtCurrency(Number(snap.quotaAmount))}</>) },
+                            { key: "col_2", header: "Pipeline" , render: (snap: any) => (<>{fmtCurrency(Number(snap.pipelineAmount))}</>) },
+                            { key: "col_3", header: "Won" , render: (snap: any) => (<>{fmtCurrency(Number(snap.wonAmount))}</>) },
+                            { key: "col_4", header: "Override Forecast" , render: (snap: any) => (<>{snap.status === "FROZEN" ? (
+                                                  <span>{fmtCurrency(Number(snap.forecastAmount))}</span>
+                                                ) : (
+                                                  <div className="ui-flex-end ui-gap-2">
+                                                    <Input
+                                                      type="number"
+                                                      defaultValue={snap.forecastAmount}
+                                                      onBlur={(e) =>
+                                                        handleAdjustForecast(
+                                                          snap.id,
+                                                          parseFloat(e.target.value),
+                                                        )
+                                                      }
+                                                      className={styles.forecastInput}
+                                                    />
+                                                  </div>
+                                                )}</>) },
+                            { key: "col_5", header: "Status" , render: (snap: any) => (<><Badge
+                                                  variant={
+                                                    snap.status === "FROZEN" ? "default" : "success"
+                                                  }
+                                                >
+                                                  {snap.status}
+                                                </Badge></>) },
+                            { key: "col_6", header: "Actions" , render: (snap: any) => (<>{snap.status !== "FROZEN" && (
+                                                  <Button
+                                                    size="sm"
+                                                    onClick={() => handleFreezeSnapshot(snap.id)}
+                                                  >
+                                                    Freeze
+                                                  </Button>
+                                                )}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={snapshots} rowKey={(snap: any) => snap.id} />;
+                              })()}</>
           )}
         </div>
       </Card>
@@ -645,7 +533,7 @@ export default function ForecastingPage() {
                     {
                       key: "amount",
                       header: "Amount",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-semibold">
                           {fmtCurrency(Number(v))}
                         </span>

@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  KPICard,
-  Sparkline,
-  MiniDonutChart,
-  Badge,
-  Spinner,
-  DataTable,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, KPICard, Sparkline, MiniDonutChart, Badge, Spinner, DataTable, Button, type Column } from "@unerp/ui";
 import {
   Users,
   Shield,
@@ -330,7 +320,7 @@ export default function AdminDashboardPage() {
     {
       key: "action",
       header: "Event",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div
             className={styles.s1}
@@ -351,12 +341,12 @@ export default function AdminDashboardPage() {
     {
       key: "user",
       header: "User",
-      render: (row) => <span className="ui-text-sm-muted">{row.user}</span>,
+      render: (row: any) => <span className="ui-text-sm-muted">{row.user}</span>,
     },
     {
       key: "severity",
       header: "Severity",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.severity === "critical"
@@ -374,7 +364,7 @@ export default function AdminDashboardPage() {
       key: "timestamp",
       header: "Time",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-tertiary">{timeAgo(row.timestamp)}</span>
       ),
     },
@@ -449,7 +439,7 @@ export default function AdminDashboardPage() {
                 <DataTable
                   columns={auditColumns}
                   data={events}
-                  rowKey={(row) => row.id}
+                  rowKey={(row: any) => row.id}
                   onRowClick={() => {}}
                 />
               </Card>

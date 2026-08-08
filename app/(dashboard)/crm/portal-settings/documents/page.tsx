@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
 import { FileText, Download, Trash2, Plus, Search } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -165,54 +165,31 @@ export default function PortalDocumentsPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Size</th>
-                  <th>Customer</th>
-                  <th>Shared</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {docs.map((d) => (
-                  <tr key={d.id}>
-                    <td>
-                      <FileText size={14} /> {d.name}
-                    </td>
-                    <td>
-                      <Badge>{d.fileType}</Badge>
-                    </td>
-                    <td className="ui-text-xs">
-                      {(d.fileSize / 1024).toFixed(1)} KB
-                    </td>
-                    <td className="ui-text-xs">
-                      {d.customerId.substring(0, 8)}
-                    </td>
-                    <td>{d.isShared ? "Yes" : "No"}</td>
-                    <td>
-                      <div className="ui-flex ui-gap-1">
-                        <a
-                          href={d.fileUrl}
-                          target="_blank"
-                          className="ui-btn-icon"
-                        >
-                          <Download size={14} />
-                        </a>
-                        <button
-                          className="ui-btn-icon"
-                          onClick={() => deleteDoc(d.id)}
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Name", render: (d: any) => (<><FileText size={14} /> {d.name}</>) },
+                            { key: "col_1", header: "Type", render: (d: any) => (<><Badge>{d.fileType}</Badge></>) },
+                            { key: "col_2", header: "Size", render: (d: any) => (<>{(d.fileSize / 1024).toFixed(1)} KB</>) },
+                            { key: "col_3", header: "Customer", render: (d: any) => (<>{d.customerId.substring(0, 8)}</>) },
+                            { key: "col_4", header: "Shared", render: (d: any) => (<>{d.isShared ? "Yes" : "No"}</>) },
+                            { key: "col_5", header: "Actions", render: (d: any) => (<><div className="ui-flex ui-gap-1">
+                                                  <a
+                                                    href={d.fileUrl}
+                                                    target="_blank"
+                                                    className="ui-btn-icon"
+                                                  >
+                                                    <Download size={14} />
+                                                  </a>
+                                                  <button
+                                                    className="ui-btn-icon"
+                                                    onClick={() => deleteDoc(d.id)}
+                                                  >
+                                                    <Trash2 size={14} />
+                                                  </button>
+                                                </div></>) },
+                          ];
+                                    return <DataTable columns={columns} data={docs} rowKey={(d: any) => d.id} />;
+                                  })()}</>
             {docs.length === 0 && (
               <p className="ui-p-3 ui-text-sm text-muted">No documents found</p>
             )}

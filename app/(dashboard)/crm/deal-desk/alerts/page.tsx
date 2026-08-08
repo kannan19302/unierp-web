@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  useToast,
-  Button,
-  Input, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Input, DataTable } from "@unerp/ui";
 import { AlertTriangle, Bell, CheckCircle } from "lucide-react";
 import { apiGet, apiPost } from "../../_components/api";
 
@@ -89,59 +83,38 @@ export default function DealAlertsPage() {
       {!loading && alerts.length > 0 && (
         <Card title={`Alerts for ${opportunityId}`}>
           <div className="ui-table-wrapper">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Type</th>
-                  <th>Severity</th>
-                  <th>Message</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {alerts.map((a: any) => (
-                  <tr key={a.id}>
-                    <td>
-                      <Badge variant="info">{a.alertType}</Badge>
-                    </td>
-                    <td>
-                      <Badge
-                        variant={
-                          a.severity === "CRITICAL"
-                            ? "danger"
-                            : a.severity === "WARNING"
-                              ? "warning"
-                              : "info"
-                        }
-                      >
-                        {a.severity}
-                      </Badge>
-                    </td>
-                    <td>{a.message}</td>
-                    <td>
-                      <Badge
-                        variant={a.status === "OPEN" ? "warning" : "success"}
-                      >
-                        {a.status}
-                      </Badge>
-                    </td>
-                    <td>{new Date(a.createdAt).toLocaleDateString()}</td>
-                    <td>
-                      {a.status === "OPEN" && (
-                        <Button
-                          variant="ghost"
-                          onClick={() => handleAcknowledge(a.id)}
-                        >
-                          <CheckCircle size={16} /> Acknowledge
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Type", render: (a: any) => (<><Badge variant="info">{a.alertType}</Badge></>) },
+                        { key: "col_1", header: "Severity", render: (a: any) => (<><Badge
+                                              variant={
+                                                a.severity === "CRITICAL"
+                                                  ? "danger"
+                                                  : a.severity === "WARNING"
+                                                    ? "warning"
+                                                    : "info"
+                                              }
+                                            >
+                                              {a.severity}
+                                            </Badge></>) },
+                        { key: "col_2", header: "Message", render: (a: any) => (<>{a.message}</>) },
+                        { key: "col_3", header: "Status", render: (a: any) => (<><Badge
+                                              variant={a.status === "OPEN" ? "warning" : "success"}
+                                            >
+                                              {a.status}
+                                            </Badge></>) },
+                        { key: "col_4", header: "Created", render: (a: any) => (<>{new Date(a.createdAt).toLocaleDateString()}</>) },
+                        { key: "col_5", header: "Actions", render: (a: any) => (<>{a.status === "OPEN" && (
+                                              <Button
+                                                variant="ghost"
+                                                onClick={() => handleAcknowledge(a.id)}
+                                              >
+                                                <CheckCircle size={16} /> Acknowledge
+                                              </Button>
+                                            )}</>) },
+                      ];
+                                return <DataTable columns={columns} data={alerts} rowKey={(a: any) => a.id} />;
+                              })()}</>
           </div>
         </Card>
       )}

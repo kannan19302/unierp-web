@@ -1,12 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  Input,
-  ProtectedComponent, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, Input, ProtectedComponent, DataTable } from "@unerp/ui";
 import { Plus, Search, Eye, Download, Share2, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { apiGet, apiSend } from "../../_components/api";
@@ -94,64 +88,42 @@ export default function ContentLibraryPage() {
         {items.length === 0 ? (
           <p className="text-sm text-gray-400">No content items yet.</p>
         ) : (
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="text-left border-b text-gray-500">
-                <th className="pb-2">Title</th>
-                <th className="pb-2">Type</th>
-                <th className="pb-2">Category</th>
-                <th className="pb-2">Status</th>
-                <th className="pb-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2">
-                    <Link
-                      href={`/crm/sales-enablement/content/${item.id}`}
-                      className="font-medium hover:underline"
-                    >
-                      {item.title}
-                    </Link>
-                  </td>
-                  <td className="py-2">
-                    <Badge variant="default">{item.type}</Badge>
-                  </td>
-                  <td className="py-2 text-gray-500">
-                    {item.category?.name ?? "—"}
-                  </td>
-                  <td className="py-2">
-                    <Badge
-                      variant={
-                        item.status === "PUBLISHED" ? "success" : "warning"
-                      }
-                    >
-                      {item.status}
-                    </Badge>
-                  </td>
-                  <td className="py-2">
-                    <div className="flex gap-1">
-                      <Link href={`/crm/sales-enablement/content/${item.id}`}>
-                        <Button variant="ghost" size="sm">
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                      </Link>
-                      <ProtectedComponent permission="crm.sales-enablement.content.delete">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => deleteItem(item.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </ProtectedComponent>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Title", render: (item: any) => (<><Link
+                                            href={`/crm/sales-enablement/content/${item.id}`}
+                                            className="font-medium hover:underline"
+                                          >
+                                            {item.title}
+                                          </Link></>) },
+                        { key: "col_1", header: "Type", render: (item: any) => (<><Badge variant="default">{item.type}</Badge></>) },
+                        { key: "col_2", header: "Category", render: (item: any) => (<>{item.category?.name ?? "—"}</>) },
+                        { key: "col_3", header: "Status", render: (item: any) => (<><Badge
+                                            variant={
+                                              item.status === "PUBLISHED" ? "success" : "warning"
+                                            }
+                                          >
+                                            {item.status}
+                                          </Badge></>) },
+                        { key: "col_4", header: "Actions", render: (item: any) => (<><div className="flex gap-1">
+                                            <Link href={`/crm/sales-enablement/content/${item.id}`}>
+                                              <Button variant="ghost" size="sm">
+                                                <Eye className="w-4 h-4" />
+                                              </Button>
+                                            </Link>
+                                            <ProtectedComponent permission="crm.sales-enablement.content.delete">
+                                              <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={() => deleteItem(item.id)}
+                                              >
+                                                <Trash2 className="w-4 h-4" />
+                                              </Button>
+                                            </ProtectedComponent>
+                                          </div></>) },
+                      ];
+                                return <DataTable columns={columns} data={items} rowKey={(item: any) => item.id} />;
+                              })()}</>
         )}
       </Card>
     </div>

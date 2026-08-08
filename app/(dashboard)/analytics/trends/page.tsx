@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { TrendingUp, Loader2 } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
-import { Card, Button, Table } from "@unerp/ui";
+import { Card, Button, Table, DataTable } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 
 interface TrendResult {
@@ -90,56 +90,18 @@ export default function TrendsPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <Table className="ui-table w-full">
-                <thead>
-                  <tr>
-                    <th>KPI</th>
-                    <th>Period</th>
-                    <th>Value</th>
-                    <th>Previous</th>
-                    <th>Change</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {trends.map((t) => (
-                    <tr key={t.id}>
-                      <td className="font-medium">{t.kpiName}</td>
-                      <td className="ui-text-xs-muted">
-                        {t.period}{" "}
-                        {new Date(t.periodStart).toLocaleDateString()} -{" "}
-                        {new Date(t.periodEnd).toLocaleDateString()}
-                      </td>
-                      <td className="font-mono">{t.value.toLocaleString()}</td>
-                      <td className="font-mono">
-                        {t.previousValue?.toLocaleString() ?? "-"}
-                      </td>
-                      <td
-                        className={
-                          t.changePercent !== null
-                            ? t.changePercent >= 0
-                              ? "text-green-600"
-                              : "text-red-600"
-                            : ""
-                        }
-                      >
-                        {t.changePercent !== null
-                          ? `${t.changePercent >= 0 ? "+" : ""}${t.changePercent.toFixed(1)}%`
-                          : "-"}
-                      </td>
-                    </tr>
-                  ))}
-                  {trends.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={5}
-                        className="text-center ui-text-muted py-4"
-                      >
-                        No trend data yet.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "KPI" , render: (t: any) => (<>{t.kpiName}</>) },
+                                { key: "col_1", header: "Period" , render: (t: any) => (<>{t.period}{" "}{new Date(t.periodStart).toLocaleDateString()}-{" "}{new Date(t.periodEnd).toLocaleDateString()}</>) },
+                                { key: "col_2", header: "Value" , render: (t: any) => (<>{t.value.toLocaleString()}</>) },
+                                { key: "col_3", header: "Previous" , render: (t: any) => (<>{t.previousValue?.toLocaleString() ?? "-"}</>) },
+                                { key: "col_4", header: "Change" , render: (t: any) => (<>{t.changePercent !== null
+                                                        ? `${t.changePercent >= 0 ? "+" : ""}${t.changePercent.toFixed(1)}%`
+                                                        : "-"}</>) },
+                              ];
+                                      return <DataTable columns={columns} data={trends} rowKey={(t: any) => t.id} />;
+                                  })()}</>
             </div>
           )}
         </Card>

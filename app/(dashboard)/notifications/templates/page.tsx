@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -238,63 +238,44 @@ export default function NotificationTemplatesPage() {
       {!loading && templates.length === 0 && (
         <div className="text-gray-500">No templates found.</div>
       )}
-      <Table className="ui-table w-full">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Subject</th>
-            <th>Channel</th>
-            <th>Event</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {templates.map((t) => (
-            <tr key={t.id}>
-              <td className="font-medium">{t.name}</td>
-              <td className="text-gray-500">{t.subject}</td>
-              <td>
-                <span className="badge">{t.channel}</span>
-              </td>
-              <td className="text-xs text-gray-400">{t.eventType ?? "-"}</td>
-              <td>
-                <span
-                  className={`badge ${t.isActive ? "badge-success" : "badge-secondary"}`}
-                >
-                  {t.isActive ? "Active" : "Inactive"}
-                </span>
-              </td>
-              <td>
-                <div className="flex gap-1">
-                  <button
-                    className="ui-btn ui-btn-ghost btn-sm"
-                    onClick={() => openEdit(t.id)}
-                  >
-                    <Edit className="w-4 h-4" />
-                  </button>
-                  <button
-                    className="ui-btn ui-btn-ghost btn-sm"
-                    onClick={() => {
-                      setEditingId(t.id);
-                      setRenderVars("");
-                      setRendered(null);
-                    }}
-                  >
-                    <Eye className="w-4 h-4" />
-                  </button>
-                  <button
-                    className="ui-btn ui-btn-ghost btn-sm"
-                    onClick={() => deleteTemplate(t.id)}
-                  >
-                    <Trash2 className="w-4 h-4 text-red-500" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <>{(() => {
+                  const columns = [
+            { key: "col_0", header: "Name" , render: (t: any) => (<>{t.name}</>) },
+            { key: "col_1", header: "Subject" , render: (t: any) => (<>{t.subject}</>) },
+            { key: "col_2", header: "Channel" , render: (t: any) => (<><span className="badge">{t.channel}</span></>) },
+            { key: "col_3", header: "Event" , render: (t: any) => (<>{t.eventType ?? "-"}</>) },
+            { key: "col_4", header: "Status" , render: (t: any) => (<><span
+                            className={`badge ${t.isActive ? "badge-success" : "badge-secondary"}`}
+                          >
+                            {t.isActive ? "Active" : "Inactive"}
+                          </span></>) },
+            { key: "col_5", header: "Actions" , render: (t: any) => (<><div className="flex gap-1">
+                            <button
+                              className="ui-btn ui-btn-ghost btn-sm"
+                              onClick={() => openEdit(t.id)}
+                            >
+                              <Edit className="w-4 h-4" />
+                            </button>
+                            <button
+                              className="ui-btn ui-btn-ghost btn-sm"
+                              onClick={() => {
+                                setEditingId(t.id);
+                                setRenderVars("");
+                                setRendered(null);
+                              }}
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                            <button
+                              className="ui-btn ui-btn-ghost btn-sm"
+                              onClick={() => deleteTemplate(t.id)}
+                            >
+                              <Trash2 className="w-4 h-4 text-red-500" />
+                            </button>
+                          </div></>) },
+          ];
+                  return <DataTable columns={columns} data={templates} rowKey={(t: any) => t.id} />;
+              })()}</>
       {editingId && !showEditor && (
         <div className="ui-card p-4 mt-4">
           <h3 className="font-semibold mb-2">Preview / Render Test</h3>

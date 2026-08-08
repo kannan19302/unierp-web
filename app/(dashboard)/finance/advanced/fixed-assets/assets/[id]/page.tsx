@@ -17,14 +17,7 @@ import {
   User,
   MapPin,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ChangeHistory,
-  ProtectedComponent,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, Button, ChangeHistory, ProtectedComponent, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface AssetDepreciation {
@@ -407,7 +400,7 @@ export default function FixedAssetDetail() {
                   {
                     key: "periodName",
                     header: "Period",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">
                         {String(v || "N/A")}
                       </span>
@@ -416,22 +409,22 @@ export default function FixedAssetDetail() {
                   {
                     key: "date",
                     header: "Date",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "amount",
                     header: "Depreciation Amount",
-                    render: (v) => `-$${Number(v).toFixed(2)}`,
+                    render: (v: any) => `-$${Number(v).toFixed(2)}`,
                   },
                   {
                     key: "accumulatedDepreciation",
                     header: "Accumulated Depreciation",
-                    render: (v) => `$${Number(v).toFixed(2)}`,
+                    render: (v: any) => `$${Number(v).toFixed(2)}`,
                   },
                   {
                     key: "bookValue",
                     header: "Net Book Value",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">
                         ${Number(v).toFixed(2)}
                       </span>
@@ -440,7 +433,7 @@ export default function FixedAssetDetail() {
                   {
                     key: "journalId",
                     header: "Journal Reference",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="ui-text-primary">
                         {String(v || "Manual Entry")}
                       </span>
@@ -449,7 +442,7 @@ export default function FixedAssetDetail() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">
                         {String(v)}
                       </span>
@@ -578,18 +571,18 @@ export default function FixedAssetDetail() {
                   {
                     key: "transferDate",
                     header: "Transfer Date",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "fromLocation",
                     header: "From Location",
-                    render: (v) =>
+                    render: (v: any) =>
                       String((v as any)?.name || "Corporate Store"),
                   },
                   {
                     key: "toLocation",
                     header: "To Location",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.s15}>
                         {String((v as any)?.name || "Corporate Store")}
                       </span>
@@ -598,12 +591,12 @@ export default function FixedAssetDetail() {
                   {
                     key: "fromCustodian",
                     header: "From Custodian",
-                    render: (v) => String((v as any)?.name || "Unassigned"),
+                    render: (v: any) => String((v as any)?.name || "Unassigned"),
                   },
                   {
                     key: "toCustodian",
                     header: "To Custodian",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">
                         {String((v as any)?.name || "Unassigned")}
                       </span>
@@ -612,7 +605,7 @@ export default function FixedAssetDetail() {
                   {
                     key: "reason",
                     header: "Reason",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="ui-text-muted">
                         {String(v || "N/A")}
                       </span>
@@ -770,12 +763,12 @@ export default function FixedAssetDetail() {
                   {
                     key: "maintenanceDate",
                     header: "Date",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "type",
                     header: "Type",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`px-2 py-0.5 rounded-full text-xs font-semibold ${v === "PREVENTIVE" ? "bg-green-100 text-green-700" : v === "CORRECTIVE" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"}`}
                       >
@@ -787,13 +780,13 @@ export default function FixedAssetDetail() {
                   {
                     key: "cost",
                     header: "Cost",
-                    render: (v) => `$${Number(v).toFixed(2)}`,
+                    render: (v: any) => `$${Number(v).toFixed(2)}`,
                   },
                   { key: "performedBy", header: "Performed By" },
                   {
                     key: "nextMaintenanceDate",
                     header: "Next Schedule",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="ui-text-muted">
                         {v ? new Date(String(v)).toLocaleDateString() : "N/A"}
                       </span>

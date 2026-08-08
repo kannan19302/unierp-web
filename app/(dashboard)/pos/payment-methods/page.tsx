@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { CreditCard, Plus, Edit2, Trash2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSPaymentMethodsPage() {
   const client = useApiClient();
@@ -104,61 +104,36 @@ export default function POSPaymentMethodsPage() {
           </div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Code</th>
-                <th>Type</th>
-                <th>Active</th>
-                <th>Order</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                methods.map((m) => (
-                  <tr key={m.id}>
-                    <td>{m.name}</td>
-                    <td>{m.code}</td>
-                    <td>{m.type}</td>
-                    <td>
-                      {m.isActive ? (
-                        <span className="ui-badge-success">Active</span>
-                      ) : (
-                        <span className="ui-badge">Inactive</span>
-                      )}
-                    </td>
-                    <td>{m.sortOrder}</td>
-                    <td className="ui-hstack-1">
-                      <button
-                        className="ui-btn-icon"
-                        onClick={() => {
-                          setEditId(m.id);
-                          setForm(m);
-                          setShowModal(true);
-                        }}
-                      >
-                        <Edit2 size={14} />
-                      </button>
-                      <button
-                        className="ui-btn-icon ui-text-error"
-                        onClick={() => remove(m.id)}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Name", render: (m: any) => (<>{m.name}</>) },
+                    { key: "col_1", header: "Code", render: (m: any) => (<>{m.code}</>) },
+                    { key: "col_2", header: "Type", render: (m: any) => (<>{m.type}</>) },
+                    { key: "col_3", header: "Active", render: (m: any) => (<>{m.isActive ? (
+                                          <span className="ui-badge-success">Active</span>
+                                        ) : (
+                                          <span className="ui-badge">Inactive</span>
+                                        )}</>) },
+                    { key: "col_4", header: "Order", render: (m: any) => (<>{m.sortOrder}</>) },
+                    { key: "col_5", header: "Actions", render: (m: any) => (<><button
+                                          className="ui-btn-icon"
+                                          onClick={() => {
+                                            setEditId(m.id);
+                                            setForm(m);
+                                            setShowModal(true);
+                                          }}
+                                        >
+                                          <Edit2 size={14} />
+                                        </button>
+                                        <button
+                                          className="ui-btn-icon ui-text-error"
+                                          onClick={() => remove(m.id)}
+                                        >
+                                          <Trash2 size={14} />
+                                        </button></>) },
+                  ];
+                            return <DataTable columns={columns} data={methods} rowKey={(m: any) => m.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

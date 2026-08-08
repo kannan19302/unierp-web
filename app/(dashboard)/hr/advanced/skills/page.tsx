@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, Award, TrendingDown, Users, Check } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 import styles from "./page.module.css";
@@ -241,7 +234,7 @@ export default function SkillsPage() {
                   {
                     key: "skillsCount",
                     header: "Skills Tracked",
-                    render: (v) => `${v} skills`,
+                    render: (v: any) => `${v} skills`,
                   },
                   {
                     key: "gapsCount",

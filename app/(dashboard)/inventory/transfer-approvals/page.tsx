@@ -1,13 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { AlertCircle, ShieldCheck, ShieldX, Settings } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -44,17 +38,17 @@ const makeColumns = (
       );
     },
   },
-  { key: "entryValue", header: "Entry Value", render: (v) => `$${v}` },
-  { key: "thresholdValue", header: "Threshold", render: (v) => `$${v}` },
+  { key: "entryValue", header: "Entry Value", render: (v: any) => `$${v}` },
+  { key: "thresholdValue", header: "Threshold", render: (v: any) => `$${v}` },
   {
     key: "status",
     header: "Status",
-    render: (v) => <Badge variant="warning">{String(v)}</Badge>,
+    render: (v: any) => <Badge variant="warning">{String(v)}</Badge>,
   },
   {
     key: "id",
     header: "",
-    render: (v) => (
+    render: (v: any) => (
       <div className={styles.s1}>
         <button
           onClick={() => handleApprove(String(v))}

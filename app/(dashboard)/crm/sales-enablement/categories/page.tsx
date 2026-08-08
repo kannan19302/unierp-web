@@ -1,10 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Button,
-  ProtectedComponent, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, ProtectedComponent, DataTable } from "@unerp/ui";
 import { Plus, FolderOpen, Trash2 } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -115,41 +111,24 @@ export default function ContentCategoriesPage() {
         {categories.length === 0 ? (
           <p className="text-sm text-gray-400">No categories yet.</p>
         ) : (
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="text-left border-b text-gray-500">
-                <th className="pb-2">Name</th>
-                <th className="pb-2">Description</th>
-                <th className="pb-2">Items</th>
-                <th className="pb-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.map((cat) => (
-                <tr key={cat.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2 font-medium">
-                    <FolderOpen className="w-4 h-4 inline mr-2" />
-                    {cat.name}
-                  </td>
-                  <td className="py-2 text-gray-500">
-                    {cat.description || "—"}
-                  </td>
-                  <td className="py-2">{cat._count?.items ?? 0}</td>
-                  <td className="py-2">
-                    <ProtectedComponent permission="crm.sales-enablement.categories.delete">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => deleteCategory(cat.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </ProtectedComponent>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: "Name", render: (cat: any) => (<><FolderOpen className="w-4 h-4 inline mr-2" />
+                                          {cat.name}</>) },
+                        { key: "col_1", header: "Description", render: (cat: any) => (<>{cat.description || "—"}</>) },
+                        { key: "col_2", header: "Items", render: (cat: any) => (<>{cat._count?.items ?? 0}</>) },
+                        { key: "col_3", header: "Actions", render: (cat: any) => (<><ProtectedComponent permission="crm.sales-enablement.categories.delete">
+                                            <Button
+                                              variant="ghost"
+                                              size="sm"
+                                              onClick={() => deleteCategory(cat.id)}
+                                            >
+                                              <Trash2 className="w-4 h-4" />
+                                            </Button>
+                                          </ProtectedComponent></>) },
+                      ];
+                                return <DataTable columns={columns} data={categories} rowKey={(cat: any) => cat.id} />;
+                              })()}</>
         )}
       </Card>
     </div>

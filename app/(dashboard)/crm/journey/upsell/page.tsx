@@ -108,13 +108,13 @@ export default function UpsellPage() {
                   {
                     key: "confidenceScore",
                     header: "Confidence",
-                    render: (row) =>
+                    render: (row: any) =>
                       `${Number(row.confidenceScore).toFixed(0)}%`,
                   },
                   {
                     key: "estimatedValue",
                     header: "Est. Value",
-                    render: (row) =>
+                    render: (row: any) =>
                       `$${Number(row.estimatedValue).toLocaleString()}`,
                   },
                   { key: "status", header: "Status" },
@@ -122,7 +122,7 @@ export default function UpsellPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (row) =>
+                    render: (row: any) =>
                       row.status === "PENDING" ? (
                         <div className="ui-flex ui-gap-2">
                           <button

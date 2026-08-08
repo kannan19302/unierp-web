@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { RotateCcw, Eye } from "lucide-react";
 
 interface DeadLetter {
@@ -45,29 +38,29 @@ export default function DeadLettersPage() {
     {
       key: "failureReason",
       header: "Reason",
-      render: (r) =>
+      render: (r: any) =>
         r.failureReason ? r.failureReason.slice(0, 50) + "..." : "-",
     },
     {
       key: "action",
       header: "Action",
-      render: (r) =>
+      render: (r: any) =>
         r.action ? <Badge variant="info">{r.action}</Badge> : "-",
     },
     {
       key: "actionedBy",
       header: "Actioned By",
-      render: (r) => r.actionedBy || "-",
+      render: (r: any) => r.actionedBy || "-",
     },
     {
       key: "deadLetterAt",
       header: "Dead Since",
-      render: (r) => new Date(r.deadLetterAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.deadLetterAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

@@ -1,15 +1,7 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { useApiClient } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, type Column } from "@unerp/ui";
 import { Bell, CheckCircle, Archive, RefreshCw } from "lucide-react";
 
 interface Notification {
@@ -93,7 +85,7 @@ export default function NotificationListPage() {
     {
       key: "title",
       header: "Title",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <div className={r.status === "UNREAD" ? "font-semibold" : ""}>
             {r.title}
@@ -104,21 +96,21 @@ export default function NotificationListPage() {
         </div>
       ),
     },
-    { key: "type", header: "Type", render: (r) => typeLabel(r.type) },
+    { key: "type", header: "Type", render: (r: any) => typeLabel(r.type) },
     {
       key: "status",
       header: "Status",
-      render: (r) => statusBadge(r.status),
+      render: (r: any) => statusBadge(r.status),
     },
     {
       key: "createdAt",
       header: "Received",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-flex ui-gap-1">
           {r.status === "UNREAD" && (
             <Button
@@ -181,7 +173,7 @@ export default function NotificationListPage() {
         <DataTable
           columns={columns}
           data={notifications}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No notifications"
           emptyIcon={<Bell size={48} />}
         />

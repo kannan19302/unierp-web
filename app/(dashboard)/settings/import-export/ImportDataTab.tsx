@@ -1,17 +1,7 @@
 "use client";
 import styles from "./ImportDataTab.module.css";
 import React, { useState, useCallback } from "react";
-import {
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  Stepper,
-  FormField,
-  Select,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { Card, Button, Spinner, Badge, Stepper, FormField, Select, DataTable, type Column } from "@unerp/ui";
 import { Upload, CheckCircle, XCircle, ArrowRight } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -373,7 +363,7 @@ export default function ImportDataTab() {
                         ] as Column<ValidationError>[]
                       }
                       data={validation.errors}
-                      rowKey={(r, i) => `${r.row}-${r.field}-${i}`}
+                      rowKey={(r: any, i: any) => `${r.row}-${r.field}-${i}`}
                     />
                   </Card>
                 )}

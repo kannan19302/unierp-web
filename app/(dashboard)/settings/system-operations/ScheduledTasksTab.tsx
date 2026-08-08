@@ -77,22 +77,22 @@ export default function ScheduledTasksTab() {
             {
               key: "name",
               header: "Task Name",
-              render: (v) => <span className="font-semibold">{String(v)}</span>,
+              render: (v: any) => <span className="font-semibold">{String(v)}</span>,
             },
             {
               key: "expression",
               header: "Expression",
-              render: (v) => <span className={styles.s3}>{String(v)}</span>,
+              render: (v: any) => <span className={styles.s3}>{String(v)}</span>,
             },
             {
               key: "nextRun",
               header: "Next Run Target",
-              render: (v) => <span className="ui-text-muted">{String(v)}</span>,
+              render: (v: any) => <span className="ui-text-muted">{String(v)}</span>,
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   className={styles.s4}
                   style={{
@@ -118,7 +118,7 @@ export default function ScheduledTasksTab() {
             {
               key: "id",
               header: "Actions",
-              render: (v) => (
+              render: (v: any) => (
                 <button
                   onClick={() => handleTriggerTask(String(v))}
                   disabled={runningTaskId !== null}

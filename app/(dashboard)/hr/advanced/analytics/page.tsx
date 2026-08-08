@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   BarChart3,
   Users,
@@ -275,17 +268,17 @@ export default function AnalyticsPage() {
                   {
                     key: "budgeted",
                     header: "Budgeted Payroll",
-                    render: (v) => `$${Number(v).toLocaleString()}/mo`,
+                    render: (v: any) => `$${Number(v).toLocaleString()}/mo`,
                   },
                   {
                     key: "actual",
                     header: "Actual Payroll",
-                    render: (v) => `$${Number(v).toLocaleString()}/mo`,
+                    render: (v: any) => `$${Number(v).toLocaleString()}/mo`,
                   },
                   {
                     key: "variance",
                     header: "Variance",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={
                           Number(v) >= 0

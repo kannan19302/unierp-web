@@ -10,7 +10,7 @@ import {
   Eye,
 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 interface Shift {
   id: string;
@@ -237,72 +237,35 @@ export default function POSShiftsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Employee</th>
-                  <th>Status</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
-                  <th>Opening Cash</th>
-                  <th>Closing Cash</th>
-                  <th>Sales</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={8} className="text-center p-4">
-                      Loading...
-                    </td>
-                  </tr>
-                ) : shifts.length === 0 ? (
-                  <tr>
-                    <td colSpan={8} className="text-center p-4">
-                      No shifts found
-                    </td>
-                  </tr>
-                ) : (
-                  shifts.map((s) => (
-                    <tr key={s.id}>
-                      <td>{s.employeeId}</td>
-                      <td>
-                        <span
-                          className={
-                            s.status === "OPEN"
-                              ? "ui-badge-success"
-                              : "ui-badge"
-                          }
-                        >
-                          {s.status}
-                        </span>
-                      </td>
-                      <td>{new Date(s.startTime).toLocaleString()}</td>
-                      <td>
-                        {s.endTime ? new Date(s.endTime).toLocaleString() : "-"}
-                      </td>
-                      <td>${Number(s.openingCash).toFixed(2)}</td>
-                      <td>
-                        {s.closingCash
-                          ? `$${Number(s.closingCash).toFixed(2)}`
-                          : "-"}
-                      </td>
-                      <td>${Number(s.totalSales).toFixed(2)}</td>
-                      <td>
-                        <button
-                          className="ui-btn-icon"
-                          onClick={() => loadShiftDetail(s.id)}
-                          title="View"
-                        >
-                          <Eye size={16} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Employee", render: (s: any) => (<>{s.employeeId}</>) },
+                            { key: "col_1", header: "Status", render: (s: any) => (<><span
+                                                    className={
+                                                      s.status === "OPEN"
+                                                        ? "ui-badge-success"
+                                                        : "ui-badge"
+                                                    }
+                                                  >
+                                                    {s.status}
+                                                  </span></>) },
+                            { key: "col_2", header: "Start Time", render: (s: any) => (<>{new Date(s.startTime).toLocaleString()}</>) },
+                            { key: "col_3", header: "End Time", render: (s: any) => (<>{s.endTime ? new Date(s.endTime).toLocaleString() : "-"}</>) },
+                            { key: "col_4", header: "Opening Cash", render: (s: any) => (<>${Number(s.openingCash).toFixed(2)}</>) },
+                            { key: "col_5", header: "Closing Cash", render: (s: any) => (<>{s.closingCash
+                                                    ? `$${Number(s.closingCash).toFixed(2)}`
+                                                    : "-"}</>) },
+                            { key: "col_6", header: "Sales", render: (s: any) => (<>${Number(s.totalSales).toFixed(2)}</>) },
+                            { key: "col_7", header: "Actions", render: (s: any) => (<><button
+                                                    className="ui-btn-icon"
+                                                    onClick={() => loadShiftDetail(s.id)}
+                                                    title="View"
+                                                  >
+                                                    <Eye size={16} />
+                                                  </button></>) },
+                          ];
+                                    return <DataTable columns={columns} data={shifts} rowKey={(s: any) => s.id} />;
+                                  })()}</>
             <div className="flex items-center justify-between p-4">
               <span className="ui-text-sm-muted">
                 Page {page} of {totalPages}

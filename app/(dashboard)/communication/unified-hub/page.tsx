@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   Mail,
@@ -120,27 +106,27 @@ export default function CommunicationUnifiedHub() {
     {
       key: "name",
       header: "Inbox Name",
-      render: (row) => <strong>{row.name}</strong>,
+      render: (row: any) => <strong>{row.name}</strong>,
     },
     {
       key: "emailAddress",
       header: "Email Address",
-      render: (row) => row.emailAddress,
+      render: (row: any) => row.emailAddress,
     },
     {
       key: "provider",
       header: "Mail Provider",
-      render: (row) => <Badge variant="info">{row.provider}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.provider}</Badge>,
     },
     {
       key: "isShared",
       header: "Shared Access",
-      render: (row) => (row.isShared ? "Team Inbox" : "Personal"),
+      render: (row: any) => (row.isShared ? "Team Inbox" : "Personal"),
     },
     {
       key: "isActive",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <StatusBadge status={row.isActive ? "ACTIVE" : "INACTIVE"} />
       ),
     },

@@ -1,15 +1,7 @@
 "use client";
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-  Badge,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner, Badge } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import {
   Folder,
@@ -74,7 +66,7 @@ export default function FolderDetailPage({
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-3">
           {"mimeType" in r ? (
             <FileText size={16} />
@@ -89,18 +81,18 @@ export default function FolderDetailPage({
       key: "updatedAt",
       header: "Modified",
       sortable: true,
-      render: (r) => new Date(r.updatedAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.updatedAt).toLocaleDateString(),
     },
     {
       key: "size",
       header: "Size",
-      render: (r) =>
+      render: (r: any) =>
         "size" in r ? `${(Number(r.size) / 1024).toFixed(1)} KB` : "—",
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-2">
           {"mimeType" in r && (
             <Button
@@ -165,7 +157,7 @@ export default function FolderDetailPage({
         <DataTable
           columns={columns}
           data={[...subFolders, ...files]}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
         />
       </Card>
     </div>

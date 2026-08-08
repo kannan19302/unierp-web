@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Users, Plus, Hash, Search, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -77,7 +67,7 @@ export default function SpacesPage() {
     {
       key: "name",
       header: "Space / Channel",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <Hash size={16} />
@@ -94,7 +84,7 @@ export default function SpacesPage() {
     {
       key: "type",
       header: "Visibility",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.isPrivate ? "warning" : "success"}>
           {row.isPrivate ? "Private" : "Public"}
         </Badge>
@@ -104,7 +94,7 @@ export default function SpacesPage() {
       key: "action",
       header: "Action",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <Link href={`/connect?channel=${row.id}`}>
           <Button variant="secondary">
             Join & Chat <ArrowRight size={12} className={styles.s2} />
@@ -155,7 +145,7 @@ export default function SpacesPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No spaces found"
             emptyMessage="Create a space or channel to start communicating."
             emptyIcon={<Users size={48} />}

@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   Trash2,
@@ -294,14 +286,14 @@ export default function StockEntriesPage() {
                 {
                   key: "entryNumber",
                   header: "Voucher ID",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-semibold">{String(v)}</span>
                   ),
                 },
                 {
                   key: "purpose",
                   header: "Type",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Badge
                       variant={
                         String(v) === "MATERIAL_RECEIPT"
@@ -318,12 +310,12 @@ export default function StockEntriesPage() {
                 {
                   key: "postingDate",
                   header: "Posting Date",
-                  render: (v) => new Date(String(v)).toLocaleString(),
+                  render: (v: any) => new Date(String(v)).toLocaleString(),
                 },
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Badge
                       variant={
                         String(v) === "SUBMITTED"
@@ -340,7 +332,7 @@ export default function StockEntriesPage() {
                 {
                   key: "totalValue",
                   header: "Total Value",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-semibold">
                       $
                       {Number(v).toLocaleString(undefined, {
@@ -352,7 +344,7 @@ export default function StockEntriesPage() {
                 {
                   key: "remarks",
                   header: "Remarks",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="ui-text-muted">
                       {String(v || "No remarks")}
                     </span>

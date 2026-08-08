@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
 import { DollarSign, TrendingUp, Wallet, AlertTriangle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import styles from "./page.module.css";
@@ -55,7 +47,7 @@ export default function ProjectRevenueRecognitionPage() {
     {
       key: "name",
       header: "Project",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="font-semibold">{row.name}</div>
           <div className="ui-text-xs-tertiary">{row.code}</div>
@@ -65,7 +57,7 @@ export default function ProjectRevenueRecognitionPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.status === "COMPLETED"
@@ -83,13 +75,13 @@ export default function ProjectRevenueRecognitionPage() {
       key: "budget",
       header: "Budget",
       align: "right" as const,
-      render: (row) => fmtCurrency(row.budget),
+      render: (row: any) => fmtCurrency(row.budget),
     },
     {
       key: "percentComplete",
       header: "% Complete",
       align: "right" as const,
-      render: (row) =>
+      render: (row: any) =>
         row.percentComplete === null ? (
           <span className="ui-text-tertiary">—</span>
         ) : (
@@ -100,7 +92,7 @@ export default function ProjectRevenueRecognitionPage() {
       key: "recognizedRevenue",
       header: "Recognized Revenue",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className={styles.p1}>{fmtCurrency(row.recognizedRevenue)}</span>
       ),
     },
@@ -108,7 +100,7 @@ export default function ProjectRevenueRecognitionPage() {
       key: "remainingRevenue",
       header: "Remaining",
       align: "right" as const,
-      render: (row) => fmtCurrency(row.remainingRevenue),
+      render: (row: any) => fmtCurrency(row.remainingRevenue),
     },
   ];
 
@@ -167,7 +159,7 @@ export default function ProjectRevenueRecognitionPage() {
           <DataTable
             columns={columns}
             data={rows}
-            rowKey={(r) => r.projectId}
+            rowKey={(r: any) => r.projectId}
             emptyTitle="No projects"
             emptyMessage="Set a budget, start date, and end date on a project to see its revenue recognition schedule."
             emptyIcon={<DollarSign size={48} />}

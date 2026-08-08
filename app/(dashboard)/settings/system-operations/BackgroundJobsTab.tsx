@@ -86,12 +86,12 @@ export default function BackgroundJobsTab() {
             {
               key: "name",
               header: "Queue Name",
-              render: (v) => <span className="font-semibold">{String(v)}</span>,
+              render: (v: any) => <span className="font-semibold">{String(v)}</span>,
             },
             {
               key: "active",
               header: "Active",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   className={styles.s5}
                   style={{
@@ -112,7 +112,7 @@ export default function BackgroundJobsTab() {
             {
               key: "waiting",
               header: "Waiting",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   className={styles.s6}
                   style={{
@@ -133,12 +133,12 @@ export default function BackgroundJobsTab() {
             {
               key: "completed",
               header: "Completed",
-              render: (v) => <span className={styles.s7}>{String(v)}</span>,
+              render: (v: any) => <span className={styles.s7}>{String(v)}</span>,
             },
             {
               key: "failed",
               header: "Failed",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   className={styles.s8}
                   style={{

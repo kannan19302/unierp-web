@@ -1,17 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column } from "@unerp/ui";
 import { Video, Monitor, Camera, BarChart3, Users, Radio } from "lucide-react";
 
 interface Meeting {
@@ -59,7 +49,7 @@ export default function VideoPage() {
     {
       key: "title",
       header: "Meeting",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="font-medium">{r.title}</span>
           <div className="text-xs text-muted">{r.code}</div>
@@ -69,7 +59,7 @@ export default function VideoPage() {
     {
       key: "active",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.active ? "success" : "default"}>
           {r.active ? "Live" : "Ended"}
         </Badge>
@@ -78,7 +68,7 @@ export default function VideoPage() {
     {
       key: "participants",
       header: "Participants",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-1">
           <Users size={14} />
           {r._count?.participants || 0}
@@ -88,7 +78,7 @@ export default function VideoPage() {
     {
       key: "recordings",
       header: "Recordings",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-1">
           <Monitor size={14} />
           {r._count?.recordings || 0}
@@ -98,7 +88,7 @@ export default function VideoPage() {
     {
       key: "startedAt",
       header: "Started",
-      render: (r) => new Date(r.startedAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.startedAt).toLocaleDateString(),
     },
     {
       key: "actions",
@@ -179,7 +169,7 @@ export default function VideoPage() {
             <DataTable
               columns={columns}
               data={meetings}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No meetings"
               emptyIcon={<Video size={48} />}
             />

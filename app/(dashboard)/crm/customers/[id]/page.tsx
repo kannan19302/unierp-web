@@ -2,18 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  StatusBadge,
-  Badge,
-  Modal,
-  ListPageTemplate,
-  type ListColumn,
-  ChangeHistory,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, StatusBadge, Badge, Modal, ListPageTemplate, type ListColumn, ChangeHistory } from "@unerp/ui";
 import {
   ArrowLeft,
   Building,
@@ -422,7 +411,7 @@ export default function CustomerDetailPage() {
               {
                 key: "contractType",
                 header: "Type",
-                render: (v) => String(v || "ONE_TIME"),
+                render: (v: any) => String(v || "ONE_TIME"),
               },
               {
                 key: "value",
@@ -433,7 +422,7 @@ export default function CustomerDetailPage() {
               {
                 key: "status",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <Badge
                     variant={
                       v === "ACTIVE"
@@ -450,7 +439,7 @@ export default function CustomerDetailPage() {
               {
                 key: "endDate",
                 header: "End Date",
-                render: (v) => new Date(String(v)).toLocaleDateString(),
+                render: (v: any) => new Date(String(v)).toLocaleDateString(),
               },
             ] as ListColumn[]
           }
@@ -639,23 +628,23 @@ export default function CustomerDetailPage() {
             {
               key: "orderNumber",
               header: "Order Number",
-              render: (v) => <span className="font-semibold">{String(v)}</span>,
+              render: (v: any) => <span className="font-semibold">{String(v)}</span>,
             },
             {
               key: "orderDate",
               header: "Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
             {
               key: "totalAmount",
               header: "Total Amount",
-              render: (v) =>
+              render: (v: any) =>
                 `$${Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => <StatusBadge status={String(v)} />,
+              render: (v: any) => <StatusBadge status={String(v)} />,
             },
           ] as ListColumn[]
         }
@@ -675,28 +664,28 @@ export default function CustomerDetailPage() {
             {
               key: "invoiceNumber",
               header: "Invoice Number",
-              render: (v) => <span className="font-semibold">{String(v)}</span>,
+              render: (v: any) => <span className="font-semibold">{String(v)}</span>,
             },
             {
               key: "issueDate",
               header: "Issue Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
             {
               key: "dueDate",
               header: "Due Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
             {
               key: "totalAmount",
               header: "Total Amount",
-              render: (v) =>
+              render: (v: any) =>
                 `$${Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => <StatusBadge status={String(v)} />,
+              render: (v: any) => <StatusBadge status={String(v)} />,
             },
           ] as ListColumn[]
         }
@@ -716,13 +705,13 @@ export default function CustomerDetailPage() {
             {
               key: "caseNumber",
               header: "Case ID",
-              render: (v) => <span className="font-semibold">{String(v)}</span>,
+              render: (v: any) => <span className="font-semibold">{String(v)}</span>,
             },
             { key: "subject", header: "Subject" },
             {
               key: "priority",
               header: "Priority",
-              render: (v) => (
+              render: (v: any) => (
                 <span
                   style={{
                     backgroundColor:
@@ -743,12 +732,12 @@ export default function CustomerDetailPage() {
             {
               key: "status",
               header: "Status",
-              render: (v) => <StatusBadge status={String(v)} />,
+              render: (v: any) => <StatusBadge status={String(v)} />,
             },
             {
               key: "createdAt",
               header: "Created",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
           ] as ListColumn[]
         }

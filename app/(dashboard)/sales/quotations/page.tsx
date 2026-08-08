@@ -3,15 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   Search,
@@ -371,18 +363,18 @@ export default function QuotationsPage() {
                 {
                   key: "quotationNumber",
                   header: "Quotation ID",
-                  render: (v) => <span className={styles.p8}>{String(v)}</span>,
+                  render: (v: any) => <span className={styles.p8}>{String(v)}</span>,
                 },
                 { key: "customerName", header: "Customer" },
                 {
                   key: "validUntil",
                   header: "Valid Until",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
                 {
                   key: "totalAmount",
                   header: "Total Amount",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-medium">
                       ${Number(v).toLocaleString()}
                     </span>
@@ -391,7 +383,7 @@ export default function QuotationsPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       style={{
                         background:

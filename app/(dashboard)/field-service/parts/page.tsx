@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-  Select,
-  FormField,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast, Select, FormField } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Package, Plus, CheckCircle, AlertTriangle, Truck } from "lucide-react";
 
@@ -128,7 +114,7 @@ export default function PartsPage() {
     {
       key: "item",
       header: "Part",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="ui-heading-sm">{r.itemName}</span>
           <div className="ui-text-xs-tertiary">
@@ -141,7 +127,7 @@ export default function PartsPage() {
     {
       key: "qty",
       header: "Qty",
-      render: (r) => (
+      render: (r: any) => (
         <span>
           {r.quantityRequested}
           {r.quantityApproved ? ` / ${r.quantityApproved}` : ""}
@@ -151,12 +137,12 @@ export default function PartsPage() {
     {
       key: "source",
       header: "Source",
-      render: (r) => <Badge variant="info">{r.source}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.source}</Badge>,
     },
     {
       key: "priority",
       header: "Priority",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.priority === "HIGH" || r.priority === "URGENT"
@@ -171,7 +157,7 @@ export default function PartsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "FULFILLED"
@@ -190,7 +176,7 @@ export default function PartsPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) =>
+      render: (r: any) =>
         r.status === "PENDING" ? (
           <Button
             size="sm"
@@ -266,7 +252,7 @@ export default function PartsPage() {
           <DataTable
             columns={columns}
             data={requests}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No part requests"
             emptyMessage="Create part requests for technicians."
             emptyIcon={<Package size={48} />}

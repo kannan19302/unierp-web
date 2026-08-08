@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Key, Plus, DollarSign, AlertTriangle } from "lucide-react";
 import Link from "next/link";
@@ -94,7 +82,7 @@ export default function LeasesPage() {
     {
       key: "tenant",
       header: "Tenant",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <Link href={`/real-estate/leases/${row.id}`} className={styles.s1}>
             {row.tenantName}
@@ -108,7 +96,7 @@ export default function LeasesPage() {
     {
       key: "dates",
       header: "Lease Period",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.startDate ? new Date(row.startDate).toLocaleDateString() : "—"} →{" "}
           {row.endDate ? new Date(row.endDate).toLocaleDateString() : "—"}
@@ -119,21 +107,21 @@ export default function LeasesPage() {
       key: "rent",
       header: "Rent",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmtCurrency(row.rentAmount)}</span>
       ),
     },
     {
       key: "freq",
       header: "Billing",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="info">{row.billingFrequency || "Monthly"}</Badge>
       ),
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "EXPIRED" ? "danger" : "success"}>
           {row.status || "Active"}
         </Badge>
@@ -188,7 +176,7 @@ export default function LeasesPage() {
           <DataTable
             columns={columns}
             data={leases}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No leases"
             emptyMessage="Create leases to track tenants."
             emptyIcon={<Key size={48} />}

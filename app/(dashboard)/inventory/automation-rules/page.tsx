@@ -1,12 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  Card,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, Badge, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import { Zap, CheckCircle, Play, Lock } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -259,7 +253,7 @@ export default function AutomationRulesPage() {
                   {
                     key: "productId",
                     header: "Product",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">{String(v)}</span>
                     ),
                   },
@@ -268,7 +262,7 @@ export default function AutomationRulesPage() {
                   {
                     key: "triggerQty",
                     header: "Trigger Qty",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-right block">
                         {Number(v).toFixed(0)}
                       </span>
@@ -277,7 +271,7 @@ export default function AutomationRulesPage() {
                   {
                     key: "replenishQty",
                     header: "Replenish Qty",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-right block">
                         {Number(v).toFixed(0)}
                       </span>
@@ -286,7 +280,7 @@ export default function AutomationRulesPage() {
                   {
                     key: "lastTriggeredAt",
                     header: "Last Triggered",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-xs">
                         {v ? new Date(String(v)).toLocaleDateString() : "—"}
                       </span>
@@ -319,14 +313,14 @@ export default function AutomationRulesPage() {
                   {
                     key: "holdNumber",
                     header: "Hold#",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">{String(v)}</span>
                     ),
                   },
                   {
                     key: "holdType",
                     header: "Type",
-                    render: (v) => (
+                    render: (v: any) => (
                       <Badge
                         variant={HOLD_TYPE_VARIANT[String(v)] ?? "default"}
                       >
@@ -337,7 +331,7 @@ export default function AutomationRulesPage() {
                   {
                     key: "reason",
                     header: "Reason",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-muted-foreground truncate max-w-xs block">
                         {String(v)}
                       </span>
@@ -346,7 +340,7 @@ export default function AutomationRulesPage() {
                   {
                     key: "heldQty",
                     header: "Qty",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-right block">
                         {Number(v).toFixed(0)}
                       </span>

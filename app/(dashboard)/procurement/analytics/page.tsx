@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Spinner, Card, Table } from "@unerp/ui";
+import { PageHeader, Spinner, Card, Table, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart, BarChart3 } from "lucide-react";
@@ -83,79 +83,40 @@ export default function ProcurementAnalyticsPage() {
 
           <Card>
             <h3>Top Vendors by Spend</h3>
-            <Table className="ui-table" style={{ marginTop: 8, width: "100%" }}>
-              <thead>
-                <tr>
-                  <th>Vendor</th>
-                  <th>Total Spend</th>
-                  <th>Orders</th>
-                  <th>Overall Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(data.vendorPerformance || []).slice(0, 10).map((v: any) => (
-                  <tr key={v.vendorId}>
-                    <td>{v.vendorName}</td>
-                    <td>${v.totalSpend.toLocaleString()}</td>
-                    <td>{v.orderCount}</td>
-                    <td>{v.overallScore ? `${v.overallScore}/100` : "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Vendor" , render: (v: any) => (<>{v.vendorName}</>) },
+                            { key: "col_1", header: "Total Spend" , render: (v: any) => (<>${v.totalSpend.toLocaleString()}</>) },
+                            { key: "col_2", header: "Orders" , render: (v: any) => (<>{v.orderCount}</>) },
+                            { key: "col_3", header: "Overall Score" , render: (v: any) => (<>{v.overallScore ? `${v.overallScore}/100` : "—"}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={(data.vendorPerformance || []).slice(0, 10)} rowKey={(v: any) => v.vendorId} />;
+                              })()}</>
           </Card>
 
           <div className="ui-grid-2">
             <Card>
               <h3>Spend by Status</h3>
-              <Table
-                className="ui-table"
-                style={{ marginTop: 8, width: "100%" }}
-              >
-                <thead>
-                  <tr>
-                    <th>Status</th>
-                    <th>Total</th>
-                    <th>Count</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(data.spendByStatus || {}).map(
-                    ([status, s]: any) => (
-                      <tr key={status}>
-                        <td>{status}</td>
-                        <td>${s.total.toLocaleString()}</td>
-                        <td>{s.count}</td>
-                      </tr>
-                    ),
-                  )}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Status" , render: ([status, s]) => (<>{status}</>) },
+                                { key: "col_1", header: "Total" , render: ([status, s]) => (<>${s.total.toLocaleString()}</>) },
+                                { key: "col_2", header: "Count" , render: ([status, s]) => (<>{s.count}</>) },
+                              ];
+                                      return <DataTable columns={columns} data={Object.entries(data.spendByStatus || {})} rowKey={([status, s]) => status} />;
+                                  })()}</>
             </Card>
 
             <Card>
               <h3>Monthly Spend Trend</h3>
-              <Table
-                className="ui-table"
-                style={{ marginTop: 8, width: "100%" }}
-              >
-                <thead>
-                  <tr>
-                    <th>Month</th>
-                    <th>Total</th>
-                    <th>Orders</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(data.monthlyTrend || []).slice(-6).map((m: any) => (
-                    <tr key={m.month}>
-                      <td>{m.month}</td>
-                      <td>${m.total.toLocaleString()}</td>
-                      <td>{m.count}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Month" , render: (m: any) => (<>{m.month}</>) },
+                                { key: "col_1", header: "Total" , render: (m: any) => (<>${m.total.toLocaleString()}</>) },
+                                { key: "col_2", header: "Orders" , render: (m: any) => (<>{m.count}</>) },
+                              ];
+                                      return <DataTable columns={columns} data={(data.monthlyTrend || []).slice(-6)} rowKey={(m: any) => m.month} />;
+                                  })()}</>
             </Card>
           </div>
         </div>

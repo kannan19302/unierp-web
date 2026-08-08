@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -42,58 +42,29 @@ export default function EventLogsPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Event Delivery Logs</h1>
-      <Table className="w-full text-sm">
-        <thead>
-          <tr className="border-b text-left">
-            <th className="py-2 px-2">Event Type</th>
-            <th className="py-2 px-2">Channel</th>
-            <th className="py-2 px-2">Status</th>
-            <th className="py-2 px-2">Sent At</th>
-            <th className="py-2 px-2">Retries</th>
-            <th className="py-2 px-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {logs.map((l: any) => (
-            <tr key={l.id} className="border-b hover:bg-muted/50">
-              <td className="py-2 px-2">{l.eventType}</td>
-              <td className="py-2 px-2">{l.channel || "—"}</td>
-              <td className="py-2 px-2">
-                <span
-                  className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${l.status === "SENT" ? "bg-green-100 text-green-800" : l.status === "FAILED" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}`}
-                >
-                  {l.status}
-                </span>
-              </td>
-              <td className="py-2 px-2">
-                {l.sentAt ? new Date(l.sentAt).toLocaleString() : "—"}
-              </td>
-              <td className="py-2 px-2">{l.retryCount || 0}</td>
-              <td className="py-2 px-2">
-                {l.status === "FAILED" && (
-                  <button
-                    className="text-xs text-blue-600 hover:underline"
-                    onClick={() => retry(l.id)}
-                    disabled={retrying === l.id}
-                  >
-                    {retrying === l.id ? "Retrying..." : "Retry"}
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-          {logs.length === 0 && (
-            <tr>
-              <td
-                colSpan={6}
-                className="py-4 text-center text-muted-foreground"
-              >
-                No event logs found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+      <>{(() => {
+                    const columns = [
+            { key: "col_0", header: "Event Type", render: (l: any) => (<>{l.eventType}</>) },
+            { key: "col_1", header: "Channel", render: (l: any) => (<>{l.channel || "—"}</>) },
+            { key: "col_2", header: "Status", render: (l: any) => (<><span
+                            className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${l.status === "SENT" ? "bg-green-100 text-green-800" : l.status === "FAILED" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}`}
+                          >
+                            {l.status}
+                          </span></>) },
+            { key: "col_3", header: "Sent At", render: (l: any) => (<>{l.sentAt ? new Date(l.sentAt).toLocaleString() : "—"}</>) },
+            { key: "col_4", header: "Retries", render: (l: any) => (<>{l.retryCount || 0}</>) },
+            { key: "col_5", header: "Actions", render: (l: any) => (<>{l.status === "FAILED" && (
+                            <button
+                              className="text-xs text-blue-600 hover:underline"
+                              onClick={() => retry(l.id)}
+                              disabled={retrying === l.id}
+                            >
+                              {retrying === l.id ? "Retrying..." : "Retry"}
+                            </button>
+                          )}</>) },
+          ];
+                    return <DataTable columns={columns} data={logs} rowKey={(l: any) => l.id} />;
+                  })()}</>
     </div>
   );
 }

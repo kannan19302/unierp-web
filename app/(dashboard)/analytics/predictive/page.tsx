@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Cpu, TrendingUp, Sparkles, Target } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -118,42 +118,17 @@ export default function AnalyticsPredictivePage() {
             No trained predictive models.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Model Name</th>
-                <th style={{ padding: "12px" }}>Algorithm</th>
-                <th style={{ padding: "12px" }}>Target Metric</th>
-                <th style={{ padding: "12px" }}>Accuracy Score</th>
-                <th style={{ padding: "12px" }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {models.map((m) => (
-                <tr key={m.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {m.modelName}
-                  </td>
-                  <td style={{ padding: "12px" }}>{m.algorithm}</td>
-                  <td style={{ padding: "12px" }}>{m.targetMetric}</td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--chart-9)",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {Number(m.accuracyScore).toFixed(2)}%
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="success">{m.status}</Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Model Name" , render: (m: any) => (<>{m.modelName}</>) },
+                        { key: "col_1", header: "Algorithm" , render: (m: any) => (<>{m.algorithm}</>) },
+                        { key: "col_2", header: "Target Metric" , render: (m: any) => (<>{m.targetMetric}</>) },
+                        { key: "col_3", header: "Accuracy Score" , render: (m: any) => (<>{Number(m.accuracyScore).toFixed(2)}%
+                                        </>) },
+                        { key: "col_4", header: "Status" , render: (m: any) => (<><Badge variant="success">{m.status}</Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={models} rowKey={(m: any) => m.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

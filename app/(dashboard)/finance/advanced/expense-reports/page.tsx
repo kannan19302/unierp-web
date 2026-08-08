@@ -2,20 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, useToast } from "@unerp/ui";
 import {
   Receipt,
   Plus,
@@ -264,7 +251,7 @@ export default function ExpenseManagementPage() {
     {
       key: "report",
       header: "Expense Report",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s1} onClick={() => refreshDetail(row.id)}>
           <div className="ui-heading-sm">
             {row.title}{" "}
@@ -285,14 +272,14 @@ export default function ExpenseManagementPage() {
       key: "totalAmount",
       header: "Amount",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmt(row.totalAmount)}</span>
       ),
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {new Date(row.createdAt).toLocaleDateString()}
         </span>
@@ -301,7 +288,7 @@ export default function ExpenseManagementPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={statusVariant(row.status)}>
           {row.status.replace(/_/g, " ")}
         </Badge>
@@ -312,7 +299,7 @@ export default function ExpenseManagementPage() {
       header: "",
       align: "right" as const,
       width: "220px",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s3}>
           {row.status === "DRAFT" && (
             <Button
@@ -442,7 +429,7 @@ export default function ExpenseManagementPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             loading={loading}
             emptyTitle="No expense reports"
             emptyMessage="Submit your first expense report."

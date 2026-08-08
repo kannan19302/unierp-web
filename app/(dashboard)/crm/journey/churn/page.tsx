@@ -80,13 +80,13 @@ export default function ChurnPage() {
                   {
                     key: "customer",
                     header: "Customer",
-                    render: (row) => row.customer?.name || "Unknown",
+                    render: (row: any) => row.customer?.name || "Unknown",
                     sortable: true,
                   },
                   {
                     key: "score",
                     header: "Risk Score",
-                    render: (row) => `${Number(row.score).toFixed(1)}%`,
+                    render: (row: any) => `${Number(row.score).toFixed(1)}%`,
                     sortable: true,
                   },
                   {
@@ -97,7 +97,7 @@ export default function ChurnPage() {
                   {
                     key: "signals",
                     header: "Signals",
-                    render: (row) =>
+                    render: (row: any) =>
                       Array.isArray(row.signals)
                         ? row.signals.slice(0, 3).join(", ")
                         : "",
@@ -106,7 +106,7 @@ export default function ChurnPage() {
                   {
                     key: "predictedAt",
                     header: "Predicted",
-                    render: (row) =>
+                    render: (row: any) =>
                       new Date(row.predictedAt).toLocaleDateString(),
                   },
                 ]}

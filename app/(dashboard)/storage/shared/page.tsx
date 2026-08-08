@@ -1,12 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Spinner,
-  DataTable,
-  type Column,
-  StatusBadge,
-} from "@unerp/ui";
+import { PageHeader, Spinner, DataTable, type Column, StatusBadge } from "@unerp/ui";
 import { apiGet } from "@/lib/api";
 
 export default function SharedFilesPage() {

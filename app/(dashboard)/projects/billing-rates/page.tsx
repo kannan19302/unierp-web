@@ -46,20 +46,20 @@ export default function BillingRatesPage() {
       key: "hourlyRate",
       header: "Hourly Rate",
       align: "right",
-      render: (row) => fmtCurrency(row.hourlyRate, row.currency),
+      render: (row: any) => fmtCurrency(row.hourlyRate, row.currency),
     },
     {
       key: "dailyRate",
       header: "Daily Rate",
       align: "right",
-      render: (row) =>
+      render: (row: any) =>
         row.dailyRate ? fmtCurrency(row.dailyRate, row.currency) : "-",
     },
     { key: "currency", header: "Currency" },
     {
       key: "isActive",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.isActive ? "success" : "default"}>
           {row.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -68,7 +68,7 @@ export default function BillingRatesPage() {
     {
       key: "projectName",
       header: "Project",
-      render: (row) => row.projectName || "Global",
+      render: (row: any) => row.projectName || "Global",
     },
   ];
 
@@ -94,7 +94,7 @@ export default function BillingRatesPage() {
         <DataTable
           columns={columns}
           data={rates}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No Billing Rates"
           emptyMessage="Add billing rates for roles to track project costs and billing."
           emptyIcon={<DollarSign size={48} />}

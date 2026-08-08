@@ -294,20 +294,20 @@ export default function CreditRiskPage() {
                   {
                     key: "creditLimit",
                     header: "Credit Limit",
-                    render: (v) =>
+                    render: (v: any) =>
                       v !== null && v !== undefined ? fmt(Number(v)) : "—",
                   },
                   {
                     key: "outstanding",
                     header: "Outstanding",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">{fmt(Number(v))}</span>
                     ),
                   },
                   {
                     key: "creditUtilization",
                     header: "Utilization",
-                    render: (v) => {
+                    render: (v: any) => {
                       const util = v as number | null;
                       const utilColor =
                         util === null
@@ -332,7 +332,7 @@ export default function CreditRiskPage() {
                   {
                     key: "riskRating",
                     header: "Risk",
-                    render: (v) => {
+                    render: (v: any) => {
                       const rc = RISK_COLORS[String(v)] || RISK_COLORS.LOW;
                       return (
                         <span style={{ ...rc }} className={styles.s12}>
@@ -344,7 +344,7 @@ export default function CreditRiskPage() {
                   {
                     key: "creditHold",
                     header: "Hold",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? (
                         <span className={styles.s13}>
                           <Lock size={12} />

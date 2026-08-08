@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { Plus, X, Trash2, MapPin, Play, ListChecks } from "lucide-react";
 import {
   apiGet,
@@ -222,29 +212,29 @@ export default function TerritoryAssignmentRulesPage() {
       header: "Priority",
       align: "right",
       sortable: true,
-      render: (r) => <Badge variant="default">{r.priority}</Badge>,
+      render: (r: any) => <Badge variant="default">{r.priority}</Badge>,
     },
     {
       key: "name",
       header: "Rule",
-      render: (r) => <span className="font-semibold">{r.name}</span>,
+      render: (r: any) => <span className="font-semibold">{r.name}</span>,
     },
     {
       key: "ruleType",
       header: "Type",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant="info">{r.ruleType.replace("_", " ")}</Badge>
       ),
     },
     {
       key: "territory",
       header: "Territory",
-      render: (r) => r.territory?.name || "—",
+      render: (r: any) => r.territory?.name || "—",
     },
     {
       key: "isActive",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <button onClick={() => handleToggleActive(r)} className={styles.style0}>
           <Badge variant={r.isActive ? "success" : "default"}>
             {r.isActive ? "Active" : "Disabled"}
@@ -256,7 +246,7 @@ export default function TerritoryAssignmentRulesPage() {
       key: "actions",
       header: "",
       align: "right",
-      render: (r) => (
+      render: (r: any) => (
         <button
           title="Delete"
           onClick={() => handleDelete(r)}
@@ -325,7 +315,7 @@ export default function TerritoryAssignmentRulesPage() {
           <DataTable<TerritoryRule>
             columns={columns}
             data={rules}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
           />
         )}
       </Card>

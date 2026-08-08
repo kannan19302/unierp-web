@@ -256,7 +256,7 @@ export default function CurrencyRevaluationPage() {
                             {
                               key: "source",
                               header: "Source",
-                              render: (v) => (
+                              render: (v: any) => (
                                 <span className="ui-text-muted">
                                   {String(v)}
                                 </span>
@@ -265,7 +265,7 @@ export default function CurrencyRevaluationPage() {
                             {
                               key: "ref",
                               header: "Reference",
-                              render: (v) => (
+                              render: (v: any) => (
                                 <span className="font-mono">{String(v)}</span>
                               ),
                             },
@@ -278,27 +278,27 @@ export default function CurrencyRevaluationPage() {
                             {
                               key: "bookRate",
                               header: "Book Rate",
-                              render: (v) => Number(v).toFixed(4),
+                              render: (v: any) => Number(v).toFixed(4),
                             },
                             {
                               key: "currentRate",
                               header: "Current Rate",
-                              render: (v) => Number(v).toFixed(4),
+                              render: (v: any) => Number(v).toFixed(4),
                             },
                             {
                               key: "bookValue",
                               header: "Book Value",
-                              render: (v) => money(Number(v)),
+                              render: (v: any) => money(Number(v)),
                             },
                             {
                               key: "currentValue",
                               header: "Current Value",
-                              render: (v) => money(Number(v)),
+                              render: (v: any) => money(Number(v)),
                             },
                             {
                               key: "delta",
                               header: "FX Δ",
-                              render: (v) => (
+                              render: (v: any) => (
                                 <span
                                   className={`font-semibold ${Number(v) >= 0 ? "text-green-600" : "text-red-600"}`}
                                 >

@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -42,35 +42,21 @@ export default function SavedSearchesPage() {
         <div className="text-gray-500">No saved searches yet.</div>
       )}
       {searches.length > 0 && (
-        <Table className="ui-table w-full">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Query</th>
-              <th>Scope</th>
-              <th>Created</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {searches.map((s) => (
-              <tr key={s.id}>
-                <td className="font-medium">{s.name}</td>
-                <td className="text-gray-500">{s.query}</td>
-                <td>{s.scope}</td>
-                <td>{new Date(s.createdAt).toLocaleDateString()}</td>
-                <td>
-                  <button
-                    className="ui-btn ui-btn-ghost"
-                    onClick={() => deleteSearch(s.id)}
-                  >
-                    <Trash2 className="w-4 h-4 text-red-500" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                      const columns = [
+                { key: "col_0", header: "Name" , render: (s: any) => (<>{s.name}</>) },
+                { key: "col_1", header: "Query" , render: (s: any) => (<>{s.query}</>) },
+                { key: "col_2", header: "Scope" , render: (s: any) => (<>{s.scope}</>) },
+                { key: "col_3", header: "Created" , render: (s: any) => (<>{new Date(s.createdAt).toLocaleDateString()}</>) },
+                { key: "col_4", header: "Actions" , render: (s: any) => (<><button
+                                  className="ui-btn ui-btn-ghost"
+                                  onClick={() => deleteSearch(s.id)}
+                                >
+                                  <Trash2 className="w-4 h-4 text-red-500" />
+                                </button></>) },
+              ];
+                      return <DataTable columns={columns} data={searches} rowKey={(s: any) => s.id} />;
+                  })()}</>
       )}
     </div>
   );

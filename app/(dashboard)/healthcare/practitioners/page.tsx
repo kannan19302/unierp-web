@@ -1,18 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard } from "@unerp/ui";
 import { Stethoscope, Plus, Users, Award } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -71,7 +60,7 @@ export default function PractitionersPage() {
     {
       key: "name",
       header: "Practitioner",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <Stethoscope size={18} />
@@ -88,12 +77,12 @@ export default function PractitionersPage() {
     {
       key: "specialty",
       header: "Specialty",
-      render: (row) => <Badge variant="info">{row.specialty}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.specialty}</Badge>,
     },
     {
       key: "license",
       header: "License #",
-      render: (row) => <code className={styles.s2}>{row.licenseNumber}</code>,
+      render: (row: any) => <code className={styles.s2}>{row.licenseNumber}</code>,
     },
     {
       key: "status",
@@ -144,7 +133,7 @@ export default function PractitionersPage() {
         <DataTable
           columns={columns}
           data={practitioners}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No practitioners"
           emptyMessage="Add practitioners to manage clinical staff."
           emptyIcon={<Stethoscope size={48} />}

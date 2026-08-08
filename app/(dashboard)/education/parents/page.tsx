@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, Table, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -149,38 +149,20 @@ export default function EducationParentsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Relation</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {parents.map((p: any) => (
-                <tr key={p.id}>
-                  <td className="font-medium">
-                    {p.firstName} {p.lastName}
-                  </td>
-                  <td>{p.email || "-"}</td>
-                  <td>{p.phone || "-"}</td>
-                  <td>
-                    <span className="ui-badge ui-badge-info">{p.relation}</span>
-                  </td>
-                  <td>
-                    {p.isPrimary ? (
-                      <span className="ui-badge ui-badge-success">Primary</span>
-                    ) : (
-                      <span className="ui-badge">Secondary</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Name" , render: (p: any) => (<>{p.firstName}{p.lastName}</>) },
+                        { key: "col_1", header: "Email" , render: (p: any) => (<>{p.email || "-"}</>) },
+                        { key: "col_2", header: "Phone" , render: (p: any) => (<>{p.phone || "-"}</>) },
+                        { key: "col_3", header: "Relation" , render: (p: any) => (<><span className="ui-badge ui-badge-info">{p.relation}</span></>) },
+                        { key: "col_4", header: "Status" , render: (p: any) => (<>{p.isPrimary ? (
+                                            <span className="ui-badge ui-badge-success">Primary</span>
+                                          ) : (
+                                            <span className="ui-badge">Secondary</span>
+                                          )}</>) },
+                      ];
+                              return <DataTable columns={columns} data={parents} rowKey={(p: any) => p.id} />;
+                          })()}</>
         </div>
       )}
     </div>

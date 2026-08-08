@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Pagination,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Pagination } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, Search, Eye, Edit, FileText, DollarSign } from "lucide-react";
 
@@ -81,33 +67,33 @@ export default function CarrierContractsPage() {
       key: "contractNumber",
       header: "Contract #",
       sortable: true,
-      render: (r) => <span className="ui-link">{r.contractNumber}</span>,
+      render: (r: any) => <span className="ui-link">{r.contractNumber}</span>,
     },
     { key: "title", header: "Title" },
     {
       key: "carrier",
       header: "Carrier",
-      render: (r) => r.carrier?.name ?? "—",
+      render: (r: any) => r.carrier?.name ?? "—",
     },
     {
       key: "contractType",
       header: "Type",
-      render: (r) => <Badge variant="info">{r.contractType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.contractType}</Badge>,
     },
     {
       key: "totalValue",
       header: "Value",
-      render: (r) => fmtCurrency(r.totalValue),
+      render: (r: any) => fmtCurrency(r.totalValue),
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
     {
       key: "startDate",
       header: "Start",
-      render: (r) => new Date(r.startDate).toLocaleDateString(),
+      render: (r: any) => new Date(r.startDate).toLocaleDateString(),
     },
   ];
 
@@ -191,7 +177,7 @@ export default function CarrierContractsPage() {
             columns={columns}
             data={contracts}
             loading={loading}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No contracts"
             emptyMessage="Create your first carrier contract."
             emptyIcon={<FileText size={48} />}

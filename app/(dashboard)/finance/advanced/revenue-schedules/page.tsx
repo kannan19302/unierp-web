@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { TrendingUp, Plus, DollarSign, Clock, CheckCircle } from "lucide-react";
 
@@ -93,7 +81,7 @@ export default function RevenueRecognitionPage() {
     {
       key: "description",
       header: "Contract",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="ui-heading-sm">{row.description}</div>
           <div className="ui-text-xs-tertiary">
@@ -105,7 +93,7 @@ export default function RevenueRecognitionPage() {
     {
       key: "recognitionType",
       header: "Method",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="info">{row.recognitionType.replace("_", " ")}</Badge>
       ),
     },
@@ -113,14 +101,14 @@ export default function RevenueRecognitionPage() {
       key: "totalAmount",
       header: "Total",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmtCurrency(row.totalAmount)}</span>
       ),
     },
     {
       key: "progress",
       header: "Progress",
-      render: (row) => {
+      render: (row: any) => {
         const total = Number(row.totalAmount) || 1;
         const pct = Math.round((Number(row.recognizedAmount) / total) * 100);
         return (
@@ -136,7 +124,7 @@ export default function RevenueRecognitionPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "ACTIVE" ? "success" : "default"}>
           {row.status}
         </Badge>
@@ -189,7 +177,7 @@ export default function RevenueRecognitionPage() {
           columns={columns}
           data={schedules}
           loading={loading}
-          rowKey={(row) => row.id}
+          rowKey={(row: any) => row.id}
           emptyTitle="No revenue schedules"
           emptyMessage="Create a schedule to track deferred revenue recognition."
           emptyIcon={<TrendingUp size={48} />}

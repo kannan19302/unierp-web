@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import {
-  Badge,
-  Button,
-  Card,
-  DataTable,
-  Modal,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { Badge, Button, Card, DataTable, Modal, Tabs, type Column } from "@unerp/ui";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   DetailView,
@@ -47,25 +39,25 @@ const stockColumns: Column<WarehouseStockRow>[] = [
   {
     key: "warehouse",
     header: "Warehouse",
-    render: (r) => `${r.warehouse.name} (${r.warehouse.code})`,
+    render: (r: any) => `${r.warehouse.name} (${r.warehouse.code})`,
   },
   {
     key: "quantity",
     header: "On Hand",
     align: "right",
-    render: (r) => Number(r.quantity).toLocaleString(),
+    render: (r: any) => Number(r.quantity).toLocaleString(),
   },
   {
     key: "reservedQty",
     header: "Reserved",
     align: "right",
-    render: (r) => Number(r.reservedQty ?? 0).toLocaleString(),
+    render: (r: any) => Number(r.reservedQty ?? 0).toLocaleString(),
   },
   {
     key: "valuationRate",
     header: "Valuation Rate",
     align: "right",
-    render: (r) =>
+    render: (r: any) =>
       Number(r.valuationRate ?? 0).toLocaleString(undefined, {
         minimumFractionDigits: 2,
       }),
@@ -78,7 +70,7 @@ const variantColumns: Column<VariantRow>[] = [
   {
     key: "attributes",
     header: "Attributes",
-    render: (r) => (
+    render: (r: any) => (
       <span className={styles.s1}>
         {Object.entries(r.attributes ?? {}).map(([k, v]) => (
           <Badge key={k} variant="info">{`${k}: ${v}`}</Badge>
@@ -90,7 +82,7 @@ const variantColumns: Column<VariantRow>[] = [
     key: "sellPrice",
     header: "Sell Price",
     align: "right",
-    render: (r) =>
+    render: (r: any) =>
       Number(r.sellPrice).toLocaleString(undefined, {
         minimumFractionDigits: 2,
       }),
@@ -170,7 +162,7 @@ export default function ProductDetailPage({
             <DataTable<WarehouseStockRow>
               columns={stockColumns}
               data={stockRows}
-              rowKey={(r) => r.warehouse.id}
+              rowKey={(r: any) => r.warehouse.id}
               emptyTitle="No stock on hand"
               emptyMessage="Stock entries against this product will appear here."
             />
@@ -180,7 +172,7 @@ export default function ProductDetailPage({
             <DataTable<VariantRow>
               columns={variantColumns}
               data={variantRows}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No variants"
               emptyMessage="Add color/size variants of this SKU."
             />
@@ -203,7 +195,7 @@ export default function ProductDetailPage({
               }))}
               data={ledger.data?.data ?? []}
               loading={ledger.isLoading}
-              rowKey={(r, i) => String(r.id ?? i)}
+              rowKey={(r: any, i: any) => String(r.id ?? i)}
               emptyTitle="No ledger entries"
               emptyMessage="Stock movements for this product will appear here."
             />

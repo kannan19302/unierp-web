@@ -1,13 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { Package as InventoryModuleIcon } from "lucide-react";
@@ -17,7 +11,7 @@ const inspectionColumns: ListColumn[] = [
   {
     key: "inspectionNumber",
     header: "QA ID",
-    render: (v) => <span className="font-semibold">{String(v)}</span>,
+    render: (v: any) => <span className="font-semibold">{String(v)}</span>,
   },
   {
     key: "product",
@@ -53,7 +47,7 @@ const inspectionColumns: ListColumn[] = [
   {
     key: "status",
     header: "Disposition Status",
-    render: (v) => (
+    render: (v: any) => (
       <Badge
         variant={
           v === "PASS" ? "success" : v === "PENDING" ? "warning" : "danger"

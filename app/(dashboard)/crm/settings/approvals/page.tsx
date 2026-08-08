@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -355,19 +347,19 @@ export default function ApprovalSettingsPage() {
                 {
                   key: "name",
                   header: "Name",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className={styles.style10}>{String(v)}</span>
                   ),
                 },
                 {
                   key: "entity",
                   header: "Entity",
-                  render: (v) => <Badge>{String(v)}</Badge>,
+                  render: (v: any) => <Badge>{String(v)}</Badge>,
                 },
                 {
                   key: "steps",
                   header: "Steps",
-                  render: (v) => {
+                  render: (v: any) => {
                     const n = (v as any[]).length;
                     return (
                       <Badge variant="info">
@@ -379,7 +371,7 @@ export default function ApprovalSettingsPage() {
                 {
                   key: "isActive",
                   header: "Active",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? (
                       <Badge variant="success">Active</Badge>
                     ) : (
@@ -389,12 +381,12 @@ export default function ApprovalSettingsPage() {
                 {
                   key: "createdAt",
                   header: "Created",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v) => (
+                  render: (v: any) => (
                     <div className={styles.style11}>
                       <button className={styles.style12}>
                         <Edit3 size={16} />

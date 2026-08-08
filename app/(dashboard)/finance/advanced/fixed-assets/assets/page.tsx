@@ -166,7 +166,7 @@ export default function FixedAssetRegistry() {
           {
             key: "assetCode",
             header: "Asset Code",
-            render: (v) => <span className="font-semibold">{v as string}</span>,
+            render: (v: any) => <span className="font-semibold">{v as string}</span>,
           },
           { key: "name", header: "Asset Name" },
           {
@@ -200,19 +200,19 @@ export default function FixedAssetRegistry() {
           {
             key: "purchaseValue",
             header: "Purchase Value",
-            render: (v) => <span>${Number(v).toFixed(2)}</span>,
+            render: (v: any) => <span>${Number(v).toFixed(2)}</span>,
           },
           {
             key: "currentValue",
             header: "Net Book Value",
-            render: (v) => (
+            render: (v: any) => (
               <span className={styles.s12}>${Number(v).toFixed(2)}</span>
             ),
           },
           {
             key: "status",
             header: "Status",
-            render: (v) => {
+            render: (v: any) => {
               const s = v as string;
               return (
                 <span
@@ -232,7 +232,7 @@ export default function FixedAssetRegistry() {
           {
             key: "id",
             header: "Action",
-            render: (v) => (
+            render: (v: any) => (
               <Link
                 href={`/finance/advanced/fixed-assets/assets/${v as string}`}
                 className={`ui-btn ui-btn-primary ${styles.s13}`}

@@ -233,7 +233,7 @@ function AsnsTab() {
           {
             key: "asnNumber",
             header: "ASN #",
-            render: (v) => (
+            render: (v: any) => (
               <span className="text-blue-600 font-medium">{String(v)}</span>
             ),
           },
@@ -242,22 +242,22 @@ function AsnsTab() {
           {
             key: "status",
             header: "Status",
-            render: (v) => statusBadge(String(v)),
+            render: (v: any) => statusBadge(String(v)),
           },
           {
             key: "expectedArrival",
             header: "Expected Arrival",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
           {
             key: "carrierName",
             header: "Carrier",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           {
             key: "trackingNumber",
             header: "Tracking",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
         ] as ListColumn[]
       }
@@ -290,7 +290,7 @@ function InboundTab() {
           {
             key: "shipmentNumber",
             header: "Shipment #",
-            render: (v) => (
+            render: (v: any) => (
               <span className="text-blue-600 font-medium">{String(v)}</span>
             ),
           },
@@ -298,22 +298,22 @@ function InboundTab() {
           {
             key: "status",
             header: "Status",
-            render: (v) => statusBadge(String(v)),
+            render: (v: any) => statusBadge(String(v)),
           },
           {
             key: "trackingNumber",
             header: "Tracking #",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           {
             key: "expectedArrival",
             header: "Expected",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
           {
             key: "arrivedAt",
             header: "Arrived",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
         ] as ListColumn[]
       }
@@ -346,34 +346,34 @@ function OutboundTab() {
           {
             key: "shipmentNumber",
             header: "Shipment #",
-            render: (v) => (
+            render: (v: any) => (
               <span className="text-blue-600 font-medium">{String(v)}</span>
             ),
           },
           {
             key: "salesOrderId",
             header: "Sales Order",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           {
             key: "status",
             header: "Status",
-            render: (v) => statusBadge(String(v)),
+            render: (v: any) => statusBadge(String(v)),
           },
           {
             key: "trackingNumber",
             header: "Tracking #",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           {
             key: "shipDate",
             header: "Ship Date",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
           {
             key: "estimatedDelivery",
             header: "Est. Delivery",
-            render: (v) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
+            render: (v: any) => (v ? new Date(String(v)).toLocaleDateString() : "—"),
           },
         ] as ListColumn[]
       }
@@ -406,23 +406,23 @@ function CarriersTab() {
           {
             key: "code",
             header: "Code",
-            render: (v) => <strong>{String(v)}</strong>,
+            render: (v: any) => <strong>{String(v)}</strong>,
           },
           { key: "name", header: "Name" },
           {
             key: "contactEmail",
             header: "Contact Email",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           {
             key: "trackingUrl",
             header: "Tracking URL",
-            render: (v) => String(v ?? "—"),
+            render: (v: any) => String(v ?? "—"),
           },
           {
             key: "isActive",
             header: "Status",
-            render: (v) => (
+            render: (v: any) => (
               <span
                 className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${v ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-500"}`}
               >

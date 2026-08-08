@@ -43,7 +43,7 @@ export default function LoginHistoryPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={
             r.status === "SUCCESS"
@@ -58,20 +58,20 @@ export default function LoginHistoryPage() {
     {
       key: "ipAddress",
       header: "IP Address",
-      render: (r) => r.ipAddress ?? "-",
+      render: (r: any) => r.ipAddress ?? "-",
     },
-    { key: "location", header: "Location", render: (r) => r.location ?? "-" },
-    { key: "browser", header: "Browser", render: (r) => r.browser ?? "-" },
-    { key: "device", header: "Device", render: (r) => r.device ?? "-" },
+    { key: "location", header: "Location", render: (r: any) => r.location ?? "-" },
+    { key: "browser", header: "Browser", render: (r: any) => r.browser ?? "-" },
+    { key: "device", header: "Device", render: (r: any) => r.device ?? "-" },
     {
       key: "failureReason",
       header: "Reason",
-      render: (r) => r.failureReason ?? "-",
+      render: (r: any) => r.failureReason ?? "-",
     },
     {
       key: "createdAt",
       header: "Date",
-      render: (r) => new Date(r.createdAt).toLocaleString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleString(),
     },
   ];
 

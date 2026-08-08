@@ -2,17 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  Modal,
-  StatCardRow,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable, Modal, StatCardRow, type Column } from "@unerp/ui";
 import {
   Plus,
   DollarSign,
@@ -120,27 +110,27 @@ export default function CommissionsPage() {
     {
       key: "targetType",
       header: "Target",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="default">{row.targetType.replace(/_/g, " ")}</Badge>
       ),
     },
-    { key: "rate", header: "Rate", render: (row) => `${row.rate}%` },
+    { key: "rate", header: "Rate", render: (row: any) => `${row.rate}%` },
     {
       key: "threshold",
       header: "Threshold",
-      render: (row) => `$${row.threshold.toLocaleString()}`,
+      render: (row: any) => `$${row.threshold.toLocaleString()}`,
     },
     {
       key: "maxPayout",
       header: "Max Payout",
-      render: (row) =>
+      render: (row: any) =>
         row.maxPayout ? `$${row.maxPayout.toLocaleString()}` : "—",
     },
     {
       key: "isActive",
       header: "Status",
       sortable: true,
-      render: (row) =>
+      render: (row: any) =>
         row.isActive ? (
           <Badge variant="success">Active</Badge>
         ) : (
@@ -150,7 +140,7 @@ export default function CommissionsPage() {
     {
       key: "id",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <Button
             variant="ghost"
@@ -175,13 +165,13 @@ export default function CommissionsPage() {
     {
       key: "amount",
       header: "Amount",
-      render: (row) => <strong>${row.amount.toLocaleString()}</strong>,
+      render: (row: any) => <strong>${row.amount.toLocaleString()}</strong>,
     },
     { key: "period", header: "Period" },
     {
       key: "status",
       header: "Status",
-      render: (row) =>
+      render: (row: any) =>
         row.status === "PAID" ? (
           <Badge variant="success">Paid</Badge>
         ) : row.status === "PENDING" ? (
@@ -193,7 +183,7 @@ export default function CommissionsPage() {
     {
       key: "paidAt",
       header: "Paid Date",
-      render: (row) =>
+      render: (row: any) =>
         row.paidAt ? new Date(row.paidAt).toLocaleDateString() : "—",
     },
   ];

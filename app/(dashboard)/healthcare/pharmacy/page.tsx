@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -253,58 +253,40 @@ export default function HealthcarePharmacyPage() {
         <div className="ui-card">
           {activeTab === "inventory" && (
             <>
-              <Table className="ui-table">
-                <thead>
-                  <tr>
-                    <th>Drug</th>
-                    <th>Stock</th>
-                    <th>Controlled</th>
-                    <th>Batches</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {drugs.map((d: any) => (
-                    <tr key={d.id}>
-                      <td className="font-medium">{d.name}</td>
-                      <td>
-                        <span
-                          className={
-                            d.quantity < 10 ? "text-red-600 font-semibold" : ""
-                          }
-                        >
-                          {d.quantity}
-                        </span>
-                      </td>
-                      <td>
-                        {d.isControlled ? (
-                          <span className="ui-badge ui-badge-danger">Yes</span>
-                        ) : (
-                          <span className="ui-badge ui-badge-info">No</span>
-                        )}
-                      </td>
-                      <td>{d.batches?.length || 0}</td>
-                      <td>
-                        <div className="flex gap-1">
-                          {d.quantity > 0 && (
-                            <button
-                              className="ui-btn ui-btn-sm ui-btn-outline"
-                              onClick={() => {
-                                setDispenseForm({
-                                  ...dispenseForm,
-                                  drugId: d.id,
-                                });
-                              }}
-                            >
-                              Dispense
-                            </button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Drug" , render: (d: any) => (<>{d.name}</>) },
+                                { key: "col_1", header: "Stock" , render: (d: any) => (<><span
+                                                        className={
+                                                          d.quantity < 10 ? "text-red-600 font-semibold" : ""
+                                                        }
+                                                      >
+                                                        {d.quantity}
+                                                      </span></>) },
+                                { key: "col_2", header: "Controlled" , render: (d: any) => (<>{d.isControlled ? (
+                                                        <span className="ui-badge ui-badge-danger">Yes</span>
+                                                      ) : (
+                                                        <span className="ui-badge ui-badge-info">No</span>
+                                                      )}</>) },
+                                { key: "col_3", header: "Batches" , render: (d: any) => (<>{d.batches?.length || 0}</>) },
+                                { key: "col_4", header: "Actions" , render: (d: any) => (<><div className="flex gap-1">
+                                                        {d.quantity > 0 && (
+                                                          <button
+                                                            className="ui-btn ui-btn-sm ui-btn-outline"
+                                                            onClick={() => {
+                                                              setDispenseForm({
+                                                                ...dispenseForm,
+                                                                drugId: d.id,
+                                                              });
+                                                            }}
+                                                          >
+                                                            Dispense
+                                                          </button>
+                                                        )}
+                                                      </div></>) },
+                              ];
+                                      return <DataTable columns={columns} data={drugs} rowKey={(d: any) => d.id} />;
+                                  })()}</>
               {dispenseForm.drugId && (
                 <div className="mt-4 p-4 border rounded-lg">
                   <h4 className="font-semibold mb-2">
@@ -371,77 +353,37 @@ export default function HealthcarePharmacyPage() {
             </>
           )}
           {activeTab === "batches" && (
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Drug</th>
-                  <th>Batch #</th>
-                  <th>Qty</th>
-                  <th>Remaining</th>
-                  <th>Expiry</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {drugs.flatMap((d: any) =>
-                  (d.batches || []).map((b: any) => (
-                    <tr key={b.id}>
-                      <td>{d.name}</td>
-                      <td>{b.batchNumber}</td>
-                      <td>{b.quantity}</td>
-                      <td>{b.remainingQty}</td>
-                      <td
-                        className={
-                          b.expiryDate && new Date(b.expiryDate) < new Date()
-                            ? "text-red-600"
-                            : ""
-                        }
-                      >
-                        {b.expiryDate
-                          ? new Date(b.expiryDate).toLocaleDateString()
-                          : "-"}
-                      </td>
-                      <td>
-                        <span
-                          className={`ui-badge ${b.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-danger"}`}
-                        >
-                          {b.status}
-                        </span>
-                      </td>
-                    </tr>
-                  )),
-                )}
-                )
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Drug", render: (b: any) => (<>{d.name}</>) },
+                            { key: "col_1", header: "Batch #", render: (b: any) => (<>{b.batchNumber}</>) },
+                            { key: "col_2", header: "Qty", render: (b: any) => (<>{b.quantity}</>) },
+                            { key: "col_3", header: "Remaining", render: (b: any) => (<>{b.remainingQty}</>) },
+                            { key: "col_4", header: "Expiry", render: (b: any) => (<>{b.expiryDate
+                                                    ? new Date(b.expiryDate).toLocaleDateString()
+                                                    : "-"}</>) },
+                            { key: "col_5", header: "Status", render: (b: any) => (<><span
+                                                    className={`ui-badge ${b.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-danger"}`}
+                                                  >
+                                                    {b.status}
+                                                  </span></>) },
+                          ];
+                                    return <DataTable columns={columns} data={(d.batches || [])} rowKey={(b: any) => b.id} />;
+                                  })()}</>
           )}
           {activeTab === "controlled" && (
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Drug</th>
-                  <th>Action</th>
-                  <th>Qty</th>
-                  <th>Administered By</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {controlledLogs.map((l: any) => (
-                  <tr key={l.id}>
-                    <td>{l.drug?.name}</td>
-                    <td>
-                      <span className="ui-badge ui-badge-warning">
-                        {l.action}
-                      </span>
-                    </td>
-                    <td>{l.quantity}</td>
-                    <td>{l.administeredBy}</td>
-                    <td>{new Date(l.loggedAt).toLocaleString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Drug" , render: (l: any) => (<>{l.drug?.name}</>) },
+                            { key: "col_1", header: "Action" , render: (l: any) => (<><span className="ui-badge ui-badge-warning">
+                                                  {l.action}
+                                                </span></>) },
+                            { key: "col_2", header: "Qty" , render: (l: any) => (<>{l.quantity}</>) },
+                            { key: "col_3", header: "Administered By" , render: (l: any) => (<>{l.administeredBy}</>) },
+                            { key: "col_4", header: "Date" , render: (l: any) => (<>{new Date(l.loggedAt).toLocaleString()}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={controlledLogs} rowKey={(l: any) => l.id} />;
+                              })()}</>
           )}
         </div>
       )}

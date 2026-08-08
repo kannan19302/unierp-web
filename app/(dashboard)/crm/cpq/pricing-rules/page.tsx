@@ -2,21 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Button,
-  Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  Modal,
-  useToast,
-  DataTable,
-  Input,
-  Select,
-  ProtectedComponent,
-  type Column,
-  type SortOrder,
-} from "@unerp/ui";
+import { Button, Card, PageHeader, Spinner, Badge, Modal, useToast, DataTable, Input, Select, ProtectedComponent, type Column, type SortOrder } from "@unerp/ui";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 
 const RULE_TYPES = [

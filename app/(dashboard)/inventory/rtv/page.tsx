@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  Badge,
-  StatCardRow,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { PageHeader, Button, Badge, StatCardRow, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   AlertCircle,
@@ -72,7 +65,7 @@ const makeRmaColumns = (
   {
     key: "rmaNumber",
     header: "RMA #",
-    render: (v) => <span className={styles.s1}>{String(v)}</span>,
+    render: (v: any) => <span className={styles.s1}>{String(v)}</span>,
   },
   {
     key: "vendor",
@@ -85,7 +78,7 @@ const makeRmaColumns = (
   {
     key: "vendorRmaRef",
     header: "Vendor RMA Ref",
-    render: (v) => <span className={styles.s1}>{String(v ?? "—")}</span>,
+    render: (v: any) => <span className={styles.s1}>{String(v ?? "—")}</span>,
   },
   {
     key: "reasonCode",
@@ -106,7 +99,7 @@ const makeRmaColumns = (
   {
     key: "status",
     header: "Status",
-    render: (v) => (
+    render: (v: any) => (
       <Badge variant={STATUS_VARIANT[String(v)] ?? "default"}>
         {String(v)}
       </Badge>
@@ -181,7 +174,7 @@ const makeShipmentColumns = (
   {
     key: "shipmentNumber",
     header: "Shipment #",
-    render: (v) => <span className={styles.s1}>{String(v)}</span>,
+    render: (v: any) => <span className={styles.s1}>{String(v)}</span>,
   },
   {
     key: "rmaRequest",
@@ -220,7 +213,7 @@ const makeShipmentColumns = (
   {
     key: "status",
     header: "Status",
-    render: (v) => (
+    render: (v: any) => (
       <Badge variant={STATUS_VARIANT[String(v)] ?? "default"}>
         {String(v)}
       </Badge>

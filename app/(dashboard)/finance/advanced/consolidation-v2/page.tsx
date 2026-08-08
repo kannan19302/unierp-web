@@ -390,29 +390,29 @@ export default function ConsolidationV2Page() {
                       {
                         key: "groupName",
                         header: "Group",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "parentEntity",
                         header: "Parent",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "members",
                         header: "Members",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "currency",
                         header: "Currency",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "ACTIVE" ? "ui-badge-green" : "ui-badge-gray"}`}
                           >
@@ -423,7 +423,7 @@ export default function ConsolidationV2Page() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v) => (
+                        render: (v: any) => (
                           <button
                             onClick={() => handleAddMembers(String(v))}
                             className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded hover:bg-blue-100"
@@ -512,19 +512,19 @@ export default function ConsolidationV2Page() {
                       {
                         key: "groupName",
                         header: "Group",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "period",
                         header: "Period",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "COMPLETED" ? "ui-badge-green" : v === "RUNNING" ? "ui-badge-blue" : "ui-badge-yellow"}`}
                           >
@@ -535,12 +535,12 @@ export default function ConsolidationV2Page() {
                       {
                         key: "startedAt",
                         header: "Started",
-                        render: (v) => new Date(String(v)).toLocaleString(),
+                        render: (v: any) => new Date(String(v)).toLocaleString(),
                       },
                       {
                         key: "entriesPosted",
                         header: "Entries",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                     ] as ListColumn[]
                   }
@@ -645,29 +645,29 @@ export default function ConsolidationV2Page() {
                       {
                         key: "ruleName",
                         header: "Rule",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "fromEntity",
                         header: "From",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "toEntity",
                         header: "To",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "accountType",
                         header: "Account Type",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "active",
                         header: "Active",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <span className="text-green-600 font-medium">
                               Yes
@@ -777,29 +777,29 @@ export default function ConsolidationV2Page() {
                       {
                         key: "entityName",
                         header: "Entity",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "minorityShare",
                         header: "Share %",
-                        render: (v) => `${Number(v)}%`,
+                        render: (v: any) => `${Number(v)}%`,
                       },
                       {
                         key: "netIncome",
                         header: "Net Income",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "minorityInterestAmount",
                         header: "Minority Interest",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "period",
                         header: "Period",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                     ] as ListColumn[]
                   }

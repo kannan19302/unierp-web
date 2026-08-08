@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, AlertCircle, PackageCheck, Truck } from "lucide-react";
 
@@ -184,19 +176,19 @@ export default function LicensePlatesPage() {
                     {
                       key: "code",
                       header: "Code",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-mono">{String(v)}</span>
                       ),
                     },
                     {
                       key: "items",
                       header: "Items",
-                      render: (v) => String((v as any)?.length ?? 0),
+                      render: (v: any) => String((v as any)?.length ?? 0),
                     },
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => (
+                      render: (v: any) => (
                         <Badge
                           variant={
                             v === "OPEN"
@@ -242,7 +234,7 @@ export default function LicensePlatesPage() {
                     {
                       key: "stockEntryId",
                       header: "Stock Entry",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-mono">{String(v)}</span>
                       ),
                     },
@@ -250,12 +242,12 @@ export default function LicensePlatesPage() {
                     {
                       key: "suggestedBin",
                       header: "Suggested Bin",
-                      render: (v) => String((v as any)?.code || "—"),
+                      render: (v: any) => String((v as any)?.code || "—"),
                     },
                     {
                       key: "id",
                       header: "Actions",
-                      render: (v) => (
+                      render: (v: any) => (
                         <button
                           onClick={() => handleCompleteTask(String(v))}
                           className={`ui-btn ui-btn-primary ${styles.s4}`}

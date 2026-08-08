@@ -2,20 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import {
   DollarSign,
   Plus,
@@ -120,7 +107,7 @@ export default function FeeManagementPage() {
     {
       key: "name",
       header: "Fee Structure",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="ui-heading-sm">{row.name}</div>
           {row.description && (
@@ -133,14 +120,14 @@ export default function FeeManagementPage() {
       key: "amount",
       header: "Amount",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmtCurrency(row.amount)}</span>
       ),
     },
     {
       key: "dueDate",
       header: "Due Date",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.dueDate ? new Date(row.dueDate).toLocaleDateString() : "—"}
         </span>
@@ -222,7 +209,7 @@ export default function FeeManagementPage() {
             <DataTable
               columns={structureColumns}
               data={structures}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No fee structures"
               emptyMessage="Create fee structures to start managing academic fees."
               emptyIcon={<DollarSign size={48} />}
@@ -293,7 +280,7 @@ export default function FeeManagementPage() {
                 ] as Column<StudentFee>[]
               }
               data={studentFees}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No student fees"
               emptyMessage="Student fee records will appear here."
               emptyIcon={<DollarSign size={48} />}

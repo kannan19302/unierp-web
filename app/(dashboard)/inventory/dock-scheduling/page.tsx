@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, AlertCircle, Truck } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -119,19 +112,19 @@ export default function DockSchedulingPage() {
     {
       key: "dockDoor",
       header: "Dock Door",
-      render: (v) => <span className="font-mono">{String(v)}</span>,
+      render: (v: any) => <span className="font-mono">{String(v)}</span>,
     },
     { key: "type", header: "Type" },
     { key: "carrierName", header: "Carrier" },
     {
       key: "scheduledAt",
       header: "Scheduled",
-      render: (v) => new Date(String(v)).toLocaleString(),
+      render: (v: any) => new Date(String(v)).toLocaleString(),
     },
     {
       key: "status",
       header: "Status",
-      render: (v) => {
+      render: (v: any) => {
         const s = String(v);
         return (
           <Badge

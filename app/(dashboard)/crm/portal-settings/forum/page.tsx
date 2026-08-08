@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
 import {
   MessageSquare,
   Plus,
@@ -173,109 +173,40 @@ export default function PortalForumPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Customer</th>
-                  <th>Category</th>
-                  <th>Status</th>
-                  <th>Replies</th>
-                  <th>Views</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topics.map((t) => (
-                  <React.Fragment key={t.id}>
-                    <tr>
-                      <td>
-                        <strong>
-                          {t.isPinned && "📌 "}
-                          {t.title}
-                        </strong>
-                      </td>
-                      <td className="ui-text-xs">
-                        {t.customerId.substring(0, 8)}
-                      </td>
-                      <td>
-                        <Badge>{t.category || "General"}</Badge>
-                      </td>
-                      <td>
-                        <Badge variant={statusBadge[t.status] || "default"}>
-                          {t.status}
-                        </Badge>
-                      </td>
-                      <td>{t._count?.replies || 0}</td>
-                      <td>
-                        <Eye size={12} /> {t.viewCount}
-                      </td>
-                      <td>
-                        <div className="ui-flex ui-gap-1">
-                          <button
-                            className="ui-btn-icon"
-                            onClick={() => loadReplies(t.id)}
-                            title="Replies"
-                          >
-                            <MessageCircle size={14} />
-                          </button>
-                          {t.status !== "CLOSED" && (
-                            <button
-                              className="ui-btn-icon"
-                              onClick={() => closeTopic(t.id)}
-                              title="Close"
-                            >
-                              <Lock size={14} />
-                            </button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                    {expandedTopic === t.id && (
-                      <tr>
-                        <td colSpan={7}>
-                          <div className="ui-p-2">
-                            <p className="ui-text-sm">{t.content}</p>
-                            {(replies[t.id] || []).map((r: any) => (
-                              <div
-                                key={r.id}
-                                className="ui-flex ui-items-start ui-gap-2 ui-py-1 ui-border-b ui-ml-4"
-                              >
-                                <MessageSquare size={12} className="ui-mt-1" />
-                                <div className="ui-flex-1">
-                                  <p className="ui-text-sm">{r.content}</p>
-                                  <p className="ui-text-xs text-muted">
-                                    {r.authorRole} ·{" "}
-                                    {new Date(r.createdAt).toLocaleDateString()}
-                                    {r.isAnswer && (
-                                      <Badge
-                                        variant="success"
-                                        className="ui-ml-1"
-                                      >
-                                        Answer
-                                      </Badge>
-                                    )}
-                                  </p>
-                                </div>
-                                {!r.isAnswer && (
-                                  <button
-                                    className="ui-btn-icon"
-                                    onClick={() => markAnswer(r.id)}
-                                    title="Mark as answer"
-                                  >
-                                    <CheckCircle size={14} />
-                                  </button>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Title", render: (t: any) => (<><strong>
+                                                    {t.isPinned && "📌 "}
+                                                    {t.title}
+                                                  </strong></>) },
+                            { key: "col_1", header: "Customer", render: (t: any) => (<>{t.customerId.substring(0, 8)}</>) },
+                            { key: "col_2", header: "Category", render: (t: any) => (<><Badge>{t.category || "General"}</Badge></>) },
+                            { key: "col_3", header: "Status", render: (t: any) => (<><Badge variant={statusBadge[t.status] || "default"}>
+                                                    {t.status}
+                                                  </Badge></>) },
+                            { key: "col_4", header: "Replies", render: (t: any) => (<>{t._count?.replies || 0}</>) },
+                            { key: "col_5", header: "Views", render: (t: any) => (<><Eye size={12} /> {t.viewCount}</>) },
+                            { key: "col_6", header: "Actions", render: (t: any) => (<><div className="ui-flex ui-gap-1">
+                                                    <button
+                                                      className="ui-btn-icon"
+                                                      onClick={() => loadReplies(t.id)}
+                                                      title="Replies"
+                                                    >
+                                                      <MessageCircle size={14} />
+                                                    </button>
+                                                    {t.status !== "CLOSED" && (
+                                                      <button
+                                                        className="ui-btn-icon"
+                                                        onClick={() => closeTopic(t.id)}
+                                                        title="Close"
+                                                      >
+                                                        <Lock size={14} />
+                                                      </button>
+                                                    )}
+                                                  </div></>) },
+                          ];
+                                    return <DataTable columns={columns} data={topics} rowKey={(t: any, i: any) => String(i)} />;
+                                  })()}</>
           </div>
         </Card>
       )}

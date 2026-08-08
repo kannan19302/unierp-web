@@ -1,20 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Select,
-  FormField,
-  Badge,
-  StatusBadge,
-  Spinner,
-  Pagination,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Select, FormField, Badge, StatusBadge, Spinner, Pagination } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, Search, Briefcase } from "lucide-react";
 import Link from "next/link";
@@ -110,7 +96,7 @@ export default function SourcingPage() {
     {
       key: "projectNumber",
       header: "Project #",
-      render: (r) => (
+      render: (r: any) => (
         <Link href={`/procurement/sourcing/${r.id}`} className="ui-link">
           {r.projectNumber}
         </Link>
@@ -120,12 +106,12 @@ export default function SourcingPage() {
     {
       key: "category",
       header: "Category",
-      render: (r) => (r.category ? <Badge>{r.category}</Badge> : "—"),
+      render: (r: any) => (r.category ? <Badge>{r.category}</Badge> : "—"),
     },
     {
       key: "estimatedValue",
       header: "Est. Value",
-      render: (r) =>
+      render: (r: any) =>
         r.estimatedValue
           ? `${r.currency} ${Number(r.estimatedValue).toLocaleString()}`
           : "—",
@@ -133,7 +119,7 @@ export default function SourcingPage() {
     {
       key: "expectedSavings",
       header: "Savings",
-      render: (r) =>
+      render: (r: any) =>
         r.expectedSavings
           ? `$${Number(r.expectedSavings).toLocaleString()}`
           : "—",
@@ -141,23 +127,23 @@ export default function SourcingPage() {
     {
       key: "targetDate",
       header: "Target",
-      render: (r) =>
+      render: (r: any) =>
         r.targetDate ? new Date(r.targetDate).toLocaleDateString() : "—",
     },
     {
       key: "evaluations",
       header: "Evaluations",
-      render: (r) => r._count?.evaluations ?? 0,
+      render: (r: any) => r._count?.evaluations ?? 0,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -183,7 +169,7 @@ export default function SourcingPage() {
           columns={columns}
           data={filtered}
           loading={loading}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No sourcing projects"
           emptyMessage="Create your first sourcing project."
           emptyIcon={<Briefcase size={48} />}

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, Table, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -202,57 +202,37 @@ export default function EducationEnrollmentsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Student</th>
-                <th>Course</th>
-                <th>Academic Year</th>
-                <th>Semester</th>
-                <th>Status</th>
-                <th>Enrolled</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {enrollments.map((e: any) => (
-                <tr key={e.id}>
-                  <td className="font-medium">
-                    {e.student?.firstName} {e.student?.lastName}
-                  </td>
-                  <td>{e.course?.name}</td>
-                  <td>{e.academicYear}</td>
-                  <td>{e.semester}</td>
-                  <td>
-                    <span
-                      className={`ui-badge ${e.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-info"}`}
-                    >
-                      {e.status}
-                    </span>
-                  </td>
-                  <td>{new Date(e.enrollmentDate).toLocaleDateString()}</td>
-                  <td>
-                    <div className="flex gap-1">
-                      {e.status === "ACTIVE" && (
-                        <button
-                          className="ui-btn ui-btn-sm ui-btn-outline"
-                          onClick={() => updateStatus(e.id, "COMPLETED")}
-                        >
-                          Complete
-                        </button>
-                      )}
-                      <button
-                        className="ui-btn ui-btn-sm ui-btn-danger"
-                        onClick={() => updateStatus(e.id, "DROPPED")}
-                      >
-                        Drop
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Student" , render: (e: any) => (<>{e.student?.firstName}{e.student?.lastName}</>) },
+                        { key: "col_1", header: "Course" , render: (e: any) => (<>{e.course?.name}</>) },
+                        { key: "col_2", header: "Academic Year" , render: (e: any) => (<>{e.academicYear}</>) },
+                        { key: "col_3", header: "Semester" , render: (e: any) => (<>{e.semester}</>) },
+                        { key: "col_4", header: "Status" , render: (e: any) => (<><span
+                                            className={`ui-badge ${e.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-info"}`}
+                                          >
+                                            {e.status}
+                                          </span></>) },
+                        { key: "col_5", header: "Enrolled" , render: (e: any) => (<>{new Date(e.enrollmentDate).toLocaleDateString()}</>) },
+                        { key: "col_6", header: "Actions" , render: (e: any) => (<><div className="flex gap-1">
+                                            {e.status === "ACTIVE" && (
+                                              <button
+                                                className="ui-btn ui-btn-sm ui-btn-outline"
+                                                onClick={() => updateStatus(e.id, "COMPLETED")}
+                                              >
+                                                Complete
+                                              </button>
+                                            )}
+                                            <button
+                                              className="ui-btn ui-btn-sm ui-btn-danger"
+                                              onClick={() => updateStatus(e.id, "DROPPED")}
+                                            >
+                                              Drop
+                                            </button>
+                                          </div></>) },
+                      ];
+                              return <DataTable columns={columns} data={enrollments} rowKey={(e: any) => e.id} />;
+                          })()}</>
         </div>
       )}
     </div>

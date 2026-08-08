@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import {
   DollarSign,
   Plus,
@@ -201,11 +191,11 @@ export default function CommissionPlansPage() {
   };
 
   const planColumns: Column<Plan>[] = [
-    { key: "name", header: "Plan", render: (p) => <strong>{p.name}</strong> },
+    { key: "name", header: "Plan", render: (p: any) => <strong>{p.name}</strong> },
     {
       key: "tiers",
       header: "Accelerator Tiers",
-      render: (p) => (
+      render: (p: any) => (
         <div className={styles.p20}>
           {p.tiers.length === 0 ? (
             <span className="ui-text-muted">None yet</span>
@@ -225,18 +215,18 @@ export default function CommissionPlansPage() {
       key: "spiffs",
       header: "SPIFFs",
       align: "right",
-      render: (p) => p._count?.spiffs ?? 0,
+      render: (p: any) => p._count?.spiffs ?? 0,
     },
     {
       key: "payouts",
       header: "Payouts",
       align: "right",
-      render: (p) => p._count?.payouts ?? 0,
+      render: (p: any) => p._count?.payouts ?? 0,
     },
     {
       key: "isActive",
       header: "Status",
-      render: (p) => (
+      render: (p: any) => (
         <Badge variant={p.isActive ? "success" : "default"}>
           {p.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -246,7 +236,7 @@ export default function CommissionPlansPage() {
       key: "actions",
       header: "",
       align: "right",
-      render: (p) => (
+      render: (p: any) => (
         <ProtectedComponent permission="crm.commission.manage">
           <Button variant="secondary" onClick={() => setTierModalPlanId(p.id)}>
             Add Tier
@@ -258,36 +248,36 @@ export default function CommissionPlansPage() {
 
   const payoutColumns: Column<Payout>[] = [
     { key: "userName", header: "Rep" },
-    { key: "plan", header: "Plan", render: (p) => p.plan?.name ?? "—" },
+    { key: "plan", header: "Plan", render: (p: any) => p.plan?.name ?? "—" },
     { key: "period", header: "Period" },
     {
       key: "attainmentPct",
       header: "Attainment",
       align: "right",
-      render: (p) => `${Number(p.attainmentPct).toFixed(1)}%`,
+      render: (p: any) => `${Number(p.attainmentPct).toFixed(1)}%`,
     },
     {
       key: "tieredCommission",
       header: "Tiered Commission",
       align: "right",
-      render: (p) => `$${Number(p.tieredCommission).toLocaleString()}`,
+      render: (p: any) => `$${Number(p.tieredCommission).toLocaleString()}`,
     },
     {
       key: "spiffBonus",
       header: "SPIFF Bonus",
       align: "right",
-      render: (p) => `$${Number(p.spiffBonus).toLocaleString()}`,
+      render: (p: any) => `$${Number(p.spiffBonus).toLocaleString()}`,
     },
     {
       key: "totalPayout",
       header: "Total",
       align: "right",
-      render: (p) => <strong>${Number(p.totalPayout).toLocaleString()}</strong>,
+      render: (p: any) => <strong>${Number(p.totalPayout).toLocaleString()}</strong>,
     },
     {
       key: "status",
       header: "Status",
-      render: (p) => (
+      render: (p: any) => (
         <Badge
           variant={
             p.status === "PAID"
@@ -305,7 +295,7 @@ export default function CommissionPlansPage() {
       key: "actions",
       header: "",
       align: "right",
-      render: (p) => (
+      render: (p: any) => (
         <ProtectedComponent permission="crm.commission.manage">
           <div className="ui-flex-end ui-gap-2">
             {p.status === "DRAFT" && (
@@ -406,7 +396,7 @@ export default function CommissionPlansPage() {
             <DataTable<Plan>
               columns={planColumns}
               data={plans}
-              rowKey={(p) => p.id}
+              rowKey={(p: any) => p.id}
             />
           )
         ) : payouts.length === 0 ? (
@@ -418,7 +408,7 @@ export default function CommissionPlansPage() {
           <DataTable<Payout>
             columns={payoutColumns}
             data={payouts}
-            rowKey={(p) => p.id}
+            rowKey={(p: any) => p.id}
           />
         )}
       </Card>

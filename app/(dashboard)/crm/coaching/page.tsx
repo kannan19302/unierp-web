@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { GraduationCap, Plus, X, BookOpen } from "lucide-react";
 import { apiGet, apiPost, ApiRequestError } from "../../../../src/lib/api";
 import styles from "./page.module.css";
@@ -144,7 +134,7 @@ export default function CoachingPage() {
       key: "averageScorePct",
       header: "Avg Score",
       align: "right",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.averageScorePct >= 80
@@ -162,7 +152,7 @@ export default function CoachingPage() {
       key: "averageTalkRatio",
       header: "Avg Talk Ratio",
       align: "right",
-      render: (r) =>
+      render: (r: any) =>
         r.averageTalkRatio != null ? `${r.averageTalkRatio}%` : "—",
     },
   ];
@@ -172,12 +162,12 @@ export default function CoachingPage() {
     {
       key: "criteria",
       header: "Criteria",
-      render: (r) => `${r.criteria.length} scored criteria`,
+      render: (r: any) => `${r.criteria.length} scored criteria`,
     },
     {
       key: "isActive",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.isActive ? "success" : "default"}>
           {r.isActive ? "Active" : "Inactive"}
         </Badge>
@@ -190,9 +180,9 @@ export default function CoachingPage() {
     {
       key: "category",
       header: "Category",
-      render: (l) => l.category.replace(/_/g, " "),
+      render: (l: any) => l.category.replace(/_/g, " "),
     },
-    { key: "tags", header: "Tags", render: (l) => l.tags.join(", ") || "—" },
+    { key: "tags", header: "Tags", render: (l: any) => l.tags.join(", ") || "—" },
   ];
 
   return (
@@ -238,7 +228,7 @@ export default function CoachingPage() {
             <DataTable<TeamRow>
               columns={teamColumns}
               data={team}
-              rowKey={(r) => r.repUserId}
+              rowKey={(r: any) => r.repUserId}
             />
           )}
         </Card>
@@ -273,7 +263,7 @@ export default function CoachingPage() {
             <DataTable<Rubric>
               columns={rubricColumns}
               data={rubrics}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
             />
           )}
         </Card>
@@ -297,7 +287,7 @@ export default function CoachingPage() {
             <DataTable<LibraryItem>
               columns={libraryColumns}
               data={library}
-              rowKey={(l) => l.id}
+              rowKey={(l: any) => l.id}
             />
           )}
         </Card>

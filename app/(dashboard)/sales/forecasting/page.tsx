@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  StatCardRow,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable, StatCardRow, type Column } from "@unerp/ui";
 import {
   TrendingUp,
   DollarSign,
@@ -81,12 +72,12 @@ export default function SalesForecastingPage() {
       key: "forecastNextMonth",
       header: "Forecast (Next Month)",
       sortable: true,
-      render: (row) => <strong>{row.forecastNextMonth}</strong>,
+      render: (row: any) => <strong>{row.forecastNextMonth}</strong>,
     },
     {
       key: "reorderPoint",
       header: "Reorder Point",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={row.currentStock <= row.reorderPoint ? "danger" : "default"}
         >

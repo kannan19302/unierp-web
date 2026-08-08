@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Award, UserCheck, TrendingUp } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -107,38 +107,20 @@ export default function AdvancedHrSuccessionPage() {
             No succession plans defined.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Plan Name</th>
-                <th style={{ padding: "12px" }}>Urgency</th>
-                <th style={{ padding: "12px" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {plans.map((p) => (
-                <tr key={p.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {p.planName}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge
-                      variant={p.urgencyLevel === "HIGH" ? "danger" : "warning"}
-                    >
-                      {p.urgencyLevel}
-                    </Badge>
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Button size="sm" variant="outline">
-                      Add Candidate
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Plan Name" , render: (p: any) => (<>{p.planName}</>) },
+                        { key: "col_1", header: "Urgency" , render: (p: any) => (<><Badge
+                                            variant={p.urgencyLevel === "HIGH" ? "danger" : "warning"}
+                                          >
+                                            {p.urgencyLevel}
+                                          </Badge></>) },
+                        { key: "col_2", header: "Action" , render: (p: any) => (<><Button size="sm" variant="outline">
+                                            Add Candidate
+                                          </Button></>) },
+                      ];
+                              return <DataTable columns={columns} data={plans} rowKey={(p: any) => p.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

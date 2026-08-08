@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  StatusBadge,
-  DataTable,
-  StatCardRow,
-  Modal,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Button, StatusBadge, DataTable, StatCardRow, Modal, type Column } from "@unerp/ui";
 import {
   Plus,
   Eye,
@@ -121,38 +113,38 @@ export default function DropShipPage() {
     {
       key: "orderNumber",
       header: "Order Number",
-      render: (row) => <span className={styles.s1}>{row.orderNumber}</span>,
+      render: (row: any) => <span className={styles.s1}>{row.orderNumber}</span>,
     },
     {
       key: "provider",
       header: "Provider",
-      render: (row) => row.provider?.name ?? row.providerId,
+      render: (row: any) => row.provider?.name ?? row.providerId,
     },
     {
       key: "vendor",
       header: "Vendor",
-      render: (row) => row.vendor?.name ?? row.vendorId,
+      render: (row: any) => row.vendor?.name ?? row.vendorId,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     { key: "shipMethod", header: "Ship Method" },
     {
       key: "trackingNumber",
       header: "Tracking",
-      render: (row) => row.trackingNumber ?? "—",
+      render: (row: any) => row.trackingNumber ?? "—",
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (row) => new Date(row.createdAt).toLocaleDateString(),
+      render: (row: any) => new Date(row.createdAt).toLocaleDateString(),
     },
     {
       key: "id",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s2}>
           <button
             className={`ui-btn ${styles.s3}`}

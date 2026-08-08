@@ -12,7 +12,7 @@ import {
   ChevronDown,
   ChevronRight,
 } from "lucide-react";
-import { Card, Button, Badge, Table } from "@unerp/ui";
+import { Card, Button, Badge, Table, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface Vendor {
@@ -319,52 +319,30 @@ export default function SupplierPortalPage() {
                       above.
                     </div>
                   ) : (
-                    <Table className={styles.p20}>
-                      <thead>
-                        <tr className={styles.p21}>
-                          {["Email", "Status", "Last Login", "Invited", ""].map(
-                            (h) => (
-                              <th key={h} className={styles.p22}>
-                                {h}
-                              </th>
-                            ),
-                          )}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {portalUsers.map((u) => (
-                          <tr key={u.id} className="border-b">
-                            <td className="p-3">{u.email}</td>
-                            <td className="p-3">
-                              <Badge
-                                variant={statusVariant(u.status)}
-                                size="sm"
-                              >
-                                {u.status}
-                              </Badge>
-                            </td>
-                            <td className={styles.p23}>
-                              {u.lastLoginAt
-                                ? new Date(u.lastLoginAt).toLocaleDateString()
-                                : "—"}
-                            </td>
-                            <td className={styles.p24}>
-                              {new Date(u.createdAt).toLocaleDateString()}
-                            </td>
-                            <td className="p-3">
-                              {u.status !== "DISABLED" && (
-                                <button
-                                  onClick={() => disable(u.id)}
-                                  className={styles.p25}
-                                >
-                                  <Ban size={12} /> Disable
-                                </button>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                    <>{(() => {
+                                                      const columns = [
+                                                { key: "col_0", header: "{h}" , render: (u: any) => (<>{u.email}</>) },
+                                                { key: "col_1", header: "Col 1" , render: (u: any) => (<><Badge
+                                                                              variant={statusVariant(u.status)}
+                                                                              size="sm"
+                                                                            >
+                                                                              {u.status}
+                                                                            </Badge></>) },
+                                                { key: "col_2", header: "Col 2" , render: (u: any) => (<>{u.lastLoginAt
+                                                                              ? new Date(u.lastLoginAt).toLocaleDateString()
+                                                                              : "—"}</>) },
+                                                { key: "col_3", header: "Col 3" , render: (u: any) => (<>{new Date(u.createdAt).toLocaleDateString()}</>) },
+                                                { key: "col_4", header: "Col 4" , render: (u: any) => (<>{u.status !== "DISABLED" && (
+                                                                              <button
+                                                                                onClick={() => disable(u.id)}
+                                                                                className={styles.p25}
+                                                                              >
+                                                                                <Ban size={12} /> Disable
+                                                                              </button>
+                                                                            )}</>) },
+                                              ];
+                                                      return <DataTable columns={columns} data={portalUsers} rowKey={(u: any) => u.id} />;
+                                                  })()}</>
                   )}
                 </div>
               </Card>
@@ -383,42 +361,22 @@ export default function SupplierPortalPage() {
                       No purchase orders for this vendor.
                     </div>
                   ) : (
-                    <Table className={styles.p29}>
-                      <thead>
-                        <tr className={styles.p30}>
-                          {["PO Number", "Status", "Amount", "Created"].map(
-                            (h) => (
-                              <th key={h} className={styles.p31}>
-                                {h}
-                              </th>
-                            ),
-                          )}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {purchaseOrders.map((po) => (
-                          <tr key={po.id} className="border-b">
-                            <td className={styles.p32}>{po.poNumber}</td>
-                            <td className="p-3">
-                              <Badge
-                                variant={statusVariant(po.status)}
-                                size="sm"
-                              >
-                                {po.status}
-                              </Badge>
-                            </td>
-                            <td className="p-3">
-                              {po.totalAmount != null
-                                ? `${po.currency || "USD"} ${po.totalAmount.toLocaleString()}`
-                                : "—"}
-                            </td>
-                            <td className={styles.p33}>
-                              {new Date(po.createdAt).toLocaleDateString()}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                    <>{(() => {
+                                                      const columns = [
+                                                { key: "col_0", header: "{h}" , render: (po: any) => (<>{po.poNumber}</>) },
+                                                { key: "col_1", header: "Col 1" , render: (po: any) => (<><Badge
+                                                                              variant={statusVariant(po.status)}
+                                                                              size="sm"
+                                                                            >
+                                                                              {po.status}
+                                                                            </Badge></>) },
+                                                { key: "col_2", header: "Col 2" , render: (po: any) => (<>{po.totalAmount != null
+                                                                              ? `${po.currency || "USD"} ${po.totalAmount.toLocaleString()}`
+                                                                              : "—"}</>) },
+                                                { key: "col_3", header: "Col 3" , render: (po: any) => (<>{new Date(po.createdAt).toLocaleDateString()}</>) },
+                                              ];
+                                                      return <DataTable columns={columns} data={purchaseOrders} rowKey={(po: any) => po.id} />;
+                                                  })()}</>
                   )}
                 </div>
               </Card>
@@ -435,44 +393,22 @@ export default function SupplierPortalPage() {
                   ) : rfqs.length === 0 ? (
                     <div className={styles.p36}>No RFQs for this vendor.</div>
                   ) : (
-                    <Table className={styles.p37}>
-                      <thead>
-                        <tr className={styles.p38}>
-                          {["RFQ #", "Status", "Due Date", "Created"].map(
-                            (h) => (
-                              <th key={h} className={styles.p39}>
-                                {h}
-                              </th>
-                            ),
-                          )}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {rfqs.map((r) => (
-                          <tr key={r.id} className="border-b">
-                            <td className={styles.p40}>
-                              {r.rfqNumber || r.id.slice(0, 8)}
-                            </td>
-                            <td className="p-3">
-                              <Badge
-                                variant={statusVariant(r.status)}
-                                size="sm"
-                              >
-                                {r.status}
-                              </Badge>
-                            </td>
-                            <td className="p-3">
-                              {r.dueDate
-                                ? new Date(r.dueDate).toLocaleDateString()
-                                : "—"}
-                            </td>
-                            <td className={styles.p41}>
-                              {new Date(r.createdAt).toLocaleDateString()}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                    <>{(() => {
+                                                      const columns = [
+                                                { key: "col_0", header: "{h}" , render: (r: any) => (<>{r.rfqNumber || r.id.slice(0, 8)}</>) },
+                                                { key: "col_1", header: "Col 1" , render: (r: any) => (<><Badge
+                                                                              variant={statusVariant(r.status)}
+                                                                              size="sm"
+                                                                            >
+                                                                              {r.status}
+                                                                            </Badge></>) },
+                                                { key: "col_2", header: "Col 2" , render: (r: any) => (<>{r.dueDate
+                                                                              ? new Date(r.dueDate).toLocaleDateString()
+                                                                              : "—"}</>) },
+                                                { key: "col_3", header: "Col 3" , render: (r: any) => (<>{new Date(r.createdAt).toLocaleDateString()}</>) },
+                                              ];
+                                                      return <DataTable columns={columns} data={rfqs} rowKey={(r: any) => r.id} />;
+                                                  })()}</>
                   )}
                 </div>
               </Card>

@@ -2,17 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  useToast,
-  DataTable,
-  type Column,
-  type SortOrder,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, useToast, DataTable, type Column, type SortOrder } from "@unerp/ui";
 import {
   CheckCircle,
   XCircle,
@@ -224,35 +214,35 @@ export default function ApprovalsPage() {
       key: "entityType",
       header: "Entity Type",
       sortable: true,
-      render: (r) => <Badge>{r.entityType}</Badge>,
+      render: (r: any) => <Badge>{r.entityType}</Badge>,
     },
     {
       key: "entityId",
       header: "Entity ID",
-      render: (r) => <span className={styles.p20}>{r.entityId}</span>,
+      render: (r: any) => <span className={styles.p20}>{r.entityId}</span>,
     },
     {
       key: "processName",
       header: "Process",
       sortable: true,
-      render: (r) => r.processName,
+      render: (r: any) => r.processName,
     },
     {
       key: "submittedBy",
       header: "Submitted By",
-      render: (r) => r.submittedBy,
+      render: (r: any) => r.submittedBy,
     },
     {
       key: "submittedAt",
       header: "Submitted At",
       sortable: true,
-      render: (r) => new Date(r.submittedAt).toLocaleString(),
+      render: (r: any) => new Date(r.submittedAt).toLocaleString(),
     },
     {
       key: "step",
       header: "Step",
       align: "center",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant="info">
           {r.currentStep}/{r.totalSteps}
         </Badge>
@@ -261,7 +251,7 @@ export default function ApprovalsPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className={styles.p21}>
           <button
             onClick={(e) => {
@@ -358,7 +348,7 @@ export default function ApprovalsPage() {
           <DataTable<ApprovalRequest>
             columns={columns}
             data={filteredRequests}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             sortBy={sortBy}
             sortOrder={sortOrder}
             onSortChange={(key, order) => {

@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -175,51 +175,32 @@ export default function BudgetsPage() {
           </div>
         </div>
       )}
-      <Table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Allocated</th>
-            <th>Spent</th>
-            <th>Committed</th>
-            <th>Remaining</th>
-            <th>Fiscal Year</th>
-            <th>Notes</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {lines.map((l) => (
-            <tr key={l.id}>
-              <td>
-                <span className={styles.categoryBadge}>{l.category}</span>
-              </td>
-              <td>${l.allocated.toLocaleString()}</td>
-              <td>${l.spent.toLocaleString()}</td>
-              <td>${l.committed.toLocaleString()}</td>
-              <td>${(l.allocated - l.spent).toLocaleString()}</td>
-              <td>{l.fiscalYear || "-"}</td>
-              <td className={styles.notesCell}>{l.notes || "-"}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    setEditLine(l);
-                    setEditData({
-                      allocated: String(l.allocated),
-                      committed: String(l.committed),
-                      notes: l.notes || "",
-                    });
-                    setIsEditOpen(true);
-                  }}
-                  className={styles.editBtn}
-                >
-                  <Edit3 size={14} />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <>{(() => {
+                  const columns = [
+            { key: "col_0", header: "Category" , render: (l: any) => (<><span className={styles.categoryBadge}>{l.category}</span></>) },
+            { key: "col_1", header: "Allocated" , render: (l: any) => (<>${l.allocated.toLocaleString()}</>) },
+            { key: "col_2", header: "Spent" , render: (l: any) => (<>${l.spent.toLocaleString()}</>) },
+            { key: "col_3", header: "Committed" , render: (l: any) => (<>${l.committed.toLocaleString()}</>) },
+            { key: "col_4", header: "Remaining" , render: (l: any) => (<>${(l.allocated - l.spent).toLocaleString()}</>) },
+            { key: "col_5", header: "Fiscal Year" , render: (l: any) => (<>{l.fiscalYear || "-"}</>) },
+            { key: "col_6", header: "Notes" , render: (l: any) => (<>{l.notes || "-"}</>) },
+            { key: "col_7", header: "Actions" , render: (l: any) => (<><button
+                            onClick={() => {
+                              setEditLine(l);
+                              setEditData({
+                                allocated: String(l.allocated),
+                                committed: String(l.committed),
+                                notes: l.notes || "",
+                              });
+                              setIsEditOpen(true);
+                            }}
+                            className={styles.editBtn}
+                          >
+                            <Edit3 size={14} />
+                          </button></>) },
+          ];
+                  return <DataTable columns={columns} data={lines} rowKey={(l: any) => l.id} />;
+              })()}</>
       {lines.length === 0 && !loading && (
         <div className="ui-text-muted">No budget lines yet.</div>
       )}

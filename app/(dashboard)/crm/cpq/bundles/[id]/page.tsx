@@ -2,19 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Button,
-  Card,
-  PageHeader,
-  Spinner,
-  Badge,
-  Modal,
-  useToast,
-  DataTable,
-  Input,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Button, Card, PageHeader, Spinner, Badge, Modal, useToast, DataTable, Input, ProtectedComponent, type Column } from "@unerp/ui";
 import { Plus, Trash2, Package, Eye } from "lucide-react";
 
 export default function CpqBundleDetailPage() {

@@ -3,13 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  StatCardRow,
-  ListPageTemplate,
-  type ListColumn, Table } from "@unerp/ui";
+import { PageHeader, Button, Spinner, Badge, StatCardRow, ListPageTemplate, type ListColumn, Table, DataTable } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -445,65 +439,32 @@ export default function PurchaseReturnsPage() {
                       </div>
                     ) : (
                       <div className={styles.p24}>
-                        <Table className={styles.p25}>
-                          <thead>
-                            <tr className={styles.p26}>
-                              <th className={styles.p27}>Description</th>
-                              <th className={styles.p28}>Qty</th>
-                              <th className={styles.p29}>Unit Price</th>
-                              <th className={styles.p30}>Tax (%)</th>
-                              <th className={styles.p31}>Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {lineItems.map((item, index) => {
-                              const total =
-                                item.quantity *
-                                item.unitPrice *
-                                (1 + item.taxRate / 100);
-                              return (
-                                <tr
-                                  key={index}
-                                  style={{
-                                    borderBottom:
-                                      index < lineItems.length - 1
-                                        ? "1px solid var(--color-border)"
-                                        : "none",
-                                  }}
-                                >
-                                  <td className="p-2">{item.description}</td>
-                                  <td className="p-2">
-                                    <input
-                                      type="number"
-                                      min={0}
-                                      value={item.quantity}
-                                      onChange={(e) => {
-                                        const updated = [...lineItems];
-                                        updated[index]!.quantity = Number(
-                                          e.target.value,
-                                        );
-                                        setLineItems(updated);
-                                      }}
-                                      className={styles.p32}
-                                    />
-                                  </td>
-                                  <td className={styles.p33}>
-                                    ${item.unitPrice.toLocaleString()}
-                                  </td>
-                                  <td className={styles.p34}>
-                                    {item.taxRate}%
-                                  </td>
-                                  <td className={styles.p35}>
-                                    $
-                                    {total.toLocaleString(undefined, {
-                                      minimumFractionDigits: 2,
-                                    })}
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </Table>
+                        <>{(() => {
+                                                                  const columns = [
+                                                            { key: "col_0", header: "Description" , render: (item: any) => (<>{item.description}</>) },
+                                                            { key: "col_1", header: "Qty" , render: (item: any) => (<><input
+                                                                                                type="number"
+                                                                                                min={0}
+                                                                                                value={item.quantity}
+                                                                                                onChange={(e) => {
+                                                                                                  const updated = [...lineItems];
+                                                                                                  updated[index]!.quantity = Number(
+                                                                                                    e.target.value,
+                                                                                                  );
+                                                                                                  setLineItems(updated);
+                                                                                                }}
+                                                                                                className={styles.p32}
+                                                                                              /></>) },
+                                                            { key: "col_2", header: "Unit Price" , render: (item: any) => (<>${item.unitPrice.toLocaleString()}</>) },
+                                                            { key: "col_3", header: "Tax (%)" , render: (item: any) => (<>{item.taxRate}%
+                                                                                            </>) },
+                                                            { key: "col_4", header: "Total" , render: (item: any) => (<>$
+                                                                                              {total.toLocaleString(undefined, {
+                                                                                                minimumFractionDigits: 2,
+                                                                                              })}</>) },
+                                                          ];
+                                                                  return <DataTable columns={columns} data={lineItems} rowKey={(item: any) => index} />;
+                                                              })()}</>
                       </div>
                     )}
                   </div>

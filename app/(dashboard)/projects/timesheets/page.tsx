@@ -45,23 +45,23 @@ export default function TimesheetsPage() {
     {
       key: "date",
       header: "Date",
-      render: (row) => new Date(row.date).toLocaleDateString(),
+      render: (row: any) => new Date(row.date).toLocaleDateString(),
     },
     {
       key: "hours",
       header: "Hours",
       align: "right",
-      render: (row) => `${row.hours}h`,
+      render: (row: any) => `${row.hours}h`,
     },
     {
       key: "notes",
       header: "Notes",
-      render: (row) => row.notes || "-",
+      render: (row: any) => row.notes || "-",
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.status === "APPROVED"
@@ -99,7 +99,7 @@ export default function TimesheetsPage() {
         <DataTable
           columns={columns}
           data={entries}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No Timesheet Entries"
           emptyMessage="Log time entries to track work hours across projects."
           emptyIcon={<Clock size={48} />}

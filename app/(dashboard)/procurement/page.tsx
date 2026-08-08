@@ -4,18 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  DashboardChart,
-  ViewSwitcher,
-  KanbanBoard,
-  StatCardRow,
-  type ViewMode,
-  type KanbanColumn,
-  type KanbanItem,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, DashboardChart, ViewSwitcher, KanbanBoard, StatCardRow, type ViewMode, type KanbanColumn, type KanbanItem } from "@unerp/ui";
 import {
   ShoppingCart,
   Truck,

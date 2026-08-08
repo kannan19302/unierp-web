@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, Table, DataTable } from "@unerp/ui";
 import { AlertCircle, Truck, CheckCircle, Plus, Package } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -243,177 +243,104 @@ export default function AsnPage() {
               <div className="font-semibold mb-2">
                 Incoming ASNs (Expected Soon)
               </div>
-              <Table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left text-gray-500">
-                    <th>ASN #</th>
-                    <th>Vendor</th>
-                    <th>Status</th>
-                    <th>Expected Arrival</th>
-                    <th>Items</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dashboard.recentAsns.map((a) => (
-                    <tr key={a.id} className="border-t">
-                      <td className="py-1 font-mono">{a.asnNumber}</td>
-                      <td>{a.vendorId}</td>
-                      <td>
-                        <Badge variant={STATUS_COLORS[a.status] ?? "default"}>
-                          {a.status}
-                        </Badge>
-                      </td>
-                      <td>
-                        {a.expectedArrival
-                          ? new Date(a.expectedArrival).toLocaleDateString()
-                          : "—"}
-                      </td>
-                      <td>{a._count?.lineItems ?? 0}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "ASN #" , render: (a: any) => (<>{a.asnNumber}</>) },
+                            { key: "col_1", header: "Vendor" , render: (a: any) => (<>{a.vendorId}</>) },
+                            { key: "col_2", header: "Status" , render: (a: any) => (<><Badge variant={STATUS_COLORS[a.status] ?? "default"}>
+                                                    {a.status}
+                                                  </Badge></>) },
+                            { key: "col_3", header: "Expected Arrival" , render: (a: any) => (<>{a.expectedArrival
+                                                    ? new Date(a.expectedArrival).toLocaleDateString()
+                                                    : "—"}</>) },
+                            { key: "col_4", header: "Items" , render: (a: any) => (<>{a._count?.lineItems ?? 0}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={dashboard.recentAsns} rowKey={(a: any) => a.id} />;
+                              })()}</>
             </Card>
           </div>
         )}
 
         {tab === "asns" && (
           <Card className="p-4">
-            <Table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-gray-500">
-                  <th>ASN #</th>
-                  <th>Vendor</th>
-                  <th>Status</th>
-                  <th>Carrier</th>
-                  <th>Tracking</th>
-                  <th>Expected</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {asns.map((a) => (
-                  <tr key={a.id} className="border-t">
-                    <td className="py-1 font-mono">{a.asnNumber}</td>
-                    <td>{a.vendorId}</td>
-                    <td>
-                      <Badge variant={STATUS_COLORS[a.status] ?? "default"}>
-                        {a.status}
-                      </Badge>
-                    </td>
-                    <td>{a.carrierName ?? "—"}</td>
-                    <td>{a.trackingNumber ?? "—"}</td>
-                    <td>
-                      {a.expectedArrival
-                        ? new Date(a.expectedArrival).toLocaleDateString()
-                        : "—"}
-                    </td>
-                    <td className="flex gap-1">
-                      <Button
-                        variant="secondary"
-                        onClick={() => {
-                          setSelectedAsn(a);
-                          load("detail", a.id);
-                          setTab("detail");
-                        }}
-                      >
-                        View
-                      </Button>
-                      {a.status === "PENDING" && (
-                        <Button
-                          variant="secondary"
-                          onClick={() => asnAction("in-transit", a.id)}
-                        >
-                          <Truck size={12} />
-                        </Button>
-                      )}
-                      {["PENDING", "IN_TRANSIT"].includes(a.status) && (
-                        <Button
-                          variant="secondary"
-                          onClick={() => asnAction("arrived", a.id)}
-                        >
-                          <Package size={12} />
-                        </Button>
-                      )}
-                      {["ARRIVING", "RECEIVING"].includes(a.status) && (
-                        <Button
-                          variant="secondary"
-                          onClick={() => asnAction("finalize", a.id)}
-                        >
-                          <CheckCircle size={12} />
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-                {asns.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="py-4 text-center text-gray-400">
-                      No ASNs found
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "ASN #" , render: (a: any) => (<>{a.asnNumber}</>) },
+                        { key: "col_1", header: "Vendor" , render: (a: any) => (<>{a.vendorId}</>) },
+                        { key: "col_2", header: "Status" , render: (a: any) => (<><Badge variant={STATUS_COLORS[a.status] ?? "default"}>
+                                              {a.status}
+                                            </Badge></>) },
+                        { key: "col_3", header: "Carrier" , render: (a: any) => (<>{a.carrierName ?? "—"}</>) },
+                        { key: "col_4", header: "Tracking" , render: (a: any) => (<>{a.trackingNumber ?? "—"}</>) },
+                        { key: "col_5", header: "Expected" , render: (a: any) => (<>{a.expectedArrival
+                                              ? new Date(a.expectedArrival).toLocaleDateString()
+                                              : "—"}</>) },
+                        { key: "col_6", header: "Actions" , render: (a: any) => (<><Button
+                                              variant="secondary"
+                                              onClick={() => {
+                                                setSelectedAsn(a);
+                                                load("detail", a.id);
+                                                setTab("detail");
+                                              }}
+                                            >
+                                              View
+                                            </Button>{a.status === "PENDING" && (
+                                              <Button
+                                                variant="secondary"
+                                                onClick={() => asnAction("in-transit", a.id)}
+                                              >
+                                                <Truck size={12} />
+                                              </Button>
+                                            )}{["PENDING", "IN_TRANSIT"].includes(a.status) && (
+                                              <Button
+                                                variant="secondary"
+                                                onClick={() => asnAction("arrived", a.id)}
+                                              >
+                                                <Package size={12} />
+                                              </Button>
+                                            )}{["ARRIVING", "RECEIVING"].includes(a.status) && (
+                                              <Button
+                                                variant="secondary"
+                                                onClick={() => asnAction("finalize", a.id)}
+                                              >
+                                                <CheckCircle size={12} />
+                                              </Button>
+                                            )}</>) },
+                      ];
+                              return <DataTable columns={columns} data={asns} rowKey={(a: any) => a.id} />;
+                          })()}</>
           </Card>
         )}
 
         {tab === "discrepancies" && (
           <Card className="p-4">
-            <Table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-gray-500">
-                  <th>ASN</th>
-                  <th>Type</th>
-                  <th>Product</th>
-                  <th>Expected</th>
-                  <th>Actual</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {discrepancies.map((d) => (
-                  <tr key={d.id} className="border-t">
-                    <td className="py-1 font-mono">{d.asnId}</td>
-                    <td>
-                      <Badge
-                        variant={STATUS_COLORS[d.discrepancyType] ?? "default"}
-                      >
-                        {d.discrepancyType}
-                      </Badge>
-                    </td>
-                    <td>{d.productId}</td>
-                    <td>{d.expectedQty}</td>
-                    <td>{d.actualQty}</td>
-                    <td>
-                      {d.resolvedAt ? (
-                        <Badge variant="success">Resolved</Badge>
-                      ) : (
-                        <Badge variant="warning">Open</Badge>
-                      )}
-                    </td>
-                    <td>
-                      {!d.resolvedAt && (
-                        <Button
-                          variant="secondary"
-                          onClick={() => resolveDiscrepancy(d.id)}
-                        >
-                          Resolve
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-                {discrepancies.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="py-4 text-center text-gray-400">
-                      No discrepancies
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "ASN" , render: (d: any) => (<>{d.asnId}</>) },
+                        { key: "col_1", header: "Type" , render: (d: any) => (<><Badge
+                                              variant={STATUS_COLORS[d.discrepancyType] ?? "default"}
+                                            >
+                                              {d.discrepancyType}
+                                            </Badge></>) },
+                        { key: "col_2", header: "Product" , render: (d: any) => (<>{d.productId}</>) },
+                        { key: "col_3", header: "Expected" , render: (d: any) => (<>{d.expectedQty}</>) },
+                        { key: "col_4", header: "Actual" , render: (d: any) => (<>{d.actualQty}</>) },
+                        { key: "col_5", header: "Status" , render: (d: any) => (<>{d.resolvedAt ? (
+                                              <Badge variant="success">Resolved</Badge>
+                                            ) : (
+                                              <Badge variant="warning">Open</Badge>
+                                            )}</>) },
+                        { key: "col_6", header: "Action" , render: (d: any) => (<>{!d.resolvedAt && (
+                                              <Button
+                                                variant="secondary"
+                                                onClick={() => resolveDiscrepancy(d.id)}
+                                              >
+                                                Resolve
+                                              </Button>
+                                            )}</>) },
+                      ];
+                              return <DataTable columns={columns} data={discrepancies} rowKey={(d: any) => d.id} />;
+                          })()}</>
           </Card>
         )}
 
@@ -463,26 +390,15 @@ export default function AsnPage() {
                   </Button>
                 )}
               </div>
-              <Table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left text-gray-500">
-                    <th>Product</th>
-                    <th>Expected</th>
-                    <th>Received</th>
-                    <th>UOM</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedAsn.lineItems?.map((item) => (
-                    <tr key={item.id} className="border-t">
-                      <td className="py-1">{item.productId}</td>
-                      <td>{item.expectedQty}</td>
-                      <td>{item.receivedQty}</td>
-                      <td>{item.uom}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Product" , render: (item: any) => (<>{item.productId}</>) },
+                            { key: "col_1", header: "Expected" , render: (item: any) => (<>{item.expectedQty}</>) },
+                            { key: "col_2", header: "Received" , render: (item: any) => (<>{item.receivedQty}</>) },
+                            { key: "col_3", header: "UOM" , render: (item: any) => (<>{item.uom}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={selectedAsn.lineItems} rowKey={(item: any) => item.id} />;
+                              })()}</>
             </Card>
             {["ARRIVED", "RECEIVING"].includes(selectedAsn.status) && (
               <Card className="p-4 space-y-3 max-w-md">

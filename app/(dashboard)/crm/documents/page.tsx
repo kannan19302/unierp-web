@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  type Column,
-  type SortOrder,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column, type SortOrder } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -195,13 +185,13 @@ export default function DocumentsPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (d) => <span className="font-semibold">{d.name}</span>,
+      render: (d: any) => <span className="font-semibold">{d.name}</span>,
     },
-    { key: "type", header: "Type", render: (d) => getTypeBadge(d.type) },
+    { key: "type", header: "Type", render: (d: any) => getTypeBadge(d.type) },
     {
       key: "entityType",
       header: "Entity",
-      render: (d) => (
+      render: (d: any) => (
         <div>
           <Badge variant="default">{d.entityType}</Badge>
           <div className={styles.entityId}>{d.entityId}</div>
@@ -213,25 +203,25 @@ export default function DocumentsPage() {
       header: "Size",
       align: "right",
       sortable: true,
-      render: (d) => formatSize(d.fileSize),
+      render: (d: any) => formatSize(d.fileSize),
     },
     {
       key: "uploadedBy",
       header: "Uploaded By",
-      render: (d) => d.uploadedBy?.name || "Unknown",
+      render: (d: any) => d.uploadedBy?.name || "Unknown",
     },
     {
       key: "createdAt",
       header: "Date",
       sortable: true,
-      render: (d) => new Date(d.createdAt).toLocaleDateString(),
+      render: (d: any) => new Date(d.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
       align: "center",
       width: "80px",
-      render: (d) => (
+      render: (d: any) => (
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -308,7 +298,7 @@ export default function DocumentsPage() {
             <DataTable<CrmDocument>
               columns={docColumns}
               data={sortedDocs}
-              rowKey={(d) => d.id}
+              rowKey={(d: any) => d.id}
               sortBy={docSortBy}
               sortOrder={docSortOrder}
               onSortChange={(key, order) => {

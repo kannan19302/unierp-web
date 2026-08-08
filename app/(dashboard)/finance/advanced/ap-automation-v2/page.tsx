@@ -469,24 +469,24 @@ export default function ApAutomationV2Page() {
                       {
                         key: "batchName",
                         header: "Batch",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "invoiceCount",
                         header: "Invoices",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "totalAmount",
                         header: "Total",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "PROCESSED" ? "ui-badge-green" : v === "PROCESSING" ? "ui-badge-blue" : "ui-badge-yellow"}`}
                           >
@@ -531,24 +531,24 @@ export default function ApAutomationV2Page() {
                       {
                         key: "vendorName",
                         header: "Vendor",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "invoiceNumber",
                         header: "Invoice #",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "amount",
                         header: "Amount",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "confidence",
                         header: "Confidence",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`font-semibold ${Number(v) > 90 ? "text-green-600" : Number(v) > 70 ? "text-amber-600" : "text-red-600"}`}
                           >
@@ -559,7 +559,7 @@ export default function ApAutomationV2Page() {
                       {
                         key: "validated",
                         header: "Validated",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <Check size={16} className="text-green-600" />
                           ) : (
@@ -708,29 +708,29 @@ export default function ApAutomationV2Page() {
                       {
                         key: "ruleName",
                         header: "Rule",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "matchType",
                         header: "Type",
-                        render: (v) => String(v).replace(/_/g, " "),
+                        render: (v: any) => String(v).replace(/_/g, " "),
                       },
                       {
                         key: "tolerance",
                         header: "Tolerance %",
-                        render: (v) => `${Number(v)}%`,
+                        render: (v: any) => `${Number(v)}%`,
                       },
                       {
                         key: "priority",
                         header: "Priority",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "active",
                         header: "Active",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <span className="text-green-600 font-medium">
                               Yes
@@ -853,29 +853,29 @@ export default function ApAutomationV2Page() {
                       {
                         key: "ruleName",
                         header: "Rule",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "condition",
                         header: "Condition",
-                        render: (v) => String(v).replace(/_/g, " "),
+                        render: (v: any) => String(v).replace(/_/g, " "),
                       },
                       {
                         key: "approver",
                         header: "Approver",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "threshold",
                         header: "Threshold",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "active",
                         header: "Active",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <span className="text-green-600 font-medium">
                               Yes
@@ -915,24 +915,24 @@ export default function ApAutomationV2Page() {
                       {
                         key: "recommendation",
                         header: "Recommendation",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "currentCost",
                         header: "Current Cost",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "optimizedCost",
                         header: "Optimized Cost",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "savings",
                         header: "Savings",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold text-green-600">
                             {fmt(Number(v))}
                           </span>
@@ -941,7 +941,7 @@ export default function ApAutomationV2Page() {
                       {
                         key: "recommendedRail",
                         header: "Rail",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">
                             {String(v)}
                           </span>
@@ -950,7 +950,7 @@ export default function ApAutomationV2Page() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v) => (
+                        render: (v: any) => (
                           <button
                             onClick={() => handleExecuteOptimization(String(v))}
                             className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded hover:bg-green-100"

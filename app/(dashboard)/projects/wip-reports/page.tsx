@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Badge,
-  DataTable,
-  type Column,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Badge, DataTable, type Column, KPICard, Spinner } from "@unerp/ui";
 import {
   DollarSign,
   TrendingUp,
@@ -82,7 +74,7 @@ export default function WipReportsPage() {
     {
       key: "name",
       header: "Project",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="font-semibold">{row.name}</div>
           <div className="ui-text-xs-tertiary">{row.code}</div>
@@ -92,7 +84,7 @@ export default function WipReportsPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.status === "COMPLETED"
@@ -110,13 +102,13 @@ export default function WipReportsPage() {
       key: "estimatedCost",
       header: "Est. Cost",
       align: "right" as const,
-      render: (row) => fmtCurrency(row.estimatedCost),
+      render: (row: any) => fmtCurrency(row.estimatedCost),
     },
     {
       key: "totalCost",
       header: "Cost Incurred",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="font-semibold">{fmtCurrency(row.totalCost)}</div>
           <div className={styles.p1}>L: {Math.round(row.percentComplete)}%</div>
@@ -127,25 +119,25 @@ export default function WipReportsPage() {
       key: "contractValue",
       header: "Contract Value",
       align: "right" as const,
-      render: (row) => fmtCurrency(row.contractValue),
+      render: (row: any) => fmtCurrency(row.contractValue),
     },
     {
       key: "recognizedRevenue",
       header: "Recognized Rev",
       align: "right" as const,
-      render: (row) => fmtCurrency(row.recognizedRevenue),
+      render: (row: any) => fmtCurrency(row.recognizedRevenue),
     },
     {
       key: "billedAmount",
       header: "Total Billed",
       align: "right" as const,
-      render: (row) => fmtCurrency(row.billedAmount),
+      render: (row: any) => fmtCurrency(row.billedAmount),
     },
     {
       key: "overUnderBilling",
       header: "WIP Position",
       align: "right" as const,
-      render: (row) => {
+      render: (row: any) => {
         if (row.overUnderBilling > 0) {
           return (
             <Badge variant="success">
@@ -216,7 +208,7 @@ export default function WipReportsPage() {
           <DataTable
             columns={columns}
             data={rows}
-            rowKey={(r) => r.projectId}
+            rowKey={(r: any) => r.projectId}
             emptyTitle="No Projects Found"
             emptyMessage="Create a project with estimated costs and log cost entries to generate WIP metrics."
             emptyIcon={<Percent size={48} />}

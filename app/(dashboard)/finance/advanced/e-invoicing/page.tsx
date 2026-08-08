@@ -147,7 +147,7 @@ export default function EInvoicingPage() {
                 {
                   key: "invoiceNumber",
                   header: "Invoice #",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-medium">{v as string}</span>
                   ),
                 },
@@ -166,7 +166,7 @@ export default function EInvoicingPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded-full text-xs font-semibold ${(v as string) === "DRAFT" ? "bg-gray-100 text-gray-600" : "bg-green-100 text-green-700"}`}
                     >
@@ -187,7 +187,7 @@ export default function EInvoicingPage() {
                 {
                   key: "id",
                   header: "E-Invoices",
-                  render: (v) => (
+                  render: (v: any) => (
                     <div className={styles.s9}>
                       {docFor(v as string).map((d) => (
                         <button

@@ -2,17 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  Modal,
-  StatCardRow,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable, Modal, StatCardRow, type Column } from "@unerp/ui";
 import {
   Plus,
   Percent,
@@ -156,28 +146,28 @@ export default function PromotionsPage() {
     {
       key: "type",
       header: "Type",
-      render: (row) => <Badge variant="default">{row.type}</Badge>,
+      render: (row: any) => <Badge variant="default">{row.type}</Badge>,
     },
     {
       key: "value",
       header: "Value",
-      render: (row) =>
+      render: (row: any) =>
         row.type === "PERCENTAGE" ? `${row.value}%` : `$${row.value}`,
     },
     {
       key: "startDate",
       header: "Start",
-      render: (row) => new Date(row.startDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.startDate).toLocaleDateString(),
     },
     {
       key: "endDate",
       header: "End",
-      render: (row) => new Date(row.endDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.endDate).toLocaleDateString(),
     },
     {
       key: "isActive",
       header: "Active",
-      render: (row) =>
+      render: (row: any) =>
         row.isActive ? (
           <Badge variant="success">Yes</Badge>
         ) : (
@@ -188,7 +178,7 @@ export default function PromotionsPage() {
     {
       key: "id",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <Button
             variant="ghost"
@@ -221,7 +211,7 @@ export default function PromotionsPage() {
     {
       key: "code",
       header: "Code",
-      render: (row) => <code className={styles.p3}>{row.code}</code>,
+      render: (row: any) => <code className={styles.p3}>{row.code}</code>,
     },
     { key: "promotionName", header: "Promotion" },
     { key: "usageLimit", header: "Usage Limit" },
@@ -229,7 +219,7 @@ export default function PromotionsPage() {
     {
       key: "isActive",
       header: "Active",
-      render: (row) =>
+      render: (row: any) =>
         row.isActive ? (
           <Badge variant="success">Active</Badge>
         ) : (

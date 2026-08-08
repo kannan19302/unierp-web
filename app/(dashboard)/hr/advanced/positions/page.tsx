@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   BarChart3,
@@ -344,22 +335,22 @@ export default function PositionsPage() {
                     {
                       key: "department",
                       header: "Department",
-                      render: (v) => (v as { name: string })?.name,
+                      render: (v: any) => (v as { name: string })?.name,
                     },
                     {
                       key: "budgetedSalary",
                       header: "Budgeted Salary",
-                      render: (v) => `$${Number(v).toFixed(2)}/mo`,
+                      render: (v: any) => `$${Number(v).toFixed(2)}/mo`,
                     },
                     {
                       key: "employeeId",
                       header: "Employee Assigned",
-                      render: (v) => getEmployeeName(v as string | null),
+                      render: (v: any) => getEmployeeName(v as string | null),
                     },
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => <StatusBadge status={String(v)} />,
+                      render: (v: any) => <StatusBadge status={String(v)} />,
                     },
                     {
                       key: "id",

@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ProtectedComponent,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent } from "@unerp/ui";
 import { Plus, Edit3, Trash2, Users, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { Modal, inputStyle, labelStyle } from "../_components/Modal";

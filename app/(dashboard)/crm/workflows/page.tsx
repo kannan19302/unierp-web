@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  Spinner,
-  useToast,
-  StatCardRow,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, Spinner, useToast, StatCardRow, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   Trash2,
@@ -288,12 +278,12 @@ export default function WorkflowsPage() {
               {
                 key: "entity",
                 header: "Entity",
-                render: (v) => <Badge variant="default">{String(v)}</Badge>,
+                render: (v: any) => <Badge variant="default">{String(v)}</Badge>,
               },
               {
                 key: "trigger",
                 header: "Trigger",
-                render: (v) => (
+                render: (v: any) => (
                   <Badge variant="default">
                     {String(v).replace(/_/g, " ")}
                   </Badge>
@@ -302,12 +292,12 @@ export default function WorkflowsPage() {
               {
                 key: "conditions",
                 header: "Conditions",
-                render: (v) => String((v as WorkflowCondition[]).length),
+                render: (v: any) => String((v as WorkflowCondition[]).length),
               },
               {
                 key: "actions",
                 header: "Actions",
-                render: (v) => String((v as WorkflowAction[]).length),
+                render: (v: any) => String((v as WorkflowAction[]).length),
               },
               {
                 key: "active",
@@ -336,7 +326,7 @@ export default function WorkflowsPage() {
               {
                 key: "id",
                 header: "",
-                render: (v) => (
+                render: (v: any) => (
                   <button
                     onClick={() => deleteRule(String(v))}
                     className="ui-btn-icon ui-text-danger"

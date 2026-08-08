@@ -11,13 +11,7 @@ import {
   DollarSign,
   Calendar,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface TaxFiling {
@@ -147,21 +141,21 @@ export default function TaxFilingSummaryPage() {
                     {
                       key: "period",
                       header: "Period Range",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-medium">{v as string}</span>
                       ),
                     },
                     {
                       key: "type",
                       header: "Tax Type",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="ui-text-muted">{v as string}</span>
                       ),
                     },
                     {
                       key: "liability",
                       header: "Tax Liability",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           style={{
                             color:
@@ -178,7 +172,7 @@ export default function TaxFilingSummaryPage() {
                     {
                       key: "status",
                       header: "Filing Status",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           style={{
                             background:

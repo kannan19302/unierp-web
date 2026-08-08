@@ -90,7 +90,7 @@ export default function CommunicationAdvancedPage() {
     {
       key: "name",
       header: "File Name",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <div className="font-semibold">{r.name}</div>
           <div className="ui-text-micro ui-text-muted">{r.mimeType}</div>
@@ -100,7 +100,7 @@ export default function CommunicationAdvancedPage() {
     {
       key: "size",
       header: "Size",
-      render: (r) => {
+      render: (r: any) => {
         const kb = (r.size / 1024).toFixed(1);
         return `${kb} KB`;
       },
@@ -108,7 +108,7 @@ export default function CommunicationAdvancedPage() {
     {
       key: "createdAt",
       header: "Shared At",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -117,13 +117,13 @@ export default function CommunicationAdvancedPage() {
     {
       key: "content",
       header: "Content",
-      render: (r) =>
+      render: (r: any) =>
         r.content.length > 60 ? `${r.content.slice(0, 60)}...` : r.content,
     },
     {
       key: "priority",
       header: "Priority",
-      render: (r) => (
+      render: (r: any) => (
         <span
           style={{
             color:
@@ -141,7 +141,7 @@ export default function CommunicationAdvancedPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={styles.s46}
           style={{
@@ -166,7 +166,7 @@ export default function CommunicationAdvancedPage() {
     {
       key: "publishedAt",
       header: "Published",
-      render: (r) =>
+      render: (r: any) =>
         r.publishedAt ? new Date(r.publishedAt).toLocaleDateString() : "—",
     },
   ];
@@ -279,7 +279,7 @@ export default function CommunicationAdvancedPage() {
             <DataTable
               columns={inboxColumns}
               data={fileShares}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No shared files"
               emptyIcon={<Inbox size={48} />}
             />

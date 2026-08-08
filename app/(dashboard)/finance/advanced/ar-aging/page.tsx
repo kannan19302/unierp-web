@@ -325,7 +325,7 @@ export default function ARAgingPage() {
                                 {
                                   key: "invoiceNumber",
                                   header: "Invoice #",
-                                  render: (v) => (
+                                  render: (v: any) => (
                                     <span className={styles.s17}>
                                       {String(v)}
                                     </span>
@@ -334,18 +334,18 @@ export default function ARAgingPage() {
                                 {
                                   key: "customer",
                                   header: "Customer",
-                                  render: (v) => String(v || "—"),
+                                  render: (v: any) => String(v || "—"),
                                 },
                                 {
                                   key: "dueDate",
                                   header: "Due Date",
-                                  render: (v) =>
+                                  render: (v: any) =>
                                     new Date(String(v)).toLocaleDateString(),
                                 },
                                 {
                                   key: "daysOverdue",
                                   header: "Days Overdue",
-                                  render: (v) =>
+                                  render: (v: any) =>
                                     Number(v) > 0 ? (
                                       <span
                                         className={styles.overdueDays}
@@ -362,7 +362,7 @@ export default function ARAgingPage() {
                                 {
                                   key: "amount",
                                   header: "Amount",
-                                  render: (v) => (
+                                  render: (v: any) => (
                                     <span className="font-semibold">
                                       {fmt(Number(v))}
                                     </span>

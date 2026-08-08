@@ -725,7 +725,7 @@ export default function BulkOperationsPage() {
               {
                 key: "status",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <span style={statusBadge(String(v))}>{String(v)}</span>
                 ),
               },
@@ -733,13 +733,13 @@ export default function BulkOperationsPage() {
               {
                 key: "operationType",
                 header: "Operation",
-                render: (v) => String(v).replace("_", " "),
+                render: (v: any) => String(v).replace("_", " "),
               },
               { key: "totalRecords", header: "Records" },
               {
                 key: "failedRecords",
                 header: "Failed",
-                render: (v) => (
+                render: (v: any) => (
                   <span
                     style={{
                       color:
@@ -753,7 +753,7 @@ export default function BulkOperationsPage() {
               {
                 key: "createdAt",
                 header: "Created",
-                render: (v) => new Date(String(v)).toLocaleDateString(),
+                render: (v: any) => new Date(String(v)).toLocaleDateString(),
               },
             ] as ListColumn[]
           }

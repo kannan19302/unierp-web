@@ -210,14 +210,14 @@ export default function CatchWeightRecallPage() {
                 {
                   key: "productId",
                   header: "Product ID",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">{String(v)}</span>
                   ),
                 },
                 {
                   key: "nominalWeightKg",
                   header: "Nominal Weight",
-                  render: (v) => `${Number(v).toFixed(3)} kg`,
+                  render: (v: any) => `${Number(v).toFixed(3)} kg`,
                 },
                 {
                   key: "tolerancePctPlus",
@@ -229,7 +229,7 @@ export default function CatchWeightRecallPage() {
                 {
                   key: "active",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs font-medium ${v ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}
                     >

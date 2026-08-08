@@ -3,14 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { HeartHandshake, ArrowLeft, BarChart3, Users } from "lucide-react";
-import {
-  PageHeader,
-  Button,
-  Card,
-  Spinner,
-  DataTable,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Button, Card, Spinner, DataTable, KPICard } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 
 interface NpsResponse {
@@ -183,7 +176,7 @@ export default function SurveyDetailPage() {
                   {
                     key: "respondedAt",
                     header: "Responded",
-                    render: (row) =>
+                    render: (row: any) =>
                       row.respondedAt
                         ? new Date(row.respondedAt).toLocaleDateString()
                         : "N/A",

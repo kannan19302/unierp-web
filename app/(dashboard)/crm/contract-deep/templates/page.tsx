@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 
@@ -46,45 +46,21 @@ export default function ContractTemplatesPage() {
         </div>
       )}
       <div className="overflow-x-auto">
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-3 font-medium">Name</th>
-              <th className="py-2 px-3 font-medium">Type</th>
-              <th className="py-2 px-3 font-medium">Version</th>
-              <th className="py-2 px-3 font-medium">Active</th>
-              <th className="py-2 px-3 font-medium">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {templates.map((t: any) => (
-              <tr key={t.id} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-3">{t.name}</td>
-                <td className="py-2 px-3">{t.contractType}</td>
-                <td className="py-2 px-3">v{t.version}</td>
-                <td className="py-2 px-3">{t.isActive ? "Yes" : "No"}</td>
-                <td className="py-2 px-3 space-x-2">
-                  <button className="text-blue-600 hover:underline">
-                    Generate
-                  </button>
-                  <button className="text-blue-600 hover:underline">
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {templates.length === 0 && (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="py-4 text-center text-muted-foreground"
-                >
-                  No templates found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Name", render: (t: any) => (<>{t.name}</>) },
+                { key: "col_1", header: "Type", render: (t: any) => (<>{t.contractType}</>) },
+                { key: "col_2", header: "Version", render: (t: any) => (<>v{t.version}</>) },
+                { key: "col_3", header: "Active", render: (t: any) => (<>{t.isActive ? "Yes" : "No"}</>) },
+                { key: "col_4", header: "Actions", render: (t: any) => (<><button className="text-blue-600 hover:underline">
+                                  Generate
+                                </button>
+                                <button className="text-blue-600 hover:underline">
+                                  Edit
+                                </button></>) },
+              ];
+                        return <DataTable columns={columns} data={templates} rowKey={(t: any) => t.id} />;
+                      })()}</>
       </div>
     </div>
   );

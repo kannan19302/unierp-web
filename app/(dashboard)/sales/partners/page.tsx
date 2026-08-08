@@ -2,17 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  Modal,
-  StatCardRow,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable, Modal, StatCardRow, type Column } from "@unerp/ui";
 import {
   Plus,
   DollarSign,
@@ -118,7 +108,7 @@ export default function PartnersPage() {
       key: "tier",
       header: "Tier",
       sortable: true,
-      render: (row) =>
+      render: (row: any) =>
         row.tier === "GOLD" ? (
           <Badge variant="warning">Gold</Badge>
         ) : row.tier === "SILVER" ? (
@@ -132,17 +122,17 @@ export default function PartnersPage() {
     {
       key: "commissionRate",
       header: "Rate",
-      render: (row) => `${row.commissionRate}%`,
+      render: (row: any) => `${row.commissionRate}%`,
     },
     {
       key: "totalSales",
       header: "Total Sales",
-      render: (row) => `$${row.totalSales.toLocaleString()}`,
+      render: (row: any) => `$${row.totalSales.toLocaleString()}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (row) =>
+      render: (row: any) =>
         row.status === "ACTIVE" ? (
           <Badge variant="success">Active</Badge>
         ) : (
@@ -152,12 +142,12 @@ export default function PartnersPage() {
     {
       key: "referralCode",
       header: "Referral Code",
-      render: (row) => <span className={styles.p1}>{row.referralCode}</span>,
+      render: (row: any) => <span className={styles.p1}>{row.referralCode}</span>,
     },
     {
       key: "id",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <Button
             variant="ghost"

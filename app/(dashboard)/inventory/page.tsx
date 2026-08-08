@@ -1,23 +1,7 @@
 "use client";
 import styles from "./inventory.module.css";
 import React, { useState, useMemo } from "react";
-import {
-  PageHeader,
-  Button,
-  Spinner,
-  StatusBadge,
-  DashboardChart,
-  ViewSwitcher,
-  type ViewMode,
-  Modal,
-  StatCardRow,
-  ListPageTemplate,
-  DetailPageTemplate,
-  type ListColumn,
-  TextField,
-  FormField,
-  Input,
-} from "@unerp/ui";
+import { PageHeader, Button, Spinner, StatusBadge, DashboardChart, ViewSwitcher, type ViewMode, Modal, StatCardRow, ListPageTemplate, DetailPageTemplate, type ListColumn, TextField, FormField, Input } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 import {
   useProducts,
@@ -202,19 +186,19 @@ export default function InventoryPage() {
     {
       key: "sellPrice",
       header: "Price",
-      render: (v) => `$${Number(v || 0).toFixed(2)}`,
+      render: (v: any) => `$${Number(v || 0).toFixed(2)}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (v) => <StatusBadge status={String(v || "ACTIVE")} />,
+      render: (v: any) => <StatusBadge status={String(v || "ACTIVE")} />,
     },
   ];
 
   const warehouseColumns: ListColumn[] = [
     { key: "name", header: "Name" },
     { key: "code", header: "Code" },
-    { key: "location", header: "Location", render: (v) => String(v || "—") },
+    { key: "location", header: "Location", render: (v: any) => String(v || "—") },
   ];
 
   const stockLevelColumns: ListColumn[] = [

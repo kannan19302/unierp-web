@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { Trophy, UserPlus, ArrowLeft } from "lucide-react";
 import {
   apiGet,
@@ -79,7 +69,7 @@ export default function ContestDetailPage() {
       key: "score",
       header: "Score",
       sortable: true,
-      render: (r) => Number(r.score).toLocaleString(),
+      render: (r: any) => Number(r.score).toLocaleString(),
     },
   ];
 

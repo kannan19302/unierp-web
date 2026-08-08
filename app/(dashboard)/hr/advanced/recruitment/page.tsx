@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   Plus,
   ArrowLeft,
@@ -494,12 +485,12 @@ export default function RecruitmentPage() {
                     {
                       key: "postedAt",
                       header: "Posted",
-                      render: (v) => new Date(String(v)).toLocaleDateString(),
+                      render: (v: any) => new Date(String(v)).toLocaleDateString(),
                     },
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => <StatusBadge status={String(v)} />,
+                      render: (v: any) => <StatusBadge status={String(v)} />,
                     },
                   ] as ListColumn[]
                 }
@@ -553,13 +544,13 @@ export default function RecruitmentPage() {
                         {
                           key: "jobPosting",
                           header: "Job Position",
-                          render: (v) =>
+                          render: (v: any) =>
                             (v as { title: string })?.title || "N/A",
                         },
                         {
                           key: "currentStage",
                           header: "Pipeline Stage",
-                          render: (v) => <StatusBadge status={String(v)} />,
+                          render: (v: any) => <StatusBadge status={String(v)} />,
                         },
                         {
                           key: "id",
@@ -736,7 +727,7 @@ export default function RecruitmentPage() {
                     {
                       key: "applicant",
                       header: "Candidate",
-                      render: (v) => {
+                      render: (v: any) => {
                         const a = v as OfferLetter["applicant"];
                         return (
                           <span className="font-semibold">
@@ -748,7 +739,7 @@ export default function RecruitmentPage() {
                     {
                       key: "applicant",
                       header: "Position",
-                      render: (v) => {
+                      render: (v: any) => {
                         const a = v as OfferLetter["applicant"];
                         return a?.jobPosting?.title || "N/A";
                       },
@@ -756,7 +747,7 @@ export default function RecruitmentPage() {
                     {
                       key: "salaryOffered",
                       header: "Salary",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-semibold">
                           ${Number(v).toLocaleString()}/mo
                         </span>
@@ -765,13 +756,13 @@ export default function RecruitmentPage() {
                     {
                       key: "expiresAt",
                       header: "Expires",
-                      render: (v) =>
+                      render: (v: any) =>
                         v ? new Date(String(v)).toLocaleDateString() : "Never",
                     },
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => <StatusBadge status={String(v)} />,
+                      render: (v: any) => <StatusBadge status={String(v)} />,
                     },
                     {
                       key: "id",

@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-  FormField,
-  Input,
-  Select,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn, StatCardRow, FormField, Input, Select } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { SubTabBar } from "@unerp/ui/layout";
 import { useSearchParams } from "next/navigation";
@@ -389,7 +377,7 @@ export default function AdvancedInventoryPage() {
                         {
                           key: "parent",
                           header: "Parent Category",
-                          render: (row) =>
+                          render: (row: any) =>
                             (row as unknown as Category).parent?.name || "Root",
                         },
                         {
@@ -436,7 +424,7 @@ export default function AdvancedInventoryPage() {
                           {
                             key: "abbreviation",
                             header: "Code",
-                            render: (row) => (
+                            render: (row: any) => (
                               <Badge variant="info">
                                 {String((row as unknown as UoM).abbreviation)}
                               </Badge>
@@ -446,7 +434,7 @@ export default function AdvancedInventoryPage() {
                           {
                             key: "isBase",
                             header: "Base Unit",
-                            render: (row) =>
+                            render: (row: any) =>
                               (row as unknown as UoM).isBase ? "Yes" : "No",
                           },
                         ] as ListColumn[]
@@ -479,13 +467,13 @@ export default function AdvancedInventoryPage() {
                           {
                             key: "fromUoM",
                             header: "Source UoM",
-                            render: (row) =>
+                            render: (row: any) =>
                               (row as unknown as UoMConversion).fromUoM.name,
                           },
                           {
                             key: "toUoM",
                             header: "Target UoM",
-                            render: (row) =>
+                            render: (row: any) =>
                               (row as unknown as UoMConversion).toUoM.name,
                           },
                           { key: "factor", header: "Conversion Factor" },
@@ -525,7 +513,7 @@ export default function AdvancedInventoryPage() {
                         {
                           key: "product",
                           header: "Product",
-                          render: (row) => {
+                          render: (row: any) => {
                             const r = row as unknown as ReorderRule;
                             return `${r.product.name} (${r.product.sku})`;
                           },
@@ -534,7 +522,7 @@ export default function AdvancedInventoryPage() {
                         {
                           key: "maxQty",
                           header: "Max Limit",
-                          render: (row) =>
+                          render: (row: any) =>
                             (row as unknown as ReorderRule).maxQty || "N/A",
                         },
                         { key: "reorderQty", header: "Trigger PO Qty" },
@@ -577,26 +565,26 @@ export default function AdvancedInventoryPage() {
                         {
                           key: "sku",
                           header: "Assembly SKU",
-                          render: (row) =>
+                          render: (row: any) =>
                             (row as unknown as ProductKit).product.sku,
                         },
                         { key: "name", header: "Kit Name" },
                         {
                           key: "sellPrice",
                           header: "Base Price",
-                          render: (row) =>
+                          render: (row: any) =>
                             `$${Number((row as unknown as ProductKit).sellPrice).toLocaleString()}`,
                         },
                         {
                           key: "discount",
                           header: "Discount %",
-                          render: (row) =>
+                          render: (row: any) =>
                             `${(row as unknown as ProductKit).discount}%`,
                         },
                         {
                           key: "components",
                           header: "Components Count",
-                          render: (row) =>
+                          render: (row: any) =>
                             `${(row as unknown as ProductKit).components.length} items`,
                         },
                       ] as ListColumn[]

@@ -2,19 +2,7 @@
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@unerp/ui";
 import { GitCompare, Link2, Unlink, FileText } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
@@ -125,7 +113,7 @@ export default function BankReconciliationPage() {
     {
       key: "bank",
       header: "Bank Account",
-      render: (row) => (
+      render: (row: any) => (
         <div>
           <div className="ui-heading-sm">{row.bankName}</div>
           <div className="ui-text-xs-tertiary">
@@ -137,7 +125,7 @@ export default function BankReconciliationPage() {
     {
       key: "progress",
       header: "Match Progress",
-      render: (row) => {
+      render: (row: any) => {
         const pct = row.totalTransactions
           ? Math.round((row.matchedCount / row.totalTransactions) * 100)
           : 0;
@@ -165,7 +153,7 @@ export default function BankReconciliationPage() {
     {
       key: "unmatched",
       header: "Unmatched",
-      render: (row) =>
+      render: (row: any) =>
         row.unmatchedCount > 0 ? (
           <Badge variant="warning">{row.unmatchedCount}</Badge>
         ) : (
@@ -175,7 +163,7 @@ export default function BankReconciliationPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "COMPLETED" ? "success" : "warning"}>
           {row.status.replace("_", " ")}
         </Badge>
@@ -187,20 +175,20 @@ export default function BankReconciliationPage() {
     {
       key: "date",
       header: "Date",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-xs">{row.date?.slice(0, 10)}</span>
       ),
     },
     {
       key: "description",
       header: "Description",
-      render: (row) => <span className="text-sm">{row.description}</span>,
+      render: (row: any) => <span className="text-sm">{row.description}</span>,
     },
     {
       key: "amount",
       header: "Amount",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span
           style={{
             color:
@@ -218,7 +206,7 @@ export default function BankReconciliationPage() {
     {
       key: "matched",
       header: "Match Status",
-      render: (row) =>
+      render: (row: any) =>
         row.reconciled ? (
           <div className="ui-flex ui-items-center ui-gap-1">
             <Link2 size={12} className="ui-text-success" />
@@ -233,7 +221,7 @@ export default function BankReconciliationPage() {
       header: "",
       align: "right" as const,
       width: "100px",
-      render: (row) =>
+      render: (row: any) =>
         !row.reconciled ? (
           <Button variant="outline" onClick={() => handleMatch(row)}>
             Match
@@ -312,7 +300,7 @@ export default function BankReconciliationPage() {
               columns={reconColumns}
               data={reconciliations}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No bank accounts"
               emptyMessage="Add a bank account to start reconciling."
               emptyIcon={<GitCompare size={48} />}
@@ -322,7 +310,7 @@ export default function BankReconciliationPage() {
               columns={stmtColumns}
               data={statements}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No transactions"
               emptyMessage="Add a bank transaction to reconcile."
               emptyIcon={<FileText size={48} />}

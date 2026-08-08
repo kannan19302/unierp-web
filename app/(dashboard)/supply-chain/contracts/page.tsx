@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Pagination,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Pagination } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, Search, Eye, Edit, Trash2, FileText } from "lucide-react";
 import Link from "next/link";
@@ -161,7 +147,7 @@ export default function ContractsPage() {
       key: "contractNumber",
       header: "Contract #",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Link href={`/supply-chain/contracts/${row.id}`} className="ui-link">
           {row.contractNumber}
         </Link>
@@ -172,7 +158,7 @@ export default function ContractsPage() {
       key: "type",
       header: "Type",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.type === "SERVICE"
@@ -190,18 +176,18 @@ export default function ContractsPage() {
       key: "value",
       header: "Value",
       sortable: true,
-      render: (row) => fmtCurrency(row.value),
+      render: (row: any) => fmtCurrency(row.value),
     },
     {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "dates",
       header: "Start-End",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {new Date(row.startDate).toLocaleDateString()} —{" "}
           {new Date(row.endDate).toLocaleDateString()}
@@ -212,7 +198,7 @@ export default function ContractsPage() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-flex ui-gap-1" onClick={(e) => e.stopPropagation()}>
           <button
             className="ui-btn-icon"
@@ -305,7 +291,7 @@ export default function ContractsPage() {
             columns={columns}
             data={contracts}
             loading={loading}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             sortBy={sortBy}
             sortOrder={sortOrder}
             onSortChange={handleSort}

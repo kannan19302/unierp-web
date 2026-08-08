@@ -1,17 +1,7 @@
 "use client";
 import styles from "./SequencesTab.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  Spinner,
-  Modal,
-  FormField,
-  Input,
-  Textarea,
-  useToast,
-} from "@unerp/ui";
+import { Card, Button, Badge, Spinner, Modal, FormField, Input, Textarea, useToast } from "@unerp/ui";
 import {
   Plus,
   Mail,

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, DataTable } from "@unerp/ui";
 import {
   BarChart3,
   Users,
@@ -122,38 +122,18 @@ export default function AgentPerformancePage() {
           </div>
           <Card>
             <div className="ui-card-body p-0">
-              <Table className="ui-table">
-                <thead>
-                  <tr>
-                    <th>Agent</th>
-                    <th>Resolved</th>
-                    <th>Avg Resolution (h)</th>
-                    <th>CSAT</th>
-                    <th>First Response (min)</th>
-                    <th>SLA Breaches</th>
-                    <th>Chats</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dashboard.agents.map((a) => (
-                    <tr key={a.agentId}>
-                      <td>
-                        <strong>{a.agentName}</strong>
-                      </td>
-                      <td>
-                        <Badge variant="success">{a.casesResolved}</Badge>
-                      </td>
-                      <td>{a.avgResolutionHours.toFixed(1)}h</td>
-                      <td>
-                        <Star size={12} /> {a.csatScore.toFixed(1)}
-                      </td>
-                      <td>{a.firstResponseMins.toFixed(0)}m</td>
-                      <td>{a.slaBreachCount}</td>
-                      <td>{a.chatsHandled}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                        const columns = [
+                                { key: "col_0", header: "Agent", render: (a: any) => (<><strong>{a.agentName}</strong></>) },
+                                { key: "col_1", header: "Resolved", render: (a: any) => (<><Badge variant="success">{a.casesResolved}</Badge></>) },
+                                { key: "col_2", header: "Avg Resolution (h)", render: (a: any) => (<>{a.avgResolutionHours.toFixed(1)}h</>) },
+                                { key: "col_3", header: "CSAT", render: (a: any) => (<><Star size={12} /> {a.csatScore.toFixed(1)}</>) },
+                                { key: "col_4", header: "First Response (min)", render: (a: any) => (<>{a.firstResponseMins.toFixed(0)}m</>) },
+                                { key: "col_5", header: "SLA Breaches", render: (a: any) => (<>{a.slaBreachCount}</>) },
+                                { key: "col_6", header: "Chats", render: (a: any) => (<>{a.chatsHandled}</>) },
+                              ];
+                                        return <DataTable columns={columns} data={dashboard.agents} rowKey={(a: any) => a.agentId} />;
+                                      })()}</>
             </div>
           </Card>
         </>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { LogOut, Heart, ThumbsUp, BarChart3 } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -138,39 +138,17 @@ export default function AdvancedHrExitInterviewPage() {
             No exit interviews recorded.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Employee</th>
-                <th style={{ padding: "12px" }}>Exit Reason</th>
-                <th style={{ padding: "12px" }}>Satisfaction</th>
-                <th style={{ padding: "12px" }}>Would Rehire</th>
-              </tr>
-            </thead>
-            <tbody>
-              {interviews.map((e, i) => (
-                <tr
-                  key={e.id ?? i}
-                  style={{ borderBottom: "1px solid #f1f5f9" }}
-                >
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {e.employeeId}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="warning">{e.exitReason}</Badge>
-                  </td>
-                  <td style={{ padding: "12px" }}>{e.satisfactionScore}/10</td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant={e.wouldRehire ? "success" : "danger"}>
-                      {e.wouldRehire ? "Yes" : "No"}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Employee" , render: (e: any) => (<>{e.employeeId}</>) },
+                        { key: "col_1", header: "Exit Reason" , render: (e: any) => (<><Badge variant="warning">{e.exitReason}</Badge></>) },
+                        { key: "col_2", header: "Satisfaction" , render: (e: any) => (<>{e.satisfactionScore}/10</>) },
+                        { key: "col_3", header: "Would Rehire" , render: (e: any) => (<><Badge variant={e.wouldRehire ? "success" : "danger"}>
+                                            {e.wouldRehire ? "Yes" : "No"}
+                                          </Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={interviews} rowKey={(e: any) => e.id ?? i} />;
+                          })()}</>
         )}
       </Card>
     </div>

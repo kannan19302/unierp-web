@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import React from "react";
@@ -22,41 +22,23 @@ export default function PwaOfflineSyncPage() {
       </div>
 
       <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-        <Table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-gray-500 font-medium text-xs uppercase border-b">
-            <tr>
-              <th className="p-3">Action Type</th>
-              <th className="p-3">User ID</th>
-              <th className="p-3">Retries</th>
-              <th className="p-3">Status</th>
-              <th className="p-3">Enqueued At</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y text-gray-700">
-            <tr>
-              <td className="p-3 font-semibold">TICKET_UPDATE</td>
-              <td className="p-3 font-mono text-xs">usr_88291</td>
-              <td className="p-3">0</td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
-                  SYNCED
-                </span>
-              </td>
-              <td className="p-3 text-xs text-gray-500">2026-07-27 15:30:00</td>
-            </tr>
-            <tr>
-              <td className="p-3 font-semibold">CREATE_SALES_ORDER</td>
-              <td className="p-3 font-mono text-xs">usr_10492</td>
-              <td className="p-3">1</td>
-              <td className="p-3">
-                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded font-medium">
-                  PENDING
-                </span>
-              </td>
-              <td className="p-3 text-xs text-gray-500">2026-07-27 15:42:10</td>
-            </tr>
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Action Type", render: (row: any) => (<>{row.col_0}</>) },
+                { key: "col_1", header: "User ID", render: (row: any) => (<>{row.col_1}</>) },
+                { key: "col_2", header: "Retries", render: (row: any) => (<>{row.col_2}</>) },
+                { key: "col_3", header: "Status", render: (row: any) => (<>{row.col_3}</>) },
+                { key: "col_4", header: "Enqueued At", render: (row: any) => (<>{row.col_4}</>) },
+              ];
+                        return <DataTable columns={columns} data={[
+                { col_0: ( <>TICKET_UPDATE</> ), col_1: ( <>usr_88291</> ), col_2: ( <>0</> ), col_3: ( <><span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
+                                SYNCED
+                              </span></> ), col_4: ( <>2026-07-27 15:30:00</> ),  },
+                { col_0: ( <>CREATE_SALES_ORDER</> ), col_1: ( <>usr_10492</> ), col_2: ( <>1</> ), col_3: ( <><span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded font-medium">
+                                PENDING
+                              </span></> ), col_4: ( <>2026-07-27 15:42:10</> ),  },
+              ]} rowKey={(row: any, i: any) => String(i)} />;
+                      })()}</>
       </div>
     </div>
   );

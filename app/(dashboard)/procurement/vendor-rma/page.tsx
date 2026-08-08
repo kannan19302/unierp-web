@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Badge, Spinner, Card, Table } from "@unerp/ui";
+import { PageHeader, Badge, Spinner, Card, Table, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart } from "lucide-react";
@@ -125,47 +125,22 @@ export default function VendorRMAPage() {
         <Spinner />
       ) : (
         <Card>
-          <Table className="ui-table" style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th>RMA #</th>
-                <th>Vendor</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(data || []).map((rma: any) => (
-                <tr key={rma.id}>
-                  <td>{rma.rmaNumber || rma.id}</td>
-                  <td>{rma.vendor?.name || "—"}</td>
-                  <td>{rma.product?.name || "—"}</td>
-                  <td>{rma.quantity ?? "—"}</td>
-                  <td>{rma.reason || "—"}</td>
-                  <td>
-                    <Badge variant={statusVariant(rma.status)}>
-                      {rma.status}
-                    </Badge>
-                  </td>
-                  <td>
-                    {rma.createdAt
-                      ? new Date(rma.createdAt).toLocaleDateString()
-                      : "—"}
-                  </td>
-                </tr>
-              ))}
-              {(!data || data.length === 0) && (
-                <tr>
-                  <td colSpan={7} style={{ textAlign: "center", padding: 24 }}>
-                    No RMA requests found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "RMA #" , render: (rma: any) => (<>{rma.rmaNumber || rma.id}</>) },
+                        { key: "col_1", header: "Vendor" , render: (rma: any) => (<>{rma.vendor?.name || "—"}</>) },
+                        { key: "col_2", header: "Product" , render: (rma: any) => (<>{rma.product?.name || "—"}</>) },
+                        { key: "col_3", header: "Quantity" , render: (rma: any) => (<>{rma.quantity ?? "—"}</>) },
+                        { key: "col_4", header: "Reason" , render: (rma: any) => (<>{rma.reason || "—"}</>) },
+                        { key: "col_5", header: "Status" , render: (rma: any) => (<><Badge variant={statusVariant(rma.status)}>
+                                            {rma.status}
+                                          </Badge></>) },
+                        { key: "col_6", header: "Date" , render: (rma: any) => (<>{rma.createdAt
+                                            ? new Date(rma.createdAt).toLocaleDateString()
+                                            : "—"}</>) },
+                      ];
+                              return <DataTable columns={columns} data={(data || [])} rowKey={(rma: any) => rma.id} />;
+                          })()}</>
         </Card>
       )}
     </RouteGuard>

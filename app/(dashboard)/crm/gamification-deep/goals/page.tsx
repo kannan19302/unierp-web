@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { Target, Plus, X, Trash2 } from "lucide-react";
 import {
   apiGet,
@@ -119,26 +109,26 @@ export default function GoalsPage() {
       key: "goalType",
       header: "Type",
       sortable: true,
-      render: (r) => <Badge variant="info">{r.goalType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.goalType}</Badge>,
     },
     {
       key: "targetValue",
       header: "Target",
       sortable: true,
-      render: (r) => `$${Number(r.targetValue).toLocaleString()}`,
+      render: (r: any) => `$${Number(r.targetValue).toLocaleString()}`,
     },
     {
       key: "currentValue",
       header: "Current",
       sortable: true,
-      render: (r) => `$${Number(r.currentValue).toLocaleString()}`,
+      render: (r: any) => `$${Number(r.currentValue).toLocaleString()}`,
     },
     { key: "period", header: "Period", sortable: true },
     {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "ACTIVE"
@@ -155,7 +145,7 @@ export default function GoalsPage() {
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <button
           className="ui-btn-icon"
           onClick={(e) => {

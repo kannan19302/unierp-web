@@ -45,13 +45,13 @@ function UnlinkedEmailsPage() {
     {
       key: "receivedAt",
       header: "Received",
-      render: (row) =>
+      render: (row: any) =>
         new Date((row as any).receivedAt as string).toLocaleString(),
     },
     {
       key: "id",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const id = (row as any).id;
         return (
           <div className="ui-flex-h-2">

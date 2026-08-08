@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { LifeBuoy, Plus, MessageSquare, Clock } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -116,42 +116,22 @@ export default function SaasPortalSupportPage() {
             No active support tickets found.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Ticket #</th>
-                <th style={{ padding: "12px" }}>Subject</th>
-                <th style={{ padding: "12px" }}>Category</th>
-                <th style={{ padding: "12px" }}>Priority</th>
-                <th style={{ padding: "12px" }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tickets.map((t) => (
-                <tr key={t.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {t.ticketNumber}
-                  </td>
-                  <td style={{ padding: "12px" }}>{t.subject}</td>
-                  <td style={{ padding: "12px" }}>{t.category}</td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant={t.priority === "HIGH" ? "danger" : "info"}>
-                      {t.priority}
-                    </Badge>
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge
-                      variant={t.status === "RESOLVED" ? "success" : "warning"}
-                    >
-                      {t.status}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Ticket #" , render: (t: any) => (<>{t.ticketNumber}</>) },
+                        { key: "col_1", header: "Subject" , render: (t: any) => (<>{t.subject}</>) },
+                        { key: "col_2", header: "Category" , render: (t: any) => (<>{t.category}</>) },
+                        { key: "col_3", header: "Priority" , render: (t: any) => (<><Badge variant={t.priority === "HIGH" ? "danger" : "info"}>
+                                            {t.priority}
+                                          </Badge></>) },
+                        { key: "col_4", header: "Status" , render: (t: any) => (<><Badge
+                                            variant={t.status === "RESOLVED" ? "success" : "warning"}
+                                          >
+                                            {t.status}
+                                          </Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={tickets} rowKey={(t: any) => t.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

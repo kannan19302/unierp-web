@@ -16,14 +16,7 @@ import {
   ArrowRight,
   Check,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, DataTable, type Column } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface BudgetScenario {
@@ -345,7 +338,7 @@ export default function BudgetScenariosPage() {
     {
       key: "account",
       header: "GL Account",
-      render: (acc) => (
+      render: (acc: any) => (
         <div>
           <div className="text-xs text-gray-400">{acc.code}</div>
           <div className="truncate font-semibold text-gray-700">{acc.name}</div>
@@ -357,7 +350,7 @@ export default function BudgetScenariosPage() {
       key: "rowTotal",
       header: "Row Total",
       align: "right" as const,
-      render: (acc) => {
+      render: (acc: any) => {
         let rowTotal = 0;
         for (let m = 1; m <= 12; m++) {
           rowTotal += lineMap.get(`${acc.id}-${m}`) || 0;
@@ -496,7 +489,7 @@ export default function BudgetScenariosPage() {
                     {
                       key: "type",
                       header: "Type",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="text-xs font-semibold px-2 py-0.5 bg-gray-100 rounded">
                           {String(v)}
                         </span>
@@ -506,7 +499,7 @@ export default function BudgetScenariosPage() {
                     {
                       key: "_count",
                       header: "Lines Entered",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-medium text-gray-600">
                           {(v as any)?.lines || 0}
                         </span>
@@ -515,7 +508,7 @@ export default function BudgetScenariosPage() {
                     {
                       key: "isLocked",
                       header: "Status",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           className={`ui-badge ${v ? "ui-badge-green" : "ui-badge-gray"}`}
                         >
@@ -526,7 +519,7 @@ export default function BudgetScenariosPage() {
                     {
                       key: "id",
                       header: "Actions",
-                      render: (v) => (
+                      render: (v: any) => (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -573,7 +566,7 @@ export default function BudgetScenariosPage() {
               <DataTable
                 columns={monthlyGridColumns}
                 data={accounts}
-                rowKey={(acc) => acc.id}
+                rowKey={(acc: any) => acc.id}
                 loading={linesLoading}
                 emptyTitle="No GL accounts found"
                 emptyMessage="No accounts are available to budget for this scenario."

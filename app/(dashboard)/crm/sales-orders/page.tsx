@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  StatusBadge,
-  DataTable,
-  type Column,
-  type SortOrder,
-  KPICard,
-  Badge,
-  Modal,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, StatusBadge, DataTable, type Column, type SortOrder, KPICard, Badge, Modal } from "@unerp/ui";
 import {
   ClipboardList,
   Search,
@@ -223,7 +211,7 @@ export default function CrmSalesOrdersPage() {
     {
       key: "order",
       header: "Order",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.style0}>
             <ClipboardList size={16} />
@@ -238,14 +226,14 @@ export default function CrmSalesOrdersPage() {
     {
       key: "items",
       header: "Items",
-      render: (row) => <span className="text-sm">{row.items || "—"}</span>,
+      render: (row: any) => <span className="text-sm">{row.items || "—"}</span>,
     },
     {
       key: "totalAmount",
       header: "Amount",
       align: "right" as const,
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmtCurrency(row.totalAmount)}</span>
       ),
     },
@@ -253,7 +241,7 @@ export default function CrmSalesOrdersPage() {
       key: "orderDate",
       header: "Order Date",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {new Date(row.orderDate).toLocaleDateString()}
         </span>
@@ -263,14 +251,14 @@ export default function CrmSalesOrdersPage() {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "actions",
       header: "",
       align: "right" as const,
       width: "60px",
-      render: (row) => (
+      render: (row: any) => (
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -401,7 +389,7 @@ export default function CrmSalesOrdersPage() {
             columns={columns}
             data={data}
             loading={loading}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             onRowClick={(r) => {
               setSelected(r);
               setDetailOpen(true);

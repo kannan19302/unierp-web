@@ -375,7 +375,7 @@ export default function APAutomationPage() {
                       {
                         key: "vendor",
                         header: "Vendor",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">
                             {(v as any)?.name || "Unknown"}
                           </span>
@@ -384,12 +384,12 @@ export default function APAutomationPage() {
                       {
                         key: "dueDate",
                         header: "Due Date",
-                        render: (v) => new Date(String(v)).toLocaleDateString(),
+                        render: (v: any) => new Date(String(v)).toLocaleDateString(),
                       },
                       {
                         key: "amount",
                         header: "Amount",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">
                             ${Number(v).toFixed(2)}
                           </span>
@@ -457,17 +457,17 @@ export default function APAutomationPage() {
                       {
                         key: "runDate",
                         header: "Date",
-                        render: (v) => new Date(String(v)).toLocaleDateString(),
+                        render: (v: any) => new Date(String(v)).toLocaleDateString(),
                       },
                       {
                         key: "bankAccount",
                         header: "Account",
-                        render: (v) => String((v as any)?.bankName ?? "—"),
+                        render: (v: any) => String((v as any)?.bankName ?? "—"),
                       },
                       {
                         key: "totalAmount",
                         header: "Total",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className={styles.s20}>
                             ${Number(v).toFixed(2)}
                           </span>

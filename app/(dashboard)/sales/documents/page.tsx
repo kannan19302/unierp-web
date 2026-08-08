@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 
 export default function SalesDocumentsPage() {
@@ -124,50 +124,24 @@ export default function SalesDocumentsPage() {
               No generated documents yet.
             </p>
           ) : (
-            <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr
-                  style={{
-                    borderBottom: "1px solid #e2e8f0",
-                    textAlign: "left",
-                  }}
-                >
-                  <th style={{ padding: "10px 12px" }}>Document Title</th>
-                  <th style={{ padding: "10px 12px" }}>Status</th>
-                  <th style={{ padding: "10px 12px" }}>Created Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {generations.map((g) => (
-                  <tr key={g.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                    <td style={{ padding: "10px 12px", fontWeight: 500 }}>
-                      {g.title}
-                    </td>
-                    <td style={{ padding: "10px 12px" }}>
-                      <Badge
-                        variant={
-                          g.status === "SIGNED"
-                            ? "success"
-                            : g.status === "SENT"
-                              ? "info"
-                              : "default"
-                        }
-                      >
-                        {g.status}
-                      </Badge>
-                    </td>
-                    <td
-                      style={{
-                        padding: "10px 12px",
-                        color: "var(--color-text-secondary)",
-                      }}
-                    >
-                      {new Date(g.createdAt).toLocaleDateString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Document Title" , render: (g: any) => (<>{g.title}</>) },
+                            { key: "col_1", header: "Status" , render: (g: any) => (<><Badge
+                                                  variant={
+                                                    g.status === "SIGNED"
+                                                      ? "success"
+                                                      : g.status === "SENT"
+                                                        ? "info"
+                                                        : "default"
+                                                  }
+                                                >
+                                                  {g.status}
+                                                </Badge></>) },
+                            { key: "col_2", header: "Created Date" , render: (g: any) => (<>{new Date(g.createdAt).toLocaleDateString()}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={generations} rowKey={(g: any) => g.id} />;
+                              })()}</>
           )}
         </Card>
       </div>

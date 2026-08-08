@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -22,42 +22,19 @@ export default function SlackPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Slack Connections</h1>
-      <Table className="w-full text-sm">
-        <thead>
-          <tr className="border-b text-left">
-            <th className="py-2 px-2">Name</th>
-            <th className="py-2 px-2">Workspace</th>
-            <th className="py-2 px-2">Default Channel</th>
-            <th className="py-2 px-2">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {connections.map((s: any) => (
-            <tr key={s.id} className="border-b hover:bg-muted/50">
-              <td className="py-2 px-2">{s.name}</td>
-              <td className="py-2 px-2">{s.workspaceName}</td>
-              <td className="py-2 px-2">{s.defaultChannel || "—"}</td>
-              <td className="py-2 px-2">
-                <span
-                  className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${s.enabled ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
-                >
-                  {s.enabled ? "Enabled" : "Disabled"}
-                </span>
-              </td>
-            </tr>
-          ))}
-          {connections.length === 0 && (
-            <tr>
-              <td
-                colSpan={4}
-                className="py-4 text-center text-muted-foreground"
-              >
-                No Slack connections
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+      <>{(() => {
+                    const columns = [
+            { key: "col_0", header: "Name", render: (s: any) => (<>{s.name}</>) },
+            { key: "col_1", header: "Workspace", render: (s: any) => (<>{s.workspaceName}</>) },
+            { key: "col_2", header: "Default Channel", render: (s: any) => (<>{s.defaultChannel || "—"}</>) },
+            { key: "col_3", header: "Status", render: (s: any) => (<><span
+                            className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${s.enabled ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
+                          >
+                            {s.enabled ? "Enabled" : "Disabled"}
+                          </span></>) },
+          ];
+                    return <DataTable columns={columns} data={connections} rowKey={(s: any) => s.id} />;
+                  })()}</>
     </div>
   );
 }

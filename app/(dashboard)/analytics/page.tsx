@@ -13,15 +13,7 @@ import {
   X,
   Plus,
 } from "lucide-react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  DashboardKPICard,
-  DashboardChart,
-  DrillDownModal,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, DashboardKPICard, DashboardChart, DrillDownModal } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface KPI {

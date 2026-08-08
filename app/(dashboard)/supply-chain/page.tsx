@@ -1,24 +1,7 @@
 "use client";
 import styles from "./supply-chain.module.css";
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  DashboardChart,
-  ViewSwitcher,
-  type ViewMode,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, DashboardChart, ViewSwitcher, type ViewMode } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   Truck,
@@ -154,7 +137,7 @@ export default function SupplyChainDashboard() {
     {
       key: "shipment",
       header: "Shipment",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.iconWell}>
             <Truck size={16} />
@@ -171,7 +154,7 @@ export default function SupplyChainDashboard() {
     {
       key: "type",
       header: "Type",
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.type === "OUTBOUND"
@@ -188,7 +171,7 @@ export default function SupplyChainDashboard() {
     {
       key: "trackingNumber",
       header: "Tracking #",
-      render: (row) =>
+      render: (row: any) =>
         row.trackingNumber ? (
           <code className={styles.trackingCode}>{row.trackingNumber}</code>
         ) : (
@@ -198,7 +181,7 @@ export default function SupplyChainDashboard() {
     {
       key: "weight",
       header: "Weight",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">
           {row.weight ? `${row.weight} kg` : "—"}
         </span>
@@ -207,7 +190,7 @@ export default function SupplyChainDashboard() {
     {
       key: "estimatedDelivery",
       header: "ETA",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {row.estimatedDelivery
             ? new Date(row.estimatedDelivery).toLocaleDateString()
@@ -218,7 +201,7 @@ export default function SupplyChainDashboard() {
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
   ];
 
@@ -388,7 +371,7 @@ export default function SupplyChainDashboard() {
                 columns={columns}
                 data={filtered}
                 loading={loading}
-                rowKey={(r) => r.id}
+                rowKey={(r: any) => r.id}
                 emptyTitle="No shipments"
                 emptyMessage="Create your first shipment to start tracking."
                 emptyIcon={<Truck size={48} />}

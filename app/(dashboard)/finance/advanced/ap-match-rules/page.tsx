@@ -259,28 +259,28 @@ export default function APMatchRulesPage() {
                   {
                     key: "vendorId",
                     header: "Scope",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? `Vendor: ${String(v).slice(0, 8)}…` : "Global",
                   },
                   {
                     key: "quantityTolerancePercent",
                     header: "Qty Tolerance",
-                    render: (v) => `${Number(v).toFixed(1)}%`,
+                    render: (v: any) => `${Number(v).toFixed(1)}%`,
                   },
                   {
                     key: "priceTolerancePercent",
                     header: "Price Tolerance",
-                    render: (v) => `${Number(v).toFixed(1)}%`,
+                    render: (v: any) => `${Number(v).toFixed(1)}%`,
                   },
                   {
                     key: "effectiveDate",
                     header: "Effective Date",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`ui-badge ${v === "ACTIVE" ? "ui-badge-green" : "ui-badge-gray"}`}
                       >

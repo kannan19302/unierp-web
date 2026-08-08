@@ -2,15 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { MapPin, Plus, Pencil, Trash2, GripVertical } from "lucide-react";
-import {
-  PageHeader,
-  Button,
-  Card,
-  Spinner,
-  DataTable,
-  Modal,
-  FormField,
-} from "@unerp/ui";
+import { PageHeader, Button, Card, Spinner, DataTable, Modal, FormField } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 
 interface JourneyStage {
@@ -130,7 +122,7 @@ export default function JourneyStagesPage() {
                 {
                   key: "color",
                   header: "Color",
-                  render: (row) => (
+                  render: (row: any) => (
                     <div className="ui-flex ui-items-center ui-gap-2">
                       <div
                         className="ui-w-5 ui-h-5 ui-rounded-full"
@@ -146,12 +138,12 @@ export default function JourneyStagesPage() {
                 {
                   key: "isActive",
                   header: "Active",
-                  render: (row) => (row.isActive ? "Yes" : "No"),
+                  render: (row: any) => (row.isActive ? "Yes" : "No"),
                 },
                 {
                   key: "id",
                   header: "Actions",
-                  render: (row) => (
+                  render: (row: any) => (
                     <div className="ui-flex ui-gap-2">
                       <button
                         onClick={(e) => {

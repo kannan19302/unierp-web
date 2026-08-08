@@ -1,18 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard } from "@unerp/ui";
 import { ClipboardList, Plus, FileText, Stethoscope } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -84,7 +73,7 @@ export default function ClinicalNotesPage() {
     {
       key: "patient",
       header: "Patient",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-heading-sm">
           {row.patient
             ? `${row.patient.firstName} ${row.patient.lastName}`
@@ -95,25 +84,25 @@ export default function ClinicalNotesPage() {
     {
       key: "diagnosis",
       header: "Diagnosis",
-      render: (row) => <span className="text-sm">{row.diagnosis}</span>,
+      render: (row: any) => <span className="text-sm">{row.diagnosis}</span>,
     },
     {
       key: "code",
       header: "Treatment Code",
-      render: (row) => <code className={styles.s1}>{row.treatmentCode}</code>,
+      render: (row: any) => <code className={styles.s1}>{row.treatmentCode}</code>,
     },
     {
       key: "billing",
       header: "Billing",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmtCurrency(row.billingAmount)}</span>
       ),
     },
     {
       key: "date",
       header: "Date",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-tertiary">
           {row.createdAt ? new Date(row.createdAt).toLocaleDateString() : "—"}
         </span>
@@ -164,7 +153,7 @@ export default function ClinicalNotesPage() {
           <DataTable
             columns={columns}
             data={encounters}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No clinical notes"
             emptyMessage="Document medical encounters here."
             emptyIcon={<ClipboardList size={48} />}

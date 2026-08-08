@@ -1,21 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Building2, Plus, Search, AlertTriangle } from "lucide-react";
 import Link from "next/link";
@@ -87,7 +73,7 @@ export default function PropertiesPage() {
     {
       key: "name",
       header: "Property",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <Building2 size={18} />
@@ -107,19 +93,19 @@ export default function PropertiesPage() {
     {
       key: "type",
       header: "Type",
-      render: (row) => <Badge variant="info">{row.type}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.type}</Badge>,
     },
     {
       key: "address",
       header: "Address",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">{row.address || "—"}</span>
       ),
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "OCCUPIED" ? "success" : "warning"}>
           {row.status || "Available"}
         </Badge>
@@ -178,7 +164,7 @@ export default function PropertiesPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No properties"
             emptyMessage="Add properties to your portfolio."
             emptyIcon={<Building2 size={48} />}

@@ -8,7 +8,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function EcommerceExpOrdersPage() {
   const client = useApiClient();
@@ -173,56 +173,31 @@ export default function EcommerceExpOrdersPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Order #</th>
-                  <th>Customer</th>
-                  <th>Status</th>
-                  <th>Total</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={6} className="text-center p-4">
-                      Loading...
-                    </td>
-                  </tr>
-                ) : (
-                  orders.map((o) => (
-                    <tr key={o.id}>
-                      <td>{o.orderNumber}</td>
-                      <td>{o.customerName || o.customerEmail || "-"}</td>
-                      <td>
-                        <span
-                          className={`ui-badge-${o.status === "DELIVERED" ? "success" : o.status === "CANCELLED" ? "error" : o.status === "PROCESSING" ? "info" : ""}`}
-                        >
-                          {o.status}
-                        </span>
-                      </td>
-                      <td>${Number(o.grandTotal).toFixed(2)}</td>
-                      <td>{new Date(o.createdAt).toLocaleDateString()}</td>
-                      <td>
-                        <button
-                          className="ui-btn-icon"
-                          onClick={async () => {
-                            const d = await client.get<any>(
-                              `/ecommerce/exp/orders/${o.id}`,
-                            );
-                            setSelected(d);
-                          }}
-                        >
-                          <Eye size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Order #", render: (o: any) => (<>{o.orderNumber}</>) },
+                            { key: "col_1", header: "Customer", render: (o: any) => (<>{o.customerName || o.customerEmail || "-"}</>) },
+                            { key: "col_2", header: "Status", render: (o: any) => (<><span
+                                                    className={`ui-badge-${o.status === "DELIVERED" ? "success" : o.status === "CANCELLED" ? "error" : o.status === "PROCESSING" ? "info" : ""}`}
+                                                  >
+                                                    {o.status}
+                                                  </span></>) },
+                            { key: "col_3", header: "Total", render: (o: any) => (<>${Number(o.grandTotal).toFixed(2)}</>) },
+                            { key: "col_4", header: "Date", render: (o: any) => (<>{new Date(o.createdAt).toLocaleDateString()}</>) },
+                            { key: "col_5", header: "Actions", render: (o: any) => (<><button
+                                                    className="ui-btn-icon"
+                                                    onClick={async () => {
+                                                      const d = await client.get<any>(
+                                                        `/ecommerce/exp/orders/${o.id}`,
+                                                      );
+                                                      setSelected(d);
+                                                    }}
+                                                  >
+                                                    <Eye size={14} />
+                                                  </button></>) },
+                          ];
+                                    return <DataTable columns={columns} data={orders} rowKey={(o: any) => o.id} />;
+                                  })()}</>
             <div className="flex items-center justify-between p-4">
               <span className="ui-text-sm-muted">
                 Page {page} of {totalPages}

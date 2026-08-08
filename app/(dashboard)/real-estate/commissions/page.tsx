@@ -1,19 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { DollarSign, Plus, Users, AlertTriangle } from "lucide-react";
 interface Commission {
@@ -83,7 +71,7 @@ export default function CommissionsPage() {
     {
       key: "agent",
       header: "Agent",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-heading-sm">{row.agentId.slice(0, 12)}</span>
       ),
     },
@@ -91,19 +79,19 @@ export default function CommissionsPage() {
       key: "amount",
       header: "Amount",
       align: "right" as const,
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-semibold">{fmtCurrency(row.amount)}</span>
       ),
     },
     {
       key: "split",
       header: "Split Ratio",
-      render: (row) => <Badge variant="info">{row.splitRatio}%</Badge>,
+      render: (row: any) => <Badge variant="info">{row.splitRatio}%</Badge>,
     },
     {
       key: "gl",
       header: "GL Reference",
-      render: (row) => (
+      render: (row: any) => (
         <code className={styles.s1}>{row.generalLedgerRef || "—"}</code>
       ),
     },
@@ -159,7 +147,7 @@ export default function CommissionsPage() {
           <DataTable
             columns={columns}
             data={commissions}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No commissions"
             emptyMessage="Add commission records."
             emptyIcon={<DollarSign size={48} />}

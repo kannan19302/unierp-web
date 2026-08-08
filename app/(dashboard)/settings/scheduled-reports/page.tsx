@@ -373,7 +373,7 @@ export default function ScheduledReportsPage() {
               {
                 key: "reportType",
                 header: "Report Type",
-                render: (v) => (
+                render: (v: any) => (
                   <code className={styles.reportType}>
                     {reportTypeLabel(String(v))}
                   </code>
@@ -382,7 +382,7 @@ export default function ScheduledReportsPage() {
               {
                 key: "schedule",
                 header: "Schedule",
-                render: (v) => (
+                render: (v: any) => (
                   <span className={styles.schedule}>
                     <Clock size={12} className="ui-text-tertiary" />{" "}
                     {scheduleLabel(String(v))}
@@ -392,20 +392,20 @@ export default function ScheduledReportsPage() {
               {
                 key: "format",
                 header: "Format",
-                render: (v) => (
+                render: (v: any) => (
                   <span className={styles.format}>{String(v)}</span>
                 ),
               },
               {
                 key: "lastRunAt",
                 header: "Last Run",
-                render: (v) =>
+                render: (v: any) =>
                   v ? new Date(String(v)).toLocaleString() : "Never",
               },
               {
                 key: "isActive",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <span
                     className={`${styles.status} ${v ? styles.statusActive : ""}`}
                   >

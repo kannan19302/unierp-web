@@ -3,20 +3,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, Modal, TextField, FormField, Select, KPICard, DataTable, type Column } from "@unerp/ui";
 import {
   Target,
   TrendingUp,
@@ -453,13 +440,13 @@ export default function BudgetingPage() {
     {
       key: "account",
       header: "Account",
-      render: (b) =>
+      render: (b: any) =>
         b.account ? `${b.account.code} - ${b.account.name}` : b.accountId,
     },
     {
       key: "dimension",
       header: "Dimension",
-      render: (b) =>
+      render: (b: any) =>
         b.costCenter ? (
           <span className="ui-hstack-2">
             <Layers size={12} /> {b.costCenter.name}
@@ -475,7 +462,7 @@ export default function BudgetingPage() {
     {
       key: "period",
       header: "Period",
-      render: (b) =>
+      render: (b: any) =>
         `${new Date(b.startDate).toLocaleDateString()} - ${new Date(
           b.endDate,
         ).toLocaleDateString()}`,
@@ -484,13 +471,13 @@ export default function BudgetingPage() {
       key: "amount",
       header: "Amount",
       align: "right" as const,
-      render: (b) => fmtBalance(b.amount),
+      render: (b: any) => fmtBalance(b.amount),
     },
     {
       key: "actions",
       header: "",
       align: "right" as const,
-      render: (b) => (
+      render: (b: any) => (
         <div className="ui-hstack-2">
           <Button
             size="sm"
@@ -523,16 +510,16 @@ export default function BudgetingPage() {
   ];
 
   const reallocationColumns: Column<BudgetReallocation>[] = [
-    { key: "number", header: "Req Number", render: (r) => r.number },
+    { key: "number", header: "Req Number", render: (r: any) => r.number },
     {
       key: "description",
       header: "Description",
-      render: (r) => r.description || "N/A",
+      render: (r: any) => r.description || "N/A",
     },
     {
       key: "transfer",
       header: "Transfer Detail",
-      render: (r) => {
+      render: (r: any) => {
         const sourceLine = r.lines.find((l) => l.type === "SOURCE");
         const destLine = r.lines.find((l) => l.type === "DESTINATION");
         if (!sourceLine || !destLine) return "Invalid Lines";
@@ -549,7 +536,7 @@ export default function BudgetingPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "APPROVED"
@@ -568,12 +555,12 @@ export default function BudgetingPage() {
     {
       key: "requestedBy",
       header: "Requested By",
-      render: (r) => r.requestedBy,
+      render: (r: any) => r.requestedBy,
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-2">
           {r.status === "DRAFT" && (
             <Button
@@ -613,25 +600,25 @@ export default function BudgetingPage() {
     {
       key: "account",
       header: "Account Code / Name",
-      render: (item) => `${item.accountCode} - ${item.accountName}`,
+      render: (item: any) => `${item.accountCode} - ${item.accountName}`,
     },
     {
       key: "budgetAmount",
       header: "Budget Amount",
       align: "right" as const,
-      render: (item) => fmtBalance(item.budgetAmount),
+      render: (item: any) => fmtBalance(item.budgetAmount),
     },
     {
       key: "actualAmount",
       header: "Actual Amount",
       align: "right" as const,
-      render: (item) => fmtBalance(item.actualAmount),
+      render: (item: any) => fmtBalance(item.actualAmount),
     },
     {
       key: "variance",
       header: "Variance",
       align: "right" as const,
-      render: (item) => (
+      render: (item: any) => (
         <span
           className={item.variance >= 0 ? "ui-text-success" : "ui-text-danger"}
         >
@@ -643,7 +630,7 @@ export default function BudgetingPage() {
       key: "variancePercent",
       header: "% Diff",
       align: "right" as const,
-      render: (item) => (
+      render: (item: any) => (
         <span
           className={item.variance >= 0 ? "ui-text-success" : "ui-text-danger"}
         >
@@ -1038,7 +1025,7 @@ export default function BudgetingPage() {
               <DataTable
                 columns={budgetColumns}
                 data={budgets}
-                rowKey={(b) => b.id}
+                rowKey={(b: any) => b.id}
                 emptyTitle="No budget allocations found"
                 emptyMessage="Create a budget allocation to start tracking spend against it."
               />
@@ -1055,7 +1042,7 @@ export default function BudgetingPage() {
             <DataTable
               columns={reallocationColumns}
               data={reallocations}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No budget reallocations found"
               emptyMessage="Submit a reallocation request to transfer budget between accounts."
             />
@@ -1271,7 +1258,7 @@ export default function BudgetingPage() {
               <DataTable
                 columns={vsActualColumns}
                 data={vsActualData.items}
-                rowKey={(item, idx) => `${item.accountId}-${idx}`}
+                rowKey={(item: any, idx: any) => `${item.accountId}-${idx}`}
                 emptyTitle="No variance data"
                 emptyMessage="No account activity for this budget period."
               />

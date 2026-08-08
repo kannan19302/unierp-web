@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { ShieldCheck, CheckCircle2, FileCheck, Lock } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -137,59 +137,38 @@ export default function ReportingCompliancePage() {
             No pending compliance report sign-offs.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Report Name</th>
-                <th style={{ padding: "12px" }}>Regulation</th>
-                <th style={{ padding: "12px" }}>Sign-off Status</th>
-                <th style={{ padding: "12px" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {audits.map((a) => (
-                <tr key={a.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {a.reportName}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="info">{a.complianceType}</Badge>
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge
-                      variant={
-                        a.signoffStatus === "APPROVED" ? "success" : "warning"
-                      }
-                    >
-                      {a.signoffStatus}
-                    </Badge>
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    {a.signoffStatus !== "APPROVED" ? (
-                      <Button size="sm" onClick={() => handleSignoff(a.id)}>
-                        <ShieldCheck size={14} style={{ marginRight: "6px" }} />{" "}
-                        Sign Off & Approve
-                      </Button>
-                    ) : (
-                      <span
-                        style={{
-                          color: "var(--chart-9)",
-                          fontSize: "13px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "4px",
-                        }}
-                      >
-                        <CheckCircle2 size={14} /> Signed by Auditor
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Report Name" , render: (a: any) => (<>{a.reportName}</>) },
+                        { key: "col_1", header: "Regulation" , render: (a: any) => (<><Badge variant="info">{a.complianceType}</Badge></>) },
+                        { key: "col_2", header: "Sign-off Status" , render: (a: any) => (<><Badge
+                                            variant={
+                                              a.signoffStatus === "APPROVED" ? "success" : "warning"
+                                            }
+                                          >
+                                            {a.signoffStatus}
+                                          </Badge></>) },
+                        { key: "col_3", header: "Action" , render: (a: any) => (<>{a.signoffStatus !== "APPROVED" ? (
+                                            <Button size="sm" onClick={() => handleSignoff(a.id)}>
+                                              <ShieldCheck size={14} style={{ marginRight: "6px" }} />{" "}
+                                              Sign Off & Approve
+                                            </Button>
+                                          ) : (
+                                            <span
+                                              style={{
+                                                color: "var(--chart-9)",
+                                                fontSize: "13px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "4px",
+                                              }}
+                                            >
+                                              <CheckCircle2 size={14} /> Signed by Auditor
+                                            </span>
+                                          )}</>) },
+                      ];
+                              return <DataTable columns={columns} data={audits} rowKey={(a: any) => a.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

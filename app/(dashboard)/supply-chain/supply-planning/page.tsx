@@ -1,18 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Modal,
-  TextField,
-  Badge,
-  StatusBadge,
-  Tabs,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Modal, TextField, Badge, StatusBadge, Tabs, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus, Search, TrendingUp } from "lucide-react";
 
@@ -90,25 +78,25 @@ export default function SupplyPlanningPage() {
     {
       key: "planType",
       header: "Type",
-      render: (r) => <Badge>{r.planType}</Badge>,
+      render: (r: any) => <Badge>{r.planType}</Badge>,
     },
     { key: "planningHorizon", header: "Horizon (mo)" },
-    { key: "lines", header: "Lines", render: (r) => r._count?.lines ?? 0 },
+    { key: "lines", header: "Lines", render: (r: any) => r._count?.lines ?? 0 },
     {
       key: "scenarios",
       header: "Scenarios",
-      render: (r) => r._count?.scenarios ?? 0,
+      render: (r: any) => r._count?.scenarios ?? 0,
     },
     { key: "approvedBy", header: "Approved By" },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
   ];
 
@@ -119,7 +107,7 @@ export default function SupplyPlanningPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
   ];
 
@@ -160,7 +148,7 @@ export default function SupplyPlanningPage() {
           <DataTable
             columns={planColumns}
             data={plans}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No supply plans"
             emptyIcon={<TrendingUp size={48} />}
           />
@@ -169,7 +157,7 @@ export default function SupplyPlanningPage() {
           <DataTable
             columns={sopColumns}
             data={sopPlans}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No S&OP plans"
           />
         )}
@@ -192,7 +180,7 @@ export default function SupplyPlanningPage() {
               },
             ]}
             data={demandRuns}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No demand sensing runs"
           />
         )}

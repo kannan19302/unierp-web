@@ -576,7 +576,7 @@ export default function CloseTasksPage() {
                       {
                         key: "category",
                         header: "Category",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs text-gray-600 font-medium px-2 py-0.5 bg-gray-100 rounded-full">
                             {String(v)}
                           </span>
@@ -585,7 +585,7 @@ export default function CloseTasksPage() {
                       {
                         key: "priority",
                         header: "Priority",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "CRITICAL" ? "bg-red-100 text-red-700" : v === "HIGH" ? "bg-orange-100 text-orange-700" : v === "MEDIUM" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"}`}
                           >
@@ -596,7 +596,7 @@ export default function CloseTasksPage() {
                       {
                         key: "dueDate",
                         header: "Due Date",
-                        render: (v) =>
+                        render: (v: any) =>
                           v
                             ? new Date(String(v)).toLocaleDateString()
                             : "No due date",
@@ -604,7 +604,7 @@ export default function CloseTasksPage() {
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "DONE" ? "ui-badge-green" : v === "IN_PROGRESS" ? "ui-badge-blue" : "ui-badge-gray"}`}
                           >
@@ -615,7 +615,7 @@ export default function CloseTasksPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v) => (
+                        render: (v: any) => (
                           <button
                             onClick={() => handleDeleteTask(String(v))}
                             className="ui-action-btn ui-action-btn-danger"
@@ -696,24 +696,24 @@ export default function CloseTasksPage() {
                       {
                         key: "accountId",
                         header: "GL Account",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "priorAmount",
                         header: "Prior Bal",
-                        render: (v) => `$${Number(v).toLocaleString()}`,
+                        render: (v: any) => `$${Number(v).toLocaleString()}`,
                       },
                       {
                         key: "currentAmount",
                         header: "Current Bal",
-                        render: (v) => `$${Number(v).toLocaleString()}`,
+                        render: (v: any) => `$${Number(v).toLocaleString()}`,
                       },
                       {
                         key: "varianceAmount",
                         header: "Variance Amount",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`font-semibold ${Number(v) < 0 ? "text-red-600" : "text-green-600"}`}
                           >
@@ -724,7 +724,7 @@ export default function CloseTasksPage() {
                       {
                         key: "variancePercent",
                         header: "Deviation (%)",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold text-red-600">
                             {Number(v).toFixed(1)}%
                           </span>
@@ -733,7 +733,7 @@ export default function CloseTasksPage() {
                       {
                         key: "severity",
                         header: "Severity",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "CRITICAL" ? "bg-red-100 text-red-700" : v === "HIGH" ? "bg-orange-100 text-orange-700" : "bg-blue-100 text-blue-700"}`}
                           >
@@ -744,7 +744,7 @@ export default function CloseTasksPage() {
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "RESOLVED" ? "ui-badge-green" : v === "ACKNOWLEDGED" ? "ui-badge-blue" : "ui-badge-red"}`}
                           >

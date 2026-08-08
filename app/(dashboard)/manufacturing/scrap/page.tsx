@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -107,37 +107,19 @@ export default function ScrapPage() {
           </div>
         </div>
       )}
-      <Table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Work Order</th>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Reason</th>
-            <th>Cost Impact</th>
-          </tr>
-        </thead>
-        <tbody>
-          {records.map((r) => (
-            <tr key={r.id}>
-              <td>{new Date(r.createdAt).toLocaleDateString()}</td>
-              <td>{r.workOrderId}</td>
-              <td>{r.productId}</td>
-              <td className={styles.qtyCell}>{r.scrappedQty}</td>
-              <td>
-                <span className={styles.reasonBadge}>{r.reason}</span>
-                {r.reasonDetail && (
-                  <span className={styles.detail}>: {r.reasonDetail}</span>
-                )}
-              </td>
-              <td>
-                {r.costImpact ? `$${r.costImpact.toLocaleString()}` : "-"}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <>{(() => {
+                  const columns = [
+            { key: "col_0", header: "Date" , render: (r: any) => (<>{new Date(r.createdAt).toLocaleDateString()}</>) },
+            { key: "col_1", header: "Work Order" , render: (r: any) => (<>{r.workOrderId}</>) },
+            { key: "col_2", header: "Product" , render: (r: any) => (<>{r.productId}</>) },
+            { key: "col_3", header: "Qty" , render: (r: any) => (<>{r.scrappedQty}</>) },
+            { key: "col_4", header: "Reason" , render: (r: any) => (<><span className={styles.reasonBadge}>{r.reason}</span>{r.reasonDetail && (
+                            <span className={styles.detail}>: {r.reasonDetail}</span>
+                          )}</>) },
+            { key: "col_5", header: "Cost Impact" , render: (r: any) => (<>{r.costImpact ? `$${r.costImpact.toLocaleString()}` : "-"}</>) },
+          ];
+                  return <DataTable columns={columns} data={records} rowKey={(r: any) => r.id} />;
+              })()}</>
       {records.length === 0 && !loading && (
         <div className="ui-text-muted">No scrap records yet.</div>
       )}

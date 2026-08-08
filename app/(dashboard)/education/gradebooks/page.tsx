@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, Table, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -163,85 +163,55 @@ export default function EducationGradebooksPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Course</th>
-                <th>Gradebook</th>
-                <th>Max Score</th>
-                <th>Entries</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {gradebooks.map((gb: any) => (
-                <tr key={gb.id}>
-                  <td>{gb.course?.name}</td>
-                  <td className="font-medium">{gb.name}</td>
-                  <td>{gb.maxScore}</td>
-                  <td>{gb.entries?.length || 0}</td>
-                  <td>
-                    <button
-                      className="ui-btn ui-btn-sm ui-btn-outline"
-                      onClick={() =>
-                        setSelectedGb(selectedGb?.id === gb.id ? null : gb)
-                      }
-                    >
-                      {selectedGb?.id === gb.id ? "Hide" : "View"} Grades
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Course" , render: (gb: any) => (<>{gb.course?.name}</>) },
+                        { key: "col_1", header: "Gradebook" , render: (gb: any) => (<>{gb.name}</>) },
+                        { key: "col_2", header: "Max Score" , render: (gb: any) => (<>{gb.maxScore}</>) },
+                        { key: "col_3", header: "Entries" , render: (gb: any) => (<>{gb.entries?.length || 0}</>) },
+                        { key: "col_4", header: "Actions" , render: (gb: any) => (<><button
+                                            className="ui-btn ui-btn-sm ui-btn-outline"
+                                            onClick={() =>
+                                              setSelectedGb(selectedGb?.id === gb.id ? null : gb)
+                                            }
+                                          >
+                                            {selectedGb?.id === gb.id ? "Hide" : "View"} Grades
+                                          </button></>) },
+                      ];
+                              return <DataTable columns={columns} data={gradebooks} rowKey={(gb: any) => gb.id} />;
+                          })()}</>
           {selectedGb && (
             <div className="mt-4 p-4 border-t">
               <h4 className="font-semibold mb-2">
                 {selectedGb.name} - Grade Entry
               </h4>
-              <Table className="ui-table">
-                <thead>
-                  <tr>
-                    <th>Student</th>
-                    <th>Score</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedGb.entries?.map((e: any) => (
-                    <tr key={e.id}>
-                      <td>
-                        {e.student?.firstName} {e.student?.lastName}
-                      </td>
-                      <td>
-                        <span
-                          className={
-                            e.score >= selectedGb.maxScore * 0.6
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }
-                        >
-                          {e.score}/{selectedGb.maxScore}
-                        </span>
-                      </td>
-                      <td>
-                        <input
-                          className="ui-input w-20"
-                          type="number"
-                          defaultValue={e.score}
-                          onBlur={(ev) =>
-                            upsertEntry(
-                              selectedGb.id,
-                              e.studentId,
-                              parseFloat(ev.target.value),
-                            )
-                          }
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Student" , render: (e: any) => (<>{e.student?.firstName}{e.student?.lastName}</>) },
+                                { key: "col_1", header: "Score" , render: (e: any) => (<><span
+                                                        className={
+                                                          e.score >= selectedGb.maxScore * 0.6
+                                                            ? "text-green-600"
+                                                            : "text-red-600"
+                                                        }
+                                                      >
+                                                        {e.score}/{selectedGb.maxScore}
+                                                      </span></>) },
+                                { key: "col_2", header: "Action" , render: (e: any) => (<><input
+                                                        className="ui-input w-20"
+                                                        type="number"
+                                                        defaultValue={e.score}
+                                                        onBlur={(ev) =>
+                                                          upsertEntry(
+                                                            selectedGb.id,
+                                                            e.studentId,
+                                                            parseFloat(ev.target.value),
+                                                          )
+                                                        }
+                                                      /></>) },
+                              ];
+                                      return <DataTable columns={columns} data={selectedGb.entries} rowKey={(e: any) => e.id} />;
+                                  })()}</>
             </div>
           )}
         </div>

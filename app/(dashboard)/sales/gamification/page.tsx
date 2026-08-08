@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Trophy, Award, Flame, Target } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -138,53 +138,22 @@ export default function SalesGamificationPage() {
         <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
           Rep Rankings & Leaderboard
         </h3>
-        <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr
-              style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-            >
-              <th style={{ padding: "12px 16px" }}>Rank</th>
-              <th style={{ padding: "12px 16px" }}>Sales Rep</th>
-              <th style={{ padding: "12px 16px" }}>Total Score / Value</th>
-              <th style={{ padding: "12px 16px" }}>Deals Closed</th>
-              <th style={{ padding: "12px 16px" }}>Streak</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leaderboards.map((rep: any) => (
-              <tr
-                key={rep.salesRepId}
-                style={{ borderBottom: "1px solid #f1f5f9" }}
-              >
-                <td style={{ padding: "12px 16px", fontWeight: "bold" }}>
-                  {rep.rank === 1
-                    ? "🥇 #1"
-                    : rep.rank === 2
-                      ? "🥈 #2"
-                      : rep.rank === 3
-                        ? "🥉 #3"
-                        : `#${rep.rank}`}
-                </td>
-                <td style={{ padding: "12px 16px", fontWeight: 500 }}>
-                  {rep.name}
-                </td>
-                <td
-                  style={{
-                    padding: "12px 16px",
-                    color: "var(--chart-9)",
-                    fontWeight: 600,
-                  }}
-                >
-                  ${(rep.score || 0).toLocaleString()}
-                </td>
-                <td style={{ padding: "12px 16px" }}>{rep.deals} deals</td>
-                <td style={{ padding: "12px 16px" }}>
-                  <Badge variant="warning">🔥 {rep.streak} streak</Badge>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                      const columns = [
+                { key: "col_0", header: "Rank" , render: (rep: any) => (<>{rep.rank === 1
+                                  ? "🥇 #1"
+                                  : rep.rank === 2
+                                    ? "🥈 #2"
+                                    : rep.rank === 3
+                                      ? "🥉 #3"
+                                      : `#${rep.rank}`}</>) },
+                { key: "col_1", header: "Sales Rep" , render: (rep: any) => (<>{rep.name}</>) },
+                { key: "col_2", header: "Total Score / Value" , render: (rep: any) => (<>${(rep.score || 0).toLocaleString()}</>) },
+                { key: "col_3", header: "Deals Closed" , render: (rep: any) => (<>{rep.deals}deals</>) },
+                { key: "col_4", header: "Streak" , render: (rep: any) => (<><Badge variant="warning">🔥 {rep.streak} streak</Badge></>) },
+              ];
+                      return <DataTable columns={columns} data={leaderboards} rowKey={(rep: any) => rep.salesRepId} />;
+                  })()}</>
       </Card>
     </div>
   );

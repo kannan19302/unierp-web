@@ -1,13 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  Badge,
-  Spinner,
-  Modal,
-  DataTable,
-} from "@unerp/ui";
+import { PageHeader, Button, Badge, Spinner, Modal, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart, Plus } from "lucide-react";

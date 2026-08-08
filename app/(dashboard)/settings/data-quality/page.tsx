@@ -293,7 +293,7 @@ export default function DataQualityPage() {
                           {
                             key: "id",
                             header: "Record ID",
-                            render: (v) => (
+                            render: (v: any) => (
                               <span className={styles.s22}>{String(v)}</span>
                             ),
                           },

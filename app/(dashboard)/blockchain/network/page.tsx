@@ -49,18 +49,18 @@ export default function NetworkPage() {
     {
       key: "network",
       header: "Network",
-      render: (r) => <span className="ui-badge">{r.network}</span>,
+      render: (r: any) => <span className="ui-badge">{r.network}</span>,
     },
     {
       key: "blockHeight",
       header: "Block Height",
-      render: (r) => r.blockHeight.toLocaleString(),
+      render: (r: any) => r.blockHeight.toLocaleString(),
     },
-    { key: "peers", header: "Peers", render: (r) => r.peers },
+    { key: "peers", header: "Peers", render: (r: any) => r.peers },
     {
       key: "syncStatus",
       header: "Sync Status",
-      render: (r) => {
+      render: (r: any) => {
         const cls =
           r.syncStatus === "SYNCED"
             ? "ui-badge-success"
@@ -73,7 +73,7 @@ export default function NetworkPage() {
     {
       key: "lastCheckedAt",
       header: "Last Checked",
-      render: (r) => new Date(r.lastCheckedAt).toLocaleString(),
+      render: (r: any) => new Date(r.lastCheckedAt).toLocaleString(),
     },
   ];
 

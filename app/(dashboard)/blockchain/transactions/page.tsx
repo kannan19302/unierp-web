@@ -43,7 +43,7 @@ export default function TransactionsPage() {
     {
       key: "transactionHash",
       header: "Tx Hash",
-      render: (r) => (
+      render: (r: any) => (
         <code className="u-text-xs">
           {r.transactionHash.substring(0, 16)}...
         </code>
@@ -52,12 +52,12 @@ export default function TransactionsPage() {
     {
       key: "blockNumber",
       header: "Block",
-      render: (r) => r.blockNumber ?? "-",
+      render: (r: any) => r.blockNumber ?? "-",
     },
     {
       key: "fromAddress",
       header: "From",
-      render: (r) =>
+      render: (r: any) =>
         r.fromAddress ? (
           <code className="u-text-xs">{r.fromAddress.substring(0, 10)}...</code>
         ) : (
@@ -67,18 +67,18 @@ export default function TransactionsPage() {
     {
       key: "toAddress",
       header: "To",
-      render: (r) =>
+      render: (r: any) =>
         r.toAddress ? (
           <code className="u-text-xs">{r.toAddress.substring(0, 10)}...</code>
         ) : (
           "-"
         ),
     },
-    { key: "value", header: "Value", render: (r) => r.value ?? "0" },
+    { key: "value", header: "Value", render: (r: any) => r.value ?? "0" },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={`ui-badge ${r.status === "CONFIRMED" ? "ui-badge-success" : r.status === "FAILED" ? "ui-badge-danger" : "ui-badge-info"}`}
         >
@@ -89,7 +89,7 @@ export default function TransactionsPage() {
     {
       key: "timestamp",
       header: "Time",
-      render: (r) => new Date(r.timestamp).toLocaleString(),
+      render: (r: any) => new Date(r.timestamp).toLocaleString(),
     },
   ];
 

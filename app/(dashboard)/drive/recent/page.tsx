@@ -1,13 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { FileText, Folder, Download, Star, Clock } from "lucide-react";
 
@@ -52,7 +45,7 @@ export default function RecentPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-3">
           {r.type === "folder" ? (
             <Folder size={16} className="ui-text-primary" />
@@ -67,7 +60,7 @@ export default function RecentPage() {
       key: "updatedAt",
       header: "Modified",
       sortable: true,
-      render: (r) => <span>{new Date(r.updatedAt).toLocaleString()}</span>,
+      render: (r: any) => <span>{new Date(r.updatedAt).toLocaleString()}</span>,
     },
     {
       key: "actions",
@@ -113,7 +106,7 @@ export default function RecentPage() {
         <DataTable
           columns={columns}
           data={items}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No recent files"
           emptyMessage="Your recently modified files will appear here."
           emptyIcon={<Clock size={48} />}

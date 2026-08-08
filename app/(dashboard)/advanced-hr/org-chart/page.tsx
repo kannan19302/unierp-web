@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { GitBranch, Users, Building2, Plus } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -81,48 +81,15 @@ export default function AdvancedHrOrgChartPage() {
               No org chart nodes defined.
             </p>
           ) : (
-            <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr
-                  style={{
-                    borderBottom: "1px solid #e2e8f0",
-                    textAlign: "left",
-                  }}
-                >
-                  <th style={{ padding: "12px" }}>Job Title</th>
-                  <th style={{ padding: "12px" }}>Department</th>
-                  <th style={{ padding: "12px" }}>Level</th>
-                  <th style={{ padding: "12px" }}>Headcount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {nodes.map((n, i) => (
-                  <tr
-                    key={n.id ?? i}
-                    style={{
-                      borderBottom: "1px solid #f1f5f9",
-                      paddingLeft: `${n.reportingLevel * 16}px`,
-                    }}
-                  >
-                    <td
-                      style={{
-                        padding: "12px",
-                        fontWeight: 600,
-                        paddingLeft: `${(n.reportingLevel - 1) * 24 + 12}px`,
-                      }}
-                    >
-                      {n.reportingLevel > 1 ? "└ " : ""}
-                      {n.jobTitle}
-                    </td>
-                    <td style={{ padding: "12px" }}>{n.department}</td>
-                    <td style={{ padding: "12px" }}>
-                      <Badge variant="info">L{n.reportingLevel}</Badge>
-                    </td>
-                    <td style={{ padding: "12px" }}>{n.headcount}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Job Title" , render: (n: any) => (<>{n.reportingLevel > 1 ? "└ " : ""}{n.jobTitle}</>) },
+                            { key: "col_1", header: "Department" , render: (n: any) => (<>{n.department}</>) },
+                            { key: "col_2", header: "Level" , render: (n: any) => (<><Badge variant="info">L{n.reportingLevel}</Badge></>) },
+                            { key: "col_3", header: "Headcount" , render: (n: any) => (<>{n.headcount}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={nodes} rowKey={(n: any) => n.id ?? i} />;
+                              })()}</>
           )}
         </Card>
 

@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-  Select,
-  FormField,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast, Select, FormField } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Wrench, Plus, AlertTriangle, CheckCircle, Clock } from "lucide-react";
 
@@ -138,7 +124,7 @@ export default function MaintenanceRequestsPage() {
     {
       key: "title",
       header: "Request",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="ui-heading-sm">{r.title}</span>
           <div className="ui-text-xs-tertiary">
@@ -150,7 +136,7 @@ export default function MaintenanceRequestsPage() {
     {
       key: "priority",
       header: "Priority",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.priority === "EMERGENCY"
@@ -169,12 +155,12 @@ export default function MaintenanceRequestsPage() {
     {
       key: "cost",
       header: "Cost",
-      render: (r) => <span>${Number(r.actualCost || 0).toLocaleString()}</span>,
+      render: (r: any) => <span>${Number(r.actualCost || 0).toLocaleString()}</span>,
     },
     {
       key: "scheduled",
       header: "Scheduled",
-      render: (r) => (
+      render: (r: any) => (
         <span className="text-xs">
           {r.scheduledDate
             ? new Date(r.scheduledDate).toLocaleDateString()
@@ -185,14 +171,14 @@ export default function MaintenanceRequestsPage() {
     {
       key: "vendor",
       header: "Vendor",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant="info">{r.vendor?.name || "Unassigned"}</Badge>
       ),
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "COMPLETED"
@@ -211,7 +197,7 @@ export default function MaintenanceRequestsPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <select
           className="ui-input-sm"
           value={r.status}
@@ -280,7 +266,7 @@ export default function MaintenanceRequestsPage() {
           <DataTable
             columns={columns}
             data={items}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No maintenance requests"
             emptyMessage="Create maintenance requests for properties."
             emptyIcon={<Wrench size={48} />}

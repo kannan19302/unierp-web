@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   DollarSign,
   Plus,
@@ -573,12 +564,12 @@ export default function PayrollPage() {
                       {
                         key: "employeeId",
                         header: "Employee",
-                        render: (v) => getEmpName(String(v)),
+                        render: (v: any) => getEmpName(String(v)),
                       },
                       {
                         key: "baseSalary",
                         header: "Base Salary",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">
                             ${Number(v).toLocaleString()}/mo
                           </span>
@@ -626,7 +617,7 @@ export default function PayrollPage() {
                       {
                         key: "taxRate",
                         header: "Tax Rate",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">{Number(v)}%</span>
                         ),
                       },

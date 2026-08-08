@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -165,33 +165,15 @@ export default function AnalyticsPivotPage() {
 
           {/* Pivot Output Table */}
           <div className={styles.s6}>
-            <Table className={styles.s7}>
-              <thead>
-                <tr className={styles.s8}>
-                  <th className={styles.s9}>Period / Row</th>
-                  <th className={styles.s9}>Channel / Col</th>
-                  <th className={styles.s9}>Value</th>
-                  <th className={styles.s9}>Transactions Count</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pivotData.map((p, idx) => (
-                  <tr key={idx} className="border-b">
-                    <td className="p-3">{p.row}</td>
-                    <td className="p-3">{p.column}</td>
-                    <td className={styles.s9}>${p.value.toLocaleString()}</td>
-                    <td className="p-3">{p.count}</td>
-                  </tr>
-                ))}
-                {pivotData.length === 0 && (
-                  <tr>
-                    <td colSpan={4} className={styles.s10}>
-                      No pivot data records found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Period / Row" , render: (p: any) => (<>{p.row}</>) },
+                        { key: "col_1", header: "Channel / Col" , render: (p: any) => (<>{p.column}</>) },
+                        { key: "col_2", header: "Value" , render: (p: any) => (<>${p.value.toLocaleString()}</>) },
+                        { key: "col_3", header: "Transactions Count" , render: (p: any) => (<>{p.count}</>) },
+                      ];
+                              return <DataTable columns={columns} data={pivotData} rowKey={(p: any) => idx} />;
+                          })()}</>
           </div>
         </div>
       </div>

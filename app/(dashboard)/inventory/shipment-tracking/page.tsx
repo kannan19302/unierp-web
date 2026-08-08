@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, Table, DataTable } from "@unerp/ui";
 import { AlertCircle, Truck, Package, CheckCircle, Plus } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -306,128 +306,61 @@ export default function ShipmentTrackingPage() {
 
         {tab === "inbound" && (
           <Card className="p-4">
-            <Table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-gray-500">
-                  <th>Shipment #</th>
-                  <th>Status</th>
-                  <th>Warehouse</th>
-                  <th>Tracking #</th>
-                  <th>Created</th>
-                </tr>
-              </thead>
-              <tbody>
-                {inbound.map((s) => (
-                  <tr key={s.id} className="border-t">
-                    <td className="py-1 font-mono">{s.shipmentNumber}</td>
-                    <td>
-                      <Badge variant={STATUS_COLORS[s.status] ?? "default"}>
-                        {s.status}
-                      </Badge>
-                    </td>
-                    <td>{s.warehouseId}</td>
-                    <td>{s.trackingNumber ?? "—"}</td>
-                    <td>{new Date(s.createdAt).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-                {inbound.length === 0 && (
-                  <tr>
-                    <td colSpan={5} className="py-4 text-center text-gray-400">
-                      No inbound shipments
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Shipment #" , render: (s: any) => (<>{s.shipmentNumber}</>) },
+                        { key: "col_1", header: "Status" , render: (s: any) => (<><Badge variant={STATUS_COLORS[s.status] ?? "default"}>
+                                              {s.status}
+                                            </Badge></>) },
+                        { key: "col_2", header: "Warehouse" , render: (s: any) => (<>{s.warehouseId}</>) },
+                        { key: "col_3", header: "Tracking #" , render: (s: any) => (<>{s.trackingNumber ?? "—"}</>) },
+                        { key: "col_4", header: "Created" , render: (s: any) => (<>{new Date(s.createdAt).toLocaleDateString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={inbound} rowKey={(s: any) => s.id} />;
+                          })()}</>
           </Card>
         )}
 
         {tab === "outbound" && (
           <Card className="p-4">
-            <Table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-gray-500">
-                  <th>Shipment #</th>
-                  <th>Status</th>
-                  <th>Warehouse</th>
-                  <th>Tracking #</th>
-                  <th>Created</th>
-                </tr>
-              </thead>
-              <tbody>
-                {outbound.map((s) => (
-                  <tr key={s.id} className="border-t">
-                    <td className="py-1 font-mono">{s.shipmentNumber}</td>
-                    <td>
-                      <Badge variant={STATUS_COLORS[s.status] ?? "default"}>
-                        {s.status}
-                      </Badge>
-                    </td>
-                    <td>{s.warehouseId}</td>
-                    <td>{s.trackingNumber ?? "—"}</td>
-                    <td>{new Date(s.createdAt).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-                {outbound.length === 0 && (
-                  <tr>
-                    <td colSpan={5} className="py-4 text-center text-gray-400">
-                      No outbound shipments
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Shipment #" , render: (s: any) => (<>{s.shipmentNumber}</>) },
+                        { key: "col_1", header: "Status" , render: (s: any) => (<><Badge variant={STATUS_COLORS[s.status] ?? "default"}>
+                                              {s.status}
+                                            </Badge></>) },
+                        { key: "col_2", header: "Warehouse" , render: (s: any) => (<>{s.warehouseId}</>) },
+                        { key: "col_3", header: "Tracking #" , render: (s: any) => (<>{s.trackingNumber ?? "—"}</>) },
+                        { key: "col_4", header: "Created" , render: (s: any) => (<>{new Date(s.createdAt).toLocaleDateString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={outbound} rowKey={(s: any) => s.id} />;
+                          })()}</>
           </Card>
         )}
 
         {tab === "exceptions" && (
           <Card className="p-4">
-            <Table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-gray-500">
-                  <th>Shipment</th>
-                  <th>Direction</th>
-                  <th>Code</th>
-                  <th>Description</th>
-                  <th>Severity</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {exceptions.map((e) => (
-                  <tr key={e.id} className="border-t">
-                    <td className="py-1 font-mono text-xs">{e.shipmentId}</td>
-                    <td>{e.direction}</td>
-                    <td>{e.exceptionCode}</td>
-                    <td>{e.description}</td>
-                    <td>{e.severity}</td>
-                    <td>
-                      <Badge variant={STATUS_COLORS[e.status] ?? "default"}>
-                        {e.status}
-                      </Badge>
-                    </td>
-                    <td>
-                      {e.status !== "RESOLVED" && (
-                        <Button
-                          variant="secondary"
-                          onClick={() => resolveException(e.id)}
-                        >
-                          Resolve
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-                {exceptions.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="py-4 text-center text-gray-400">
-                      No exceptions
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Shipment" , render: (e: any) => (<>{e.shipmentId}</>) },
+                        { key: "col_1", header: "Direction" , render: (e: any) => (<>{e.direction}</>) },
+                        { key: "col_2", header: "Code" , render: (e: any) => (<>{e.exceptionCode}</>) },
+                        { key: "col_3", header: "Description" , render: (e: any) => (<>{e.description}</>) },
+                        { key: "col_4", header: "Severity" , render: (e: any) => (<>{e.severity}</>) },
+                        { key: "col_5", header: "Status" , render: (e: any) => (<><Badge variant={STATUS_COLORS[e.status] ?? "default"}>
+                                              {e.status}
+                                            </Badge></>) },
+                        { key: "col_6", header: "Action" , render: (e: any) => (<>{e.status !== "RESOLVED" && (
+                                              <Button
+                                                variant="secondary"
+                                                onClick={() => resolveException(e.id)}
+                                              >
+                                                Resolve
+                                              </Button>
+                                            )}</>) },
+                      ];
+                              return <DataTable columns={columns} data={exceptions} rowKey={(e: any) => e.id} />;
+                          })()}</>
           </Card>
         )}
 

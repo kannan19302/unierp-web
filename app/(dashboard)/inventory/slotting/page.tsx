@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useCallback, useState, useEffect } from "react";
-import {
-  PageHeader,
-  Badge,
-  ListPageTemplate,
-  FormField,
-  Select,
-  type ListColumn,
-} from "@unerp/ui";
+import { PageHeader, Badge, ListPageTemplate, FormField, Select, type ListColumn } from "@unerp/ui";
 import { AlertCircle, LayoutGrid } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -41,7 +34,7 @@ const columns: ListColumn[] = [
   {
     key: "recommendation",
     header: "Recommendation",
-    render: (v) => (
+    render: (v: any) => (
       <Badge variant={v === "MOVE_TO_PREFERRED_ZONE" ? "warning" : "default"}>
         {v === "MOVE_TO_PREFERRED_ZONE" ? "Move to Zone A" : "Move to Reserve"}
       </Badge>
@@ -50,7 +43,7 @@ const columns: ListColumn[] = [
   {
     key: "suggestedBinCode",
     header: "Suggested Bin",
-    render: (v) => <span className="font-mono">{v ? String(v) : "—"}</span>,
+    render: (v: any) => <span className="font-mono">{v ? String(v) : "—"}</span>,
   },
 ];
 

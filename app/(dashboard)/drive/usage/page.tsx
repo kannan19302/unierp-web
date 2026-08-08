@@ -1,13 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Spinner,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Spinner, useToast } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import {
   HardDrive,
@@ -80,7 +73,7 @@ export default function UsagePage() {
     {
       key: "type",
       header: "Type",
-      render: (r) => (
+      render: (r: any) => (
         <span className="ui-hstack-2">
           {r.type === "images" ? (
             <Image size={16} />
@@ -95,12 +88,12 @@ export default function UsagePage() {
         </span>
       ),
     },
-    { key: "formatted", header: "Size", render: (r) => r.formatted },
+    { key: "formatted", header: "Size", render: (r: any) => r.formatted },
   ];
 
   const userColumns: Column<{ userId: string; size: number }>[] = [
-    { key: "userId", header: "User", render: (r) => r.userId },
-    { key: "size", header: "Storage Used", render: (r) => formatBytes(r.size) },
+    { key: "userId", header: "User", render: (r: any) => r.userId },
+    { key: "size", header: "Storage Used", render: (r: any) => formatBytes(r.size) },
   ];
 
   return (

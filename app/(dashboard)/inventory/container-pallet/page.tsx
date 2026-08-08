@@ -250,13 +250,13 @@ export default function ContainerPalletPage() {
                 {
                   key: "code",
                   header: "Code",
-                  render: (v) => <strong>{String(v)}</strong>,
+                  render: (v: any) => <strong>{String(v)}</strong>,
                 },
                 { key: "name", header: "Name" },
                 {
                   key: "category",
                   header: "Category",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-1 rounded text-xs font-medium ${STATUS_COLORS["DRAFT"]}`}
                     >
@@ -275,7 +275,7 @@ export default function ContainerPalletPage() {
                 {
                   key: "maxWeightKg",
                   header: "Max Weight (kg)",
-                  render: (v) => String(v ?? "—"),
+                  render: (v: any) => String(v ?? "—"),
                 },
               ] as ListColumn[]
             }
@@ -294,13 +294,13 @@ export default function ContainerPalletPage() {
                 {
                   key: "code",
                   header: "Code",
-                  render: (v) => <strong>{String(v)}</strong>,
+                  render: (v: any) => <strong>{String(v)}</strong>,
                 },
                 { key: "name", header: "Name" },
                 {
                   key: "category",
                   header: "Category",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700">
                       {String(v)}
                     </span>
@@ -309,17 +309,17 @@ export default function ContainerPalletPage() {
                 {
                   key: "isoCode",
                   header: "ISO Code",
-                  render: (v) => String(v ?? "—"),
+                  render: (v: any) => String(v ?? "—"),
                 },
                 {
                   key: "maxPayloadKg",
                   header: "Max Payload (kg)",
-                  render: (v) => String(v ?? "—"),
+                  render: (v: any) => String(v ?? "—"),
                 },
                 {
                   key: "cubicMeters",
                   header: "Volume (m³)",
-                  render: (v) => String(v ?? "—"),
+                  render: (v: any) => String(v ?? "—"),
                 },
               ] as ListColumn[]
             }

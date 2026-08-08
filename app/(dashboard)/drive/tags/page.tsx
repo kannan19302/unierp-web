@@ -1,14 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner, useToast } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Plus } from "lucide-react";
 
@@ -43,7 +35,7 @@ export default function TagsPage() {
     {
       key: "name",
       header: "Tag",
-      render: (r) => (
+      render: (r: any) => (
         <span className="ui-hstack-2">
           <span
             style={{
@@ -61,7 +53,7 @@ export default function TagsPage() {
     {
       key: "files",
       header: "Files",
-      render: (r) => <span>{r.files?.length || 0}</span>,
+      render: (r: any) => <span>{r.files?.length || 0}</span>,
     },
   ];
 

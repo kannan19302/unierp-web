@@ -1,13 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { PageHeader, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, AlertCircle, ShoppingCart } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -33,12 +27,12 @@ const makeColumns = (
   {
     key: "leadTimeDays",
     header: "Lead Time",
-    render: (v) => `${v}d`,
+    render: (v: any) => `${v}d`,
   },
   {
     key: "isTriggered",
     header: "Status",
-    render: (v) => (
+    render: (v: any) => (
       <Badge variant={v ? "warning" : "success"}>
         {v ? "Reorder Needed" : "OK"}
       </Badge>

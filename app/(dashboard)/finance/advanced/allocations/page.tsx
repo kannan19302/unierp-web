@@ -15,13 +15,7 @@ import {
   Info,
   Settings,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { apiGet, apiPost, apiPatch, apiDelete } from "@/lib/api";
 
@@ -441,12 +435,12 @@ export default function AllocationsPage() {
                 {
                   key: "runDate",
                   header: "Run Date",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
                 {
                   key: "rule",
                   header: "Rule",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-medium text-gray-800">
                       {(v as any)?.name || "Deleted Rule"}
                     </span>
@@ -461,7 +455,7 @@ export default function AllocationsPage() {
                 {
                   key: "allocatedAmount",
                   header: "Allocated Amount",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-semibold">
                       $
                       {Number(v).toLocaleString("en-US", {
@@ -473,7 +467,7 @@ export default function AllocationsPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Badge variant={v === "POSTED" ? "success" : "warning"}>
                       {String(v)}
                     </Badge>

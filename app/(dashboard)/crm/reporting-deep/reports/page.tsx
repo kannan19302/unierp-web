@@ -1,15 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, type Column } from "@unerp/ui";
 import { Plus, Star, Trash2, Copy, Play, Download } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 import Link from "next/link";

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, Table, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -189,94 +189,56 @@ export default function EducationExamsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Course</th>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Room</th>
-                <th>Max</th>
-                <th>Results</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {exams.map((ex: any) => (
-                <tr key={ex.id}>
-                  <td>{ex.course?.name}</td>
-                  <td className="font-medium">{ex.title}</td>
-                  <td>{new Date(ex.examDate).toLocaleDateString()}</td>
-                  <td>
-                    {ex.startTime}-{ex.endTime}
-                  </td>
-                  <td>{ex.room || "-"}</td>
-                  <td>{ex.maxScore}</td>
-                  <td>{ex.results?.length || 0}</td>
-                  <td>
-                    <button
-                      className="ui-btn ui-btn-sm ui-btn-outline"
-                      onClick={() =>
-                        setSelectedExam(selectedExam?.id === ex.id ? null : ex)
-                      }
-                    >
-                      {selectedExam?.id === ex.id ? "Hide" : "Results"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Course" , render: (ex: any) => (<>{ex.course?.name}</>) },
+                        { key: "col_1", header: "Title" , render: (ex: any) => (<>{ex.title}</>) },
+                        { key: "col_2", header: "Date" , render: (ex: any) => (<>{new Date(ex.examDate).toLocaleDateString()}</>) },
+                        { key: "col_3", header: "Time" , render: (ex: any) => (<>{ex.startTime}-{ex.endTime}</>) },
+                        { key: "col_4", header: "Room" , render: (ex: any) => (<>{ex.room || "-"}</>) },
+                        { key: "col_5", header: "Max" , render: (ex: any) => (<>{ex.maxScore}</>) },
+                        { key: "col_6", header: "Results" , render: (ex: any) => (<>{ex.results?.length || 0}</>) },
+                        { key: "col_7", header: "Actions" , render: (ex: any) => (<><button
+                                            className="ui-btn ui-btn-sm ui-btn-outline"
+                                            onClick={() =>
+                                              setSelectedExam(selectedExam?.id === ex.id ? null : ex)
+                                            }
+                                          >
+                                            {selectedExam?.id === ex.id ? "Hide" : "Results"}
+                                          </button></>) },
+                      ];
+                              return <DataTable columns={columns} data={exams} rowKey={(ex: any) => ex.id} />;
+                          })()}</>
           {selectedExam && (
             <div className="mt-4 p-4 border-t">
               <h4 className="font-semibold mb-2">
                 {selectedExam.title} - Results
               </h4>
-              <Table className="ui-table">
-                <thead>
-                  <tr>
-                    <th>Student</th>
-                    <th>Score</th>
-                    <th>Passed</th>
-                    <th>Enter Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedExam.results?.map((r: any) => (
-                    <tr key={r.id}>
-                      <td>
-                        {r.student?.firstName} {r.student?.lastName}
-                      </td>
-                      <td>
-                        {r.score}/{selectedExam.maxScore}
-                      </td>
-                      <td>
-                        {r.isPassed ? (
-                          <span className="ui-badge ui-badge-success">
-                            Pass
-                          </span>
-                        ) : (
-                          <span className="ui-badge ui-badge-danger">Fail</span>
-                        )}
-                      </td>
-                      <td>
-                        <input
-                          className="ui-input w-20"
-                          type="number"
-                          onBlur={(ev) =>
-                            addResult(
-                              selectedExam.id,
-                              r.studentId,
-                              parseFloat(ev.target.value),
-                            )
-                          }
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Student" , render: (r: any) => (<>{r.student?.firstName}{r.student?.lastName}</>) },
+                                { key: "col_1", header: "Score" , render: (r: any) => (<>{r.score}/{selectedExam.maxScore}</>) },
+                                { key: "col_2", header: "Passed" , render: (r: any) => (<>{r.isPassed ? (
+                                                        <span className="ui-badge ui-badge-success">
+                                                          Pass
+                                                        </span>
+                                                      ) : (
+                                                        <span className="ui-badge ui-badge-danger">Fail</span>
+                                                      )}</>) },
+                                { key: "col_3", header: "Enter Score" , render: (r: any) => (<><input
+                                                        className="ui-input w-20"
+                                                        type="number"
+                                                        onBlur={(ev) =>
+                                                          addResult(
+                                                            selectedExam.id,
+                                                            r.studentId,
+                                                            parseFloat(ev.target.value),
+                                                          )
+                                                        }
+                                                      /></>) },
+                              ];
+                                      return <DataTable columns={columns} data={selectedExam.results} rowKey={(r: any) => r.id} />;
+                                  })()}</>
             </div>
           )}
         </div>

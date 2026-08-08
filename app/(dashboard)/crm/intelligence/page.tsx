@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  StatusBadge,
-  DashboardKPICard,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, StatusBadge, DashboardKPICard } from "@unerp/ui";
 import {
   Brain,
   TrendingUp,

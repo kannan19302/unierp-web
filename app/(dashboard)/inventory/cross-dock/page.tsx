@@ -1,13 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { AlertCircle, ArrowRightLeft } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -82,7 +76,7 @@ export default function CrossDockPage() {
     {
       key: "matchedQty",
       header: "Matched Qty",
-      render: (v) => <span className="font-bold">{String(v)}</span>,
+      render: (v: any) => <span className="font-bold">{String(v)}</span>,
     },
     {
       key: "putawayTaskId",

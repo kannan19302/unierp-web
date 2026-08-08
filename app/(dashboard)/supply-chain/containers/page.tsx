@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Disclosure,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Disclosure } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, Box, Anchor, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
@@ -100,7 +86,7 @@ export default function ContainersPage() {
       key: "containerNumber",
       header: "Container #",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span
           style={{
             color: isAtRisk(row) ? "var(--danger-600)" : undefined,
@@ -118,7 +104,7 @@ export default function ContainersPage() {
       key: "origin",
       header: "Origin",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">
           <MapPin size={12} /> {row.origin}
         </span>
@@ -127,7 +113,7 @@ export default function ContainersPage() {
     {
       key: "destination",
       header: "Destination",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">
           <MapPin size={12} /> {row.destination}
         </span>
@@ -137,17 +123,17 @@ export default function ContainersPage() {
       key: "eta",
       header: "ETA",
       sortable: true,
-      render: (row) => new Date(row.eta).toLocaleDateString(),
+      render: (row: any) => new Date(row.eta).toLocaleDateString(),
     },
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "lastEvent",
       header: "Last Event",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">{row.lastEvent}</span>
       ),
     },
@@ -155,7 +141,7 @@ export default function ContainersPage() {
       key: "daysInTransit",
       header: "Days in Transit",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <span
           style={{
             color: isAtRisk(row) ? "var(--danger-600)" : "var(--neutral-600)",
@@ -218,7 +204,7 @@ export default function ContainersPage() {
           <DataTable
             columns={columns}
             data={containers}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             onRowClick={(row) =>
               setExpandedId(expandedId === row.id ? null : row.id)
             }

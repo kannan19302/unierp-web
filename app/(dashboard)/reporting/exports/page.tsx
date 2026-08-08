@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import {
   Download,
   FileSpreadsheet,
@@ -124,39 +124,18 @@ export default function ReportingExportsPage() {
             No report exports generated.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Report Type</th>
-                <th style={{ padding: "12px" }}>Format</th>
-                <th style={{ padding: "12px" }}>Status</th>
-                <th style={{ padding: "12px" }}>Download</th>
-              </tr>
-            </thead>
-            <tbody>
-              {exportsList.map((e) => (
-                <tr key={e.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {e.reportType}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="info">{e.exportFormat}</Badge>
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="success">{e.status}</Badge>
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Button size="sm" variant="ghost">
-                      <Download size={14} style={{ marginRight: "6px" }} />{" "}
-                      Download File
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Report Type" , render: (e: any) => (<>{e.reportType}</>) },
+                        { key: "col_1", header: "Format" , render: (e: any) => (<><Badge variant="info">{e.exportFormat}</Badge></>) },
+                        { key: "col_2", header: "Status" , render: (e: any) => (<><Badge variant="success">{e.status}</Badge></>) },
+                        { key: "col_3", header: "Download" , render: (e: any) => (<><Button size="sm" variant="ghost">
+                                            <Download size={14} style={{ marginRight: "6px" }} />{" "}
+                                            Download File
+                                          </Button></>) },
+                      ];
+                              return <DataTable columns={columns} data={exportsList} rowKey={(e: any) => e.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

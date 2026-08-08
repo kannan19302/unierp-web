@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card,
-  StatusBadge,
-  Button,
-  Modal,
-  FormField,
-  Input,
-  Select,
-  useToast, Table } from "@unerp/ui";
+import { Card, StatusBadge, Button, Modal, FormField, Input, Select, useToast, DataTable } from "@unerp/ui";
 import { Plus, AlertTriangle } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 import styles from "./AssetsTab.module.css";
@@ -99,32 +92,16 @@ export default function AssetsTab() {
         </div>
       )}
       <Card padding="none" className="builder-table-wrapper">
-        <Table className={styles.s0}>
-          <thead>
-            <tr className={styles.s1}>
-              <th className="p-4">Asset</th>
-              <th className="p-4">Type</th>
-              <th className="p-4">Serial</th>
-              <th className="p-4">Assigned</th>
-              <th className="p-4">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assets.map((a) => (
-              <tr key={a.id} className="border-b">
-                <td className="p-4">{a.assetName}</td>
-                <td className="p-4">{a.assetType}</td>
-                <td className="p-4">{a.serialNumber || "--"}</td>
-                <td className="p-4">
-                  {new Date(a.assignedDate).toLocaleDateString()}
-                </td>
-                <td className="p-4">
-                  <StatusBadge status={a.status} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Asset", render: (a: any) => (<>{a.assetName}</>) },
+                { key: "col_1", header: "Type", render: (a: any) => (<>{a.assetType}</>) },
+                { key: "col_2", header: "Serial", render: (a: any) => (<>{a.serialNumber || "--"}</>) },
+                { key: "col_3", header: "Assigned", render: (a: any) => (<>{new Date(a.assignedDate).toLocaleDateString()}</>) },
+                { key: "col_4", header: "Status", render: (a: any) => (<><StatusBadge status={a.status} /></>) },
+              ];
+                        return <DataTable columns={columns} data={assets} rowKey={(a: any) => a.id} />;
+                      })()}</>
       </Card>
 
       <Modal

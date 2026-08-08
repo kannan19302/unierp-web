@@ -1,14 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner, useToast } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import {
   FileText,
@@ -77,7 +69,7 @@ export default function TrashPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-3">
           {r.type === "folder" ? (
             <Folder size={16} className="ui-text-primary" />
@@ -92,13 +84,13 @@ export default function TrashPage() {
       key: "deletedAt",
       header: "Deleted",
       sortable: true,
-      render: (r) =>
+      render: (r: any) =>
         r.deletedAt ? new Date(r.deletedAt).toLocaleDateString() : "—",
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-2">
           <Button
             variant="ghost"
@@ -148,7 +140,7 @@ export default function TrashPage() {
         <DataTable
           columns={columns}
           data={items}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="Trash is empty"
           emptyMessage="Deleted files and folders will appear here."
           emptyIcon={<Trash2 size={48} />}

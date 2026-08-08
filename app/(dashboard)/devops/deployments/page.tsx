@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { Plus, RotateCcw, Eye } from "lucide-react";
 
 interface Deployment {
@@ -49,7 +42,7 @@ export default function DeploymentsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "SUCCESS"
@@ -64,12 +57,12 @@ export default function DeploymentsPage() {
       ),
     },
     { key: "strategy", header: "Strategy" },
-    { key: "branch", header: "Branch", render: (r) => r.branch || "-" },
+    { key: "branch", header: "Branch", render: (r: any) => r.branch || "-" },
     { key: "deployedBy", header: "Deployed By" },
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

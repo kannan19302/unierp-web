@@ -4,12 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ChangeHistory, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@unerp/ui";
 import {
   User,
   AlertCircle,
@@ -483,38 +478,23 @@ export default function EmployeeDetailPage() {
             {activeTab === "documents" && (
               <div className="builder-table-wrapper">
                 {documents.length > 0 ? (
-                  <Table className={styles.p16}>
-                    <thead>
-                      <tr className={styles.p17}>
-                        <th className={styles.p18}>Document Type</th>
-                        <th className={styles.p18}>File Name</th>
-                        <th className={styles.p18}>Uploaded At</th>
-                        <th className={styles.p18}>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {documents.map((doc) => (
-                        <tr key={doc.id} className={styles.p19}>
-                          <td className={styles.p20}>{doc.documentType}</td>
-                          <td className={styles.p20}>{doc.fileName}</td>
-                          <td className={styles.p20}>
-                            {new Date(doc.uploadedAt).toLocaleDateString()}
-                          </td>
-                          <td className={styles.p20}>
-                            <Badge
-                              variant={
-                                doc.status === "APPROVED"
-                                  ? "success"
-                                  : "default"
-                              }
-                            >
-                              {doc.status}
-                            </Badge>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                  <>{(() => {
+                                            const columns = [
+                                    { key: "col_0", header: "Document Type", render: (doc: any) => (<>{doc.documentType}</>) },
+                                    { key: "col_1", header: "File Name", render: (doc: any) => (<>{doc.fileName}</>) },
+                                    { key: "col_2", header: "Uploaded At", render: (doc: any) => (<>{new Date(doc.uploadedAt).toLocaleDateString()}</>) },
+                                    { key: "col_3", header: "Status", render: (doc: any) => (<><Badge
+                                                                variant={
+                                                                  doc.status === "APPROVED"
+                                                                    ? "success"
+                                                                    : "default"
+                                                                }
+                                                              >
+                                                                {doc.status}
+                                                              </Badge></>) },
+                                  ];
+                                            return <DataTable columns={columns} data={documents} rowKey={(doc: any) => doc.id} />;
+                                          })()}</>
                 ) : (
                   <p className={styles.p22}>
                     No documents found for this employee.
@@ -548,27 +528,15 @@ export default function EmployeeDetailPage() {
                         {Number(salaryStructure.total).toLocaleString()}
                       </span>
                     </div>
-                    <Table className={styles.p16}>
-                      <thead>
-                        <tr className={styles.p17}>
-                          <th className={styles.p18}>Component</th>
-                          <th className={styles.p18}>Type</th>
-                          <th className={styles.p18}>Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {salaryStructure.components.map((comp) => (
-                          <tr key={comp.id} className={styles.p19}>
-                            <td className={styles.p20}>{comp.component}</td>
-                            <td className={styles.p20}>{comp.type}</td>
-                            <td className={styles.p20}>
-                              {salaryStructure.currency || "$"}
-                              {Number(comp.amount).toLocaleString()}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
+                    <>{(() => {
+                                                const columns = [
+                                        { key: "col_0", header: "Component", render: (comp: any) => (<>{comp.component}</>) },
+                                        { key: "col_1", header: "Type", render: (comp: any) => (<>{comp.type}</>) },
+                                        { key: "col_2", header: "Amount", render: (comp: any) => (<>{salaryStructure.currency || "$"}
+                                                                    {Number(comp.amount).toLocaleString()}</>) },
+                                      ];
+                                                return <DataTable columns={columns} data={salaryStructure.components} rowKey={(comp: any) => comp.id} />;
+                                              })()}</>
                   </>
                 ) : (
                   <p className={styles.p22}>
@@ -581,40 +549,25 @@ export default function EmployeeDetailPage() {
             {activeTab === "attendance" && (
               <div className="builder-table-wrapper">
                 {attendance.length > 0 ? (
-                  <Table className={styles.p16}>
-                    <thead>
-                      <tr className={styles.p17}>
-                        <th className={styles.p18}>Date</th>
-                        <th className={styles.p18}>Status</th>
-                        <th className={styles.p18}>Check In</th>
-                        <th className={styles.p18}>Check Out</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {attendance.map((rec) => (
-                        <tr key={rec.id} className={styles.p19}>
-                          <td className={styles.p20}>
-                            {new Date(rec.date).toLocaleDateString()}
-                          </td>
-                          <td className={styles.p20}>
-                            <Badge
-                              variant={
-                                rec.status === "PRESENT"
-                                  ? "success"
-                                  : rec.status === "LATE"
-                                    ? "warning"
-                                    : "danger"
-                              }
-                            >
-                              {rec.status}
-                            </Badge>
-                          </td>
-                          <td className={styles.p20}>{rec.checkIn || "—"}</td>
-                          <td className={styles.p20}>{rec.checkOut || "—"}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                  <>{(() => {
+                                            const columns = [
+                                    { key: "col_0", header: "Date", render: (rec: any) => (<>{new Date(rec.date).toLocaleDateString()}</>) },
+                                    { key: "col_1", header: "Status", render: (rec: any) => (<><Badge
+                                                                variant={
+                                                                  rec.status === "PRESENT"
+                                                                    ? "success"
+                                                                    : rec.status === "LATE"
+                                                                      ? "warning"
+                                                                      : "danger"
+                                                                }
+                                                              >
+                                                                {rec.status}
+                                                              </Badge></>) },
+                                    { key: "col_2", header: "Check In", render: (rec: any) => (<>{rec.checkIn || "—"}</>) },
+                                    { key: "col_3", header: "Check Out", render: (rec: any) => (<>{rec.checkOut || "—"}</>) },
+                                  ];
+                                            return <DataTable columns={columns} data={attendance} rowKey={(rec: any) => rec.id} />;
+                                          })()}</>
                 ) : (
                   <p className={styles.p22}>
                     No attendance records for the current month.
@@ -626,37 +579,24 @@ export default function EmployeeDetailPage() {
             {activeTab === "leave" && (
               <div className="builder-table-wrapper">
                 {leaveBalances.length > 0 ? (
-                  <Table className={styles.p16}>
-                    <thead>
-                      <tr className={styles.p17}>
-                        <th className={styles.p18}>Leave Type</th>
-                        <th className={styles.p18}>Allocated</th>
-                        <th className={styles.p18}>Used</th>
-                        <th className={styles.p18}>Balance</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {leaveBalances.map((lb, idx) => (
-                        <tr key={idx} className={styles.p19}>
-                          <td className={styles.p20}>{lb.leaveType}</td>
-                          <td className={styles.p20}>{lb.allocated}</td>
-                          <td className={styles.p20}>{lb.used}</td>
-                          <td className={styles.p20}>
-                            <span
-                              style={{
-                                color:
-                                  lb.balance <= 0
-                                    ? "var(--color-danger)"
-                                    : "var(--color-success)",
-                              }}
-                            >
-                              {lb.balance}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                  <>{(() => {
+                                            const columns = [
+                                    { key: "col_0", header: "Leave Type", render: (lb: any) => (<>{lb.leaveType}</>) },
+                                    { key: "col_1", header: "Allocated", render: (lb: any) => (<>{lb.allocated}</>) },
+                                    { key: "col_2", header: "Used", render: (lb: any) => (<>{lb.used}</>) },
+                                    { key: "col_3", header: "Balance", render: (lb: any) => (<><span
+                                                                style={{
+                                                                  color:
+                                                                    lb.balance <= 0
+                                                                      ? "var(--color-danger)"
+                                                                      : "var(--color-success)",
+                                                                }}
+                                                              >
+                                                                {lb.balance}
+                                                              </span></>) },
+                                  ];
+                                            return <DataTable columns={columns} data={leaveBalances} rowKey={(lb: any) => idx} />;
+                                          })()}</>
                 ) : (
                   <p className={styles.p22}>No leave balance records found.</p>
                 )}

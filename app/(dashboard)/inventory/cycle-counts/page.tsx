@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import { Card,
-  PageHeader,
-  Button,
-  Badge,
-  ListPageTemplate,
-  FormField,
-  Input,
-  Select,
-  type ListColumn, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, ListPageTemplate, FormField, Input, Select, type ListColumn, Table, DataTable } from "@unerp/ui";
 import { Plus, AlertCircle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -220,7 +212,7 @@ export default function CycleCountsPage() {
     {
       key: "createdAt",
       header: "Audit Date",
-      render: (v) => (
+      render: (v: any) => (
         <span className="ui-text-muted">
           {new Date(String(v)).toLocaleString()}
         </span>
@@ -229,7 +221,7 @@ export default function CycleCountsPage() {
     {
       key: "status",
       header: "Status",
-      render: (v) => {
+      render: (v: any) => {
         const s = String(v);
         return (
           <Badge
@@ -249,12 +241,12 @@ export default function CycleCountsPage() {
     {
       key: "items",
       header: "Items Checked",
-      render: (v) => `${(v as CycleCount["items"])?.length || 0} Products`,
+      render: (v: any) => `${(v as CycleCount["items"])?.length || 0} Products`,
     },
     {
       key: "variance",
       header: "Total Variance Qty",
-      render: (v) => {
+      render: (v: any) => {
         const varQty = Number(v || 0);
         return (
           <span
@@ -271,7 +263,7 @@ export default function CycleCountsPage() {
     {
       key: "notes",
       header: "Notes",
-      render: (v) => (
+      render: (v: any) => (
         <span className="ui-text-muted">{String(v || "Routine Audit")}</span>
       ),
     },
@@ -480,65 +472,48 @@ export default function CycleCountsPage() {
               </div>
               <div className="p-5">
                 <form onSubmit={handleSubmitWorksheet} className="ui-stack-4">
-                  <Table className={styles.s15}>
-                    <thead>
-                      <tr className={styles.s16}>
-                        <th className={styles.s17}>Product</th>
-                        <th className={styles.s18}>System Book Qty</th>
-                        <th className={styles.s18}>Physical Counted</th>
-                        <th className={styles.s19}>Remarks</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {activeCountSession.items.map((item) => (
-                        <tr key={item.id} className="border-b">
-                          <td className={styles.s20}>
-                            <div className="ui-flex-col">
-                              <span>{item.product?.name}</span>
-                              <span className="ui-text-micro ui-text-muted">
-                                {item.product?.sku}
-                              </span>
-                            </div>
-                          </td>
-                          <td className={styles.s18}>{item.expectedQty}</td>
-                          <td className={styles.s18}>
-                            <Input
-                              type="number"
-                              className={styles.s21}
-                              value={worksheetCounts[item.id]?.countedQty}
-                              onChange={(e) => {
-                                setWorksheetCounts({
-                                  ...worksheetCounts,
-                                  [item.id]: {
-                                    ...worksheetCounts[item.id]!,
-                                    countedQty: Number(e.target.value),
-                                  },
-                                });
-                              }}
-                              required
-                            />
-                          </td>
-                          <td className={styles.s19}>
-                            <Input
-                              type="text"
-                              className="text-xs"
-                              placeholder="Verification notes..."
-                              value={worksheetCounts[item.id]?.remarks || ""}
-                              onChange={(e) => {
-                                setWorksheetCounts({
-                                  ...worksheetCounts,
-                                  [item.id]: {
-                                    ...worksheetCounts[item.id]!,
-                                    remarks: e.target.value,
-                                  },
-                                });
-                              }}
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                  <>{(() => {
+                                          const columns = [
+                                    { key: "col_0", header: "Product" , render: (item: any) => (<><div className="ui-flex-col">
+                                                                <span>{item.product?.name}</span>
+                                                                <span className="ui-text-micro ui-text-muted">
+                                                                  {item.product?.sku}
+                                                                </span>
+                                                              </div></>) },
+                                    { key: "col_1", header: "System Book Qty" , render: (item: any) => (<>{item.expectedQty}</>) },
+                                    { key: "col_2", header: "Physical Counted" , render: (item: any) => (<><Input
+                                                                type="number"
+                                                                className={styles.s21}
+                                                                value={worksheetCounts[item.id]?.countedQty}
+                                                                onChange={(e) => {
+                                                                  setWorksheetCounts({
+                                                                    ...worksheetCounts,
+                                                                    [item.id]: {
+                                                                      ...worksheetCounts[item.id]!,
+                                                                      countedQty: Number(e.target.value),
+                                                                    },
+                                                                  });
+                                                                }}
+                                                                required
+                                                              /></>) },
+                                    { key: "col_3", header: "Remarks" , render: (item: any) => (<><Input
+                                                                type="text"
+                                                                className="text-xs"
+                                                                placeholder="Verification notes..."
+                                                                value={worksheetCounts[item.id]?.remarks || ""}
+                                                                onChange={(e) => {
+                                                                  setWorksheetCounts({
+                                                                    ...worksheetCounts,
+                                                                    [item.id]: {
+                                                                      ...worksheetCounts[item.id]!,
+                                                                      remarks: e.target.value,
+                                                                    },
+                                                                  });
+                                                                }}
+                                                              /></>) },
+                                  ];
+                                          return <DataTable columns={columns} data={activeCountSession.items} rowKey={(item: any) => item.id} />;
+                                      })()}</>
 
                   <FormField label="Final Remarks" htmlFor="cc-final-remarks">
                     <Input

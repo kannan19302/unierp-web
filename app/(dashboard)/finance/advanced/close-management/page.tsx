@@ -495,19 +495,19 @@ export default function CloseManagementPage() {
                       {
                         key: "taskName",
                         header: "Task",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "dependsOn",
                         header: "Depends On",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "dependencyType",
                         header: "Type",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs px-2 py-0.5 bg-gray-100 rounded-full">
                             {String(v).replace(/_/g, " → ")}
                           </span>
@@ -516,7 +516,7 @@ export default function CloseManagementPage() {
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "COMPLETED" ? "ui-badge-green" : "ui-badge-yellow"}`}
                           >
@@ -628,19 +628,19 @@ export default function CloseManagementPage() {
                       {
                         key: "title",
                         header: "Event",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "eventDate",
                         header: "Date",
-                        render: (v) => new Date(String(v)).toLocaleDateString(),
+                        render: (v: any) => new Date(String(v)).toLocaleDateString(),
                       },
                       {
                         key: "eventType",
                         header: "Type",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-blue-100 text-blue-700">
                             {String(v)}
                           </span>
@@ -649,7 +649,7 @@ export default function CloseManagementPage() {
                       {
                         key: "assignee",
                         header: "Assignee",
-                        render: (v) => String(v) || "—",
+                        render: (v: any) => String(v) || "—",
                       },
                     ] as ListColumn[]
                   }
@@ -755,24 +755,24 @@ export default function CloseManagementPage() {
                       {
                         key: "ruleName",
                         header: "Rule",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "triggerCondition",
                         header: "Trigger",
-                        render: (v) => String(v).replace(/_/g, " "),
+                        render: (v: any) => String(v).replace(/_/g, " "),
                       },
                       {
                         key: "escalateTo",
                         header: "Escalates To",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "priority",
                         header: "Priority",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "CRITICAL" ? "bg-red-100 text-red-700" : v === "HIGH" ? "bg-orange-100 text-orange-700" : "bg-blue-100 text-blue-700"}`}
                           >
@@ -783,7 +783,7 @@ export default function CloseManagementPage() {
                       {
                         key: "active",
                         header: "Active",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? (
                             <span className="text-green-600 font-medium">
                               Yes

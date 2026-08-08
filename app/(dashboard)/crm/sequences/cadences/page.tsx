@@ -1,17 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -185,7 +175,7 @@ export default function SalesCadencesPage() {
     {
       key: "channel",
       header: "Channel",
-      render: (t) => (
+      render: (t: any) => (
         <span className="ui-hstack-2">
           {channelIcon[t.channel]}
           <Badge variant="info">{t.channel}</Badge>
@@ -195,23 +185,23 @@ export default function SalesCadencesPage() {
     {
       key: "sequence",
       header: "Cadence",
-      render: (t) => t.enrollment?.sequence?.name || "—",
+      render: (t: any) => t.enrollment?.sequence?.name || "—",
     },
     {
       key: "instructions",
       header: "Instructions",
-      render: (t) => t.step?.instructions || t.step?.subject || "—",
+      render: (t: any) => t.step?.instructions || t.step?.subject || "—",
     },
     {
       key: "dueAt",
       header: "Due",
-      render: (t) => new Date(t.dueAt).toLocaleDateString(),
+      render: (t: any) => new Date(t.dueAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "",
       align: "right",
-      render: (t) => (
+      render: (t: any) => (
         <div className="ui-flex-end ui-gap-2">
           <Button
             variant="secondary"
@@ -291,7 +281,7 @@ export default function SalesCadencesPage() {
           <DataTable<StepTask>
             columns={columns}
             data={tasks}
-            rowKey={(t) => t.id}
+            rowKey={(t: any) => t.id}
           />
         )}
       </Card>

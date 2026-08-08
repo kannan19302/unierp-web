@@ -18,7 +18,7 @@ import {
   Users,
   Briefcase,
 } from "lucide-react";
-import { useTheme, Table } from "@unerp/ui";
+import { useTheme, Table, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { ProfileDirectorySection } from "./ProfileDirectorySection";
 
@@ -1136,64 +1136,31 @@ export default function ProfilePage() {
                       </button>
                     </div>
                     <div className="ui-card-body p-0">
-                      <Table className={styles.s11}>
-                        <thead className="border-b">
-                          <tr>
-                            <th className={styles.s12}>Device</th>
-                            <th className={styles.s12}>IP Address</th>
-                            <th className={styles.s12}>Last Active</th>
-                            <th className={styles.s12}>Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {sessionsLoading && (
-                            <tr>
-                              <td className={styles.s13} colSpan={4}>
-                                Loading sessions...
-                              </td>
-                            </tr>
-                          )}
-                          {!sessionsLoading && sessions.length === 0 && (
-                            <tr>
-                              <td className={styles.s13} colSpan={4}>
-                                No active sessions found.
-                              </td>
-                            </tr>
-                          )}
-                          {sessions.map((s) => (
-                            <tr key={s.id} className="border-b">
-                              <td className={styles.s13}>
-                                <div className="ui-hstack-2">
-                                  <Monitor
-                                    size={16}
-                                    className="ui-text-muted"
-                                  />
-                                  <span>
-                                    {[s.device, s.browser]
-                                      .filter(Boolean)
-                                      .join(" • ") || "Unknown device"}
-                                  </span>
-                                </div>
-                              </td>
-                              <td className={styles.s14}>
-                                {s.ipAddress || "—"}
-                              </td>
-                              <td className={styles.s13}>
-                                {new Date(s.lastActivityAt).toLocaleString()}
-                              </td>
-                              <td className={styles.s13}>
-                                {s.isCurrent ? (
-                                  <span className={styles.s15}>
-                                    <Check size={12} /> Current
-                                  </span>
-                                ) : (
-                                  "—"
-                                )}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
+                      {(() => {
+                                                      const columns = [
+                                                { key: "col_0", header: "Device" , render: (s: any) => (<><div className="ui-hstack-2">
+                                                                                <Monitor
+                                                                                  size={16}
+                                                                                  className="ui-text-muted"
+                                                                                />
+                                                                                <span>
+                                                                                  {[s.device, s.browser]
+                                                                                    .filter(Boolean)
+                                                                                    .join(" • ") || "Unknown device"}
+                                                                                </span>
+                                                                              </div></>) },
+                                                { key: "col_1", header: "IP Address" , render: (s: any) => (<>{s.ipAddress || "—"}</>) },
+                                                { key: "col_2", header: "Last Active" , render: (s: any) => (<>{new Date(s.lastActivityAt).toLocaleString()}</>) },
+                                                { key: "col_3", header: "Status" , render: (s: any) => (<>{s.isCurrent ? (
+                                                                                <span className={styles.s15}>
+                                                                                  <Check size={12} /> Current
+                                                                                </span>
+                                                                              ) : (
+                                                                                "—"
+                                                                              )}</>) },
+                                              ];
+                                                      return <DataTable columns={columns} data={sessions} rowKey={(s: any) => s.id} />;
+                                                  })()}
                     </div>
                   </div>
 
@@ -1204,79 +1171,43 @@ export default function ProfilePage() {
                       Recent Login History
                     </div>
                     <div className="ui-card-body p-0">
-                      <Table className={styles.s11}>
-                        <thead className="border-b">
-                          <tr>
-                            <th className={styles.s12}>Date & Time</th>
-                            <th className={styles.s12}>Status</th>
-                            <th className={styles.s12}>IP Address</th>
-                            <th className={styles.s12}>Device / Browser</th>
-                            <th className={styles.s12}>Location</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {historyLoading && (
-                            <tr>
-                              <td className={styles.s13} colSpan={5}>
-                                Loading login history...
-                              </td>
-                            </tr>
-                          )}
-                          {!historyLoading && loginHistory.length === 0 && (
-                            <tr>
-                              <td className={styles.s13} colSpan={5}>
-                                No login history found.
-                              </td>
-                            </tr>
-                          )}
-                          {loginHistory.map((h) => (
-                            <tr key={h.id} className="border-b">
-                              <td className={styles.s13}>
-                                {new Date(h.createdAt).toLocaleString()}
-                              </td>
-                              <td className={styles.s13}>
-                                <span
-                                  className={
-                                    h.status === "SUCCESS"
-                                      ? "ui-badge ui-badge-success"
-                                      : "ui-badge ui-badge-danger"
-                                  }
-                                  style={{
-                                    backgroundColor:
-                                      h.status === "SUCCESS"
-                                        ? "rgba(16, 185, 129, 0.1)"
-                                        : "rgba(239, 68, 68, 0.1)",
-                                    color:
-                                      h.status === "SUCCESS"
-                                        ? "var(--chart-9)"
-                                        : "var(--chart-4)",
-                                    padding: "2px 8px",
-                                    borderRadius: "4px",
-                                    fontSize: "11px",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  {h.status}
-                                  {h.failureReason
-                                    ? ` (${h.failureReason})`
-                                    : ""}
-                                </span>
-                              </td>
-                              <td className={styles.s14}>
-                                {h.ipAddress || "—"}
-                              </td>
-                              <td className={styles.s13}>
-                                {[h.device, h.browser]
-                                  .filter(Boolean)
-                                  .join(" • ") || "—"}
-                              </td>
-                              <td className={styles.s13}>
-                                {h.location || "—"}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
+                      {(() => {
+                                                      const columns = [
+                                                { key: "col_0", header: "Date & Time" , render: (h: any) => (<>{new Date(h.createdAt).toLocaleString()}</>) },
+                                                { key: "col_1", header: "Status" , render: (h: any) => (<><span
+                                                                                className={
+                                                                                  h.status === "SUCCESS"
+                                                                                    ? "ui-badge ui-badge-success"
+                                                                                    : "ui-badge ui-badge-danger"
+                                                                                }
+                                                                                style={{
+                                                                                  backgroundColor:
+                                                                                    h.status === "SUCCESS"
+                                                                                      ? "rgba(16, 185, 129, 0.1)"
+                                                                                      : "rgba(239, 68, 68, 0.1)",
+                                                                                  color:
+                                                                                    h.status === "SUCCESS"
+                                                                                      ? "var(--chart-9)"
+                                                                                      : "var(--chart-4)",
+                                                                                  padding: "2px 8px",
+                                                                                  borderRadius: "4px",
+                                                                                  fontSize: "11px",
+                                                                                  fontWeight: "bold",
+                                                                                }}
+                                                                              >
+                                                                                {h.status}
+                                                                                {h.failureReason
+                                                                                  ? ` (${h.failureReason})`
+                                                                                  : ""}
+                                                                              </span></>) },
+                                                { key: "col_2", header: "IP Address" , render: (h: any) => (<>{h.ipAddress || "—"}</>) },
+                                                { key: "col_3", header: "Device / Browser" , render: (h: any) => (<>{[h.device, h.browser]
+                                                                                .filter(Boolean)
+                                                                                .join(" • ") || "—"}</>) },
+                                                { key: "col_4", header: "Location" , render: (h: any) => (<>{h.location || "—"}</>) },
+                                              ];
+                                                      return <DataTable columns={columns} data={loginHistory} rowKey={(h: any) => h.id} />;
+                                                  })()}
                     </div>
                   </div>
                 </div>

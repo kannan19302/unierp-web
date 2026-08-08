@@ -15,15 +15,7 @@ import {
   BookOpen,
   Clock,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  StatusBadge,
-  PageHeader,
-  ListPageTemplate,
-  type ListColumn,
-  useToast,
-} from "@unerp/ui";
+import { Card, Button, StatusBadge, PageHeader, ListPageTemplate, type ListColumn, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 type ReportType =
@@ -214,7 +206,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "amount",
                   header: "Amount",
-                  render: (v) => formatCurrency(Number(v)),
+                  render: (v: any) => formatCurrency(Number(v)),
                 },
               ] as ListColumn[]
             }
@@ -246,7 +238,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "amount",
                   header: "Amount",
-                  render: (v) => formatCurrency(Number(v)),
+                  render: (v: any) => formatCurrency(Number(v)),
                 },
               ] as ListColumn[]
             }
@@ -340,7 +332,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "balance",
                   header: "Balance",
-                  render: (v) => formatCurrency(Number(v)),
+                  render: (v: any) => formatCurrency(Number(v)),
                 },
               ] as ListColumn[]
             }
@@ -375,7 +367,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "balance",
                   header: "Balance",
-                  render: (v) => formatCurrency(Number(v)),
+                  render: (v: any) => formatCurrency(Number(v)),
                 },
               ] as ListColumn[]
             }
@@ -410,7 +402,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "balance",
                   header: "Balance",
-                  render: (v) => formatCurrency(Number(v)),
+                  render: (v: any) => formatCurrency(Number(v)),
                 },
               ] as ListColumn[]
             }
@@ -467,7 +459,7 @@ export default function AdvancedReportsPage() {
               {
                 key: "amount",
                 header: "Amount",
-                render: (v) => formatCurrency(Number(v)),
+                render: (v: any) => formatCurrency(Number(v)),
               },
             ] as ListColumn[]
           }
@@ -570,28 +562,28 @@ export default function AdvancedReportsPage() {
               {
                 key: "code",
                 header: "Code",
-                render: (v) => <span className="text-xs">{String(v)}</span>,
+                render: (v: any) => <span className="text-xs">{String(v)}</span>,
               },
               { key: "name", header: "Account" },
               {
                 key: "type",
                 header: "Type",
-                render: (v) => <StatusBadge status={String(v)} />,
+                render: (v: any) => <StatusBadge status={String(v)} />,
               },
               {
                 key: "debitTotal",
                 header: "Debit Total",
-                render: (v) => formatCurrency(Number(v)),
+                render: (v: any) => formatCurrency(Number(v)),
               },
               {
                 key: "creditTotal",
                 header: "Credit Total",
-                render: (v) => formatCurrency(Number(v)),
+                render: (v: any) => formatCurrency(Number(v)),
               },
               {
                 key: "balance",
                 header: "Balance",
-                render: (v) => formatCurrency(Number(v)),
+                render: (v: any) => formatCurrency(Number(v)),
               },
               { key: "entriesCount", header: "Entries" },
             ] as ListColumn[]
@@ -685,19 +677,19 @@ export default function AdvancedReportsPage() {
                     {
                       key: "documentNumber",
                       header: "Document",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="text-xs">{String(v)}</span>
                       ),
                     },
                     {
                       key: "totalAmount",
                       header: "Total",
-                      render: (v) => formatCurrency(Number(v)),
+                      render: (v: any) => formatCurrency(Number(v)),
                     },
                     {
                       key: "outstanding",
                       header: "Outstanding",
-                      render: (v) => formatCurrency(Number(v)),
+                      render: (v: any) => formatCurrency(Number(v)),
                     },
                     { key: "daysOverdue", header: "Days Overdue" },
                   ] as ListColumn[]

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Database, Play, GitMerge, RefreshCw } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -135,50 +135,23 @@ export default function AnalyticsPipelinesPage() {
             No active ETL data pipelines.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Pipeline Name</th>
-                <th style={{ padding: "12px" }}>Status</th>
-                <th style={{ padding: "12px" }}>Last Run</th>
-                <th style={{ padding: "12px" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pipelines.map((p) => (
-                <tr key={p.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {p.pipelineName}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="success">{p.status}</Badge>
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--color-text-secondary)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    {p.lastRunAt
-                      ? new Date(p.lastRunAt).toLocaleString()
-                      : "Never"}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleRun(p.id)}
-                    >
-                      <Play size={12} style={{ marginRight: "6px" }} /> Run Sync
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Pipeline Name" , render: (p: any) => (<>{p.pipelineName}</>) },
+                        { key: "col_1", header: "Status" , render: (p: any) => (<><Badge variant="success">{p.status}</Badge></>) },
+                        { key: "col_2", header: "Last Run" , render: (p: any) => (<>{p.lastRunAt
+                                            ? new Date(p.lastRunAt).toLocaleString()
+                                            : "Never"}</>) },
+                        { key: "col_3", header: "Action" , render: (p: any) => (<><Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => handleRun(p.id)}
+                                          >
+                                            <Play size={12} style={{ marginRight: "6px" }} /> Run Sync
+                                          </Button></>) },
+                      ];
+                              return <DataTable columns={columns} data={pipelines} rowKey={(p: any) => p.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

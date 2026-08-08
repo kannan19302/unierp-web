@@ -1,13 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  type Column,
-  Button,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, type Column, Button, Spinner } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { FileText, Folder, Download, Star, Users } from "lucide-react";
 
@@ -52,7 +45,7 @@ export default function SharedPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-hstack-3">
           {r.type === "folder" ? (
             <Folder size={16} className="ui-text-primary" />
@@ -67,14 +60,14 @@ export default function SharedPage() {
     {
       key: "permission",
       header: "Permission",
-      render: (r) => (
+      render: (r: any) => (
         <span className="ui-badge ui-badge-info">{r.permission}</span>
       ),
     },
     {
       key: "createdAt",
       header: "Shared on",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
@@ -120,7 +113,7 @@ export default function SharedPage() {
         <DataTable
           columns={columns}
           data={items}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="Nothing shared with you"
           emptyMessage="When someone shares a file or folder, it will appear here."
           emptyIcon={<Users size={48} />}

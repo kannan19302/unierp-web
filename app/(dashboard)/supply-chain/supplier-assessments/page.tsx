@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Disclosure,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Disclosure } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, Search, ClipboardCheck, ChevronDown } from "lucide-react";
 
@@ -118,7 +104,7 @@ export default function SupplierAssessmentsPage() {
       key: "assessmentType",
       header: "Assessment Type",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="info">{row.assessmentType.replace(/_/g, " ")}</Badge>
       ),
     },
@@ -126,18 +112,18 @@ export default function SupplierAssessmentsPage() {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
     {
       key: "score",
       header: "Score",
       sortable: true,
-      render: (row) => <span className="ui-text-bold">{row.score}%</span>,
+      render: (row: any) => <span className="ui-text-bold">{row.score}%</span>,
     },
     {
       key: "rating",
       header: "Rating",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={ratingVariant(row.rating)}>{row.rating}</Badge>
       ),
     },
@@ -146,7 +132,7 @@ export default function SupplierAssessmentsPage() {
       key: "date",
       header: "Date",
       sortable: true,
-      render: (row) => new Date(row.date).toLocaleDateString(),
+      render: (row: any) => new Date(row.date).toLocaleDateString(),
     },
   ];
 
@@ -209,7 +195,7 @@ export default function SupplierAssessmentsPage() {
           <DataTable
             columns={columns}
             data={filtered}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             onRowClick={(row) =>
               setExpandedId(expandedId === row.id ? null : row.id)
             }

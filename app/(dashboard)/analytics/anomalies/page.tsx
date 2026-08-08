@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import {
   AlertTriangle,
   AlertOctagon,
@@ -74,56 +74,20 @@ export default function AnalyticsAnomaliesPage() {
             No active metric anomalies detected.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Metric</th>
-                <th style={{ padding: "12px" }}>Severity</th>
-                <th style={{ padding: "12px" }}>Deviation</th>
-                <th style={{ padding: "12px" }}>Detected At</th>
-                <th style={{ padding: "12px" }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {anomalies.map((a) => (
-                <tr key={a.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {a.metric}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge
-                      variant={a.severity === "CRITICAL" ? "danger" : "warning"}
-                    >
-                      {a.severity}
-                    </Badge>
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--chart-4)",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {a.deviationPercent}
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--color-text-secondary)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    {new Date(a.detectedAt).toLocaleString()}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <Badge variant="info">{a.status}</Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Metric" , render: (a: any) => (<>{a.metric}</>) },
+                        { key: "col_1", header: "Severity" , render: (a: any) => (<><Badge
+                                            variant={a.severity === "CRITICAL" ? "danger" : "warning"}
+                                          >
+                                            {a.severity}
+                                          </Badge></>) },
+                        { key: "col_2", header: "Deviation" , render: (a: any) => (<>{a.deviationPercent}</>) },
+                        { key: "col_3", header: "Detected At" , render: (a: any) => (<>{new Date(a.detectedAt).toLocaleString()}</>) },
+                        { key: "col_4", header: "Status" , render: (a: any) => (<><Badge variant="info">{a.status}</Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={anomalies} rowKey={(a: any) => a.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

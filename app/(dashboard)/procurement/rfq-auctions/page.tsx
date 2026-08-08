@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Badge, Spinner, Card, Table } from "@unerp/ui";
+import { PageHeader, Badge, Spinner, Card, Table, DataTable } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart } from "lucide-react";
@@ -110,47 +110,20 @@ export default function RfqAuctionsPage() {
         <Spinner />
       ) : (
         <Card>
-          <Table className="ui-table" style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th>Auction #</th>
-                <th>Title</th>
-                <th>Vendor</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-                <th>Awarded To</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(data || []).map((a: any) => (
-                <tr key={a.id}>
-                  <td>{a.auctionNumber || a.id}</td>
-                  <td>{a.title || "—"}</td>
-                  <td>{a.vendor?.name || "—"}</td>
-                  <td>
-                    {a.startDate
-                      ? new Date(a.startDate).toLocaleDateString()
-                      : "—"}
-                  </td>
-                  <td>
-                    {a.endDate ? new Date(a.endDate).toLocaleDateString() : "—"}
-                  </td>
-                  <td>
-                    <Badge variant={statusVariant(a.status)}>{a.status}</Badge>
-                  </td>
-                  <td>{a.awardedTo?.name || a.awardedVendor || "—"}</td>
-                </tr>
-              ))}
-              {(!data || data.length === 0) && (
-                <tr>
-                  <td colSpan={7} style={{ textAlign: "center", padding: 24 }}>
-                    No auctions found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Auction #" , render: (a: any) => (<>{a.auctionNumber || a.id}</>) },
+                        { key: "col_1", header: "Title" , render: (a: any) => (<>{a.title || "—"}</>) },
+                        { key: "col_2", header: "Vendor" , render: (a: any) => (<>{a.vendor?.name || "—"}</>) },
+                        { key: "col_3", header: "Start Date" , render: (a: any) => (<>{a.startDate
+                                            ? new Date(a.startDate).toLocaleDateString()
+                                            : "—"}</>) },
+                        { key: "col_4", header: "End Date" , render: (a: any) => (<>{a.endDate ? new Date(a.endDate).toLocaleDateString() : "—"}</>) },
+                        { key: "col_5", header: "Status" , render: (a: any) => (<><Badge variant={statusVariant(a.status)}>{a.status}</Badge></>) },
+                        { key: "col_6", header: "Awarded To" , render: (a: any) => (<>{a.awardedTo?.name || a.awardedVendor || "—"}</>) },
+                      ];
+                              return <DataTable columns={columns} data={(data || [])} rowKey={(a: any) => a.id} />;
+                          })()}</>
         </Card>
       )}
     </RouteGuard>

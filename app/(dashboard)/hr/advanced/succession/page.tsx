@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  StatusBadge,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, StatusBadge, Button, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { TrendingUp, Plus } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 import styles from "./page.module.css";
@@ -235,17 +227,17 @@ export default function SuccessionPage() {
           {
             key: "currentHolderId",
             header: "Current Holder",
-            render: (v) => getEmpName(v as string | null),
+            render: (v: any) => getEmpName(v as string | null),
           },
           {
             key: "successorId",
             header: "Designated Successor",
-            render: (v) => getEmpName(v as string | null),
+            render: (v: any) => getEmpName(v as string | null),
           },
           {
             key: "riskLevel",
             header: "Vacancy Risk",
-            render: (v) => (
+            render: (v: any) => (
               <span
                 className={styles.dyn0}
                 style={{
@@ -270,7 +262,7 @@ export default function SuccessionPage() {
           {
             key: "readinessLevel",
             header: "Readiness",
-            render: (v) => <StatusBadge status={String(v)} />,
+            render: (v: any) => <StatusBadge status={String(v)} />,
           },
         ];
         return (

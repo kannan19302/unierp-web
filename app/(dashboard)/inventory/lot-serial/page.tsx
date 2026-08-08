@@ -247,7 +247,7 @@ function BatchesTab() {
             {
               key: "batchNo",
               header: "Batch No",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -256,19 +256,19 @@ function BatchesTab() {
             {
               key: "expiryDate",
               header: "Expiry Date",
-              render: (v) =>
+              render: (v: any) =>
                 v ? new Date(String(v)).toLocaleDateString() : "—",
             },
             {
               key: "manufactureDate",
               header: "Mfg Date",
-              render: (v) =>
+              render: (v: any) =>
                 v ? new Date(String(v)).toLocaleDateString() : "—",
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} color={batchStatusColor(String(v))} />
               ),
             },
@@ -321,7 +321,7 @@ function SerialsTab() {
             {
               key: "serialNo",
               header: "Serial No",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -329,18 +329,18 @@ function SerialsTab() {
             {
               key: "warehouseId",
               header: "Warehouse",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             {
               key: "warrantyExpiry",
               header: "Warranty Expiry",
-              render: (v) =>
+              render: (v: any) =>
                 v ? new Date(String(v)).toLocaleDateString() : "—",
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} color={serialStatusColor(String(v))} />
               ),
             },
@@ -392,12 +392,12 @@ function PickSuggestionsTab() {
             {
               key: "strategy",
               header: "Strategy",
-              render: (v) => <Badge label={String(v)} color="blue" />,
+              render: (v: any) => <Badge label={String(v)} color="blue" />,
             },
             {
               key: "batchId",
               header: "Batch",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v ?? "—")}</span>
               ),
             },
@@ -406,7 +406,7 @@ function PickSuggestionsTab() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} color={pickStatusColor(String(v))} />
               ),
             },
@@ -460,25 +460,25 @@ function ExpiryAlertsTab() {
             {
               key: "batchId",
               header: "Batch",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "expiryDate",
               header: "Expiry Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
             {
               key: "daysUntilExpiry",
               header: "Days Until",
-              render: (v) => (Number(v) <= 0 ? "Expired" : `${v}d`),
+              render: (v: any) => (Number(v) <= 0 ? "Expired" : `${v}d`),
             },
             { key: "qty", header: "Qty" },
             {
               key: "severity",
               header: "Severity",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge label={String(v)} color={severityColor(String(v))} />
               ),
             },
@@ -529,7 +529,7 @@ function QuarantineTab() {
             {
               key: "orderNumber",
               header: "Order #",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
@@ -539,7 +539,7 @@ function QuarantineTab() {
             {
               key: "status",
               header: "Status",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge
                   label={String(v)}
                   color={quarantineStatusColor(String(v))}
@@ -549,7 +549,7 @@ function QuarantineTab() {
             {
               key: "releasedAt",
               header: "Released At",
-              render: (v) =>
+              render: (v: any) =>
                 v ? new Date(String(v)).toLocaleDateString() : "—",
             },
           ] as ListColumn[]

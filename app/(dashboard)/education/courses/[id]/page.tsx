@@ -1,14 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Spinner,
-  Badge,
-  KPICard,
-  ChangeHistory,
-} from "@unerp/ui";
+import { PageHeader, Card, Spinner, Badge, KPICard, ChangeHistory } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { BookOpen, Users, Calendar, ArrowLeft } from "lucide-react";
 import Link from "next/link";

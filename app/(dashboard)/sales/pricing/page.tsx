@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { DollarSign, Layers, Globe, Percent } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -203,37 +203,17 @@ export default function AdvancedPricingPage() {
           >
             Multi-Currency Exchange Matrix
           </h3>
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "10px" }}>Currency</th>
-                <th style={{ padding: "10px" }}>Symbol</th>
-                <th style={{ padding: "10px" }}>Base Rate</th>
-                <th style={{ padding: "10px" }}>Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currencies.map((c) => (
-                <tr
-                  key={c.currency}
-                  style={{ borderBottom: "1px solid #f1f5f9" }}
-                >
-                  <td style={{ padding: "10px", fontWeight: 600 }}>
-                    {c.currency}
-                  </td>
-                  <td style={{ padding: "10px" }}>{c.symbol}</td>
-                  <td style={{ padding: "10px" }}>{c.rate}</td>
-                  <td style={{ padding: "10px" }}>
-                    <Badge variant={c.isBase ? "info" : "default"}>
-                      {c.isBase ? "BASE" : "CONVERTED"}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                          const columns = [
+                    { key: "col_0", header: "Currency" , render: (c: any) => (<>{c.currency}</>) },
+                    { key: "col_1", header: "Symbol" , render: (c: any) => (<>{c.symbol}</>) },
+                    { key: "col_2", header: "Base Rate" , render: (c: any) => (<>{c.rate}</>) },
+                    { key: "col_3", header: "Type" , render: (c: any) => (<><Badge variant={c.isBase ? "info" : "default"}>
+                                        {c.isBase ? "BASE" : "CONVERTED"}
+                                      </Badge></>) },
+                  ];
+                          return <DataTable columns={columns} data={currencies} rowKey={(c: any) => c.currency} />;
+                      })()}</>
         </Card>
       </div>
     </div>

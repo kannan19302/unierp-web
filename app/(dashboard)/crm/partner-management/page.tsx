@@ -1,11 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ProtectedComponent, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, Table, DataTable } from "@unerp/ui";
 import {
   Plus,
   Users,
@@ -140,73 +135,50 @@ export default function PartnerManagementPage() {
         {deals.length === 0 ? (
           <p className="text-sm text-gray-400">No deal registrations</p>
         ) : (
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-2">Company</th>
-                <th className="text-left py-2">Partner</th>
-                <th className="text-left py-2">Contact</th>
-                <th className="text-right py-2">Value</th>
-                <th className="text-left py-2">Status</th>
-                <th className="text-right py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {deals.map((d) => (
-                <tr key={d.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2">{d.companyName}</td>
-                  <td className="py-2">{d.partner?.name || "-"}</td>
-                  <td className="py-2">
-                    {d.contactName}
-                    <br />
-                    <span className="text-xs text-gray-400">
-                      {d.contactEmail}
-                    </span>
-                  </td>
-                  <td className="py-2 text-right">
-                    ${(d.estimatedValue || 0).toLocaleString()}
-                  </td>
-                  <td className="py-2">
-                    <Badge
-                      variant={
-                        d.status === "APPROVED"
-                          ? "success"
-                          : d.status === "REJECTED"
-                            ? "danger"
-                            : "warning"
-                      }
-                    >
-                      {d.status}
-                    </Badge>
-                  </td>
-                  <td className="py-2 text-right">
-                    {d.status === "SUBMITTED" && (
-                      <div className="flex gap-1 justify-end">
-                        <ProtectedComponent permission="crm.partner.approve">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => approveDeal(d.id)}
-                            title="Approve"
-                          >
-                            <CheckCircle className="w-4 h-4 text-green-600" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => rejectDeal(d.id)}
-                            title="Reject"
-                          >
-                            <XCircle className="w-4 h-4 text-red-600" />
-                          </Button>
-                        </ProtectedComponent>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Company" , render: (d: any) => (<>{d.companyName}</>) },
+                        { key: "col_1", header: "Partner" , render: (d: any) => (<>{d.partner?.name || "-"}</>) },
+                        { key: "col_2", header: "Contact" , render: (d: any) => (<>{d.contactName}<br /><span className="text-xs text-gray-400">
+                                            {d.contactEmail}
+                                          </span></>) },
+                        { key: "col_3", header: "Value" , render: (d: any) => (<>${(d.estimatedValue || 0).toLocaleString()}</>) },
+                        { key: "col_4", header: "Status" , render: (d: any) => (<><Badge
+                                            variant={
+                                              d.status === "APPROVED"
+                                                ? "success"
+                                                : d.status === "REJECTED"
+                                                  ? "danger"
+                                                  : "warning"
+                                            }
+                                          >
+                                            {d.status}
+                                          </Badge></>) },
+                        { key: "col_5", header: "Actions" , render: (d: any) => (<>{d.status === "SUBMITTED" && (
+                                            <div className="flex gap-1 justify-end">
+                                              <ProtectedComponent permission="crm.partner.approve">
+                                                <Button
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  onClick={() => approveDeal(d.id)}
+                                                  title="Approve"
+                                                >
+                                                  <CheckCircle className="w-4 h-4 text-green-600" />
+                                                </Button>
+                                                <Button
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  onClick={() => rejectDeal(d.id)}
+                                                  title="Reject"
+                                                >
+                                                  <XCircle className="w-4 h-4 text-red-600" />
+                                                </Button>
+                                              </ProtectedComponent>
+                                            </div>
+                                          )}</>) },
+                      ];
+                              return <DataTable columns={columns} data={deals} rowKey={(d: any) => d.id} />;
+                          })()}</>
         )}
       </Card>
 
@@ -214,42 +186,21 @@ export default function PartnerManagementPage() {
         {mdfFunds.length === 0 ? (
           <p className="text-sm text-gray-400">No MDF funds</p>
         ) : (
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-2">Name</th>
-                <th className="text-left py-2">Partner</th>
-                <th className="text-left py-2">Type</th>
-                <th className="text-right py-2">Budget</th>
-                <th className="text-right py-2">Spent</th>
-                <th className="text-left py-2">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mdfFunds.map((f) => (
-                <tr key={f.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2">{f.name}</td>
-                  <td className="py-2">{f.partner?.name || "-"}</td>
-                  <td className="py-2">
-                    <Badge variant="default">{f.fundType}</Badge>
-                  </td>
-                  <td className="py-2 text-right">
-                    ${(f.budgetAmount || 0).toLocaleString()}
-                  </td>
-                  <td className="py-2 text-right">
-                    ${(f.spentAmount || 0).toLocaleString()}
-                  </td>
-                  <td className="py-2">
-                    <Badge
-                      variant={f.status === "ACTIVE" ? "success" : "warning"}
-                    >
-                      {f.status}
-                    </Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Name" , render: (f: any) => (<>{f.name}</>) },
+                        { key: "col_1", header: "Partner" , render: (f: any) => (<>{f.partner?.name || "-"}</>) },
+                        { key: "col_2", header: "Type" , render: (f: any) => (<><Badge variant="default">{f.fundType}</Badge></>) },
+                        { key: "col_3", header: "Budget" , render: (f: any) => (<>${(f.budgetAmount || 0).toLocaleString()}</>) },
+                        { key: "col_4", header: "Spent" , render: (f: any) => (<>${(f.spentAmount || 0).toLocaleString()}</>) },
+                        { key: "col_5", header: "Status" , render: (f: any) => (<><Badge
+                                            variant={f.status === "ACTIVE" ? "success" : "warning"}
+                                          >
+                                            {f.status}
+                                          </Badge></>) },
+                      ];
+                              return <DataTable columns={columns} data={mdfFunds} rowKey={(f: any) => f.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { SplitSquareHorizontal, Search } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSSplitPaymentsPage() {
   const client = useApiClient();
@@ -58,44 +58,17 @@ export default function POSSplitPaymentsPage() {
           </div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Amount</th>
-                <th>Reference</th>
-                <th>Card Last4</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : payments.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="text-center p-4">
-                    No payments found for this order
-                  </td>
-                </tr>
-              ) : (
-                payments.map((p) => (
-                  <tr key={p.id}>
-                    <td>{p.method}</td>
-                    <td>${Number(p.amount).toFixed(2)}</td>
-                    <td>{p.reference || "-"}</td>
-                    <td>{p.cardLast4 || "-"}</td>
-                    <td>{p.status}</td>
-                    <td>{new Date(p.createdAt).toLocaleString()}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Method", render: (p: any) => (<>{p.method}</>) },
+                    { key: "col_1", header: "Amount", render: (p: any) => (<>${Number(p.amount).toFixed(2)}</>) },
+                    { key: "col_2", header: "Reference", render: (p: any) => (<>{p.reference || "-"}</>) },
+                    { key: "col_3", header: "Card Last4", render: (p: any) => (<>{p.cardLast4 || "-"}</>) },
+                    { key: "col_4", header: "Status", render: (p: any) => (<>{p.status}</>) },
+                    { key: "col_5", header: "Date", render: (p: any) => (<>{new Date(p.createdAt).toLocaleString()}</>) },
+                  ];
+                            return <DataTable columns={columns} data={payments} rowKey={(p: any) => p.id} />;
+                          })()}</>
         </div>
       </div>
     </RouteGuard>

@@ -1,16 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Button,
-  StatusBadge,
-  DataTable,
-  StatCardRow,
-  Modal,
-  Pagination,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Button, StatusBadge, DataTable, StatCardRow, Modal, Pagination, type Column } from "@unerp/ui";
 import {
   Package as InventoryModuleIcon,
   BarChart3,
@@ -123,12 +114,12 @@ export default function AtpCtpPage() {
     {
       key: "product",
       header: "Product",
-      render: (row) => row.product?.name ?? row.productId,
+      render: (row: any) => row.product?.name ?? row.productId,
     },
     {
       key: "warehouse",
       header: "Warehouse",
-      render: (row) => row.warehouse?.name ?? row.warehouseId,
+      render: (row: any) => row.warehouse?.name ?? row.warehouseId,
     },
     { key: "onHand", header: "On Hand" },
     { key: "onOrder", header: "On Order" },
@@ -136,7 +127,7 @@ export default function AtpCtpPage() {
     {
       key: "available",
       header: "Available",
-      render: (row) => (
+      render: (row: any) => (
         <span
           style={{
             color:
@@ -152,13 +143,13 @@ export default function AtpCtpPage() {
     {
       key: "lastComputed",
       header: "Last Computed",
-      render: (row) =>
+      render: (row: any) =>
         row.lastComputed ? new Date(row.lastComputed).toLocaleString() : "—",
     },
     {
       key: "id",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s2}>
           <button
             className={`ui-btn ${styles.s3}`}

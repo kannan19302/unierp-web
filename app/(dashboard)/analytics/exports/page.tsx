@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -127,59 +127,35 @@ export default function ExportsPage() {
           <Plus size={18} /> Schedule Export
         </button>
       </div>
-      <Table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Source</th>
-            <th>Format</th>
-            <th>Schedule</th>
-            <th>Last Run</th>
-            <th>Next Run</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {exports.map((e) => (
-            <tr key={e.id}>
-              <td className={styles.nameCell}>{e.name}</td>
-              <td>
-                <span className={styles.sourceBadge}>{e.source}</span>
-              </td>
-              <td>
-                <span className={styles.formatBadge}>{e.format}</span>
-              </td>
-              <td>{e.scheduleType}</td>
-              <td className="ui-text-muted">
-                {e.lastRunAt
-                  ? new Date(e.lastRunAt).toLocaleDateString()
-                  : "Never"}
-              </td>
-              <td className="ui-text-muted">
-                {e.nextRunAt ? new Date(e.nextRunAt).toLocaleDateString() : "-"}
-              </td>
-              <td>
-                <div className="ui-flex ui-gap-1">
-                  <button
-                    onClick={() => handleRunNow(e.id)}
-                    className={styles.iconBtn}
-                    title="Run now"
-                  >
-                    <Play size={14} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(e.id)}
-                    className={styles.iconBtn}
-                    title="Delete"
-                  >
-                    <Trash2 size={14} />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <>{(() => {
+                  const columns = [
+            { key: "col_0", header: "Name" , render: (e: any) => (<>{e.name}</>) },
+            { key: "col_1", header: "Source" , render: (e: any) => (<><span className={styles.sourceBadge}>{e.source}</span></>) },
+            { key: "col_2", header: "Format" , render: (e: any) => (<><span className={styles.formatBadge}>{e.format}</span></>) },
+            { key: "col_3", header: "Schedule" , render: (e: any) => (<>{e.scheduleType}</>) },
+            { key: "col_4", header: "Last Run" , render: (e: any) => (<>{e.lastRunAt
+                            ? new Date(e.lastRunAt).toLocaleDateString()
+                            : "Never"}</>) },
+            { key: "col_5", header: "Next Run" , render: (e: any) => (<>{e.nextRunAt ? new Date(e.nextRunAt).toLocaleDateString() : "-"}</>) },
+            { key: "col_6", header: "" , render: (e: any) => (<><div className="ui-flex ui-gap-1">
+                            <button
+                              onClick={() => handleRunNow(e.id)}
+                              className={styles.iconBtn}
+                              title="Run now"
+                            >
+                              <Play size={14} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(e.id)}
+                              className={styles.iconBtn}
+                              title="Delete"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div></>) },
+          ];
+                  return <DataTable columns={columns} data={exports} rowKey={(e: any) => e.id} />;
+              })()}</>
       {exports.length === 0 && !loading && (
         <div className="ui-text-muted">No scheduled exports yet.</div>
       )}

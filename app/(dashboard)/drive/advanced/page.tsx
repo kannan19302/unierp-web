@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
@@ -385,60 +385,41 @@ export default function DocumentsAdvancedPage() {
               })}
             </div>
             <div className={styles.p16}>
-              <Table className={styles.p17}>
-                <thead>
-                  <tr className={styles.p18}>
-                    <th className={styles.p19}>Document</th>
-                    <th className={styles.p20}>Submitted By</th>
-                    <th className={styles.p21}>Reviewer</th>
-                    <th className={styles.p22}>Status</th>
-                    <th className={styles.p23}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {approvals.map((a) => (
-                    <tr key={a.id} className="border-b">
-                      <td className="py-3 px-4">
-                        <div className="ui-hstack-2">
-                          <FileText size={16} className="ui-text-primary" />
-                          <div>
-                            <div className="font-semibold">
-                              {a.documentName}
-                            </div>
-                            <div className="ui-text-micro">
-                              Submitted {a.submittedAt}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={styles.p24}>{a.submittedBy}</td>
-                      <td className={styles.p25}>{a.reviewer}</td>
-                      <td className="py-3 px-4">
-                        <span className={styles.p26}>
-                          {a.status.replace("_", " ")}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        {a.status === "PENDING_REVIEW" && (
-                          <div className="ui-flex ui-gap-1">
-                            <button className={styles.p27}>
-                              <CheckCircle size={12} /> Approve
-                            </button>
-                            <button className={styles.p28}>
-                              <XCircle size={12} /> Reject
-                            </button>
-                          </div>
-                        )}
-                        {a.status !== "PENDING_REVIEW" && (
-                          <button className={styles.p29}>
-                            <Eye size={12} /> View
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Document" , render: (a: any) => (<><div className="ui-hstack-2">
+                                                    <FileText size={16} className="ui-text-primary" />
+                                                    <div>
+                                                      <div className="font-semibold">
+                                                        {a.documentName}
+                                                      </div>
+                                                      <div className="ui-text-micro">
+                                                        Submitted {a.submittedAt}
+                                                      </div>
+                                                    </div>
+                                                  </div></>) },
+                            { key: "col_1", header: "Submitted By" , render: (a: any) => (<>{a.submittedBy}</>) },
+                            { key: "col_2", header: "Reviewer" , render: (a: any) => (<>{a.reviewer}</>) },
+                            { key: "col_3", header: "Status" , render: (a: any) => (<><span className={styles.p26}>
+                                                    {a.status.replace("_", " ")}
+                                                  </span></>) },
+                            { key: "col_4", header: "Actions" , render: (a: any) => (<>{a.status === "PENDING_REVIEW" && (
+                                                    <div className="ui-flex ui-gap-1">
+                                                      <button className={styles.p27}>
+                                                        <CheckCircle size={12} /> Approve
+                                                      </button>
+                                                      <button className={styles.p28}>
+                                                        <XCircle size={12} /> Reject
+                                                      </button>
+                                                    </div>
+                                                  )}{a.status !== "PENDING_REVIEW" && (
+                                                    <button className={styles.p29}>
+                                                      <Eye size={12} /> View
+                                                    </button>
+                                                  )}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={approvals} rowKey={(a: any) => a.id} />;
+                              })()}</>
             </div>
           </div>
         )}

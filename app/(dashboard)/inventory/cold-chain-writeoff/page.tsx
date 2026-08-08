@@ -229,7 +229,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String(v).slice(-8)}
                     </span>
@@ -238,7 +238,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "minTempCelsius",
                   header: "Min Temp (°C)",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="ui-text-primary">
                       {Number(v).toFixed(1)}
                     </span>
@@ -247,7 +247,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "maxTempCelsius",
                   header: "Max Temp (°C)",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="ui-text-primary">
                       {Number(v).toFixed(1)}
                     </span>
@@ -256,12 +256,12 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "maxExcursionMins",
                   header: "Max Excursion (min)",
-                  render: (v) => String(v ?? "—"),
+                  render: (v: any) => String(v ?? "—"),
                 },
                 {
                   key: "active",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs ${v ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}
                     >
@@ -286,7 +286,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "requirement",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String((v as any)?.productId ?? "").slice(-8)}
                     </span>
@@ -295,17 +295,17 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "warehouseId",
                   header: "Warehouse",
-                  render: (v) => String(v).slice(-8),
+                  render: (v: any) => String(v).slice(-8),
                 },
                 {
                   key: "recordedTempC",
                   header: "Temp (°C)",
-                  render: (v) => <strong>{Number(v).toFixed(1)}</strong>,
+                  render: (v: any) => <strong>{Number(v).toFixed(1)}</strong>,
                 },
                 {
                   key: "severity",
                   header: "Severity",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS[String(v)] ?? "bg-gray-100 text-gray-700"}`}
                     >
@@ -316,7 +316,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs ${STATUS_COLORS[String(v)] ?? "bg-gray-100 text-gray-700"}`}
                     >
@@ -327,7 +327,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "excursionStartAt",
                   header: "Occurred",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
                 {
                   key: "id",
@@ -363,14 +363,14 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "requestNumber",
                   header: "Number",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">{String(v)}</span>
                   ),
                 },
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String(v).slice(-8)}
                     </span>
@@ -379,17 +379,17 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "quantity",
                   header: "Qty",
-                  render: (v) => Number(v).toFixed(2),
+                  render: (v: any) => Number(v).toFixed(2),
                 },
                 {
                   key: "originalValuePerUnit",
                   header: "Original Value",
-                  render: (v) => `$${Number(v).toFixed(2)}`,
+                  render: (v: any) => `$${Number(v).toFixed(2)}`,
                 },
                 {
                   key: "proposedValuePerUnit",
                   header: "Proposed Value",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className={styles.s1}>${Number(v).toFixed(2)}</span>
                   ),
                 },
@@ -397,7 +397,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs ${STATUS_COLORS[String(v)] ?? "bg-gray-100 text-gray-700"}`}
                     >
@@ -458,14 +458,14 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "writeOffNumber",
                   header: "Number",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">{String(v)}</span>
                   ),
                 },
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String(v).slice(-8)}
                     </span>
@@ -474,12 +474,12 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "quantity",
                   header: "Qty",
-                  render: (v) => Number(v).toFixed(2),
+                  render: (v: any) => Number(v).toFixed(2),
                 },
                 {
                   key: "totalWriteOff",
                   header: "Total Write-Off",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className={styles.s3}>
                       ${Number(v).toLocaleString()}
                     </span>
@@ -489,7 +489,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded text-xs ${STATUS_COLORS[String(v)] ?? "bg-gray-100 text-gray-700"}`}
                     >

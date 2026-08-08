@@ -1,20 +1,7 @@
 "use client";
 import styles from "./operations.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Drawer,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Spinner,
-} from "@unerp/ui";
+import { Card, Button, Badge, StatusBadge, DataTable, type Column, Drawer, Modal, TextField, FormField, Select, Spinner } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   Package,
@@ -379,7 +366,7 @@ export default function ShipmentsTab() {
     {
       key: "shipment",
       header: "Shipment",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div
             className={
@@ -400,7 +387,7 @@ export default function ShipmentsTab() {
     {
       key: "tracking",
       header: "Tracking",
-      render: (row) =>
+      render: (row: any) =>
         row.trackingNumber ? (
           <code className={styles.trackingCode}>{row.trackingNumber}</code>
         ) : (
@@ -410,7 +397,7 @@ export default function ShipmentsTab() {
     {
       key: "weight",
       header: "Weight",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">
           {row.totalWeight ? `${row.totalWeight} kg` : "—"}
         </span>
@@ -419,7 +406,7 @@ export default function ShipmentsTab() {
     {
       key: "qty",
       header: "Pallets/Cartons",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.totalPallets || 0} / {row.totalCartons || 0}
         </span>
@@ -428,7 +415,7 @@ export default function ShipmentsTab() {
     {
       key: "eta",
       header: "ETA / Expected",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">
           {row.expectedArrival || row.estimatedDelivery
             ? new Date(
@@ -441,7 +428,7 @@ export default function ShipmentsTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
   ];
 
@@ -522,7 +509,7 @@ export default function ShipmentsTab() {
             <DataTable
               columns={columns}
               data={filtered}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               onRowClick={handleRowClick}
               emptyTitle={`No ${direction} shipments`}
               emptyMessage={`Add a new ${direction} shipment to begin tracking.`}

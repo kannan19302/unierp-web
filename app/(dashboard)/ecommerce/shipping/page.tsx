@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Truck, Plus, Edit2, Trash2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function EcommerceShippingPage() {
   const client = useApiClient();
@@ -118,69 +118,45 @@ export default function EcommerceShippingPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Countries</th>
-                <th>Rates</th>
-                <th>Active</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={5} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                zones.map((z) => (
-                  <tr key={z.id}>
-                    <td>{z.name}</td>
-                    <td>{(z.countries || []).join(", ") || "All"}</td>
-                    <td>{(z.rates || []).length} rates</td>
-                    <td>
-                      {z.isActive ? (
-                        <span className="ui-badge-success">Active</span>
-                      ) : (
-                        <span className="ui-badge">Inactive</span>
-                      )}
-                    </td>
-                    <td className="ui-hstack-1">
-                      <button
-                        className="ui-btn-icon"
-                        onClick={() => {
-                          setRateForm({
-                            zoneId: z.id,
-                            name: "",
-                            type: "FLAT",
-                            baseRate: 0,
-                            perUnitRate: 0,
-                          });
-                          setShowRateModal(true);
-                        }}
-                        title="Add Rate"
-                      >
-                        +Rate
-                      </button>
-                      <button
-                        className="ui-btn-icon"
-                        onClick={() => {
-                          setEditId(z.id);
-                          setForm(z);
-                          setShowModal(true);
-                        }}
-                      >
-                        <Edit2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Name", render: (z: any) => (<>{z.name}</>) },
+                    { key: "col_1", header: "Countries", render: (z: any) => (<>{(z.countries || []).join(", ") || "All"}</>) },
+                    { key: "col_2", header: "Rates", render: (z: any) => (<>{(z.rates || []).length} rates</>) },
+                    { key: "col_3", header: "Active", render: (z: any) => (<>{z.isActive ? (
+                                          <span className="ui-badge-success">Active</span>
+                                        ) : (
+                                          <span className="ui-badge">Inactive</span>
+                                        )}</>) },
+                    { key: "col_4", header: "Actions", render: (z: any) => (<><button
+                                          className="ui-btn-icon"
+                                          onClick={() => {
+                                            setRateForm({
+                                              zoneId: z.id,
+                                              name: "",
+                                              type: "FLAT",
+                                              baseRate: 0,
+                                              perUnitRate: 0,
+                                            });
+                                            setShowRateModal(true);
+                                          }}
+                                          title="Add Rate"
+                                        >
+                                          +Rate
+                                        </button>
+                                        <button
+                                          className="ui-btn-icon"
+                                          onClick={() => {
+                                            setEditId(z.id);
+                                            setForm(z);
+                                            setShowModal(true);
+                                          }}
+                                        >
+                                          <Edit2 size={14} />
+                                        </button></>) },
+                  ];
+                            return <DataTable columns={columns} data={zones} rowKey={(z: any) => z.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

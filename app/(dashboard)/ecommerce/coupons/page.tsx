@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Ticket, Plus, Edit2, Trash2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function EcommerceCouponsPage() {
   const client = useApiClient();
@@ -113,69 +113,37 @@ export default function EcommerceCouponsPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Type</th>
-                <th>Value</th>
-                <th>Min Order</th>
-                <th>Used</th>
-                <th>Active</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={7} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                items.map((i) => (
-                  <tr key={i.id}>
-                    <td>
-                      <code>{i.code}</code>
-                    </td>
-                    <td>{i.type}</td>
-                    <td>
-                      {i.type === "PERCENTAGE" ? `${i.value}%` : `$${i.value}`}
-                    </td>
-                    <td>${Number(i.minOrderAmount || 0).toFixed(2)}</td>
-                    <td>
-                      {i.usedCount}/{i.usageLimit || "∞"}
-                    </td>
-                    <td>
-                      {i.isActive ? (
-                        <span className="ui-badge-success">Active</span>
-                      ) : (
-                        <span className="ui-badge">Inactive</span>
-                      )}
-                    </td>
-                    <td className="ui-hstack-1">
-                      <button
-                        className="ui-btn-icon"
-                        onClick={() => {
-                          setEditId(i.id);
-                          setForm(i);
-                          setShowModal(true);
-                        }}
-                      >
-                        <Edit2 size={14} />
-                      </button>
-                      <button
-                        className="ui-btn-icon ui-text-error"
-                        onClick={() => remove(i.id)}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Code", render: (i: any) => (<><code>{i.code}</code></>) },
+                    { key: "col_1", header: "Type", render: (i: any) => (<>{i.type}</>) },
+                    { key: "col_2", header: "Value", render: (i: any) => (<>{i.type === "PERCENTAGE" ? `${i.value}%` : `$${i.value}`}</>) },
+                    { key: "col_3", header: "Min Order", render: (i: any) => (<>${Number(i.minOrderAmount || 0).toFixed(2)}</>) },
+                    { key: "col_4", header: "Used", render: (i: any) => (<>{i.usedCount}/{i.usageLimit || "∞"}</>) },
+                    { key: "col_5", header: "Active", render: (i: any) => (<>{i.isActive ? (
+                                          <span className="ui-badge-success">Active</span>
+                                        ) : (
+                                          <span className="ui-badge">Inactive</span>
+                                        )}</>) },
+                    { key: "col_6", header: "Actions", render: (i: any) => (<><button
+                                          className="ui-btn-icon"
+                                          onClick={() => {
+                                            setEditId(i.id);
+                                            setForm(i);
+                                            setShowModal(true);
+                                          }}
+                                        >
+                                          <Edit2 size={14} />
+                                        </button>
+                                        <button
+                                          className="ui-btn-icon ui-text-error"
+                                          onClick={() => remove(i.id)}
+                                        >
+                                          <Trash2 size={14} />
+                                        </button></>) },
+                  ];
+                            return <DataTable columns={columns} data={items} rowKey={(i: any) => i.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ChefHat, Plus, Edit2, Trash2, Eye } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSKitchenDisplayPage() {
   const client = useApiClient();
@@ -174,66 +174,42 @@ export default function POSKitchenDisplayPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Code</th>
-                  <th>Status</th>
-                  <th>Terminals</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={5} className="text-center p-4">
-                      Loading...
-                    </td>
-                  </tr>
-                ) : (
-                  displays.map((d) => (
-                    <tr key={d.id}>
-                      <td>{d.name}</td>
-                      <td>{d.code}</td>
-                      <td>
-                        <span
-                          className={`ui-badge-${d.status === "ACTIVE" ? "success" : ""}`}
-                        >
-                          {d.status}
-                        </span>
-                      </td>
-                      <td>{(d.terminalIds || []).length}</td>
-                      <td className="ui-hstack-1">
-                        <button
-                          className="ui-btn-icon"
-                          onClick={() => viewKOrders(d.id)}
-                          title="View Orders"
-                        >
-                          <Eye size={14} />
-                        </button>
-                        <button
-                          className="ui-btn-icon"
-                          onClick={() => {
-                            setEditId(d.id);
-                            setForm(d);
-                            setShowModal(true);
-                          }}
-                        >
-                          <Edit2 size={14} />
-                        </button>
-                        <button
-                          className="ui-btn-icon ui-text-error"
-                          onClick={() => remove(d.id)}
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Name", render: (d: any) => (<>{d.name}</>) },
+                            { key: "col_1", header: "Code", render: (d: any) => (<>{d.code}</>) },
+                            { key: "col_2", header: "Status", render: (d: any) => (<><span
+                                                    className={`ui-badge-${d.status === "ACTIVE" ? "success" : ""}`}
+                                                  >
+                                                    {d.status}
+                                                  </span></>) },
+                            { key: "col_3", header: "Terminals", render: (d: any) => (<>{(d.terminalIds || []).length}</>) },
+                            { key: "col_4", header: "Actions", render: (d: any) => (<><button
+                                                    className="ui-btn-icon"
+                                                    onClick={() => viewKOrders(d.id)}
+                                                    title="View Orders"
+                                                  >
+                                                    <Eye size={14} />
+                                                  </button>
+                                                  <button
+                                                    className="ui-btn-icon"
+                                                    onClick={() => {
+                                                      setEditId(d.id);
+                                                      setForm(d);
+                                                      setShowModal(true);
+                                                    }}
+                                                  >
+                                                    <Edit2 size={14} />
+                                                  </button>
+                                                  <button
+                                                    className="ui-btn-icon ui-text-error"
+                                                    onClick={() => remove(d.id)}
+                                                  >
+                                                    <Trash2 size={14} />
+                                                  </button></>) },
+                          ];
+                                    return <DataTable columns={columns} data={displays} rowKey={(d: any) => d.id} />;
+                                  })()}</>
           </div>
         )}
         {showModal && (

@@ -3,13 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn, Table, DataTable } from "@unerp/ui";
 import {
   Plus,
   Search,
@@ -279,7 +273,7 @@ export default function SalesReturnsPage() {
                 {
                   key: "returnNumber",
                   header: "Return ID",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className={styles.p19}>{String(v)}</span>
                   ),
                 },
@@ -287,12 +281,12 @@ export default function SalesReturnsPage() {
                 {
                   key: "orderNumber",
                   header: "Sales Order",
-                  render: (v) => <Badge variant="default">{String(v)}</Badge>,
+                  render: (v: any) => <Badge variant="default">{String(v)}</Badge>,
                 },
                 {
                   key: "returnDate",
                   header: "Date Logged",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="ui-text-muted">
                       {new Date(String(v)).toLocaleDateString()}
                     </span>
@@ -301,12 +295,12 @@ export default function SalesReturnsPage() {
                 {
                   key: "lineItemCount",
                   header: "Items",
-                  render: (v) => `${v} Types`,
+                  render: (v: any) => `${v} Types`,
                 },
                 {
                   key: "totalAmount",
                   header: "Total Credit",
-                  render: (v) => <strong>${Number(v).toLocaleString()}</strong>,
+                  render: (v: any) => <strong>${Number(v).toLocaleString()}</strong>,
                 },
                 {
                   key: "status",
@@ -458,65 +452,32 @@ export default function SalesReturnsPage() {
                       </div>
                     ) : (
                       <div className={styles.p41}>
-                        <Table className={styles.p42}>
-                          <thead>
-                            <tr className={styles.p43}>
-                              <th className={styles.p44}>Description</th>
-                              <th className={styles.p45}>Qty</th>
-                              <th className={styles.p46}>Unit Price</th>
-                              <th className={styles.p47}>Tax (%)</th>
-                              <th className={styles.p48}>Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {lineItems.map((item, index) => {
-                              const total =
-                                item.quantity *
-                                item.unitPrice *
-                                (1 + item.taxRate / 100);
-                              return (
-                                <tr
-                                  key={index}
-                                  style={{
-                                    borderBottom:
-                                      index < lineItems.length - 1
-                                        ? "1px solid var(--color-border)"
-                                        : "none",
-                                  }}
-                                >
-                                  <td className="p-2">{item.description}</td>
-                                  <td className="p-2">
-                                    <input
-                                      type="number"
-                                      min={0}
-                                      value={item.quantity}
-                                      onChange={(e) => {
-                                        const updated = [...lineItems];
-                                        updated[index]!.quantity = Number(
-                                          e.target.value,
-                                        );
-                                        setLineItems(updated);
-                                      }}
-                                      className={styles.p49}
-                                    />
-                                  </td>
-                                  <td className={styles.p50}>
-                                    ${item.unitPrice.toLocaleString()}
-                                  </td>
-                                  <td className={styles.p51}>
-                                    {item.taxRate}%
-                                  </td>
-                                  <td className={styles.p52}>
-                                    $
-                                    {total.toLocaleString(undefined, {
-                                      minimumFractionDigits: 2,
-                                    })}
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </Table>
+                        <>{(() => {
+                                                                  const columns = [
+                                                            { key: "col_0", header: "Description" , render: (item: any) => (<>{item.description}</>) },
+                                                            { key: "col_1", header: "Qty" , render: (item: any) => (<><input
+                                                                                                type="number"
+                                                                                                min={0}
+                                                                                                value={item.quantity}
+                                                                                                onChange={(e) => {
+                                                                                                  const updated = [...lineItems];
+                                                                                                  updated[index]!.quantity = Number(
+                                                                                                    e.target.value,
+                                                                                                  );
+                                                                                                  setLineItems(updated);
+                                                                                                }}
+                                                                                                className={styles.p49}
+                                                                                              /></>) },
+                                                            { key: "col_2", header: "Unit Price" , render: (item: any) => (<>${item.unitPrice.toLocaleString()}</>) },
+                                                            { key: "col_3", header: "Tax (%)" , render: (item: any) => (<>{item.taxRate}%
+                                                                                            </>) },
+                                                            { key: "col_4", header: "Total" , render: (item: any) => (<>$
+                                                                                              {total.toLocaleString(undefined, {
+                                                                                                minimumFractionDigits: 2,
+                                                                                              })}</>) },
+                                                          ];
+                                                                  return <DataTable columns={columns} data={lineItems} rowKey={(item: any) => index} />;
+                                                              })()}</>
                       </div>
                     )}
                   </div>

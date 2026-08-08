@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import {
   GraduationCap,
   Plus,
@@ -93,7 +83,7 @@ export default function CoachingDeepPage() {
       key: "name",
       header: "Name",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <Link href={`/crm/coaching-deep/programs/${r.id}`} className="ui-link">
           {r.name}
         </Link>
@@ -103,13 +93,13 @@ export default function CoachingDeepPage() {
       key: "programType",
       header: "Type",
       sortable: true,
-      render: (r) => <Badge variant="info">{r.programType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.programType}</Badge>,
     },
     {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "ACTIVE" ? "success" : "warning"}>
           {r.status}
         </Badge>
@@ -119,20 +109,20 @@ export default function CoachingDeepPage() {
       key: "isRequired",
       header: "Required",
       sortable: true,
-      render: (r) =>
+      render: (r: any) =>
         r.isRequired ? <Badge variant="warning">Yes</Badge> : "No",
     },
     {
       key: "assigneeIds",
       header: "Enrolled",
       sortable: true,
-      render: (r) => (r.assigneeIds ?? []).length,
+      render: (r: any) => (r.assigneeIds ?? []).length,
     },
     {
       key: "modules",
       header: "Modules",
       sortable: true,
-      render: (r) => (r.modules ?? []).length,
+      render: (r: any) => (r.modules ?? []).length,
     },
   ];
 

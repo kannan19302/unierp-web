@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { Plus, Eye, Trash2 } from "lucide-react";
 
 interface CacheRule {
@@ -48,19 +41,19 @@ export default function CacheRulesPage() {
     {
       key: "cacheStrategy",
       header: "Strategy",
-      render: (r) => <Badge variant="info">{r.cacheStrategy}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.cacheStrategy}</Badge>,
     },
     {
       key: "maxAgeSeconds",
       header: "TTL",
-      render: (r) => `${Math.round(r.maxAgeSeconds / 60)} min`,
+      render: (r: any) => `${Math.round(r.maxAgeSeconds / 60)} min`,
     },
     { key: "maxEntries", header: "Max Entries" },
     { key: "priority", header: "Priority" },
     {
       key: "isActive",
       header: "Active",
-      render: (r) =>
+      render: (r: any) =>
         r.isActive ? (
           <Badge variant="success">Active</Badge>
         ) : (
@@ -70,7 +63,7 @@ export default function CacheRulesPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

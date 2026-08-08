@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  StatusBadge,
-  Spinner,
-  ProtectedComponent,
-  useToast,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, StatusBadge, Spinner, ProtectedComponent, useToast, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Search, UserPlus, Ban, RotateCcw, Copy } from "lucide-react";
 import {
   apiGet,
@@ -253,12 +243,12 @@ export default function CustomerPortalAdminPage() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => <StatusBadge status={String(v)} />,
+                    render: (v: any) => <StatusBadge status={String(v)} />,
                   },
                   {
                     key: "lastLoginAt",
                     header: "Last login",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? new Date(String(v)).toLocaleString() : "Never",
                   },
                   {

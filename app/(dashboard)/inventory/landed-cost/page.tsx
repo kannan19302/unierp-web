@@ -251,7 +251,7 @@ export default function LandedCostPage() {
     {
       key: "voucherNumber",
       header: "Voucher #",
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-mono">
           {(row as unknown as Voucher).voucherNumber}
         </span>
@@ -260,7 +260,7 @@ export default function LandedCostPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => {
+      render: (row: any) => {
         const v = row as unknown as Voucher;
         return (
           <span
@@ -275,19 +275,19 @@ export default function LandedCostPage() {
     {
       key: "totalAmount",
       header: "Total",
-      render: (row) =>
+      render: (row: any) =>
         Number((row as unknown as Voucher).totalAmount).toFixed(2),
     },
     { key: "currency", header: "Currency" },
     {
       key: "invoiceRef",
       header: "Invoice Ref",
-      render: (row) => (row as unknown as Voucher).invoiceRef ?? "-",
+      render: (row: any) => (row as unknown as Voucher).invoiceRef ?? "-",
     },
     {
       key: "actions",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const v = row as unknown as Voucher;
         return (
           <div className="flex gap-2 flex-wrap">
@@ -334,7 +334,7 @@ export default function LandedCostPage() {
     {
       key: "chargeType",
       header: "Type",
-      render: (row) => (
+      render: (row: any) => (
         <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">
           {(row as unknown as ChargeLine).chargeType}
         </span>
@@ -343,23 +343,23 @@ export default function LandedCostPage() {
     {
       key: "description",
       header: "Description",
-      render: (row) => (row as unknown as ChargeLine).description ?? "-",
+      render: (row: any) => (row as unknown as ChargeLine).description ?? "-",
     },
     {
       key: "amount",
       header: "Amount",
-      render: (row) => Number((row as unknown as ChargeLine).amount).toFixed(2),
+      render: (row: any) => Number((row as unknown as ChargeLine).amount).toFixed(2),
     },
     { key: "currency", header: "Currency" },
     {
       key: "accountCode",
       header: "Account",
-      render: (row) => (row as unknown as ChargeLine).accountCode ?? "-",
+      render: (row: any) => (row as unknown as ChargeLine).accountCode ?? "-",
     },
     {
       key: "actions",
       header: "Actions",
-      render: (row) => {
+      render: (row: any) => {
         const l = row as unknown as ChargeLine;
         return selectedVoucher?.status === "DRAFT" ? (
           <button
@@ -377,7 +377,7 @@ export default function LandedCostPage() {
     {
       key: "voucherId",
       header: "Voucher",
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-mono text-xs">
           {(row as unknown as Allocation).voucherId.slice(0, 8)}
         </span>
@@ -386,7 +386,7 @@ export default function LandedCostPage() {
     {
       key: "chargeType",
       header: "Charge Type",
-      render: (row) => (
+      render: (row: any) => (
         <span className="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">
           {(row as unknown as Allocation).chargeType}
         </span>
@@ -395,7 +395,7 @@ export default function LandedCostPage() {
     {
       key: "stockEntryId",
       header: "Stock Entry",
-      render: (row) => (
+      render: (row: any) => (
         <span className="font-mono text-xs">
           {(row as unknown as Allocation).stockEntryId.slice(0, 8)}
         </span>
@@ -404,25 +404,25 @@ export default function LandedCostPage() {
     {
       key: "basis",
       header: "Basis",
-      render: (row) =>
+      render: (row: any) =>
         Number((row as unknown as Allocation).allocationPct).toFixed(2),
     },
     {
       key: "allocationPct",
       header: "Pct %",
-      render: (row) =>
+      render: (row: any) =>
         `${Number((row as unknown as Allocation).allocationPct).toFixed(2)}%`,
     },
     {
       key: "allocatedAmount",
       header: "Allocated Amt",
-      render: (row) =>
+      render: (row: any) =>
         Number((row as unknown as Allocation).allocatedAmount).toFixed(2),
     },
     {
       key: "addedToItemCost",
       header: "Added to Cost",
-      render: (row) =>
+      render: (row: any) =>
         (row as unknown as Allocation).addedToItemCost ? "✓" : "-",
     },
   ];

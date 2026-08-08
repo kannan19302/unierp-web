@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -60,72 +60,39 @@ export default function PipelineAnalyticsPage() {
 
       <div className="ui-card p-4">
         <h2 className="font-semibold mb-3">Deal Size Distribution</h2>
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Bucket</th>
-              <th className="py-2 px-2">Count</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sizeDist.map((b: any) => (
-              <tr key={b.label} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2">{b.label}</td>
-                <td className="py-2 px-2">{b.count}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Bucket", render: (b: any) => (<>{b.label}</>) },
+                { key: "col_1", header: "Count", render: (b: any) => (<>{b.count}</>) },
+              ];
+                        return <DataTable columns={columns} data={sizeDist} rowKey={(b: any) => b.label} />;
+                      })()}</>
       </div>
 
       <div className="ui-card p-4">
         <h2 className="font-semibold mb-3">Loss Reason Analysis</h2>
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Reason</th>
-              <th className="py-2 px-2">Count</th>
-              <th className="py-2 px-2">Total Amount</th>
-              <th className="py-2 px-2">%</th>
-            </tr>
-          </thead>
-          <tbody>
-            {lossReasons.map((l: any) => (
-              <tr key={l.reason} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2">{l.reason}</td>
-                <td className="py-2 px-2">{l.count}</td>
-                <td className="py-2 px-2">
-                  ${l.totalAmount?.toLocaleString()}
-                </td>
-                <td className="py-2 px-2">{l.percentage}%</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Reason", render: (l: any) => (<>{l.reason}</>) },
+                { key: "col_1", header: "Count", render: (l: any) => (<>{l.count}</>) },
+                { key: "col_2", header: "Total Amount", render: (l: any) => (<>${l.totalAmount?.toLocaleString()}</>) },
+                { key: "col_3", header: "%", render: (l: any) => (<>{l.percentage}%</>) },
+              ];
+                        return <DataTable columns={columns} data={lossReasons} rowKey={(l: any) => l.reason} />;
+                      })()}</>
       </div>
 
       <div className="ui-card p-4">
         <h2 className="font-semibold mb-3">Win Rate by Source</h2>
-        <Table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-2 px-2">Source</th>
-              <th className="py-2 px-2">Total</th>
-              <th className="py-2 px-2">Converted</th>
-              <th className="py-2 px-2">Conv. Rate</th>
-            </tr>
-          </thead>
-          <tbody>
-            {winBySource.map((s: any) => (
-              <tr key={s.source} className="border-b hover:bg-muted/50">
-                <td className="py-2 px-2">{s.source}</td>
-                <td className="py-2 px-2">{s.total}</td>
-                <td className="py-2 px-2">{s.converted}</td>
-                <td className="py-2 px-2">{s.conversionRate}%</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <>{(() => {
+                        const columns = [
+                { key: "col_0", header: "Source", render: (s: any) => (<>{s.source}</>) },
+                { key: "col_1", header: "Total", render: (s: any) => (<>{s.total}</>) },
+                { key: "col_2", header: "Converted", render: (s: any) => (<>{s.converted}</>) },
+                { key: "col_3", header: "Conv. Rate", render: (s: any) => (<>{s.conversionRate}%</>) },
+              ];
+                        return <DataTable columns={columns} data={winBySource} rowKey={(s: any) => s.source} />;
+                      })()}</>
       </div>
     </div>
   );

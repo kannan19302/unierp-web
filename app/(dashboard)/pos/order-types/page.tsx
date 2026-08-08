@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ListOrdered, Plus, Edit2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSOrderTypesPage() {
   const client = useApiClient();
@@ -88,49 +88,26 @@ export default function POSOrderTypesPage() {
           </div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Code</th>
-                <th>Default</th>
-                <th>Active</th>
-                <th>Order</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                items.map((i) => (
-                  <tr key={i.id}>
-                    <td>{i.name}</td>
-                    <td>{i.code}</td>
-                    <td>{i.isDefault ? "Yes" : "-"}</td>
-                    <td>{i.isActive ? "Yes" : "No"}</td>
-                    <td>{i.sortOrder}</td>
-                    <td>
-                      <button
-                        className="ui-btn-icon"
-                        onClick={() => {
-                          setEditId(i.id);
-                          setForm(i);
-                          setShowModal(true);
-                        }}
-                      >
-                        <Edit2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Name", render: (i: any) => (<>{i.name}</>) },
+                    { key: "col_1", header: "Code", render: (i: any) => (<>{i.code}</>) },
+                    { key: "col_2", header: "Default", render: (i: any) => (<>{i.isDefault ? "Yes" : "-"}</>) },
+                    { key: "col_3", header: "Active", render: (i: any) => (<>{i.isActive ? "Yes" : "No"}</>) },
+                    { key: "col_4", header: "Order", render: (i: any) => (<>{i.sortOrder}</>) },
+                    { key: "col_5", header: "Actions", render: (i: any) => (<><button
+                                          className="ui-btn-icon"
+                                          onClick={() => {
+                                            setEditId(i.id);
+                                            setForm(i);
+                                            setShowModal(true);
+                                          }}
+                                        >
+                                          <Edit2 size={14} />
+                                        </button></>) },
+                  ];
+                            return <DataTable columns={columns} data={items} rowKey={(i: any) => i.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

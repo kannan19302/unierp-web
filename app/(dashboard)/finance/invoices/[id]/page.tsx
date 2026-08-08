@@ -4,12 +4,7 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ChangeHistory, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ChangeHistory, DataTable } from "@unerp/ui";
 import {
   FileText,
   AlertCircle,
@@ -506,26 +501,15 @@ export default function InvoiceDetailPage() {
 
             {activeTab === "items" && (
               <div className="builder-table-wrapper">
-                <Table className={styles.itemsTable}>
-                  <thead>
-                    <tr className={styles.itemsTableHead}>
-                      <th>Description</th>
-                      <th>Quantity</th>
-                      <th>Unit Price</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody className={styles.itemsTableBody}>
-                    {invoice.lineItems?.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.description}</td>
-                        <td>{Number(item.quantity)}</td>
-                        <td>${Number(item.unitPrice).toLocaleString()}</td>
-                        <td>${Number(item.totalAmount).toLocaleString()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <>{(() => {
+                                        const columns = [
+                                { key: "col_0", header: "Description", render: (item: any) => (<>{item.description}</>) },
+                                { key: "col_1", header: "Quantity", render: (item: any) => (<>{Number(item.quantity)}</>) },
+                                { key: "col_2", header: "Unit Price", render: (item: any) => (<>${Number(item.unitPrice).toLocaleString()}</>) },
+                                { key: "col_3", header: "Total", render: (item: any) => (<>${Number(item.totalAmount).toLocaleString()}</>) },
+                              ];
+                                        return <DataTable columns={columns} data={invoice.lineItems} rowKey={(item: any) => item.id} />;
+                                      })()}</>
 
                 <div className={styles.totalsPanel}>
                   <div className="ui-text-xs-muted">

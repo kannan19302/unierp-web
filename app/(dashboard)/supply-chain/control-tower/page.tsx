@@ -1,15 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  PageHeader,
-  KPICard,
-  DashboardChart,
-  Card,
-  DataTable,
-  type Column,
-  Spinner,
-  Badge,
-} from "@unerp/ui";
+import { PageHeader, KPICard, DashboardChart, Card, DataTable, type Column, Spinner, Badge } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import {
   LayoutDashboard,
@@ -162,14 +153,14 @@ export default function ScmControlTowerPage() {
     {
       key: "module",
       header: "Module",
-      render: (r) => <Badge variant="info">{r.module}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.module}</Badge>,
     },
-    { key: "type", header: "Type", render: (r) => r.type.replace(/_/g, " ") },
-    { key: "message", header: "Message", render: (r) => r.message },
+    { key: "type", header: "Type", render: (r: any) => r.type.replace(/_/g, " ") },
+    { key: "message", header: "Message", render: (r: any) => r.message },
     {
       key: "severity",
       header: "Severity",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={severityBadgeVariant(r.severity)}>{r.severity}</Badge>
       ),
     },

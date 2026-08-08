@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Card, Button, Spinner, StatusBadge, useToast, Table } from "@unerp/ui";
+import { Card, Button, Spinner, StatusBadge, useToast, Table, DataTable } from "@unerp/ui";
 import {
   FileText,
   ShoppingCart,
@@ -300,191 +300,96 @@ export default function CustomerPortalDashboardPage() {
           (quotations.length === 0 ? (
             <p className="ui-empty-state">No quotations yet.</p>
           ) : (
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Status</th>
-                  <th>Total</th>
-                  <th>Valid until</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {quotations.map((q) => (
-                  <tr key={q.id}>
-                    <td>{q.quotationNumber}</td>
-                    <td>
-                      <StatusBadge status={q.status} />
-                    </td>
-                    <td>
-                      {q.currency} {Number(q.totalAmount).toFixed(2)}
-                    </td>
-                    <td>{new Date(q.validUntil).toLocaleDateString()}</td>
-                    <td>
-                      <div className={styles.s7}>
-                        {q.status === "SENT" && (
-                          <>
-                            <Button
-                              size="sm"
-                              onClick={() => handleAccept(q.id)}
-                            >
-                              <Check size={14} /> Accept
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="danger"
-                              onClick={() => handleReject(q.id)}
-                            >
-                              <XIcon size={14} /> Reject
-                            </Button>
-                          </>
-                        )}
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          onClick={() =>
-                            handleDownloadQuotationPdf(q.id, q.quotationNumber)
-                          }
-                        >
-                          <Download size={14} /> PDF
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Number" , render: (q: any) => (<>{q.quotationNumber}</>) },
+                        { key: "col_1", header: "Status" , render: (q: any) => (<><StatusBadge status={q.status} /></>) },
+                        { key: "col_2", header: "Total" , render: (q: any) => (<>{q.currency}{Number(q.totalAmount).toFixed(2)}</>) },
+                        { key: "col_3", header: "Valid until" , render: (q: any) => (<>{new Date(q.validUntil).toLocaleDateString()}</>) },
+                        { key: "col_4", header: "Actions" , render: (q: any) => (<><div className={styles.s7}>
+                                              {q.status === "SENT" && (
+                                                <>
+                                                  <Button
+                                                    size="sm"
+                                                    onClick={() => handleAccept(q.id)}
+                                                  >
+                                                    <Check size={14} /> Accept
+                                                  </Button>
+                                                  <Button
+                                                    size="sm"
+                                                    variant="danger"
+                                                    onClick={() => handleReject(q.id)}
+                                                  >
+                                                    <XIcon size={14} /> Reject
+                                                  </Button>
+                                                </>
+                                              )}
+                                              <Button
+                                                size="sm"
+                                                variant="secondary"
+                                                onClick={() =>
+                                                  handleDownloadQuotationPdf(q.id, q.quotationNumber)
+                                                }
+                                              >
+                                                <Download size={14} /> PDF
+                                              </Button>
+                                            </div></>) },
+                      ];
+                              return <DataTable columns={columns} data={quotations} rowKey={(q: any) => q.id} />;
+                          })()}</>
           ))}
 
         {tab === "orders" &&
           (orders.length === 0 ? (
             <p className="ui-empty-state">No sales orders yet.</p>
           ) : (
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Status</th>
-                  <th>Total</th>
-                  <th>Order date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((o) => (
-                  <tr key={o.id}>
-                    <td>{o.orderNumber}</td>
-                    <td>
-                      <StatusBadge status={o.status} />
-                    </td>
-                    <td>
-                      {o.currency} {Number(o.totalAmount).toFixed(2)}
-                    </td>
-                    <td>{new Date(o.orderDate).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Number" , render: (o: any) => (<>{o.orderNumber}</>) },
+                        { key: "col_1", header: "Status" , render: (o: any) => (<><StatusBadge status={o.status} /></>) },
+                        { key: "col_2", header: "Total" , render: (o: any) => (<>{o.currency}{Number(o.totalAmount).toFixed(2)}</>) },
+                        { key: "col_3", header: "Order date" , render: (o: any) => (<>{new Date(o.orderDate).toLocaleDateString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={orders} rowKey={(o: any) => o.id} />;
+                          })()}</>
           ))}
 
         {tab === "invoices" &&
           (invoices.length === 0 ? (
             <p className="ui-empty-state">No invoices yet.</p>
           ) : (
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Status</th>
-                  <th>Total</th>
-                  <th>Paid</th>
-                  <th>Due date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoices.map((i) => {
-                  const outstanding =
-                    Number(i.totalAmount) - Number(i.paidAmount);
-                  return (
-                    <React.Fragment key={i.id}>
-                      <tr>
-                        <td>{i.invoiceNumber}</td>
-                        <td>
-                          <StatusBadge status={i.status} />
-                        </td>
-                        <td>
-                          {i.currency} {Number(i.totalAmount).toFixed(2)}
-                        </td>
-                        <td>
-                          {i.currency} {Number(i.paidAmount).toFixed(2)}
-                        </td>
-                        <td>{new Date(i.dueDate).toLocaleDateString()}</td>
-                        <td>
-                          <div className={styles.s7}>
-                            {i.status !== "PAID" && outstanding > 0 && (
-                              <Button
-                                size="sm"
-                                onClick={() => {
-                                  setPayingInvoiceId(i.id);
-                                  setPayAmount(outstanding.toFixed(2));
-                                }}
-                              >
-                                <CreditCard size={14} /> Pay Now
-                              </Button>
-                            )}
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              onClick={() =>
-                                handleDownloadInvoicePdf(i.id, i.invoiceNumber)
-                              }
-                            >
-                              <Download size={14} /> PDF
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                      {payingInvoiceId === i.id && (
-                        <tr>
-                          <td colSpan={6}>
-                            <div className={styles.s8}>
-                              <span>Amount:</span>
-                              <input
-                                className={`ui-input ${styles.s9}`}
-                                type="number"
-                                min="0.01"
-                                step="0.01"
-                                max={outstanding}
-                                value={payAmount}
-                                onChange={(e) => setPayAmount(e.target.value)}
-                              />
-                              <span>{i.currency}</span>
-                              <Button
-                                size="sm"
-                                onClick={() => handlePayInvoice(i.id)}
-                                disabled={processingPayment}
-                              >
-                                {processingPayment
-                                  ? "Processing…"
-                                  : "Confirm Payment"}
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="secondary"
-                                onClick={() => setPayingInvoiceId(null)}
-                              >
-                                Cancel
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Number" , render: (i: any) => (<>{i.invoiceNumber}</>) },
+                        { key: "col_1", header: "Status" , render: (i: any) => (<><StatusBadge status={i.status} /></>) },
+                        { key: "col_2", header: "Total" , render: (i: any) => (<>{i.currency}{Number(i.totalAmount).toFixed(2)}</>) },
+                        { key: "col_3", header: "Paid" , render: (i: any) => (<>{i.currency}{Number(i.paidAmount).toFixed(2)}</>) },
+                        { key: "col_4", header: "Due date" , render: (i: any) => (<>{new Date(i.dueDate).toLocaleDateString()}</>) },
+                        { key: "col_5", header: "Actions" , render: (i: any) => (<><div className={styles.s7}>
+                                                  {i.status !== "PAID" && outstanding > 0 && (
+                                                    <Button
+                                                      size="sm"
+                                                      onClick={() => {
+                                                        setPayingInvoiceId(i.id);
+                                                        setPayAmount(outstanding.toFixed(2));
+                                                      }}
+                                                    >
+                                                      <CreditCard size={14} /> Pay Now
+                                                    </Button>
+                                                  )}
+                                                  <Button
+                                                    size="sm"
+                                                    variant="secondary"
+                                                    onClick={() =>
+                                                      handleDownloadInvoicePdf(i.id, i.invoiceNumber)
+                                                    }
+                                                  >
+                                                    <Download size={14} /> PDF
+                                                  </Button>
+                                                </div></>) },
+                      ];
+                              return <DataTable columns={columns} data={invoices}  />;
+                          })()}</>
           ))}
 
         {tab === "cases" && (
@@ -524,36 +429,16 @@ export default function CustomerPortalDashboardPage() {
             {cases.length === 0 ? (
               <p className="ui-empty-state">No support cases yet.</p>
             ) : (
-              <Table className="ui-table">
-                <thead>
-                  <tr>
-                    <th>Case #</th>
-                    <th>Subject</th>
-                    <th>Priority</th>
-                    <th>Status</th>
-                    <th>Opened</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cases.map((c) => (
-                    <tr
-                      key={c.id}
-                      className={styles.s12}
-                      onClick={() =>
-                        router.push(`/public/customer-portal/cases/${c.id}`)
-                      }
-                    >
-                      <td>{c.caseNumber}</td>
-                      <td>{c.subject}</td>
-                      <td>{c.priority}</td>
-                      <td>
-                        <StatusBadge status={c.status} />
-                      </td>
-                      <td>{new Date(c.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Case #" , render: (c: any) => (<>{c.caseNumber}</>) },
+                                { key: "col_1", header: "Subject" , render: (c: any) => (<>{c.subject}</>) },
+                                { key: "col_2", header: "Priority" , render: (c: any) => (<>{c.priority}</>) },
+                                { key: "col_3", header: "Status" , render: (c: any) => (<><StatusBadge status={c.status} /></>) },
+                                { key: "col_4", header: "Opened" , render: (c: any) => (<>{new Date(c.createdAt).toLocaleDateString()}</>) },
+                              ];
+                                      return <DataTable columns={columns} data={cases} rowKey={(c: any) => c.id} />;
+                                  })()}</>
             )}
           </>
         )}

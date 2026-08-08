@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  KPICard,
-  Spinner,
-  DataTable,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, KPICard, Spinner, DataTable, Button, type Column } from "@unerp/ui";
 import {
   Smartphone,
   Bell,
@@ -77,12 +70,12 @@ export default function PwaPage() {
     {
       key: "maxAgeSeconds",
       header: "TTL",
-      render: (r) => `${Math.round(r.maxAgeSeconds / 60)}min`,
+      render: (r: any) => `${Math.round(r.maxAgeSeconds / 60)}min`,
     },
     {
       key: "isActive",
       header: "Active",
-      render: (r) => (r.isActive ? "Yes" : "No"),
+      render: (r: any) => (r.isActive ? "Yes" : "No"),
     },
   ];
 

@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import { DoorOpen, Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { apiGet, apiPost, ApiRequestError } from "../../../../src/lib/api";
@@ -75,40 +65,40 @@ export default function DealRoomsPage() {
     {
       key: "name",
       header: "Deal Room",
-      render: (r) => <strong>{r.name}</strong>,
+      render: (r: any) => <strong>{r.name}</strong>,
     },
     {
       key: "opportunity",
       header: "Opportunity",
-      render: (r) => r.opportunity?.name ?? "—",
+      render: (r: any) => r.opportunity?.name ?? "—",
     },
     {
       key: "stage",
       header: "Stage",
-      render: (r) => r.opportunity?.stage ?? "—",
+      render: (r: any) => r.opportunity?.stage ?? "—",
     },
     {
       key: "milestones",
       header: "Milestones",
       align: "right",
-      render: (r) => r._count.milestones,
+      render: (r: any) => r._count.milestones,
     },
     {
       key: "stakeholders",
       header: "Stakeholders",
       align: "right",
-      render: (r) => r._count.stakeholders,
+      render: (r: any) => r._count.stakeholders,
     },
     {
       key: "documents",
       header: "Documents",
       align: "right",
-      render: (r) => r._count.documents,
+      render: (r: any) => r._count.documents,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "ACTIVE" ? "success" : "default"}>
           {r.status}
         </Badge>
@@ -156,7 +146,7 @@ export default function DealRoomsPage() {
           <DataTable<DealRoomRow>
             columns={columns}
             data={rooms}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             onRowClick={(r) => router.push(`/crm/deal-rooms/${r.id}`)}
           />
         )}

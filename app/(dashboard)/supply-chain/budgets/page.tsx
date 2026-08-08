@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Pagination,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, Pagination } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, DollarSign, Wallet } from "lucide-react";
 import Link from "next/link";
@@ -111,7 +97,7 @@ export default function BudgetsPage() {
       key: "budgetNumber",
       header: "Budget #",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Link href={`/supply-chain/budgets/${row.id}`} className="ui-link">
           {row.budgetNumber}
         </Link>
@@ -122,25 +108,25 @@ export default function BudgetsPage() {
       key: "category",
       header: "Category",
       sortable: true,
-      render: (row) => <Badge variant="info">{row.category}</Badge>,
+      render: (row: any) => <Badge variant="info">{row.category}</Badge>,
     },
     {
       key: "totalBudget",
       header: "Total Budget",
       sortable: true,
-      render: (row) => fmtCurrency(row.totalBudget),
+      render: (row: any) => fmtCurrency(row.totalBudget),
     },
     {
       key: "spent",
       header: "Spent",
       sortable: true,
-      render: (row) => fmtCurrency(row.spent),
+      render: (row: any) => fmtCurrency(row.spent),
     },
     {
       key: "remaining",
       header: "Remaining %",
       sortable: true,
-      render: (row) => {
+      render: (row: any) => {
         const pct =
           row.totalBudget > 0
             ? Math.round((row.spent / row.totalBudget) * 100)
@@ -179,7 +165,7 @@ export default function BudgetsPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
   ];
 
@@ -224,7 +210,7 @@ export default function BudgetsPage() {
             columns={columns}
             data={budgets}
             loading={loading}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             sortBy={sortBy}
             sortOrder={sortOrder}
             onSortChange={handleSort}

@@ -21,14 +21,7 @@ import {
   DollarSign,
   RefreshCw,
 } from "lucide-react";
-import {
-  PageHeader,
-  Button,
-  Card,
-  DashboardChart,
-  Spinner,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Button, Card, DashboardChart, Spinner, KPICard } from "@unerp/ui";
 import { RouteGuard, ListView } from "@unerp/framework";
 
 interface DashboardData {

@@ -1,12 +1,7 @@
 "use client";
 import styles from "./WebhooksConfigTab.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Badge,
-  StatusBadge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Badge, StatusBadge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 
 interface WebhookData {
   id: string;
@@ -40,17 +35,17 @@ export default function WebhooksConfigTab() {
           {
             key: "name",
             header: "Name",
-            render: (v) => <span className="font-medium">{String(v)}</span>,
+            render: (v: any) => <span className="font-medium">{String(v)}</span>,
           },
           {
             key: "targetUrl",
             header: "Target URL",
-            render: (v) => <code className={styles.s1}>{String(v)}</code>,
+            render: (v: any) => <code className={styles.s1}>{String(v)}</code>,
           },
           {
             key: "events",
             header: "Events",
-            render: (v) => (
+            render: (v: any) => (
               <div className={styles.s2}>
                 {JSON.parse(String(v)).map((e: string) => (
                   <Badge key={e} variant="info">
@@ -63,7 +58,7 @@ export default function WebhooksConfigTab() {
           {
             key: "status",
             header: "Status",
-            render: (v) => <StatusBadge status={String(v)} />,
+            render: (v: any) => <StatusBadge status={String(v)} />,
           },
         ] as ListColumn[]
       }

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Card, PageHeader, Button, Input, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Input, DataTable } from "@unerp/ui";
 import { Search, Merge } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -118,40 +118,25 @@ export default function DuplicatesPage() {
 
       {duplicates.length > 0 && (
         <Card title={`Found ${duplicates.length} matching records`}>
-          <Table className="w-full text-sm mb-4">
-            <thead>
-              <tr className="text-left border-b text-gray-500">
-                <th className="pb-2">Master</th>
-                <th className="pb-2">Merge</th>
-                <th className="pb-2">ID</th>
-                <th className="pb-2">Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {duplicates.map((dup) => (
-                <tr key={dup.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2">
-                    <input
-                      type="radio"
-                      name="master"
-                      checked={masterId === dup.id}
-                      onChange={() => setMasterId(dup.id)}
-                    />
-                  </td>
-                  <td className="py-2">
-                    <input
-                      type="checkbox"
-                      checked={mergeIds.includes(dup.id)}
-                      onChange={() => toggleMergeId(dup.id)}
-                      disabled={masterId === dup.id}
-                    />
-                  </td>
-                  <td className="py-2 text-xs">{dup.id}</td>
-                  <td className="py-2">{dup.email || dup.firstName || "—"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Master", render: (dup: any) => (<><input
+                                        type="radio"
+                                        name="master"
+                                        checked={masterId === dup.id}
+                                        onChange={() => setMasterId(dup.id)}
+                                      /></>) },
+                    { key: "col_1", header: "Merge", render: (dup: any) => (<><input
+                                        type="checkbox"
+                                        checked={mergeIds.includes(dup.id)}
+                                        onChange={() => toggleMergeId(dup.id)}
+                                        disabled={masterId === dup.id}
+                                      /></>) },
+                    { key: "col_2", header: "ID", render: (dup: any) => (<>{dup.id}</>) },
+                    { key: "col_3", header: "Email", render: (dup: any) => (<>{dup.email || dup.firstName || "—"}</>) },
+                  ];
+                            return <DataTable columns={columns} data={duplicates} rowKey={(dup: any) => dup.id} />;
+                          })()}</>
           <Button
             variant="primary"
             size="sm"

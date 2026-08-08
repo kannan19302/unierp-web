@@ -1,16 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ProtectedComponent,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, Edit3, Trash2, Users, AlertCircle } from "lucide-react";
 import { Modal, inputStyle, labelStyle } from "../../_components/Modal";
 import { apiGet, apiSend } from "../../_components/api";
@@ -174,29 +165,29 @@ export default function DuplicateRulesPage() {
                 {
                   key: "name",
                   header: "Name",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-semibold">{String(v)}</span>
                   ),
                 },
                 {
                   key: "entity",
                   header: "Entity",
-                  render: (v) => <Badge>{String(v)}</Badge>,
+                  render: (v: any) => <Badge>{String(v)}</Badge>,
                 },
                 {
                   key: "matchFields",
                   header: "Match Fields",
-                  render: (v) => (v as string[]).join(", "),
+                  render: (v: any) => (v as string[]).join(", "),
                 },
                 {
                   key: "threshold",
                   header: "Threshold",
-                  render: (v) => `${Math.round(Number(v) * 100)}%`,
+                  render: (v: any) => `${Math.round(Number(v) * 100)}%`,
                 },
                 {
                   key: "action",
                   header: "Action",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Badge variant={v === "BLOCK" ? "danger" : "info"}>
                       {String(v)}
                     </Badge>
@@ -205,7 +196,7 @@ export default function DuplicateRulesPage() {
                 {
                   key: "active",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Badge variant={v ? "success" : "default"}>
                       {v ? "Active" : "Inactive"}
                     </Badge>

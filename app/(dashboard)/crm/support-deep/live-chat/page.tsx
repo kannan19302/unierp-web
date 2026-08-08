@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, DataTable } from "@unerp/ui";
 import { MessageSquare, Clock, User, Phone, Globe } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -96,60 +96,34 @@ export default function LiveChatPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Visitor</th>
-                  <th>Status</th>
-                  <th>Source</th>
-                  <th>Agent</th>
-                  <th>Duration</th>
-                  <th>Rating</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sessions.map((s) => (
-                  <tr key={s.id}>
-                    <td>
-                      <User size={12} /> {s.visitorId.substring(0, 8)}
-                    </td>
-                    <td>
-                      <Badge variant={statusBadge[s.status] || "default"}>
-                        {s.status}
-                      </Badge>
-                    </td>
-                    <td>
-                      <Globe size={12} /> {s.source}
-                    </td>
-                    <td className="ui-text-xs">
-                      {s.assignedAgentId
-                        ? s.assignedAgentId.substring(0, 8)
-                        : "-"}
-                    </td>
-                    <td className="ui-text-xs">
-                      {s.durationSec ? (
-                        `${Math.round(s.durationSec / 60)}m`
-                      ) : (
-                        <Clock size={12} />
-                      )}
-                    </td>
-                    <td>{s.rating ? `${s.rating}/5` : "-"}</td>
-                    <td>
-                      {s.status !== "CLOSED" && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => endSession(s.id)}
-                        >
-                          End
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Visitor", render: (s: any) => (<><User size={12} /> {s.visitorId.substring(0, 8)}</>) },
+                            { key: "col_1", header: "Status", render: (s: any) => (<><Badge variant={statusBadge[s.status] || "default"}>
+                                                  {s.status}
+                                                </Badge></>) },
+                            { key: "col_2", header: "Source", render: (s: any) => (<><Globe size={12} /> {s.source}</>) },
+                            { key: "col_3", header: "Agent", render: (s: any) => (<>{s.assignedAgentId
+                                                  ? s.assignedAgentId.substring(0, 8)
+                                                  : "-"}</>) },
+                            { key: "col_4", header: "Duration", render: (s: any) => (<>{s.durationSec ? (
+                                                  `${Math.round(s.durationSec / 60)}m`
+                                                ) : (
+                                                  <Clock size={12} />
+                                                )}</>) },
+                            { key: "col_5", header: "Rating", render: (s: any) => (<>{s.rating ? `${s.rating}/5` : "-"}</>) },
+                            { key: "col_6", header: "Actions", render: (s: any) => (<>{s.status !== "CLOSED" && (
+                                                  <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    onClick={() => endSession(s.id)}
+                                                  >
+                                                    End
+                                                  </Button>
+                                                )}</>) },
+                          ];
+                                    return <DataTable columns={columns} data={sessions} rowKey={(s: any) => s.id} />;
+                                  })()}</>
             {sessions.length === 0 && (
               <p className="ui-p-3 ui-text-sm text-muted">
                 No chat sessions found

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { BookOpen, Plus, X, Loader2 } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
-import { Card, Button, Table } from "@unerp/ui";
+import { Card, Button, Table, DataTable } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 
 interface BiMetric {
@@ -137,70 +137,38 @@ export default function CatalogPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <Table className="ui-table w-full">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Source</th>
-                    <th>Expression</th>
-                    <th>Dimensions</th>
-                    <th>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {metrics.map((m) => (
-                    <tr key={m.id}>
-                      <td className="font-medium">{m.name}</td>
-                      <td>
-                        <span className="ui-badge-primary text-xs px-2 py-0.5 rounded">
-                          {m.category}
-                        </span>
-                      </td>
-                      <td className="ui-text-xs-muted">{m.source}</td>
-                      <td className="font-mono text-xs">{m.expression}</td>
-                      <td>
-                        <div className="ui-hstack-2">
-                          {m.dimensions?.map((d, i) => (
-                            <span
-                              key={i}
-                              className="ui-badge-secondary text-xs px-1.5 py-0.5 rounded"
-                            >
-                              {d}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
-                      <td>
-                        <span
-                          className={`px-2 py-0.5 rounded text-xs ${m.isActive ? "ui-badge-success" : "ui-badge-secondary"}`}
-                        >
-                          {m.isActive ? "Active" : "Inactive"}
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => deleteMetric(m.id)}
-                          className="ui-btn-icon ui-text-danger"
-                        >
-                          <X size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                  {metrics.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={7}
-                        className="text-center ui-text-muted py-4"
-                      >
-                        No metrics defined.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Name" , render: (m: any) => (<>{m.name}</>) },
+                                { key: "col_1", header: "Category" , render: (m: any) => (<><span className="ui-badge-primary text-xs px-2 py-0.5 rounded">
+                                                        {m.category}
+                                                      </span></>) },
+                                { key: "col_2", header: "Source" , render: (m: any) => (<>{m.source}</>) },
+                                { key: "col_3", header: "Expression" , render: (m: any) => (<>{m.expression}</>) },
+                                { key: "col_4", header: "Dimensions" , render: (m: any) => (<><div className="ui-hstack-2">
+                                                        {m.dimensions?.map((d, i) => (
+                                                          <span
+                                                            key={i}
+                                                            className="ui-badge-secondary text-xs px-1.5 py-0.5 rounded"
+                                                          >
+                                                            {d}
+                                                          </span>
+                                                        ))}
+                                                      </div></>) },
+                                { key: "col_5", header: "Status" , render: (m: any) => (<><span
+                                                        className={`px-2 py-0.5 rounded text-xs ${m.isActive ? "ui-badge-success" : "ui-badge-secondary"}`}
+                                                      >
+                                                        {m.isActive ? "Active" : "Inactive"}
+                                                      </span></>) },
+                                { key: "col_6", header: "" , render: (m: any) => (<><button
+                                                        onClick={() => deleteMetric(m.id)}
+                                                        className="ui-btn-icon ui-text-danger"
+                                                      >
+                                                        <X size={14} />
+                                                      </button></>) },
+                              ];
+                                      return <DataTable columns={columns} data={metrics} rowKey={(m: any) => m.id} />;
+                                  })()}</>
             </div>
           )}
         </Card>

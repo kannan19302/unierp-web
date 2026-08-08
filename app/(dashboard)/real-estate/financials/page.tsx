@@ -1,20 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-  Select,
-  FormField,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast, Select, FormField } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   DollarSign,
@@ -150,7 +136,7 @@ export default function FinancialsPage() {
     {
       key: "property",
       header: "Property",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="ui-heading-sm">
             {r.property?.name || r.propertyId.slice(0, 8)}
@@ -165,17 +151,17 @@ export default function FinancialsPage() {
     {
       key: "income",
       header: "Effective Income",
-      render: (r) => <span>${Number(r.effectiveIncome).toLocaleString()}</span>,
+      render: (r: any) => <span>${Number(r.effectiveIncome).toLocaleString()}</span>,
     },
     {
       key: "expenses",
       header: "Expenses",
-      render: (r) => <span>${Number(r.totalExpenses).toLocaleString()}</span>,
+      render: (r: any) => <span>${Number(r.totalExpenses).toLocaleString()}</span>,
     },
     {
       key: "noi",
       header: "NOI",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={`font-semibold ${r.netOperatingIncome >= 0 ? "text-green-600" : "text-red-600"}`}
         >
@@ -186,14 +172,14 @@ export default function FinancialsPage() {
     {
       key: "cap",
       header: "Cap Rate",
-      render: (r) => (
+      render: (r: any) => (
         <span>{r.capRate ? `${r.capRate.toFixed(2)}%` : "—"}</span>
       ),
     },
     {
       key: "cashflow",
       header: "Net Cash Flow",
-      render: (r) => (
+      render: (r: any) => (
         <span
           className={r.netCashFlow >= 0 ? "text-green-600" : "text-red-600"}
         >
@@ -204,7 +190,7 @@ export default function FinancialsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.status === "FINAL" ? "success" : "warning"}>
           {r.status}
         </Badge>
@@ -213,7 +199,7 @@ export default function FinancialsPage() {
     {
       key: "occupancy",
       header: "Occupancy",
-      render: (r) => (
+      render: (r: any) => (
         <span>{r.occupancyRate ? `${r.occupancyRate.toFixed(1)}%` : "—"}</span>
       ),
     },
@@ -294,7 +280,7 @@ export default function FinancialsPage() {
             <DataTable
               columns={columns}
               data={financials}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No financial records"
               emptyMessage="Create financial records for properties."
               emptyIcon={<DollarSign size={48} />}

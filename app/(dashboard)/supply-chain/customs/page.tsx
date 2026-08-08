@@ -1,19 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Pagination,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Pagination } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, FileText, Globe } from "lucide-react";
 import Link from "next/link";
@@ -115,7 +102,7 @@ export default function CustomsPage() {
       key: "documentNumber",
       header: "Document #",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Link href={`/supply-chain/customs/${row.id}`} className="ui-link">
           {row.documentNumber}
         </Link>
@@ -125,14 +112,14 @@ export default function CustomsPage() {
       key: "type",
       header: "Type",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant="info">{row.type.replace(/_/g, " ")}</Badge>
       ),
     },
     {
       key: "direction",
       header: "Direction",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.direction === "IMPORT" ? "primary" : "warning"}>
           {row.direction}
         </Badge>
@@ -143,7 +130,7 @@ export default function CustomsPage() {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={statusVariant(row.status)}>
           {row.status.replace(/_/g, " ")}
         </Badge>
@@ -153,12 +140,12 @@ export default function CustomsPage() {
       key: "filedDate",
       header: "Filed Date",
       sortable: true,
-      render: (row) => new Date(row.filedDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.filedDate).toLocaleDateString(),
     },
     {
       key: "clearedDate",
       header: "Cleared Date",
-      render: (row) =>
+      render: (row: any) =>
         row.clearedDate ? (
           new Date(row.clearedDate).toLocaleDateString()
         ) : (
@@ -169,7 +156,7 @@ export default function CustomsPage() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-flex ui-gap-1" onClick={(e) => e.stopPropagation()}>
           <button
             className="ui-btn-icon"
@@ -229,7 +216,7 @@ export default function CustomsPage() {
             columns={columns}
             data={documents}
             loading={loading}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             sortBy={sortBy}
             sortOrder={sortOrder}
             onSortChange={handleSort}

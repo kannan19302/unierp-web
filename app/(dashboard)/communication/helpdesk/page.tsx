@@ -1,17 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column } from "@unerp/ui";
 import {
   HeadphonesIcon,
   Plus,
@@ -89,23 +79,23 @@ export default function HelpdeskPage() {
     {
       key: "subject",
       header: "Subject",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="font-medium">{r.subject}</span>
           <div className="text-xs text-muted">{r.customerName}</div>
         </div>
       ),
     },
-    { key: "status", header: "Status", render: (r) => statusBadge(r.status) },
+    { key: "status", header: "Status", render: (r: any) => statusBadge(r.status) },
     {
       key: "priority",
       header: "Priority",
-      render: (r) => priorityBadge(r.priority),
+      render: (r: any) => priorityBadge(r.priority),
     },
     {
       key: "assignedTo",
       header: "Assigned",
-      render: (r) =>
+      render: (r: any) =>
         r.assignedTo ? (
           <div className="flex items-center gap-1">
             <UserCheck size={14} />
@@ -118,12 +108,12 @@ export default function HelpdeskPage() {
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="ui-flex ui-gap-1">
           <Button variant="ghost" size="sm">
             <AlertCircle size={14} />
@@ -202,7 +192,7 @@ export default function HelpdeskPage() {
             <DataTable
               columns={columns}
               data={tickets}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No tickets"
               emptyIcon={<HeadphonesIcon size={48} />}
             />

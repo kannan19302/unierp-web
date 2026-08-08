@@ -1,21 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  StatusBadge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  DashboardChart,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, DashboardChart } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   FolderKanban,
@@ -121,22 +106,22 @@ export default function PpmEnterpriseHub() {
     {
       key: "name",
       header: "Portfolio Name",
-      render: (row) => <strong>{row.name}</strong>,
+      render: (row: any) => <strong>{row.name}</strong>,
     },
     {
       key: "strategicGoal",
       header: "Strategic Alignment",
-      render: (row) => row.strategicGoal || "General Enterprise",
+      render: (row: any) => row.strategicGoal || "General Enterprise",
     },
     {
       key: "budget",
       header: "Allocated Budget",
-      render: (row) => `${row.currency} ${Number(row.budget).toLocaleString()}`,
+      render: (row: any) => `${row.currency} ${Number(row.budget).toLocaleString()}`,
     },
     {
       key: "status",
       header: "Portfolio Status",
-      render: (row) => <StatusBadge status={row.status} />,
+      render: (row: any) => <StatusBadge status={row.status} />,
     },
   ];
 

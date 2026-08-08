@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  DataTable,
-  Badge,
-  Card,
-  Spinner,
-  Input,
-  type Column,
-} from "@unerp/ui";
+import { Button, DataTable, Badge, Card, Spinner, Input, type Column } from "@unerp/ui";
 
 interface ServiceTicket {
   id: string;
@@ -74,7 +66,7 @@ export default function ServiceManagementPage() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.status === "OPEN" ? "warning" : "default"}>
           {row.status}
         </Badge>
@@ -83,7 +75,7 @@ export default function ServiceManagementPage() {
     {
       key: "priority",
       header: "Priority",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.priority === "HIGH" ? "danger" : "default"}>
           {row.priority}
         </Badge>

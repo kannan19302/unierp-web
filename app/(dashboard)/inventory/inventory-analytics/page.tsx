@@ -337,21 +337,21 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "productId",
                     header: "Product ID",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">{String(v)}</span>
                     ),
                   },
                   {
                     key: "warehouseId",
                     header: "Warehouse",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">{String(v)}</span>
                     ),
                   },
                   {
                     key: "onHandQty",
                     header: "On-Hand Qty",
-                    render: (v) => Number(v).toFixed(0),
+                    render: (v: any) => Number(v).toFixed(0),
                   },
                 ] as ListColumn[]
               }
@@ -384,24 +384,24 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "productId",
                     header: "Product",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">{String(v)}</span>
                     ),
                   },
                   {
                     key: "onHand",
                     header: "On-Hand",
-                    render: (v) => Number(v).toFixed(0),
+                    render: (v: any) => Number(v).toFixed(0),
                   },
                   {
                     key: "avgDailySales",
                     header: "Avg Daily Sales",
-                    render: (v) => Number(v).toFixed(2),
+                    render: (v: any) => Number(v).toFixed(2),
                   },
                   {
                     key: "daysInventoryOutstanding",
                     header: "DIO",
-                    render: (v) => (v != null ? Number(v).toFixed(1) : "—"),
+                    render: (v: any) => (v != null ? Number(v).toFixed(1) : "—"),
                   },
                 ] as ListColumn[]
               }
@@ -474,7 +474,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "inbound",
                     header: "Inbound",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-green-600">
                         {Number(v).toFixed(0)}
                       </span>
@@ -483,7 +483,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "outbound",
                     header: "Outbound",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-red-600">
                         {Number(v).toFixed(0)}
                       </span>
@@ -543,14 +543,14 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "productId",
                     header: "Product ID",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">{String(v)}</span>
                     ),
                   },
                   {
                     key: "shrinkage",
                     header: "Shrinkage",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-red-600 font-medium">
                         {Number(v).toFixed(2)}
                       </span>
@@ -583,7 +583,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "warehouse",
                     header: "Code",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">
                         {String((v as any)?.code ?? "—")}
                       </span>
@@ -593,7 +593,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "totalQuantity",
                     header: "Total Qty",
-                    render: (v) => Number(v).toLocaleString(),
+                    render: (v: any) => Number(v).toLocaleString(),
                   },
                 ] as ListColumn[]
               }
@@ -625,13 +625,13 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "onHandQty",
                     header: "On-Hand",
-                    render: (v) => Number(v).toLocaleString(),
+                    render: (v: any) => Number(v).toLocaleString(),
                   },
                   { key: "occupiedBins", header: "Bins" },
                   {
                     key: "inbound30d",
                     header: "Inbound",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-green-600">
                         {Math.round(Number(v)).toLocaleString()}
                       </span>
@@ -640,7 +640,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "outbound30d",
                     header: "Outbound",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="text-red-600">
                         {Math.round(Number(v)).toLocaleString()}
                       </span>

@@ -1,19 +1,7 @@
 "use client";
 import styles from "./operations.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  KPICard,
-  Spinner,
-} from "@unerp/ui";
+import { Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, Spinner } from "@unerp/ui";
 import { useApiClient, RouteGuard } from "@unerp/framework";
 import {
   Truck,
@@ -95,7 +83,7 @@ export default function CarriersTab() {
     {
       key: "name",
       header: "Carrier",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.carrierIconWell}>
             <Truck size={18} />
@@ -110,7 +98,7 @@ export default function CarriersTab() {
     {
       key: "contact",
       header: "Contact",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-stack-1">
           {row.contactEmail && (
             <div className="ui-hstack-1 ui-items-center text-xs text-muted">
@@ -131,7 +119,7 @@ export default function CarriersTab() {
     {
       key: "trackingUrl",
       header: "Tracking Link",
-      render: (row) =>
+      render: (row: any) =>
         row.trackingUrl ? (
           <a
             href={row.trackingUrl}
@@ -148,7 +136,7 @@ export default function CarriersTab() {
     {
       key: "status",
       header: "Status",
-      render: (row) => (
+      render: (row: any) => (
         <Badge variant={row.isActive ? "success" : "default"}>
           {row.isActive ? "ACTIVE" : "INACTIVE"}
         </Badge>
@@ -192,7 +180,7 @@ export default function CarriersTab() {
           <DataTable
             columns={columns}
             data={carriers}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No carriers"
             emptyMessage="Add shipping carriers to manage your logistics network."
             emptyIcon={<Truck size={48} />}

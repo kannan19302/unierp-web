@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import {
   TrendingUp,
   DollarSign,
@@ -389,7 +381,7 @@ export default function CrmReportsPage() {
                         {
                           key: "totalRevenue",
                           header: "Revenue",
-                          render: (v) => (
+                          render: (v: any) => (
                             <span className="font-semibold">
                               ${Number(v).toLocaleString()}
                             </span>
@@ -398,7 +390,7 @@ export default function CrmReportsPage() {
                         {
                           key: "avgCycleTimeDays",
                           header: "Avg Days",
-                          render: (v) => `${v}d`,
+                          render: (v: any) => `${v}d`,
                         },
                       ] as ListColumn[]
                     }
@@ -431,7 +423,7 @@ export default function CrmReportsPage() {
                       {
                         key: "conversionRate",
                         header: "Conversion Rate",
-                        render: (v) => (
+                        render: (v: any) => (
                           <div className="ui-hstack-2">
                             <div className={styles.cohortTrack}>
                               <div
@@ -539,7 +531,7 @@ export default function CrmReportsPage() {
                   {
                     key: "name",
                     header: "Name",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.reportName}>
                         <FileText size={14} />
                         {String(v)}
@@ -549,19 +541,19 @@ export default function CrmReportsPage() {
                   {
                     key: "type",
                     header: "Type",
-                    render: (v) => <Badge variant="info">{String(v)}</Badge>,
+                    render: (v: any) => <Badge variant="info">{String(v)}</Badge>,
                   },
                   {
                     key: "chartType",
                     header: "Chart",
-                    render: (v) => (
+                    render: (v: any) => (
                       <Badge variant="default">{String(v || "None")}</Badge>
                     ),
                   },
                   {
                     key: "isShared",
                     header: "Shared",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? (
                         <Badge variant="success">Shared</Badge>
                       ) : (
@@ -571,12 +563,12 @@ export default function CrmReportsPage() {
                   {
                     key: "createdAt",
                     header: "Created",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "id",
                     header: "",
-                    render: (v) => (
+                    render: (v: any) => (
                       <button
                         onClick={() => handleDeleteReport(String(v))}
                         className="ui-btn-icon ui-text-danger"

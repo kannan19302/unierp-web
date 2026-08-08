@@ -2,16 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ProtectedComponent,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { ArrowLeft, RefreshCw, Users, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { apiGet, apiSend } from "../../_components/api";
@@ -184,12 +175,12 @@ export default function SegmentDetailPage() {
                   {
                     key: "email",
                     header: "Email",
-                    render: (v) => String(v || "-"),
+                    render: (v: any) => String(v || "-"),
                   },
                   {
                     key: "company",
                     header: "Company",
-                    render: (v) => String(v || "-"),
+                    render: (v: any) => String(v || "-"),
                   },
                 ] as ListColumn[]
               }

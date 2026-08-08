@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { AlertCircle, Layers, TrendingUp } from "lucide-react";
 
@@ -179,12 +171,12 @@ export default function KitsPage() {
     {
       key: "components",
       header: "Components",
-      render: (row) => String((row as unknown as Kit).components?.length ?? 0),
+      render: (row: any) => String((row as unknown as Kit).components?.length ?? 0),
     },
     {
       key: "isActive",
       header: "Status",
-      render: (row) => {
+      render: (row: any) => {
         const k = row as unknown as Kit;
         return (
           <Badge variant={k.isActive ? "success" : "default"}>

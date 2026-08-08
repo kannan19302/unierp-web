@@ -1,11 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ProtectedComponent, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, Table, DataTable } from "@unerp/ui";
 import {
   Plus,
   TrendingUp,
@@ -307,35 +302,20 @@ export default function WinLossPage() {
 
       {analytics && analytics.reasonsBreakdown?.length > 0 && (
         <Card title="Reasons Breakdown">
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-2">Reason</th>
-                <th className="text-left py-2">Type</th>
-                <th className="text-right py-2">Count</th>
-                <th className="text-right py-2">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {analytics.reasonsBreakdown.map((r) => (
-                <tr key={r.id} className="border-b hover:bg-gray-50">
-                  <td className="py-2">{r.name}</td>
-                  <td className="py-2">
-                    <Badge
-                      variant={r.category === "WIN" ? "success" : "danger"}
-                      size="sm"
-                    >
-                      {r.category}
-                    </Badge>
-                  </td>
-                  <td className="py-2 text-right">{r.count}</td>
-                  <td className="py-2 text-right">
-                    ${(r.totalValue || 0).toLocaleString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                          const columns = [
+                    { key: "col_0", header: "Reason" , render: (r: any) => (<>{r.name}</>) },
+                    { key: "col_1", header: "Type" , render: (r: any) => (<><Badge
+                                        variant={r.category === "WIN" ? "success" : "danger"}
+                                        size="sm"
+                                      >
+                                        {r.category}
+                                      </Badge></>) },
+                    { key: "col_2", header: "Count" , render: (r: any) => (<>{r.count}</>) },
+                    { key: "col_3", header: "Value" , render: (r: any) => (<>${(r.totalValue || 0).toLocaleString()}</>) },
+                  ];
+                          return <DataTable columns={columns} data={analytics.reasonsBreakdown} rowKey={(r: any) => r.id} />;
+                      })()}</>
         </Card>
       )}
     </div>

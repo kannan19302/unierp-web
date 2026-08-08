@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Activity, Users, Zap, Globe } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -131,48 +131,15 @@ export default function AnalyticsRealtimePage() {
             No active user sessions.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Session ID</th>
-                <th style={{ padding: "12px" }}>Geographic Location</th>
-                <th style={{ padding: "12px" }}>Active Page</th>
-                <th style={{ padding: "12px" }}>Duration</th>
-              </tr>
-            </thead>
-            <tbody>
-              {liveMetrics.activeSessions.map((s: any) => (
-                <tr key={s.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>{s.id}</td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
-                    <Globe size={16} color="var(--color-primary)" />{" "}
-                    {s.location}
-                  </td>
-                  <td style={{ padding: "12px" }}>
-                    <code>{s.activePage}</code>
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--color-text-secondary)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    {s.duration}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Session ID" , render: (s: any) => (<>{s.id}</>) },
+                        { key: "col_1", header: "Geographic Location" , render: (s: any) => (<><Globe size={16} color="var(--color-primary)" />{" "}{s.location}</>) },
+                        { key: "col_2", header: "Active Page" , render: (s: any) => (<><code>{s.activePage}</code></>) },
+                        { key: "col_3", header: "Duration" , render: (s: any) => (<>{s.duration}</>) },
+                      ];
+                              return <DataTable columns={columns} data={liveMetrics.activeSessions} rowKey={(s: any) => s.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

@@ -1,20 +1,7 @@
 "use client";
 import styles from "./CampaignsTab.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  Modal,
-  Drawer,
-  DataTable,
-  type Column,
-  FormField,
-  Input,
-  Select,
-  Textarea,
-  useToast,
-} from "@unerp/ui";
+import { Card, Button, Badge, Modal, Drawer, DataTable, type Column, FormField, Input, Select, Textarea, useToast } from "@unerp/ui";
 import {
   Plus,
   Search,
@@ -157,17 +144,17 @@ export default function CampaignsTab() {
     {
       key: "name",
       header: "Campaign",
-      render: (c) => <span className="font-semibold">{c.name}</span>,
+      render: (c: any) => <span className="font-semibold">{c.name}</span>,
     },
     {
       key: "type",
       header: "Type",
-      render: (c) => <Badge variant="default">{c.type}</Badge>,
+      render: (c: any) => <Badge variant="default">{c.type}</Badge>,
     },
     {
       key: "status",
       header: "Status",
-      render: (c) => (
+      render: (c: any) => (
         <Badge variant={statusVariant(c.status)}>{c.status}</Badge>
       ),
     },
@@ -175,19 +162,19 @@ export default function CampaignsTab() {
       key: "budget",
       header: "Budget",
       align: "right",
-      render: (c) => `$${c.budget.toLocaleString()}`,
+      render: (c: any) => `$${c.budget.toLocaleString()}`,
     },
     {
       key: "actualCost",
       header: "Spend",
       align: "right",
-      render: (c) => `$${c.actualCost.toLocaleString()}`,
+      render: (c: any) => `$${c.actualCost.toLocaleString()}`,
     },
     {
       key: "leadCount",
       header: "Leads / Won",
       align: "center",
-      render: (c) => (
+      render: (c: any) => (
         <>
           <b>{c.leadCount}</b>{" "}
           <span className="ui-text-muted">/ {c.wonCount}</span>
@@ -198,7 +185,7 @@ export default function CampaignsTab() {
       key: "conversionRate",
       header: "Conv.",
       align: "right",
-      render: (c) => <span className={styles.style0}>{c.conversionRate}%</span>,
+      render: (c: any) => <span className={styles.style0}>{c.conversionRate}%</span>,
     },
   ];
 
@@ -283,7 +270,7 @@ export default function CampaignsTab() {
           columns={columns}
           data={filtered}
           loading={loading}
-          rowKey={(c) => c.id}
+          rowKey={(c: any) => c.id}
           onRowClick={setSelected}
           emptyIcon={<Target size={40} />}
           emptyTitle="No campaigns found"

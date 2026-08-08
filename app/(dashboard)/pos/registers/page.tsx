@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Monitor, Plus, Eye } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function POSRegistersPage() {
   const client = useApiClient();
@@ -107,60 +107,32 @@ export default function POSRegistersPage() {
           </div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Terminal</th>
-                <th>Status</th>
-                <th>Opened</th>
-                <th>Closed</th>
-                <th>Starting</th>
-                <th>Sales</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={7} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                registers.map((r) => (
-                  <tr key={r.id}>
-                    <td>{r.terminal?.name || r.terminalId}</td>
-                    <td>
-                      <span
-                        className={
-                          r.status === "OPEN" ? "ui-badge-success" : "ui-badge"
-                        }
-                      >
-                        {r.status}
-                      </span>
-                    </td>
-                    <td>{new Date(r.openedAt).toLocaleString()}</td>
-                    <td>
-                      {r.closedAt ? new Date(r.closedAt).toLocaleString() : "-"}
-                    </td>
-                    <td>${Number(r.startingCash).toFixed(2)}</td>
-                    <td>${Number(r.totalSales).toFixed(2)}</td>
-                    <td>
-                      {r.status === "OPEN" && (
-                        <button
-                          className="ui-btn-icon"
-                          onClick={() => closeRegister(r.id)}
-                          title="Close"
-                        >
-                          Close
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Terminal", render: (r: any) => (<>{r.terminal?.name || r.terminalId}</>) },
+                    { key: "col_1", header: "Status", render: (r: any) => (<><span
+                                          className={
+                                            r.status === "OPEN" ? "ui-badge-success" : "ui-badge"
+                                          }
+                                        >
+                                          {r.status}
+                                        </span></>) },
+                    { key: "col_2", header: "Opened", render: (r: any) => (<>{new Date(r.openedAt).toLocaleString()}</>) },
+                    { key: "col_3", header: "Closed", render: (r: any) => (<>{r.closedAt ? new Date(r.closedAt).toLocaleString() : "-"}</>) },
+                    { key: "col_4", header: "Starting", render: (r: any) => (<>${Number(r.startingCash).toFixed(2)}</>) },
+                    { key: "col_5", header: "Sales", render: (r: any) => (<>${Number(r.totalSales).toFixed(2)}</>) },
+                    { key: "col_6", header: "Actions", render: (r: any) => (<>{r.status === "OPEN" && (
+                                          <button
+                                            className="ui-btn-icon"
+                                            onClick={() => closeRegister(r.id)}
+                                            title="Close"
+                                          >
+                                            Close
+                                          </button>
+                                        )}</>) },
+                  ];
+                            return <DataTable columns={columns} data={registers} rowKey={(r: any) => r.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

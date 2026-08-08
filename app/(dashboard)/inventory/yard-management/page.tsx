@@ -631,14 +631,14 @@ export default function YardManagementPage() {
                   {
                     key: "appointmentNumber",
                     header: "Appt #",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono">{String(v)}</span>
                     ),
                   },
                   {
                     key: "appointmentType",
                     header: "Type",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`px-2 py-0.5 rounded text-xs ${v === "INBOUND" ? "bg-blue-50 text-blue-700" : "bg-purple-50 text-purple-700"}`}
                       >
@@ -649,12 +649,12 @@ export default function YardManagementPage() {
                   {
                     key: "carrierName",
                     header: "Carrier",
-                    render: (v) => String(v ?? "-"),
+                    render: (v: any) => String(v ?? "-"),
                   },
                   {
                     key: "trailerNumber",
                     header: "Trailer",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">
                         {String(v ?? "-")}
                       </span>
@@ -663,17 +663,17 @@ export default function YardManagementPage() {
                   {
                     key: "scheduledAt",
                     header: "Scheduled",
-                    render: (v) => new Date(String(v)).toLocaleString(),
+                    render: (v: any) => new Date(String(v)).toLocaleString(),
                   },
                   {
                     key: "dockDoor",
                     header: "Door",
-                    render: (v) => String((v as any)?.doorNumber ?? "-"),
+                    render: (v: any) => String((v as any)?.doorNumber ?? "-"),
                   },
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`px-2 py-0.5 rounded text-xs ${STATUS_COLORS[String(v)] ?? ""}`}
                       >
@@ -684,7 +684,7 @@ export default function YardManagementPage() {
                   {
                     key: "gatePass",
                     header: "Gate Pass",
-                    render: (v) => (v ? `✓ ${(v as any).passNumber}` : "-"),
+                    render: (v: any) => (v ? `✓ ${(v as any).passNumber}` : "-"),
                   },
                   {
                     key: "id",
@@ -925,7 +925,7 @@ export default function YardManagementPage() {
                   {
                     key: "trailerNumber",
                     header: "Trailer #",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono">{String(v)}</span>
                     ),
                   },
@@ -933,7 +933,7 @@ export default function YardManagementPage() {
                   {
                     key: "description",
                     header: "Description",
-                    render: (v) => String(v ?? "-"),
+                    render: (v: any) => String(v ?? "-"),
                   },
                   {
                     key: "qty",
@@ -943,12 +943,12 @@ export default function YardManagementPage() {
                   {
                     key: "arrivedAt",
                     header: "Arrived",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v) => (
+                    render: (v: any) => (
                       <button
                         onClick={async () => {
                           try {

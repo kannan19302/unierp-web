@@ -2,16 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  StatCardRow,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, DataTable, StatCardRow, type Column } from "@unerp/ui";
 import {
   Plus,
   Eye,
@@ -95,7 +86,7 @@ export default function SalesContractsPage() {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (row) =>
+      render: (row: any) =>
         row.status === "ACTIVE" ? (
           <Badge variant="success">Active</Badge>
         ) : row.status === "EXPIRED" ? (
@@ -110,22 +101,22 @@ export default function SalesContractsPage() {
       key: "value",
       header: "Value",
       sortable: true,
-      render: (row) => <strong>{fmtCurrency(row.value)}</strong>,
+      render: (row: any) => <strong>{fmtCurrency(row.value)}</strong>,
     },
     {
       key: "startDate",
       header: "Start",
-      render: (row) => new Date(row.startDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.startDate).toLocaleDateString(),
     },
     {
       key: "endDate",
       header: "End",
-      render: (row) => new Date(row.endDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.endDate).toLocaleDateString(),
     },
     {
       key: "id",
       header: "Actions",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-2">
           <Button
             variant="ghost"

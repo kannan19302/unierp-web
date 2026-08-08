@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Spinner,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Spinner } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { DollarSign, BarChart3 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
@@ -51,12 +43,12 @@ export default function SupplyChainFinancePage() {
     {
       key: "programName",
       header: "Program Name",
-      render: (r) => <span className="ui-link">{r.programName}</span>,
+      render: (r: any) => <span className="ui-link">{r.programName}</span>,
     },
     {
       key: "programType",
       header: "Type",
-      render: (r) => <Badge variant="info">{r.programType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.programType}</Badge>,
     },
   ];
 
@@ -87,7 +79,7 @@ export default function SupplyChainFinancePage() {
               columns={columns}
               data={programs}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No programs"
               emptyMessage="Create your first SCF program."
               emptyIcon={<DollarSign size={48} />}

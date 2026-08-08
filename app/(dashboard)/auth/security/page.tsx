@@ -86,17 +86,17 @@ export default function SecurityPage() {
     {
       key: "ipRange",
       header: "IP Range",
-      render: (r) => <code>{r.ipRange}</code>,
+      render: (r: any) => <code>{r.ipRange}</code>,
     },
     {
       key: "description",
       header: "Description",
-      render: (r) => r.description ?? "-",
+      render: (r: any) => r.description ?? "-",
     },
     {
       key: "isActive",
       header: "Active",
-      render: (r) =>
+      render: (r: any) =>
         r.isActive ? (
           <span className="ui-badge ui-badge-success">Yes</span>
         ) : (
@@ -106,7 +106,7 @@ export default function SecurityPage() {
     {
       key: "actions",
       header: "",
-      render: (r) => (
+      render: (r: any) => (
         <Button
           size="sm"
           variant="ghost"

@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  ListPageTemplate,
-  useToast,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, ListPageTemplate, useToast, type ListColumn } from "@unerp/ui";
 import {
   FileText,
   Plus,
@@ -299,7 +291,7 @@ export default function DocumentsPage() {
             {
               key: "expiryDate",
               header: "Expires",
-              render: (v) =>
+              render: (v: any) =>
                 v ? (
                   <div className={styles.expiryDate}>
                     <Calendar size={12} className="text-muted-foreground" />

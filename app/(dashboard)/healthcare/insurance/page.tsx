@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent, Table } from "@unerp/ui";
+import { ProtectedComponent, Table, DataTable } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -338,92 +338,56 @@ export default function HealthcareInsurancePage() {
       ) : (
         <div className="ui-card">
           {activeTab === "policies" ? (
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Patient</th>
-                  <th>Provider</th>
-                  <th>Policy #</th>
-                  <th>Coverage</th>
-                  <th>Status</th>
-                  <th>Deductible</th>
-                  <th>Claims</th>
-                </tr>
-              </thead>
-              <tbody>
-                {policies.map((p: any) => (
-                  <tr key={p.id}>
-                    <td className="font-medium">
-                      {p.patient?.firstName} {p.patient?.lastName}
-                    </td>
-                    <td>{p.providerName}</td>
-                    <td>{p.policyNumber}</td>
-                    <td>{p.coverageType}</td>
-                    <td>
-                      <span
-                        className={`ui-badge ${p.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-danger"}`}
-                      >
-                        {p.status}
-                      </span>
-                    </td>
-                    <td>${p.deductible}</td>
-                    <td>{p.claims?.length || 0}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                  const columns = [
+                            { key: "col_0", header: "Patient" , render: (p: any) => (<>{p.patient?.firstName}{p.patient?.lastName}</>) },
+                            { key: "col_1", header: "Provider" , render: (p: any) => (<>{p.providerName}</>) },
+                            { key: "col_2", header: "Policy #" , render: (p: any) => (<>{p.policyNumber}</>) },
+                            { key: "col_3", header: "Coverage" , render: (p: any) => (<>{p.coverageType}</>) },
+                            { key: "col_4", header: "Status" , render: (p: any) => (<><span
+                                                  className={`ui-badge ${p.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-danger"}`}
+                                                >
+                                                  {p.status}
+                                                </span></>) },
+                            { key: "col_5", header: "Deductible" , render: (p: any) => (<>${p.deductible}</>) },
+                            { key: "col_6", header: "Claims" , render: (p: any) => (<>{p.claims?.length || 0}</>) },
+                          ];
+                                  return <DataTable columns={columns} data={policies} rowKey={(p: any) => p.id} />;
+                              })()}</>
           ) : (
-            <Table className="ui-table">
-              <thead>
-                <tr>
-                  <th>Claim #</th>
-                  <th>Policy</th>
-                  <th>Service Date</th>
-                  <th>Billed</th>
-                  <th>Paid</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {claims.map((c: any) => (
-                  <tr key={c.id}>
-                    <td className="font-medium">{c.claimNumber}</td>
-                    <td>{c.policy?.providerName}</td>
-                    <td>{new Date(c.serviceDate).toLocaleDateString()}</td>
-                    <td>${c.billedAmount}</td>
-                    <td>{c.paidAmount ? `$${c.paidAmount}` : "-"}</td>
-                    <td>
-                      <span
-                        className={`ui-badge ${c.status === "PAID" ? "ui-badge-success" : c.status === "DENIED" ? "ui-badge-danger" : "ui-badge-info"}`}
-                      >
-                        {c.status}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="flex gap-1">
-                        {c.status === "SUBMITTED" && (
-                          <button
-                            className="ui-btn ui-btn-sm ui-btn-outline"
-                            onClick={() => updateClaimStatus(c.id, "IN_REVIEW")}
-                          >
-                            Review
-                          </button>
-                        )}
-                        {c.status === "IN_REVIEW" && (
-                          <button
-                            className="ui-btn ui-btn-sm ui-btn-success"
-                            onClick={() => updateClaimStatus(c.id, "APPROVED")}
-                          >
-                            Approve
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                      const columns = [
+                                { key: "col_0", header: "Claim #" , render: (c: any) => (<>{c.claimNumber}</>) },
+                                { key: "col_1", header: "Policy" , render: (c: any) => (<>{c.policy?.providerName}</>) },
+                                { key: "col_2", header: "Service Date" , render: (c: any) => (<>{new Date(c.serviceDate).toLocaleDateString()}</>) },
+                                { key: "col_3", header: "Billed" , render: (c: any) => (<>${c.billedAmount}</>) },
+                                { key: "col_4", header: "Paid" , render: (c: any) => (<>{c.paidAmount ? `$${c.paidAmount}` : "-"}</>) },
+                                { key: "col_5", header: "Status" , render: (c: any) => (<><span
+                                                      className={`ui-badge ${c.status === "PAID" ? "ui-badge-success" : c.status === "DENIED" ? "ui-badge-danger" : "ui-badge-info"}`}
+                                                    >
+                                                      {c.status}
+                                                    </span></>) },
+                                { key: "col_6", header: "Actions" , render: (c: any) => (<><div className="flex gap-1">
+                                                      {c.status === "SUBMITTED" && (
+                                                        <button
+                                                          className="ui-btn ui-btn-sm ui-btn-outline"
+                                                          onClick={() => updateClaimStatus(c.id, "IN_REVIEW")}
+                                                        >
+                                                          Review
+                                                        </button>
+                                                      )}
+                                                      {c.status === "IN_REVIEW" && (
+                                                        <button
+                                                          className="ui-btn ui-btn-sm ui-btn-success"
+                                                          onClick={() => updateClaimStatus(c.id, "APPROVED")}
+                                                        >
+                                                          Approve
+                                                        </button>
+                                                      )}
+                                                    </div></>) },
+                              ];
+                                      return <DataTable columns={columns} data={claims} rowKey={(c: any) => c.id} />;
+                                  })()}</>
           )}
         </div>
       )}

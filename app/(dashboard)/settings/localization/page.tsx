@@ -1,15 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Badge,
-  Spinner,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Badge, Spinner, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 import { Globe, Trash2, X, Search, Download, Upload } from "lucide-react";
 
@@ -377,20 +369,20 @@ export default function LocalizationPage() {
             {
               key: "locale",
               header: "Locale",
-              render: (v) => (
+              render: (v: any) => (
                 <Badge variant="info">{String(v).toUpperCase()}</Badge>
               ),
             },
             {
               key: "key",
               header: "Translation Key",
-              render: (v) => <code className={styles.p10}>{String(v)}</code>,
+              render: (v: any) => <code className={styles.p10}>{String(v)}</code>,
             },
             { key: "translation", header: "Value" },
             {
               key: "id",
               header: "Actions",
-              render: (v) => (
+              render: (v: any) => (
                 <div className="text-right">
                   <button
                     onClick={() => handleDelete(String(v))}

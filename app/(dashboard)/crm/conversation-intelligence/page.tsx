@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  Input,
-  Textarea,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, Input, Textarea, type Column } from "@unerp/ui";
 import { Phone, PlusCircle, Smile, Meh, Frown, X } from "lucide-react";
 import { apiGet, apiPost, ApiRequestError } from "../../../../src/lib/api";
 import styles from "./page.module.css";
@@ -129,7 +117,7 @@ export default function ConversationIntelligencePage() {
     {
       key: "subject",
       header: "Call",
-      render: (c) => (
+      render: (c: any) => (
         <div>
           <div className="font-semibold">{c.subject}</div>
           <div className="ui-text-xs-muted">
@@ -141,7 +129,7 @@ export default function ConversationIntelligencePage() {
     {
       key: "aiSentiment",
       header: "Sentiment",
-      render: (c) => (
+      render: (c: any) => (
         <div className="ui-flex ui-items-center ui-gap-1">
           {sentimentIcon(c.aiSentiment)}
           <Badge variant={sentimentVariant(c.aiSentiment)}>
@@ -153,17 +141,17 @@ export default function ConversationIntelligencePage() {
     {
       key: "aiTalkTrackScore",
       header: "Engagement Score",
-      render: (c) => c.aiTalkTrackScore ?? "—",
+      render: (c: any) => c.aiTalkTrackScore ?? "—",
     },
     {
       key: "aiSummary",
       header: "AI Summary",
-      render: (c) => <span className="text-sm">{c.aiSummary ?? "—"}</span>,
+      render: (c: any) => <span className="text-sm">{c.aiSummary ?? "—"}</span>,
     },
     {
       key: "aiActionItems",
       header: "Action Items",
-      render: (c) =>
+      render: (c: any) =>
         Array.isArray(c.aiActionItems) && c.aiActionItems.length > 0 ? (
           <span className="text-sm">{c.aiActionItems.join("; ")}</span>
         ) : (
@@ -283,7 +271,7 @@ export default function ConversationIntelligencePage() {
           <DataTable<CallActivity>
             columns={columns}
             data={calls}
-            rowKey={(c) => c.id}
+            rowKey={(c: any) => c.id}
           />
         )}
       </Card>

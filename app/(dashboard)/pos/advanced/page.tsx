@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 
 import styles from "./page.module.css";
@@ -365,52 +365,27 @@ export default function POSAdvancedPage() {
             </button>
           </div>
           <div className={styles.p5}>
-            <Table className={styles.p6}>
-              <thead>
-                <tr className={styles.p7}>
-                  {[
-                    "Order #",
-                    "Product",
-                    "Qty",
-                    "Refund",
-                    "Reason",
-                    "Status",
-                    "Actions",
-                  ].map((h) => (
-                    <th key={h} className={styles.p8}>
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {returns.map((r) => (
-                  <tr key={r.id} className="border-b">
-                    <td className={styles.p9}>{r.originalOrderNo}</td>
-                    <td className="py-3 px-4">{r.productName}</td>
-                    <td className="py-3 px-4">{r.qty}</td>
-                    <td className={styles.p10}>${r.refundAmount.toFixed(2)}</td>
-                    <td className={styles.p11}>{r.reason}</td>
-                    <td className="py-3 px-4">
-                      <span style={{ ...statusStyles(r.status) }}>
-                        {r.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4">
-                      {r.status === "PENDING" && (
-                        <div className="ui-flex ui-gap-1">
-                          <button className={styles.p13}>Approve</button>
-                          <button className={styles.p14}>Reject</button>
-                        </div>
-                      )}
-                      {r.status === "APPROVED" && (
-                        <button className={styles.p15}>Issue Refund</button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "{h}" , render: (r: any) => (<>{r.originalOrderNo}</>) },
+                        { key: "col_1", header: "Col 1" , render: (r: any) => (<>{r.productName}</>) },
+                        { key: "col_2", header: "Col 2" , render: (r: any) => (<>{r.qty}</>) },
+                        { key: "col_3", header: "Col 3" , render: (r: any) => (<>${r.refundAmount.toFixed(2)}</>) },
+                        { key: "col_4", header: "Col 4" , render: (r: any) => (<>{r.reason}</>) },
+                        { key: "col_5", header: "Col 5" , render: (r: any) => (<><span style={{ ...statusStyles(r.status) }}>
+                                              {r.status}
+                                            </span></>) },
+                        { key: "col_6", header: "Col 6" , render: (r: any) => (<>{r.status === "PENDING" && (
+                                              <div className="ui-flex ui-gap-1">
+                                                <button className={styles.p13}>Approve</button>
+                                                <button className={styles.p14}>Reject</button>
+                                              </div>
+                                            )}{r.status === "APPROVED" && (
+                                              <button className={styles.p15}>Issue Refund</button>
+                                            )}</>) },
+                      ];
+                              return <DataTable columns={columns} data={returns} rowKey={(r: any) => r.id} />;
+                          })()}</>
           </div>
         </div>
       )}
@@ -433,43 +408,17 @@ export default function POSAdvancedPage() {
             })}
           </div>
           <div className={styles.p20}>
-            <Table className={styles.p21}>
-              <thead>
-                <tr className={styles.p22}>
-                  {[
-                    "Member",
-                    "Tier",
-                    "Points",
-                    "Total Spent",
-                    "Last Visit",
-                  ].map((h) => (
-                    <th key={h} className={styles.p23}>
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {loyaltyMembers.map((m) => (
-                  <tr key={m.id} className="border-b">
-                    <td className="py-3 px-4">
-                      <div className="font-semibold">{m.name}</div>
-                      <div className="ui-text-micro">{m.email}</div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <span style={{ color: tierColor(m.tier) }}>{m.tier}</span>
-                    </td>
-                    <td className={styles.p25}>
-                      {m.points.toLocaleString()} pts
-                    </td>
-                    <td className="py-3 px-4">
-                      ${m.totalSpent.toLocaleString()}
-                    </td>
-                    <td className={styles.p26}>{m.lastVisit}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "{h}" , render: (m: any) => (<><div className="font-semibold">{m.name}</div><div className="ui-text-micro">{m.email}</div></>) },
+                        { key: "col_1", header: "Col 1" , render: (m: any) => (<><span style={{ color: tierColor(m.tier) }}>{m.tier}</span></>) },
+                        { key: "col_2", header: "Col 2" , render: (m: any) => (<>{m.points.toLocaleString()}pts
+                                          </>) },
+                        { key: "col_3", header: "Col 3" , render: (m: any) => (<>${m.totalSpent.toLocaleString()}</>) },
+                        { key: "col_4", header: "Col 4" , render: (m: any) => (<>{m.lastVisit}</>) },
+                      ];
+                              return <DataTable columns={columns} data={loyaltyMembers} rowKey={(m: any) => m.id} />;
+                          })()}</>
           </div>
         </div>
       )}

@@ -1,17 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column } from "@unerp/ui";
 import {
   Phone,
   PhoneIncoming,
@@ -78,7 +68,7 @@ export default function VoipPage() {
     {
       key: "callerName",
       header: "Caller",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="font-medium">{r.callerName}</span>
           <div className="text-xs text-muted">{r.callerNumber}</div>
@@ -88,7 +78,7 @@ export default function VoipPage() {
     {
       key: "direction",
       header: "Direction",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.direction === "INBOUND" ? "info" : "default"}>
           {r.direction === "INBOUND" ? (
             <PhoneIncoming size={14} />
@@ -99,11 +89,11 @@ export default function VoipPage() {
         </Badge>
       ),
     },
-    { key: "status", header: "Status", render: (r) => statusBadge(r.status) },
+    { key: "status", header: "Status", render: (r: any) => statusBadge(r.status) },
     {
       key: "durationSecs",
       header: "Duration",
-      render: (r) => {
+      render: (r: any) => {
         const m = Math.floor(r.durationSecs / 60);
         const s = r.durationSecs % 60;
         return `${m}m ${s}s`;
@@ -112,7 +102,7 @@ export default function VoipPage() {
     {
       key: "startedAt",
       header: "Time",
-      render: (r) => new Date(r.startedAt).toLocaleString(),
+      render: (r: any) => new Date(r.startedAt).toLocaleString(),
     },
     {
       key: "actions",
@@ -191,7 +181,7 @@ export default function VoipPage() {
             <DataTable
               columns={columns}
               data={calls}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No calls"
               emptyIcon={<Phone size={48} />}
             />

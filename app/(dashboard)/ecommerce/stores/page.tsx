@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Store, Plus, Edit2, Eye, Globe } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast, Table } from "@unerp/ui";
+import { useToast, DataTable } from "@unerp/ui";
 
 export default function EcommerceStoresPage() {
   const client = useApiClient();
@@ -88,74 +88,45 @@ export default function EcommerceStoresPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <Table className="ui-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Currency</th>
-                <th>Published</th>
-                <th>Active</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="text-center p-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                items.map((i) => (
-                  <tr key={i.id}>
-                    <td>{i.name}</td>
-                    <td>
-                      <code>{i.slug}</code>
-                    </td>
-                    <td>{i.currency}</td>
-                    <td>
-                      {i.isPublished ? (
-                        <span className="ui-badge-success">Yes</span>
-                      ) : (
-                        <span className="ui-badge">No</span>
-                      )}
-                    </td>
-                    <td>
-                      {i.isActive ? (
-                        <span className="ui-badge-success">Active</span>
-                      ) : (
-                        <span className="ui-badge">Inactive</span>
-                      )}
-                    </td>
-                    <td className="ui-hstack-1">
-                      <button
-                        className="ui-btn-icon"
-                        onClick={async () => {
-                          const d = await client.get<any>(
-                            `/ecommerce/exp/stores/${i.id}`,
-                          );
-                          alert(JSON.stringify(d, null, 2));
-                        }}
-                      >
-                        <Eye size={14} />
-                      </button>
-                      <button
-                        className="ui-btn-icon"
-                        onClick={() => {
-                          setEditId(i.id);
-                          setForm(i);
-                          setShowModal(true);
-                        }}
-                      >
-                        <Edit2 size={14} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Name", render: (i: any) => (<>{i.name}</>) },
+                    { key: "col_1", header: "Slug", render: (i: any) => (<><code>{i.slug}</code></>) },
+                    { key: "col_2", header: "Currency", render: (i: any) => (<>{i.currency}</>) },
+                    { key: "col_3", header: "Published", render: (i: any) => (<>{i.isPublished ? (
+                                          <span className="ui-badge-success">Yes</span>
+                                        ) : (
+                                          <span className="ui-badge">No</span>
+                                        )}</>) },
+                    { key: "col_4", header: "Active", render: (i: any) => (<>{i.isActive ? (
+                                          <span className="ui-badge-success">Active</span>
+                                        ) : (
+                                          <span className="ui-badge">Inactive</span>
+                                        )}</>) },
+                    { key: "col_5", header: "Actions", render: (i: any) => (<><button
+                                          className="ui-btn-icon"
+                                          onClick={async () => {
+                                            const d = await client.get<any>(
+                                              `/ecommerce/exp/stores/${i.id}`,
+                                            );
+                                            alert(JSON.stringify(d, null, 2));
+                                          }}
+                                        >
+                                          <Eye size={14} />
+                                        </button>
+                                        <button
+                                          className="ui-btn-icon"
+                                          onClick={() => {
+                                            setEditId(i.id);
+                                            setForm(i);
+                                            setShowModal(true);
+                                          }}
+                                        >
+                                          <Edit2 size={14} />
+                                        </button></>) },
+                  ];
+                            return <DataTable columns={columns} data={items} rowKey={(i: any) => i.id} />;
+                          })()}</>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

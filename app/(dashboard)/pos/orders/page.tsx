@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import styles from "./page.module.css";
@@ -156,30 +156,15 @@ export default function POSOrdersPage() {
               </div>
             </div>
             <h3 className={styles.p6}>Items</h3>
-            <Table className={styles.p7}>
-              <thead>
-                <tr className="border-b">
-                  <th className={styles.p8}>Product</th>
-                  <th className={styles.p9}>Qty</th>
-                  <th className={styles.p10}>Price</th>
-                  <th className={styles.p11}>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(selectedOrder.items || []).map((item: any) => (
-                  <tr key={item.id} className="border-b">
-                    <td className="p-2">{item.productName}</td>
-                    <td className={styles.p12}>{Number(item.qty)}</td>
-                    <td className={styles.p13}>
-                      ${Number(item.unitPrice).toFixed(2)}
-                    </td>
-                    <td className={styles.p14}>
-                      ${Number(item.lineTotal).toFixed(2)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Product" , render: (item: any) => (<>{item.productName}</>) },
+                        { key: "col_1", header: "Qty" , render: (item: any) => (<>{Number(item.qty)}</>) },
+                        { key: "col_2", header: "Price" , render: (item: any) => (<>${Number(item.unitPrice).toFixed(2)}</>) },
+                        { key: "col_3", header: "Total" , render: (item: any) => (<>${Number(item.lineTotal).toFixed(2)}</>) },
+                      ];
+                              return <DataTable columns={columns} data={(selectedOrder.items || [])} rowKey={(item: any) => item.id} />;
+                          })()}</>
             <h3 className={styles.p15}>Payments</h3>
             {(selectedOrder.payments || []).map((p: any) => (
               <div key={p.id} className={styles.p16}>
@@ -190,69 +175,12 @@ export default function POSOrdersPage() {
           </div>
         ) : (
           <div className={styles.p17}>
-            <Table className={styles.p18}>
-              <thead>
-                <tr className={styles.p19}>
-                  {[
-                    "Order #",
-                    "Type",
-                    "Status",
-                    "Customer",
-                    "Cashier",
-                    "Total",
-                    "Date",
-                    "",
-                  ].map((h) => (
-                    <th key={h} className={styles.p20}>
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {loading ? (
-                  <tr>
-                    <td colSpan={8} className={styles.p21}>
-                      Loading...
-                    </td>
-                  </tr>
-                ) : orders.length === 0 ? (
-                  <tr>
-                    <td colSpan={8} className={styles.p22}>
-                      No orders found
-                    </td>
-                  </tr>
-                ) : (
-                  orders.map((o) => (
-                    <tr key={o.id} className="border-b">
-                      <td className={styles.p23}>{o.orderNumber}</td>
-                      <td className="py-3 px-4">{o.type}</td>
-                      <td className="py-3 px-4">
-                        <span style={{ color: statusColor(o.status) }}>
-                          {o.status}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4">{o.customerName || "—"}</td>
-                      <td className="py-3 px-4">{o.cashierName || "—"}</td>
-                      <td className={styles.p25}>
-                        ${Number(o.grandTotal).toFixed(2)}
-                      </td>
-                      <td className={styles.p26}>
-                        {new Date(o.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="py-3 px-4">
-                        <button
-                          onClick={() => loadOrderDetail(o.id)}
-                          className={styles.p27}
-                        >
-                          <Eye size={12} /> View
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: h, render: (o: any) => (<>{o.orderNumber}</>) },
+                          ];
+                                    return <DataTable columns={columns} data={orders} rowKey={(o: any) => o.id} />;
+                                  })()}</>
             <div className={styles.p28}>
               <button
                 disabled={page <= 1}

@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  Badge,
-  Spinner,
-  Button,
-  Modal,
-  TextField,
-  FormField,
-  Textarea,
-  DataTable,
-  type Column,
-  ProtectedComponent,
-} from "@unerp/ui";
+import { Card, Badge, Spinner, Button, Modal, TextField, FormField, Textarea, DataTable, type Column, ProtectedComponent } from "@unerp/ui";
 import { Package, Plus, Edit2, Trash2 } from "lucide-react";
 import { PERMISSION_REGISTRY, getPermissionsByModule } from "@unerp/shared";
 import { useApiClient } from "@unerp/framework";
@@ -64,7 +52,7 @@ export default function PackagesTab() {
       key: "name",
       header: "Package",
       width: "35%",
-      render: (row) => (
+      render: (row: any) => (
         <div className="ui-hstack-3">
           <div className={styles.s1}>
             <Package size={18} />
@@ -79,7 +67,7 @@ export default function PackagesTab() {
     {
       key: "permissions",
       header: "Contents",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s2}>
           <Badge variant="info">{row.permissions.length} perms</Badge>
           {row.fieldAccessRules.length > 0 && (
@@ -96,7 +84,7 @@ export default function PackagesTab() {
     {
       key: "assignedRoles",
       header: "Assigned To",
-      render: (row) => (
+      render: (row: any) => (
         <div className={styles.s3}>
           {row.assignedRoles.map((r) => (
             <Badge key={r} variant="success">
@@ -141,7 +129,7 @@ export default function PackagesTab() {
           columns={columns}
           data={packages}
           loading={loading}
-          rowKey={(row) => row.id}
+          rowKey={(row: any) => row.id}
           emptyTitle="No access packages yet"
           emptyMessage="Create your first access package to bundle permissions for easy role assignment."
           emptyIcon={<Package size={48} />}

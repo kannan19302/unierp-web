@@ -10,16 +10,7 @@ import {
   Eye,
   Trash2,
 } from "lucide-react";
-import {
-  PageHeader,
-  Button,
-  Card,
-  Spinner,
-  DataTable,
-  KPICard,
-  Modal,
-  FormField,
-} from "@unerp/ui";
+import { PageHeader, Button, Card, Spinner, DataTable, KPICard, Modal, FormField } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 
 interface NpsSurvey {
@@ -176,24 +167,24 @@ export default function NpsPage() {
                   {
                     key: "_count",
                     header: "Responses",
-                    render: (row) => row._count.responses,
+                    render: (row: any) => row._count.responses,
                   },
                   { key: "question", header: "Question" },
                   {
                     key: "sendAutomatically",
                     header: "Auto-send",
-                    render: (row) => (row.sendAutomatically ? "Yes" : "No"),
+                    render: (row: any) => (row.sendAutomatically ? "Yes" : "No"),
                   },
                   {
                     key: "createdAt",
                     header: "Created",
-                    render: (row) =>
+                    render: (row: any) =>
                       new Date(row.createdAt).toLocaleDateString(),
                   },
                   {
                     key: "id",
                     header: "Actions",
-                    render: (row) => (
+                    render: (row: any) => (
                       <div className="ui-flex ui-gap-2">
                         <Link href={`/crm/journey/nps/surveys/${row.id}`}>
                           <button

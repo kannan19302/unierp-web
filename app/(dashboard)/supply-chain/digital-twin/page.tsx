@@ -1,21 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  FormField,
-  TextField,
-  Select,
-  Spinner,
-  Pagination,
-  StatusBadge,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, FormField, TextField, Select, Spinner, Pagination, StatusBadge } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { Cpu, GitCompare, BarChart3, Plus } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
@@ -113,22 +99,22 @@ export default function DigitalTwinPage() {
     {
       key: "twinName",
       header: "Twin Name",
-      render: (r) => <span className="ui-link">{r.twinName}</span>,
+      render: (r: any) => <span className="ui-link">{r.twinName}</span>,
     },
     {
       key: "twinType",
       header: "Type",
-      render: (r) => <Badge variant="info">{r.twinType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.twinType}</Badge>,
     },
     {
       key: "simulations",
       header: "Simulations",
-      render: (r) => r._count?.simulations ?? 0,
+      render: (r: any) => r._count?.simulations ?? 0,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
   ];
 
@@ -177,7 +163,7 @@ export default function DigitalTwinPage() {
               columns={twinColumns}
               data={twins}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No digital twins"
               emptyMessage="Create your first supply chain digital twin."
               emptyIcon={<Cpu size={48} />}

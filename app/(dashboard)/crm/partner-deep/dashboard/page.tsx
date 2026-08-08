@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -71,32 +71,17 @@ export default function PartnerDashboardPage() {
       {dashboard.partnerPerformance?.length > 0 && (
         <div className="ui-card p-4">
           <h2 className="font-semibold mb-3">Per-Partner Performance</h2>
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="border-b text-left">
-                <th className="py-2 px-2">Partner</th>
-                <th className="py-2 px-2">Win Rate</th>
-                <th className="py-2 px-2">Deals</th>
-                <th className="py-2 px-2">Referrals</th>
-                <th className="py-2 px-2">MDF Util</th>
-                <th className="py-2 px-2">Contracts</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dashboard.partnerPerformance.map((p: any) => (
-                <tr key={p.partnerId} className="border-b hover:bg-muted/50">
-                  <td className="py-2 px-2">{p.partnerName}</td>
-                  <td className="py-2 px-2">{p.wonRate}%</td>
-                  <td className="py-2 px-2">
-                    {p.wonDeals}/{p.dealRegistrations}
-                  </td>
-                  <td className="py-2 px-2">{p.totalReferrals}</td>
-                  <td className="py-2 px-2">{p.mdfUtilization}%</td>
-                  <td className="py-2 px-2">{p.activeContracts}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                            const columns = [
+                    { key: "col_0", header: "Partner", render: (p: any) => (<>{p.partnerName}</>) },
+                    { key: "col_1", header: "Win Rate", render: (p: any) => (<>{p.wonRate}%</>) },
+                    { key: "col_2", header: "Deals", render: (p: any) => (<>{p.wonDeals}/{p.dealRegistrations}</>) },
+                    { key: "col_3", header: "Referrals", render: (p: any) => (<>{p.totalReferrals}</>) },
+                    { key: "col_4", header: "MDF Util", render: (p: any) => (<>{p.mdfUtilization}%</>) },
+                    { key: "col_5", header: "Contracts", render: (p: any) => (<>{p.activeContracts}</>) },
+                  ];
+                            return <DataTable columns={columns} data={dashboard.partnerPerformance} rowKey={(p: any) => p.partnerId} />;
+                          })()}</>
         </div>
       )}
     </div>

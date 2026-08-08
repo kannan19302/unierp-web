@@ -13,17 +13,7 @@ import {
   Plus,
   FileText,
 } from "lucide-react";
-import { Card,
-  PageHeader,
-  Button,
-  Spinner,
-  DashboardChart,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  StatCardRow,
-  useToast, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, DashboardChart, Modal, TextField, FormField, Select, StatCardRow, useToast, Table, DataTable } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { useApiClient } from "@unerp/framework";
 
@@ -1424,64 +1414,42 @@ export default function ProjectsPage() {
                   <h4 className={styles.p84}>Project Cost Ledger</h4>
                   {costEntries.length > 0 ? (
                     <div className="builder-table-wrapper">
-                      <Table className={styles.p85}>
-                        <thead>
-                          <tr className={styles.p86}>
-                            <th className={styles.p87}>Date</th>
-                            <th className={styles.p88}>Cost Type</th>
-                            <th className={styles.p89}>Description</th>
-                            <th className={styles.p90}>Amount</th>
-                            <th className={styles.p91}>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {costEntries.map((ce) => (
-                            <tr key={ce.id} className="border-b">
-                              <td className={styles.p92}>
-                                {new Date(ce.date).toLocaleDateString()}
-                              </td>
-                              <td className={styles.p93}>
-                                <span
-                                  style={{
-                                    background:
-                                      ce.type === "LABOR"
-                                        ? "var(--color-info-light)"
-                                        : ce.type === "MATERIAL"
-                                          ? "var(--color-warning-light)"
-                                          : "var(--color-primary-light)",
-                                    color:
-                                      ce.type === "LABOR"
-                                        ? "var(--color-info)"
-                                        : ce.type === "MATERIAL"
-                                          ? "var(--color-warning)"
-                                          : "var(--color-primary)",
-                                  }}
-                                  className={styles.s10}
-                                >
-                                  {ce.type}
-                                </span>
-                              </td>
-                              <td className={styles.p94}>
-                                {ce.description || "—"}
-                              </td>
-                              <td className={styles.p95}>
-                                $
-                                {Number(ce.amount).toLocaleString(undefined, {
-                                  minimumFractionDigits: 2,
-                                })}
-                              </td>
-                              <td className={styles.p96}>
-                                <button
-                                  onClick={() => handleDeleteCostEntry(ce.id)}
-                                  className={styles.p97}
-                                >
-                                  Delete
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
+                      {(() => {
+                                                  const columns = [
+                                            { key: "col_0", header: "Date" , render: (ce: any) => (<>{new Date(ce.date).toLocaleDateString()}</>) },
+                                            { key: "col_1", header: "Cost Type" , render: (ce: any) => (<><span
+                                                                            style={{
+                                                                              background:
+                                                                                ce.type === "LABOR"
+                                                                                  ? "var(--color-info-light)"
+                                                                                  : ce.type === "MATERIAL"
+                                                                                    ? "var(--color-warning-light)"
+                                                                                    : "var(--color-primary-light)",
+                                                                              color:
+                                                                                ce.type === "LABOR"
+                                                                                  ? "var(--color-info)"
+                                                                                  : ce.type === "MATERIAL"
+                                                                                    ? "var(--color-warning)"
+                                                                                    : "var(--color-primary)",
+                                                                            }}
+                                                                            className={styles.s10}
+                                                                          >
+                                                                            {ce.type}
+                                                                          </span></>) },
+                                            { key: "col_2", header: "Description" , render: (ce: any) => (<>{ce.description || "—"}</>) },
+                                            { key: "col_3", header: "Amount" , render: (ce: any) => (<>$
+                                                                          {Number(ce.amount).toLocaleString(undefined, {
+                                                                            minimumFractionDigits: 2,
+                                                                          })}</>) },
+                                            { key: "col_4", header: "Actions" , render: (ce: any) => (<><button
+                                                                            onClick={() => handleDeleteCostEntry(ce.id)}
+                                                                            className={styles.p97}
+                                                                          >
+                                                                            Delete
+                                                                          </button></>) },
+                                          ];
+                                                  return <DataTable columns={columns} data={costEntries} rowKey={(ce: any) => ce.id} />;
+                                              })()}
                     </div>
                   ) : (
                     <p className={styles.p98}>

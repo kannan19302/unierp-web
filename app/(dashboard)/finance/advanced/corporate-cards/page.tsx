@@ -42,22 +42,22 @@ export default function CorporateCardsPage() {
     {
       key: "lastFourDigits",
       header: "Card Digits",
-      render: (val) => `•••• ${String(val)}`,
+      render: (val: any) => `•••• ${String(val)}`,
     },
     {
       key: "monthlyLimit",
       header: "Monthly Limit",
-      render: (val) => `$${Number(val).toLocaleString()}`,
+      render: (val: any) => `$${Number(val).toLocaleString()}`,
     },
     {
       key: "currentSpend",
       header: "Current Month Spend",
-      render: (val) => `$${Number(val).toLocaleString()}`,
+      render: (val: any) => `$${Number(val).toLocaleString()}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (val) => (
+      render: (val: any) => (
         <span
           className={`ui-badge ui-badge-${val === "ACTIVE" ? "success" : "warning"}`}
         >

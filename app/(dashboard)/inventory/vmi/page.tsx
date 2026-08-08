@@ -204,7 +204,7 @@ function AgreementsTab() {
               {
                 key: "agreementNumber",
                 header: "Agreement #",
-                render: (v) => <span className="font-mono">{String(v)}</span>,
+                render: (v: any) => <span className="font-mono">{String(v)}</span>,
               },
               { key: "vendorId", header: "Vendor" },
               { key: "productId", header: "Product" },
@@ -216,7 +216,7 @@ function AgreementsTab() {
               {
                 key: "status",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs">
                     {String(v)}
                   </span>
@@ -366,7 +366,7 @@ function SnapshotsTab() {
             {
               key: "snapshotDate",
               header: "Date",
-              render: (v) => new Date(String(v)).toLocaleDateString(),
+              render: (v: any) => new Date(String(v)).toLocaleDateString(),
             },
             { key: "onHandQty", header: "On-Hand Qty" },
             { key: "onOrderQty", header: "On-Order Qty" },
@@ -427,7 +427,7 @@ function OrdersTab() {
               {
                 key: "orderNumber",
                 header: "Order #",
-                render: (v) => <span className="font-mono">{String(v)}</span>,
+                render: (v: any) => <span className="font-mono">{String(v)}</span>,
               },
               { key: "vendorId", header: "Vendor" },
               { key: "orderedQty", header: "Qty" },
@@ -435,7 +435,7 @@ function OrdersTab() {
               {
                 key: "status",
                 header: "Status",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="px-2 py-0.5 bg-green-50 text-green-700 rounded text-xs">
                     {String(v)}
                   </span>
@@ -444,7 +444,7 @@ function OrdersTab() {
               {
                 key: "id",
                 header: "Update Status",
-                render: (v) => (
+                render: (v: any) => (
                   <div className={styles.s1}>
                     <select
                       className="border rounded px-1 py-0.5 text-xs"

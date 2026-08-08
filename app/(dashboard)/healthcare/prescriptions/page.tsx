@@ -1,17 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard } from "@unerp/ui";
 import { Pill, Plus, Search, FileText } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -71,7 +60,7 @@ export default function PrescriptionsPage() {
     {
       key: "patient",
       header: "Patient",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-heading-sm">
           {row.patient
             ? `${row.patient.firstName} ${row.patient.lastName}`
@@ -82,7 +71,7 @@ export default function PrescriptionsPage() {
     {
       key: "details",
       header: "Prescription",
-      render: (row) => (
+      render: (row: any) => (
         <span className="text-sm">
           {row.details.length > 60
             ? row.details.slice(0, 60) + "..."
@@ -93,7 +82,7 @@ export default function PrescriptionsPage() {
     {
       key: "prescriber",
       header: "Prescriber",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-sm-muted">
           {row.practitioner?.specialty || row.practitionerId.slice(0, 8)}
         </span>
@@ -102,7 +91,7 @@ export default function PrescriptionsPage() {
     {
       key: "date",
       header: "Date",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-tertiary">
           {row.createdAt ? new Date(row.createdAt).toLocaleDateString() : "—"}
         </span>
@@ -163,7 +152,7 @@ export default function PrescriptionsPage() {
         <DataTable
           columns={columns}
           data={prescriptions}
-          rowKey={(r) => r.id}
+          rowKey={(r: any) => r.id}
           emptyTitle="No prescriptions"
           emptyMessage="Create prescriptions for patients."
           emptyIcon={<Pill size={48} />}

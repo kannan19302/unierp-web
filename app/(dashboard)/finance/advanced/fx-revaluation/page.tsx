@@ -240,7 +240,7 @@ export default function FxRevaluationPage() {
                 {
                   key: "runDate",
                   header: "Revaluation Date",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-semibold">
                       {new Date(String(v)).toLocaleDateString()}
                     </span>
@@ -250,7 +250,7 @@ export default function FxRevaluationPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       style={{
                         background:
@@ -269,7 +269,7 @@ export default function FxRevaluationPage() {
                 {
                   key: "journalId",
                   header: "Linked Journal",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? (
                       <span className={styles.s7}>
                         <FileText size={14} /> GL ID:{" "}
@@ -282,14 +282,14 @@ export default function FxRevaluationPage() {
                 {
                   key: "notes",
                   header: "Notes",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="ui-text-muted">{String(v || "—")}</span>
                   ),
                 },
                 {
                   key: "id",
                   header: "Action",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Button
                       variant="outline"
                       size="sm"
@@ -434,23 +434,23 @@ export default function FxRevaluationPage() {
                       {
                         key: "balanceInForeign",
                         header: "Foreign Balance",
-                        render: (v) =>
+                        render: (v: any) =>
                           `${String(v)} ${draftRun!.targetCurrency}`,
                       },
                       {
                         key: "originalAmountBase",
                         header: "Original value (Base)",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "revaluedAmountBase",
                         header: "Revalued value (Base)",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "unrealizedGainLoss",
                         header: "Unrealized Gain/Loss",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             style={{
                               color:

@@ -3,15 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  useToast,
-  Badge,
-  DataTable,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, DataTable, type Column } from "@unerp/ui";
 import {
   Truck,
   AlertTriangle,
@@ -92,12 +84,12 @@ export default function FulfillmentPage() {
     {
       key: "qtyBackordered",
       header: "Qty Backordered",
-      render: (row) => `${row.qtyBackordered} of ${row.qtyOrdered}`,
+      render: (row: any) => `${row.qtyBackordered} of ${row.qtyOrdered}`,
     },
     {
       key: "eta",
       header: "ETA",
-      render: (row) => new Date(row.eta).toLocaleDateString(),
+      render: (row: any) => new Date(row.eta).toLocaleDateString(),
     },
   ];
 
@@ -107,17 +99,17 @@ export default function FulfillmentPage() {
     {
       key: "promisedDate",
       header: "Promised Date",
-      render: (row) => new Date(row.promisedDate).toLocaleDateString(),
+      render: (row: any) => new Date(row.promisedDate).toLocaleDateString(),
     },
     {
       key: "daysRemaining",
       header: "Days Left",
-      render: (row) => `${row.daysRemaining} days`,
+      render: (row: any) => `${row.daysRemaining} days`,
     },
     {
       key: "slaStatus",
       header: "SLA Status",
-      render: (row) => {
+      render: (row: any) => {
         const status = row.slaStatus;
         if (status === "ON_TRACK")
           return <Badge variant="success">On Track</Badge>;

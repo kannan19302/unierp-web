@@ -1,19 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  KPICard,
-  useToast,
-  Select,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, KPICard, useToast, Select } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { FileText, Plus, CheckCircle, XCircle, TrendingUp } from "lucide-react";
 
@@ -184,7 +171,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "tenant",
       header: "Tenant",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="ui-heading-sm">{r.tenantName}</span>
           <div className="ui-text-xs-tertiary">
@@ -196,7 +183,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "rent",
       header: "Rent",
-      render: (r) => (
+      render: (r: any) => (
         <span>
           ${Number(r.currentRent).toLocaleString()} → $
           {Number(r.proposedRent).toLocaleString()} (
@@ -211,12 +198,12 @@ export default function LeaseRenewalsPage() {
     {
       key: "term",
       header: "Term",
-      render: (r) => <span>{r.renewalTermMonths} mo</span>,
+      render: (r: any) => <span>{r.renewalTermMonths} mo</span>,
     },
     {
       key: "dates",
       header: "Period",
-      render: (r) => (
+      render: (r: any) => (
         <span className="text-xs">
           {new Date(r.proposedStartDate).toLocaleDateString()} -{" "}
           {new Date(r.proposedEndDate).toLocaleDateString()}
@@ -226,7 +213,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "EXECUTED"
@@ -247,7 +234,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-1">
           {r.status === "DRAFT" || r.status === "NEGOTIATING" ? (
             <Button
@@ -276,7 +263,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "name",
       header: "Schedule",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="ui-heading-sm">{r.scheduleName}</span>
           <div className="ui-text-xs-tertiary">
@@ -288,12 +275,12 @@ export default function LeaseRenewalsPage() {
     {
       key: "type",
       header: "Type",
-      render: (r) => <Badge variant="info">{r.escalationType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.escalationType}</Badge>,
     },
     {
       key: "rate",
       header: "Rate",
-      render: (r) => (
+      render: (r: any) => (
         <span>
           {r.escalationType === "PERCENTAGE"
             ? `${r.escalationRate}%`
@@ -304,7 +291,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "rent",
       header: "Rent",
-      render: (r) => (
+      render: (r: any) => (
         <span>
           ${Number(r.baseRent).toLocaleString()} → $
           {Number(r.currentRent).toLocaleString()}
@@ -314,7 +301,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "next",
       header: "Next Escalation",
-      render: (r) => (
+      render: (r: any) => (
         <span className="text-xs">
           {r.nextEscalationDate
             ? new Date(r.nextEscalationDate).toLocaleDateString()
@@ -325,7 +312,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "ACTIVE"
@@ -342,7 +329,7 @@ export default function LeaseRenewalsPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) =>
+      render: (r: any) =>
         r.status === "ACTIVE" &&
         r.nextEscalationDate &&
         new Date(r.nextEscalationDate) <= new Date() ? (
@@ -426,7 +413,7 @@ export default function LeaseRenewalsPage() {
             <DataTable
               columns={renewalsCols}
               data={renewals}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No renewals"
               emptyMessage="Create lease renewals."
               emptyIcon={<FileText size={48} />}
@@ -437,7 +424,7 @@ export default function LeaseRenewalsPage() {
             <DataTable
               columns={escalationCols}
               data={escalations}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No escalations"
               emptyMessage="Create rent escalation schedules."
               emptyIcon={<TrendingUp size={48} />}

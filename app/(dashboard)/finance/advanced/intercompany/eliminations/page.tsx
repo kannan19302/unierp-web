@@ -2,13 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import {
   Loader2,
   RefreshCw,
@@ -384,7 +378,7 @@ export default function IntercompanyEliminationsPage() {
                   {
                     key: "date",
                     header: "Transaction Date",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">
                         {new Date(String(v)).toLocaleDateString()}
                       </span>
@@ -396,14 +390,14 @@ export default function IntercompanyEliminationsPage() {
                   {
                     key: "amount",
                     header: "Amount",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-semibold">{fmt(Number(v))}</span>
                     ),
                   },
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         style={{
                           background:
@@ -424,7 +418,7 @@ export default function IntercompanyEliminationsPage() {
                   {
                     key: "eliminationJournalId",
                     header: "Elimination Journal",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? (
                         <span className={styles.s9}>
                           <FileText size={14} /> ID: {String(v).substring(0, 8)}
@@ -691,12 +685,12 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "sourceOrgId",
                       header: "Seller org",
-                      render: (v) => String(v || "Any Seller"),
+                      render: (v: any) => String(v || "Any Seller"),
                     },
                     {
                       key: "destinationOrgId",
                       header: "Buyer org",
-                      render: (v) => String(v || "Any Buyer"),
+                      render: (v: any) => String(v || "Any Buyer"),
                     },
                     {
                       key: "sourceAccount",
@@ -731,7 +725,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "isActive",
                       header: "Status",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           style={{
                             background: v
@@ -748,7 +742,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "id",
                       header: "Action",
-                      render: (v) => (
+                      render: (v: any) => (
                         <Button
                           variant="outline"
                           size="sm"
@@ -833,7 +827,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "runDate",
                       header: "Run Date",
-                      render: (v) => new Date(String(v)).toLocaleString(),
+                      render: (v: any) => new Date(String(v)).toLocaleString(),
                     },
                     {
                       key: "periodStart",
@@ -848,14 +842,14 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "totalEliminated",
                       header: "Total Eliminated",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-semibold">{fmt(Number(v))}</span>
                       ),
                     },
                     {
                       key: "rulesAppliedCount",
                       header: "Rules Applied",
-                      render: (v) => `${String(v)} Rules`,
+                      render: (v: any) => `${String(v)} Rules`,
                     },
                     {
                       key: "journalId",
@@ -874,7 +868,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           style={{
                             background:

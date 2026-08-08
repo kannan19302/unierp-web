@@ -1,12 +1,7 @@
 "use client";
 import styles from "./WebhookLogsTab.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Badge,
-  StatusBadge,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Badge, StatusBadge, ListPageTemplate, type ListColumn } from "@unerp/ui";
 
 interface LogData {
   id: string;
@@ -45,24 +40,24 @@ export default function WebhookLogsTab() {
           {
             key: "event",
             header: "Event",
-            render: (v) => <Badge variant="info">{String(v)}</Badge>,
+            render: (v: any) => <Badge variant="info">{String(v)}</Badge>,
           },
           {
             key: "status",
             header: "Status",
-            render: (v) => <StatusBadge status={String(v)} />,
+            render: (v: any) => <StatusBadge status={String(v)} />,
           },
           {
             key: "responseStatus",
             header: "HTTP Status",
-            render: (v) => (
+            render: (v: any) => (
               <span className="font-mono">{v != null ? String(v) : "—"}</span>
             ),
           },
           {
             key: "createdAt",
             header: "Time",
-            render: (v) => <span className={styles.s1}>{String(v)}</span>,
+            render: (v: any) => <span className={styles.s1}>{String(v)}</span>,
           },
         ] as ListColumn[]
       }

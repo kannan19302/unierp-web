@@ -474,17 +474,17 @@ export default function StockValuationPage() {
                   {
                     key: "productId",
                     header: "Product",
-                    render: (v) => String(v ?? "All"),
+                    render: (v: any) => String(v ?? "All"),
                   },
                   {
                     key: "warehouseId",
                     header: "Warehouse",
-                    render: (v) => String(v ?? "All"),
+                    render: (v: any) => String(v ?? "All"),
                   },
                   {
                     key: "method",
                     header: "Method",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">
                         {String(v)}
                       </span>
@@ -493,13 +493,13 @@ export default function StockValuationPage() {
                   {
                     key: "standardCost",
                     header: "Standard Cost",
-                    render: (v) => (v ? Number(v).toFixed(4) : "-"),
+                    render: (v: any) => (v ? Number(v).toFixed(4) : "-"),
                   },
                   { key: "currency", header: "Currency" },
                   {
                     key: "isActive",
                     header: "Active",
-                    render: (v) =>
+                    render: (v: any) =>
                       v ? (
                         <span className="text-green-600">✓</span>
                       ) : (
@@ -509,7 +509,7 @@ export default function StockValuationPage() {
                   {
                     key: "effectiveFrom",
                     header: "Effective From",
-                    render: (v) => new Date(String(v)).toLocaleDateString(),
+                    render: (v: any) => new Date(String(v)).toLocaleDateString(),
                   },
                 ] as ListColumn[]
               }
@@ -622,7 +622,7 @@ export default function StockValuationPage() {
                   {
                     key: "adjustmentNumber",
                     header: "Adj #",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono">{String(v)}</span>
                     ),
                   },
@@ -630,22 +630,22 @@ export default function StockValuationPage() {
                   {
                     key: "oldUnitCost",
                     header: "Old Cost",
-                    render: (v) => Number(v).toFixed(4),
+                    render: (v: any) => Number(v).toFixed(4),
                   },
                   {
                     key: "newUnitCost",
                     header: "New Cost",
-                    render: (v) => Number(v).toFixed(4),
+                    render: (v: any) => Number(v).toFixed(4),
                   },
                   {
                     key: "qty",
                     header: "Qty",
-                    render: (v) => Number(v).toFixed(2),
+                    render: (v: any) => Number(v).toFixed(2),
                   },
                   {
                     key: "impactAmount",
                     header: "Impact",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={
                           Number(v) >= 0 ? "text-green-600" : "text-red-600"
@@ -659,7 +659,7 @@ export default function StockValuationPage() {
                   {
                     key: "status",
                     header: "Status",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         className={`px-2 py-1 rounded text-xs ${STATUS_COLORS[String(v)] ?? ""}`}
                       >
@@ -759,17 +759,17 @@ export default function StockValuationPage() {
                             {
                               key: "currentUnitCost",
                               header: "Current Cost",
-                              render: (v) => Number(v).toFixed(4),
+                              render: (v: any) => Number(v).toFixed(4),
                             },
                             {
                               key: "newUnitCost",
                               header: "New Cost",
-                              render: (v) => Number(v).toFixed(4),
+                              render: (v: any) => Number(v).toFixed(4),
                             },
                             {
                               key: "impactAmount",
                               header: "Impact",
-                              render: (v) => (
+                              render: (v: any) => (
                                 <span
                                   className={
                                     Number(v) >= 0
@@ -817,7 +817,7 @@ export default function StockValuationPage() {
                   {
                     key: "transactionRef",
                     header: "Ref",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="font-mono text-xs">
                         {String(v ?? "")}
                       </span>
@@ -826,32 +826,32 @@ export default function StockValuationPage() {
                   {
                     key: "qty",
                     header: "Qty",
-                    render: (v) => Number(v).toFixed(2),
+                    render: (v: any) => Number(v).toFixed(2),
                   },
                   {
                     key: "unitCost",
                     header: "Unit Cost",
-                    render: (v) => Number(v).toFixed(4),
+                    render: (v: any) => Number(v).toFixed(4),
                   },
                   {
                     key: "totalCost",
                     header: "Total Cost",
-                    render: (v) => Number(v).toFixed(2),
+                    render: (v: any) => Number(v).toFixed(2),
                   },
                   {
                     key: "runningQty",
                     header: "Running Qty",
-                    render: (v) => Number(v).toFixed(2),
+                    render: (v: any) => Number(v).toFixed(2),
                   },
                   {
                     key: "runningValue",
                     header: "Running Value",
-                    render: (v) => Number(v).toFixed(2),
+                    render: (v: any) => Number(v).toFixed(2),
                   },
                   {
                     key: "runningAvgCost",
                     header: "Avg Cost",
-                    render: (v) => Number(v ?? 0).toFixed(4),
+                    render: (v: any) => Number(v ?? 0).toFixed(4),
                   },
                 ] as ListColumn[]
               }
@@ -884,7 +884,7 @@ export default function StockValuationPage() {
                   {
                     key: "method",
                     header: "Method",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">
                         {String(v ?? "")}
                       </span>
@@ -893,18 +893,18 @@ export default function StockValuationPage() {
                   {
                     key: "qty",
                     header: "Qty",
-                    render: (v) => Number(v).toFixed(2),
+                    render: (v: any) => Number(v).toFixed(2),
                   },
                   {
                     key: "value",
                     header: "Value",
-                    render: (v) =>
+                    render: (v: any) =>
                       `$${Number(v).toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
                   },
                   {
                     key: "avgCost",
                     header: "Avg Cost",
-                    render: (v) => Number(v).toFixed(4),
+                    render: (v: any) => Number(v).toFixed(4),
                   },
                 ] as ListColumn[]
               }

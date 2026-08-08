@@ -235,14 +235,14 @@ export default function Form1099ReportingPage() {
       key: "name",
       header: "Vendor",
       sortable: true,
-      render: (v) => <span className="font-medium">{v.name}</span>,
+      render: (v: any) => <span className="font-medium">{v.name}</span>,
     },
-    { key: "taxId", header: "Tax ID", render: (v) => v.taxId || "—" },
+    { key: "taxId", header: "Tax ID", render: (v: any) => v.taxId || "—" },
     {
       key: "ytdPaid",
       header: "YTD Paid",
       sortable: true,
-      render: (v) => (
+      render: (v: any) => (
         <span>
           ${v.ytdPaid.toLocaleString("en-US", { minimumFractionDigits: 2 })}
           {v.crossesThreshold && (
@@ -256,7 +256,7 @@ export default function Form1099ReportingPage() {
     {
       key: "is1099Vendor",
       header: "1099 Vendor",
-      render: (v) => (
+      render: (v: any) => (
         <Badge variant={v.profile?.is1099Vendor ? "success" : "default"}>
           {v.profile?.is1099Vendor ? "Yes" : "No"}
         </Badge>
@@ -265,7 +265,7 @@ export default function Form1099ReportingPage() {
     {
       key: "w9OnFile",
       header: "W-9",
-      render: (v) => (
+      render: (v: any) => (
         <Badge variant={v.profile?.w9OnFile ? "success" : "danger"}>
           {v.profile?.w9OnFile ? "On File" : "Missing"}
         </Badge>
@@ -274,7 +274,7 @@ export default function Form1099ReportingPage() {
     {
       key: "tinMatchStatus",
       header: "TIN Match",
-      render: (v) => (
+      render: (v: any) => (
         <Badge
           variant={
             v.profile?.tinMatchStatus === "MATCHED"
@@ -292,7 +292,7 @@ export default function Form1099ReportingPage() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (v) => (
+      render: (v: any) => (
         <div className="flex justify-end gap-2">
           <Button
             variant="secondary"
@@ -328,7 +328,7 @@ export default function Form1099ReportingPage() {
       key: "select",
       header: "",
       width: "2.5rem",
-      render: (f) =>
+      render: (f: any) =>
         f.status === "READY" && !f.batchId ? (
           <input
             type="checkbox"
@@ -345,31 +345,31 @@ export default function Form1099ReportingPage() {
       key: "vendorName",
       header: "Vendor",
       sortable: true,
-      render: (f) => <span className="font-medium">{f.vendor.name}</span>,
+      render: (f: any) => <span className="font-medium">{f.vendor.name}</span>,
     },
     {
       key: "formType",
       header: "Form Type",
-      render: (f) => `1099-${f.formType}`,
+      render: (f: any) => `1099-${f.formType}`,
     },
     {
       key: "totalAmount",
       header: "Total Amount",
       sortable: true,
-      render: (f) =>
+      render: (f: any) =>
         `$${Number(f.totalAmount).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
     },
     {
       key: "federalWithholding",
       header: "Withholding",
-      render: (f) =>
+      render: (f: any) =>
         `$${Number(f.federalWithholding).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
     },
     {
       key: "status",
       header: "Status",
       sortable: true,
-      render: (f) => (
+      render: (f: any) => (
         <Badge variant={statusVariant[f.status]}>{f.status}</Badge>
       ),
     },
@@ -377,7 +377,7 @@ export default function Form1099ReportingPage() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (f) => (
+      render: (f: any) => (
         <div className="flex justify-end gap-2">
           {f.status === "DRAFT" && (
             <Button
@@ -414,27 +414,27 @@ export default function Form1099ReportingPage() {
       key: "name",
       header: "Batch",
       sortable: true,
-      render: (b) => <span className="font-medium">{b.name}</span>,
+      render: (b: any) => <span className="font-medium">{b.name}</span>,
     },
     { key: "formCount", header: "Forms", sortable: true },
     {
       key: "totalAmount",
       header: "Total Amount",
       sortable: true,
-      render: (b) =>
+      render: (b: any) =>
         `$${Number(b.totalAmount).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
     },
     {
       key: "status",
       header: "Status",
-      render: (b) => (
+      render: (b: any) => (
         <Badge variant={statusVariant[b.status]}>{b.status}</Badge>
       ),
     },
     {
       key: "efileConfirmation",
       header: "E-File Confirmation",
-      render: (b) => (
+      render: (b: any) => (
         <span className="font-mono text-xs">{b.efileConfirmation || "—"}</span>
       ),
     },
@@ -442,7 +442,7 @@ export default function Form1099ReportingPage() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (b) =>
+      render: (b: any) =>
         b.status === "GENERATED" ? (
           <Button
             variant="primary"
@@ -563,7 +563,7 @@ export default function Form1099ReportingPage() {
           columns={vendorColumns}
           data={vendors}
           loading={loading}
-          rowKey={(v) => v.vendorId}
+          rowKey={(v: any) => v.vendorId}
           emptyTitle="No vendors found"
           emptyMessage="Vendors will appear here once created in Procurement."
           emptyIcon={<Info size={48} />}
@@ -587,7 +587,7 @@ export default function Form1099ReportingPage() {
             columns={formColumns}
             data={forms}
             loading={loading}
-            rowKey={(f) => f.id}
+            rowKey={(f: any) => f.id}
             emptyTitle={`No 1099 forms generated for ${taxYear}`}
             emptyMessage='Click "Generate Forms" to create draft forms for all eligible vendors crossing the $600 threshold.'
             emptyIcon={<FileText size={48} />}
@@ -598,7 +598,7 @@ export default function Form1099ReportingPage() {
           columns={batchColumns}
           data={batches}
           loading={loading}
-          rowKey={(b) => b.id}
+          rowKey={(b: any) => b.id}
           emptyTitle="No e-file batches yet"
           emptyMessage="Select READY forms in the Forms tab to bundle them into an e-file batch."
           emptyIcon={<Send size={48} />}

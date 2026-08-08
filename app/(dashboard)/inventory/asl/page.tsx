@@ -236,21 +236,21 @@ function ApprovedSuppliers() {
             {
               key: "productId",
               header: "Product",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "vendorId",
               header: "Vendor",
-              render: (v) => (
+              render: (v: any) => (
                 <span className="font-mono text-xs">{String(v)}</span>
               ),
             },
             {
               key: "vendorProductRef",
               header: "Vendor's SKU",
-              render: (v) => String(v ?? "—"),
+              render: (v: any) => String(v ?? "—"),
             },
             {
               key: "unitPrice",
@@ -258,26 +258,26 @@ function ApprovedSuppliers() {
               render: (v, row) =>
                 v ? `${row.currency} ${Number(v).toFixed(4)}` : "—",
             },
-            { key: "moq", header: "MOQ", render: (v) => (v ? String(v) : "—") },
+            { key: "moq", header: "MOQ", render: (v: any) => (v ? String(v) : "—") },
             {
               key: "leadTimeDays",
               header: "Lead Time",
-              render: (v) => (v ? `${v}d` : "—"),
+              render: (v: any) => (v ? `${v}d` : "—"),
             },
             {
               key: "isPreferred",
               header: "Preferred",
-              render: (v) => (v ? "★" : ""),
+              render: (v: any) => (v ? "★" : ""),
             },
             {
               key: "status",
               header: "Status",
-              render: (v) => statusBadge(String(v)),
+              render: (v: any) => statusBadge(String(v)),
             },
             {
               key: "expiryDate",
               header: "Expires",
-              render: (v) =>
+              render: (v: any) =>
                 v ? new Date(String(v)).toLocaleDateString() : "—",
             },
             {
@@ -493,23 +493,23 @@ function Compliance() {
               {
                 key: "productCategory",
                 header: "Category",
-                render: (v) => String(v ?? "Default"),
+                render: (v: any) => String(v ?? "Default"),
               },
               { key: "minApprovedVendors", header: "Min Vendors" },
               {
                 key: "requiresQualification",
                 header: "Req. Qualification",
-                render: (v) => (v ? "Yes" : "No"),
+                render: (v: any) => (v ? "Yes" : "No"),
               },
               {
                 key: "requiresPreferred",
                 header: "Req. Preferred",
-                render: (v) => (v ? "Yes" : "No"),
+                render: (v: any) => (v ? "Yes" : "No"),
               },
               {
                 key: "notes",
                 header: "Notes",
-                render: (v) => String(v ?? "—"),
+                render: (v: any) => String(v ?? "—"),
               },
             ] as ListColumn[]
           }
@@ -604,7 +604,7 @@ function SourcingReport() {
                 {
                   key: "vendorId",
                   header: "Vendor",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">{String(v)}</span>
                   ),
                 },
@@ -612,7 +612,7 @@ function SourcingReport() {
                 {
                   key: "isPreferred",
                   header: "Preferred",
-                  render: (v) => (v ? "★" : ""),
+                  render: (v: any) => (v ? "★" : ""),
                 },
                 {
                   key: "unitPrice",
@@ -623,17 +623,17 @@ function SourcingReport() {
                 {
                   key: "moq",
                   header: "MOQ",
-                  render: (v) => (v ? String(v) : "—"),
+                  render: (v: any) => (v ? String(v) : "—"),
                 },
                 {
                   key: "leadTimeDays",
                   header: "Lead Time",
-                  render: (v) => (v ? `${v}d` : "—"),
+                  render: (v: any) => (v ? `${v}d` : "—"),
                 },
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => statusBadge(String(v)),
+                  render: (v: any) => statusBadge(String(v)),
                 },
               ] as ListColumn[]
             }

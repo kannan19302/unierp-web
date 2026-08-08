@@ -498,7 +498,7 @@ export default function PaymentBatchesPage() {
                     {
                       key: "invoiceId",
                       header: "Reference",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-mono text-sm">
                           {String(v).slice(0, 16)}…
                         </span>
@@ -507,7 +507,7 @@ export default function PaymentBatchesPage() {
                     {
                       key: "amount",
                       header: "Amount",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-semibold">
                           $
                           {Number(v).toLocaleString(undefined, {
@@ -519,12 +519,12 @@ export default function PaymentBatchesPage() {
                     {
                       key: "scheduledPaymentDate",
                       header: "Payment Date",
-                      render: (v) => new Date(String(v)).toLocaleDateString(),
+                      render: (v: any) => new Date(String(v)).toLocaleDateString(),
                     },
                     {
                       key: "status",
                       header: "Status",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span
                           className={`ui-badge ${v === "SETTLED" ? "ui-badge-green" : "ui-badge-gray"}`}
                         >
@@ -535,7 +535,7 @@ export default function PaymentBatchesPage() {
                     {
                       key: "id",
                       header: "Actions",
-                      render: (v) =>
+                      render: (v: any) =>
                         ["DRAFT", "READY"].includes(selectedBatch.status) ? (
                           <button
                             className="ui-action-btn ui-action-btn-danger"

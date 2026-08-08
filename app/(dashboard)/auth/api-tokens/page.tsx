@@ -60,29 +60,29 @@ export default function ApiTokensPage() {
   };
 
   const columns: Column<ApiToken>[] = [
-    { key: "name", header: "Name", render: (r) => r.name },
-    { key: "scopes", header: "Scopes", render: (r) => r.scopes.join(", ") },
+    { key: "name", header: "Name", render: (r: any) => r.name },
+    { key: "scopes", header: "Scopes", render: (r: any) => r.scopes.join(", ") },
     {
       key: "expiresAt",
       header: "Expires",
-      render: (r) =>
+      render: (r: any) =>
         r.expiresAt ? new Date(r.expiresAt).toLocaleDateString() : "Never",
     },
     {
       key: "lastUsedAt",
       header: "Last Used",
-      render: (r) =>
+      render: (r: any) =>
         r.lastUsedAt ? new Date(r.lastUsedAt).toLocaleDateString() : "Never",
     },
     {
       key: "createdAt",
       header: "Created",
-      render: (r) => new Date(r.createdAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.createdAt).toLocaleDateString(),
     },
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <Button
           size="sm"
           variant="ghost"

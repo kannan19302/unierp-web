@@ -433,21 +433,21 @@ export default function RiskManagementPage() {
                       {
                         key: "customerName",
                         header: "Customer",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "score",
                         header: "Score",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">{Number(v)}</span>
                         ),
                       },
                       {
                         key: "rating",
                         header: "Rating",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "LOW" ? "bg-green-100 text-green-700" : v === "MEDIUM" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700"}`}
                           >
@@ -458,13 +458,13 @@ export default function RiskManagementPage() {
                       {
                         key: "lastComputed",
                         header: "Last Computed",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? new Date(String(v)).toLocaleDateString() : "—",
                       },
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v) => (
+                        render: (v: any) => (
                           <button
                             onClick={() => handleComputeScore(String(v))}
                             className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded hover:bg-blue-100"
@@ -561,26 +561,26 @@ export default function RiskManagementPage() {
                       {
                         key: "vendorName",
                         header: "Vendor",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "riskScore",
                         header: "Risk Score",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">{Number(v)}</span>
                         ),
                       },
                       {
                         key: "category",
                         header: "Category",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "COMPLETED" ? "ui-badge-green" : v === "IN_REVIEW" ? "ui-badge-yellow" : "ui-badge-red"}`}
                           >
@@ -591,7 +591,7 @@ export default function RiskManagementPage() {
                       {
                         key: "lastReview",
                         header: "Last Review",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? new Date(String(v)).toLocaleDateString() : "—",
                       },
                     ] as ListColumn[]
@@ -619,19 +619,19 @@ export default function RiskManagementPage() {
                     {
                       key: "instrument",
                       header: "Instrument",
-                      render: (v) => (
+                      render: (v: any) => (
                         <span className="font-medium">{String(v)}</span>
                       ),
                     },
                     {
                       key: "exposureAmount",
                       header: "Exposure",
-                      render: (v) => fmt(Number(v)),
+                      render: (v: any) => fmt(Number(v)),
                     },
                     {
                       key: "hedged",
                       header: "Hedged",
-                      render: (v) =>
+                      render: (v: any) =>
                         v ? (
                           <span className="text-green-600 font-medium">
                             Yes
@@ -643,12 +643,12 @@ export default function RiskManagementPage() {
                     {
                       key: "counterparty",
                       header: "Counterparty",
-                      render: (v) => String(v),
+                      render: (v: any) => String(v),
                     },
                     {
                       key: "maturityDate",
                       header: "Maturity",
-                      render: (v) => new Date(String(v)).toLocaleDateString(),
+                      render: (v: any) => new Date(String(v)).toLocaleDateString(),
                     },
                     {
                       key: "id",
@@ -700,19 +700,19 @@ export default function RiskManagementPage() {
                       {
                         key: "eventType",
                         header: "Type",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "description",
                         header: "Description",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "severity",
                         header: "Severity",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "CRITICAL" ? "bg-red-100 text-red-700" : v === "HIGH" ? "bg-orange-100 text-orange-700" : v === "MEDIUM" ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"}`}
                           >
@@ -723,7 +723,7 @@ export default function RiskManagementPage() {
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "RESOLVED" ? "ui-badge-green" : "ui-badge-red"}`}
                           >
@@ -734,7 +734,7 @@ export default function RiskManagementPage() {
                       {
                         key: "occurredAt",
                         header: "Date",
-                        render: (v) => new Date(String(v)).toLocaleDateString(),
+                        render: (v: any) => new Date(String(v)).toLocaleDateString(),
                       },
                       {
                         key: "id",
@@ -851,14 +851,14 @@ export default function RiskManagementPage() {
                       {
                         key: "controlName",
                         header: "Control",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "controlType",
                         header: "Type",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="text-xs px-2 py-0.5 bg-gray-100 rounded-full">
                             {String(v)}
                           </span>
@@ -867,12 +867,12 @@ export default function RiskManagementPage() {
                       {
                         key: "owner",
                         header: "Owner",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "effectiveness",
                         header: "Effectiveness",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "HIGH" ? "bg-green-100 text-green-700" : v === "MEDIUM" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700"}`}
                           >
@@ -883,13 +883,13 @@ export default function RiskManagementPage() {
                       {
                         key: "lastTested",
                         header: "Last Tested",
-                        render: (v) =>
+                        render: (v: any) =>
                           v ? new Date(String(v)).toLocaleDateString() : "—",
                       },
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v) => (
+                        render: (v: any) => (
                           <button
                             onClick={() => handleTestControl(String(v))}
                             className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded hover:bg-blue-100"

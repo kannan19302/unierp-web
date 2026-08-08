@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table, DataTable } from "@unerp/ui";
 import { Filter, ArrowDown, TrendingDown } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -110,46 +110,16 @@ export default function AnalyticsFunnelsPage() {
             No conversion funnel calculations recorded.
           </p>
         ) : (
-          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr
-                style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
-              >
-                <th style={{ padding: "12px" }}>Funnel Name</th>
-                <th style={{ padding: "12px" }}>Period</th>
-                <th style={{ padding: "12px" }}>Overall Dropoff</th>
-                <th style={{ padding: "12px" }}>Calculated At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {conversions.map((c) => (
-                <tr key={c.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
-                  <td style={{ padding: "12px", fontWeight: 600 }}>
-                    {c.funnelName}
-                  </td>
-                  <td style={{ padding: "12px" }}>{c.period}</td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--chart-4)",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {Number(c.overallDropoff).toFixed(2)}%
-                  </td>
-                  <td
-                    style={{
-                      padding: "12px",
-                      color: "var(--color-text-secondary)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    {new Date(c.calculatedAt).toLocaleString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <>{(() => {
+                              const columns = [
+                        { key: "col_0", header: "Funnel Name" , render: (c: any) => (<>{c.funnelName}</>) },
+                        { key: "col_1", header: "Period" , render: (c: any) => (<>{c.period}</>) },
+                        { key: "col_2", header: "Overall Dropoff" , render: (c: any) => (<>{Number(c.overallDropoff).toFixed(2)}%
+                                        </>) },
+                        { key: "col_3", header: "Calculated At" , render: (c: any) => (<>{new Date(c.calculatedAt).toLocaleString()}</>) },
+                      ];
+                              return <DataTable columns={columns} data={conversions} rowKey={(c: any) => c.id} />;
+                          })()}</>
         )}
       </Card>
     </div>

@@ -1,16 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  PageHeader,
-  Spinner,
-  Button,
-  Badge,
-  ProtectedComponent,
-  ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, ProtectedComponent, ListPageTemplate, type ListColumn } from "@unerp/ui";
 import { Plus, Edit3, Trash2, RefreshCw, Zap, AlertCircle } from "lucide-react";
 import { Modal, inputStyle, labelStyle } from "../../_components/Modal";
 import { apiGet, apiSend } from "../../_components/api";
@@ -214,7 +205,7 @@ export default function LeadScoringPage() {
                 {
                   key: "name",
                   header: "Name",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-semibold">{String(v)}</span>
                   ),
                 },
@@ -234,7 +225,7 @@ export default function LeadScoringPage() {
                 {
                   key: "points",
                   header: "Points",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       style={{
                         color:
@@ -251,7 +242,7 @@ export default function LeadScoringPage() {
                 {
                   key: "active",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <Badge variant={v ? "success" : "default"}>
                       {v ? "Active" : "Inactive"}
                     </Badge>

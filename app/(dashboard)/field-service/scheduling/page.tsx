@@ -1,18 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  Select,
-  useToast,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, Select, useToast } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Calendar, Plus, Clock, MapPin } from "lucide-react";
 
@@ -140,7 +128,7 @@ export default function SchedulingPage() {
     {
       key: "title",
       header: "Title",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span className="ui-heading-sm">{r.title}</span>
           <div className="ui-text-xs-tertiary">
@@ -152,7 +140,7 @@ export default function SchedulingPage() {
     {
       key: "date",
       header: "Date",
-      render: (r) => (
+      render: (r: any) => (
         <span className="text-sm">
           {new Date(r.scheduledDate).toLocaleDateString()}
         </span>
@@ -161,7 +149,7 @@ export default function SchedulingPage() {
     {
       key: "time",
       header: "Time",
-      render: (r) => (
+      render: (r: any) => (
         <span className="flex items-center gap-1">
           <Clock size={14} />
           {r.startTime
@@ -176,12 +164,12 @@ export default function SchedulingPage() {
     {
       key: "duration",
       header: "Duration",
-      render: (r) => <span>{r.durationMin} min</span>,
+      render: (r: any) => <span>{r.durationMin} min</span>,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => (
+      render: (r: any) => (
         <Badge
           variant={
             r.status === "COMPLETED"
@@ -198,7 +186,7 @@ export default function SchedulingPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <select
           className="ui-input-sm"
           value={r.status}
@@ -217,7 +205,7 @@ export default function SchedulingPage() {
     {
       key: "title",
       header: "Event",
-      render: (r) => (
+      render: (r: any) => (
         <div>
           <span
             className="ui-heading-sm"
@@ -232,12 +220,12 @@ export default function SchedulingPage() {
     {
       key: "type",
       header: "Type",
-      render: (r) => <Badge variant="info">{r.eventType}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.eventType}</Badge>,
     },
     {
       key: "start",
       header: "Start",
-      render: (r) => (
+      render: (r: any) => (
         <span className="text-sm">
           {new Date(r.startTime).toLocaleString()}
         </span>
@@ -246,14 +234,14 @@ export default function SchedulingPage() {
     {
       key: "end",
       header: "End",
-      render: (r) => (
+      render: (r: any) => (
         <span className="text-sm">{new Date(r.endTime).toLocaleString()}</span>
       ),
     },
     {
       key: "location",
       header: "Location",
-      render: (r) => (
+      render: (r: any) => (
         <span className="flex items-center gap-1">
           <MapPin size={14} />
           {r.location || "—"}
@@ -304,7 +292,7 @@ export default function SchedulingPage() {
             <DataTable
               columns={scheduleColumns}
               data={schedules}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No schedules"
               emptyMessage="Create a schedule entry."
               emptyIcon={<Calendar size={48} />}
@@ -315,7 +303,7 @@ export default function SchedulingPage() {
             <DataTable
               columns={eventColumns}
               data={events}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No events"
               emptyMessage="No calendar events found."
               emptyIcon={<Calendar size={48} />}

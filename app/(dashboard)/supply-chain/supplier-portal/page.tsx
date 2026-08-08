@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Badge,
-  DataTable,
-  type Column,
-  Spinner,
-  StatusBadge,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Spinner, StatusBadge } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { Users, Send, BarChart3 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
@@ -52,17 +43,17 @@ export default function SupplierPortalPage() {
     {
       key: "email",
       header: "Email",
-      render: (r) => <span className="ui-link">{r.email}</span>,
+      render: (r: any) => <span className="ui-link">{r.email}</span>,
     },
     {
       key: "portalAccessLevel",
       header: "Access Level",
-      render: (r) => <Badge variant="info">{r.portalAccessLevel}</Badge>,
+      render: (r: any) => <Badge variant="info">{r.portalAccessLevel}</Badge>,
     },
     {
       key: "status",
       header: "Status",
-      render: (r) => <StatusBadge status={r.status} />,
+      render: (r: any) => <StatusBadge status={r.status} />,
     },
   ];
 
@@ -93,7 +84,7 @@ export default function SupplierPortalPage() {
               columns={columns}
               data={users}
               loading={loading}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No portal users"
               emptyMessage="Invite your first supplier to the portal."
               emptyIcon={<Users size={48} />}

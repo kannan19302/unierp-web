@@ -1,17 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Card,
-  PageHeader,
-  Button,
-  Spinner,
-  Badge,
-  useToast,
-  DataTable,
-  ProtectedComponent,
-  type Column,
-} from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, useToast, DataTable, ProtectedComponent, type Column } from "@unerp/ui";
 import {
   AlertTriangle,
   RefreshCw,
@@ -156,7 +146,7 @@ export default function PipelineRiskAlertsPage() {
     {
       key: "deal",
       header: "Deal",
-      render: (a) => (
+      render: (a: any) => (
         <div>
           <div className="font-semibold">
             {a.opportunity?.name ?? a.opportunityId}
@@ -168,24 +158,24 @@ export default function PipelineRiskAlertsPage() {
     {
       key: "alertType",
       header: "Risk Type",
-      render: (a) => a.alertType.replace(/_/g, " "),
+      render: (a: any) => a.alertType.replace(/_/g, " "),
     },
     {
       key: "riskLevel",
       header: "Level",
-      render: (a) => (
+      render: (a: any) => (
         <Badge variant={riskVariant(a.riskLevel)}>{a.riskLevel}</Badge>
       ),
     },
     {
       key: "message",
       header: "Detail",
-      render: (a) => <span className="text-sm">{a.message}</span>,
+      render: (a: any) => <span className="text-sm">{a.message}</span>,
     },
     {
       key: "status",
       header: "Status",
-      render: (a) => (
+      render: (a: any) => (
         <Badge
           variant={
             a.status === "OPEN"
@@ -203,7 +193,7 @@ export default function PipelineRiskAlertsPage() {
       key: "actions",
       header: "",
       align: "right",
-      render: (a) => (
+      render: (a: any) => (
         <ProtectedComponent permission="crm.opportunity.update">
           <div className="ui-flex-end ui-gap-2">
             {a.status === "OPEN" && (
@@ -300,7 +290,7 @@ export default function PipelineRiskAlertsPage() {
           <DataTable<RiskAlert>
             columns={columns}
             data={alerts}
-            rowKey={(a) => a.id}
+            rowKey={(a: any) => a.id}
           />
         )}
       </Card>

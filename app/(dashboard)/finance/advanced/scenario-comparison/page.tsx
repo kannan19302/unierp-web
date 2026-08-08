@@ -11,13 +11,7 @@ import {
   TrendingUp,
   Layers,
 } from "lucide-react";
-import {
-  Card,
-  Button,
-  ListPageTemplate,
-  type ListColumn,
-  StatCardRow,
-} from "@unerp/ui";
+import { Card, Button, ListPageTemplate, type ListColumn, StatCardRow } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface BudgetScenario {
@@ -265,7 +259,7 @@ export default function ScenarioComparisonPage() {
                   {
                     key: "scenarioATotal",
                     header: "Baseline (A)",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.s2}>
                         $
                         {Number(v).toLocaleString(undefined, {
@@ -277,7 +271,7 @@ export default function ScenarioComparisonPage() {
                   {
                     key: "scenarioBTotal",
                     header: "Comparison (B)",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span className={styles.s2}>
                         $
                         {Number(v).toLocaleString(undefined, {
@@ -289,7 +283,7 @@ export default function ScenarioComparisonPage() {
                   {
                     key: "varianceAmount",
                     header: "Variance",
-                    render: (v) => (
+                    render: (v: any) => (
                       <span
                         style={{
                           color:

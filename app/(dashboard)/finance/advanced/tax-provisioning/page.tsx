@@ -435,29 +435,29 @@ export default function TaxProvisioningPage() {
                       {
                         key: "runName",
                         header: "Run",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "period",
                         header: "Period",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "jurisdiction",
                         header: "Jurisdiction",
-                        render: (v) => String(v).replace(/_/g, " "),
+                        render: (v: any) => String(v).replace(/_/g, " "),
                       },
                       {
                         key: "totalProvision",
                         header: "Provision",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "COMPLETED" ? "ui-badge-green" : v === "RUNNING" ? "ui-badge-blue" : "ui-badge-yellow"}`}
                           >
@@ -605,24 +605,24 @@ export default function TaxProvisioningPage() {
                       {
                         key: "accountName",
                         header: "Account",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "temporaryDifference",
                         header: "Temp Difference",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "taxRate",
                         header: "Rate %",
-                        render: (v) => `${Number(v).toFixed(1)}%`,
+                        render: (v: any) => `${Number(v).toFixed(1)}%`,
                       },
                       {
                         key: "deferredTax",
                         header: "Deferred Tax",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">
                             {fmt(Number(v))}
                           </span>
@@ -631,7 +631,7 @@ export default function TaxProvisioningPage() {
                       {
                         key: "classification",
                         header: "Type",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "LIABILITY" ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
                           >
@@ -752,29 +752,29 @@ export default function TaxProvisioningPage() {
                       {
                         key: "positionName",
                         header: "Position",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "taxAuthority",
                         header: "Authority",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                       {
                         key: "exposureAmount",
                         header: "Exposure",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "probabilityOfSuccess",
                         header: "Success %",
-                        render: (v) => `${Number(v)}%`,
+                        render: (v: any) => `${Number(v)}%`,
                       },
                       {
                         key: "status",
                         header: "Status",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span
                             className={`ui-badge ${v === "EVALUATED" ? "ui-badge-green" : v === "UNDER_REVIEW" ? "ui-badge-yellow" : "ui-badge-gray"}`}
                           >
@@ -905,19 +905,19 @@ export default function TaxProvisioningPage() {
                       {
                         key: "entityName",
                         header: "Entity",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
                         key: "deferredTaxAsset",
                         header: "DTA",
-                        render: (v) => fmt(Number(v)),
+                        render: (v: any) => fmt(Number(v)),
                       },
                       {
                         key: "allowanceAmount",
                         header: "Allowance",
-                        render: (v) => (
+                        render: (v: any) => (
                           <span className="font-semibold">
                             {fmt(Number(v))}
                           </span>
@@ -926,12 +926,12 @@ export default function TaxProvisioningPage() {
                       {
                         key: "rationale",
                         header: "Rationale",
-                        render: (v) => String(v) || "—",
+                        render: (v: any) => String(v) || "—",
                       },
                       {
                         key: "period",
                         header: "Period",
-                        render: (v) => String(v),
+                        render: (v: any) => String(v),
                       },
                     ] as ListColumn[]
                   }

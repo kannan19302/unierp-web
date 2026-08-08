@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card,
-  PageHeader,
-  Spinner,
-  useToast,
-  Button,
-  Input,
-  Badge, Table } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Button, Input, Badge, DataTable } from "@unerp/ui";
 import { Users, TrendingUp, DollarSign, Target } from "lucide-react";
 import { apiGet, apiPost } from "../../_components/api";
 
@@ -147,43 +141,28 @@ export default function TeamRollupPage() {
 
           <Card title="Team Members">
             <div className="ui-table-wrapper">
-              <Table className="ui-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Commit</th>
-                    <th>Best Case</th>
-                    <th>Pipeline</th>
-                    <th>Quota</th>
-                    <th>Attainment</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rollupData.team?.map((m: any) => (
-                    <tr key={m.userId}>
-                      <td>{m.name}</td>
-                      <td>${(m.commit || 0).toLocaleString()}</td>
-                      <td>${(m.bestCase || 0).toLocaleString()}</td>
-                      <td>${(m.pipeline || 0).toLocaleString()}</td>
-                      <td>${(m.quota || 0).toLocaleString()}</td>
-                      <td>
-                        <Badge
-                          variant={
-                            m.quota > 0 && m.commit / m.quota >= 0.8
-                              ? "success"
-                              : "warning"
-                          }
-                        >
-                          {m.quota > 0
-                            ? Math.round((m.commit / m.quota) * 100)
-                            : 0}
-                          %
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <>{(() => {
+                                    const columns = [
+                            { key: "col_0", header: "Name", render: (m: any) => (<>{m.name}</>) },
+                            { key: "col_1", header: "Commit", render: (m: any) => (<>${(m.commit || 0).toLocaleString()}</>) },
+                            { key: "col_2", header: "Best Case", render: (m: any) => (<>${(m.bestCase || 0).toLocaleString()}</>) },
+                            { key: "col_3", header: "Pipeline", render: (m: any) => (<>${(m.pipeline || 0).toLocaleString()}</>) },
+                            { key: "col_4", header: "Quota", render: (m: any) => (<>${(m.quota || 0).toLocaleString()}</>) },
+                            { key: "col_5", header: "Attainment", render: (m: any) => (<><Badge
+                                                    variant={
+                                                      m.quota > 0 && m.commit / m.quota >= 0.8
+                                                        ? "success"
+                                                        : "warning"
+                                                    }
+                                                  >
+                                                    {m.quota > 0
+                                                      ? Math.round((m.commit / m.quota) * 100)
+                                                      : 0}
+                                                    %
+                                                  </Badge></>) },
+                          ];
+                                    return <DataTable columns={columns} data={rollupData.team} rowKey={(m: any) => m.userId} />;
+                                  })()}</>
             </div>
             <div className="ui-card-actions">
               <Button variant="primary" onClick={handleSaveRollup}>
@@ -195,46 +174,26 @@ export default function TeamRollupPage() {
           {rollups.length > 0 && (
             <Card title="Saved Rollups">
               <div className="ui-table-wrapper">
-                <Table className="ui-table">
-                  <thead>
-                    <tr>
-                      <th>Period</th>
-                      <th>Commit</th>
-                      <th>Best Case</th>
-                      <th>Pipeline</th>
-                      <th>Quota</th>
-                      <th>Attainment</th>
-                      <th>Saved</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rollups.map((r: any) => (
-                      <tr key={r.id}>
-                        <td>{r.period}</td>
-                        <td>${Number(r.totalCommit || 0).toLocaleString()}</td>
-                        <td>
-                          ${Number(r.totalBestCase || 0).toLocaleString()}
-                        </td>
-                        <td>
-                          ${Number(r.totalPipeline || 0).toLocaleString()}
-                        </td>
-                        <td>${Number(r.totalQuota || 0).toLocaleString()}</td>
-                        <td>
-                          <Badge
-                            variant={
-                              Number(r.attainmentPct) >= 80
-                                ? "success"
-                                : "warning"
-                            }
-                          >
-                            {Number(r.attainmentPct).toFixed(1)}%
-                          </Badge>
-                        </td>
-                        <td>{new Date(r.createdAt).toLocaleDateString()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <>{(() => {
+                                        const columns = [
+                                { key: "col_0", header: "Period", render: (r: any) => (<>{r.period}</>) },
+                                { key: "col_1", header: "Commit", render: (r: any) => (<>${Number(r.totalCommit || 0).toLocaleString()}</>) },
+                                { key: "col_2", header: "Best Case", render: (r: any) => (<>${Number(r.totalBestCase || 0).toLocaleString()}</>) },
+                                { key: "col_3", header: "Pipeline", render: (r: any) => (<>${Number(r.totalPipeline || 0).toLocaleString()}</>) },
+                                { key: "col_4", header: "Quota", render: (r: any) => (<>${Number(r.totalQuota || 0).toLocaleString()}</>) },
+                                { key: "col_5", header: "Attainment", render: (r: any) => (<><Badge
+                                                          variant={
+                                                            Number(r.attainmentPct) >= 80
+                                                              ? "success"
+                                                              : "warning"
+                                                          }
+                                                        >
+                                                          {Number(r.attainmentPct).toFixed(1)}%
+                                                        </Badge></>) },
+                                { key: "col_6", header: "Saved", render: (r: any) => (<>{new Date(r.createdAt).toLocaleDateString()}</>) },
+                              ];
+                                        return <DataTable columns={columns} data={rollups} rowKey={(r: any) => r.id} />;
+                                      })()}</>
               </div>
             </Card>
           )}

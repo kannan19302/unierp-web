@@ -262,7 +262,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String(v).slice(0, 12)}…
                     </span>
@@ -271,29 +271,29 @@ export default function DemandForecastingPage() {
                 {
                   key: "forecastDate",
                   header: "Date",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
-                { key: "horizon", header: "Horizon", render: (v) => `${v}d` },
+                { key: "horizon", header: "Horizon", render: (v: any) => `${v}d` },
                 { key: "method", header: "Method" },
                 {
                   key: "forecastedQty",
                   header: "Forecasted Qty",
-                  render: (v) => Number(v).toFixed(2),
+                  render: (v: any) => Number(v).toFixed(2),
                 },
                 {
                   key: "actualQty",
                   header: "Actual Qty",
-                  render: (v) => (v ? Number(v).toFixed(2) : "—"),
+                  render: (v: any) => (v ? Number(v).toFixed(2) : "—"),
                 },
                 {
                   key: "mape",
                   header: "MAPE",
-                  render: (v) => (v ? `${(Number(v) * 100).toFixed(1)}%` : "—"),
+                  render: (v: any) => (v ? `${(Number(v) * 100).toFixed(1)}%` : "—"),
                 },
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                         v === "ACTIVE"
@@ -324,7 +324,7 @@ export default function DemandForecastingPage() {
               {
                 key: "productId",
                 header: "Product",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="font-mono text-xs">
                     {String(v).slice(0, 12)}…
                   </span>
@@ -333,42 +333,42 @@ export default function DemandForecastingPage() {
               {
                 key: "warehouseId",
                 header: "Warehouse",
-                render: (v) => String(v ?? "—"),
+                render: (v: any) => String(v ?? "—"),
               },
               {
                 key: "reorderPoint",
                 header: "Reorder Point",
-                render: (v) => Number(v).toFixed(2),
+                render: (v: any) => Number(v).toFixed(2),
               },
               {
                 key: "reorderQty",
                 header: "Reorder Qty",
-                render: (v) => Number(v).toFixed(2),
+                render: (v: any) => Number(v).toFixed(2),
               },
               {
                 key: "safetyStock",
                 header: "Safety Stock",
-                render: (v) => Number(v).toFixed(2),
+                render: (v: any) => Number(v).toFixed(2),
               },
               {
                 key: "leadTimeDays",
                 header: "Lead Time",
-                render: (v) => `${v}d`,
+                render: (v: any) => `${v}d`,
               },
               {
                 key: "avgDailyDemand",
                 header: "Avg Daily Demand",
-                render: (v) => Number(v).toFixed(2),
+                render: (v: any) => Number(v).toFixed(2),
               },
               {
                 key: "serviceLevel",
                 header: "Service Level",
-                render: (v) => `${(Number(v) * 100).toFixed(0)}%`,
+                render: (v: any) => `${(Number(v) * 100).toFixed(0)}%`,
               },
               {
                 key: "isActive",
                 header: "Active",
-                render: (v) => (
+                render: (v: any) => (
                   <span
                     className={`px-2 py-0.5 rounded-full text-xs ${v ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}
                   >
@@ -412,7 +412,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String(v).slice(0, 12)}…
                     </span>
@@ -429,7 +429,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "priority",
                   header: "Priority",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                         v === "URGENT"
@@ -446,7 +446,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded-full text-xs ${
                         v === "PENDING"
@@ -467,7 +467,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "createdAt",
                   header: "Created",
-                  render: (v) => new Date(String(v)).toLocaleDateString(),
+                  render: (v: any) => new Date(String(v)).toLocaleDateString(),
                 },
               ] as ListColumn[]
             }
@@ -506,7 +506,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "productId",
                   header: "Product",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span className="font-mono text-xs">
                       {String(v).slice(0, 12)}…
                     </span>
@@ -516,28 +516,28 @@ export default function DemandForecastingPage() {
                 {
                   key: "currentStock",
                   header: "Current Stock",
-                  render: (v) => Number(v).toFixed(2),
+                  render: (v: any) => Number(v).toFixed(2),
                 },
                 {
                   key: "avgDailyDemand",
                   header: "Avg Daily Demand",
-                  render: (v) => Number(v).toFixed(2),
+                  render: (v: any) => Number(v).toFixed(2),
                 },
                 {
                   key: "daysOfStock",
                   header: "Days of Stock",
-                  render: (v) => Number(v).toFixed(1),
+                  render: (v: any) => Number(v).toFixed(1),
                 },
                 {
                   key: "predictedStockoutDate",
                   header: "Predicted Stockout",
-                  render: (v) =>
+                  render: (v: any) =>
                     v ? new Date(String(v)).toLocaleDateString() : "—",
                 },
                 {
                   key: "riskLevel",
                   header: "Risk",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                         v === "CRITICAL"
@@ -556,7 +556,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "acknowledged",
                   header: "Acknowledged",
-                  render: (v) => (
+                  render: (v: any) => (
                     <span
                       className={`px-2 py-0.5 rounded-full text-xs ${v ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}
                     >
@@ -581,7 +581,7 @@ export default function DemandForecastingPage() {
               {
                 key: "productId",
                 header: "Product",
-                render: (v) => (
+                render: (v: any) => (
                   <span className="font-mono text-xs">
                     {String(v).slice(0, 12)}…
                   </span>
@@ -590,33 +590,33 @@ export default function DemandForecastingPage() {
               {
                 key: "warehouseId",
                 header: "Warehouse",
-                render: (v) => String(v ?? "—"),
+                render: (v: any) => String(v ?? "—"),
               },
               { key: "method", header: "Method" },
               {
                 key: "fixedQty",
                 header: "Fixed Qty",
-                render: (v) => (v ? Number(v).toFixed(2) : "—"),
+                render: (v: any) => (v ? Number(v).toFixed(2) : "—"),
               },
               {
                 key: "coverageDays",
                 header: "Coverage Days",
-                render: (v) => String(v ?? "—"),
+                render: (v: any) => String(v ?? "—"),
               },
               {
                 key: "serviceLevel",
                 header: "Service Level",
-                render: (v) => (v ? `${(Number(v) * 100).toFixed(0)}%` : "—"),
+                render: (v: any) => (v ? `${(Number(v) * 100).toFixed(0)}%` : "—"),
               },
               {
                 key: "calculatedSafety",
                 header: "Calculated Safety",
-                render: (v) => (v ? Number(v).toFixed(2) : "—"),
+                render: (v: any) => (v ? Number(v).toFixed(2) : "—"),
               },
               {
                 key: "lastRecalcAt",
                 header: "Last Recalc",
-                render: (v) =>
+                render: (v: any) =>
                   v ? new Date(String(v)).toLocaleDateString() : "—",
               },
             ] as ListColumn[]

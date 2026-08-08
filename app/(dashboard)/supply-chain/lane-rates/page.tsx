@@ -1,19 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  DataTable,
-  type Column,
-  Modal,
-  TextField,
-  FormField,
-  Select,
-  Disclosure,
-} from "@unerp/ui";
+import { PageHeader, Card, Button, Spinner, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Disclosure } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { Plus, Search, Route, DollarSign, TrendingDown } from "lucide-react";
 
@@ -142,7 +129,7 @@ export default function LaneRatesPage() {
       key: "mode",
       header: "Mode",
       sortable: true,
-      render: (row) => (
+      render: (row: any) => (
         <Badge
           variant={
             row.mode === "OCEAN"
@@ -162,17 +149,17 @@ export default function LaneRatesPage() {
       key: "ratePerUnit",
       header: "Rate/Unit",
       sortable: true,
-      render: (row) => fmtCurrency(row.ratePerUnit),
+      render: (row: any) => fmtCurrency(row.ratePerUnit),
     },
     {
       key: "minCharge",
       header: "Min Charge",
-      render: (row) => fmtCurrency(row.minCharge),
+      render: (row: any) => fmtCurrency(row.minCharge),
     },
     {
       key: "transitTime",
       header: "Transit Time",
-      render: (row) => (
+      render: (row: any) => (
         <span className="ui-text-xs-muted">{row.transitTime}</span>
       ),
     },
@@ -180,7 +167,7 @@ export default function LaneRatesPage() {
       key: "validUntil",
       header: "Valid Until",
       sortable: true,
-      render: (row) => new Date(row.validUntil).toLocaleDateString(),
+      render: (row: any) => new Date(row.validUntil).toLocaleDateString(),
     },
   ];
 
@@ -217,7 +204,7 @@ export default function LaneRatesPage() {
           <DataTable
             columns={columns}
             data={rates}
-            rowKey={(r) => r.id}
+            rowKey={(r: any) => r.id}
             emptyTitle="No lane rates"
             emptyMessage="Add your first carrier rate for a lane."
             emptyIcon={<Route size={48} />}

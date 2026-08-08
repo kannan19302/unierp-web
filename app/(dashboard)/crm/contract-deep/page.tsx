@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { Table, DataTable } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -110,52 +110,18 @@ export default function ContractDeepPage() {
           Upcoming Expiry Calendar (90 days)
         </h2>
         <div className="overflow-x-auto">
-          <Table className="w-full text-sm">
-            <thead>
-              <tr className="border-b text-left">
-                <th className="py-2 px-3 font-medium">Contract</th>
-                <th className="py-2 px-3 font-medium">Customer/Vendor</th>
-                <th className="py-2 px-3 font-medium">End Date</th>
-                <th className="py-2 px-3 font-medium">Renewal Date</th>
-                <th className="py-2 px-3 font-medium">Value</th>
-                <th className="py-2 px-3 font-medium">Status</th>
-                <th className="py-2 px-3 font-medium">Auto-Renew</th>
-              </tr>
-            </thead>
-            <tbody>
-              {calendar.map((c: any) => (
-                <tr key={c.id} className="border-b hover:bg-muted/50">
-                  <td className="py-2 px-3">
-                    {c.contractNumber} - {c.title}
-                  </td>
-                  <td className="py-2 px-3">
-                    {c.customer?.name || c.vendor?.name || "-"}
-                  </td>
-                  <td className="py-2 px-3">
-                    {new Date(c.endDate).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-3">
-                    {new Date(c.renewalDate).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-3">
-                    {c.currency} {Number(c.value).toLocaleString()}
-                  </td>
-                  <td className="py-2 px-3">{c.status}</td>
-                  <td className="py-2 px-3">{c.autoRenew ? "Yes" : "No"}</td>
-                </tr>
-              ))}
-              {calendar.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={7}
-                    className="py-4 text-center text-muted-foreground"
-                  >
-                    No contracts expiring in the next 90 days
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+          <>{(() => {
+                          const columns = [
+                    { key: "col_0", header: "Contract" , render: (c: any) => (<>{c.contractNumber}- {c.title}</>) },
+                    { key: "col_1", header: "Customer/Vendor" , render: (c: any) => (<>{c.customer?.name || c.vendor?.name || "-"}</>) },
+                    { key: "col_2", header: "End Date" , render: (c: any) => (<>{new Date(c.endDate).toLocaleDateString()}</>) },
+                    { key: "col_3", header: "Renewal Date" , render: (c: any) => (<>{new Date(c.renewalDate).toLocaleDateString()}</>) },
+                    { key: "col_4", header: "Value" , render: (c: any) => (<>{c.currency}{Number(c.value).toLocaleString()}</>) },
+                    { key: "col_5", header: "Status" , render: (c: any) => (<>{c.status}</>) },
+                    { key: "col_6", header: "Auto-Renew" , render: (c: any) => (<>{c.autoRenew ? "Yes" : "No"}</>) },
+                  ];
+                          return <DataTable columns={columns} data={calendar} rowKey={(c: any) => c.id} />;
+                      })()}</>
         </div>
       </div>
     </div>

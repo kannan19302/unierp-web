@@ -1,4 +1,4 @@
-import { Table } from "@unerp/ui";
+import { DataTable } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
@@ -211,67 +211,27 @@ export default function CustomModulePage() {
 
           {/* Data Table */}
           <div className="builder-table-wrapper">
-            <Table className={`ui-table ${styles.s10}`}>
-              <thead>
-                <tr>
-                  <th className={styles.s11}>
-                    <input type="checkbox" />
-                  </th>
-                  {fields.slice(0, 5).map((f: any) => (
-                    <th key={f.name}>{f.label}</th>
-                  ))}
-                  <th>Created</th>
-                  <th className={styles.s12}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredRecords.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={fields.slice(0, 5).length + 3}
-                      className={styles.s13}
-                    >
-                      No records found. Click 'New' to create one.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredRecords.map((record) => (
-                    <tr key={record.id}>
-                      <td>
-                        <input type="checkbox" />
-                      </td>
-                      {fields.slice(0, 5).map((f: any) => (
-                        <td key={f.name}>
-                          {f.type === "boolean"
-                            ? record.data[f.name]
-                              ? "Yes"
-                              : "No"
-                            : String(record.data[f.name] ?? "")}
-                        </td>
-                      ))}
-                      <td className={styles.s14}>
-                        {new Date(record.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="text-right">
-                        <div className={styles.s15}>
-                          <button
-                            className={`ui-btn ui-btn-secondary ${styles.s16}`}
-                          >
-                            <Edit3 size={13} />
-                          </button>
-                          <button
-                            className={`ui-btn ui-btn-secondary ${styles.s17}`}
-                            onClick={() => handleDelete(record.id)}
-                          >
-                            <Trash2 size={13} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </Table>
+            <>{(() => {
+                                const columns = [
+                        { key: "col_0", header: ( <input type="checkbox" /> ), render: (record: any) => (<><input type="checkbox" /></>) },
+                        { key: "col_1", header: f.label, render: (record: any) => (<>{new Date(record.createdAt).toLocaleDateString()}</>) },
+                        { key: "col_2", header: "Created", render: (record: any) => (<><div className={styles.s15}>
+                                                <button
+                                                  className={`ui-btn ui-btn-secondary ${styles.s16}`}
+                                                >
+                                                  <Edit3 size={13} />
+                                                </button>
+                                                <button
+                                                  className={`ui-btn ui-btn-secondary ${styles.s17}`}
+                                                  onClick={() => handleDelete(record.id)}
+                                                >
+                                                  <Trash2 size={13} />
+                                                </button>
+                                              </div></>) },
+                        { key: "col_3", header: "Actions", render: (record: any) => (<></>) },
+                      ];
+                                return <DataTable columns={columns} data={filteredRecords} rowKey={(record: any) => record.id} />;
+                              })()}</>
           </div>
         </div>
       </div>

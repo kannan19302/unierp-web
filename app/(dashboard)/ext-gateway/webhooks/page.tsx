@@ -1,13 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  DataTable,
-  Badge,
-  Spinner,
-  Button,
-  type Column,
-} from "@unerp/ui";
+import { Card, DataTable, Badge, Spinner, Button, type Column } from "@unerp/ui";
 import { Plus, Eye, Trash2, RotateCcw } from "lucide-react";
 
 interface Webhook {
@@ -44,18 +37,18 @@ export default function WebhooksPage() {
 
   const columns: Column<Webhook>[] = [
     { key: "name", header: "Name", sortable: true },
-    { key: "url", header: "URL", render: (r) => r.url.slice(0, 40) + "..." },
+    { key: "url", header: "URL", render: (r: any) => r.url.slice(0, 40) + "..." },
     {
       key: "eventTypes",
       header: "Events",
-      render: (r) => r.eventTypes?.join(", ") || "-",
+      render: (r: any) => r.eventTypes?.join(", ") || "-",
     },
     { key: "format", header: "Format" },
     { key: "retryPolicy", header: "Retry" },
     {
       key: "active",
       header: "Active",
-      render: (r) =>
+      render: (r: any) =>
         r.active ? (
           <Badge variant="success">Active</Badge>
         ) : (
@@ -65,7 +58,7 @@ export default function WebhooksPage() {
     {
       key: "consecutiveFailureCount",
       header: "Failures",
-      render: (r) => (
+      render: (r: any) => (
         <Badge variant={r.consecutiveFailureCount > 0 ? "danger" : "success"}>
           {r.consecutiveFailureCount}
         </Badge>
@@ -74,7 +67,7 @@ export default function WebhooksPage() {
     {
       key: "id",
       header: "Actions",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex gap-2">
           <button
             onClick={(e) => {

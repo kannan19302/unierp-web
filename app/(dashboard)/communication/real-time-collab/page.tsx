@@ -1,17 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
-import {
-  PageHeader,
-  Card,
-  DataTable,
-  Button,
-  Badge,
-  Spinner,
-  KPICard,
-  Tabs,
-  type Column,
-} from "@unerp/ui";
+import { PageHeader, Card, DataTable, Button, Badge, Spinner, KPICard, Tabs, type Column } from "@unerp/ui";
 import { FileText, Grid, Plus, Edit3, Lock, Users, Layers } from "lucide-react";
 
 interface Document {
@@ -67,7 +57,7 @@ export default function RealTimeCollabPage() {
     {
       key: "title",
       header: "Document",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-2">
           <FileText size={16} />
           <span className="font-medium">{r.title}</span>
@@ -78,12 +68,12 @@ export default function RealTimeCollabPage() {
     {
       key: "version",
       header: "Version",
-      render: (r) => <Badge>v{r.version}</Badge>,
+      render: (r: any) => <Badge>v{r.version}</Badge>,
     },
     {
       key: "collaborators",
       header: "Collaborators",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-1">
           <Users size={14} />
           {r.collaborators?.length || 0}
@@ -93,7 +83,7 @@ export default function RealTimeCollabPage() {
     {
       key: "updatedAt",
       header: "Updated",
-      render: (r) => new Date(r.updatedAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.updatedAt).toLocaleDateString(),
     },
     {
       key: "actions",
@@ -115,7 +105,7 @@ export default function RealTimeCollabPage() {
     {
       key: "title",
       header: "Whiteboard",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-2">
           <Grid size={16} />
           <span className="font-medium">{r.title}</span>
@@ -125,7 +115,7 @@ export default function RealTimeCollabPage() {
     {
       key: "collaborators",
       header: "Collaborators",
-      render: (r) => (
+      render: (r: any) => (
         <div className="flex items-center gap-1">
           <Users size={14} />
           {r.collaborators?.length || 0}
@@ -135,7 +125,7 @@ export default function RealTimeCollabPage() {
     {
       key: "updatedAt",
       header: "Updated",
-      render: (r) => new Date(r.updatedAt).toLocaleDateString(),
+      render: (r: any) => new Date(r.updatedAt).toLocaleDateString(),
     },
     {
       key: "actions",
@@ -212,7 +202,7 @@ export default function RealTimeCollabPage() {
             <DataTable
               columns={docColumns}
               data={documents}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No documents"
               emptyIcon={<FileText size={48} />}
             />
@@ -223,7 +213,7 @@ export default function RealTimeCollabPage() {
             <DataTable
               columns={wbColumns}
               data={whiteboards}
-              rowKey={(r) => r.id}
+              rowKey={(r: any) => r.id}
               emptyTitle="No whiteboards"
               emptyIcon={<Grid size={48} />}
             />
