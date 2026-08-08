@@ -24,6 +24,18 @@ export default defineConfig({
     // Process CSS rather than discarding it, so a component that reads
     // `styles.button` gets a class name instead of undefined.
     css: true,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      reportsDirectory: "./coverage",
+      all: true,
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 80,
+        statements: 80,
+      },
+    },
   },
   resolve: {
     alias: {
