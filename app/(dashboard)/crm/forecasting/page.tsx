@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Badge,
@@ -10,8 +9,7 @@ import {
   Button,
   Input,
   ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+  type ListColumn, Table } from "@unerp/ui";
 import {
   TrendingUp,
   TrendingDown,
@@ -408,7 +406,7 @@ export default function ForecastingPage() {
           <h3 className={`${styles.sectionTitle} ${styles.titleWithIcon}`}>
             <Award size={18} /> Rep Leaderboard
           </h3>
-          <TableclassName={styles.dataTable}>
+          <Table className={styles.dataTable}>
             <thead>
               <tr className={styles.tableHeaderRow}>
                 {[
@@ -495,7 +493,7 @@ export default function ForecastingPage() {
               No forecast snapshots created yet.
             </div>
           ) : (
-            <TableclassName={styles.dataTable}>
+            <Table className={styles.dataTable}>
               <thead>
                 <tr className={styles.tableHeaderRow}>
                   <th className={`${styles.tableHeader} ${styles.alignLeft}`}>

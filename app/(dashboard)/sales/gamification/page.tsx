@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, Table } from "@unerp/ui";
 import { Trophy, Award, Flame, Target } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -138,7 +138,7 @@ export default function SalesGamificationPage() {
         <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
           Rep Rankings & Leaderboard
         </h3>
-        <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
+        <Table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr
               style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}

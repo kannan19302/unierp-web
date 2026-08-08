@@ -4,14 +4,12 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Card,
+import { Card,
   PageHeader,
   Button,
   Spinner,
   Badge,
-  ChangeHistory,
-} from "@unerp/ui";
+  ChangeHistory, Table } from "@unerp/ui";
 import {
   FileText,
   AlertCircle,
@@ -338,7 +336,7 @@ export default function PurchaseOrderDetailPage() {
             {/* Tab Content 1: PO Items */}
             {activeTab === "details" ? (
               <div className="builder-table-wrapper">
-                <TableclassName={styles.p22}>
+                <Table className={styles.p22}>
                   <thead>
                     <tr className={styles.p23}>
                       <th className={styles.p24}>Description</th>
@@ -431,7 +429,7 @@ export default function PurchaseOrderDetailPage() {
                     </div>
 
                     <div className="builder-table-wrapper">
-                      <TableclassName={styles.p45}>
+                      <Table className={styles.p45}>
                         <thead>
                           <tr className={styles.p46}>
                             <th className="p-3" rowSpan={2}>

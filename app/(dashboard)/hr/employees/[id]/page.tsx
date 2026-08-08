@@ -4,14 +4,12 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Card,
+import { Card,
   PageHeader,
   Button,
   Spinner,
   Badge,
-  ChangeHistory,
-} from "@unerp/ui";
+  ChangeHistory, Table } from "@unerp/ui";
 import {
   User,
   AlertCircle,
@@ -485,7 +483,7 @@ export default function EmployeeDetailPage() {
             {activeTab === "documents" && (
               <div className="builder-table-wrapper">
                 {documents.length > 0 ? (
-                  <TableclassName={styles.p16}>
+                  <Table className={styles.p16}>
                     <thead>
                       <tr className={styles.p17}>
                         <th className={styles.p18}>Document Type</th>
@@ -550,7 +548,7 @@ export default function EmployeeDetailPage() {
                         {Number(salaryStructure.total).toLocaleString()}
                       </span>
                     </div>
-                    <TableclassName={styles.p16}>
+                    <Table className={styles.p16}>
                       <thead>
                         <tr className={styles.p17}>
                           <th className={styles.p18}>Component</th>
@@ -583,7 +581,7 @@ export default function EmployeeDetailPage() {
             {activeTab === "attendance" && (
               <div className="builder-table-wrapper">
                 {attendance.length > 0 ? (
-                  <TableclassName={styles.p16}>
+                  <Table className={styles.p16}>
                     <thead>
                       <tr className={styles.p17}>
                         <th className={styles.p18}>Date</th>
@@ -628,7 +626,7 @@ export default function EmployeeDetailPage() {
             {activeTab === "leave" && (
               <div className="builder-table-wrapper">
                 {leaveBalances.length > 0 ? (
-                  <TableclassName={styles.p16}>
+                  <Table className={styles.p16}>
                     <thead>
                       <tr className={styles.p17}>
                         <th className={styles.p18}>Leave Type</th>

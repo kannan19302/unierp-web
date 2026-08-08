@@ -12,7 +12,7 @@ import {
   ChevronDown,
   ChevronRight,
 } from "lucide-react";
-import { Card, Button, Badge } from "@unerp/ui";
+import { Card, Button, Badge, Table } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 interface Vendor {
@@ -319,7 +319,7 @@ export default function SupplierPortalPage() {
                       above.
                     </div>
                   ) : (
-                    <TableclassName={styles.p20}>
+                    <Table className={styles.p20}>
                       <thead>
                         <tr className={styles.p21}>
                           {["Email", "Status", "Last Login", "Invited", ""].map(
@@ -383,7 +383,7 @@ export default function SupplierPortalPage() {
                       No purchase orders for this vendor.
                     </div>
                   ) : (
-                    <TableclassName={styles.p29}>
+                    <Table className={styles.p29}>
                       <thead>
                         <tr className={styles.p30}>
                           {["PO Number", "Status", "Amount", "Created"].map(
@@ -435,7 +435,7 @@ export default function SupplierPortalPage() {
                   ) : rfqs.length === 0 ? (
                     <div className={styles.p36}>No RFQs for this vendor.</div>
                   ) : (
-                    <TableclassName={styles.p37}>
+                    <Table className={styles.p37}>
                       <thead>
                         <tr className={styles.p38}>
                           {["RFQ #", "Status", "Due Date", "Created"].map(

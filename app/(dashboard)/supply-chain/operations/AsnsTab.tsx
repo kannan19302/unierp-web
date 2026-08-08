@@ -1,8 +1,7 @@
 "use client";
 import styles from "./operations.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   Button,
   Badge,
   DataTable,
@@ -13,8 +12,7 @@ import {
   Select,
   KPICard,
   Drawer,
-  Spinner,
-} from "@unerp/ui";
+  Spinner, Table } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import {
   ClipboardList,
@@ -666,7 +664,7 @@ export default function AsnsTab() {
 
               <div className="ui-heading-md">Expected Line Items</div>
               <Card padding="none">
-                <TableclassName="ui-table w-full">
+                <Table className="ui-table w-full">
                   <thead>
                     <tr>
                       <th className="text-left py-2 px-3">Product ID</th>

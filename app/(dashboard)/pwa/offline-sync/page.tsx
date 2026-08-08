@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import React from "react";
@@ -21,7 +22,7 @@ export default function PwaOfflineSyncPage() {
       </div>
 
       <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-        <TableclassName="w-full text-left text-sm">
+        <Table className="w-full text-left text-sm">
           <thead className="bg-gray-50 text-gray-500 font-medium text-xs uppercase border-b">
             <tr>
               <th className="p-3">Action Type</th>

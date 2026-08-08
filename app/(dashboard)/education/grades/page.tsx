@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import { PageHeader, Card, Button, Badge, KPICard } from "@unerp/ui";
+import { PageHeader, Card, Button, Badge, KPICard, Table } from "@unerp/ui";
 import { BookOpen, Award, Save, Users } from "lucide-react";
 
 const COURSES_MOCK = [
@@ -127,7 +127,7 @@ export default function GradeBookPage() {
 
       <Card>
         <div className={styles.s3}>
-          <TableclassName={styles.s4}>
+          <Table className={styles.s4}>
             <thead>
               <tr className={styles.s5}>
                 <th className={styles.s6}>Student</th>

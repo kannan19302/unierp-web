@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -174,7 +175,7 @@ export default function BudgetsPage() {
           </div>
         </div>
       )}
-      <TableclassName={styles.table}>
+      <Table className={styles.table}>
         <thead>
           <tr>
             <th>Category</th>

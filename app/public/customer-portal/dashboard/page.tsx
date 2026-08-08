@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Card, Button, Spinner, StatusBadge, useToast } from "@unerp/ui";
+import { Card, Button, Spinner, StatusBadge, useToast, Table } from "@unerp/ui";
 import {
   FileText,
   ShoppingCart,
@@ -300,7 +300,7 @@ export default function CustomerPortalDashboardPage() {
           (quotations.length === 0 ? (
             <p className="ui-empty-state">No quotations yet.</p>
           ) : (
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Number</th>
@@ -361,7 +361,7 @@ export default function CustomerPortalDashboardPage() {
           (orders.length === 0 ? (
             <p className="ui-empty-state">No sales orders yet.</p>
           ) : (
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Number</th>
@@ -391,7 +391,7 @@ export default function CustomerPortalDashboardPage() {
           (invoices.length === 0 ? (
             <p className="ui-empty-state">No invoices yet.</p>
           ) : (
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Number</th>
@@ -524,7 +524,7 @@ export default function CustomerPortalDashboardPage() {
             {cases.length === 0 ? (
               <p className="ui-empty-state">No support cases yet.</p>
             ) : (
-              <TableclassName="ui-table">
+              <Table className="ui-table">
                 <thead>
                   <tr>
                     <th>Case #</th>

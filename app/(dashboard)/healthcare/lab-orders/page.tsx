@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent } from "@unerp/ui";
+import { ProtectedComponent, Table } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -215,7 +215,7 @@ export default function HealthcareLabOrdersPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Patient</th>

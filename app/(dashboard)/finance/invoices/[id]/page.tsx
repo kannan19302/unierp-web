@@ -4,14 +4,12 @@ import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-  Card,
+import { Card,
   PageHeader,
   Button,
   Spinner,
   Badge,
-  ChangeHistory,
-} from "@unerp/ui";
+  ChangeHistory, Table } from "@unerp/ui";
 import {
   FileText,
   AlertCircle,
@@ -508,7 +506,7 @@ export default function InvoiceDetailPage() {
 
             {activeTab === "items" && (
               <div className="builder-table-wrapper">
-                <TableclassName={styles.itemsTable}>
+                <Table className={styles.itemsTable}>
                   <thead>
                     <tr className={styles.itemsTableHead}>
                       <th>Description</th>

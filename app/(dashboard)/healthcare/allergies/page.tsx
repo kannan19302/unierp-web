@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
@@ -51,7 +52,7 @@ export default function HealthcareAllergiesPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Patient</th>

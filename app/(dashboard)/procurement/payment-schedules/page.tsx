@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Badge, Spinner, Card } from "@unerp/ui";
+import { PageHeader, Badge, Spinner, Card, Table } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart } from "lucide-react";
@@ -111,7 +111,7 @@ export default function PaymentSchedulesPage() {
         <Spinner />
       ) : (
         <Card>
-          <TableclassName="ui-table" style={{ width: "100%" }}>
+          <Table className="ui-table" style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>Schedule #</th>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { RotateCcw, Eye, Check, X } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 export default function POSRefundsPage() {
   const client = useApiClient();
@@ -115,7 +115,7 @@ export default function POSRefundsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Refund #</th>

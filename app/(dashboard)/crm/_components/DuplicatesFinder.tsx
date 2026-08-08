@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button, Spinner } from "@unerp/ui";
+import { Button, Spinner, Table } from "@unerp/ui";
 import { Modal, inputStyle, labelStyle } from "./Modal";
 import { apiGet, apiSend } from "./api";
 import styles from "./DuplicatesFinder.module.css";
@@ -183,7 +183,7 @@ function MergeReviewModal({
         </select>
       </div>
       <div className="builder-table-wrapper">
-        <TableclassName={styles.table}>
+        <Table className={styles.table}>
           <thead>
             <tr className={styles.tableHead}>
               <th className={styles.cell}>Field</th>

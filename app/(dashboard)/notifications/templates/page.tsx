@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -237,7 +238,7 @@ export default function NotificationTemplatesPage() {
       {!loading && templates.length === 0 && (
         <div className="text-gray-500">No templates found.</div>
       )}
-      <TableclassName="ui-table w-full">
+      <Table className="ui-table w-full">
         <thead>
           <tr>
             <th>Name</th>

@@ -18,7 +18,7 @@ import {
   Users,
   Briefcase,
 } from "lucide-react";
-import { useTheme } from "@unerp/ui";
+import { useTheme, Table } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 import { ProfileDirectorySection } from "./ProfileDirectorySection";
 
@@ -1136,7 +1136,7 @@ export default function ProfilePage() {
                       </button>
                     </div>
                     <div className="ui-card-body p-0">
-                      <TableclassName={styles.s11}>
+                      <Table className={styles.s11}>
                         <thead className="border-b">
                           <tr>
                             <th className={styles.s12}>Device</th>
@@ -1204,7 +1204,7 @@ export default function ProfilePage() {
                       Recent Login History
                     </div>
                     <div className="ui-card-body p-0">
-                      <TableclassName={styles.s11}>
+                      <Table className={styles.s11}>
                         <thead className="border-b">
                           <tr>
                             <th className={styles.s12}>Date & Time</th>

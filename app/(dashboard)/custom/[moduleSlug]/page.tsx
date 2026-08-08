@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useEffect, useState } from "react";
@@ -210,7 +211,7 @@ export default function CustomModulePage() {
 
           {/* Data Table */}
           <div className="builder-table-wrapper">
-            <TableclassName={`ui-table ${styles.s10}`}>
+            <Table className={`ui-table ${styles.s10}`}>
               <thead>
                 <tr>
                   <th className={styles.s11}>

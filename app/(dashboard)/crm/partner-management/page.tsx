@@ -1,13 +1,11 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Button,
   Badge,
-  ProtectedComponent,
-} from "@unerp/ui";
+  ProtectedComponent, Table } from "@unerp/ui";
 import {
   Plus,
   Users,
@@ -142,7 +140,7 @@ export default function PartnerManagementPage() {
         {deals.length === 0 ? (
           <p className="text-sm text-gray-400">No deal registrations</p>
         ) : (
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="border-b">
                 <th className="text-left py-2">Company</th>
@@ -216,7 +214,7 @@ export default function PartnerManagementPage() {
         {mdfFunds.length === 0 ? (
           <p className="text-sm text-gray-400">No MDF funds</p>
         ) : (
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="border-b">
                 <th className="text-left py-2">Name</th>

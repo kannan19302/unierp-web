@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  PageHeader,
+import { PageHeader,
   Card,
   Button,
   Badge,
   DataTable,
   type Column,
   KPICard,
-  Spinner,
-} from "@unerp/ui";
+  Spinner, Table } from "@unerp/ui";
 import {
   CalendarClock,
   Play,
@@ -295,7 +293,7 @@ export default function SchedulingPage() {
                   </div>
                 </div>
               </div>
-              <TableclassName={styles.p7}>
+              <Table className={styles.p7}>
                 <thead>
                   <tr className="border-b">
                     <th className={styles.p8}>Product</th>

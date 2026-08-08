@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Badge,
   useToast,
   Button,
-  Input,
-} from "@unerp/ui";
+  Input, Table } from "@unerp/ui";
 import { Settings, Plus, Trash2, Play, Edit3 } from "lucide-react";
 import { apiGet, apiPost, apiPut, apiSend } from "../../_components/api";
 
@@ -275,7 +273,7 @@ export default function DealAutomationPage() {
 
       <Card title={`Rules (${rules.length})`}>
         <div className="ui-table-wrapper">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Name</th>

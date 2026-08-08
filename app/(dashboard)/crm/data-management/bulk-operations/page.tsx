@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
 import { Plus, Play, XCircle, ListChecks } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -183,7 +183,7 @@ export default function BulkOperationsPage() {
         {ops.length === 0 ? (
           <p className="text-sm text-gray-400">No bulk operations yet.</p>
         ) : (
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">Type</th>

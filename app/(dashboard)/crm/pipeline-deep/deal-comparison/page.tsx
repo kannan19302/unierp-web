@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import { useState } from "react";
@@ -48,7 +49,7 @@ export default function PipelineDealComparisonPage() {
       </div>
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
       {deals.length > 0 && (
-        <TableclassName="w-full text-sm">
+        <Table className="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Name</th>

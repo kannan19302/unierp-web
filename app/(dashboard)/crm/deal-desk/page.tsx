@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, Button } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Table } from "@unerp/ui";
 import {
   ClipboardList,
   AlertTriangle,
@@ -94,7 +94,7 @@ export default function DealDeskPage() {
       <div className="ui-grid-2">
         <Card title="Open Requests">
           <div className="ui-table-wrapper">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Type</th>
@@ -145,7 +145,7 @@ export default function DealDeskPage() {
 
         <Card title="Recent Activity">
           <div className="ui-table-wrapper">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Opportunity</th>

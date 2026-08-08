@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Card, PageHeader, Button, Input } from "@unerp/ui";
+import { Card, PageHeader, Button, Input, Table } from "@unerp/ui";
 import { Search, Merge } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -118,7 +118,7 @@ export default function DuplicatesPage() {
 
       {duplicates.length > 0 && (
         <Card title={`Found ${duplicates.length} matching records`}>
-          <TableclassName="w-full text-sm mb-4">
+          <Table className="w-full text-sm mb-4">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">Master</th>

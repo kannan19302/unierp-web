@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Gift, Plus, Search, Eye } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 export default function POSGiftCardsPage() {
   const client = useApiClient();
@@ -150,7 +150,7 @@ export default function POSGiftCardsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Code</th>

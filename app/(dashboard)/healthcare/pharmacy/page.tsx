@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent } from "@unerp/ui";
+import { ProtectedComponent, Table } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -253,7 +253,7 @@ export default function HealthcarePharmacyPage() {
         <div className="ui-card">
           {activeTab === "inventory" && (
             <>
-              <TableclassName="ui-table">
+              <Table className="ui-table">
                 <thead>
                   <tr>
                     <th>Drug</th>
@@ -371,7 +371,7 @@ export default function HealthcarePharmacyPage() {
             </>
           )}
           {activeTab === "batches" && (
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Drug</th>
@@ -416,7 +416,7 @@ export default function HealthcarePharmacyPage() {
             </Table>
           )}
           {activeTab === "controlled" && (
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Drug</th>

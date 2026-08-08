@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -150,7 +151,7 @@ export default function DriveTemplatesPage() {
         </div>
 
         <div className={styles.p7}>
-          <TableclassName={styles.p8}>
+          <Table className={styles.p8}>
             <thead>
               <tr className={styles.p9}>
                 {[

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Palette, Plus, CheckCircle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 export default function EcommerceThemesPage() {
   const client = useApiClient();
@@ -89,7 +89,7 @@ export default function EcommerceThemesPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Name</th>

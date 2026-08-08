@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import { useState } from "react";
 
@@ -58,7 +59,7 @@ export default function CommunicationAnalyticsPage() {
         <div>
           <h2 className="text-lg font-semibold mb-3">Multi-Channel Overview</h2>
           <div className="overflow-x-auto">
-            <TableclassName="w-full text-sm">
+            <Table className="w-full text-sm">
               <thead>
                 <tr className="border-b text-left">
                   <th className="py-2 px-3 font-medium">Channel</th>

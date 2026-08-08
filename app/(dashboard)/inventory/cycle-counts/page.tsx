@@ -1,8 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Button,
   Badge,
@@ -10,8 +9,7 @@ import {
   FormField,
   Input,
   Select,
-  type ListColumn,
-} from "@unerp/ui";
+  type ListColumn, Table } from "@unerp/ui";
 import { Plus, AlertCircle } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -482,7 +480,7 @@ export default function CycleCountsPage() {
               </div>
               <div className="p-5">
                 <form onSubmit={handleSubmitWorksheet} className="ui-stack-4">
-                  <TableclassName={styles.s15}>
+                  <Table className={styles.s15}>
                     <thead>
                       <tr className={styles.s16}>
                         <th className={styles.s17}>Product</th>

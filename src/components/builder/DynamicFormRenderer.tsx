@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import React, { useState, useEffect } from "react";

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
-import { Card, PageHeader, Spinner, Button } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Table } from "@unerp/ui";
 import {
   LayoutDashboard,
   X,
@@ -11,12 +11,26 @@ import {
   BarChart3,
   PieChart,
   TrendingUp,
-  Table,
+  Table as TableIcon,
   Award,
   Activity,
 } from "lucide-react";
 import { useApiClient, RouteGuard } from "@unerp/framework";
 import styles from "./page.module.css";
+
+interface Widget {
+  id: string;
+  title: string;
+  widgetType: WidgetType;
+  dataSource: DataSource;
+  configJson?: string;
+  config?: Record<string, unknown>;
+  position?: { x: number; y: number; w: number; h: number };
+  gridRowStart?: number;
+  gridColStart?: number;
+  gridRowSpan?: number;
+  gridColSpan?: number;
+}
 
 type WidgetType =
   | "KPI_CARD"
@@ -25,6 +39,7 @@ type WidgetType =
   | "FUNNEL"
   | "TABLE"
   | "LEADERBOARD";
+
 type DataSource =
   | "PIPELINE"
   | "LEADS"
@@ -34,19 +49,11 @@ type DataSource =
   | "CONVERSIONS"
   | "COMMISSIONS";
 
-interface Widget {
-  id: string;
-  widgetType: WidgetType;
-  title: string;
-  dataSource: DataSource;
-  config: Record<string, unknown>;
-  position: { x: number; y: number; w: number; h: number };
-}
-
 interface Dashboard {
   id: string;
   name: string;
-  description: string | null;
+  description?: string;
+  isDefault?: boolean;
   widgets: Widget[];
 }
 
@@ -55,7 +62,7 @@ const WIDGET_ICONS: Record<WidgetType, React.ReactNode> = {
   BAR_CHART: <BarChart3 className={styles.widgetIcon} />,
   PIE_CHART: <PieChart className={styles.widgetIcon} />,
   FUNNEL: <Activity className={styles.widgetIcon} />,
-  TABLE: <Table className={styles.widgetIcon} />,
+  TABLE: <TableIcon className={styles.widgetIcon} />,
   LEADERBOARD: <Award className={styles.widgetIcon} />,
 };
 
@@ -405,8 +412,8 @@ export default function DashboardCanvasPage() {
                 key={widget.id}
                 className={`${styles.widgetCard} ${editMode ? styles.editMode : ""}`}
                 style={{
-                  gridColumn: `${widget.position.x + 1} / span ${widget.position.w}`,
-                  gridRow: `${widget.position.y + 1} / span ${widget.position.h}`,
+                  gridColumn: `${(widget.position?.x ?? widget.gridColStart ?? 0) + 1} / span ${widget.position?.w ?? widget.gridColSpan ?? 1}`,
+                  gridRow: `${(widget.position?.y ?? widget.gridRowStart ?? 0) + 1} / span ${widget.position?.h ?? widget.gridRowSpan ?? 1}`,
                 }}
               >
                 <div className={styles.widgetHeader}>

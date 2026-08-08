@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, Table } from "@unerp/ui";
 import { AlertCircle, Truck, CheckCircle, Plus, Package } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -243,7 +243,7 @@ export default function AsnPage() {
               <div className="font-semibold mb-2">
                 Incoming ASNs (Expected Soon)
               </div>
-              <TableclassName="w-full text-sm">
+              <Table className="w-full text-sm">
                 <thead>
                   <tr className="text-left text-gray-500">
                     <th>ASN #</th>
@@ -279,7 +279,7 @@ export default function AsnPage() {
 
         {tab === "asns" && (
           <Card className="p-4">
-            <TableclassName="w-full text-sm">
+            <Table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>ASN #</th>
@@ -360,7 +360,7 @@ export default function AsnPage() {
 
         {tab === "discrepancies" && (
           <Card className="p-4">
-            <TableclassName="w-full text-sm">
+            <Table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>ASN</th>
@@ -463,7 +463,7 @@ export default function AsnPage() {
                   </Button>
                 )}
               </div>
-              <TableclassName="w-full text-sm">
+              <Table className="w-full text-sm">
                 <thead>
                   <tr className="text-left text-gray-500">
                     <th>Product</th>

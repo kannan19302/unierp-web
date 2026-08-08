@@ -3,15 +3,13 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Button,
   Spinner,
   Badge,
   ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+  type ListColumn, Table } from "@unerp/ui";
 import {
   Plus,
   Search,
@@ -460,7 +458,7 @@ export default function SalesReturnsPage() {
                       </div>
                     ) : (
                       <div className={styles.p41}>
-                        <TableclassName={styles.p42}>
+                        <Table className={styles.p42}>
                           <thead>
                             <tr className={styles.p43}>
                               <th className={styles.p44}>Description</th>

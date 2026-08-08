@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import { Card, PageHeader, Spinner, Button, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
 import { Upload, XCircle, FileText } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -166,7 +166,7 @@ export default function ImportPage() {
         {logs.length === 0 ? (
           <p className="text-sm text-gray-400">No imports yet.</p>
         ) : (
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">File</th>

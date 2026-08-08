@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -102,7 +103,7 @@ export default function NotificationPreferencesPage() {
       </div>
       {loading && <div className="text-gray-500">Loading...</div>}
       {!loading && (
-        <TableclassName="ui-table w-full">
+        <Table className="ui-table w-full">
           <thead>
             <tr>
               <th>Category</th>

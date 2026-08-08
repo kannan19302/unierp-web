@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -24,7 +25,7 @@ export default function TierRequirementsPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Tier Requirements</h1>
-      <TableclassName="w-full text-sm">
+      <Table className="w-full text-sm">
         <thead>
           <tr className="border-b text-left">
             <th className="py-2 px-2">Tier</th>

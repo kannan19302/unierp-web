@@ -1,14 +1,12 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Button,
   Badge,
   Input,
-  ProtectedComponent,
-} from "@unerp/ui";
+  ProtectedComponent, Table } from "@unerp/ui";
 import { Plus, Search, Eye, Download, Share2, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { apiGet, apiSend } from "../../_components/api";
@@ -96,7 +94,7 @@ export default function ContentLibraryPage() {
         {items.length === 0 ? (
           <p className="text-sm text-gray-400">No content items yet.</p>
         ) : (
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">Title</th>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, Spinner, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, Table } from "@unerp/ui";
 import { AlertCircle, Truck, Package, CheckCircle, Plus } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
@@ -306,7 +306,7 @@ export default function ShipmentTrackingPage() {
 
         {tab === "inbound" && (
           <Card className="p-4">
-            <TableclassName="w-full text-sm">
+            <Table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>Shipment #</th>
@@ -344,7 +344,7 @@ export default function ShipmentTrackingPage() {
 
         {tab === "outbound" && (
           <Card className="p-4">
-            <TableclassName="w-full text-sm">
+            <Table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>Shipment #</th>
@@ -382,7 +382,7 @@ export default function ShipmentTrackingPage() {
 
         {tab === "exceptions" && (
           <Card className="p-4">
-            <TableclassName="w-full text-sm">
+            <Table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>Shipment</th>

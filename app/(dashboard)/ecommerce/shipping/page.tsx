@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Truck, Plus, Edit2, Trash2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 export default function EcommerceShippingPage() {
   const client = useApiClient();
@@ -118,7 +118,7 @@ export default function EcommerceShippingPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Name</th>

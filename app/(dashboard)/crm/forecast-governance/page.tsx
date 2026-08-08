@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast, Button } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Button, Table } from "@unerp/ui";
 import {
   TrendingUp,
   TrendingDown,
@@ -110,7 +110,7 @@ export default function ForecastGovernancePage() {
       <div className="ui-grid-2">
         <Card title="Forecast Categories">
           <div className="ui-table-wrapper">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Category</th>
@@ -147,7 +147,7 @@ export default function ForecastGovernancePage() {
 
         <Card title="Forecast Trend">
           <div className="ui-table-wrapper">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Period</th>
@@ -180,7 +180,7 @@ export default function ForecastGovernancePage() {
       <div className="ui-grid-2">
         <Card title="Forecast Accuracy">
           <div className="ui-table-wrapper">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Period</th>

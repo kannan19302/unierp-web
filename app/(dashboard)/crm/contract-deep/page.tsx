@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -109,7 +110,7 @@ export default function ContractDeepPage() {
           Upcoming Expiry Calendar (90 days)
         </h2>
         <div className="overflow-x-auto">
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="border-b text-left">
                 <th className="py-2 px-3 font-medium">Contract</th>

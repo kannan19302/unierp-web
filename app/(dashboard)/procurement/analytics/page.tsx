@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { PageHeader, Spinner, Card } from "@unerp/ui";
+import { PageHeader, Spinner, Card, Table } from "@unerp/ui";
 import { RouteGuard, useApiClient } from "@unerp/framework";
 
 import { ShoppingCart, BarChart3 } from "lucide-react";
@@ -83,7 +83,7 @@ export default function ProcurementAnalyticsPage() {
 
           <Card>
             <h3>Top Vendors by Spend</h3>
-            <TableclassName="ui-table" style={{ marginTop: 8, width: "100%" }}>
+            <Table className="ui-table" style={{ marginTop: 8, width: "100%" }}>
               <thead>
                 <tr>
                   <th>Vendor</th>

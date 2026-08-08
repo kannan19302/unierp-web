@@ -13,8 +13,7 @@ import {
   Plus,
   FileText,
 } from "lucide-react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Button,
   Spinner,
@@ -24,8 +23,7 @@ import {
   FormField,
   Select,
   StatCardRow,
-  useToast,
-} from "@unerp/ui";
+  useToast, Table } from "@unerp/ui";
 import { SubTabBar, type SubTab } from "@unerp/ui/layout";
 import { useApiClient } from "@unerp/framework";
 
@@ -1426,7 +1424,7 @@ export default function ProjectsPage() {
                   <h4 className={styles.p84}>Project Cost Ledger</h4>
                   {costEntries.length > 0 ? (
                     <div className="builder-table-wrapper">
-                      <TableclassName={styles.p85}>
+                      <Table className={styles.p85}>
                         <thead>
                           <tr className={styles.p86}>
                             <th className={styles.p87}>Date</th>

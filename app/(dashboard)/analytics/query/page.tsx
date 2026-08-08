@@ -1,12 +1,13 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
+import { Table } from "@unerp/ui";
 import {
   GitFork,
   Play,
   Download,
   Filter,
-  Table,
+  Table as TableIcon,
   BarChart3,
   Plus,
   Trash2,
@@ -343,7 +344,7 @@ export default function VisualQueryBuilderPage() {
             {AVAILABLE_TABLES.map((t) => (
               <div key={t.name} className="ui-stack-1">
                 <div className={styles.s13}>
-                  <Table size={14} className="ui-text-primary" /> {t.name}
+                  <TableIcon size={14} className="ui-text-primary" /> {t.name}
                 </div>
                 <div className={styles.s14}>
                   {t.columns.map((col) => (
@@ -627,7 +628,7 @@ export default function VisualQueryBuilderPage() {
                       }}
                       className={styles.s36}
                     >
-                      <Table size={12} /> Table
+                      <TableIcon size={12} /> Table
                     </button>
                     <button
                       onClick={() => setViewMode("chart")}
@@ -650,7 +651,7 @@ export default function VisualQueryBuilderPage() {
 
                 {viewMode === "table" ? (
                   <div className="builder-table-wrapper">
-                    <TableclassName={styles.s37}>
+                    <Table className={styles.s37}>
                       <thead>
                         <tr>
                           {results.columns.map((c) => (

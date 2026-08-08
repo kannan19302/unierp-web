@@ -3,15 +3,13 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
+import { PageHeader,
   Button,
   Spinner,
   Badge,
   StatCardRow,
   ListPageTemplate,
-  type ListColumn,
-} from "@unerp/ui";
+  type ListColumn, Table } from "@unerp/ui";
 import {
   Plus,
   X,
@@ -447,7 +445,7 @@ export default function PurchaseReturnsPage() {
                       </div>
                     ) : (
                       <div className={styles.p24}>
-                        <TableclassName={styles.p25}>
+                        <Table className={styles.p25}>
                           <thead>
                             <tr className={styles.p26}>
                               <th className={styles.p27}>Description</th>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
 import { LogOut, Heart, ThumbsUp, BarChart3 } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -138,7 +138,7 @@ export default function AdvancedHrExitInterviewPage() {
             No exit interviews recorded.
           </p>
         ) : (
-          <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
+          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr
                 style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}

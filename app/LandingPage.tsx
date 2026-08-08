@@ -28,7 +28,7 @@ import {
   RefreshCw,
   Plus,
 } from "lucide-react";
-import { useTheme } from "@unerp/ui";
+import { useTheme, Table } from "@unerp/ui";
 import "./landing.css";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1513,7 +1513,7 @@ export default function LandingPage() {
                       </button>
                     </div>
                     <div className="playground-table-container">
-                      <TableclassName="playground-table">
+                      <Table className="playground-table">
                         <thead>
                           <tr>
                             <th>Invoice ID</th>
@@ -1745,7 +1745,7 @@ export default function LandingPage() {
                       </div>
                     )}
                     <div className="playground-table-container">
-                      <TableclassName="playground-table">
+                      <Table className="playground-table">
                         <thead>
                           <tr>
                             <th>SKU</th>

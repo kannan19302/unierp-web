@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Badge,
   useToast,
   Button,
-  Input,
-} from "@unerp/ui";
+  Input, Table } from "@unerp/ui";
 import {
   ClipboardList,
   Search,
@@ -95,7 +93,7 @@ export default function DealDeskRequestsPage() {
 
       <Card>
         <div className="ui-table-wrapper">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Opportunity</th>

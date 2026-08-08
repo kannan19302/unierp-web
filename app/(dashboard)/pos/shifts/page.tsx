@@ -10,7 +10,7 @@ import {
   Eye,
 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 interface Shift {
   id: string;
@@ -237,7 +237,7 @@ export default function POSShiftsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Employee</th>

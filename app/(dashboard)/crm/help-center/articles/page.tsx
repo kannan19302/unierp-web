@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
 import { Search, Eye, ThumbsUp, Trash2, Edit3 } from "lucide-react";
 import Link from "next/link";
 import { apiGet, apiSend } from "../../_components/api";
@@ -75,7 +75,7 @@ export default function ArticlesPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Title</th>

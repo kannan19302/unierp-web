@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import styles from "./page.module.css";
@@ -364,7 +365,7 @@ export default function POSAdvancedPage() {
             </button>
           </div>
           <div className={styles.p5}>
-            <TableclassName={styles.p6}>
+            <Table className={styles.p6}>
               <thead>
                 <tr className={styles.p7}>
                   {[
@@ -432,7 +433,7 @@ export default function POSAdvancedPage() {
             })}
           </div>
           <div className={styles.p20}>
-            <TableclassName={styles.p21}>
+            <Table className={styles.p21}>
               <thead>
                 <tr className={styles.p22}>
                   {[

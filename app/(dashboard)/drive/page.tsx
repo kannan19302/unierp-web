@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useRef, Suspense } from "react";
@@ -778,7 +779,7 @@ function DrivePageContent() {
             <h3 className={styles.p23}>Files</h3>
 
             <div className={["ui-card", styles.p24].filter(Boolean).join(" ")}>
-              <TableclassName={styles.p25}>
+              <Table className={styles.p25}>
                 <thead>
                   <tr className={styles.p26}>
                     <th className={styles.p27}>Name</th>

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ProtectedComponent } from "@unerp/ui";
+import { ProtectedComponent, Table } from "@unerp/ui";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const api = {
@@ -189,7 +189,7 @@ export default function EducationExamsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Course</th>
@@ -233,7 +233,7 @@ export default function EducationExamsPage() {
               <h4 className="font-semibold mb-2">
                 {selectedExam.title} - Results
               </h4>
-              <TableclassName="ui-table">
+              <Table className="ui-table">
                 <thead>
                   <tr>
                     <th>Student</th>

@@ -8,7 +8,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 export default function EcommerceExpOrdersPage() {
   const client = useApiClient();
@@ -173,7 +173,7 @@ export default function EcommerceExpOrdersPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Order #</th>

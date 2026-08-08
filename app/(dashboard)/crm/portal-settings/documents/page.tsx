@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Button, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Button, Badge, Table } from "@unerp/ui";
 import { FileText, Download, Trash2, Plus, Search } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -165,7 +165,7 @@ export default function PortalDocumentsPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Name</th>

@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -175,7 +176,7 @@ export default function QualityChecksPage() {
         </button>
       </div>
       {tab === "checks" && (
-        <TableclassName={styles.table}>
+        <Table className={styles.table}>
           <thead>
             <tr>
               <th>Status</th>

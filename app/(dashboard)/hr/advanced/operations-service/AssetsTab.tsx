@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   StatusBadge,
   Button,
   Modal,
   FormField,
   Input,
   Select,
-  useToast,
-} from "@unerp/ui";
+  useToast, Table } from "@unerp/ui";
 import { Plus, AlertTriangle } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 import styles from "./AssetsTab.module.css";
@@ -101,7 +99,7 @@ export default function AssetsTab() {
         </div>
       )}
       <Card padding="none" className="builder-table-wrapper">
-        <TableclassName={styles.s0}>
+        <Table className={styles.s0}>
           <thead>
             <tr className={styles.s1}>
               <th className="p-4">Asset</th>

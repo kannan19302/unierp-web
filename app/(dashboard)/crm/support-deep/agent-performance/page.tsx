@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, PageHeader, Spinner, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, Table } from "@unerp/ui";
 import {
   BarChart3,
   Users,
@@ -122,7 +122,7 @@ export default function AgentPerformancePage() {
           </div>
           <Card>
             <div className="ui-card-body p-0">
-              <TableclassName="ui-table">
+              <Table className="ui-table">
                 <thead>
                   <tr>
                     <th>Agent</th>

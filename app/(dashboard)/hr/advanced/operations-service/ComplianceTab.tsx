@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, Button, Spinner, useToast } from "@unerp/ui";
+import { Card, Button, Spinner, useToast, Table } from "@unerp/ui";
 import {
   Play,
   ShieldAlert,
@@ -126,7 +126,7 @@ export default function ComplianceTab() {
         </div>
       ) : (
         <Card padding="none" className="builder-table-wrapper">
-          <TableclassName={styles.s7}>
+          <Table className={styles.s7}>
             <thead>
               <tr className={styles.s8}>
                 <th className="p-4">Audit Area</th>

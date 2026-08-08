@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, Badge, Table } from "@unerp/ui";
 import {
   Plus,
   Trash2,
@@ -382,7 +382,7 @@ export default function BlanketAgreementsPage() {
             </div>
           ) : (
             <div className="builder-table-wrapper">
-              <TableclassName={styles.p14}>
+              <Table className={styles.p14}>
                 <thead>
                   <tr className={styles.p15}>
                     <th className="py-3 px-4">Agreement No.</th>
@@ -801,7 +801,7 @@ export default function BlanketAgreementsPage() {
                 </div>
 
                 <div className={styles.p58}>
-                  <TableclassName={styles.p59}>
+                  <Table className={styles.p59}>
                     <thead>
                       <tr className={styles.p60}>
                         <th className="p-3">Description</th>

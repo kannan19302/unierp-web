@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -126,7 +127,7 @@ export default function ExportsPage() {
           <Plus size={18} /> Schedule Export
         </button>
       </div>
-      <TableclassName={styles.table}>
+      <Table className={styles.table}>
         <thead>
           <tr>
             <th>Name</th>

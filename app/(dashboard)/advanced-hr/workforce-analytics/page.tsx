@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
 import { Users, TrendingDown, Clock, Star } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -162,7 +162,7 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
             No snapshots. Click Generate to capture current state.
           </p>
         ) : (
-          <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
+          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr
                 style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}

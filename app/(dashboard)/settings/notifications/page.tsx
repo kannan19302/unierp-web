@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -127,7 +128,7 @@ export default function NotificationPreferencesPage() {
           {loading ? (
             <div className={styles.loading}>Loading preferences...</div>
           ) : (
-            <TableclassName={styles.table}>
+            <Table className={styles.table}>
               <thead>
                 <tr className="border-b">
                   <th className={styles.categoryHeading}>Category</th>

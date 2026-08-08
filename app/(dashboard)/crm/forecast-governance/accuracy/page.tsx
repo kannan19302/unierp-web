@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, Badge, useToast } from "@unerp/ui";
+import { Card, PageHeader, Spinner, Badge, useToast, Table } from "@unerp/ui";
 import { BarChart3, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { apiGet } from "../../_components/api";
 
@@ -125,7 +125,7 @@ export default function ForecastAccuracyPage() {
 
       <Card title="Period-over-Period Accuracy">
         <div className="ui-table-wrapper">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Period</th>

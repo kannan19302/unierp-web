@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Button, Spinner, useToast, Badge, Table } from "@unerp/ui";
 import { GitBranch, Users, Building2, Plus } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -81,7 +81,7 @@ export default function AdvancedHrOrgChartPage() {
               No org chart nodes defined.
             </p>
           ) : (
-            <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
+            <Table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr
                   style={{

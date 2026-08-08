@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 export const dynamic = "force-dynamic";
@@ -319,7 +320,7 @@ function CustomAppPageContent() {
           </div>
         ) : (
           <div className="builder-table-wrapper">
-            <TableclassName={styles.s14}>
+            <Table className={styles.s14}>
               <thead>
                 <tr className="border-b">
                   <th className={styles.s15}>ID</th>
@@ -885,7 +886,7 @@ function RuntimeTableWidget({
           <div className={styles.s38}>No records found.</div>
         ) : (
           <div className="builder-table-wrapper">
-            <TableclassName={styles.s44}>
+            <Table className={styles.s44}>
               <thead>
                 <tr className={styles.s45}>
                   <th className={styles.s46}>ID</th>
@@ -1217,7 +1218,7 @@ function RemoteAppPageRenderer({
       {state === "error" && <p className={styles.s78}>{message}</p>}
       {state === "ok" && (
         <div className={styles.s79}>
-          <TableclassName={styles.s80}>
+          <Table className={styles.s80}>
             <thead>
               <tr>
                 {cols.map((c) => (

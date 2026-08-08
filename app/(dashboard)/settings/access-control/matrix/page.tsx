@@ -1,8 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
-import {
-  PageHeader,
+import { PageHeader,
   Card,
   Badge,
   Spinner,
@@ -10,8 +9,7 @@ import {
   Tooltip,
   Drawer,
   Disclosure,
-  EmptyState,
-} from "@unerp/ui";
+  EmptyState, Table } from "@unerp/ui";
 import { Check, X, Minus, Shield, Search, ArrowLeft } from "lucide-react";
 import {
   PERMISSION_REGISTRY,
@@ -143,7 +141,7 @@ export default function MatrixPage() {
           </Card>
         ) : (
           <Card padding="none" className="builder-table-wrapper">
-            <TableclassName={styles.s3}>
+            <Table className={styles.s3}>
               <thead>
                 <tr className={styles.s4}>
                   <th className={styles.s5}>Role</th>

@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { Search, Save, Clock, TrendingUp } from "lucide-react";
-import { DataTable } from "@unerp/ui";
+import { DataTable, Table } from "@unerp/ui";
 import type { Column } from "@unerp/ui";
 
 interface SearchResult {
@@ -93,7 +93,7 @@ export default function SearchPage() {
         <div className="text-gray-500">No results found for "{query}"</div>
       )}
       {results.length > 0 && (
-        <TableclassName="ui-table w-full">
+        <Table className="ui-table w-full">
           <thead>
             <tr>
               <th>Type</th>

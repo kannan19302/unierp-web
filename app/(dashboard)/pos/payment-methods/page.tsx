@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { CreditCard, Plus, Edit2, Trash2 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 export default function POSPaymentMethodsPage() {
   const client = useApiClient();
@@ -104,7 +104,7 @@ export default function POSPaymentMethodsPage() {
           </div>
         )}
         <div className="ui-card">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Name</th>

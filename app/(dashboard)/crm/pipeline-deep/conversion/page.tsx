@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -29,7 +30,7 @@ export default function PipelineConversionPage() {
     <div className="space-y-6">
       <div className="ui-card p-4">
         <h1 className="text-xl font-bold mb-4">Stage Conversion Rates</h1>
-        <TableclassName="w-full text-sm">
+        <Table className="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Stage</th>
@@ -67,7 +68,7 @@ export default function PipelineConversionPage() {
 
       <div className="ui-card p-4">
         <h2 className="text-xl font-bold mb-4">Stage Duration Analysis</h2>
-        <TableclassName="w-full text-sm">
+        <Table className="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Stage</th>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, Table } from "@unerp/ui";
 import { useApiClient } from "@unerp/framework";
 
 export default function SalesDocumentsPage() {
@@ -124,7 +124,7 @@ export default function SalesDocumentsPage() {
               No generated documents yet.
             </p>
           ) : (
-            <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
+            <Table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr
                   style={{

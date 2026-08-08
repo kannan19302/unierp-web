@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { TrendingUp, Loader2 } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
-import { Card, Button } from "@unerp/ui";
+import { Card, Button, Table } from "@unerp/ui";
 import { RouteGuard } from "@unerp/framework";
 
 interface TrendResult {
@@ -90,7 +90,7 @@ export default function TrendsPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <TableclassName="ui-table w-full">
+              <Table className="ui-table w-full">
                 <thead>
                   <tr>
                     <th>KPI</th>

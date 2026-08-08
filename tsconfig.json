@@ -6,6 +6,9 @@
       "@/*": [
         "./src/*"
       ],
+      "@unerp/ui": [
+        "../unierp-design-system/src/index.ts"
+      ],
       "@/components/*": [
         "./src/components/*"
       ],

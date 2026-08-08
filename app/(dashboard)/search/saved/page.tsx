@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 
 import { useState, useEffect } from "react";
@@ -41,7 +42,7 @@ export default function SavedSearchesPage() {
         <div className="text-gray-500">No saved searches yet.</div>
       )}
       {searches.length > 0 && (
-        <TableclassName="ui-table w-full">
+        <Table className="ui-table w-full">
           <thead>
             <tr>
               <th>Name</th>

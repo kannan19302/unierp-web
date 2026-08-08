@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
@@ -384,7 +385,7 @@ export default function DocumentsAdvancedPage() {
               })}
             </div>
             <div className={styles.p16}>
-              <TableclassName={styles.p17}>
+              <Table className={styles.p17}>
                 <thead>
                   <tr className={styles.p18}>
                     <th className={styles.p19}>Document</th>

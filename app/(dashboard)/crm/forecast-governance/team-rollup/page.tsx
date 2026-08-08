@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   useToast,
   Button,
   Input,
-  Badge,
-} from "@unerp/ui";
+  Badge, Table } from "@unerp/ui";
 import { Users, TrendingUp, DollarSign, Target } from "lucide-react";
 import { apiGet, apiPost } from "../../_components/api";
 
@@ -149,7 +147,7 @@ export default function TeamRollupPage() {
 
           <Card title="Team Members">
             <div className="ui-table-wrapper">
-              <TableclassName="ui-table">
+              <Table className="ui-table">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -197,7 +195,7 @@ export default function TeamRollupPage() {
           {rollups.length > 0 && (
             <Card title="Saved Rollups">
               <div className="ui-table-wrapper">
-                <TableclassName="ui-table">
+                <Table className="ui-table">
                   <thead>
                     <tr>
                       <th>Period</th>

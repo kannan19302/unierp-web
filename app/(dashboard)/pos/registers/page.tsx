@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Monitor, Plus, Eye } from "lucide-react";
 import { RouteGuard, useApiClient } from "@unerp/framework";
-import { useToast } from "@unerp/ui";
+import { useToast, Table } from "@unerp/ui";
 
 export default function POSRegistersPage() {
   const client = useApiClient();
@@ -107,7 +107,7 @@ export default function POSRegistersPage() {
           </div>
         )}
         <div className="ui-card">
-          <TableclassName="ui-table">
+          <Table className="ui-table">
             <thead>
               <tr>
                 <th>Terminal</th>

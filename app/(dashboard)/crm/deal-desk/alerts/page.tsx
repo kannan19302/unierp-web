@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Badge,
   useToast,
   Button,
-  Input,
-} from "@unerp/ui";
+  Input, Table } from "@unerp/ui";
 import { AlertTriangle, Bell, CheckCircle } from "lucide-react";
 import { apiGet, apiPost } from "../../_components/api";
 
@@ -91,7 +89,7 @@ export default function DealAlertsPage() {
       {!loading && alerts.length > 0 && (
         <Card title={`Alerts for ${opportunityId}`}>
           <div className="ui-table-wrapper">
-            <TableclassName="ui-table">
+            <Table className="ui-table">
               <thead>
                 <tr>
                   <th>Type</th>

@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
@@ -164,7 +165,7 @@ export default function AnalyticsPivotPage() {
 
           {/* Pivot Output Table */}
           <div className={styles.s6}>
-            <TableclassName={styles.s7}>
+            <Table className={styles.s7}>
               <thead>
                 <tr className={styles.s8}>
                   <th className={styles.s9}>Period / Row</th>

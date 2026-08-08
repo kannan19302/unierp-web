@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Button,
-  ProtectedComponent,
-} from "@unerp/ui";
+  ProtectedComponent, Table } from "@unerp/ui";
 import { Plus, FolderOpen, Trash2 } from "lucide-react";
 import { apiGet, apiSend } from "../../_components/api";
 
@@ -117,7 +115,7 @@ export default function ContentCategoriesPage() {
         {categories.length === 0 ? (
           <p className="text-sm text-gray-400">No categories yet.</p>
         ) : (
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">Name</th>

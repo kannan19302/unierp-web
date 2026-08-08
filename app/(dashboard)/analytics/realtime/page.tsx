@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge } from "@unerp/ui";
+import { Card, PageHeader, Spinner, useToast, Badge, Table } from "@unerp/ui";
 import { Activity, Users, Zap, Globe } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 
@@ -131,7 +131,7 @@ export default function AnalyticsRealtimePage() {
             No active user sessions.
           </p>
         ) : (
-          <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
+          <Table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr
                 style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}

@@ -1,13 +1,11 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Card,
+import { Card,
   PageHeader,
   Spinner,
   Button,
   Badge,
-  ProtectedComponent,
-} from "@unerp/ui";
+  ProtectedComponent, Table } from "@unerp/ui";
 import {
   Plus,
   TrendingUp,
@@ -309,7 +307,7 @@ export default function WinLossPage() {
 
       {analytics && analytics.reasonsBreakdown?.length > 0 && (
         <Card title="Reasons Breakdown">
-          <TableclassName="w-full text-sm">
+          <Table className="w-full text-sm">
             <thead>
               <tr className="border-b">
                 <th className="text-left py-2">Reason</th>

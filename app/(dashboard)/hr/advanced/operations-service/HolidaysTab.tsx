@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Card,
+import { Card,
   Button,
   Spinner,
   Modal,
   FormField,
   Input,
   Select,
-  useToast,
-} from "@unerp/ui";
+  useToast, Table } from "@unerp/ui";
 import { Plus, Calendar, Globe, AlertTriangle } from "lucide-react";
 import { useApiClient } from "@unerp/framework";
 import styles from "./HolidaysTab.module.css";
@@ -94,7 +92,7 @@ export default function HolidaysTab() {
         </div>
       ) : (
         <Card padding="none">
-          <TableclassName={styles.s0}>
+          <Table className={styles.s0}>
             <thead>
               <tr className={styles.s1}>
                 <th className="p-4">Holiday Name</th>

@@ -1,3 +1,4 @@
+import { Table } from "@unerp/ui";
 "use client";
 import { useState, useEffect } from "react";
 
@@ -29,7 +30,7 @@ export default function ClauseLibraryPage() {
         <button className="ui-btn">+ New Clause</button>
       </div>
       <div className="overflow-x-auto">
-        <TableclassName="w-full text-sm">
+        <Table className="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-3 font-medium">Title</th>
