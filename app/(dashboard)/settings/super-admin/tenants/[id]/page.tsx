@@ -53,8 +53,6 @@ export default function TenantDetailPage() {
       !confirm("WARNING: PERMANENTLY PURGE TENANT? This action is irreversible.")
     )
       return;
-    // For C04 compliance, normally we'd need an approval token or break-glass reason.
-    // We'll prompt for a break-glass reason here if TwoPersonControl is active.
     const reason = prompt(
       "Enter a break-glass reason (min 10 chars) to bypass two-person control, or cancel:",
     );
@@ -80,6 +78,40 @@ export default function TenantDetailPage() {
       router.push("/settings/super-admin/tenants");
     } catch (err: any) {
       alert(`Purge failed: ${err.message}`);
+    }
+  }
+
+  async function handleOffboard() {
+    if (!confirm("Start offboarding process for this tenant? (30 days retention)")) return;
+    try {
+      await api.post(`/tenants/${params?.id}/offboard`, { retentionDays: 30 });
+      loadTenant(params!.id);
+    } catch (err: any) {
+      alert(`Offboard failed: ${err.message}`);
+    }
+  }
+
+  async function handleExport() {
+    const reason = prompt("Enter a break-glass reason (min 10 chars) for exporting data:");
+    if (!reason || reason.length < 10) {
+      alert("Invalid reason. Export cancelled.");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("unierp_token");
+      const res = await fetch(`/api/v1/super-admin/tenants/${params?.id}/export`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+          "x-break-glass-reason": reason
+        },
+        body: JSON.stringify({ format: "JSON" })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      alert("Export job started. Check history.");
+    } catch (err: any) {
+      alert(`Export failed: ${err.message}`);
     }
   }
 
@@ -113,20 +145,29 @@ export default function TenantDetailPage() {
           ]}
           actions={
             <div className="flex gap-2">
-              {isActive ? (
+              <Button variant="outline" onClick={handleExport}>
+                Export
+              </Button>
+              {tenant.status === "ACTIVE" && (
                 <Button variant="outline" onClick={handleSuspend}>
                   <Pause className="w-4 h-4 mr-2" />
                   Suspend
                 </Button>
-              ) : (
+              )}
+              {tenant.status === "SUSPENDED" && (
                 <Button variant="outline" onClick={handleResume}>
                   <Play className="w-4 h-4 mr-2" />
                   Resume
                 </Button>
               )}
+              {tenant.status !== "OFFBOARDING" && tenant.status !== "PURGED" && (
+                <Button variant="outline" onClick={handleOffboard}>
+                  Archive
+                </Button>
+              )}
               <Button variant="danger" onClick={handlePurge}>
                 <Trash2 className="w-4 h-4 mr-2" />
-                Purge Data
+                Purge
               </Button>
             </div>
           }
