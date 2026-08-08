@@ -25,10 +25,17 @@ export default function TenantDetailPage() {
     }
   }, [params?.id]);
 
+  const [internalAuditLogs, setInternalAuditLogs] = useState<any[]>([]);
+
   async function loadTenant(id: string) {
     try {
       const data = await api.get(`/super-admin/tenants/${id}`);
       setTenant(data);
+
+      const logs = (await api.get(`/super-admin/tenants/${id}/audit-trail?limit=10`)) as any;
+      if (logs && logs.data) {
+        setInternalAuditLogs(logs.data);
+      }
     } catch (err) {
       console.error("Failed to load tenant", err);
     } finally {
@@ -92,24 +99,25 @@ export default function TenantDetailPage() {
   }
 
   async function handleExport() {
-    const reason = prompt("Enter a break-glass reason (min 10 chars) for exporting data:");
-    if (!reason || reason.length < 10) {
-      alert("Invalid reason. Export cancelled.");
-      return;
-    }
     try {
       const token = localStorage.getItem("unierp_token");
-      const res = await fetch(`/api/v1/super-admin/tenants/${params?.id}/export`, {
-        method: "POST",
+      const res = await fetch(`/api/v1/super-admin/tenants/${params?.id}/audit-trail/export`, {
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-          "x-break-glass-reason": reason
-        },
-        body: JSON.stringify({ format: "JSON" })
+          "Authorization": `Bearer ${token}`
+        }
       });
       if (!res.ok) throw new Error(await res.text());
-      alert("Export job started. Check history.");
+      
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `tenant-${params?.id}-audit-trail.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
     } catch (err: any) {
       alert(`Export failed: ${err.message}`);
     }
@@ -291,6 +299,49 @@ export default function TenantDetailPage() {
             </div>
           </Card>
         </div>
+
+        {/* Internal Audit Trail Viewer */}
+        <Card>
+          <div className="px-6 py-4 border-b dark:border-gray-800 flex justify-between items-center">
+            <h3 className="text-lg font-semibold flex items-center">
+              <History className="w-5 h-5 mr-2 text-gray-500" />
+              Tenant Internal Audit Trail
+            </h3>
+            <Button variant="outline" size="sm" onClick={handleExport}>
+              Export CSV
+            </Button>
+          </div>
+          <div className="p-6">
+            {internalAuditLogs.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                  <thead className="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th className="px-4 py-3">Time</th>
+                      <th className="px-4 py-3">Action</th>
+                      <th className="px-4 py-3">User</th>
+                      <th className="px-4 py-3">Entity Type</th>
+                      <th className="px-4 py-3">Entity ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {internalAuditLogs.map((log: any) => (
+                      <tr key={log.id} className="border-b dark:border-gray-700">
+                        <td className="px-4 py-3 whitespace-nowrap">{new Date(log.createdAt).toLocaleString()}</td>
+                        <td className="px-4 py-3 font-medium">{log.action}</td>
+                        <td className="px-4 py-3 text-gray-500">{log.userId}</td>
+                        <td className="px-4 py-3">{log.entityType}</td>
+                        <td className="px-4 py-3 font-mono text-xs">{log.entityId}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-sm text-gray-500 italic">No internal audit logs found for this tenant.</div>
+            )}
+          </div>
+        </Card>
 
       </div>
     </RouteGuard>
