@@ -199,6 +199,13 @@ export default function DashboardLayout({
   >({});
   const [demoDataLoaded, setDemoDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isImpersonating, setIsImpersonating] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsImpersonating(!!localStorage.getItem("unierp_token_original"));
+    }
+  }, []);
 
   const [dynamicAppNav, setDynamicAppNav] = useState<any>(null);
 
@@ -666,6 +673,48 @@ export default function DashboardLayout({
               }}
               className={styles.s5}
             >
+              {isImpersonating && (
+                <div style={{ backgroundColor: "#ef4444", color: "white", padding: "12px", borderRadius: "8px", marginBottom: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <Users size={16} />
+                    <strong>IMPERSONATING TENANT</strong> - All actions are audited.
+                  </div>
+                  <button
+                    onClick={() => {
+                      const originalToken = localStorage.getItem("unierp_token_original");
+                      if (originalToken) {
+                        localStorage.setItem("unierp_token", originalToken);
+                        localStorage.removeItem("unierp_token_original");
+                        window.location.href = "/settings/super-admin/tenants";
+                      }
+                    }}
+                    style={{ backgroundColor: "rgba(0,0,0,0.2)", padding: "4px 12px", borderRadius: "4px", fontSize: "12px", fontWeight: "bold" }}
+                  >
+                    End Impersonation
+                  </button>
+                </div>
+              )}
+              {isImpersonating && (
+                <div style={{ backgroundColor: "#ef4444", color: "white", padding: "12px", borderRadius: "8px", marginBottom: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <Users size={16} />
+                    <strong>IMPERSONATING TENANT</strong> - All actions are audited.
+                  </div>
+                  <button
+                    onClick={() => {
+                      const originalToken = localStorage.getItem("unierp_token_original");
+                      if (originalToken) {
+                        localStorage.setItem("unierp_token", originalToken);
+                        localStorage.removeItem("unierp_token_original");
+                        window.location.href = "/settings/super-admin/tenants";
+                      }
+                    }}
+                    style={{ backgroundColor: "rgba(0,0,0,0.2)", padding: "4px 12px", borderRadius: "4px", fontSize: "12px", fontWeight: "bold", border: "none", cursor: "pointer", color: "white" }}
+                  >
+                    End Impersonation
+                  </button>
+                </div>
+              )}
               {demoDataLoaded && (
                 <DemoBanner
                   currentModule={pathname.split("/")[1]}

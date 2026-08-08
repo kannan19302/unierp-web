@@ -115,6 +115,25 @@ export default function TenantDetailPage() {
     }
   }
 
+  async function handleImpersonate() {
+    try {
+      const res = (await api.post(`/super-admin/tenants/${params?.id}/impersonate`, {})) as any;
+      if (res?.token) {
+        // Save the current token to restore later
+        const currentToken = localStorage.getItem("unierp_token");
+        if (currentToken) localStorage.setItem("unierp_token_original", currentToken);
+        
+        // Apply impersonation token
+        localStorage.setItem("unierp_token", res.token);
+        
+        // Redirect to dashboard (now impersonating)
+        window.location.href = "/dashboard";
+      }
+    } catch (err: any) {
+      alert(`Impersonation failed: ${err.message}`);
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -145,6 +164,10 @@ export default function TenantDetailPage() {
           ]}
           actions={
             <div className="flex gap-2">
+              <Button variant="outline" onClick={handleImpersonate}>
+                <Users className="w-4 h-4 mr-2" />
+                Impersonate
+              </Button>
               <Button variant="outline" onClick={handleExport}>
                 Export
               </Button>
