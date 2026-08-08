@@ -485,7 +485,7 @@ export default function EmployeeDetailPage() {
             {activeTab === "documents" && (
               <div className="builder-table-wrapper">
                 {documents.length > 0 ? (
-                  <table className={styles.p16}>
+                  <TableclassName={styles.p16}>
                     <thead>
                       <tr className={styles.p17}>
                         <th className={styles.p18}>Document Type</th>
@@ -516,7 +516,7 @@ export default function EmployeeDetailPage() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </Table>
                 ) : (
                   <p className={styles.p22}>
                     No documents found for this employee.
@@ -550,7 +550,7 @@ export default function EmployeeDetailPage() {
                         {Number(salaryStructure.total).toLocaleString()}
                       </span>
                     </div>
-                    <table className={styles.p16}>
+                    <TableclassName={styles.p16}>
                       <thead>
                         <tr className={styles.p17}>
                           <th className={styles.p18}>Component</th>
@@ -570,7 +570,7 @@ export default function EmployeeDetailPage() {
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </Table>
                   </>
                 ) : (
                   <p className={styles.p22}>
@@ -583,7 +583,7 @@ export default function EmployeeDetailPage() {
             {activeTab === "attendance" && (
               <div className="builder-table-wrapper">
                 {attendance.length > 0 ? (
-                  <table className={styles.p16}>
+                  <TableclassName={styles.p16}>
                     <thead>
                       <tr className={styles.p17}>
                         <th className={styles.p18}>Date</th>
@@ -616,7 +616,7 @@ export default function EmployeeDetailPage() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </Table>
                 ) : (
                   <p className={styles.p22}>
                     No attendance records for the current month.
@@ -628,7 +628,7 @@ export default function EmployeeDetailPage() {
             {activeTab === "leave" && (
               <div className="builder-table-wrapper">
                 {leaveBalances.length > 0 ? (
-                  <table className={styles.p16}>
+                  <TableclassName={styles.p16}>
                     <thead>
                       <tr className={styles.p17}>
                         <th className={styles.p18}>Leave Type</th>
@@ -658,7 +658,7 @@ export default function EmployeeDetailPage() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </Table>
                 ) : (
                   <p className={styles.p22}>No leave balance records found.</p>
                 )}

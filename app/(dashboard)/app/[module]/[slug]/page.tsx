@@ -319,7 +319,7 @@ function CustomAppPageContent() {
           </div>
         ) : (
           <div className="builder-table-wrapper">
-            <table className={styles.s14}>
+            <TableclassName={styles.s14}>
               <thead>
                 <tr className="border-b">
                   <th className={styles.s15}>ID</th>
@@ -405,7 +405,7 @@ function CustomAppPageContent() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         )}
 
@@ -885,7 +885,7 @@ function RuntimeTableWidget({
           <div className={styles.s38}>No records found.</div>
         ) : (
           <div className="builder-table-wrapper">
-            <table className={styles.s44}>
+            <TableclassName={styles.s44}>
               <thead>
                 <tr className={styles.s45}>
                   <th className={styles.s46}>ID</th>
@@ -917,7 +917,7 @@ function RuntimeTableWidget({
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         )}
 
@@ -1217,7 +1217,7 @@ function RemoteAppPageRenderer({
       {state === "error" && <p className={styles.s78}>{message}</p>}
       {state === "ok" && (
         <div className={styles.s79}>
-          <table className={styles.s80}>
+          <TableclassName={styles.s80}>
             <thead>
               <tr>
                 {cols.map((c) => (
@@ -1245,7 +1245,7 @@ function RemoteAppPageRenderer({
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       )}
     </div>

@@ -300,7 +300,7 @@ export default function CustomerPortalDashboardPage() {
           (quotations.length === 0 ? (
             <p className="ui-empty-state">No quotations yet.</p>
           ) : (
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Number</th>
@@ -354,14 +354,14 @@ export default function CustomerPortalDashboardPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           ))}
 
         {tab === "orders" &&
           (orders.length === 0 ? (
             <p className="ui-empty-state">No sales orders yet.</p>
           ) : (
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Number</th>
@@ -384,14 +384,14 @@ export default function CustomerPortalDashboardPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           ))}
 
         {tab === "invoices" &&
           (invoices.length === 0 ? (
             <p className="ui-empty-state">No invoices yet.</p>
           ) : (
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Number</th>
@@ -484,7 +484,7 @@ export default function CustomerPortalDashboardPage() {
                   );
                 })}
               </tbody>
-            </table>
+            </Table>
           ))}
 
         {tab === "cases" && (
@@ -524,7 +524,7 @@ export default function CustomerPortalDashboardPage() {
             {cases.length === 0 ? (
               <p className="ui-empty-state">No support cases yet.</p>
             ) : (
-              <table className="ui-table">
+              <TableclassName="ui-table">
                 <thead>
                   <tr>
                     <th>Case #</th>
@@ -553,7 +553,7 @@ export default function CustomerPortalDashboardPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             )}
           </>
         )}

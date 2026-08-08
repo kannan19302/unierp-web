@@ -29,7 +29,7 @@ export default function SocialPostsPage() {
         <button className="ui-btn">+ New Post</button>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-3 font-medium">Platform</th>
@@ -86,7 +86,7 @@ export default function SocialPostsPage() {
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

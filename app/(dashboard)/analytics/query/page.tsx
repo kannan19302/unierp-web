@@ -650,7 +650,7 @@ export default function VisualQueryBuilderPage() {
 
                 {viewMode === "table" ? (
                   <div className="builder-table-wrapper">
-                    <table className={styles.s37}>
+                    <TableclassName={styles.s37}>
                       <thead>
                         <tr>
                           {results.columns.map((c) => (
@@ -671,7 +671,7 @@ export default function VisualQueryBuilderPage() {
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </Table>
                   </div>
                 ) : (
                   <div className={styles.s40}>

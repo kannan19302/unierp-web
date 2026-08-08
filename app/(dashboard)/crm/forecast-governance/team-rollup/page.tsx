@@ -149,7 +149,7 @@ export default function TeamRollupPage() {
 
           <Card title="Team Members">
             <div className="ui-table-wrapper">
-              <table className="ui-table">
+              <TableclassName="ui-table">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -185,7 +185,7 @@ export default function TeamRollupPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
             <div className="ui-card-actions">
               <Button variant="primary" onClick={handleSaveRollup}>
@@ -197,7 +197,7 @@ export default function TeamRollupPage() {
           {rollups.length > 0 && (
             <Card title="Saved Rollups">
               <div className="ui-table-wrapper">
-                <table className="ui-table">
+                <TableclassName="ui-table">
                   <thead>
                     <tr>
                       <th>Period</th>
@@ -236,7 +236,7 @@ export default function TeamRollupPage() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
               </div>
             </Card>
           )}

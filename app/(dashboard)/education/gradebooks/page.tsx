@@ -163,7 +163,7 @@ export default function EducationGradebooksPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Course</th>
@@ -193,13 +193,13 @@ export default function EducationGradebooksPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
           {selectedGb && (
             <div className="mt-4 p-4 border-t">
               <h4 className="font-semibold mb-2">
                 {selectedGb.name} - Grade Entry
               </h4>
-              <table className="ui-table">
+              <TableclassName="ui-table">
                 <thead>
                   <tr>
                     <th>Student</th>
@@ -241,7 +241,7 @@ export default function EducationGradebooksPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
           )}
         </div>

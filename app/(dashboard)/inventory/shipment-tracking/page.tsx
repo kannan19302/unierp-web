@@ -306,7 +306,7 @@ export default function ShipmentTrackingPage() {
 
         {tab === "inbound" && (
           <Card className="p-4">
-            <table className="w-full text-sm">
+            <TableclassName="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>Shipment #</th>
@@ -338,13 +338,13 @@ export default function ShipmentTrackingPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </Table>
           </Card>
         )}
 
         {tab === "outbound" && (
           <Card className="p-4">
-            <table className="w-full text-sm">
+            <TableclassName="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>Shipment #</th>
@@ -376,13 +376,13 @@ export default function ShipmentTrackingPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </Table>
           </Card>
         )}
 
         {tab === "exceptions" && (
           <Card className="p-4">
-            <table className="w-full text-sm">
+            <TableclassName="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>Shipment</th>
@@ -427,7 +427,7 @@ export default function ShipmentTrackingPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </Table>
           </Card>
         )}
 

@@ -180,7 +180,7 @@ export default function EducationInvoicesPage() {
       ) : (
         <>
           <div className="ui-card">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Invoice #</th>
@@ -228,7 +228,7 @@ export default function EducationInvoicesPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
           {payForm.invoiceId && (
             <div className="ui-card p-4 mt-4">

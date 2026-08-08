@@ -173,7 +173,7 @@ export default function PortalForumPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Title</th>
@@ -275,7 +275,7 @@ export default function PortalForumPage() {
                   </React.Fragment>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </Card>
       )}

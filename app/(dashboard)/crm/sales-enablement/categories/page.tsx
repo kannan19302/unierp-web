@@ -117,7 +117,7 @@ export default function ContentCategoriesPage() {
         {categories.length === 0 ? (
           <p className="text-sm text-gray-400">No categories yet.</p>
         ) : (
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">Name</th>
@@ -151,7 +151,7 @@ export default function ContentCategoriesPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         )}
       </Card>
     </div>

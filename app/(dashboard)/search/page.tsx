@@ -93,7 +93,7 @@ export default function SearchPage() {
         <div className="text-gray-500">No results found for "{query}"</div>
       )}
       {results.length > 0 && (
-        <table className="ui-table w-full">
+        <TableclassName="ui-table w-full">
           <thead>
             <tr>
               <th>Type</th>
@@ -118,7 +118,7 @@ export default function SearchPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   );

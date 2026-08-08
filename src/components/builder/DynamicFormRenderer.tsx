@@ -529,7 +529,7 @@ export function DynamicFormRenderer({
             }}
           >
             <div style={{ overflowX: "auto" }}>
-              <table
+              <Table
                 style={{
                   width: "100%",
                   borderCollapse: "collapse",
@@ -663,7 +663,7 @@ export function DynamicFormRenderer({
                     </tr>
                   )}
                 </tbody>
-              </table>
+              </Table>
             </div>
             {!f.readOnly && (
               <div

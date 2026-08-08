@@ -243,7 +243,7 @@ export default function AsnPage() {
               <div className="font-semibold mb-2">
                 Incoming ASNs (Expected Soon)
               </div>
-              <table className="w-full text-sm">
+              <TableclassName="w-full text-sm">
                 <thead>
                   <tr className="text-left text-gray-500">
                     <th>ASN #</th>
@@ -272,14 +272,14 @@ export default function AsnPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </Card>
           </div>
         )}
 
         {tab === "asns" && (
           <Card className="p-4">
-            <table className="w-full text-sm">
+            <TableclassName="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>ASN #</th>
@@ -354,13 +354,13 @@ export default function AsnPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </Table>
           </Card>
         )}
 
         {tab === "discrepancies" && (
           <Card className="p-4">
-            <table className="w-full text-sm">
+            <TableclassName="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-500">
                   <th>ASN</th>
@@ -413,7 +413,7 @@ export default function AsnPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </Table>
           </Card>
         )}
 
@@ -463,7 +463,7 @@ export default function AsnPage() {
                   </Button>
                 )}
               </div>
-              <table className="w-full text-sm">
+              <TableclassName="w-full text-sm">
                 <thead>
                   <tr className="text-left text-gray-500">
                     <th>Product</th>
@@ -482,7 +482,7 @@ export default function AsnPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </Card>
             {["ARRIVED", "RECEIVING"].includes(selectedAsn.status) && (
               <Card className="p-4 space-y-3 max-w-md">

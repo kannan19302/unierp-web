@@ -155,7 +155,7 @@ export default function POSOrdersPage() {
               </div>
             </div>
             <h3 className={styles.p6}>Items</h3>
-            <table className={styles.p7}>
+            <TableclassName={styles.p7}>
               <thead>
                 <tr className="border-b">
                   <th className={styles.p8}>Product</th>
@@ -178,7 +178,7 @@ export default function POSOrdersPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
             <h3 className={styles.p15}>Payments</h3>
             {(selectedOrder.payments || []).map((p: any) => (
               <div key={p.id} className={styles.p16}>
@@ -189,7 +189,7 @@ export default function POSOrdersPage() {
           </div>
         ) : (
           <div className={styles.p17}>
-            <table className={styles.p18}>
+            <TableclassName={styles.p18}>
               <thead>
                 <tr className={styles.p19}>
                   {[
@@ -251,7 +251,7 @@ export default function POSOrdersPage() {
                   ))
                 )}
               </tbody>
-            </table>
+            </Table>
             <div className={styles.p28}>
               <button
                 disabled={page <= 1}

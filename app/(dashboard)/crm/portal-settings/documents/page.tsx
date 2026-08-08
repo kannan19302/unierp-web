@@ -165,7 +165,7 @@ export default function PortalDocumentsPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -212,7 +212,7 @@ export default function PortalDocumentsPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
             {docs.length === 0 && (
               <p className="ui-p-3 ui-text-sm text-muted">No documents found</p>
             )}

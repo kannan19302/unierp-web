@@ -136,7 +136,7 @@ export default function EcommerceTaxPage() {
                 + Rate
               </button>
             </div>
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -166,7 +166,7 @@ export default function EcommerceTaxPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         ))}
         {showClassModal && (

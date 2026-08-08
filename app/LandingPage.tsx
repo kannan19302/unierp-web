@@ -1513,7 +1513,7 @@ export default function LandingPage() {
                       </button>
                     </div>
                     <div className="playground-table-container">
-                      <table className="playground-table">
+                      <TableclassName="playground-table">
                         <thead>
                           <tr>
                             <th>Invoice ID</th>
@@ -1538,7 +1538,7 @@ export default function LandingPage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </Table>
                     </div>
                     <div className="playground-ledger-balance">
                       <div className="ledger-block">
@@ -1745,7 +1745,7 @@ export default function LandingPage() {
                       </div>
                     )}
                     <div className="playground-table-container">
-                      <table className="playground-table">
+                      <TableclassName="playground-table">
                         <thead>
                           <tr>
                             <th>SKU</th>
@@ -1772,7 +1772,7 @@ export default function LandingPage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </Table>
                     </div>
                   </div>
                 )}

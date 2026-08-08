@@ -25,7 +25,7 @@ export default function PartnerContractsPage() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Partner Contracts</h1>
       </div>
-      <table className="w-full text-sm">
+      <TableclassName="w-full text-sm">
         <thead>
           <tr className="border-b text-left">
             <th className="py-2 px-2">Contract #</th>
@@ -72,7 +72,7 @@ export default function PartnerContractsPage() {
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

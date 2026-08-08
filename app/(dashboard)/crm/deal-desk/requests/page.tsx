@@ -95,7 +95,7 @@ export default function DealDeskRequestsPage() {
 
       <Card>
         <div className="ui-table-wrapper">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Opportunity</th>
@@ -177,7 +177,7 @@ export default function DealDeskRequestsPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
         {total > 50 && (
           <div className="ui-pagination">

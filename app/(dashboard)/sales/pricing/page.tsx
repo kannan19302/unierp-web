@@ -203,7 +203,7 @@ export default function AdvancedPricingPage() {
           >
             Multi-Currency Exchange Matrix
           </h3>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr
                 style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
@@ -233,7 +233,7 @@ export default function AdvancedPricingPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </Card>
       </div>
     </div>

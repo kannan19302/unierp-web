@@ -128,7 +128,7 @@ export default function WorkCentersPage() {
           ))}
         </select>
       </div>
-      <table className={styles.table}>
+      <TableclassName={styles.table}>
         <thead>
           <tr>
             <th>Date</th>
@@ -165,7 +165,7 @@ export default function WorkCentersPage() {
             );
           })}
         </tbody>
-      </table>
+      </Table>
       {capacities.length === 0 && !loading && (
         <div className="ui-text-muted">No capacity records yet.</div>
       )}

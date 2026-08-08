@@ -408,7 +408,7 @@ export default function ForecastingPage() {
           <h3 className={`${styles.sectionTitle} ${styles.titleWithIcon}`}>
             <Award size={18} /> Rep Leaderboard
           </h3>
-          <table className={styles.dataTable}>
+          <TableclassName={styles.dataTable}>
             <thead>
               <tr className={styles.tableHeaderRow}>
                 {[
@@ -480,7 +480,7 @@ export default function ForecastingPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       </Card>
 
@@ -495,7 +495,7 @@ export default function ForecastingPage() {
               No forecast snapshots created yet.
             </div>
           ) : (
-            <table className={styles.dataTable}>
+            <TableclassName={styles.dataTable}>
               <thead>
                 <tr className={styles.tableHeaderRow}>
                   <th className={`${styles.tableHeader} ${styles.alignLeft}`}>
@@ -579,7 +579,7 @@ export default function ForecastingPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           )}
         </div>
       </Card>

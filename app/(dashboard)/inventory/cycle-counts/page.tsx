@@ -482,7 +482,7 @@ export default function CycleCountsPage() {
               </div>
               <div className="p-5">
                 <form onSubmit={handleSubmitWorksheet} className="ui-stack-4">
-                  <table className={styles.s15}>
+                  <TableclassName={styles.s15}>
                     <thead>
                       <tr className={styles.s16}>
                         <th className={styles.s17}>Product</th>
@@ -540,7 +540,7 @@ export default function CycleCountsPage() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </Table>
 
                   <FormField label="Final Remarks" htmlFor="cc-final-remarks">
                     <Input

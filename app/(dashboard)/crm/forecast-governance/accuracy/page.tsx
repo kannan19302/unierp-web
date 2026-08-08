@@ -125,7 +125,7 @@ export default function ForecastAccuracyPage() {
 
       <Card title="Period-over-Period Accuracy">
         <div className="ui-table-wrapper">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Period</th>
@@ -174,7 +174,7 @@ export default function ForecastAccuracyPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       </Card>
     </div>

@@ -210,7 +210,7 @@ export default function CustomModulePage() {
 
           {/* Data Table */}
           <div className="builder-table-wrapper">
-            <table className={`ui-table ${styles.s10}`}>
+            <TableclassName={`ui-table ${styles.s10}`}>
               <thead>
                 <tr>
                   <th className={styles.s11}>
@@ -270,7 +270,7 @@ export default function CustomModulePage() {
                   ))
                 )}
               </tbody>
-            </table>
+            </Table>
           </div>
         </div>
       </div>

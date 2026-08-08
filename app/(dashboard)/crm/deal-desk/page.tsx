@@ -94,7 +94,7 @@ export default function DealDeskPage() {
       <div className="ui-grid-2">
         <Card title="Open Requests">
           <div className="ui-table-wrapper">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Type</th>
@@ -131,7 +131,7 @@ export default function DealDeskPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
           <div className="ui-card-actions">
             <Button
@@ -145,7 +145,7 @@ export default function DealDeskPage() {
 
         <Card title="Recent Activity">
           <div className="ui-table-wrapper">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Opportunity</th>
@@ -176,7 +176,7 @@ export default function DealDeskPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </Card>
       </div>

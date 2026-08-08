@@ -89,7 +89,7 @@ export default function EcommerceThemesPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -133,7 +133,7 @@ export default function EcommerceThemesPage() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

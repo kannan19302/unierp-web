@@ -58,7 +58,7 @@ export default function POSSplitPaymentsPage() {
           </div>
         )}
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Method</th>
@@ -95,7 +95,7 @@ export default function POSSplitPaymentsPage() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
       </div>
     </RouteGuard>

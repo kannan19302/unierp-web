@@ -110,7 +110,7 @@ export default function RfqAuctionsPage() {
         <Spinner />
       ) : (
         <Card>
-          <table className="ui-table" style={{ width: "100%" }}>
+          <TableclassName="ui-table" style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>Auction #</th>
@@ -150,7 +150,7 @@ export default function RfqAuctionsPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
     </RouteGuard>

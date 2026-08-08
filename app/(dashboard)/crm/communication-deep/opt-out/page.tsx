@@ -29,7 +29,7 @@ export default function OptOutPage() {
         <button className="ui-btn">+ Add Opt-Out</button>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-3 font-medium">Entity Type</th>
@@ -62,7 +62,7 @@ export default function OptOutPage() {
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

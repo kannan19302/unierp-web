@@ -75,7 +75,7 @@ export default function EcommerceReviewsPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Customer</th>
@@ -136,7 +136,7 @@ export default function EcommerceReviewsPage() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
       </div>
     </RouteGuard>

@@ -150,7 +150,7 @@ export default function POSGiftCardsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Code</th>
@@ -203,7 +203,7 @@ export default function POSGiftCardsPage() {
                   ))
                 )}
               </tbody>
-            </table>
+            </Table>
           </div>
         )}
         {showModal && (

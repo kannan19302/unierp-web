@@ -21,7 +21,7 @@ export default function CalendarPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Calendar Connections</h1>
-      <table className="w-full text-sm">
+      <TableclassName="w-full text-sm">
         <thead>
           <tr className="border-b text-left">
             <th className="py-2 px-2">Name</th>
@@ -62,7 +62,7 @@ export default function CalendarPage() {
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

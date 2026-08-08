@@ -41,7 +41,7 @@ export default function PipelineInspectionPage() {
     <div className="space-y-6">
       <div className="ui-card p-6">
         <h1 className="text-2xl font-bold mb-4">Inspection Configs</h1>
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Name</th>
@@ -76,12 +76,12 @@ export default function PipelineInspectionPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
 
       <div className="ui-card p-6">
         <h2 className="text-xl font-bold mb-4">Recent Inspection Results</h2>
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Scanned</th>
@@ -118,7 +118,7 @@ export default function PipelineInspectionPage() {
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

@@ -137,7 +137,7 @@ export default function CatalogPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="ui-table w-full">
+              <TableclassName="ui-table w-full">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -200,7 +200,7 @@ export default function CatalogPage() {
                     </tr>
                   )}
                 </tbody>
-              </table>
+              </Table>
             </div>
           )}
         </Card>

@@ -127,7 +127,7 @@ export default function ReportingDrilldownPage() {
             Drilldown Results — {drillResults.dimension} /{" "}
             {drillResults.metricKey}
           </h3>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr
                 style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
@@ -158,7 +158,7 @@ export default function ReportingDrilldownPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
 

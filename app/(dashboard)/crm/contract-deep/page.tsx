@@ -109,7 +109,7 @@ export default function ContractDeepPage() {
           Upcoming Expiry Calendar (90 days)
         </h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="border-b text-left">
                 <th className="py-2 px-3 font-medium">Contract</th>
@@ -154,7 +154,7 @@ export default function ContractDeepPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
       </div>
     </div>

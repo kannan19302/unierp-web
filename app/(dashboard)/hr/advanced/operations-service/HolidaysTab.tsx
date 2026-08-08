@@ -94,7 +94,7 @@ export default function HolidaysTab() {
         </div>
       ) : (
         <Card padding="none">
-          <table className={styles.s0}>
+          <TableclassName={styles.s0}>
             <thead>
               <tr className={styles.s1}>
                 <th className="p-4">Holiday Name</th>
@@ -135,7 +135,7 @@ export default function HolidaysTab() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
 

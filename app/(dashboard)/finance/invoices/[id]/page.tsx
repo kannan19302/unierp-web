@@ -508,7 +508,7 @@ export default function InvoiceDetailPage() {
 
             {activeTab === "items" && (
               <div className="builder-table-wrapper">
-                <table className={styles.itemsTable}>
+                <TableclassName={styles.itemsTable}>
                   <thead>
                     <tr className={styles.itemsTableHead}>
                       <th>Description</th>
@@ -527,7 +527,7 @@ export default function InvoiceDetailPage() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
 
                 <div className={styles.totalsPanel}>
                   <div className="ui-text-xs-muted">

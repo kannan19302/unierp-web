@@ -96,7 +96,7 @@ export default function LiveChatPage() {
       ) : (
         <Card>
           <div className="ui-card-body p-0">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Visitor</th>
@@ -149,7 +149,7 @@ export default function LiveChatPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
             {sessions.length === 0 && (
               <p className="ui-p-3 ui-text-sm text-muted">
                 No chat sessions found

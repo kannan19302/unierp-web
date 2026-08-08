@@ -164,7 +164,7 @@ export default function AnalyticsPivotPage() {
 
           {/* Pivot Output Table */}
           <div className={styles.s6}>
-            <table className={styles.s7}>
+            <TableclassName={styles.s7}>
               <thead>
                 <tr className={styles.s8}>
                   <th className={styles.s9}>Period / Row</th>
@@ -190,7 +190,7 @@ export default function AnalyticsPivotPage() {
                   </tr>
                 )}
               </tbody>
-            </table>
+            </Table>
           </div>
         </div>
       </div>

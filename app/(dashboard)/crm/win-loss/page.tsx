@@ -309,7 +309,7 @@ export default function WinLossPage() {
 
       {analytics && analytics.reasonsBreakdown?.length > 0 && (
         <Card title="Reasons Breakdown">
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="border-b">
                 <th className="text-left py-2">Reason</th>
@@ -337,7 +337,7 @@ export default function WinLossPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
     </div>

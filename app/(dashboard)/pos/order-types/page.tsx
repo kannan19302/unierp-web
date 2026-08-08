@@ -88,7 +88,7 @@ export default function POSOrderTypesPage() {
           </div>
         )}
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -130,7 +130,7 @@ export default function POSOrderTypesPage() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

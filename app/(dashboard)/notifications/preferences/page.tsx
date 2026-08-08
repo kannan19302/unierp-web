@@ -102,7 +102,7 @@ export default function NotificationPreferencesPage() {
       </div>
       {loading && <div className="text-gray-500">Loading...</div>}
       {!loading && (
-        <table className="ui-table w-full">
+        <TableclassName="ui-table w-full">
           <thead>
             <tr>
               <th>Category</th>
@@ -130,7 +130,7 @@ export default function NotificationPreferencesPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   );

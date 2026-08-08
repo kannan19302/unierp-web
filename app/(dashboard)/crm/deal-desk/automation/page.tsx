@@ -275,7 +275,7 @@ export default function DealAutomationPage() {
 
       <Card title={`Rules (${rules.length})`}>
         <div className="ui-table-wrapper">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -352,7 +352,7 @@ export default function DealAutomationPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
       </Card>
     </div>

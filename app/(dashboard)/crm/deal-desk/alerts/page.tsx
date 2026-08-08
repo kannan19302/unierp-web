@@ -91,7 +91,7 @@ export default function DealAlertsPage() {
       {!loading && alerts.length > 0 && (
         <Card title={`Alerts for ${opportunityId}`}>
           <div className="ui-table-wrapper">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Type</th>
@@ -143,7 +143,7 @@ export default function DealAlertsPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </Card>
       )}

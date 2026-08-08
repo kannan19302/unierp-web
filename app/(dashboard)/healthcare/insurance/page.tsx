@@ -338,7 +338,7 @@ export default function HealthcareInsurancePage() {
       ) : (
         <div className="ui-card">
           {activeTab === "policies" ? (
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Patient</th>
@@ -371,9 +371,9 @@ export default function HealthcareInsurancePage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           ) : (
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Claim #</th>
@@ -423,7 +423,7 @@ export default function HealthcareInsurancePage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           )}
         </div>
       )}

@@ -202,7 +202,7 @@ export default function EducationEnrollmentsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Student</th>
@@ -252,7 +252,7 @@ export default function EducationEnrollmentsPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       )}
     </div>

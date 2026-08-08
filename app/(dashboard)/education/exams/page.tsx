@@ -189,7 +189,7 @@ export default function EducationExamsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Course</th>
@@ -227,13 +227,13 @@ export default function EducationExamsPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
           {selectedExam && (
             <div className="mt-4 p-4 border-t">
               <h4 className="font-semibold mb-2">
                 {selectedExam.title} - Results
               </h4>
-              <table className="ui-table">
+              <TableclassName="ui-table">
                 <thead>
                   <tr>
                     <th>Student</th>
@@ -276,7 +276,7 @@ export default function EducationExamsPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
           )}
         </div>

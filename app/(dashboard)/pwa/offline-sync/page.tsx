@@ -21,7 +21,7 @@ export default function PwaOfflineSyncPage() {
       </div>
 
       <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-        <table className="w-full text-left text-sm">
+        <TableclassName="w-full text-left text-sm">
           <thead className="bg-gray-50 text-gray-500 font-medium text-xs uppercase border-b">
             <tr>
               <th className="p-3">Action Type</th>
@@ -55,7 +55,7 @@ export default function PwaOfflineSyncPage() {
               <td className="p-3 text-xs text-gray-500">2026-07-27 15:42:10</td>
             </tr>
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

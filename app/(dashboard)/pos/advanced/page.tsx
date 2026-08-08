@@ -364,7 +364,7 @@ export default function POSAdvancedPage() {
             </button>
           </div>
           <div className={styles.p5}>
-            <table className={styles.p6}>
+            <TableclassName={styles.p6}>
               <thead>
                 <tr className={styles.p7}>
                   {[
@@ -409,7 +409,7 @@ export default function POSAdvancedPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </div>
       )}
@@ -432,7 +432,7 @@ export default function POSAdvancedPage() {
             })}
           </div>
           <div className={styles.p20}>
-            <table className={styles.p21}>
+            <TableclassName={styles.p21}>
               <thead>
                 <tr className={styles.p22}>
                   {[
@@ -468,7 +468,7 @@ export default function POSAdvancedPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </div>
       )}

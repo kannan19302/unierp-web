@@ -174,7 +174,7 @@ export default function BudgetsPage() {
           </div>
         </div>
       )}
-      <table className={styles.table}>
+      <TableclassName={styles.table}>
         <thead>
           <tr>
             <th>Category</th>
@@ -218,7 +218,7 @@ export default function BudgetsPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
       {lines.length === 0 && !loading && (
         <div className="ui-text-muted">No budget lines yet.</div>
       )}

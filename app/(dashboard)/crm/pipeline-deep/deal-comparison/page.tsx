@@ -48,7 +48,7 @@ export default function PipelineDealComparisonPage() {
       </div>
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
       {deals.length > 0 && (
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Name</th>
@@ -81,7 +81,7 @@ export default function PipelineDealComparisonPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   );

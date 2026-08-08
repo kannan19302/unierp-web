@@ -115,7 +115,7 @@ export default function POSRefundsPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Refund #</th>
@@ -164,7 +164,7 @@ export default function POSRefundsPage() {
                   ))
                 )}
               </tbody>
-            </table>
+            </Table>
           </div>
         )}
       </div>

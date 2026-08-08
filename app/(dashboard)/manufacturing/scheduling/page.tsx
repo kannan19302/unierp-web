@@ -295,7 +295,7 @@ export default function SchedulingPage() {
                   </div>
                 </div>
               </div>
-              <table className={styles.p7}>
+              <TableclassName={styles.p7}>
                 <thead>
                   <tr className="border-b">
                     <th className={styles.p8}>Product</th>
@@ -318,7 +318,7 @@ export default function SchedulingPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
           )}
           {!bomCost && !bomLoading && (

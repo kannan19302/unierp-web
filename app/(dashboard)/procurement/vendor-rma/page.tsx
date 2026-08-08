@@ -125,7 +125,7 @@ export default function VendorRMAPage() {
         <Spinner />
       ) : (
         <Card>
-          <table className="ui-table" style={{ width: "100%" }}>
+          <TableclassName="ui-table" style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>RMA #</th>
@@ -165,7 +165,7 @@ export default function VendorRMAPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
     </RouteGuard>

@@ -107,7 +107,7 @@ export default function POSRegistersPage() {
           </div>
         )}
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Terminal</th>
@@ -160,7 +160,7 @@ export default function POSRegistersPage() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

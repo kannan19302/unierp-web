@@ -127,7 +127,7 @@ export default function NotificationPreferencesPage() {
           {loading ? (
             <div className={styles.loading}>Loading preferences...</div>
           ) : (
-            <table className={styles.table}>
+            <TableclassName={styles.table}>
               <thead>
                 <tr className="border-b">
                   <th className={styles.categoryHeading}>Category</th>
@@ -161,7 +161,7 @@ export default function NotificationPreferencesPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           )}
         </div>
       </div>

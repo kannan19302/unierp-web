@@ -460,7 +460,7 @@ export default function SalesReturnsPage() {
                       </div>
                     ) : (
                       <div className={styles.p41}>
-                        <table className={styles.p42}>
+                        <TableclassName={styles.p42}>
                           <thead>
                             <tr className={styles.p43}>
                               <th className={styles.p44}>Description</th>
@@ -518,7 +518,7 @@ export default function SalesReturnsPage() {
                               );
                             })}
                           </tbody>
-                        </table>
+                        </Table>
                       </div>
                     )}
                   </div>

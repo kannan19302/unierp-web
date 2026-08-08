@@ -173,7 +173,7 @@ export default function EcommerceExpOrdersPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Order #</th>
@@ -222,7 +222,7 @@ export default function EcommerceExpOrdersPage() {
                   ))
                 )}
               </tbody>
-            </table>
+            </Table>
             <div className="flex items-center justify-between p-4">
               <span className="ui-text-sm-muted">
                 Page {page} of {totalPages}

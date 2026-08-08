@@ -142,7 +142,7 @@ export default function PartnerManagementPage() {
         {deals.length === 0 ? (
           <p className="text-sm text-gray-400">No deal registrations</p>
         ) : (
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="border-b">
                 <th className="text-left py-2">Company</th>
@@ -208,7 +208,7 @@ export default function PartnerManagementPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         )}
       </Card>
 
@@ -216,7 +216,7 @@ export default function PartnerManagementPage() {
         {mdfFunds.length === 0 ? (
           <p className="text-sm text-gray-400">No MDF funds</p>
         ) : (
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="border-b">
                 <th className="text-left py-2">Name</th>
@@ -251,7 +251,7 @@ export default function PartnerManagementPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         )}
       </Card>
     </div>

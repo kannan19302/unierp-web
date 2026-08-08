@@ -41,7 +41,7 @@ export default function SavedSearchesPage() {
         <div className="text-gray-500">No saved searches yet.</div>
       )}
       {searches.length > 0 && (
-        <table className="ui-table w-full">
+        <TableclassName="ui-table w-full">
           <thead>
             <tr>
               <th>Name</th>
@@ -69,7 +69,7 @@ export default function SavedSearchesPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   );

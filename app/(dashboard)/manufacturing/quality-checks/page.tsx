@@ -175,7 +175,7 @@ export default function QualityChecksPage() {
         </button>
       </div>
       {tab === "checks" && (
-        <table className={styles.table}>
+        <TableclassName={styles.table}>
           <thead>
             <tr>
               <th>Status</th>
@@ -212,7 +212,7 @@ export default function QualityChecksPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
       {tab === "templates" && (
         <div className="ui-stack-3">

@@ -122,7 +122,7 @@ export default function AgentPerformancePage() {
           </div>
           <Card>
             <div className="ui-card-body p-0">
-              <table className="ui-table">
+              <TableclassName="ui-table">
                 <thead>
                   <tr>
                     <th>Agent</th>
@@ -153,7 +153,7 @@ export default function AgentPerformancePage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
           </Card>
         </>

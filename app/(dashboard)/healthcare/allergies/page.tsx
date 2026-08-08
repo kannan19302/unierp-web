@@ -51,7 +51,7 @@ export default function HealthcareAllergiesPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Patient</th>
@@ -76,7 +76,7 @@ export default function HealthcareAllergiesPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       )}
     </div>

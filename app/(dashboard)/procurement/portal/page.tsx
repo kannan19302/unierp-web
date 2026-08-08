@@ -319,7 +319,7 @@ export default function SupplierPortalPage() {
                       above.
                     </div>
                   ) : (
-                    <table className={styles.p20}>
+                    <TableclassName={styles.p20}>
                       <thead>
                         <tr className={styles.p21}>
                           {["Email", "Status", "Last Login", "Invited", ""].map(
@@ -364,7 +364,7 @@ export default function SupplierPortalPage() {
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </Table>
                   )}
                 </div>
               </Card>
@@ -383,7 +383,7 @@ export default function SupplierPortalPage() {
                       No purchase orders for this vendor.
                     </div>
                   ) : (
-                    <table className={styles.p29}>
+                    <TableclassName={styles.p29}>
                       <thead>
                         <tr className={styles.p30}>
                           {["PO Number", "Status", "Amount", "Created"].map(
@@ -418,7 +418,7 @@ export default function SupplierPortalPage() {
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </Table>
                   )}
                 </div>
               </Card>
@@ -435,7 +435,7 @@ export default function SupplierPortalPage() {
                   ) : rfqs.length === 0 ? (
                     <div className={styles.p36}>No RFQs for this vendor.</div>
                   ) : (
-                    <table className={styles.p37}>
+                    <TableclassName={styles.p37}>
                       <thead>
                         <tr className={styles.p38}>
                           {["RFQ #", "Status", "Due Date", "Created"].map(
@@ -472,7 +472,7 @@ export default function SupplierPortalPage() {
                           </tr>
                         ))}
                       </tbody>
-                    </table>
+                    </Table>
                   )}
                 </div>
               </Card>

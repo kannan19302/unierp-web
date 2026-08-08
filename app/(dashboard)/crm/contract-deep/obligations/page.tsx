@@ -35,7 +35,7 @@ export default function ObligationsPage() {
       </div>
       {loaded && (
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="border-b text-left">
                 <th className="py-2 px-3 font-medium">Description</th>
@@ -68,7 +68,7 @@ export default function ObligationsPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
       )}
     </div>

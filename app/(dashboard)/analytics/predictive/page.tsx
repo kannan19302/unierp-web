@@ -118,7 +118,7 @@ export default function AnalyticsPredictivePage() {
             No trained predictive models.
           </p>
         ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr
                 style={{ borderBottom: "1px solid #e2e8f0", textAlign: "left" }}
@@ -153,7 +153,7 @@ export default function AnalyticsPredictivePage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         )}
       </Card>
     </div>

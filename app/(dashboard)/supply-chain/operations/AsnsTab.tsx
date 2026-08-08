@@ -666,7 +666,7 @@ export default function AsnsTab() {
 
               <div className="ui-heading-md">Expected Line Items</div>
               <Card padding="none">
-                <table className="ui-table w-full">
+                <TableclassName="ui-table w-full">
                   <thead>
                     <tr>
                       <th className="text-left py-2 px-3">Product ID</th>
@@ -693,7 +693,7 @@ export default function AsnsTab() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
               </Card>
             </div>
           )}

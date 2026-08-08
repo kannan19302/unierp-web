@@ -111,7 +111,7 @@ export default function PaymentSchedulesPage() {
         <Spinner />
       ) : (
         <Card>
-          <table className="ui-table" style={{ width: "100%" }}>
+          <TableclassName="ui-table" style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>Schedule #</th>
@@ -153,7 +153,7 @@ export default function PaymentSchedulesPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
     </RouteGuard>

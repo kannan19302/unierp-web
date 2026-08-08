@@ -127,7 +127,7 @@ export default function GradeBookPage() {
 
       <Card>
         <div className={styles.s3}>
-          <table className={styles.s4}>
+          <TableclassName={styles.s4}>
             <thead>
               <tr className={styles.s5}>
                 <th className={styles.s6}>Student</th>
@@ -191,7 +191,7 @@ export default function GradeBookPage() {
                 );
               })}
             </tbody>
-          </table>
+          </Table>
         </div>
       </Card>
     </div>

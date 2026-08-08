@@ -29,7 +29,7 @@ export default function ClauseLibraryPage() {
         <button className="ui-btn">+ New Clause</button>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-3 font-medium">Title</th>
@@ -65,7 +65,7 @@ export default function ClauseLibraryPage() {
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

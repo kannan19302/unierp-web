@@ -38,7 +38,7 @@ export default function VersionHistoryPage() {
             <div>
               <h2 className="text-lg font-semibold mb-3">Versions</h2>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <TableclassName="w-full text-sm">
                   <thead>
                     <tr className="border-b text-left">
                       <th className="py-2 px-3 font-medium">Version</th>
@@ -59,7 +59,7 @@ export default function VersionHistoryPage() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
               </div>
             </div>
           )}
@@ -67,7 +67,7 @@ export default function VersionHistoryPage() {
             <div>
               <h2 className="text-lg font-semibold mb-3">Amendments</h2>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <TableclassName="w-full text-sm">
                   <thead>
                     <tr className="border-b text-left">
                       <th className="py-2 px-3 font-medium">Number</th>
@@ -88,7 +88,7 @@ export default function VersionHistoryPage() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
               </div>
             </div>
           )}

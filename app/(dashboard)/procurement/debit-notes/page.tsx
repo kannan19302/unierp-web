@@ -110,7 +110,7 @@ export default function DebitNotesPage() {
         <Spinner />
       ) : (
         <Card>
-          <table className="ui-table" style={{ width: "100%" }}>
+          <TableclassName="ui-table" style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>DN #</th>
@@ -148,7 +148,7 @@ export default function DebitNotesPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
     </RouteGuard>

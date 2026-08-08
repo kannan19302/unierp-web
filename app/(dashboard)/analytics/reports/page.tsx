@@ -105,7 +105,7 @@ export default function ReportsPage() {
           <Plus size={18} /> New Report
         </button>
       </div>
-      <table className={styles.table}>
+      <TableclassName={styles.table}>
         <thead>
           <tr>
             <th>Name</th>
@@ -139,7 +139,7 @@ export default function ReportsPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
       {reports.length === 0 && !loading && (
         <div className="ui-text-muted">No saved reports yet.</div>
       )}

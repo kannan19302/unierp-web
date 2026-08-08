@@ -106,7 +106,7 @@ export default function ScrapPage() {
           </div>
         </div>
       )}
-      <table className={styles.table}>
+      <TableclassName={styles.table}>
         <thead>
           <tr>
             <th>Date</th>
@@ -136,7 +136,7 @@ export default function ScrapPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
       {records.length === 0 && !loading && (
         <div className="ui-text-muted">No scrap records yet.</div>
       )}

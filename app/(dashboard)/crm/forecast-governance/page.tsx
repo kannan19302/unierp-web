@@ -110,7 +110,7 @@ export default function ForecastGovernancePage() {
       <div className="ui-grid-2">
         <Card title="Forecast Categories">
           <div className="ui-table-wrapper">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Category</th>
@@ -141,13 +141,13 @@ export default function ForecastGovernancePage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </Card>
 
         <Card title="Forecast Trend">
           <div className="ui-table-wrapper">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Period</th>
@@ -172,7 +172,7 @@ export default function ForecastGovernancePage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </Card>
       </div>
@@ -180,7 +180,7 @@ export default function ForecastGovernancePage() {
       <div className="ui-grid-2">
         <Card title="Forecast Accuracy">
           <div className="ui-table-wrapper">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Period</th>
@@ -219,7 +219,7 @@ export default function ForecastGovernancePage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </Card>
 

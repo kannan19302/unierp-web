@@ -126,7 +126,7 @@ export default function ExportsPage() {
           <Plus size={18} /> Schedule Export
         </button>
       </div>
-      <table className={styles.table}>
+      <TableclassName={styles.table}>
         <thead>
           <tr>
             <th>Name</th>
@@ -178,7 +178,7 @@ export default function ExportsPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
       {exports.length === 0 && !loading && (
         <div className="ui-text-muted">No scheduled exports yet.</div>
       )}

@@ -382,7 +382,7 @@ export default function BlanketAgreementsPage() {
             </div>
           ) : (
             <div className="builder-table-wrapper">
-              <table className={styles.p14}>
+              <TableclassName={styles.p14}>
                 <thead>
                   <tr className={styles.p15}>
                     <th className="py-3 px-4">Agreement No.</th>
@@ -477,7 +477,7 @@ export default function BlanketAgreementsPage() {
                     );
                   })}
                 </tbody>
-              </table>
+              </Table>
             </div>
           )}
         </Card>
@@ -801,7 +801,7 @@ export default function BlanketAgreementsPage() {
                 </div>
 
                 <div className={styles.p58}>
-                  <table className={styles.p59}>
+                  <TableclassName={styles.p59}>
                     <thead>
                       <tr className={styles.p60}>
                         <th className="p-3">Description</th>
@@ -862,7 +862,7 @@ export default function BlanketAgreementsPage() {
                         );
                       })}
                     </tbody>
-                  </table>
+                  </Table>
                 </div>
 
                 {/* Estimate Release cost */}

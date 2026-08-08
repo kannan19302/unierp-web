@@ -59,7 +59,7 @@ export default function PipelineAnalyticsPage() {
 
       <div className="ui-card p-4">
         <h2 className="font-semibold mb-3">Deal Size Distribution</h2>
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Bucket</th>
@@ -74,12 +74,12 @@ export default function PipelineAnalyticsPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
 
       <div className="ui-card p-4">
         <h2 className="font-semibold mb-3">Loss Reason Analysis</h2>
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Reason</th>
@@ -100,12 +100,12 @@ export default function PipelineAnalyticsPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
 
       <div className="ui-card p-4">
         <h2 className="font-semibold mb-3">Win Rate by Source</h2>
-        <table className="w-full text-sm">
+        <TableclassName="w-full text-sm">
           <thead>
             <tr className="border-b text-left">
               <th className="py-2 px-2">Source</th>
@@ -124,7 +124,7 @@ export default function PipelineAnalyticsPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

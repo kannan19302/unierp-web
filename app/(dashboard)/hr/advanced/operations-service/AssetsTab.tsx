@@ -101,7 +101,7 @@ export default function AssetsTab() {
         </div>
       )}
       <Card padding="none" className="builder-table-wrapper">
-        <table className={styles.s0}>
+        <TableclassName={styles.s0}>
           <thead>
             <tr className={styles.s1}>
               <th className="p-4">Asset</th>
@@ -126,7 +126,7 @@ export default function AssetsTab() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </Card>
 
       <Modal

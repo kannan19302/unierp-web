@@ -1136,7 +1136,7 @@ export default function ProfilePage() {
                       </button>
                     </div>
                     <div className="ui-card-body p-0">
-                      <table className={styles.s11}>
+                      <TableclassName={styles.s11}>
                         <thead className="border-b">
                           <tr>
                             <th className={styles.s12}>Device</th>
@@ -1193,7 +1193,7 @@ export default function ProfilePage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </Table>
                     </div>
                   </div>
 
@@ -1204,7 +1204,7 @@ export default function ProfilePage() {
                       Recent Login History
                     </div>
                     <div className="ui-card-body p-0">
-                      <table className={styles.s11}>
+                      <TableclassName={styles.s11}>
                         <thead className="border-b">
                           <tr>
                             <th className={styles.s12}>Date & Time</th>
@@ -1276,7 +1276,7 @@ export default function ProfilePage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </Table>
                     </div>
                   </div>
                 </div>

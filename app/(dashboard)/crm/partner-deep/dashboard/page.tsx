@@ -70,7 +70,7 @@ export default function PartnerDashboardPage() {
       {dashboard.partnerPerformance?.length > 0 && (
         <div className="ui-card p-4">
           <h2 className="font-semibold mb-3">Per-Partner Performance</h2>
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="border-b text-left">
                 <th className="py-2 px-2">Partner</th>
@@ -95,7 +95,7 @@ export default function PartnerDashboardPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       )}
     </div>

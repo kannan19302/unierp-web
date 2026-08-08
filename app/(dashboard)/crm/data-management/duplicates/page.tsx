@@ -118,7 +118,7 @@ export default function DuplicatesPage() {
 
       {duplicates.length > 0 && (
         <Card title={`Found ${duplicates.length} matching records`}>
-          <table className="w-full text-sm mb-4">
+          <TableclassName="w-full text-sm mb-4">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">Master</th>
@@ -151,7 +151,7 @@ export default function DuplicatesPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
           <Button
             variant="primary"
             size="sm"

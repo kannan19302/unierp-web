@@ -237,7 +237,7 @@ export default function NotificationTemplatesPage() {
       {!loading && templates.length === 0 && (
         <div className="text-gray-500">No templates found.</div>
       )}
-      <table className="ui-table w-full">
+      <TableclassName="ui-table w-full">
         <thead>
           <tr>
             <th>Name</th>
@@ -293,7 +293,7 @@ export default function NotificationTemplatesPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
       {editingId && !showEditor && (
         <div className="ui-card p-4 mt-4">
           <h3 className="font-semibold mb-2">Preview / Render Test</h3>

@@ -113,7 +113,7 @@ export default function EcommerceCouponsPage() {
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Code</th>
@@ -175,7 +175,7 @@ export default function EcommerceCouponsPage() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>

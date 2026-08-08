@@ -338,7 +338,7 @@ export default function PurchaseOrderDetailPage() {
             {/* Tab Content 1: PO Items */}
             {activeTab === "details" ? (
               <div className="builder-table-wrapper">
-                <table className={styles.p22}>
+                <TableclassName={styles.p22}>
                   <thead>
                     <tr className={styles.p23}>
                       <th className={styles.p24}>Description</th>
@@ -374,7 +374,7 @@ export default function PurchaseOrderDetailPage() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
 
                 <div className={styles.p36}>
                   <div className="ui-text-xs-muted">
@@ -431,7 +431,7 @@ export default function PurchaseOrderDetailPage() {
                     </div>
 
                     <div className="builder-table-wrapper">
-                      <table className={styles.p45}>
+                      <TableclassName={styles.p45}>
                         <thead>
                           <tr className={styles.p46}>
                             <th className="p-3" rowSpan={2}>
@@ -521,7 +521,7 @@ export default function PurchaseOrderDetailPage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </Table>
                     </div>
                   </>
                 )}

@@ -124,7 +124,7 @@ export default function SalesDocumentsPage() {
               No generated documents yet.
             </p>
           ) : (
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <Tablestyle={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr
                   style={{
@@ -167,7 +167,7 @@ export default function SalesDocumentsPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           )}
         </Card>
       </div>

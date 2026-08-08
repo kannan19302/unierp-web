@@ -126,7 +126,7 @@ export default function ComplianceTab() {
         </div>
       ) : (
         <Card padding="none" className="builder-table-wrapper">
-          <table className={styles.s7}>
+          <TableclassName={styles.s7}>
             <thead>
               <tr className={styles.s8}>
                 <th className="p-4">Audit Area</th>
@@ -178,7 +178,7 @@ export default function ComplianceTab() {
                 ))
               )}
             </tbody>
-          </table>
+          </Table>
         </Card>
       )}
     </div>

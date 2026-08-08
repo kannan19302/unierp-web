@@ -41,7 +41,7 @@ export default function EventLogsPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Event Delivery Logs</h1>
-      <table className="w-full text-sm">
+      <TableclassName="w-full text-sm">
         <thead>
           <tr className="border-b text-left">
             <th className="py-2 px-2">Event Type</th>
@@ -92,7 +92,7 @@ export default function EventLogsPage() {
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

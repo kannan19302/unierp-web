@@ -253,7 +253,7 @@ export default function HealthcarePharmacyPage() {
         <div className="ui-card">
           {activeTab === "inventory" && (
             <>
-              <table className="ui-table">
+              <TableclassName="ui-table">
                 <thead>
                   <tr>
                     <th>Drug</th>
@@ -304,7 +304,7 @@ export default function HealthcarePharmacyPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
               {dispenseForm.drugId && (
                 <div className="mt-4 p-4 border rounded-lg">
                   <h4 className="font-semibold mb-2">
@@ -371,7 +371,7 @@ export default function HealthcarePharmacyPage() {
             </>
           )}
           {activeTab === "batches" && (
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Drug</th>
@@ -413,10 +413,10 @@ export default function HealthcarePharmacyPage() {
                 )}
                 )
               </tbody>
-            </table>
+            </Table>
           )}
           {activeTab === "controlled" && (
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Drug</th>
@@ -441,7 +441,7 @@ export default function HealthcarePharmacyPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           )}
         </div>
       )}

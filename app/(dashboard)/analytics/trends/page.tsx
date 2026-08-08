@@ -90,7 +90,7 @@ export default function TrendsPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="ui-table w-full">
+              <TableclassName="ui-table w-full">
                 <thead>
                   <tr>
                     <th>KPI</th>
@@ -139,7 +139,7 @@ export default function TrendsPage() {
                     </tr>
                   )}
                 </tbody>
-              </table>
+              </Table>
             </div>
           )}
         </Card>

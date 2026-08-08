@@ -174,7 +174,7 @@ export default function POSKitchenDisplayPage() {
           </div>
         ) : (
           <div className="ui-card">
-            <table className="ui-table">
+            <TableclassName="ui-table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -233,7 +233,7 @@ export default function POSKitchenDisplayPage() {
                   ))
                 )}
               </tbody>
-            </table>
+            </Table>
           </div>
         )}
         {showModal && (

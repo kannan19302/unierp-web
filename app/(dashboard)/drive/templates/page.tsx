@@ -150,7 +150,7 @@ export default function DriveTemplatesPage() {
         </div>
 
         <div className={styles.p7}>
-          <table className={styles.p8}>
+          <TableclassName={styles.p8}>
             <thead>
               <tr className={styles.p9}>
                 {[
@@ -207,7 +207,7 @@ export default function DriveTemplatesPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
       </div>
     </RouteGuard>

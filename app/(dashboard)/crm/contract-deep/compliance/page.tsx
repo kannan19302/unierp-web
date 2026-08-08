@@ -51,7 +51,7 @@ export default function CompliancePage() {
             Contracts Expiring Within 30 Days
           </h2>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <TableclassName="w-full text-sm">
               <thead>
                 <tr className="border-b text-left">
                   <th className="py-2 px-3 font-medium">Contract</th>
@@ -78,7 +78,7 @@ export default function CompliancePage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
         </div>
       )}

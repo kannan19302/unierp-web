@@ -49,7 +49,7 @@ export default function MessageHistoryPage() {
       </div>
       {loaded && (
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="border-b text-left">
                 <th className="py-2 px-3 font-medium">Date</th>
@@ -86,7 +86,7 @@ export default function MessageHistoryPage() {
                 </tr>
               )}
             </tbody>
-          </table>
+          </Table>
         </div>
       )}
     </div>

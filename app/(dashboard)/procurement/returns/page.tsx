@@ -447,7 +447,7 @@ export default function PurchaseReturnsPage() {
                       </div>
                     ) : (
                       <div className={styles.p24}>
-                        <table className={styles.p25}>
+                        <TableclassName={styles.p25}>
                           <thead>
                             <tr className={styles.p26}>
                               <th className={styles.p27}>Description</th>
@@ -505,7 +505,7 @@ export default function PurchaseReturnsPage() {
                               );
                             })}
                           </tbody>
-                        </table>
+                        </Table>
                       </div>
                     )}
                   </div>

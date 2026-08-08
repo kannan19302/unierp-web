@@ -83,7 +83,7 @@ export default function ProcurementAnalyticsPage() {
 
           <Card>
             <h3>Top Vendors by Spend</h3>
-            <table className="ui-table" style={{ marginTop: 8, width: "100%" }}>
+            <TableclassName="ui-table" style={{ marginTop: 8, width: "100%" }}>
               <thead>
                 <tr>
                   <th>Vendor</th>
@@ -102,13 +102,13 @@ export default function ProcurementAnalyticsPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </Card>
 
           <div className="ui-grid-2">
             <Card>
               <h3>Spend by Status</h3>
-              <table
+              <Table
                 className="ui-table"
                 style={{ marginTop: 8, width: "100%" }}
               >
@@ -130,12 +130,12 @@ export default function ProcurementAnalyticsPage() {
                     ),
                   )}
                 </tbody>
-              </table>
+              </Table>
             </Card>
 
             <Card>
               <h3>Monthly Spend Trend</h3>
-              <table
+              <Table
                 className="ui-table"
                 style={{ marginTop: 8, width: "100%" }}
               >
@@ -155,7 +155,7 @@ export default function ProcurementAnalyticsPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </Card>
           </div>
         </div>

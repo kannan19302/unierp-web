@@ -183,7 +183,7 @@ function MergeReviewModal({
         </select>
       </div>
       <div className="builder-table-wrapper">
-        <table className={styles.table}>
+        <TableclassName={styles.table}>
           <thead>
             <tr className={styles.tableHead}>
               <th className={styles.cell}>Field</th>
@@ -226,7 +226,7 @@ function MergeReviewModal({
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
       <div className={styles.footer}>
         <Button variant="outline" onClick={onClose}>

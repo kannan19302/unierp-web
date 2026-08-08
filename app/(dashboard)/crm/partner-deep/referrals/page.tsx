@@ -23,7 +23,7 @@ export default function PartnerReferralsPage() {
   return (
     <div className="ui-card p-6">
       <h1 className="text-2xl font-bold mb-4">Partner Referrals</h1>
-      <table className="w-full text-sm">
+      <TableclassName="w-full text-sm">
         <thead>
           <tr className="border-b text-left">
             <th className="py-2 px-2">Company</th>
@@ -56,7 +56,7 @@ export default function PartnerReferralsPage() {
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

@@ -1426,7 +1426,7 @@ export default function ProjectsPage() {
                   <h4 className={styles.p84}>Project Cost Ledger</h4>
                   {costEntries.length > 0 ? (
                     <div className="builder-table-wrapper">
-                      <table className={styles.p85}>
+                      <TableclassName={styles.p85}>
                         <thead>
                           <tr className={styles.p86}>
                             <th className={styles.p87}>Date</th>
@@ -1483,7 +1483,7 @@ export default function ProjectsPage() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </Table>
                     </div>
                   ) : (
                     <p className={styles.p98}>

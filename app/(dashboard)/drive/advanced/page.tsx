@@ -384,7 +384,7 @@ export default function DocumentsAdvancedPage() {
               })}
             </div>
             <div className={styles.p16}>
-              <table className={styles.p17}>
+              <TableclassName={styles.p17}>
                 <thead>
                   <tr className={styles.p18}>
                     <th className={styles.p19}>Document</th>
@@ -437,7 +437,7 @@ export default function DocumentsAdvancedPage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
           </div>
         )}

@@ -51,7 +51,7 @@ export default function HealthcareMedicalRecordsPage() {
         </div>
       ) : (
         <div className="ui-card">
-          <table className="ui-table">
+          <TableclassName="ui-table">
             <thead>
               <tr>
                 <th>Patient</th>
@@ -82,7 +82,7 @@ export default function HealthcareMedicalRecordsPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </div>
       )}
     </div>

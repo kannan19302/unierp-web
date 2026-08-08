@@ -143,7 +143,7 @@ export default function MatrixPage() {
           </Card>
         ) : (
           <Card padding="none" className="builder-table-wrapper">
-            <table className={styles.s3}>
+            <TableclassName={styles.s3}>
               <thead>
                 <tr className={styles.s4}>
                   <th className={styles.s5}>Role</th>
@@ -227,7 +227,7 @@ export default function MatrixPage() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
 
             {/* Legend */}
             <div className={styles.s13}>

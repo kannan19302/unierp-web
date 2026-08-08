@@ -166,7 +166,7 @@ export default function ImportPage() {
         {logs.length === 0 ? (
           <p className="text-sm text-gray-400">No imports yet.</p>
         ) : (
-          <table className="w-full text-sm">
+          <TableclassName="w-full text-sm">
             <thead>
               <tr className="text-left border-b text-gray-500">
                 <th className="pb-2">File</th>
@@ -217,7 +217,7 @@ export default function ImportPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         )}
       </Card>
     </div>
