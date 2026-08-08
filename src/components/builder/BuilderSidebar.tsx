@@ -250,7 +250,7 @@ export function BuilderSidebar() {
               gap: "var(--space-6)",
             }}
           >
-            {FIELD_GROUPS.map((group) => (
+            {FIELD_GROUPS.map((group: any) => (
               <div
                 key={group.name}
                 style={{
@@ -278,7 +278,7 @@ export function BuilderSidebar() {
                     gap: "8px",
                   }}
                 >
-                  {group.items.map((ft) => (
+                  {group.items.map((ft: any) => (
                     <div
                       key={ft.type}
                       onClick={() => handleAddField(ft.type)}
@@ -297,13 +297,13 @@ export function BuilderSidebar() {
                         transition: "all 0.2s",
                         textAlign: "center",
                       }}
-                      onMouseEnter={(e) => {
+                      onMouseEnter={(e: any) => {
                         e.currentTarget.style.borderColor = ft.color;
                         e.currentTarget.style.background =
                           "rgba(255,255,255,0.05)";
                         e.currentTarget.style.transform = "translateY(-1px)";
                       }}
-                      onMouseLeave={(e) => {
+                      onMouseLeave={(e: any) => {
                         e.currentTarget.style.borderColor =
                           "rgba(255, 255, 255, 0.05)";
                         e.currentTarget.style.background =
@@ -329,7 +329,7 @@ export function BuilderSidebar() {
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            {fields.map((f) => {
+            {fields.map((f: any) => {
               const isSection = f.type === "Section Break";
               return (
                 <div

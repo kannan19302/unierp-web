@@ -65,7 +65,7 @@ export default function POSCustomersPage() {
               <input
                 placeholder="Search customers..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e: any) => setSearch(e.target.value)}
                 className={styles.p6}
               />
             </div>
@@ -80,7 +80,7 @@ export default function POSCustomersPage() {
       {activeTab === "loyalty" && (
         <div>
           <div className={styles.p8}>
-            {["BRONZE", "SILVER", "GOLD", "PLATINUM"].map((tier) => (
+            {["BRONZE", "SILVER", "GOLD", "PLATINUM"].map((tier: any) => (
               <div key={tier} className={styles.p9}>
                 <Award size={24} className={styles.p10} />
                 <div className="ui-heading-lg">{tier}</div>

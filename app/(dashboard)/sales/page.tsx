@@ -55,7 +55,7 @@ export default function SalesDashboard() {
       ]);
 
       if (Array.isArray(orderRes)) {
-        const normalizedOrders = orderRes.map((o) => ({
+        const normalizedOrders = orderRes.map((o: any) => ({
           ...o,
           columnKey: o.status || "DRAFT",
         }));
@@ -79,8 +79,8 @@ export default function SalesDashboard() {
   const totalRevenue = useMemo(
     () =>
       orders
-        .filter((o) => o.status === "CONFIRMED" || o.status === "DELIVERED")
-        .reduce((sum, o) => sum + o.totalAmount, 0),
+        .filter((o: any) => o.status === "CONFIRMED" || o.status === "DELIVERED")
+        .reduce((sum: any, o: any) => sum + o.totalAmount, 0),
     [orders],
   );
 
@@ -88,11 +88,11 @@ export default function SalesDashboard() {
     () =>
       orders
         .filter(
-          (o) =>
+          (o: any) =>
             o.salesChannel === "B2B" &&
             (o.status === "CONFIRMED" || o.status === "DELIVERED"),
         )
-        .reduce((sum, o) => sum + o.totalAmount, 0),
+        .reduce((sum: any, o: any) => sum + o.totalAmount, 0),
     [orders],
   );
 
@@ -100,11 +100,11 @@ export default function SalesDashboard() {
     () =>
       orders
         .filter(
-          (o) =>
+          (o: any) =>
             o.salesChannel === "B2C" &&
             (o.status === "CONFIRMED" || o.status === "DELIVERED"),
         )
-        .reduce((sum, o) => sum + o.totalAmount, 0),
+        .reduce((sum: any, o: any) => sum + o.totalAmount, 0),
     [orders],
   );
 
@@ -112,16 +112,16 @@ export default function SalesDashboard() {
     () =>
       orders
         .filter(
-          (o) =>
+          (o: any) =>
             o.salesChannel === "D2C" &&
             (o.status === "CONFIRMED" || o.status === "DELIVERED"),
         )
-        .reduce((sum, o) => sum + o.totalAmount, 0),
+        .reduce((sum: any, o: any) => sum + o.totalAmount, 0),
     [orders],
   );
 
   const creditHolds = useMemo(
-    () => orders.filter((o) => o.status === "CREDIT_HOLD"),
+    () => orders.filter((o: any) => o.status === "CREDIT_HOLD"),
     [orders],
   );
 
@@ -131,28 +131,28 @@ export default function SalesDashboard() {
       { name: "B2B", value: b2bRevenue },
       { name: "B2C", value: b2cRevenue },
       { name: "D2C", value: d2cRevenue },
-    ].filter((d) => d.value > 0);
+    ].filter((d: any) => d.value > 0);
   }, [b2bRevenue, b2cRevenue, d2cRevenue]);
 
   const orderStatusDistribution = useMemo(() => {
     const counts: Record<string, number> = {};
-    orders.forEach((o) => {
+    orders.forEach((o: any) => {
       counts[o.status] = (counts[o.status] || 0) + 1;
     });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
+    return Object.entries(counts).map(([name, value]: any) => ({ name, value }));
   }, [orders]);
 
   const monthlyRevenueData = useMemo(() => {
     const months: Record<string, number> = {};
     orders
-      .filter((o) => o.status === "CONFIRMED" || o.status === "DELIVERED")
-      .forEach((o) => {
+      .filter((o: any) => o.status === "CONFIRMED" || o.status === "DELIVERED")
+      .forEach((o: any) => {
         const month = o.orderDate ? o.orderDate.substring(0, 7) : "Unknown";
         months[month] = (months[month] || 0) + o.totalAmount;
       });
     return Object.entries(months)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([name, value]) => ({ name, value }));
+      .sort(([a]: any, [b]: any) => a.localeCompare(b))
+      .map(([name, value]: any) => ({ name, value }));
   }, [orders]);
 
   const ORDER_STATUS_COLUMNS: KanbanColumn[] = [
@@ -172,8 +172,8 @@ export default function SalesDashboard() {
       fetchDashboardData();
     } catch {
       // update state locally as a graceful fallback if API doesn't support patch directly
-      setOrders((prev) =>
-        prev.map((o) =>
+      setOrders((prev: any) =>
+        prev.map((o: any) =>
           o.id === itemId ? { ...o, status: toColumn, columnKey: toColumn } : o,
         ),
       );
@@ -321,7 +321,7 @@ export default function SalesDashboard() {
                 columns={ORDER_STATUS_COLUMNS}
                 items={orders}
                 onCardMove={handleKanbanMove}
-                renderCard={(item) => (
+                renderCard={(item: any) => (
                   <div>
                     <div className={styles.p8}>{item.orderNumber}</div>
                     <div className={styles.p9}>{item.customerName}</div>
@@ -366,7 +366,7 @@ export default function SalesDashboard() {
                       </div>
                       <div className={styles.p16}>
                         <span className="ui-text-xs-muted">
-                          {orders.filter((o) => o.status === "DRAFT").length}{" "}
+                          {orders.filter((o: any) => o.status === "DRAFT").length}{" "}
                           orders in draft
                         </span>
                         <Link href="/sales/orders" className={styles.p17}>
@@ -391,7 +391,7 @@ export default function SalesDashboard() {
                       </div>
                       <div className={styles.p20}>
                         <span className="ui-text-xs-muted">
-                          {quotes.filter((q) => q.status === "SENT").length}{" "}
+                          {quotes.filter((q: any) => q.status === "SENT").length}{" "}
                           quotations active
                         </span>
                         <Link href="/sales/quotations" className={styles.p21}>

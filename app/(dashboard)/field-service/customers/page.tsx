@@ -20,7 +20,7 @@ export default function FieldServiceCustomersPage() {
         />
         <ListView
           resource={customerResource}
-          onRowClick={(row) => router.push(`/crm/customers/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/crm/customers/${row.id}`)}
         />
       </div>
     </RouteGuard>

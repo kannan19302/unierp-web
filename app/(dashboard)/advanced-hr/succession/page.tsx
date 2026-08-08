@@ -81,7 +81,7 @@ export default function AdvancedHrSuccessionPage() {
             type="text"
             placeholder="Succession plan title (e.g. VP Engineering 2027 Pipeline)..."
             value={planName}
-            onChange={(e) => setPlanName(e.target.value)}
+            onChange={(e: any) => setPlanName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",

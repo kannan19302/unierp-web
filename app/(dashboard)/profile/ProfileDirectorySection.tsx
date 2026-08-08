@@ -191,7 +191,7 @@ function Avatar({
   }
   const initials = name
     .split(" ")
-    .map((p) => p[0])
+    .map((p: any) => p[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
@@ -290,7 +290,7 @@ function EditableField({
             value={draft}
             autoFocus
             rows={3}
-            onChange={(e) => setDraft(e.target.value)}
+            onChange={(e: any) => setDraft(e.target.value)}
           />
         ) : (
           <input
@@ -298,8 +298,8 @@ function EditableField({
             value={draft}
             autoFocus
             placeholder={placeholder}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={(e) => {
+            onChange={(e: any) => setDraft(e.target.value)}
+            onKeyDown={(e: any) => {
               if (e.key === "Enter") (e.target as HTMLInputElement).blur();
             }}
           />
@@ -472,7 +472,7 @@ export function ProfileDirectorySection({
     if (isSelf) {
       client
         .get<any>("/people/me")
-        .then((me) => {
+        .then((me: any) => {
           setCard({
             userId: me.userId,
             firstName: me.firstName,
@@ -505,7 +505,7 @@ export function ProfileDirectorySection({
     } else {
       client
         .get<ProfileCardData>(`/people/${targetUserId}/card`)
-        .then((res) => setCard(res))
+        .then((res: any) => setCard(res))
         .catch(() => setCard(null))
         .finally(() => setLoading(false));
     }
@@ -529,7 +529,7 @@ export function ProfileDirectorySection({
     (centerId: string) => {
       client
         .get<OrgChartNode>(`/people/${centerId}/org-chart`)
-        .then((res) => setChart(res))
+        .then((res: any) => setChart(res))
         .catch(() => setChart(null));
     },
     [client],
@@ -548,8 +548,8 @@ export function ProfileDirectorySection({
         .get<DirectoryUser[]>(
           `/people/directory?q=${encodeURIComponent(managerQuery)}`,
         )
-        .then((res) =>
-          setManagerResults(res.filter((u) => u.id !== card?.userId)),
+        .then((res: any) =>
+          setManagerResults(res.filter((u: any) => u.id !== card?.userId)),
         )
         .catch(() => setManagerResults([]));
     }, 250);
@@ -567,9 +567,9 @@ export function ProfileDirectorySection({
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream);
       chunksRef.current = [];
-      recorder.ondataavailable = (e) => chunksRef.current.push(e.data);
+      recorder.ondataavailable = (e: any) => chunksRef.current.push(e.data);
       recorder.onstop = async () => {
-        stream.getTracks().forEach((t) => t.stop());
+        stream.getTracks().forEach((t: any) => t.stop());
         const blob = new Blob(chunksRef.current, { type: "audio/webm" });
         if (blob.size > 300 * 1024) {
           setRecError("Recording too long — keep it under ~5 seconds.");
@@ -633,7 +633,7 @@ export function ProfileDirectorySection({
   const toggleWorkingDay = (day: string) => {
     if (!card) return;
     const next = card.workingDays.includes(day)
-      ? card.workingDays.filter((d) => d !== day)
+      ? card.workingDays.filter((d: any) => d !== day)
       : [...card.workingDays, day];
     saveField({ workingDays: next });
   };
@@ -751,7 +751,7 @@ export function ProfileDirectorySection({
                   label=""
                   value={card.pronouns ?? ""}
                   placeholder="Add pronouns (e.g. he/him)"
-                  onSave={(v) => saveField({ pronouns: v })}
+                  onSave={(v: any) => saveField({ pronouns: v })}
                 />
               ) : (
                 card.pronouns && (
@@ -770,7 +770,7 @@ export function ProfileDirectorySection({
                   icon={<Briefcase size={12} />}
                   value={card.jobTitle ?? ""}
                   placeholder="Add your job title"
-                  onSave={(v) => saveField({ jobTitle: v })}
+                  onSave={(v: any) => saveField({ jobTitle: v })}
                 />
               ) : (
                 <span className={styles.roleText}>
@@ -806,7 +806,7 @@ export function ProfileDirectorySection({
               value={card.overview ?? ""}
               placeholder="Write a short bio…"
               multiline
-              onSave={(v) => saveField({ overview: v })}
+              onSave={(v: any) => saveField({ overview: v })}
             />
           ) : (
             <p className={styles.overviewText}>
@@ -822,7 +822,7 @@ export function ProfileDirectorySection({
               <EditableField
                 label="First Name"
                 value={card.firstName}
-                onSave={async (v) => {
+                onSave={async (v: any) => {
                   await client.patch("/auth/me", { firstName: v });
                   loadCard();
                 }}
@@ -830,7 +830,7 @@ export function ProfileDirectorySection({
               <EditableField
                 label="Last Name"
                 value={card.lastName}
-                onSave={async (v) => {
+                onSave={async (v: any) => {
                   await client.patch("/auth/me", { lastName: v });
                   loadCard();
                 }}
@@ -878,10 +878,10 @@ export function ProfileDirectorySection({
                 <select
                   className={styles.fieldSelect}
                   value={card.timezone ?? ""}
-                  onChange={(e) => saveField({ timezone: e.target.value })}
+                  onChange={(e: any) => saveField({ timezone: e.target.value })}
                 >
                   <option value="">Not set</option>
-                  {TIMEZONES.map((tz) => (
+                  {TIMEZONES.map((tz: any) => (
                     <option key={tz} value={tz}>
                       {tz}
                     </option>
@@ -895,7 +895,7 @@ export function ProfileDirectorySection({
                     type="time"
                     className={styles.timeInput}
                     value={card.workingHoursStart ?? ""}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       saveField({ workingHoursStart: e.target.value })
                     }
                   />
@@ -904,7 +904,7 @@ export function ProfileDirectorySection({
                     type="time"
                     className={styles.timeInput}
                     value={card.workingHoursEnd ?? ""}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       saveField({ workingHoursEnd: e.target.value })
                     }
                   />
@@ -913,7 +913,7 @@ export function ProfileDirectorySection({
               <div className={styles.field}>
                 <label className={styles.fieldLabel}>Working days</label>
                 <div className={styles.daysRow}>
-                  {WEEKDAYS.map((d) => (
+                  {WEEKDAYS.map((d: any) => (
                     <button
                       key={d.key}
                       type="button"
@@ -934,7 +934,7 @@ export function ProfileDirectorySection({
                 icon={<MapPin size={12} />}
                 value={card.workingLocation ?? ""}
                 placeholder="Remote, HQ, city…"
-                onSave={(v) => saveField({ workingLocation: v })}
+                onSave={(v: any) => saveField({ workingLocation: v })}
               />
             </>
           ) : (
@@ -1000,7 +1000,7 @@ export function ProfileDirectorySection({
                   <button
                     type="button"
                     className={styles.fieldValueBtn}
-                    onClick={() => setManagerPickerOpen((v) => !v)}
+                    onClick={() => setManagerPickerOpen((v: any) => !v)}
                   >
                     <span className={styles.fieldEmpty}>Set your manager</span>
                     <Search size={12} />
@@ -1013,10 +1013,10 @@ export function ProfileDirectorySection({
                       placeholder="Search people…"
                       value={managerQuery}
                       autoFocus
-                      onChange={(e) => setManagerQuery(e.target.value)}
+                      onChange={(e: any) => setManagerQuery(e.target.value)}
                     />
                     <div className={styles.managerResults}>
-                      {managerResults.map((u) => (
+                      {managerResults.map((u: any) => (
                         <button
                           key={u.id}
                           type="button"
@@ -1061,7 +1061,7 @@ export function ProfileDirectorySection({
                 Reports to me ({reports.length})
               </label>
               <div className={styles.peopleList}>
-                {reports.map((r) => (
+                {reports.map((r: any) => (
                   <div key={r.id} className={styles.personRow}>
                     <Avatar
                       name={`${r.firstName} ${r.lastName}`}
@@ -1085,7 +1085,7 @@ export function ProfileDirectorySection({
                 Colleagues ({colleagues.length})
               </label>
               <div className={styles.peopleList}>
-                {colleagues.slice(0, 6).map((c) => (
+                {colleagues.slice(0, 6).map((c: any) => (
                   <div key={c.id} className={styles.personRow}>
                     <Avatar
                       name={`${c.firstName} ${c.lastName}`}
@@ -1114,11 +1114,11 @@ export function ProfileDirectorySection({
                   className={styles.fieldSelect}
                   value={presence}
                   disabled={savingPresence}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     handlePresenceChange({ presence: e.target.value })
                   }
                 >
-                  {Object.keys(PRESENCE_LABELS).map((p) => (
+                  {Object.keys(PRESENCE_LABELS).map((p: any) => (
                     <option key={p} value={p}>
                       {PRESENCE_LABELS[p]}
                     </option>
@@ -1128,7 +1128,7 @@ export function ProfileDirectorySection({
                   className={styles.fieldSelect}
                   value={visibility}
                   disabled={savingPresence}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     handlePresenceChange({ visibility: e.target.value })
                   }
                 >
@@ -1147,7 +1147,7 @@ export function ProfileDirectorySection({
                 <select
                   className={styles.fieldSelect}
                   value={language}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     onSavePreferences({ language: e.target.value })
                   }
                 >
@@ -1167,7 +1167,7 @@ export function ProfileDirectorySection({
                 <select
                   className={styles.fieldSelect}
                   value={theme}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     const val = e.target.value;
                     onSavePreferences({ theme: val });
                     setTheme(
@@ -1195,7 +1195,7 @@ export function ProfileDirectorySection({
                 <select
                   className={styles.fieldSelect}
                   value={density}
-                  onChange={(e) => setDensity(e.target.value as any)}
+                  onChange={(e: any) => setDensity(e.target.value as any)}
                 >
                   <option value="comfortable">Comfortable (default)</option>
                   <option value="compact">Compact (tighter fit)</option>
@@ -1257,7 +1257,7 @@ export function ProfileDirectorySection({
               <>
                 <div className={styles.orgConnector} />
                 <div className={styles.orgLevelRow}>
-                  {chart.directReports.map((r) => (
+                  {chart.directReports.map((r: any) => (
                     <button
                       key={r.id}
                       type="button"

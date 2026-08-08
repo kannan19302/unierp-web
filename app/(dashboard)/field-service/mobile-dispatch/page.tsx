@@ -151,7 +151,7 @@ export default function MobileDispatchPage() {
           <select
             className="ui-input-sm"
             value={r.currentStatus}
-            onChange={(e) => handleStatusChange(r.id, e.target.value)}
+            onChange={(e: any) => handleStatusChange(r.id, e.target.value)}
           >
             <option value="AVAILABLE">Available</option>
             <option value="BUSY">Busy</option>

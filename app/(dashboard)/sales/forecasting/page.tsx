@@ -108,7 +108,7 @@ export default function SalesForecastingPage() {
           ]}
           actions={
             <div className="ui-hstack-2">
-              {[1, 3, 6, 12].map((m) => (
+              {[1, 3, 6, 12].map((m: any) => (
                 <Button
                   key={m}
                   variant={months === m ? "primary" : "outline"}

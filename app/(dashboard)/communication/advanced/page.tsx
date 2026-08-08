@@ -223,7 +223,7 @@ export default function CommunicationAdvancedPage() {
               No chat rooms yet
             </div>
           )}
-          {chatRooms.map((room) => (
+          {chatRooms.map((room: any) => (
             <div key={room.id} className={styles.s5}>
               <div className={styles.s6}>
                 <div className="ui-hstack-2">
@@ -253,7 +253,7 @@ export default function CommunicationAdvancedPage() {
       {!loading && activeTab === "inbox" && (
         <div className={styles.s26}>
           <div className={styles.s27}>
-            {["OPEN", "ASSIGNED", "RESOLVED"].map((status) => {
+            {["OPEN", "ASSIGNED", "RESOLVED"].map((status: any) => {
               const count =
                 status === "OPEN"
                   ? fileShares.length
@@ -294,16 +294,16 @@ export default function CommunicationAdvancedPage() {
               <h3 className="ui-section-header">
                 <Megaphone size={16} className="ui-hstack-2" /> Announcements
               </h3>
-              {announcements.filter((a) => a.status === "PUBLISHED").length ===
+              {announcements.filter((a: any) => a.status === "PUBLISHED").length ===
                 0 && (
                 <div className="ui-text-sm-muted">
                   No published announcements
                 </div>
               )}
               {announcements
-                .filter((a) => a.status === "PUBLISHED")
+                .filter((a: any) => a.status === "PUBLISHED")
                 .slice(0, 5)
-                .map((a) => (
+                .map((a: any) => (
                   <div key={a.id} className={styles.s40}>
                     <div className={styles.s41}>{a.title}</div>
                     <p className={styles.s42}>
@@ -326,7 +326,7 @@ export default function CommunicationAdvancedPage() {
               {announcements.length === 0 && (
                 <div className="ui-text-sm-muted">No announcements yet</div>
               )}
-              {announcements.slice(0, 10).map((a) => (
+              {announcements.slice(0, 10).map((a: any) => (
                 <div key={a.id} className={styles.s45}>
                   <div>
                     <div className="ui-heading-sm">{a.title}</div>

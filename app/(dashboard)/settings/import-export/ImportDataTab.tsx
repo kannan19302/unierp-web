@@ -69,11 +69,11 @@ function parseCSV(text: string): {
   if (lines.length < 2) return { headers: [], rows: [] };
   const headers = lines[0]!
     .split(",")
-    .map((h) => h.trim().replace(/^"|"$/g, ""));
-  const rows = lines.slice(1).map((line) => {
-    const vals = line.split(",").map((v) => v.trim().replace(/^"|"$/g, ""));
+    .map((h: any) => h.trim().replace(/^"|"$/g, ""));
+  const rows = lines.slice(1).map((line: any) => {
+    const vals = line.split(",").map((v: any) => v.trim().replace(/^"|"$/g, ""));
     const row: Record<string, string> = {};
-    headers.forEach((h, i) => {
+    headers.forEach((h: any, i: any) => {
       row[h] = vals[i] || "";
     });
     return row;
@@ -108,16 +108,16 @@ export default function ImportDataTab() {
       const file = e.target.files?.[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = (ev) => {
+      reader.onload = (ev: any) => {
         const text = ev.target?.result as string;
         const { headers, rows } = parseCSV(text);
         setSourceHeaders(headers);
         setParsedRows(rows);
         const autoMap: Record<string, string> = {};
         const fields = MODEL_FIELDS[targetModel] || [];
-        fields.forEach((f) => {
+        fields.forEach((f: any) => {
           const match = headers.find(
-            (h) => h.toLowerCase() === f.toLowerCase(),
+            (h: any) => h.toLowerCase() === f.toLowerCase(),
           );
           if (match) autoMap[f] = match;
         });
@@ -131,9 +131,9 @@ export default function ImportDataTab() {
 
   const handleValidate = async () => {
     const fields = MODEL_FIELDS[targetModel] || [];
-    const mapped = parsedRows.map((row) => {
+    const mapped = parsedRows.map((row: any) => {
       const obj: Record<string, string> = {};
-      fields.forEach((f) => {
+      fields.forEach((f: any) => {
         if (columnMap[f]) obj[f] = row[columnMap[f]] || "";
       });
       return obj;
@@ -179,7 +179,7 @@ export default function ImportDataTab() {
         <Stepper
           steps={STEPS}
           activeStep={step}
-          onStepClick={(i) => {
+          onStepClick={(i: any) => {
             if (i < step) setStep(i);
           }}
         />
@@ -191,9 +191,9 @@ export default function ImportDataTab() {
                 <FormField label="Target Entity" required>
                   <Select
                     value={targetModel}
-                    onChange={(e) => setTargetModel(e.target.value)}
+                    onChange={(e: any) => setTargetModel(e.target.value)}
                   >
-                    {Object.keys(MODEL_FIELDS).map((m) => (
+                    {Object.keys(MODEL_FIELDS).map((m: any) => (
                       <option key={m} value={m}>
                         {m}
                       </option>
@@ -216,11 +216,11 @@ export default function ImportDataTab() {
               <div className={styles.s2}>
                 <div
                   className={styles.s3}
-                  onDragOver={(e) => {
+                  onDragOver={(e: any) => {
                     e.preventDefault();
                     e.currentTarget.style.borderColor = "var(--color-primary)";
                   }}
-                  onDragLeave={(e) => {
+                  onDragLeave={(e: any) => {
                     e.currentTarget.style.borderColor = "var(--color-border)";
                   }}
                   onClick={() => document.getElementById("csv-input")?.click()}
@@ -262,7 +262,7 @@ export default function ImportDataTab() {
                 </div>
 
                 <div className="ui-stack-2">
-                  {(MODEL_FIELDS[targetModel] || []).map((field) => (
+                  {(MODEL_FIELDS[targetModel] || []).map((field: any) => (
                     <div
                       key={field}
                       style={{
@@ -276,7 +276,7 @@ export default function ImportDataTab() {
                       <ArrowRight size={14} className="ui-text-tertiary" />
                       <Select
                         value={columnMap[field] || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setColumnMap({
                             ...columnMap,
                             [field]: e.target.value,
@@ -284,7 +284,7 @@ export default function ImportDataTab() {
                         }
                       >
                         <option value="">— Select column —</option>
-                        {sourceHeaders.map((h) => (
+                        {sourceHeaders.map((h: any) => (
                           <option key={h} value={h}>
                             {h}
                           </option>

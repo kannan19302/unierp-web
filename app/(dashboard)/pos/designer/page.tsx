@@ -100,12 +100,12 @@ export default function POSDesignerPage() {
               <select
                 className={["ui-input", styles.p5].join(" ")}
                 value={selectedTerminal}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setSelectedTerminal(e.target.value);
                   loadTemplate(e.target.value);
                 }}
               >
-                {terminals.map((t) => (
+                {terminals.map((t: any) => (
                   <option key={t.id} value={t.id}>
                     {t.name} ({t.code})
                   </option>
@@ -118,7 +118,7 @@ export default function POSDesignerPage() {
               <select
                 className={["ui-input", styles.p7].join(" ")}
                 value={layoutFormat}
-                onChange={(e) => setLayoutFormat(e.target.value)}
+                onChange={(e: any) => setLayoutFormat(e.target.value)}
               >
                 <option value="THERMAL_80MM">
                   80mm Raw Thermal Paper Layout
@@ -140,7 +140,7 @@ export default function POSDesignerPage() {
               <textarea
                 className={["ui-input", styles.p9].join(" ")}
                 value={receiptTemplate}
-                onChange={(e) => setReceiptTemplate(e.target.value)}
+                onChange={(e: any) => setReceiptTemplate(e.target.value)}
               />
             </div>
 

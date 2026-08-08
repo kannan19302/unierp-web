@@ -118,7 +118,7 @@ export default function UpdatesPage() {
                 </h3>
 
                 <div className="ui-stack-4">
-                  {status.releaseNotes.map((note, idx) => (
+                  {status.releaseNotes.map((note: any, idx: any) => (
                     <div
                       key={idx}
                       className={
@@ -134,7 +134,7 @@ export default function UpdatesPage() {
                         </span>
                       </div>
                       <ul className={styles.releaseList}>
-                        {note.fixes.map((fix, fIdx) => (
+                        {note.fixes.map((fix: any, fIdx: any) => (
                           <li key={fIdx} className={styles.releaseItem}>
                             {fix}
                           </li>

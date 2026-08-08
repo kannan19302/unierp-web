@@ -71,7 +71,7 @@ async function trySilentRefresh(): Promise<boolean> {
       headers,
       credentials: "include",
     })
-      .then(async (res) => {
+      .then(async (res: any) => {
         if (!res.ok) return false;
         const data = (await res.json()) as { token?: string; user?: unknown };
         if (data.token) localStorage.setItem("token", data.token);
@@ -129,7 +129,7 @@ export async function api<T = unknown>(
   if (
     res.status === 401 &&
     !isRetry &&
-    !NO_REFRESH_PATHS.some((p) => path.startsWith(p))
+    !NO_REFRESH_PATHS.some((p: any) => path.startsWith(p))
   ) {
     const renewed = await trySilentRefresh();
     if (renewed) {

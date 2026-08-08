@@ -74,7 +74,7 @@ export default function EcommerceThemesPage() {
               className="ui-input"
               placeholder="Store ID"
               value={storeId}
-              onChange={(e) => setStoreId(e.target.value)}
+              onChange={(e: any) => setStoreId(e.target.value)}
             />
             <button
               className="ui-btn"
@@ -114,14 +114,14 @@ export default function EcommerceThemesPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Create Theme</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-hstack-2 mt-4">

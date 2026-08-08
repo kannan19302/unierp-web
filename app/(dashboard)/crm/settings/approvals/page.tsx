@@ -145,11 +145,11 @@ export default function ApprovalSettingsPage() {
     setSubmitting(true);
     try {
       const created = await client.post<any>("/crm/approval-processes", form);
-      setProcesses((prev) => [...prev, created]);
+      setProcesses((prev: any) => [...prev, created]);
       setShowModal(false);
       setForm(emptyForm());
     } catch {
-      setProcesses((prev) => [
+      setProcesses((prev: any) => [
         ...prev,
         {
           ...form,
@@ -165,7 +165,7 @@ export default function ApprovalSettingsPage() {
   };
 
   const addStep = () =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
       steps: [
         ...prev.steps,
@@ -178,16 +178,16 @@ export default function ApprovalSettingsPage() {
       ],
     }));
   const removeStep = (idx: number) =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
       steps: prev.steps
-        .filter((_, i) => i !== idx)
-        .map((s, i) => ({ ...s, order: i + 1 })),
+        .filter((_: any, i: any) => i !== idx)
+        .map((s: any, i: any) => ({ ...s, order: i + 1 })),
     }));
   const updateStep = (idx: number, key: string, val: string | number | null) =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
-      steps: prev.steps.map((s, i) => (i === idx ? { ...s, [key]: val } : s)),
+      steps: prev.steps.map((s: any, i: any) => (i === idx ? { ...s, [key]: val } : s)),
     }));
 
   const inputStyle: React.CSSProperties = {
@@ -227,19 +227,19 @@ export default function ApprovalSettingsPage() {
     } catch {
       /* proceed with local removal */
     }
-    setProcesses((prev) => prev.filter((p) => p.id !== id));
+    setProcesses((prev: any) => prev.filter((p: any) => p.id !== id));
     setDeleteConfirm(null);
   };
 
-  const filtered = processes.filter((p) => {
+  const filtered = processes.filter((p: any) => {
     const matchesSearch =
       !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesEntity = filterEntity === "ALL" || p.entity === filterEntity;
     return matchesSearch && matchesEntity;
   });
 
-  const totalActive = processes.filter((p) => p.isActive).length;
-  const totalInactive = processes.filter((p) => !p.isActive).length;
+  const totalActive = processes.filter((p: any) => p.isActive).length;
+  const totalInactive = processes.filter((p: any) => !p.isActive).length;
 
   if (loading) {
     return (
@@ -284,7 +284,7 @@ export default function ApprovalSettingsPage() {
               icon: X,
               color: "var(--color-text-tertiary)",
             },
-          ].map((kpi) => (
+          ].map((kpi: any) => (
             <Card key={kpi.label}>
               <div className={styles.style3}>
                 <div
@@ -315,17 +315,17 @@ export default function ApprovalSettingsPage() {
                   className={styles.s2}
                   placeholder="Search processes..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e: any) => setSearchQuery(e.target.value)}
                 />
               </div>
               <select
                 style={{ ...inputStyle }}
                 className={styles.s3}
                 value={filterEntity}
-                onChange={(e) => setFilterEntity(e.target.value)}
+                onChange={(e: any) => setFilterEntity(e.target.value)}
               >
                 <option value="ALL">All Entities</option>
-                {APPROVAL_ENTITIES.map((e) => (
+                {APPROVAL_ENTITIES.map((e: any) => (
                   <option key={e} value={e}>
                     {e}
                   </option>
@@ -432,8 +432,8 @@ export default function ApprovalSettingsPage() {
                     <input
                       style={inputStyle}
                       value={form.name}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, name: e.target.value }))
+                      onChange={(e: any) =>
+                        setForm((p: any) => ({ ...p, name: e.target.value }))
                       }
                       required
                       placeholder="e.g. Large Deal Approval"
@@ -444,11 +444,11 @@ export default function ApprovalSettingsPage() {
                     <select
                       style={inputStyle}
                       value={form.entity}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, entity: e.target.value }))
+                      onChange={(e: any) =>
+                        setForm((p: any) => ({ ...p, entity: e.target.value }))
                       }
                     >
-                      {APPROVAL_ENTITIES.map((e) => (
+                      {APPROVAL_ENTITIES.map((e: any) => (
                         <option key={e} value={e}>
                           {e}
                         </option>
@@ -469,17 +469,17 @@ export default function ApprovalSettingsPage() {
                         <Plus size={14} /> Add Step
                       </button>
                     </div>
-                    {form.steps.map((step, idx) => (
+                    {form.steps.map((step: any, idx: any) => (
                       <div key={idx} className={styles.style21}>
                         <div className={styles.style22}>#{step.order}</div>
                         <select
                           style={inputStyle}
                           value={step.approverType}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             updateStep(idx, "approverType", e.target.value)
                           }
                         >
-                          {APPROVER_TYPES.map((t) => (
+                          {APPROVER_TYPES.map((t: any) => (
                             <option key={t} value={t}>
                               {t}
                             </option>
@@ -493,7 +493,7 @@ export default function ApprovalSettingsPage() {
                               : "Approver ID"
                           }
                           value={step.approverId}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             updateStep(idx, "approverId", e.target.value)
                           }
                           disabled={step.approverType === "MANAGER"}
@@ -503,7 +503,7 @@ export default function ApprovalSettingsPage() {
                           type="number"
                           placeholder="Auto hrs"
                           value={step.autoApproveAfterHours ?? ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             updateStep(
                               idx,
                               "autoApproveAfterHours",

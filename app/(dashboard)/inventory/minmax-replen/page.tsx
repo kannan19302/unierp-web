@@ -164,7 +164,7 @@ function LevelsTab() {
       <div className="flex justify-between items-center">
         <p className="text-sm text-gray-500">{total} level(s)</p>
         <button
-          onClick={() => setShowForm((v) => !v)}
+          onClick={() => setShowForm((v: any) => !v)}
           className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           + Set Level
@@ -180,8 +180,8 @@ function LevelsTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.productId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, productId: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, productId: e.target.value }))
                 }
               />
             </div>
@@ -190,8 +190,8 @@ function LevelsTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.warehouseId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, warehouseId: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, warehouseId: e.target.value }))
                 }
               />
             </div>
@@ -201,8 +201,8 @@ function LevelsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.minQty}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, minQty: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, minQty: e.target.value }))
                 }
               />
             </div>
@@ -212,8 +212,8 @@ function LevelsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.maxQty}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, maxQty: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, maxQty: e.target.value }))
                 }
               />
             </div>
@@ -225,8 +225,8 @@ function LevelsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.reorderQty}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, reorderQty: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, reorderQty: e.target.value }))
                 }
               />
             </div>
@@ -235,11 +235,11 @@ function LevelsTab() {
               <select
                 className="w-full border rounded p-2 text-sm"
                 value={form.method}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, method: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, method: e.target.value }))
                 }
               >
-                {["PURCHASE_ORDER", "TRANSFER", "PRODUCTION"].map((m) => (
+                {["PURCHASE_ORDER", "TRANSFER", "PRODUCTION"].map((m: any) => (
                   <option key={m} value={m}>
                     {m}
                   </option>
@@ -252,8 +252,8 @@ function LevelsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.leadTimeDays}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, leadTimeDays: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, leadTimeDays: e.target.value }))
                 }
               />
             </div>
@@ -262,8 +262,8 @@ function LevelsTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.preferredVendorId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, preferredVendorId: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, preferredVendorId: e.target.value }))
                 }
               />
             </div>
@@ -320,7 +320,7 @@ function LevelsTab() {
             {
               key: "id",
               header: "Actions",
-              render: (v, row) =>
+              render: (v: any, row: any) =>
                 row.active ? (
                   <button
                     onClick={() => deactivate(String(v))}
@@ -372,7 +372,7 @@ function RunTab() {
     try {
       // Parse stock snapshot from textarea: "productId:warehouseId=qty" per line
       const stockSnapshot: Record<string, number> = {};
-      stockInput.split("\n").forEach((line) => {
+      stockInput.split("\n").forEach((line: any) => {
         const [key, val] = line.trim().split("=");
         if (key && val) stockSnapshot[key.trim()] = parseFloat(val.trim());
       });
@@ -407,7 +407,7 @@ function RunTab() {
           <input
             className="w-full border rounded p-2 text-sm"
             value={warehouseId}
-            onChange={(e) => setWarehouseId(e.target.value)}
+            onChange={(e: any) => setWarehouseId(e.target.value)}
           />
         </div>
         <div>
@@ -417,7 +417,7 @@ function RunTab() {
             className="w-full border rounded p-2 text-sm font-mono"
             placeholder="p1:w1=15&#10;p2:w1=80&#10;p3:w2=5"
             value={stockInput}
-            onChange={(e) => setStockInput(e.target.value)}
+            onChange={(e: any) => setStockInput(e.target.value)}
           />
         </div>
         <button
@@ -517,10 +517,10 @@ function SuggestionsTab() {
         <select
           className="border rounded p-1 text-sm"
           value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
+          onChange={(e: any) => setFilterStatus(e.target.value)}
         >
           <option value="">All</option>
-          {["OPEN", "APPROVED", "ORDERED", "RECEIVED", "CANCELLED"].map((s) => (
+          {["OPEN", "APPROVED", "ORDERED", "RECEIVED", "CANCELLED"].map((s: any) => (
             <option key={s} value={s}>
               {s}
             </option>
@@ -570,7 +570,7 @@ function SuggestionsTab() {
             {
               key: "id",
               header: "Actions",
-              render: (v, row) => {
+              render: (v: any, row: any) => {
                 const id = String(v);
                 const status = String(row.status);
                 return (
@@ -646,7 +646,7 @@ export default function MinMaxReplenPage() {
           </p>
         </div>
         <div className="border-b flex gap-1">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}

@@ -301,8 +301,8 @@ export default function EsgAccountingPage() {
     }
   };
 
-  const totalEmissions = emissions.reduce((s, e) => s + e.tons, 0);
-  const totalOffsets = offsets.reduce((s, o) => s + o.credits, 0);
+  const totalEmissions = emissions.reduce((s: any, e: any) => s + e.tons, 0);
+  const totalOffsets = offsets.reduce((s: any, o: any) => s + o.credits, 0);
 
   return (
     <RouteGuard permission="finance.esg.read">
@@ -363,7 +363,7 @@ export default function EsgAccountingPage() {
               Active Targets
             </h3>
             <p className="text-2xl font-bold mt-1">
-              {targets.filter((t) => t.status === "ACTIVE").length}
+              {targets.filter((t: any) => t.status === "ACTIVE").length}
             </p>
           </Card>
         </div>
@@ -417,7 +417,7 @@ export default function EsgAccountingPage() {
                     <select
                       className="ui-input"
                       value={emissionForm.scope}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEmissionForm({
                           ...emissionForm,
                           scope: e.target.value,
@@ -435,7 +435,7 @@ export default function EsgAccountingPage() {
                       className="ui-input"
                       placeholder="e.g. Natural Gas, Electricity, Travel"
                       value={emissionForm.category}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEmissionForm({
                           ...emissionForm,
                           category: e.target.value,
@@ -450,7 +450,7 @@ export default function EsgAccountingPage() {
                       type="number"
                       step="0.1"
                       value={emissionForm.tons}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEmissionForm({
                           ...emissionForm,
                           tons: e.target.value,
@@ -464,7 +464,7 @@ export default function EsgAccountingPage() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={emissionForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEmissionForm({
                           ...emissionForm,
                           period: e.target.value,
@@ -592,7 +592,7 @@ export default function EsgAccountingPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           !row.retired && (
                             <button
                               onClick={() => handleRetireOffset(String(v))}
@@ -638,7 +638,7 @@ export default function EsgAccountingPage() {
                     <input
                       className="ui-input"
                       value={kpiDefForm.kpiName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setKpiDefForm({
                           ...kpiDefForm,
                           kpiName: e.target.value,
@@ -652,7 +652,7 @@ export default function EsgAccountingPage() {
                       className="ui-input"
                       placeholder="e.g. tCO2e, kWh, m³"
                       value={kpiDefForm.unit}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setKpiDefForm({ ...kpiDefForm, unit: e.target.value })
                       }
                     />
@@ -664,7 +664,7 @@ export default function EsgAccountingPage() {
                       type="number"
                       step="0.1"
                       value={kpiDefForm.targetValue}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setKpiDefForm({
                           ...kpiDefForm,
                           targetValue: e.target.value,
@@ -677,7 +677,7 @@ export default function EsgAccountingPage() {
                     <select
                       className="ui-input"
                       value={kpiDefForm.category}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setKpiDefForm({
                           ...kpiDefForm,
                           category: e.target.value,
@@ -715,7 +715,7 @@ export default function EsgAccountingPage() {
                     <select
                       className="ui-input"
                       value={kpiValueForm.kpiId}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setKpiValueForm({
                           ...kpiValueForm,
                           kpiId: e.target.value,
@@ -723,7 +723,7 @@ export default function EsgAccountingPage() {
                       }
                     >
                       <option value="">Select KPI...</option>
-                      {kpiDefs.map((k) => (
+                      {kpiDefs.map((k: any) => (
                         <option key={k.id} value={k.id}>
                           {k.kpiName}
                         </option>
@@ -737,7 +737,7 @@ export default function EsgAccountingPage() {
                       type="number"
                       step="0.1"
                       value={kpiValueForm.value}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setKpiValueForm({
                           ...kpiValueForm,
                           value: e.target.value,
@@ -751,7 +751,7 @@ export default function EsgAccountingPage() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={kpiValueForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setKpiValueForm({
                           ...kpiValueForm,
                           period: e.target.value,
@@ -885,7 +885,7 @@ export default function EsgAccountingPage() {
                     <select
                       className="ui-input"
                       value={disclosureForm.standard}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setDisclosureForm({
                           ...disclosureForm,
                           standard: e.target.value,
@@ -905,7 +905,7 @@ export default function EsgAccountingPage() {
                       className="ui-input"
                       placeholder="e.g. GRI 305-1"
                       value={disclosureForm.requirement}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setDisclosureForm({
                           ...disclosureForm,
                           requirement: e.target.value,
@@ -919,7 +919,7 @@ export default function EsgAccountingPage() {
                       className="ui-input"
                       placeholder="KPI name or ID"
                       value={disclosureForm.mappedKpi}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setDisclosureForm({
                           ...disclosureForm,
                           mappedKpi: e.target.value,
@@ -1070,7 +1070,7 @@ export default function EsgAccountingPage() {
                     <input
                       className="ui-input"
                       value={targetForm.targetName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTargetForm({
                           ...targetForm,
                           targetName: e.target.value,
@@ -1084,7 +1084,7 @@ export default function EsgAccountingPage() {
                       className="ui-input"
                       type="number"
                       value={targetForm.targetYear}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTargetForm({
                           ...targetForm,
                           targetYear: e.target.value,
@@ -1099,7 +1099,7 @@ export default function EsgAccountingPage() {
                       type="number"
                       step="0.1"
                       value={targetForm.baselineValue}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTargetForm({
                           ...targetForm,
                           baselineValue: e.target.value,
@@ -1114,7 +1114,7 @@ export default function EsgAccountingPage() {
                       type="number"
                       step="0.1"
                       value={targetForm.targetValue}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTargetForm({
                           ...targetForm,
                           targetValue: e.target.value,
@@ -1127,7 +1127,7 @@ export default function EsgAccountingPage() {
                     <select
                       className="ui-input"
                       value={targetForm.category}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTargetForm({
                           ...targetForm,
                           category: e.target.value,

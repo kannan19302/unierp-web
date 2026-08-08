@@ -188,7 +188,7 @@ export default function NpsPage() {
                       <div className="ui-flex ui-gap-2">
                         <Link href={`/crm/journey/nps/surveys/${row.id}`}>
                           <button
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e: any) => e.stopPropagation()}
                             className="ui-p-1 hover:ui-text-blue-600"
                           >
                             <Eye className="ui-w-4 ui-h-4" />
@@ -196,7 +196,7 @@ export default function NpsPage() {
                         </Link>
                         {row.status === "DRAFT" && (
                           <button
-                            onClick={(e) => {
+                            onClick={(e: any) => {
                               e.stopPropagation();
                               handleSend(row.id);
                             }}
@@ -206,7 +206,7 @@ export default function NpsPage() {
                           </button>
                         )}
                         <button
-                          onClick={(e) => {
+                          onClick={(e: any) => {
                             e.stopPropagation();
                             handleDelete(row.id);
                           }}
@@ -234,7 +234,7 @@ export default function NpsPage() {
               <input
                 className="ui-input"
                 value={formData.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
                 placeholder="Q3 Customer Satisfaction"
@@ -244,7 +244,7 @@ export default function NpsPage() {
               <textarea
                 className="ui-input"
                 value={formData.question}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, question: e.target.value })
                 }
                 rows={2}
@@ -254,7 +254,7 @@ export default function NpsPage() {
               <textarea
                 className="ui-input"
                 value={formData.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
                 rows={3}
@@ -264,7 +264,7 @@ export default function NpsPage() {
               <select
                 className="ui-input"
                 value={formData.targetSegment}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, targetSegment: e.target.value })
                 }
               >
@@ -278,7 +278,7 @@ export default function NpsPage() {
                 type="checkbox"
                 id="autoSend"
                 checked={formData.sendAutomatically}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({
                     ...formData,
                     sendAutomatically: e.target.checked,
@@ -293,7 +293,7 @@ export default function NpsPage() {
                   <select
                     className="ui-input"
                     value={formData.triggerEvent}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, triggerEvent: e.target.value })
                     }
                   >
@@ -310,7 +310,7 @@ export default function NpsPage() {
                     type="number"
                     className="ui-input"
                     value={formData.delayDays}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({
                         ...formData,
                         delayDays: Number(e.target.value),

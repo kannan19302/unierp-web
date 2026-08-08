@@ -107,7 +107,7 @@ export default function CustomerStatementPage() {
     const rows = [
       "Date,Invoice #,Description,Debit,Credit,Balance,Status,Due Date",
     ];
-    statement.lines.forEach((l) => {
+    statement.lines.forEach((l: any) => {
       rows.push(
         `"${new Date(l.date).toLocaleDateString()}","${l.invoiceNumber}","${l.description}",${l.debit},${l.credit},${l.balance},"${l.status}","${new Date(l.dueDate).toLocaleDateString()}"`,
       );
@@ -120,7 +120,7 @@ export default function CustomerStatementPage() {
   };
 
   const filteredCustomers = customers.filter(
-    (c) =>
+    (c: any) =>
       c.name.toLowerCase().includes(searchCustomer.toLowerCase()) ||
       (c.email || "").toLowerCase().includes(searchCustomer.toLowerCase()),
   );
@@ -153,7 +153,7 @@ export default function CustomerStatementPage() {
                       className={`ui-input ${styles.s4}`}
                       placeholder="Search customers..."
                       value={searchCustomer}
-                      onChange={(e) => setSearchCustomer(e.target.value)}
+                      onChange={(e: any) => setSearchCustomer(e.target.value)}
                     />
                   </div>
                   {fetchingCustomers ? (
@@ -165,10 +165,10 @@ export default function CustomerStatementPage() {
                       className={`ui-input ${styles.s5}`}
                       required
                       value={customerId}
-                      onChange={(e) => setCustomerId(e.target.value)}
+                      onChange={(e: any) => setCustomerId(e.target.value)}
                     >
                       <option value="">— Select customer —</option>
-                      {filteredCustomers.map((c) => (
+                      {filteredCustomers.map((c: any) => (
                         <option key={c.id} value={c.id}>
                           {c.name}
                           {c.email ? ` (${c.email})` : ""}
@@ -183,7 +183,7 @@ export default function CustomerStatementPage() {
                     className="ui-input"
                     type="date"
                     value={periodStart}
-                    onChange={(e) => setPeriodStart(e.target.value)}
+                    onChange={(e: any) => setPeriodStart(e.target.value)}
                   />
                 </div>
                 <div className="ui-form-group">
@@ -192,7 +192,7 @@ export default function CustomerStatementPage() {
                     className="ui-input"
                     type="date"
                     value={periodEnd}
-                    onChange={(e) => setPeriodEnd(e.target.value)}
+                    onChange={(e: any) => setPeriodEnd(e.target.value)}
                   />
                 </div>
               </div>
@@ -283,7 +283,7 @@ export default function CustomerStatementPage() {
                           ? "rgba(239,68,68,0.08)"
                           : "rgba(34,197,94,0.08)",
                     },
-                  ].map((kpi) => (
+                  ].map((kpi: any) => (
                     <div key={kpi.label} className={styles.s10}>
                       <div
                         style={{ background: kpi.bg, color: kpi.color }}

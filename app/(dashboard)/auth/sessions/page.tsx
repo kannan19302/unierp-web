@@ -86,7 +86,7 @@ export default function SessionsPage() {
             size="sm"
             variant="ghost"
             leftIcon={<XCircle size={14} />}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleRevoke(r.id);
             }}

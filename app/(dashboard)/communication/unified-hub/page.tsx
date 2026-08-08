@@ -89,7 +89,7 @@ export default function CommunicationUnifiedHub() {
       setCreateOpen(false);
       fetchData();
     } catch {
-      setInboxes((prev) => [
+      setInboxes((prev: any) => [
         ...prev,
         {
           id: String(Date.now()),
@@ -216,7 +216,7 @@ export default function CommunicationUnifiedHub() {
             <FormField label="Inbox Display Name">
               <TextField
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g. VIP Customer Desk"
                 required
               />
@@ -225,7 +225,7 @@ export default function CommunicationUnifiedHub() {
               <TextField
                 type="email"
                 value={form.emailAddress}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, emailAddress: e.target.value })
                 }
                 placeholder="vip@company.com"
@@ -235,7 +235,7 @@ export default function CommunicationUnifiedHub() {
             <FormField label="Mail Provider">
               <Select
                 value={form.provider}
-                onChange={(e) => setForm({ ...form, provider: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, provider: e.target.value })}
               >
                 <option value="GOOGLE_WORKSPACE">Google Workspace</option>
                 <option value="MICROSOFT_365">Microsoft 365 Exchange</option>

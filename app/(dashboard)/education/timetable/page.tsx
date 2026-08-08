@@ -32,7 +32,7 @@ const WEEKDAYS = [
 ];
 const HOURS = Array.from(
   { length: 12 },
-  (_, i) => `${(i + 7).toString().padStart(2, "0")}:00`,
+  (_: any, i: any) => `${(i + 7).toString().padStart(2, "0")}:00`,
 );
 
 export default function TimetablePage() {
@@ -87,7 +87,7 @@ export default function TimetablePage() {
     }
   };
 
-  const getSlots = (day: string) => timetables.filter((t) => t.weekday === day);
+  const getSlots = (day: string) => timetables.filter((t: any) => t.weekday === day);
 
   if (loading)
     return (
@@ -122,7 +122,7 @@ export default function TimetablePage() {
           />
           <KPICard
             title="Rooms Used"
-            value={new Set(timetables.map((t) => t.room)).size}
+            value={new Set(timetables.map((t: any) => t.room)).size}
             icon={<BookOpen size={18} />}
             color="var(--color-info)"
           />
@@ -138,23 +138,23 @@ export default function TimetablePage() {
             >
               {/* Header */}
               <div className={styles.s4}>Time</div>
-              {WEEKDAYS.map((day) => (
+              {WEEKDAYS.map((day: any) => (
                 <div key={day} className={styles.s5}>
                   {day}
                 </div>
               ))}
 
               {/* Time slots */}
-              {HOURS.map((hour) => (
+              {HOURS.map((hour: any) => (
                 <React.Fragment key={hour}>
                   <div className={styles.s6}>{hour}</div>
-                  {WEEKDAYS.map((day) => {
+                  {WEEKDAYS.map((day: any) => {
                     const slots = getSlots(day).filter(
-                      (s) => s.startTime === hour,
+                      (s: any) => s.startTime === hour,
                     );
                     return (
                       <div key={`${day}-${hour}`} className={styles.s7}>
-                        {slots.map((slot) => (
+                        {slots.map((slot: any) => (
                           <div key={slot.id} className={styles.s8}>
                             <div className={styles.s9}>
                               {slot.course?.name || slot.courseId}
@@ -202,7 +202,7 @@ export default function TimetablePage() {
                 }
               >
                 <option value="">Select course...</option>
-                {courses.map((c) => (
+                {courses.map((c: any) => (
                   <option key={c.id} value={c.id}>
                     {c.name} ({c.code})
                   </option>
@@ -214,7 +214,7 @@ export default function TimetablePage() {
                 label="Room"
                 required
                 value={form.room}
-                onChange={(e) => setForm({ ...form, room: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, room: e.target.value })}
                 placeholder="Room 101"
               />
               <FormField label="Weekday">
@@ -224,7 +224,7 @@ export default function TimetablePage() {
                     setForm({ ...form, weekday: e.target.value })
                   }
                 >
-                  {WEEKDAYS.map((d) => (
+                  {WEEKDAYS.map((d: any) => (
                     <option key={d} value={d}>
                       {d}
                     </option>
@@ -237,7 +237,7 @@ export default function TimetablePage() {
                 label="Start Time"
                 type="time"
                 value={form.startTime}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startTime: e.target.value })
                 }
               />
@@ -245,7 +245,7 @@ export default function TimetablePage() {
                 label="End Time"
                 type="time"
                 value={form.endTime}
-                onChange={(e) => setForm({ ...form, endTime: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endTime: e.target.value })}
               />
             </div>
           </div>

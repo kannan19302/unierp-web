@@ -10,7 +10,7 @@ export default function OutboxAnalyticsPage() {
   useEffect(() => {
     Promise.all([
       fetch("/api/outbox/analytics")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setData)
         .catch(() => {}),
     ]).finally(() => setLoading(false));

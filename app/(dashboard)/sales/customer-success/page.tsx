@@ -284,7 +284,7 @@ export default function CustomerSuccessPage() {
                   type="text"
                   placeholder="cust-101"
                   value={newPlan.customerId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPlan({ ...newPlan, customerId: e.target.value })
                   }
                   style={{
@@ -310,7 +310,7 @@ export default function CustomerSuccessPage() {
                   type="text"
                   placeholder="Enterprise Growth & Adoption"
                   value={newPlan.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPlan({ ...newPlan, name: e.target.value })
                   }
                   style={{
@@ -336,7 +336,7 @@ export default function CustomerSuccessPage() {
                   type="number"
                   placeholder="50000"
                   value={newPlan.arr}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPlan({ ...newPlan, arr: Number(e.target.value) })
                   }
                   style={{

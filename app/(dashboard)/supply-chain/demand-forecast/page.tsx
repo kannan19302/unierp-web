@@ -53,16 +53,16 @@ export default function DemandForecastPage() {
   }, [client]);
 
   const combined = [...HISTORICAL, ...forecast];
-  const totalPredicted = forecast.reduce((a, f) => a + f.predicted, 0);
+  const totalPredicted = forecast.reduce((a: any, f: any) => a + f.predicted, 0);
   const avgAccuracy =
-    HISTORICAL.filter((h) => h.actual).length > 0
+    HISTORICAL.filter((h: any) => h.actual).length > 0
       ? Math.round(
-          (HISTORICAL.filter((h) => h.actual).reduce(
-            (a, h) =>
+          (HISTORICAL.filter((h: any) => h.actual).reduce(
+            (a: any, h: any) =>
               a + (1 - Math.abs((h.actual! - h.predicted) / h.predicted)),
             0,
           ) /
-            HISTORICAL.filter((h) => h.actual).length) *
+            HISTORICAL.filter((h: any) => h.actual).length) *
             100,
         )
       : 95;
@@ -110,7 +110,7 @@ export default function DemandForecastPage() {
         <DashboardChart
           title="Demand Forecast vs Actuals"
           subtitle="Historical actuals and 6-month projected demand"
-          data={combined.map((d) => ({
+          data={combined.map((d: any) => ({
             name: d.period,
             Predicted: d.predicted,
             Actual: d.actual || null,
@@ -134,7 +134,7 @@ export default function DemandForecastPage() {
         <DashboardChart
           title="Monthly Forecast Breakdown"
           subtitle="Projected demand units by month"
-          data={forecast.map((d) => ({ name: d.period, units: d.predicted }))}
+          data={forecast.map((d: any) => ({ name: d.period, units: d.predicted }))}
           config={{
             xAxisKey: "name",
             series: [

@@ -108,7 +108,7 @@ export default function AdvancedPricingPage() {
               <input
                 type="number"
                 value={testCalc.quantity}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setTestCalc({ ...testCalc, quantity: Number(e.target.value) })
                 }
                 style={{
@@ -133,7 +133,7 @@ export default function AdvancedPricingPage() {
               <input
                 type="number"
                 value={testCalc.basePrice}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setTestCalc({
                     ...testCalc,
                     basePrice: Number(e.target.value),

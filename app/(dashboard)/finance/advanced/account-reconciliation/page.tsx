@@ -30,15 +30,15 @@ export default function AccountReconciliationPage() {
       .get<{ items: ReconciliationItem[] }>(
         `/finance/reports/account-reconciliation?asOfDate=${new Date().toISOString()}`,
       )
-      .then((res) => setItems(res?.items || []))
+      .then((res: any) => setItems(res?.items || []))
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
   };
 
   useEffect(fetchReconciliation, [client]);
 
-  const matched = items.filter((i) => i.status === "MATCHED").length;
-  const variances = items.filter((i) => i.status === "VARIANCE").length;
+  const matched = items.filter((i: any) => i.status === "MATCHED").length;
+  const variances = items.filter((i: any) => i.status === "VARIANCE").length;
 
   const columns: Column<ReconciliationItem>[] = [
     {

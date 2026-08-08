@@ -87,7 +87,7 @@ export default function ApiTokensPage() {
           size="sm"
           variant="ghost"
           leftIcon={<Trash2 size={14} />}
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             handleDelete(r.id);
           }}
@@ -148,7 +148,7 @@ export default function ApiTokensPage() {
               <input
                 className="ui-input"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="My Token"
               />
               <label className="ui-label">Expires At (optional)</label>
@@ -156,7 +156,7 @@ export default function ApiTokensPage() {
                 className="ui-input"
                 type="date"
                 value={form.expiresAt}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, expiresAt: e.target.value })
                 }
               />

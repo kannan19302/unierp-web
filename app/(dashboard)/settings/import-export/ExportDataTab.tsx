@@ -73,10 +73,10 @@ export default function ExportDataTab() {
           <label className={styles.s3}>Entity Type</label>
           <select
             value={entityType}
-            onChange={(e) => setEntityType(e.target.value)}
+            onChange={(e: any) => setEntityType(e.target.value)}
             style={inputStyle}
           >
-            {EXPORT_ENTITIES.map((e) => (
+            {EXPORT_ENTITIES.map((e: any) => (
               <option key={e} value={e}>
                 {e.charAt(0).toUpperCase() + e.slice(1)}
               </option>
@@ -88,7 +88,7 @@ export default function ExportDataTab() {
           <label className={styles.s3}>Format</label>
           <select
             value={format}
-            onChange={(e) => setFormat(e.target.value)}
+            onChange={(e: any) => setFormat(e.target.value)}
             style={inputStyle}
           >
             <option value="json">JSON</option>
@@ -102,14 +102,14 @@ export default function ExportDataTab() {
             <input
               type="date"
               value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
+              onChange={(e: any) => setStartDate(e.target.value)}
               style={{ ...inputStyle }}
               className={styles.s5}
             />
             <input
               type="date"
               value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              onChange={(e: any) => setEndDate(e.target.value)}
               style={{ ...inputStyle }}
               className={styles.s5}
             />

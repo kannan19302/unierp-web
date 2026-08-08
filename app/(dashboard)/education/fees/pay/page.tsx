@@ -58,8 +58,8 @@ export default function FeePaymentPage() {
     }
   };
 
-  const unpaidFees = fees.filter((f) => f.status !== "PAID");
-  const selected = fees.find((f) => f.id === selectedFee);
+  const unpaidFees = fees.filter((f: any) => f.status !== "PAID");
+  const selected = fees.find((f: any) => f.id === selectedFee);
   const outstanding = selected ? selected.amount - selected.paidAmount : 0;
 
   if (loading)
@@ -132,7 +132,7 @@ export default function FeePaymentPage() {
           <KPICard
             title="Total Outstanding"
             value={fmtCurrency(
-              unpaidFees.reduce((a, f) => a + (f.amount - f.paidAmount), 0),
+              unpaidFees.reduce((a: any, f: any) => a + (f.amount - f.paidAmount), 0),
             )}
             icon={<DollarSign size={18} />}
             color="var(--color-danger)"
@@ -151,7 +151,7 @@ export default function FeePaymentPage() {
                   }
                 >
                   <option value="">Choose a fee...</option>
-                  {unpaidFees.map((f) => (
+                  {unpaidFees.map((f: any) => (
                     <option key={f.id} value={f.id}>
                       {f.student
                         ? `${f.student.firstName} ${f.student.lastName}`
@@ -190,7 +190,7 @@ export default function FeePaymentPage() {
                 label="Payment Amount ($)"
                 type="number"
                 value={paymentAmount}
-                onChange={(e) => setPaymentAmount(e.target.value)}
+                onChange={(e: any) => setPaymentAmount(e.target.value)}
                 placeholder="0.00"
               />
 

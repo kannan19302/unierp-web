@@ -152,7 +152,7 @@ export default function PackagingGs1Page() {
 
         <div className="border-b border-gray-200">
           <nav className="flex gap-4 overflow-x-auto">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
@@ -188,7 +188,7 @@ export default function PackagingGs1Page() {
                 { label: "Label Templates", value: dashboard.labelTemplates },
                 { label: "SSCC Available", value: dashboard.sscc.available },
                 { label: "GS1 App Identifiers", value: dashboard.gs1Ais },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div key={c.label} className="bg-white rounded-lg border p-4">
                   <div className="text-2xl font-bold text-gray-900">
                     {c.value}
@@ -260,7 +260,7 @@ export default function PackagingGs1Page() {
                 {
                   key: "lengthMm",
                   header: "Dimensions",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     v ? `${v}×${row.widthMm}×${row.heightMm}` : "—",
                 },
                 {
@@ -332,7 +332,7 @@ export default function PackagingGs1Page() {
         {/* Label Templates */}
         {tab === "labels" && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {templates.map((t) => (
+            {templates.map((t: any) => (
               <div key={t.id} className="bg-white rounded-lg border p-4">
                 <div className="flex items-start justify-between">
                   <div>

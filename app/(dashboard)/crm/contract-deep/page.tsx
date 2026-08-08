@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -9,11 +9,11 @@ export default function ContractDeepPage() {
 
   useEffect(() => {
     fetch("/api/crm/contract-deep/dashboard")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setDash);
     fetch("/api/crm/contract-deep/expiry-calendar?range=90d")
-      .then((r) => r.json())
-      .then((d) => setCalendar(d.data || []));
+      .then((r: any) => r.json())
+      .then((d: any) => setCalendar(d.data || []));
   }, []);
 
   return (

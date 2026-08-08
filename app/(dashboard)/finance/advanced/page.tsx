@@ -352,7 +352,7 @@ export default function AdvancedFinancePage() {
         ]}
       />
 
-      {groups.map((group) => (
+      {groups.map((group: any) => (
         <div key={group.title} className="ui-stack-3">
           <div className={styles.s1}>
             <div className="ui-text-primary">{group.icon}</div>
@@ -363,7 +363,7 @@ export default function AdvancedFinancePage() {
           </div>
 
           <div className="ui-grid-3">
-            {group.modules.map((mod) => (
+            {group.modules.map((mod: any) => (
               <Link key={mod.href} href={mod.href} className={styles.s3}>
                 <Card
                   padding="md"

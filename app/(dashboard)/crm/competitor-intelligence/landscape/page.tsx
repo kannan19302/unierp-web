@@ -46,7 +46,7 @@ export default function CompetitorLandscapePage() {
             <input
               className="ui-input"
               value={compId}
-              onChange={(e) => setCompId(e.target.value)}
+              onChange={(e: any) => setCompId(e.target.value)}
               placeholder="Enter competitor ID"
             />
           </div>

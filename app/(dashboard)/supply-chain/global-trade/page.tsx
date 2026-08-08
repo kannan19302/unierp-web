@@ -231,7 +231,7 @@ export default function GlobalTradePage() {
             label="Declaration Number"
             required
             value={form.declarationNumber}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({ ...form, declarationNumber: e.target.value })
             }
           />
@@ -239,14 +239,14 @@ export default function GlobalTradePage() {
             <TextField
               label="Port of Entry"
               value={form.portOfEntry}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, portOfEntry: e.target.value })
               }
             />
             <TextField
               label="Supplier Name"
               value={form.supplierName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, supplierName: e.target.value })
               }
             />
@@ -255,12 +255,12 @@ export default function GlobalTradePage() {
             <TextField
               label="HS Code"
               value={form.hsCode}
-              onChange={(e) => setForm({ ...form, hsCode: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, hsCode: e.target.value })}
             />
             <TextField
               label="Country of Origin"
               value={form.countryOfOrigin}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, countryOfOrigin: e.target.value })
               }
             />
@@ -269,7 +269,7 @@ export default function GlobalTradePage() {
             label="Invoice Value"
             type="number"
             value={form.invoiceValue || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({
                 ...form,
                 invoiceValue: parseFloat(e.target.value) || 0,

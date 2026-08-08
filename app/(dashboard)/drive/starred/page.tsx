@@ -22,7 +22,7 @@ export default function StarredPage() {
       client.get<{ data: any[] }>("/drive/files?view=starred"),
       client.get<{ data: any[] }>("/drive/folders?view=starred"),
     ])
-      .then(([filesRes, foldersRes]) => {
+      .then(([filesRes, foldersRes]: any) => {
         const files = (filesRes.data || []).map((f: any) => ({
           ...f,
           type: "file",

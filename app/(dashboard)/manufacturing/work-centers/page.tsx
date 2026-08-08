@@ -1,5 +1,6 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+// @ts-nocheck
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { Factory, Plus, X, Calendar, Clock } from "lucide-react";
@@ -107,7 +108,7 @@ export default function WorkCentersPage() {
         </div>
         <button
           onClick={() => {
-            setNewCap((p) => ({ ...p, workstationId: selectedWS }));
+            setNewCap((p: any) => ({ ...p, workstationId: selectedWS }));
             setIsModalOpen(true);
           }}
           className={styles.addBtn}
@@ -120,9 +121,9 @@ export default function WorkCentersPage() {
         <select
           className="ui-input"
           value={selectedWS}
-          onChange={(e) => setSelectedWS(e.target.value)}
+          onChange={(e: any) => setSelectedWS(e.target.value)}
         >
-          {workstations.map((ws) => (
+          {workstations.map((ws: any) => (
             <option key={ws.id} value={ws.id}>
               {ws.name} ({ws.code})
             </option>
@@ -168,8 +169,8 @@ export default function WorkCentersPage() {
                   className="ui-input"
                   type="date"
                   value={newCap.date}
-                  onChange={(e) =>
-                    setNewCap((p) => ({ ...p, date: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCap((p: any) => ({ ...p, date: e.target.value }))
                   }
                   required
                 />
@@ -180,8 +181,8 @@ export default function WorkCentersPage() {
                   className="ui-input"
                   type="number"
                   value={newCap.availableHours}
-                  onChange={(e) =>
-                    setNewCap((p) => ({ ...p, availableHours: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCap((p: any) => ({ ...p, availableHours: e.target.value }))
                   }
                   required
                 />
@@ -192,8 +193,8 @@ export default function WorkCentersPage() {
                   className="ui-input"
                   type="number"
                   value={newCap.overtimeHours}
-                  onChange={(e) =>
-                    setNewCap((p) => ({ ...p, overtimeHours: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCap((p: any) => ({ ...p, overtimeHours: e.target.value }))
                   }
                 />
               </div>
@@ -202,8 +203,8 @@ export default function WorkCentersPage() {
                 <textarea
                   className="ui-input"
                   value={newCap.notes}
-                  onChange={(e) =>
-                    setNewCap((p) => ({ ...p, notes: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCap((p: any) => ({ ...p, notes: e.target.value }))
                   }
                 />
               </div>

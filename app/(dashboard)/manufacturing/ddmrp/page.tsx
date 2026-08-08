@@ -155,7 +155,7 @@ export default function DdmrpPage() {
 
         {activeTab === "recs" && dashboard && (
           <div className="ui-stack-3">
-            {dashboard.recommendations.map((r) => (
+            {dashboard.recommendations.map((r: any) => (
               <Card key={r.id} padding="md">
                 <div className="ui-flex-between">
                   <span className="font-semibold">

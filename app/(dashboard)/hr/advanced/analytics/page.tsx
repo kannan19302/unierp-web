@@ -197,7 +197,7 @@ export default function AnalyticsPage() {
                   Headcount
                 </h3>
                 <div className="ui-stack-3">
-                  {headcount?.byDepartment.map((d) => (
+                  {headcount?.byDepartment.map((d: any) => (
                     <div key={d.name}>
                       <div className={styles.departmentHeader}>
                         <span>{d.name}</span>

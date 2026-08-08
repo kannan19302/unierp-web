@@ -127,7 +127,7 @@ export default function QaTemplatesPage() {
             className="ui-input flex-1"
             placeholder="QA Inspection ID"
             value={inspectionId}
-            onChange={(e) => setInspectionId(e.target.value)}
+            onChange={(e: any) => setInspectionId(e.target.value)}
           />
           <Button variant="primary" onClick={handleRouteDisposition}>
             Route
@@ -165,7 +165,7 @@ export default function QaTemplatesPage() {
                     type="text"
                     className="ui-input"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e: any) => setName(e.target.value)}
                     required
                   />
                 </div>

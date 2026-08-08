@@ -9,7 +9,7 @@ export default function WorkflowTasksPage() {
 
   useEffect(() => {
     apiGet("/workflow/tasks")
-      .then((d) => setTasks(Array.isArray(d) ? d : []))
+      .then((d: any) => setTasks(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

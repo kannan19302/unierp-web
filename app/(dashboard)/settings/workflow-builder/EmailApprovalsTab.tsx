@@ -80,7 +80,7 @@ export default function EmailApprovalsTab() {
             desc: "Add an optional comments field in the email action",
             enabled: false,
           },
-        ].map((opt, i) => (
+        ].map((opt: any, i: any) => (
           <div
             key={i}
             style={{

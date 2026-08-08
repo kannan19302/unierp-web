@@ -141,10 +141,10 @@ export default function TerritoriesPage() {
   };
 
   const totalMembers = territories.reduce(
-    (a, t) => a + (t._count?.members || 0),
+    (a: any, t: any) => a + (t._count?.members || 0),
     0,
   );
-  const sortedPerf = [...performance].sort((a, b) => {
+  const sortedPerf = [...performance].sort((a: any, b: any) => {
     const key = perfSortBy as keyof TerritoryPerformance;
     const av = a[key],
       bv = b[key];
@@ -154,7 +154,7 @@ export default function TerritoriesPage() {
     return perfSortOrder === "desc" ? -cmp : cmp;
   });
   const topTerritory = [...performance].sort(
-    (a, b) => b.revenue - a.revenue,
+    (a: any, b: any) => b.revenue - a.revenue,
   )[0];
 
   const perfColumns: Column<TerritoryPerformance>[] = [
@@ -253,7 +253,7 @@ export default function TerritoriesPage() {
                 : "",
               color: "var(--color-success)",
             },
-          ].map((kpi, i) => (
+          ].map((kpi: any, i: any) => (
             <Card key={i}>
               <div className="p-5 ui-hstack-4">
                 <div style={{ background: kpi.color }} className={styles.s1}>
@@ -290,7 +290,7 @@ export default function TerritoriesPage() {
             </div>
           ) : (
             <div className={styles.style7}>
-              {territories.map((t) => (
+              {territories.map((t: any) => (
                 <div key={t.id} className={styles.style8}>
                   <div className={styles.style9}>
                     <div className={styles.style10}>{t.name}</div>
@@ -380,7 +380,7 @@ export default function TerritoriesPage() {
                       required
                       placeholder="e.g. US West Coast"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e: any) => setName(e.target.value)}
                       className="ui-input"
                       style={inputStyle}
                     />
@@ -390,7 +390,7 @@ export default function TerritoriesPage() {
                     <textarea
                       placeholder="Describe this territory..."
                       value={description}
-                      onChange={(e) => setDescription(e.target.value)}
+                      onChange={(e: any) => setDescription(e.target.value)}
                       className={`ui-input ${styles.s3}`}
                       style={{ ...inputStyle }}
                     />
@@ -400,12 +400,12 @@ export default function TerritoriesPage() {
                       <label style={labelStyle}>Parent Territory</label>
                       <select
                         value={parentId}
-                        onChange={(e) => setParentId(e.target.value)}
+                        onChange={(e: any) => setParentId(e.target.value)}
                         className="ui-input"
                         style={inputStyle}
                       >
                         <option value="">None (Root)</option>
-                        {territories.map((t) => (
+                        {territories.map((t: any) => (
                           <option key={t.id} value={t.id}>
                             {t.name}
                           </option>
@@ -418,7 +418,7 @@ export default function TerritoriesPage() {
                         type="text"
                         placeholder="User ID"
                         value={managerId}
-                        onChange={(e) => setManagerId(e.target.value)}
+                        onChange={(e: any) => setManagerId(e.target.value)}
                         className="ui-input"
                         style={inputStyle}
                       />

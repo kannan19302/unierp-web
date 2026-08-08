@@ -118,7 +118,7 @@ export default function DocumentsPage() {
         </div>
         <button
           onClick={() => {
-            setNewDoc((p) => ({ ...p, projectId: selectedProject }));
+            setNewDoc((p: any) => ({ ...p, projectId: selectedProject }));
             setIsModalOpen(true);
           }}
           className={styles.addBtn}
@@ -131,9 +131,9 @@ export default function DocumentsPage() {
         <select
           className="ui-input"
           value={selectedProject}
-          onChange={(e) => setSelectedProject(e.target.value)}
+          onChange={(e: any) => setSelectedProject(e.target.value)}
         >
-          {projects.map((p) => (
+          {projects.map((p: any) => (
             <option key={p.id} value={p.id}>
               {p.name}
             </option>
@@ -141,7 +141,7 @@ export default function DocumentsPage() {
         </select>
       </div>
       <div className={styles.grid}>
-        {docs.map((d) => (
+        {docs.map((d: any) => (
           <div key={d.id} className={styles.card}>
             <div className={styles.cardIcon}>{iconForType(d.type)}</div>
             <div className={styles.cardBody}>
@@ -199,8 +199,8 @@ export default function DocumentsPage() {
                 <input
                   className="ui-input"
                   value={newDoc.name}
-                  onChange={(e) =>
-                    setNewDoc((p) => ({ ...p, name: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewDoc((p: any) => ({ ...p, name: e.target.value }))
                   }
                   required
                 />
@@ -210,8 +210,8 @@ export default function DocumentsPage() {
                 <select
                   className="ui-input"
                   value={newDoc.type}
-                  onChange={(e) =>
-                    setNewDoc((p) => ({ ...p, type: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewDoc((p: any) => ({ ...p, type: e.target.value }))
                   }
                 >
                   <option value="FILE">File</option>
@@ -227,8 +227,8 @@ export default function DocumentsPage() {
                   <input
                     className="ui-input"
                     value={newDoc.fileUrl}
-                    onChange={(e) =>
-                      setNewDoc((p) => ({ ...p, fileUrl: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewDoc((p: any) => ({ ...p, fileUrl: e.target.value }))
                     }
                   />
                 </div>
@@ -238,8 +238,8 @@ export default function DocumentsPage() {
                 <textarea
                   className="ui-input"
                   value={newDoc.description}
-                  onChange={(e) =>
-                    setNewDoc((p) => ({ ...p, description: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewDoc((p: any) => ({ ...p, description: e.target.value }))
                   }
                 />
               </div>

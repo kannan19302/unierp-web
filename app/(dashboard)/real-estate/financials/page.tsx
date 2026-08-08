@@ -106,7 +106,7 @@ export default function FinancialsPage() {
     setCreating(true);
     try {
       const payload: any = {};
-      Object.entries(form).forEach(([k, v]) => {
+      Object.entries(form).forEach(([k, v]: any) => {
         payload[k] =
           isNaN(Number(v)) ||
           k === "notes" ||
@@ -355,7 +355,7 @@ export default function FinancialsPage() {
               label="Property ID"
               required
               value={form.propertyId}
-              onChange={(e) => setForm({ ...form, propertyId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, propertyId: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <TextField
@@ -363,7 +363,7 @@ export default function FinancialsPage() {
                 type="date"
                 required
                 value={form.periodStart}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, periodStart: e.target.value })
                 }
               />
@@ -372,7 +372,7 @@ export default function FinancialsPage() {
                 type="date"
                 required
                 value={form.periodEnd}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, periodEnd: e.target.value })
                 }
               />
@@ -382,7 +382,7 @@ export default function FinancialsPage() {
                 label="Gross Rent Income ($)"
                 type="number"
                 value={form.grossRentIncome}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, grossRentIncome: e.target.value })
                 }
               />
@@ -390,7 +390,7 @@ export default function FinancialsPage() {
                 label="Other Income ($)"
                 type="number"
                 value={form.otherIncome}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, otherIncome: e.target.value })
                 }
               />
@@ -400,7 +400,7 @@ export default function FinancialsPage() {
                 label="Vacancy Loss ($)"
                 type="number"
                 value={form.vacancyLoss}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, vacancyLoss: e.target.value })
                 }
               />
@@ -408,7 +408,7 @@ export default function FinancialsPage() {
                 label="Operating Expenses ($)"
                 type="number"
                 value={form.operatingExpenses}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, operatingExpenses: e.target.value })
                 }
               />
@@ -418,7 +418,7 @@ export default function FinancialsPage() {
                 label="Repairs ($)"
                 type="number"
                 value={form.repairsMaintenance}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, repairsMaintenance: e.target.value })
                 }
               />
@@ -426,7 +426,7 @@ export default function FinancialsPage() {
                 label="Insurance ($)"
                 type="number"
                 value={form.insurance}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, insurance: e.target.value })
                 }
               />
@@ -434,7 +434,7 @@ export default function FinancialsPage() {
                 label="Taxes ($)"
                 type="number"
                 value={form.taxes}
-                onChange={(e) => setForm({ ...form, taxes: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, taxes: e.target.value })}
               />
             </div>
             <div className="ui-grid-3 ui-gap-3">
@@ -442,7 +442,7 @@ export default function FinancialsPage() {
                 label="Utilities ($)"
                 type="number"
                 value={form.utilities}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, utilities: e.target.value })
                 }
               />
@@ -450,13 +450,13 @@ export default function FinancialsPage() {
                 label="HOA Fees ($)"
                 type="number"
                 value={form.hoaFees}
-                onChange={(e) => setForm({ ...form, hoaFees: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, hoaFees: e.target.value })}
               />
               <TextField
                 label="Other Expenses ($)"
                 type="number"
                 value={form.otherExpenses}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, otherExpenses: e.target.value })
                 }
               />
@@ -466,7 +466,7 @@ export default function FinancialsPage() {
                 label="Debt Service ($)"
                 type="number"
                 value={form.debtService}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, debtService: e.target.value })
                 }
               />
@@ -474,7 +474,7 @@ export default function FinancialsPage() {
                 label="CapEx ($)"
                 type="number"
                 value={form.capitalExpenditures}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, capitalExpenditures: e.target.value })
                 }
               />
@@ -482,7 +482,7 @@ export default function FinancialsPage() {
             <FormField label="Status">
               <Select
                 value={form.status}
-                onChange={(e) => setForm({ ...form, status: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, status: e.target.value })}
               >
                 <option value="DRAFT">Draft</option>
                 <option value="FINAL">Final</option>
@@ -491,7 +491,7 @@ export default function FinancialsPage() {
             <TextField
               label="Notes"
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </div>
         </Modal>

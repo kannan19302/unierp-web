@@ -68,15 +68,15 @@ export default function SalesContractsPage() {
 
   const now = new Date();
   const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-  const active = contracts.filter((c) => c.status === "ACTIVE");
+  const active = contracts.filter((c: any) => c.status === "ACTIVE");
   const expiringSoon = contracts.filter(
-    (c) =>
+    (c: any) =>
       c.status === "ACTIVE" &&
       c.endDate &&
       new Date(c.endDate).getTime() - now.getTime() < thirtyDays,
   );
-  const expired = contracts.filter((c) => c.status === "EXPIRED");
-  const totalValue = active.reduce((s, c) => s + c.value, 0);
+  const expired = contracts.filter((c: any) => c.status === "EXPIRED");
+  const totalValue = active.reduce((s: any, c: any) => s + c.value, 0);
 
   const columns: Column<SalesContract>[] = [
     { key: "contractNumber", header: "Contract No", sortable: true },
@@ -121,7 +121,7 @@ export default function SalesContractsPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               alert(`View ${row.contractNumber}`);
             }}
@@ -131,7 +131,7 @@ export default function SalesContractsPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               alert(`Edit ${row.contractNumber}`);
             }}
@@ -141,7 +141,7 @@ export default function SalesContractsPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleDelete(row.id);
             }}

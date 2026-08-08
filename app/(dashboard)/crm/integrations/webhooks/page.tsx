@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import { useState, useEffect } from "react";
 export default function WebhooksPage() {
@@ -8,8 +8,8 @@ export default function WebhooksPage() {
 
   useEffect(() => {
     fetch("/api/v1/crm/integrations/webhooks")
-      .then((res) => res.json())
-      .then((data) => {
+      .then((res: any) => res.json())
+      .then((data: any) => {
         setWebhooks(Array.isArray(data) ? data : data?.data || []);
         setLoading(false);
       })

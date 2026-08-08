@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import { useState } from "react";
 import { useApiClient } from "@kannan19302/framework";
@@ -15,7 +15,7 @@ export default function PipelineDealComparisonPage() {
     setError("");
     const opportunityIds = ids
       .split(",")
-      .map((s) => s.trim())
+      .map((s: any) => s.trim())
       .filter(Boolean);
     if (opportunityIds.length < 2) {
       setError("Enter at least 2 opportunity IDs");
@@ -41,7 +41,7 @@ export default function PipelineDealComparisonPage() {
           className="ui-input flex-1"
           placeholder="Opportunity IDs (comma-separated)"
           value={ids}
-          onChange={(e) => setIds(e.target.value)}
+          onChange={(e: any) => setIds(e.target.value)}
         />
         <button className="ui-btn" onClick={compare} disabled={loading}>
           {loading ? "Comparing..." : "Compare"}

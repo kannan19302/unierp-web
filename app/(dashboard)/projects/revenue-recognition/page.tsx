@@ -38,10 +38,10 @@ export default function ProjectRevenueRecognitionPage() {
     fetchData();
   }, [fetchData]);
 
-  const totalBudget = rows.reduce((s, r) => s + r.budget, 0);
-  const totalRecognized = rows.reduce((s, r) => s + r.recognizedRevenue, 0);
-  const totalRemaining = rows.reduce((s, r) => s + r.remainingRevenue, 0);
-  const unscoped = rows.filter((r) => r.reason).length;
+  const totalBudget = rows.reduce((s: any, r: any) => s + r.budget, 0);
+  const totalRecognized = rows.reduce((s: any, r: any) => s + r.recognizedRevenue, 0);
+  const totalRemaining = rows.reduce((s: any, r: any) => s + r.remainingRevenue, 0);
+  const unscoped = rows.filter((r: any) => r.reason).length;
 
   const columns: Column<RevenueRow>[] = [
     {

@@ -45,7 +45,7 @@ export default function POSSplitPaymentsPage() {
               className="ui-input flex-1"
               placeholder="Enter Order ID..."
               value={orderId}
-              onChange={(e) => setOrderId(e.target.value)}
+              onChange={(e: any) => setOrderId(e.target.value)}
             />
             <button className="ui-btn" onClick={load}>
               <Search size={14} /> Search

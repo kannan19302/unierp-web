@@ -98,7 +98,7 @@ export default function ReportSchedulesPage() {
       render: (_: string, row: any) => (
         <button
           className="ui-btn ui-btn-sm ui-btn-ghost"
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             handleDelete(row.id);
           }}
@@ -133,7 +133,7 @@ export default function ReportSchedulesPage() {
               <input
                 className="ui-input"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 required
               />
             </div>
@@ -142,7 +142,7 @@ export default function ReportSchedulesPage() {
               <select
                 className="ui-input"
                 value={form.frequency}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, frequency: e.target.value })
                 }
               >
@@ -157,7 +157,7 @@ export default function ReportSchedulesPage() {
               <select
                 className="ui-input"
                 value={form.format}
-                onChange={(e) => setForm({ ...form, format: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, format: e.target.value })}
               >
                 <option value="PDF">PDF</option>
                 <option value="CSV">CSV</option>
@@ -172,7 +172,7 @@ export default function ReportSchedulesPage() {
               <input
                 className="ui-input"
                 value={form.recipients}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, recipients: e.target.value })
                 }
                 placeholder="user@example.com, user2@example.com"

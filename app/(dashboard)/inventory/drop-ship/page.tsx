@@ -82,8 +82,8 @@ export default function DropShipPage() {
         shipToAddress,
         shipMethod,
         items: items
-          .filter((i) => i.productId)
-          .map((i) => ({
+          .filter((i: any) => i.productId)
+          .map((i: any) => ({
             productId: i.productId,
             quantity: parseInt(i.quantity) || 1,
           })),
@@ -257,7 +257,7 @@ export default function DropShipPage() {
                 type="text"
                 className="ui-input"
                 value={providerId}
-                onChange={(e) => setProviderId(e.target.value)}
+                onChange={(e: any) => setProviderId(e.target.value)}
                 required
                 placeholder="Provider ID"
               />
@@ -268,7 +268,7 @@ export default function DropShipPage() {
                 type="text"
                 className="ui-input"
                 value={vendorId}
-                onChange={(e) => setVendorId(e.target.value)}
+                onChange={(e: any) => setVendorId(e.target.value)}
                 required
                 placeholder="Vendor ID"
               />
@@ -278,7 +278,7 @@ export default function DropShipPage() {
               <textarea
                 className={`ui-input ${styles.s9}`}
                 value={shipToAddress}
-                onChange={(e) => setShipToAddress(e.target.value)}
+                onChange={(e: any) => setShipToAddress(e.target.value)}
                 required
                 rows={2}
                 placeholder="Full shipping address"
@@ -290,23 +290,23 @@ export default function DropShipPage() {
                 type="text"
                 className="ui-input"
                 value={shipMethod}
-                onChange={(e) => setShipMethod(e.target.value)}
+                onChange={(e: any) => setShipMethod(e.target.value)}
                 required
                 placeholder="e.g. UPS Ground, FedEx Express"
               />
             </div>
             <div className="ui-form-group">
               <label className="ui-label">Items</label>
-              {items.map((item, i) => (
+              {items.map((item: any, i: any) => (
                 <div key={i} className={styles.s12}>
                   <div className={styles.s10}>
                     <input
                       type="text"
                       className="ui-input"
                       value={item.productId}
-                      onChange={(e) =>
-                        setItems((prev) =>
-                          prev.map((it, j) =>
+                      onChange={(e: any) =>
+                        setItems((prev: any) =>
+                          prev.map((it: any, j: any) =>
                             j === i ? { ...it, productId: e.target.value } : it,
                           ),
                         )
@@ -318,9 +318,9 @@ export default function DropShipPage() {
                       type="number"
                       className="ui-input"
                       value={item.quantity}
-                      onChange={(e) =>
-                        setItems((prev) =>
-                          prev.map((it, j) =>
+                      onChange={(e: any) =>
+                        setItems((prev: any) =>
+                          prev.map((it: any, j: any) =>
                             j === i ? { ...it, quantity: e.target.value } : it,
                           ),
                         )
@@ -333,7 +333,7 @@ export default function DropShipPage() {
                         type="button"
                         className={styles.s11}
                         onClick={() =>
-                          setItems((prev) => prev.filter((_, j) => j !== i))
+                          setItems((prev: any) => prev.filter((_: any, j: any) => j !== i))
                         }
                       >
                         Remove
@@ -347,7 +347,7 @@ export default function DropShipPage() {
                 className="ui-btn"
                 style={{ fontSize: 12, marginTop: 4 }}
                 onClick={() =>
-                  setItems((prev) => [
+                  setItems((prev: any) => [
                     ...prev,
                     { productId: "", quantity: "1" },
                   ])

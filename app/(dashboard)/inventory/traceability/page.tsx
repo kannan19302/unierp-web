@@ -33,7 +33,7 @@ export default function TraceabilityPage() {
           valuationRate: 0,
           serialNumbers: receiveSerials
             .split(",")
-            .map((s) => s.trim())
+            .map((s: any) => s.trim())
             .filter(Boolean),
           batchNo: receiveBatchNo || null,
         }),
@@ -146,7 +146,7 @@ export default function TraceabilityPage() {
               className="ui-input flex-1"
               placeholder="Batch ID"
               value={batchId}
-              onChange={(e) => setBatchId(e.target.value)}
+              onChange={(e: any) => setBatchId(e.target.value)}
             />
             <Button
               variant="primary"
@@ -190,7 +190,7 @@ export default function TraceabilityPage() {
                   className="ui-input flex-1"
                   placeholder="Quarantine reason"
                   value={quarantineReason}
-                  onChange={(e) => setQuarantineReason(e.target.value)}
+                  onChange={(e: any) => setQuarantineReason(e.target.value)}
                 />
                 {batchTrace.batch.status === "QUARANTINE" ? (
                   <button
@@ -219,7 +219,7 @@ export default function TraceabilityPage() {
               className="ui-input flex-1"
               placeholder="Serial Number ID"
               value={serialId}
-              onChange={(e) => setSerialId(e.target.value)}
+              onChange={(e: any) => setSerialId(e.target.value)}
             />
             <Button
               variant="primary"
@@ -262,14 +262,14 @@ export default function TraceabilityPage() {
                 className="ui-input flex-1"
                 placeholder="Product ID"
                 value={receiveProductId}
-                onChange={(e) => setReceiveProductId(e.target.value)}
+                onChange={(e: any) => setReceiveProductId(e.target.value)}
                 required
               />
               <input
                 className="ui-input flex-1"
                 placeholder="Warehouse ID"
                 value={receiveWarehouseId}
-                onChange={(e) => setReceiveWarehouseId(e.target.value)}
+                onChange={(e: any) => setReceiveWarehouseId(e.target.value)}
                 required
               />
               <input
@@ -278,7 +278,7 @@ export default function TraceabilityPage() {
                 placeholder="Qty"
                 value={receiveQty}
                 min={1}
-                onChange={(e) => setReceiveQty(Number(e.target.value))}
+                onChange={(e: any) => setReceiveQty(Number(e.target.value))}
                 required
               />
             </div>
@@ -287,13 +287,13 @@ export default function TraceabilityPage() {
                 className="ui-input flex-1"
                 placeholder="Serial numbers (comma-separated, optional)"
                 value={receiveSerials}
-                onChange={(e) => setReceiveSerials(e.target.value)}
+                onChange={(e: any) => setReceiveSerials(e.target.value)}
               />
               <input
                 className="ui-input flex-1"
                 placeholder="Batch/lot number (optional)"
                 value={receiveBatchNo}
-                onChange={(e) => setReceiveBatchNo(e.target.value)}
+                onChange={(e: any) => setReceiveBatchNo(e.target.value)}
               />
             </div>
             <Button variant="primary" type="submit">

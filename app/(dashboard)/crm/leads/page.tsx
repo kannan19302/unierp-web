@@ -39,7 +39,7 @@ export default function LeadsPage() {
 
         <ListView
           resource={leadResource}
-          onRowClick={(row) => router.push(`/crm/leads/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/crm/leads/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
 

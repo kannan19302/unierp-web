@@ -99,7 +99,7 @@ export default function ImportPage() {
               <select
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 value={form.importType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, importType: e.target.value })
                 }
               >
@@ -117,7 +117,7 @@ export default function ImportPage() {
               <input
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 value={form.fileName}
-                onChange={(e) => setForm({ ...form, fileName: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, fileName: e.target.value })}
                 placeholder="customers.csv"
               />
             </div>
@@ -129,7 +129,7 @@ export default function ImportPage() {
                 type="number"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 value={form.totalRows}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, totalRows: parseInt(e.target.value) || 0 })
                 }
               />
@@ -142,7 +142,7 @@ export default function ImportPage() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 rows={5}
                 value={form.fileData}
-                onChange={(e) => setForm({ ...form, fileData: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, fileData: e.target.value })}
                 placeholder="name,email&#10;test@test.com"
               />
             </div>

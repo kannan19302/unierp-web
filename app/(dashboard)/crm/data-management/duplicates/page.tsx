@@ -30,8 +30,8 @@ export default function DuplicatesPage() {
   };
 
   const toggleMergeId = (id: string) => {
-    setMergeIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+    setMergeIds((prev: any) =>
+      prev.includes(id) ? prev.filter((x: any) => x !== id) : [...prev, id],
     );
   };
 
@@ -75,7 +75,7 @@ export default function DuplicatesPage() {
             <select
               className="px-3 py-2 border border-gray-300 rounded-md text-sm"
               value={entityType}
-              onChange={(e) => setEntityType(e.target.value)}
+              onChange={(e: any) => setEntityType(e.target.value)}
             >
               <option value="LEAD">Lead</option>
               <option value="CONTACT">Contact</option>
@@ -90,7 +90,7 @@ export default function DuplicatesPage() {
             <input
               className="px-3 py-2 border border-gray-300 rounded-md text-sm"
               value={field}
-              onChange={(e) => setField(e.target.value)}
+              onChange={(e: any) => setField(e.target.value)}
               placeholder="email"
             />
           </div>
@@ -100,7 +100,7 @@ export default function DuplicatesPage() {
             </label>
             <Input
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e: any) => setValue(e.target.value)}
               placeholder="Search value"
             />
           </div>

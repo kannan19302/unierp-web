@@ -160,7 +160,7 @@ export default function ContainerPalletPage() {
 
         <div className="border-b border-gray-200">
           <nav className="flex gap-4">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
@@ -198,7 +198,7 @@ export default function ContainerPalletPage() {
                   label: "Active Packing Plans",
                   value: dashboard.packingPlans.active,
                 },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div key={c.label} className="bg-white rounded-lg border p-4">
                   <div className="text-2xl font-bold text-gray-900">
                     {c.value}
@@ -213,7 +213,7 @@ export default function ContainerPalletPage() {
                   Load Plans by Status
                 </h3>
                 <div className="space-y-2">
-                  {Object.entries(dashboard.loadPlans).map(([k, v]) => (
+                  {Object.entries(dashboard.loadPlans).map(([k, v]: any) => (
                     <div key={k} className="flex justify-between text-sm">
                       <span className="text-gray-600 capitalize">
                         {k.replace(/([A-Z])/g, " $1")}
@@ -228,7 +228,7 @@ export default function ContainerPalletPage() {
                   Packing Plans by Status
                 </h3>
                 <div className="space-y-2">
-                  {Object.entries(dashboard.packingPlans).map(([k, v]) => (
+                  {Object.entries(dashboard.packingPlans).map(([k, v]: any) => (
                     <div key={k} className="flex justify-between text-sm">
                       <span className="text-gray-600 capitalize">
                         {k.replace(/([A-Z])/g, " $1")}
@@ -267,7 +267,7 @@ export default function ContainerPalletPage() {
                 {
                   key: "lengthMm",
                   header: "Dimensions (mm)",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     v && row.widthMm
                       ? `${v} × ${row.widthMm} × ${row.heightMm ?? "—"}`
                       : "—",
@@ -333,7 +333,7 @@ export default function ContainerPalletPage() {
         {/* Load Plans */}
         {tab === "load-plans" && (
           <div className="space-y-3">
-            {loadPlans.map((lp) => (
+            {loadPlans.map((lp: any) => (
               <div key={lp.id} className="bg-white rounded-lg border p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -425,7 +425,7 @@ export default function ContainerPalletPage() {
         {/* Packing Plans */}
         {tab === "packing-plans" && (
           <div className="space-y-3">
-            {packingPlans.map((pp) => (
+            {packingPlans.map((pp: any) => (
               <div key={pp.id} className="bg-white rounded-lg border p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -443,7 +443,7 @@ export default function ContainerPalletPage() {
                     </div>
                     {pp.cartons.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {pp.cartons.slice(0, 8).map((c) => (
+                        {pp.cartons.slice(0, 8).map((c: any) => (
                           <span
                             key={c.id}
                             className={`text-xs px-1.5 py-0.5 rounded ${c.sealed ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"}`}

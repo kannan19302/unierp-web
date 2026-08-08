@@ -79,7 +79,7 @@ export default function StudentRegistryPage() {
   };
 
   const filtered = students.filter(
-    (s) =>
+    (s: any) =>
       !search ||
       `${s.firstName} ${s.lastName}`
         .toLowerCase()
@@ -166,7 +166,7 @@ export default function StudentRegistryPage() {
             title="New This Month"
             value={
               students.filter(
-                (s) =>
+                (s: any) =>
                   s.createdAt &&
                   new Date(s.createdAt) > new Date(Date.now() - 30 * 86400000),
               ).length
@@ -183,7 +183,7 @@ export default function StudentRegistryPage() {
               type="text"
               placeholder="Search by name or enrollment number..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.s5}
             />
           </div>
@@ -226,7 +226,7 @@ export default function StudentRegistryPage() {
                 label="First Name"
                 required
                 value={form.firstName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, firstName: e.target.value })
                 }
               />
@@ -234,7 +234,7 @@ export default function StudentRegistryPage() {
                 label="Last Name"
                 required
                 value={form.lastName}
-                onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, lastName: e.target.value })}
               />
             </div>
             <div className="ui-grid-2 ui-gap-3">
@@ -242,14 +242,14 @@ export default function StudentRegistryPage() {
                 label="Date of Birth"
                 type="date"
                 value={form.dateOfBirth}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, dateOfBirth: e.target.value })
                 }
               />
               <TextField
                 label="Enrollment Number"
                 value={form.enrollmentNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, enrollmentNumber: e.target.value })
                 }
               />
@@ -257,7 +257,7 @@ export default function StudentRegistryPage() {
             <TextField
               label="Parent Contact"
               value={form.parentContact}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, parentContact: e.target.value })
               }
               placeholder="+1-555-000-0000"

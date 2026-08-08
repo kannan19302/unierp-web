@@ -153,7 +153,7 @@ export default function ColdChainWriteoffPage() {
 
         <div className="border-b border-gray-200">
           <nav className="flex gap-4 overflow-x-auto">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
@@ -207,7 +207,7 @@ export default function ColdChainWriteoffPage() {
                   label: "Total Written Off",
                   value: `$${Number(dashboard.totalWriteOffValue).toLocaleString()}`,
                 },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div key={c.label} className="bg-white rounded-lg border p-4">
                   <div
                     className={`text-2xl font-bold ${(c as any).red ? "text-red-600" : "text-gray-900"}`}
@@ -332,7 +332,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     row.status === "OPEN" ? (
                       <button
                         onClick={() =>
@@ -408,7 +408,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.s2}>
                       {row.status === "PENDING_APPROVAL" && (
                         <>
@@ -500,7 +500,7 @@ export default function ColdChainWriteoffPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.s2}>
                       {row.status === "PENDING_APPROVAL" && (
                         <>

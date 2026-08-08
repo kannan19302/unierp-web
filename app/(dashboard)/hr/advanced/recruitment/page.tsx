@@ -250,14 +250,14 @@ export default function RecruitmentPage() {
                 className="ui-input"
                 placeholder="Job Title"
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, title: e.target.value })}
                 required
               />
               <textarea
                 className="ui-input"
                 placeholder="Description"
                 value={form.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, description: e.target.value })
                 }
                 required
@@ -268,14 +268,14 @@ export default function RecruitmentPage() {
                   className="ui-input"
                   placeholder="Location"
                   value={form.location}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, location: e.target.value })
                   }
                 />
                 <select
                   className="ui-input"
                   value={form.employmentType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, employmentType: e.target.value })
                   }
                 >
@@ -307,7 +307,7 @@ export default function RecruitmentPage() {
               <select
                 className="ui-input"
                 value={applicantForm.jobPostingId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setApplicantForm({
                     ...applicantForm,
                     jobPostingId: e.target.value,
@@ -316,7 +316,7 @@ export default function RecruitmentPage() {
                 required
               >
                 <option value="">Select Job Position</option>
-                {jobs.map((j) => (
+                {jobs.map((j: any) => (
                   <option key={j.id} value={j.id}>
                     {j.title}
                   </option>
@@ -327,7 +327,7 @@ export default function RecruitmentPage() {
                   className="ui-input"
                   placeholder="First Name"
                   value={applicantForm.firstName}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setApplicantForm({
                       ...applicantForm,
                       firstName: e.target.value,
@@ -339,7 +339,7 @@ export default function RecruitmentPage() {
                   className="ui-input"
                   placeholder="Last Name"
                   value={applicantForm.lastName}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setApplicantForm({
                       ...applicantForm,
                       lastName: e.target.value,
@@ -354,7 +354,7 @@ export default function RecruitmentPage() {
                   placeholder="Email"
                   type="email"
                   value={applicantForm.email}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setApplicantForm({
                       ...applicantForm,
                       email: e.target.value,
@@ -366,7 +366,7 @@ export default function RecruitmentPage() {
                   className="ui-input"
                   placeholder="Phone"
                   value={applicantForm.phone}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setApplicantForm({
                       ...applicantForm,
                       phone: e.target.value,
@@ -397,7 +397,7 @@ export default function RecruitmentPage() {
               <select
                 className="ui-input"
                 value={offerForm.applicantId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOfferForm({ ...offerForm, applicantId: e.target.value })
                 }
                 required
@@ -405,10 +405,10 @@ export default function RecruitmentPage() {
                 <option value="">Select Candidate</option>
                 {applicants
                   .filter(
-                    (a) =>
+                    (a: any) =>
                       a.currentStage === "OFFER" || a.currentStage === "HIRED",
                   )
-                  .map((a) => (
+                  .map((a: any) => (
                     <option key={a.id} value={a.id}>
                       {a.firstName} {a.lastName} ({a.jobPosting?.title})
                     </option>
@@ -424,7 +424,7 @@ export default function RecruitmentPage() {
                     className="ui-input"
                     placeholder="5000"
                     value={offerForm.salaryOffered}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setOfferForm({
                         ...offerForm,
                         salaryOffered: e.target.value,
@@ -439,7 +439,7 @@ export default function RecruitmentPage() {
                     type="date"
                     className="ui-input"
                     value={offerForm.expiresAt}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setOfferForm({ ...offerForm, expiresAt: e.target.value })
                     }
                   />
@@ -449,7 +449,7 @@ export default function RecruitmentPage() {
                 className="ui-input"
                 placeholder="Notes, terms, or message to candidate"
                 value={offerForm.notes}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOfferForm({ ...offerForm, notes: e.target.value })
                 }
                 rows={3}
@@ -526,7 +526,7 @@ export default function RecruitmentPage() {
                         {
                           key: "firstName",
                           header: "Name",
-                          render: (_v, row) => {
+                          render: (_v: any, row: any) => {
                             const a = row as unknown as {
                               id: string;
                               firstName: string;
@@ -555,7 +555,7 @@ export default function RecruitmentPage() {
                         {
                           key: "id",
                           header: "Action",
-                          render: (_v, row) => {
+                          render: (_v: any, row: any) => {
                             const a = row as unknown as {
                               id: string;
                               firstName: string;
@@ -583,7 +583,7 @@ export default function RecruitmentPage() {
                                 <select
                                   className={`ui-input ${styles.s4}`}
                                   defaultValue=""
-                                  onChange={(e) => {
+                                  onChange={(e: any) => {
                                     if (e.target.value)
                                       advanceStage(a.id, e.target.value);
                                   }}
@@ -615,9 +615,9 @@ export default function RecruitmentPage() {
                       "OFFER",
                       "HIRED",
                       "REJECTED",
-                    ].map((stage, idx, stagesArray) => {
+                    ].map((stage: any, idx: any, stagesArray: any) => {
                       const stageApplicants = applicants.filter(
-                        (a) => a.currentStage === stage,
+                        (a: any) => a.currentStage === stage,
                       );
                       return (
                         <div key={stage} className={styles.s5}>
@@ -628,7 +628,7 @@ export default function RecruitmentPage() {
                             </span>
                           </div>
                           <div className={styles.s9}>
-                            {stageApplicants.map((a) => (
+                            {stageApplicants.map((a: any) => (
                               <Card
                                 key={a.id}
                                 padding="sm"
@@ -678,11 +678,11 @@ export default function RecruitmentPage() {
                                   <select
                                     className={`ui-input ${styles.s14}`}
                                     value={a.currentStage}
-                                    onChange={(e) =>
+                                    onChange={(e: any) =>
                                       advanceStage(a.id, e.target.value)
                                     }
                                   >
-                                    {stagesArray.map((st) => (
+                                    {stagesArray.map((st: any) => (
                                       <option key={st} value={st}>
                                         {st.toLowerCase()}
                                       </option>
@@ -767,7 +767,7 @@ export default function RecruitmentPage() {
                     {
                       key: "id",
                       header: "Actions",
-                      render: (_v, row) => {
+                      render: (_v: any, row: any) => {
                         const o = row as unknown as OfferLetter;
                         return o.status === "SENT" ? (
                           <div className={styles.s17}>

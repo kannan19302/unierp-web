@@ -157,7 +157,7 @@ export default function ConnectCalendar({
   const gridRef = useRef<HTMLDivElement>(null);
 
   const nameById = useMemo(
-    () => new Map(directory.map((d) => [d.id, d])),
+    () => new Map(directory.map((d: any) => [d.id, d])),
     [directory],
   );
   const eventsByDay = useMemo(() => {
@@ -168,7 +168,7 @@ export default function ConnectCalendar({
       m.set(e.date, list);
     }
     for (const list of m.values())
-      list.sort((a, b) => {
+      list.sort((a: any, b: any) => {
         if (a.allDay && !b.allDay) return -1;
         if (!a.allDay && b.allDay) return 1;
         return minutesOf(a.time) - minutesOf(b.time);
@@ -180,7 +180,7 @@ export default function ConnectCalendar({
     if (!searchQuery.trim()) return events;
     const q = searchQuery.toLowerCase();
     return events.filter(
-      (e) =>
+      (e: any) =>
         e.title.toLowerCase().includes(q) ||
         e.description?.toLowerCase().includes(q) ||
         e.location?.toLowerCase().includes(q),
@@ -257,7 +257,7 @@ export default function ConnectCalendar({
 
   return (
     <div onClick={onClose} className={styles.s1}>
-      <div onClick={(e) => e.stopPropagation()} className={styles.s2}>
+      <div onClick={(e: any) => e.stopPropagation()} className={styles.s2}>
         {/* ─── Top bar ─── */}
         <div className={styles.s3}>
           <CalendarDays size={24} className={styles.s4} />
@@ -286,7 +286,7 @@ export default function ConnectCalendar({
                 <input
                   autoFocus
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e: any) => setSearchQuery(e.target.value)}
                   placeholder="Search events"
                   className={styles.s10}
                 />
@@ -324,7 +324,7 @@ export default function ConnectCalendar({
               </button>
               {viewMenuOpen && (
                 <div className={styles.s13}>
-                  {(["day", "week", "month", "schedule"] as View[]).map((v) => (
+                  {(["day", "week", "month", "schedule"] as View[]).map((v: any) => (
                     <button
                       key={v}
                       onClick={() => {
@@ -393,13 +393,13 @@ export default function ConnectCalendar({
               {(() => {
                 const upcoming = [...events]
                   .filter(
-                    (e) => parseDT(e) >= new Date(new Date().toDateString()),
+                    (e: any) => parseDT(e) >= new Date(new Date().toDateString()),
                   )
-                  .sort((a, b) => parseDT(a).getTime() - parseDT(b).getTime())
+                  .sort((a: any, b: any) => parseDT(a).getTime() - parseDT(b).getTime())
                   .slice(0, 5);
                 if (upcoming.length === 0)
                   return <p className={styles.s20}>No upcoming events</p>;
-                return upcoming.map((e) => (
+                return upcoming.map((e: any) => (
                   <button
                     key={e.id}
                     onClick={() => setSelected(e)}
@@ -429,7 +429,7 @@ export default function ConnectCalendar({
                 { label: "Events", color: DEFAULT_COLOR },
                 { label: "Birthdays", color: "#33b679" },
                 { label: "Tasks", color: "#7986cb" },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div key={c.label} className={styles.s26}>
                   <span
                     style={{ background: c.color }}
@@ -449,7 +449,7 @@ export default function ConnectCalendar({
                 todayKey={todayKey}
                 eventsByDay={eventsByDay}
                 onPick={setSelected}
-                onCreateOn={(d) => openCreate(d)}
+                onCreateOn={(d: any) => openCreate(d)}
               />
             )}
             {view === "schedule" && (
@@ -556,7 +556,7 @@ function MiniCalendar({
 }) {
   const monthStart = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
   const gridStart = weekStart(monthStart);
-  const cells = Array.from({ length: 42 }, (_, i) => {
+  const cells = Array.from({ length: 42 }, (_: any, i: any) => {
     const d = new Date(gridStart);
     d.setDate(gridStart.getDate() + i);
     return d;
@@ -594,12 +594,12 @@ function MiniCalendar({
         </div>
       </div>
       <div className={styles.s34}>
-        {WEEKDAYS_SHORT.map((w, i) => (
+        {WEEKDAYS_SHORT.map((w: any, i: any) => (
           <div key={i} className={styles.s35}>
             {w}
           </div>
         ))}
-        {cells.map((d, i) => {
+        {cells.map((d: any, i: any) => {
           const key = toKey(d);
           const inMonth = d.getMonth() === cursor.getMonth();
           const isToday = key === todayKey;
@@ -638,7 +638,7 @@ function weekStart(d: Date) {
 }
 function weekDays(d: Date) {
   const s = weekStart(d);
-  return Array.from({ length: 7 }, (_, i) => {
+  return Array.from({ length: 7 }, (_: any, i: any) => {
     const x = new Date(s);
     x.setDate(s.getDate() + i);
     return x;
@@ -661,7 +661,7 @@ function MonthView({
 }) {
   const monthStart = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
   const gridStart = weekStart(monthStart);
-  const cells = Array.from({ length: 42 }, (_, i) => {
+  const cells = Array.from({ length: 42 }, (_: any, i: any) => {
     const d = new Date(gridStart);
     d.setDate(gridStart.getDate() + i);
     return d;
@@ -670,14 +670,14 @@ function MonthView({
   return (
     <div className={styles.s38}>
       <div className={styles.s39}>
-        {WEEKDAYS.map((w) => (
+        {WEEKDAYS.map((w: any) => (
           <div key={w} className={styles.s40}>
             {w}
           </div>
         ))}
       </div>
       <div className={styles.s41}>
-        {cells.map((d, i) => {
+        {cells.map((d: any, i: any) => {
           const key = toKey(d);
           const inMonth = d.getMonth() === cursor.getMonth();
           const isToday = key === todayKey;
@@ -714,10 +714,10 @@ function MonthView({
                   {d.getDate()}
                 </span>
               </div>
-              {evs.slice(0, 3).map((e) => (
+              {evs.slice(0, 3).map((e: any) => (
                 <button
                   key={e.id}
-                  onClick={(ev) => {
+                  onClick={(ev: any) => {
                     ev.stopPropagation();
                     onPick(e);
                   }}
@@ -760,7 +760,7 @@ const TimeGrid = React.forwardRef<
     onCreateAt: (date: string, time: string) => void;
   }
 >(function TimeGrid({ days, todayKey, eventsByDay, onPick, onCreateAt }, ref) {
-  const hours = Array.from({ length: 24 }, (_, i) => i);
+  const hours = Array.from({ length: 24 }, (_: any, i: any) => i);
   const isMultiDay = days.length > 1;
 
   return (
@@ -771,14 +771,14 @@ const TimeGrid = React.forwardRef<
         className={styles.s49}
       >
         <div className={styles.s50}>ALL DAY</div>
-        {days.map((d) => {
+        {days.map((d: any) => {
           const key = toKey(d);
           const allDayEvs = (eventsByDay.get(key) ?? []).filter(
-            (e) => e.allDay,
+            (e: any) => e.allDay,
           );
           return (
             <div key={key} className={styles.s51}>
-              {allDayEvs.map((e) => (
+              {allDayEvs.map((e: any) => (
                 <button
                   key={e.id}
                   onClick={() => onPick(e)}
@@ -799,7 +799,7 @@ const TimeGrid = React.forwardRef<
         className={styles.s53}
       >
         <div />
-        {days.map((d) => {
+        {days.map((d: any) => {
           const isToday = toKey(d) === todayKey;
           return (
             <div key={toKey(d)} className={styles.s54}>
@@ -837,7 +837,7 @@ const TimeGrid = React.forwardRef<
           className={styles.s58}
         >
           <div>
-            {hours.map((h) => (
+            {hours.map((h: any) => (
               <div key={h} style={{ height: HOUR_H }} className={styles.s59}>
                 <span className={styles.s60}>
                   {h === 0
@@ -847,16 +847,16 @@ const TimeGrid = React.forwardRef<
               </div>
             ))}
           </div>
-          {days.map((d) => {
+          {days.map((d: any) => {
             const key = toKey(d);
-            const evs = (eventsByDay.get(key) ?? []).filter((e) => !e.allDay);
+            const evs = (eventsByDay.get(key) ?? []).filter((e: any) => !e.allDay);
             const isToday = key === todayKey;
             const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
             return (
               <div
                 key={key}
                 className={styles.s61}
-                onClick={(e) => {
+                onClick={(e: any) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const y = e.clientY - rect.top;
                   const min = Math.max(
@@ -869,7 +869,7 @@ const TimeGrid = React.forwardRef<
                   );
                 }}
               >
-                {hours.map((h) => (
+                {hours.map((h: any) => (
                   <div
                     key={h}
                     style={{
@@ -892,14 +892,14 @@ const TimeGrid = React.forwardRef<
                   </div>
                 )}
                 {/* Events */}
-                {evs.map((ev) => {
+                {evs.map((ev: any) => {
                   const top = (minutesOf(ev.time) / 60) * HOUR_H;
                   const height = Math.max((ev.durationMins / 60) * HOUR_H, 24);
                   const c = colorOf(ev);
                   return (
                     <button
                       key={ev.id}
-                      onClick={(e) => {
+                      onClick={(e: any) => {
                         e.stopPropagation();
                         onPick(ev);
                       }}
@@ -939,8 +939,8 @@ function ScheduleView({
   onPick: (e: CalendarEvent) => void;
 }) {
   const upcoming = [...events]
-    .filter((e) => parseDT(e) >= new Date(new Date().toDateString()))
-    .sort((a, b) => parseDT(a).getTime() - parseDT(b).getTime());
+    .filter((e: any) => parseDT(e) >= new Date(new Date().toDateString()))
+    .sort((a: any, b: any) => parseDT(a).getTime() - parseDT(b).getTime());
   const groups = new Map<string, CalendarEvent[]>();
   for (const e of upcoming) {
     const list = groups.get(e.date) ?? [];
@@ -951,7 +951,7 @@ function ScheduleView({
 
   return (
     <div className={styles.s70}>
-      {[...groups.entries()].map(([date, evs]) => {
+      {[...groups.entries()].map(([date, evs]: any) => {
         const d = new Date(date + "T00:00");
         const isToday = date === todayKey;
         return (
@@ -983,9 +983,9 @@ function ScheduleView({
               </span>
             </div>
             <div className={styles.s77}>
-              {evs.map((e) => {
+              {evs.map((e: any) => {
                 const attendees = e.attendees
-                  .map((id) => nameById.get(id))
+                  .map((id: any) => nameById.get(id))
                   .filter(Boolean) as Member[];
                 return (
                   <button
@@ -1018,7 +1018,7 @@ function ScheduleView({
                       )}
                       {attendees.length > 0 && (
                         <div className={styles.s81}>
-                          {attendees.slice(0, 3).map((a, i) => (
+                          {attendees.slice(0, 3).map((a: any, i: any) => (
                             <span
                               key={a.id}
                               style={{
@@ -1106,7 +1106,7 @@ function EventDetail({
   onJoin: () => void;
 }) {
   const attendees = e.attendees
-    .map((id) => nameById.get(id))
+    .map((id: any) => nameById.get(id))
     .filter(Boolean) as Member[];
   return (
     <div className={styles.s89}>
@@ -1204,7 +1204,7 @@ function EventDetail({
             {attendees.length !== 1 ? "s" : ""}
           </div>
           <div className={styles.s108}>
-            {attendees.map((a) => (
+            {attendees.map((a: any) => (
               <div key={a.id} className={styles.s109}>
                 <span
                   style={{ background: avatarColor(a.id) }}
@@ -1268,12 +1268,12 @@ function CreateForm({
     setForm({
       ...form,
       attendeeIds: form.attendeeIds.includes(id)
-        ? form.attendeeIds.filter((x) => x !== id)
+        ? form.attendeeIds.filter((x: any) => x !== id)
         : [...form.attendeeIds, id],
     });
 
   const filteredDir = guestSearch.trim()
-    ? directory.filter((d) =>
+    ? directory.filter((d: any) =>
         d.name.toLowerCase().includes(guestSearch.toLowerCase()),
       )
     : directory;
@@ -1297,7 +1297,7 @@ function CreateForm({
         <input
           autoFocus
           value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          onChange={(e: any) => setForm({ ...form, title: e.target.value })}
           placeholder="Add title"
           style={{ ...inp }}
           className={styles.s114}
@@ -1308,7 +1308,7 @@ function CreateForm({
           <input
             type="checkbox"
             checked={form.allDay}
-            onChange={(e) => setForm({ ...form, allDay: e.target.checked })}
+            onChange={(e: any) => setForm({ ...form, allDay: e.target.checked })}
             className={styles.s116}
           />
           All day
@@ -1321,7 +1321,7 @@ function CreateForm({
             <input
               type="date"
               value={form.date}
-              onChange={(e) => setForm({ ...form, date: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, date: e.target.value })}
               style={{ ...inp }}
               className={styles.s120}
             />
@@ -1329,7 +1329,7 @@ function CreateForm({
               <input
                 type="time"
                 value={form.time}
-                onChange={(e) => setForm({ ...form, time: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, time: e.target.value })}
                 style={{ ...inp }}
                 className={styles.s120}
               />
@@ -1342,12 +1342,12 @@ function CreateForm({
           <div className={styles.s121}>
             <select
               value={form.durationMins}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, durationMins: Number(e.target.value) })
               }
               style={inp}
             >
-              {DURATIONS.map((d) => (
+              {DURATIONS.map((d: any) => (
                 <option key={d} value={d}>
                   {d >= 60
                     ? `${Math.floor(d / 60)} hr${d > 60 && d % 60 ? ` ${d % 60} min` : d > 60 ? "s" : ""}`
@@ -1363,12 +1363,12 @@ function CreateForm({
           <Repeat size={16} className={styles.s118} />
           <select
             value={form.recurrence}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({ ...form, recurrence: e.target.value as RecurrenceRule })
             }
             style={inp}
           >
-            {(Object.keys(RECURRENCE_LABELS) as RecurrenceRule[]).map((r) => (
+            {(Object.keys(RECURRENCE_LABELS) as RecurrenceRule[]).map((r: any) => (
               <option key={r} value={r}>
                 {RECURRENCE_LABELS[r]}
               </option>
@@ -1381,7 +1381,7 @@ function CreateForm({
           <MapPin size={16} className={styles.s118} />
           <input
             value={form.location}
-            onChange={(e) => setForm({ ...form, location: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, location: e.target.value })}
             placeholder="Add location"
             style={inp}
           />
@@ -1392,7 +1392,7 @@ function CreateForm({
           <AlignLeft size={16} className={styles.s123} />
           <textarea
             value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, description: e.target.value })}
             placeholder="Add description"
             rows={3}
             style={{ ...inp }}
@@ -1412,13 +1412,13 @@ function CreateForm({
                 style={{ background: form.color }}
                 className={styles.s126}
               />
-              {EVENT_COLORS.find((c) => c.value === form.color)?.name ||
+              {EVENT_COLORS.find((c: any) => c.value === form.color)?.name ||
                 "Custom"}
               <ChevronDown size={12} />
             </button>
             {colorOpen && (
               <div className={styles.s127}>
-                {EVENT_COLORS.map((c) => (
+                {EVENT_COLORS.map((c: any) => (
                   <button
                     key={c.value}
                     onClick={() => {
@@ -1451,7 +1451,7 @@ function CreateForm({
           <input
             type="checkbox"
             checked={form.withMeet}
-            onChange={(e) => setForm({ ...form, withMeet: e.target.checked })}
+            onChange={(e: any) => setForm({ ...form, withMeet: e.target.checked })}
             className={styles.s116}
           />
           Add Connect video meeting
@@ -1463,15 +1463,15 @@ function CreateForm({
             <Users size={16} className={styles.s118} />
             <input
               value={guestSearch}
-              onChange={(e) => setGuestSearch(e.target.value)}
+              onChange={(e: any) => setGuestSearch(e.target.value)}
               placeholder="Add guests"
               style={inp}
             />
           </div>
           {form.attendeeIds.length > 0 && (
             <div className={styles.s131}>
-              {form.attendeeIds.map((id) => {
-                const m = directory.find((d) => d.id === id);
+              {form.attendeeIds.map((id: any) => {
+                const m = directory.find((d: any) => d.id === id);
                 if (!m) return null;
                 return (
                   <span key={id} className={styles.s132}>
@@ -1496,8 +1496,8 @@ function CreateForm({
           )}
           <div className={styles.s135}>
             {filteredDir
-              .filter((d) => !form.attendeeIds.includes(d.id))
-              .map((d) => (
+              .filter((d: any) => !form.attendeeIds.includes(d.id))
+              .map((d: any) => (
                 <button
                   key={d.id}
                   onClick={() => toggle(d.id)}

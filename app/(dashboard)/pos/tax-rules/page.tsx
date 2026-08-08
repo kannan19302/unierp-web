@@ -130,14 +130,14 @@ export default function POSTaxRulesPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Add"} Tax Rule</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -147,7 +147,7 @@ export default function POSTaxRulesPage() {
                   step="0.01"
                   className="ui-input"
                   value={form.rate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, rate: Number(e.target.value) })
                   }
                 />
@@ -157,7 +157,7 @@ export default function POSTaxRulesPage() {
                 <select
                   className="ui-input"
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="INCLUSIVE">Inclusive</option>
                   <option value="EXCLUSIVE">Exclusive</option>

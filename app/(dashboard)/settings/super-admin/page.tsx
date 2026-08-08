@@ -162,7 +162,7 @@ export default function SuperAdminDashboardPage() {
             value: `$${(analytics?.mrr ?? 0).toLocaleString()}`,
             icon: DollarSign,
           },
-        ].map((card) => (
+        ].map((card: any) => (
           <Card key={card.label}>
             <div className={styles.kpiCard}>
               <div className={styles.kpiIcon}>
@@ -242,7 +242,7 @@ export default function SuperAdminDashboardPage() {
                 type="text"
                 placeholder="Search ID, email, or number..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e: any) => setSearchQuery(e.target.value)}
                 style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid var(--border)", background: "var(--background)" }}
                 required
               />
@@ -250,7 +250,7 @@ export default function SuperAdminDashboardPage() {
                 type="text"
                 placeholder="Justification (e.g., Ticket #1234)"
                 value={searchJustification}
-                onChange={(e) => setSearchJustification(e.target.value)}
+                onChange={(e: any) => setSearchJustification(e.target.value)}
                 style={{ flex: 1, padding: "10px", borderRadius: "6px", border: "1px solid var(--border)", background: "var(--background)" }}
                 required
                 minLength={10}
@@ -269,7 +269,7 @@ export default function SuperAdminDashboardPage() {
           {searchResults.length > 0 && (
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <h4 style={{ margin: 0, fontSize: "1rem" }}>Results ({searchResults.length})</h4>
-              {searchResults.map((res, i) => (
+              {searchResults.map((res: any, i: any) => (
                 <div key={i} style={{ padding: "12px", borderRadius: "6px", border: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div>
                     <div style={{ fontWeight: "bold", fontSize: "0.95rem" }}>{res.title}</div>

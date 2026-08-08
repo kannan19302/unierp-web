@@ -52,7 +52,7 @@ export default function PartnerManagementPage() {
       const list = perfData?.data || [];
       setPartners(list);
       if (list.length > 0) {
-        setRegisterForm((prev) => ({ ...prev, partnerId: list[0].partnerId }));
+        setRegisterForm((prev: any) => ({ ...prev, partnerId: list[0].partnerId }));
         // Load MDF for first partner
         try {
           const mdfData = await client.get<any>(
@@ -356,7 +356,7 @@ export default function PartnerManagementPage() {
                   </label>
                   <select
                     value={registerForm.partnerId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRegisterForm({
                         ...registerForm,
                         partnerId: e.target.value,
@@ -364,7 +364,7 @@ export default function PartnerManagementPage() {
                     }
                     className={styles.formControl}
                   >
-                    {partners.map((p) => (
+                    {partners.map((p: any) => (
                       <option key={p.partnerId} value={p.partnerId}>
                         {p.partnerName}
                       </option>
@@ -377,7 +377,7 @@ export default function PartnerManagementPage() {
                     placeholder="First Name *"
                     required
                     value={registerForm.firstName}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRegisterForm({
                         ...registerForm,
                         firstName: e.target.value,
@@ -390,7 +390,7 @@ export default function PartnerManagementPage() {
                     placeholder="Last Name *"
                     required
                     value={registerForm.lastName}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRegisterForm({
                         ...registerForm,
                         lastName: e.target.value,
@@ -404,7 +404,7 @@ export default function PartnerManagementPage() {
                   placeholder="Company Name *"
                   required
                   value={registerForm.company}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRegisterForm({
                       ...registerForm,
                       company: e.target.value,
@@ -417,7 +417,7 @@ export default function PartnerManagementPage() {
                   placeholder="Email Address *"
                   required
                   value={registerForm.email}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRegisterForm({ ...registerForm, email: e.target.value })
                   }
                   className={styles.formControl}
@@ -426,7 +426,7 @@ export default function PartnerManagementPage() {
                   type="text"
                   placeholder="Phone Number"
                   value={registerForm.phone}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRegisterForm({ ...registerForm, phone: e.target.value })
                   }
                   className={styles.formControl}
@@ -434,7 +434,7 @@ export default function PartnerManagementPage() {
                 <textarea
                   placeholder="Referral Notes (budget, timeline, requirements...)"
                   value={registerForm.notes}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRegisterForm({ ...registerForm, notes: e.target.value })
                   }
                   rows={3}

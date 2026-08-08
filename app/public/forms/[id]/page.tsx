@@ -14,7 +14,7 @@ export default function PublicFormPage() {
     setIsSubmitting(true);
     // Simulate API call to save form submission
     console.log("Submitting public form data:", data);
-    await new Promise((r) => setTimeout(r, 1000));
+    await new Promise((r: any) => setTimeout(r, 1000));
     setIsSubmitting(false);
     setIsSuccess(true);
   };

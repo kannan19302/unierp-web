@@ -39,7 +39,7 @@ export default function ServiceTicketDetailPage() {
           ServiceTicket[] | { data?: ServiceTicket[] }
         >("/ext/field-service/tickets");
         const list = Array.isArray(d) ? d : d.data || [];
-        setTicket(list.find((t) => t.id === id) || null);
+        setTicket(list.find((t: any) => t.id === id) || null);
         setLoadError(null);
       } catch (err) {
         const message =
@@ -129,7 +129,7 @@ export default function ServiceTicketDetailPage() {
               ["Priority", ticket.priority],
               ["Status", ticket.status],
               ["Description", ticket.description || "No description provided"],
-            ].map(([l, v]) => (
+            ].map(([l, v]: any) => (
               <div key={l as string} className={styles.s3}>
                 <span className="ui-text-sm-muted">{l}</span>
                 <span className="ui-heading-sm">{v}</span>

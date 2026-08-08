@@ -25,7 +25,7 @@ export default function ContentAnalyticsPage() {
 
   useEffect(() => {
     apiGet<DashboardData>("/crm/content/dashboard")
-      .then((d) => {
+      .then((d: any) => {
         setData(d as DashboardData);
       })
       .catch(() => {})

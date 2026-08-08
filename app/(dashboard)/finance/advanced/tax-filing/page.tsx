@@ -121,7 +121,7 @@ export default function TaxFilingPage() {
                       className="ui-field-line"
                       required
                       value={filingData.filingType}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setFilingData({
                           ...filingData,
                           filingType: e.target.value,
@@ -142,7 +142,7 @@ export default function TaxFilingPage() {
                       type="date"
                       required
                       value={filingData.periodStart}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setFilingData({
                           ...filingData,
                           periodStart: e.target.value,
@@ -157,7 +157,7 @@ export default function TaxFilingPage() {
                       type="date"
                       required
                       value={filingData.periodEnd}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setFilingData({
                           ...filingData,
                           periodEnd: e.target.value,
@@ -212,7 +212,7 @@ export default function TaxFilingPage() {
                 {
                   key: "periodStart",
                   header: "Period",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span className="ui-text-muted">
                       {new Date(v as string).toLocaleDateString()} -{" "}
                       {new Date(
@@ -242,7 +242,7 @@ export default function TaxFilingPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (_, row) => (
+                  render: (_: any, row: any) => (
                     <div className="text-right">
                       <Button
                         variant="ghost"

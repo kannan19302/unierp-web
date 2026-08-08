@@ -142,7 +142,7 @@ export default function AccountPlansPage() {
     {
       key: "customerName",
       header: "Customer",
-      render: (_, row) =>
+      render: (_: any, row: any) =>
         String((row.customer as Record<string, unknown>)?.name || "Unknown"),
     },
     { key: "name", header: "Plan Name" },
@@ -192,14 +192,14 @@ export default function AccountPlansPage() {
                 <label className={styles.p22}>Select Customer</label>
                 <select
                   value={newPlan.customerId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPlan({ ...newPlan, customerId: e.target.value })
                   }
                   className={styles.p23}
                   required
                 >
                   <option value="">-- Choose Customer --</option>
-                  {customers.map((c) => (
+                  {customers.map((c: any) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
@@ -212,7 +212,7 @@ export default function AccountPlansPage() {
                   type="text"
                   placeholder="e.g. FY2026 Expansion Plan"
                   value={newPlan.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPlan({ ...newPlan, name: e.target.value })
                   }
                   required
@@ -223,7 +223,7 @@ export default function AccountPlansPage() {
                 <textarea
                   placeholder="Objectives and initiatives..."
                   value={newPlan.objectives}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPlan({ ...newPlan, objectives: e.target.value })
                   }
                   className={styles.p26}
@@ -247,14 +247,14 @@ export default function AccountPlansPage() {
                 <label className={styles.p28}>Select Customer</label>
                 <select
                   value={healthLog.customerId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setHealthLog({ ...healthLog, customerId: e.target.value })
                   }
                   className={styles.p29}
                   required
                 >
                   <option value="">-- Choose Customer --</option>
-                  {customers.map((c) => (
+                  {customers.map((c: any) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
@@ -267,7 +267,7 @@ export default function AccountPlansPage() {
                   type="number"
                   placeholder="e.g. 85"
                   value={healthLog.score}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setHealthLog({ ...healthLog, score: e.target.value })
                   }
                   required
@@ -277,7 +277,7 @@ export default function AccountPlansPage() {
                 <label className={styles.p211}>Status</label>
                 <select
                   value={healthLog.status}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setHealthLog({ ...healthLog, status: e.target.value })
                   }
                   className={styles.p212}
@@ -294,7 +294,7 @@ export default function AccountPlansPage() {
                   type="text"
                   placeholder="e.g. High product usage"
                   value={healthLog.reason}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setHealthLog({ ...healthLog, reason: e.target.value })
                   }
                 />
@@ -319,14 +319,14 @@ export default function AccountPlansPage() {
                 </label>
                 <select
                   value={merge.sourceCustomerId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setMerge({ ...merge, sourceCustomerId: e.target.value })
                   }
                   className={styles.p216}
                   required
                 >
                   <option value="">-- Choose Source --</option>
-                  {customers.map((c) => (
+                  {customers.map((c: any) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
@@ -337,14 +337,14 @@ export default function AccountPlansPage() {
                 <label className={styles.p217}>Target Customer (To Keep)</label>
                 <select
                   value={merge.targetCustomerId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setMerge({ ...merge, targetCustomerId: e.target.value })
                   }
                   className={styles.p218}
                   required
                 >
                   <option value="">-- Choose Target --</option>
-                  {customers.map((c) => (
+                  {customers.map((c: any) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>

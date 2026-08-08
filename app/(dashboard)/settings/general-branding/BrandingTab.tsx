@@ -162,7 +162,7 @@ export default function BrandingTab() {
                 <button
                   className="ui-btn ui-btn-outline ui-btn-sm"
                   type="button"
-                  onClick={() => setUrlMode((v) => !v)}
+                  onClick={() => setUrlMode((v: any) => !v)}
                 >
                   <Link2 size={14} /> Use URL
                 </button>
@@ -191,12 +191,12 @@ export default function BrandingTab() {
                 className={`relative border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all cursor-pointer min-h-[200px]
                   ${isDragging ? "border-primary bg-primary/5" : "border-border hover:border-primary/50 hover:bg-muted/50"}
                 `}
-                onDragOver={(e) => {
+                onDragOver={(e: any) => {
                   e.preventDefault();
                   setIsDragging(true);
                 }}
                 onDragLeave={() => setIsDragging(false)}
-                onDrop={(e) => {
+                onDrop={(e: any) => {
                   e.preventDefault();
                   setIsDragging(false);
                   if (e.dataTransfer.files?.[0]) {
@@ -245,8 +245,8 @@ export default function BrandingTab() {
                     className="ui-input flex-1"
                     placeholder="https://example.com/logo.png"
                     value={urlInput}
-                    onChange={(e) => setUrlInput(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleUrlSave()}
+                    onChange={(e: any) => setUrlInput(e.target.value)}
+                    onKeyDown={(e: any) => e.key === "Enter" && handleUrlSave()}
                   />
                   <button
                     className="ui-btn ui-btn-primary"
@@ -275,7 +275,7 @@ export default function BrandingTab() {
               type="color"
               className={styles.s17}
               value={primaryColor}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 const val = e.target.value;
                 setPrimaryColor(val);
                 handleSave(val);
@@ -284,7 +284,7 @@ export default function BrandingTab() {
             <input
               className={styles.s18}
               value={primaryColor}
-              onChange={(e) => setPrimaryColor(e.target.value)}
+              onChange={(e: any) => setPrimaryColor(e.target.value)}
               onBlur={() => handleSave(primaryColor)}
             />
           </div>

@@ -325,7 +325,7 @@ export default function ConsolidationV2Page() {
                     <input
                       className="ui-input"
                       value={groupForm.groupName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setGroupForm({
                           ...groupForm,
                           groupName: e.target.value,
@@ -338,7 +338,7 @@ export default function ConsolidationV2Page() {
                     <input
                       className="ui-input"
                       value={groupForm.parentEntity}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setGroupForm({
                           ...groupForm,
                           parentEntity: e.target.value,
@@ -351,7 +351,7 @@ export default function ConsolidationV2Page() {
                     <select
                       className="ui-input"
                       value={groupForm.currency}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setGroupForm({ ...groupForm, currency: e.target.value })
                       }
                     >
@@ -460,12 +460,12 @@ export default function ConsolidationV2Page() {
                     <select
                       className="ui-input"
                       value={runForm.groupId}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunForm({ ...runForm, groupId: e.target.value })
                       }
                     >
                       <option value="">Select group...</option>
-                      {groups.map((g) => (
+                      {groups.map((g: any) => (
                         <option key={g.id} value={g.id}>
                           {g.groupName}
                         </option>
@@ -478,7 +478,7 @@ export default function ConsolidationV2Page() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={runForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunForm({ ...runForm, period: e.target.value })
                       }
                     />
@@ -570,7 +570,7 @@ export default function ConsolidationV2Page() {
                     <input
                       className="ui-input"
                       value={elimForm.ruleName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setElimForm({ ...elimForm, ruleName: e.target.value })
                       }
                     />
@@ -580,7 +580,7 @@ export default function ConsolidationV2Page() {
                     <input
                       className="ui-input"
                       value={elimForm.fromEntity}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setElimForm({ ...elimForm, fromEntity: e.target.value })
                       }
                     />
@@ -590,7 +590,7 @@ export default function ConsolidationV2Page() {
                     <input
                       className="ui-input"
                       value={elimForm.toEntity}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setElimForm({ ...elimForm, toEntity: e.target.value })
                       }
                     />
@@ -600,7 +600,7 @@ export default function ConsolidationV2Page() {
                     <select
                       className="ui-input"
                       value={elimForm.accountType}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setElimForm({
                           ...elimForm,
                           accountType: e.target.value,
@@ -706,7 +706,7 @@ export default function ConsolidationV2Page() {
                     <input
                       className="ui-input"
                       value={miForm.entityName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMiForm({ ...miForm, entityName: e.target.value })
                       }
                     />
@@ -718,7 +718,7 @@ export default function ConsolidationV2Page() {
                       type="number"
                       step="0.1"
                       value={miForm.minorityShare}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMiForm({ ...miForm, minorityShare: e.target.value })
                       }
                     />
@@ -729,7 +729,7 @@ export default function ConsolidationV2Page() {
                       className="ui-input"
                       type="number"
                       value={miForm.netIncome}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMiForm({ ...miForm, netIncome: e.target.value })
                       }
                     />
@@ -740,7 +740,7 @@ export default function ConsolidationV2Page() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={miForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMiForm({ ...miForm, period: e.target.value })
                       }
                     />

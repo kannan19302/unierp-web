@@ -175,7 +175,7 @@ export default function FulfillmentPage() {
               <div>
                 <div className={styles.p9}>At Risk Orders</div>
                 <div className={styles.p10}>
-                  {slaList.filter((s) => s.slaStatus === "AT_RISK").length}{" "}
+                  {slaList.filter((s: any) => s.slaStatus === "AT_RISK").length}{" "}
                   Orders
                 </div>
               </div>
@@ -189,7 +189,7 @@ export default function FulfillmentPage() {
               <div>
                 <div className={styles.p12}>Breached SLAs</div>
                 <div className={styles.p13}>
-                  {slaList.filter((s) => s.slaStatus === "BREACHED").length}{" "}
+                  {slaList.filter((s: any) => s.slaStatus === "BREACHED").length}{" "}
                   Orders
                 </div>
               </div>

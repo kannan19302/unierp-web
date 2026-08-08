@@ -11,7 +11,7 @@ import { NextRequest, NextResponse } from "next/server";
 const APP_HOSTS = new Set(
   ["localhost", "127.0.0.1", "0.0.0.0", process.env.NEXT_PUBLIC_APP_HOST]
     .filter(Boolean)
-    .map((h) => (h as string).toLowerCase()),
+    .map((h: any) => (h as string).toLowerCase()),
 );
 
 export function middleware(req: NextRequest) {

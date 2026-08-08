@@ -195,10 +195,10 @@ export default function CashFlowForecastPage() {
             <select
               className={`ui-input ${styles.s2}`}
               value={selectedScenarioId}
-              onChange={(e) => setSelectedScenarioId(e.target.value)}
+              onChange={(e: any) => setSelectedScenarioId(e.target.value)}
             >
               <option value="baseline">Baseline Projection</option>
-              {scenarios.map((sc) => (
+              {scenarios.map((sc: any) => (
                 <option key={sc.id} value={sc.id}>
                   {sc.name} ({Number(sc.inflowFactor).toFixed(1)}x In,{" "}
                   {Number(sc.outflowFactor).toFixed(1)}x Out)
@@ -248,7 +248,7 @@ export default function CashFlowForecastPage() {
                   color: "var(--color-success)",
                   bg: "var(--color-success-light)",
                 },
-              ].map((kpi) => (
+              ].map((kpi: any) => (
                 <Card key={kpi.label} className="ui-card p-5">
                   <div className="ui-flex-between">
                     <div>
@@ -358,7 +358,7 @@ export default function CashFlowForecastPage() {
                       {
                         key: "weekStart",
                         header: "Action",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <Button
                             variant="outline"
                             size="sm"
@@ -402,7 +402,7 @@ export default function CashFlowForecastPage() {
                 </div>
               ) : (
                 <div className="ui-flex-col">
-                  {scenarios.map((sc) => (
+                  {scenarios.map((sc: any) => (
                     <div key={sc.id} className={styles.s13}>
                       <div>
                         <p className="font-semibold">{sc.name}</p>
@@ -467,7 +467,7 @@ export default function CashFlowForecastPage() {
                     type="number"
                     className="ui-input"
                     value={overrideAdjustment}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setOverrideAdjustment(parseFloat(e.target.value) || 0)
                     }
                     placeholder="e.g. -5000 for tax payment, +15000 for asset sales"
@@ -480,7 +480,7 @@ export default function CashFlowForecastPage() {
                   <textarea
                     className={`ui-input ${styles.s18}`}
                     value={overrideComments}
-                    onChange={(e) => setOverrideComments(e.target.value)}
+                    onChange={(e: any) => setOverrideComments(e.target.value)}
                     placeholder="Provide reason for override..."
                   />
                 </div>
@@ -523,7 +523,7 @@ export default function CashFlowForecastPage() {
                     type="text"
                     className="ui-input"
                     value={scenarioName}
-                    onChange={(e) => setScenarioName(e.target.value)}
+                    onChange={(e: any) => setScenarioName(e.target.value)}
                     placeholder="e.g. Sales Surge (+15%)"
                     required
                   />
@@ -535,7 +535,7 @@ export default function CashFlowForecastPage() {
                     type="text"
                     className="ui-input"
                     value={scenarioDesc}
-                    onChange={(e) => setScenarioDesc(e.target.value)}
+                    onChange={(e: any) => setScenarioDesc(e.target.value)}
                     placeholder="Reason for simulation"
                   />
                 </div>
@@ -550,7 +550,7 @@ export default function CashFlowForecastPage() {
                     min="0"
                     className="ui-input"
                     value={inflowFactor}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setInflowFactor(parseFloat(e.target.value) || 1.0)
                     }
                     required
@@ -567,7 +567,7 @@ export default function CashFlowForecastPage() {
                     min="0"
                     className="ui-input"
                     value={outflowFactor}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setOutflowFactor(parseFloat(e.target.value) || 1.0)
                     }
                     required

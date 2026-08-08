@@ -100,9 +100,9 @@ export default function OnboardingPage() {
 
     const parsedItems = tasksText
       .split("\n")
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0)
-      .map((t, idx) => ({
+      .map((t: any) => t.trim())
+      .filter((t: any) => t.length > 0)
+      .map((t: any, idx: any) => ({
         task: t,
         category: "GENERAL",
         sortOrder: idx + 1,
@@ -163,7 +163,7 @@ export default function OnboardingPage() {
         { task, category: "GENERAL" },
       );
       {
-        setNewItemTexts((prev) => ({ ...prev, [checklistId]: "" }));
+        setNewItemTexts((prev: any) => ({ ...prev, [checklistId]: "" }));
         fetchData();
       }
     } catch (err) {
@@ -184,7 +184,7 @@ export default function OnboardingPage() {
   };
 
   const getEmpName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -225,11 +225,11 @@ export default function OnboardingPage() {
               <select
                 className="ui-input"
                 value={employeeId}
-                onChange={(e) => setEmployeeId(e.target.value)}
+                onChange={(e: any) => setEmployeeId(e.target.value)}
                 required
               >
                 <option value="">Select Employee</option>
-                {employees.map((e) => (
+                {employees.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.firstName} {e.lastName}
                   </option>
@@ -239,7 +239,7 @@ export default function OnboardingPage() {
                 className="ui-input"
                 placeholder="Template Name (e.g. Engineering Onboarding)"
                 value={templateName}
-                onChange={(e) => setTemplateName(e.target.value)}
+                onChange={(e: any) => setTemplateName(e.target.value)}
                 required
               />
               <div>
@@ -249,7 +249,7 @@ export default function OnboardingPage() {
                 <textarea
                   className="ui-input"
                   value={tasksText}
-                  onChange={(e) => setTasksText(e.target.value)}
+                  onChange={(e: any) => setTasksText(e.target.value)}
                   rows={5}
                   required
                 />
@@ -288,9 +288,9 @@ export default function OnboardingPage() {
                 </Card>
               </div>
             ) : (
-              checklists.map((list) => {
+              checklists.map((list: any) => {
                 const completedCount = list.items.filter(
-                  (i) => i.isCompleted,
+                  (i: any) => i.isCompleted,
                 ).length;
                 const totalCount = list.items.length;
                 const percent =
@@ -323,7 +323,7 @@ export default function OnboardingPage() {
                     </div>
 
                     <div className={styles.s8}>
-                      {list.items.map((item) => {
+                      {list.items.map((item: any) => {
                         const itemStatus =
                           item.status ||
                           (item.isCompleted ? "COMPLETED" : "PENDING");
@@ -381,7 +381,7 @@ export default function OnboardingPage() {
                                     type="text"
                                     className={`ui-input ${styles.s13}`}
                                     value={editTaskText}
-                                    onChange={(e) =>
+                                    onChange={(e: any) =>
                                       setEditTaskText(e.target.value)
                                     }
                                     autoFocus
@@ -427,7 +427,7 @@ export default function OnboardingPage() {
                                   <select
                                     className={`ui-input ${styles.s16}`}
                                     value={itemStatus}
-                                    onChange={(e) =>
+                                    onChange={(e: any) =>
                                       handleUpdateItem(item.id, {
                                         status: e.target.value,
                                       })
@@ -478,7 +478,7 @@ export default function OnboardingPage() {
                                         : "var(--color-bg-sunken)",
                                   }}
                                   defaultValue={item.comments || ""}
-                                  onBlur={(e) =>
+                                  onBlur={(e: any) =>
                                     handleUpdateItem(item.id, {
                                       comments: e.target.value,
                                     })
@@ -497,13 +497,13 @@ export default function OnboardingPage() {
                           placeholder="Add new task inline..."
                           className={`ui-input ${styles.s21}`}
                           value={newItemTexts[list.id] || ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setNewItemTexts({
                               ...newItemTexts,
                               [list.id]: e.target.value,
                             })
                           }
-                          onKeyDown={(e) => {
+                          onKeyDown={(e: any) => {
                             if (e.key === "Enter") {
                               handleAddItem(
                                 list.id,

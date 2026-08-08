@@ -151,7 +151,7 @@ export default function CartPage() {
           <>
             <Card padding="none">
               <div>
-                {cart.items.map((item, idx) => (
+                {cart.items.map((item: any, idx: any) => (
                   <div
                     key={item.id}
                     style={{

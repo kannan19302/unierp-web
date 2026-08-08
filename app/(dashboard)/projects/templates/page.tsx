@@ -58,7 +58,7 @@ export default function TemplatesPage() {
           ]}
         />
         <div className={styles.grid}>
-          {templates.map((t) => (
+          {templates.map((t: any) => (
             <div key={t.id} className={styles.card}>
               <div className={styles.cardTop}>
                 <h3 className={styles.cardTitle}>{t.name}</h3>

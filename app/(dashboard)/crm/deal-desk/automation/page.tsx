@@ -150,7 +150,7 @@ export default function DealAutomationPage() {
             <Input
               placeholder="Opportunity ID"
               value={evaluateOppId}
-              onChange={(e) => setEvaluateOppId(e.target.value)}
+              onChange={(e: any) => setEvaluateOppId(e.target.value)}
             />
           </div>
           <div className="ui-form-group" style={{ alignSelf: "flex-end" }}>
@@ -185,7 +185,7 @@ export default function DealAutomationPage() {
             <label className="ui-label">Name</label>
             <Input
               value={formData.name}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setFormData({ ...formData, name: e.target.value })
               }
             />
@@ -194,7 +194,7 @@ export default function DealAutomationPage() {
             <label className="ui-label">Description</label>
             <Input
               value={formData.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setFormData({ ...formData, description: e.target.value })
               }
             />
@@ -204,7 +204,7 @@ export default function DealAutomationPage() {
             <select
               className="ui-input"
               value={formData.triggerEvent}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setFormData({ ...formData, triggerEvent: e.target.value })
               }
             >
@@ -221,7 +221,7 @@ export default function DealAutomationPage() {
                 className="ui-input"
                 rows={4}
                 value={formData.conditions}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, conditions: e.target.value })
                 }
               />
@@ -232,7 +232,7 @@ export default function DealAutomationPage() {
                 className="ui-input"
                 rows={4}
                 value={formData.actions}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, actions: e.target.value })
                 }
               />
@@ -243,7 +243,7 @@ export default function DealAutomationPage() {
             <Input
               type="number"
               value={String(formData.priority)}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setFormData({ ...formData, priority: Number(e.target.value) })
               }
             />

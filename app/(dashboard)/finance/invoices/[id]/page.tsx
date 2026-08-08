@@ -551,7 +551,7 @@ export default function InvoiceDetailPage() {
                     No payments recorded yet.
                   </div>
                 ) : (
-                  payments.map((payment) => (
+                  payments.map((payment: any) => (
                     <div key={payment.id} className={styles.paymentRow}>
                       <div className={styles.paymentInfo}>
                         <span className={styles.paymentDate}>

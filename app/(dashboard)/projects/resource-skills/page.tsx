@@ -142,7 +142,7 @@ export default function ResourceSkillsPage() {
               {
                 label: "Assignments",
                 value: skills.reduce(
-                  (s, sk) => s + (sk.employeeSkills?.length || 0),
+                  (s: any, sk: any) => s + (sk.employeeSkills?.length || 0),
                   0,
                 ),
                 icon: <Users size={16} />,
@@ -151,7 +151,7 @@ export default function ResourceSkillsPage() {
             ]}
           />
           <div className="ui-grid-auto">
-            {skills.map((s) => (
+            {skills.map((s: any) => (
               <Card key={s.id} className="ui-stack-2">
                 <div className="ui-flex-between">
                   <h4 className="ui-text-label">{s.name}</h4>
@@ -180,14 +180,14 @@ export default function ResourceSkillsPage() {
               },
               {
                 label: "Active",
-                value: certifications.filter((c) => c.status === "ACTIVE")
+                value: certifications.filter((c: any) => c.status === "ACTIVE")
                   .length,
                 icon: <ShieldCheck size={16} />,
                 color: "var(--chart-2)",
               },
               {
                 label: "Expired",
-                value: certifications.filter((c) => c.status === "EXPIRED")
+                value: certifications.filter((c: any) => c.status === "EXPIRED")
                   .length,
                 icon: <ShieldCheck size={16} />,
                 color: "var(--chart-4)",
@@ -195,7 +195,7 @@ export default function ResourceSkillsPage() {
             ]}
           />
           <div className="ui-stack-3">
-            {certifications.map((c) => (
+            {certifications.map((c: any) => (
               <Card key={c.id} className="ui-flex-between">
                 <div>
                   <strong>{c.name}</strong>
@@ -229,14 +229,14 @@ export default function ResourceSkillsPage() {
               },
               {
                 label: "Significant Gaps",
-                value: gaps.filter((g) => Number(g.gapScore || 0) > 50).length,
+                value: gaps.filter((g: any) => Number(g.gapScore || 0) > 50).length,
                 icon: <BarChart3 size={16} />,
                 color: "var(--chart-4)",
               },
             ]}
           />
           <div className="ui-grid-auto">
-            {gaps.map((g) => (
+            {gaps.map((g: any) => (
               <Card key={g.id} className="ui-stack-2">
                 <div className="ui-flex-between">
                   <h4 className="ui-text-label">{g.skill.name}</h4>
@@ -266,8 +266,8 @@ export default function ResourceSkillsPage() {
           </p>
           <div className="ui-grid-auto">
             {skills
-              .filter((s) => s.employeeSkills?.length)
-              .map((s) => (
+              .filter((s: any) => s.employeeSkills?.length)
+              .map((s: any) => (
                 <Card key={s.id} className="ui-stack-2">
                   <h4 className="ui-text-label">{s.name}</h4>
                   <p className="ui-text-micro">
@@ -275,10 +275,10 @@ export default function ResourceSkillsPage() {
                   </p>
                   <div className="ui-hstack-2">
                     {["BEGINNER", "INTERMEDIATE", "ADVANCED", "EXPERT"].map(
-                      (level) => {
+                      (level: any) => {
                         const count =
                           s.employeeSkills?.filter(
-                            (es) => es.proficiency === level,
+                            (es: any) => es.proficiency === level,
                           ).length || 0;
                         return count > 0 ? (
                           <span key={level} className="ui-badge ui-badge-info">

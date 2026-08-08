@@ -81,7 +81,7 @@ export default function LeaderboardPage() {
           className="ui-input"
           style={{ width: "auto" }}
           value={period}
-          onChange={(e) => setPeriod(e.target.value)}
+          onChange={(e: any) => setPeriod(e.target.value)}
         >
           <option value="ALL_TIME">All Time</option>
           <option value="2026">2026</option>
@@ -93,7 +93,7 @@ export default function LeaderboardPage() {
           className="ui-input"
           style={{ width: "auto" }}
           value={metric}
-          onChange={(e) => setMetric(e.target.value)}
+          onChange={(e: any) => setMetric(e.target.value)}
         >
           <option value="points">Points</option>
           <option value="revenue">Revenue</option>

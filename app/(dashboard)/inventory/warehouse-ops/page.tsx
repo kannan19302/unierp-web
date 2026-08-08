@@ -20,7 +20,7 @@ interface StatCard {
 function StatCards({ cards }: { cards: StatCard[] }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-      {cards.map((c) => (
+      {cards.map((c: any) => (
         <div
           key={c.label}
           className={`rounded-lg border p-4 ${c.warn ? "border-yellow-400 bg-yellow-50 dark:bg-yellow-900/20" : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"}`}
@@ -125,7 +125,7 @@ function DashboardTab() {
       apiFetch("/inventory/warehouse-ops/tasks/dashboard"),
       apiFetch("/inventory/warehouse-ops/grn/dashboard"),
     ])
-      .then(([ops, tasks, grn]) => setData({ ops, tasks, grn }))
+      .then(([ops, tasks, grn]: any) => setData({ ops, tasks, grn }))
       .catch(() => {});
   }, []);
 
@@ -224,7 +224,7 @@ function TasksTab() {
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
         {["", "QUEUED", "ASSIGNED", "IN_PROGRESS", "COMPLETE", "CANCELLED"].map(
-          (s) => (
+          (s: any) => (
             <button
               key={s}
               onClick={() => setStatus(s)}
@@ -263,7 +263,7 @@ function TasksTab() {
             {
               key: "sourceLocation",
               header: "From → To",
-              render: (v, row) => `${v ?? "—"} → ${row.destLocation ?? "—"}`,
+              render: (v: any, row: any) => `${v ?? "—"} → ${row.destLocation ?? "—"}`,
             },
             {
               key: "productId",
@@ -306,7 +306,7 @@ function BinTransfersTab() {
   return (
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
-        {["", "PENDING", "APPROVED", "REJECTED", "COMPLETE"].map((s) => (
+        {["", "PENDING", "APPROVED", "REJECTED", "COMPLETE"].map((s: any) => (
           <button
             key={s}
             onClick={() => setStatus(s)}
@@ -344,7 +344,7 @@ function BinTransfersTab() {
             {
               key: "qty",
               header: "Qty",
-              render: (v, row) => `${v} ${row.uom ?? ""}`,
+              render: (v: any, row: any) => `${v} ${row.uom ?? ""}`,
             },
             {
               key: "status",
@@ -393,7 +393,7 @@ function GrnTab() {
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
         {["", "DRAFT", "VERIFIED", "QUALITY_CHECK", "COMPLETE", "REJECTED"].map(
-          (s) => (
+          (s: any) => (
             <button
               key={s}
               onClick={() => setStatus(s)}
@@ -473,7 +473,7 @@ function PackingTab() {
   return (
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
-        {["", "OPEN", "COMPLETE", "CANCELLED"].map((s) => (
+        {["", "OPEN", "COMPLETE", "CANCELLED"].map((s: any) => (
           <button
             key={s}
             onClick={() => setStatus(s)}
@@ -557,7 +557,7 @@ export default function WarehouseOpsPage() {
         {/* Tabs */}
         <div className="border-b border-gray-200 dark:border-gray-700 mb-6">
           <nav className="flex gap-0 -mb-px overflow-x-auto">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}

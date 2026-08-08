@@ -94,20 +94,20 @@ export default function BulkApprovalsTab() {
   ]);
 
   const toggleSelect = (id: string) => {
-    setPendingApprovals((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, selected: !a.selected } : a)),
+    setPendingApprovals((prev: any) =>
+      prev.map((a: any) => (a.id === id ? { ...a, selected: !a.selected } : a)),
     );
   };
 
   const toggleSelectAll = () => {
-    const allSelected = pendingApprovals.every((a) => a.selected);
-    setPendingApprovals((prev) =>
-      prev.map((a) => ({ ...a, selected: !allSelected })),
+    const allSelected = pendingApprovals.every((a: any) => a.selected);
+    setPendingApprovals((prev: any) =>
+      prev.map((a: any) => ({ ...a, selected: !allSelected })),
     );
   };
 
   const bulkAction = (action: "approve" | "reject") => {
-    const selected = pendingApprovals.filter((a) => a.selected);
+    const selected = pendingApprovals.filter((a: any) => a.selected);
     if (selected.length === 0) {
       alert("Select at least one item.");
       return;
@@ -115,7 +115,7 @@ export default function BulkApprovalsTab() {
     alert(
       `${action === "approve" ? "Approved" : "Rejected"} ${selected.length} item(s) successfully.`,
     );
-    setPendingApprovals((prev) => prev.filter((a) => !a.selected));
+    setPendingApprovals((prev: any) => prev.filter((a: any) => !a.selected));
   };
 
   const priorityColor = (p: string) => {
@@ -135,14 +135,14 @@ export default function BulkApprovalsTab() {
           <label className={styles.s1}>
             <input
               type="checkbox"
-              checked={pendingApprovals.every((a) => a.selected)}
+              checked={pendingApprovals.every((a: any) => a.selected)}
               onChange={toggleSelectAll}
               className={styles.s2}
             />
             Select All
           </label>
           <span className="ui-text-sm-muted">
-            {pendingApprovals.filter((a) => a.selected).length} of{" "}
+            {pendingApprovals.filter((a: any) => a.selected).length} of{" "}
             {pendingApprovals.length} selected
           </span>
         </div>
@@ -161,7 +161,7 @@ export default function BulkApprovalsTab() {
             {
               key: "selected",
               header: "Sel",
-              render: (v, row) => (
+              render: (v: any, row: any) => (
                 <input
                   type="checkbox"
                   checked={Boolean(v)}

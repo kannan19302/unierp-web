@@ -142,7 +142,7 @@ export default function SupplierRiskPage() {
         <TextField
           placeholder="Search suppliers..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           style={{ marginBottom: "1rem" }}
         />
         <DataTable

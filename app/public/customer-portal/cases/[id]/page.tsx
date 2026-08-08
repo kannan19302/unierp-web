@@ -125,7 +125,7 @@ export default function PortalCaseDetailPage() {
           {caseDetail.comments.length === 0 ? (
             <p className="ui-empty-state">No messages yet.</p>
           ) : (
-            caseDetail.comments.map((c) => (
+            caseDetail.comments.map((c: any) => (
               <div
                 key={c.id}
                 style={{
@@ -153,8 +153,8 @@ export default function PortalCaseDetailPage() {
             className="ui-input"
             placeholder="Type a message…"
             value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            onChange={(e: any) => setComment(e.target.value)}
+            onKeyDown={(e: any) => e.key === "Enter" && handleSend()}
           />
           <Button onClick={handleSend} disabled={sending || !comment.trim()}>
             <Send size={14} /> Send

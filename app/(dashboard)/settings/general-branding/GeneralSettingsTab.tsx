@@ -147,7 +147,7 @@ export default function GeneralSettingsTab() {
   };
 
   const updateField = (key: string, value: any) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setForm((prev: any) => ({ ...prev, [key]: value }));
   };
 
   if (loading) {
@@ -210,14 +210,14 @@ export default function GeneralSettingsTab() {
           <TextField
             label="Company Name"
             value={form.companyName}
-            onChange={(e) => updateField("companyName", e.target.value)}
+            onChange={(e: any) => updateField("companyName", e.target.value)}
             onBlur={() => handleSave()}
           />
           <TextField
             label="Registration No. / Tax ID"
             placeholder="e.g. TX-123456"
             value={form.taxId}
-            onChange={(e) => updateField("taxId", e.target.value)}
+            onChange={(e: any) => updateField("taxId", e.target.value)}
             onBlur={() => handleSave()}
           />
         </div>
@@ -226,7 +226,7 @@ export default function GeneralSettingsTab() {
           label="Street Address"
           placeholder="Street Address"
           value={form.address.street}
-          onChange={(e) =>
+          onChange={(e: any) =>
             updateField("address", { ...form.address, street: e.target.value })
           }
           onBlur={() => handleSave()}
@@ -237,7 +237,7 @@ export default function GeneralSettingsTab() {
             label="City"
             placeholder="City"
             value={form.address.city}
-            onChange={(e) =>
+            onChange={(e: any) =>
               updateField("address", { ...form.address, city: e.target.value })
             }
             onBlur={() => handleSave()}
@@ -246,7 +246,7 @@ export default function GeneralSettingsTab() {
             label="State"
             placeholder="State/Province"
             value={form.address.state}
-            onChange={(e) =>
+            onChange={(e: any) =>
               updateField("address", { ...form.address, state: e.target.value })
             }
             onBlur={() => handleSave()}
@@ -255,7 +255,7 @@ export default function GeneralSettingsTab() {
             label="ZIP"
             placeholder="ZIP/Postal"
             value={form.address.zip}
-            onChange={(e) =>
+            onChange={(e: any) =>
               updateField("address", { ...form.address, zip: e.target.value })
             }
             onBlur={() => handleSave()}
@@ -266,7 +266,7 @@ export default function GeneralSettingsTab() {
           <FormField label="Primary Currency">
             <Select
               value={form.currency}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 updateField("currency", e.target.value);
                 handleSave({ currency: e.target.value });
               }}
@@ -281,7 +281,7 @@ export default function GeneralSettingsTab() {
           <FormField label="Timezone">
             <Select
               value={form.timezone}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 updateField("timezone", e.target.value);
                 handleSave({ timezone: e.target.value });
               }}
@@ -308,13 +308,13 @@ export default function GeneralSettingsTab() {
           <FormField label="Fiscal Year Start Month">
             <Select
               value={form.fiscalYearStartMonth}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 const val = Number(e.target.value);
                 updateField("fiscalYearStartMonth", val);
                 handleSave({ fiscalYearStartMonth: val });
               }}
             >
-              {MONTHS.map((m, i) => (
+              {MONTHS.map((m: any, i: any) => (
                 <option key={i + 1} value={i + 1}>
                   {m}
                 </option>
@@ -334,21 +334,21 @@ export default function GeneralSettingsTab() {
             label="Invoice Prefix"
             placeholder="INV-"
             value={form.invoicePrefix}
-            onChange={(e) => updateField("invoicePrefix", e.target.value)}
+            onChange={(e: any) => updateField("invoicePrefix", e.target.value)}
             onBlur={() => handleSave()}
           />
           <TextField
             label="Purchase Order Prefix"
             placeholder="PO-"
             value={form.poPrefix}
-            onChange={(e) => updateField("poPrefix", e.target.value)}
+            onChange={(e: any) => updateField("poPrefix", e.target.value)}
             onBlur={() => handleSave()}
           />
           <TextField
             label="Sales Order Prefix"
             placeholder="SO-"
             value={form.soPrefix}
-            onChange={(e) => updateField("soPrefix", e.target.value)}
+            onChange={(e: any) => updateField("soPrefix", e.target.value)}
             onBlur={() => handleSave()}
           />
         </div>
@@ -397,7 +397,7 @@ export default function GeneralSettingsTab() {
             <div>
               <span className={styles.s7}>Per-module status:</span>
               <div className={styles.s8}>
-                {Object.entries(demoStatus.modules).map(([mod, loaded]) => (
+                {Object.entries(demoStatus.modules).map(([mod, loaded]: any) => (
                   <label key={mod} className={styles.s9}>
                     <input
                       type="checkbox"

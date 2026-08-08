@@ -108,10 +108,10 @@ export default function DuplicateRulesPage() {
     }
   };
   const toggleField = (f: string) => {
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
       matchFields: prev.matchFields.includes(f)
-        ? prev.matchFields.filter((x) => x !== f)
+        ? prev.matchFields.filter((x: any) => x !== f)
         : [...prev.matchFields, f],
     }));
   };
@@ -205,7 +205,7 @@ export default function DuplicateRulesPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.style2}>
                       <ProtectedComponent permission="crm.duplicate-rules.update">
                         <button
@@ -247,7 +247,7 @@ export default function DuplicateRulesPage() {
                 style={inputStyle}
                 required
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
             </div>
             <div>
@@ -255,7 +255,7 @@ export default function DuplicateRulesPage() {
               <select
                 style={inputStyle}
                 value={form.entity}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({
                     ...form,
                     entity: e.target.value as Entity,
@@ -263,7 +263,7 @@ export default function DuplicateRulesPage() {
                   })
                 }
               >
-                {(Object.keys(ENTITY_FIELDS) as Entity[]).map((e) => (
+                {(Object.keys(ENTITY_FIELDS) as Entity[]).map((e: any) => (
                   <option key={e} value={e}>
                     {e}
                   </option>
@@ -273,7 +273,7 @@ export default function DuplicateRulesPage() {
             <div>
               <label style={labelStyle}>Match Fields</label>
               <div className={styles.style4}>
-                {ENTITY_FIELDS[form.entity].map((f) => (
+                {ENTITY_FIELDS[form.entity].map((f: any) => (
                   <label
                     key={f}
                     style={{
@@ -303,7 +303,7 @@ export default function DuplicateRulesPage() {
                   step={0.05}
                   style={inputStyle}
                   value={form.threshold}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, threshold: Number(e.target.value) })
                   }
                 />
@@ -313,7 +313,7 @@ export default function DuplicateRulesPage() {
                 <select
                   style={inputStyle}
                   value={form.action}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, action: e.target.value as Action })
                   }
                 >
@@ -327,7 +327,7 @@ export default function DuplicateRulesPage() {
               <input
                 type="checkbox"
                 checked={form.active}
-                onChange={(e) => setForm({ ...form, active: e.target.checked })}
+                onChange={(e: any) => setForm({ ...form, active: e.target.checked })}
               />{" "}
               Active
             </label>

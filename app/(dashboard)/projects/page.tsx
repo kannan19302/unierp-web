@@ -343,7 +343,7 @@ export default function ProjectsPage() {
     if (!selectedProject) return;
     try {
       const baseline = JSON.stringify(
-        selectedProject.tasks?.map((t) => ({
+        selectedProject.tasks?.map((t: any) => ({
           taskId: t.id,
           dueDate: t.dueDate,
         })),
@@ -603,7 +603,7 @@ export default function ProjectsPage() {
         <div className="ui-stack-4">
           <h3 className={styles.p5}>Projects</h3>
           <div className="ui-stack-2">
-            {projects.map((proj) => {
+            {projects.map((proj: any) => {
               const isSelected = selectedProject?.id === proj.id;
               return (
                 <button
@@ -754,7 +754,7 @@ export default function ProjectsPage() {
                   stats={[
                     {
                       label: "Task Completion",
-                      value: `${selectedProject.tasks ? selectedProject.tasks.filter((t) => t.status === "DONE").length : 0} / ${selectedProject.tasks ? selectedProject.tasks.length : 0}`,
+                      value: `${selectedProject.tasks ? selectedProject.tasks.filter((t: any) => t.status === "DONE").length : 0} / ${selectedProject.tasks ? selectedProject.tasks.length : 0}`,
                       icon: <Activity size={16} />,
                       color: "var(--chart-1)",
                     },
@@ -782,7 +782,7 @@ export default function ProjectsPage() {
                     },
                     {
                       label: "Open Risks",
-                      value: risks.filter((r) => r.status !== "MITIGATED")
+                      value: risks.filter((r: any) => r.status !== "MITIGATED")
                         .length,
                       icon: <ShieldAlert size={16} />,
                       color:
@@ -829,10 +829,10 @@ export default function ProjectsPage() {
                     subtitle="Tasks grouped by urgency levels"
                     data={(() => {
                       const counts: Record<string, number> = {};
-                      selectedProject.tasks?.forEach((t) => {
+                      selectedProject.tasks?.forEach((t: any) => {
                         counts[t.priority] = (counts[t.priority] || 0) + 1;
                       });
-                      return Object.entries(counts).map(([name, value]) => ({
+                      return Object.entries(counts).map(([name, value]: any) => ({
                         name,
                         value,
                       }));
@@ -866,7 +866,7 @@ export default function ProjectsPage() {
 
                 {selectedProject.tasks && selectedProject.tasks.length > 0 ? (
                   <div className={styles.p20}>
-                    {selectedProject.tasks.map((task) => {
+                    {selectedProject.tasks.map((task: any) => {
                       const isCritical = criticalPathIds.includes(task.id);
                       const baselineDateStr = baselineMap[task.id];
                       let delayDays = 0;
@@ -1149,7 +1149,7 @@ export default function ProjectsPage() {
 
                 <div className="ui-stack-3">
                   {risks.length > 0 ? (
-                    risks.map((risk) => (
+                    risks.map((risk: any) => (
                       <div key={risk.id} className={styles.p49}>
                         <div>
                           <h4 className={styles.p50}>
@@ -1239,7 +1239,7 @@ export default function ProjectsPage() {
 
                 <div className="ui-stack-3">
                   {changeRequests.length > 0 ? (
-                    changeRequests.map((cr) => (
+                    changeRequests.map((cr: any) => (
                       <div key={cr.id} className={styles.p57}>
                         <div>
                           <h4 className={styles.p58}>{cr.title}</h4>
@@ -1482,7 +1482,7 @@ export default function ProjectsPage() {
                   required
                   type="text"
                   value={newProject.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewProject({ ...newProject, name: e.target.value })
                   }
                   className={styles.p102}
@@ -1495,7 +1495,7 @@ export default function ProjectsPage() {
                   type="text"
                   placeholder="e.g. PRJ-001"
                   value={newProject.code}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewProject({ ...newProject, code: e.target.value })
                   }
                   className={styles.p103}
@@ -1507,7 +1507,7 @@ export default function ProjectsPage() {
               <label className="ui-text-xs-label">Description</label>
               <textarea
                 value={newProject.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewProject({ ...newProject, description: e.target.value })
                 }
                 className={styles.p104}
@@ -1520,7 +1520,7 @@ export default function ProjectsPage() {
                 <input
                   type="date"
                   value={newProject.startDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewProject({ ...newProject, startDate: e.target.value })
                   }
                   className={styles.p105}
@@ -1531,7 +1531,7 @@ export default function ProjectsPage() {
                 <input
                   type="date"
                   value={newProject.endDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewProject({ ...newProject, endDate: e.target.value })
                   }
                   className={styles.p106}
@@ -1546,7 +1546,7 @@ export default function ProjectsPage() {
                   type="number"
                   placeholder="Budget allocation"
                   value={newProject.budget}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewProject({ ...newProject, budget: e.target.value })
                   }
                   className={styles.p107}
@@ -1558,7 +1558,7 @@ export default function ProjectsPage() {
                   type="number"
                   placeholder="Internal est. cost"
                   value={newProject.estimatedCost}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewProject({
                       ...newProject,
                       estimatedCost: e.target.value,
@@ -1575,7 +1575,7 @@ export default function ProjectsPage() {
                 type="number"
                 placeholder="Total contract value"
                 value={newProject.contractValue}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewProject({
                     ...newProject,
                     contractValue: e.target.value,
@@ -1611,7 +1611,7 @@ export default function ProjectsPage() {
               <label className={styles.p115}>Cost Type</label>
               <select
                 value={newCost.type}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewCost({ ...newCost, type: e.target.value })
                 }
                 className={styles.p116}
@@ -1629,7 +1629,7 @@ export default function ProjectsPage() {
                 step="0.01"
                 required
                 value={newCost.amount}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewCost({ ...newCost, amount: e.target.value })
                 }
                 placeholder="e.g. 250.00"
@@ -1643,7 +1643,7 @@ export default function ProjectsPage() {
                 type="date"
                 required
                 value={newCost.date}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewCost({ ...newCost, date: e.target.value })
                 }
                 className={styles.p120}
@@ -1655,7 +1655,7 @@ export default function ProjectsPage() {
               <input
                 type="text"
                 value={newCost.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewCost({ ...newCost, description: e.target.value })
                 }
                 placeholder="e.g. Subcontractor invoice #12"
@@ -1691,7 +1691,7 @@ export default function ProjectsPage() {
                 required
                 type="text"
                 value={newTask.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewTask({ ...newTask, name: e.target.value })
                 }
                 className={styles.p127}
@@ -1702,7 +1702,7 @@ export default function ProjectsPage() {
               <label className="ui-text-xs-label">Description</label>
               <textarea
                 value={newTask.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewTask({ ...newTask, description: e.target.value })
                 }
                 className={styles.p128}
@@ -1714,7 +1714,7 @@ export default function ProjectsPage() {
                 <label className="ui-text-xs-label">Priority</label>
                 <select
                   value={newTask.priority}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewTask({ ...newTask, priority: e.target.value })
                   }
                   className={styles.p129}
@@ -1730,7 +1730,7 @@ export default function ProjectsPage() {
                 <input
                   type="date"
                   value={newTask.dueDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewTask({ ...newTask, dueDate: e.target.value })
                   }
                   className={styles.p130}
@@ -1769,7 +1769,7 @@ export default function ProjectsPage() {
                   step="0.5"
                   placeholder="e.g. 8"
                   value={timeLog.hours}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setTimeLog({ ...timeLog, hours: e.target.value })
                   }
                   className={styles.p135}
@@ -1781,7 +1781,7 @@ export default function ProjectsPage() {
                   required
                   type="date"
                   value={timeLog.date}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setTimeLog({ ...timeLog, date: e.target.value })
                   }
                   className={styles.p136}
@@ -1794,7 +1794,7 @@ export default function ProjectsPage() {
               <textarea
                 placeholder="Specify what you completed..."
                 value={timeLog.notes}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setTimeLog({ ...timeLog, notes: e.target.value })
                 }
                 className={styles.p137}
@@ -1832,7 +1832,7 @@ export default function ProjectsPage() {
                 required
                 type="text"
                 value={newRisk.title}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewRisk({ ...newRisk, title: e.target.value })
                 }
                 className={styles.p143}
@@ -1843,7 +1843,7 @@ export default function ProjectsPage() {
               <label className="ui-text-xs-label">Risk Description</label>
               <textarea
                 value={newRisk.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewRisk({ ...newRisk, description: e.target.value })
                 }
                 className={styles.p144}
@@ -1855,7 +1855,7 @@ export default function ProjectsPage() {
                 <label className="ui-text-xs-label">Probability</label>
                 <select
                   value={newRisk.probability}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewRisk({ ...newRisk, probability: e.target.value })
                   }
                   className={styles.p145}
@@ -1869,7 +1869,7 @@ export default function ProjectsPage() {
                 <label className="ui-text-xs-label">Impact</label>
                 <select
                   value={newRisk.impact}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewRisk({ ...newRisk, impact: e.target.value })
                   }
                   className={styles.p146}
@@ -1885,7 +1885,7 @@ export default function ProjectsPage() {
               <label className="ui-text-xs-label">Mitigation Plan</label>
               <textarea
                 value={newRisk.mitigationPlan}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewRisk({ ...newRisk, mitigationPlan: e.target.value })
                 }
                 className={styles.p147}
@@ -1923,7 +1923,7 @@ export default function ProjectsPage() {
                 required
                 type="text"
                 value={newChange.title}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewChange({ ...newChange, title: e.target.value })
                 }
                 className={styles.p153}
@@ -1936,7 +1936,7 @@ export default function ProjectsPage() {
               </label>
               <textarea
                 value={newChange.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewChange({ ...newChange, description: e.target.value })
                 }
                 className={styles.p154}
@@ -1951,7 +1951,7 @@ export default function ProjectsPage() {
                   type="number"
                   placeholder="e.g. 5000"
                   value={newChange.requestedAmount}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewChange({
                       ...newChange,
                       requestedAmount: e.target.value,
@@ -1969,7 +1969,7 @@ export default function ProjectsPage() {
                   type="number"
                   placeholder="e.g. 10"
                   value={newChange.requestedScheduleDays}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewChange({
                       ...newChange,
                       requestedScheduleDays: e.target.value,

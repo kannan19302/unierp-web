@@ -44,16 +44,16 @@ export default function InventoryProductsPage() {
         <ListView
           resource={productResource}
           filters={{ category: category || undefined }}
-          onRowClick={(row) => router.push(`/inventory/products/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/inventory/products/${row.id}`)}
           onCreate={() => setIsCreateOpen(true)}
           toolbar={
             <Select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e: any) => setCategory(e.target.value)}
               className={styles.s1}
             >
               <option value="">All categories</option>
-              {categories.map((name) => (
+              {categories.map((name: any) => (
                 <option key={name} value={name}>
                   {name}
                 </option>

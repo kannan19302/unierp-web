@@ -190,7 +190,7 @@ export default function SchedulingPage() {
         <select
           className="ui-input-sm"
           value={r.status}
-          onChange={(e) => handleStatusChange(r.id, e.target.value)}
+          onChange={(e: any) => handleStatusChange(r.id, e.target.value)}
         >
           <option value="SCHEDULED">Scheduled</option>
           <option value="IN_PROGRESS">In Progress</option>
@@ -335,7 +335,7 @@ export default function SchedulingPage() {
               label="Technician ID"
               required
               value={form.technicianId}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, technicianId: e.target.value })
               }
             />
@@ -343,14 +343,14 @@ export default function SchedulingPage() {
               label="Title"
               required
               value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, title: e.target.value })}
             />
             <TextField
               label="Scheduled Date"
               type="date"
               required
               value={form.scheduledDate}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, scheduledDate: e.target.value })
               }
             />
@@ -359,7 +359,7 @@ export default function SchedulingPage() {
                 label="Start Time"
                 type="datetime-local"
                 value={form.startTime}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startTime: e.target.value })
                 }
               />
@@ -367,26 +367,26 @@ export default function SchedulingPage() {
                 label="End Time"
                 type="datetime-local"
                 value={form.endTime}
-                onChange={(e) => setForm({ ...form, endTime: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endTime: e.target.value })}
               />
             </div>
             <TextField
               label="Duration (min)"
               type="number"
               value={form.durationMin}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, durationMin: e.target.value })
               }
             />
             <TextField
               label="Location"
               value={form.location}
-              onChange={(e) => setForm({ ...form, location: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, location: e.target.value })}
             />
             <TextField
               label="Notes"
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </div>
         </Modal>

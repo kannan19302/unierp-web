@@ -120,7 +120,7 @@ export default function AiCopilotPage() {
   const send = async () => {
     if (!input.trim() || loading) return;
     const userMsg: Message = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((prev: any) => [...prev, userMsg]);
     const prompt = input;
     setInput("");
     setLoading(true);
@@ -188,12 +188,12 @@ export default function AiCopilotPage() {
           break;
       }
 
-      setMessages((prev) => [
+      setMessages((prev: any) => [
         ...prev,
         { role: "assistant", content, data: structuredData },
       ]);
     } catch {
-      setMessages((prev) => [
+      setMessages((prev: any) => [
         ...prev,
         {
           role: "assistant",
@@ -205,7 +205,7 @@ export default function AiCopilotPage() {
     }
   };
 
-  const currentMode = MODES.find((m) => m.id === mode)!;
+  const currentMode = MODES.find((m: any) => m.id === mode)!;
 
   const placeholders: Record<Mode, string> = {
     chat: 'e.g. "Show me unpaid invoices over $5,000 from last quarter"',
@@ -235,7 +235,7 @@ export default function AiCopilotPage() {
 
         {/* Mode Tabs */}
         <div className="ui-flex ui-gap-2 ui-flex-wrap">
-          {MODES.map((m) => (
+          {MODES.map((m: any) => (
             <button
               key={m.id}
               onClick={() => {
@@ -255,7 +255,7 @@ export default function AiCopilotPage() {
             <input
               type="checkbox"
               checked={createDraft}
-              onChange={(e) => setCreateDraft(e.target.checked)}
+              onChange={(e: any) => setCreateDraft(e.target.checked)}
               className={styles.s2}
             />
             Automatically create a draft Purchase Order from extracted fields
@@ -287,7 +287,7 @@ export default function AiCopilotPage() {
               </div>
             )}
 
-            {messages.map((msg, i) => (
+            {messages.map((msg: any, i: any) => (
               <div
                 key={i}
                 className="ui-flex ui-gap-3 ui-items-start"
@@ -371,8 +371,8 @@ export default function AiCopilotPage() {
             <div className={`ui-flex ui-gap-3 ${styles.s12}`}>
               <textarea
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
+                onChange={(e: any) => setInput(e.target.value)}
+                onKeyDown={(e: any) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     send();

@@ -134,7 +134,7 @@ export function ProfileHoverCard({
     setLoading(true);
     client
       .get<ProfileCardData>(`/people/${effectiveTargetId}/card`)
-      .then((res) => setData(res))
+      .then((res: any) => setData(res))
       .catch(() => setData(null))
       .finally(() => setLoading(false));
   }, [effectiveTargetId, data, loading, client]);
@@ -459,7 +459,7 @@ export function ProfileHoverCard({
                     className={styles.footerBtn}
                     onClick={() => {
                       setOpen(false);
-                      client.get(`/people/me/export`).then((exported) => {
+                      client.get(`/people/me/export`).then((exported: any) => {
                         const blob = new Blob(
                           [JSON.stringify(exported, null, 2)],
                           {

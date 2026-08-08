@@ -132,14 +132,14 @@ export default function ServiceManagementPage() {
             <Input
               placeholder="Title"
               value={newTicket.title}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setNewTicket({ ...newTicket, title: e.target.value })
               }
             />
             <Input
               placeholder="Description"
               value={newTicket.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setNewTicket({ ...newTicket, description: e.target.value })
               }
             />
@@ -147,7 +147,7 @@ export default function ServiceManagementPage() {
               <select
                 className="w-full p-2 border rounded"
                 value={newTicket.priority}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewTicket({ ...newTicket, priority: e.target.value })
                 }
               >

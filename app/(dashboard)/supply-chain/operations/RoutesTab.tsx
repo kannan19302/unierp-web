@@ -76,13 +76,13 @@ export default function RoutesTab() {
   ];
 
   const routeData = optimizedRoute
-    ? optimizedRoute.orderedStops.map((s, i) => ({
+    ? optimizedRoute.orderedStops.map((s: any, i: any) => ({
         order: i + 1,
         stop: s.name,
         lat: s.lat.toFixed(4),
         lng: s.lng.toFixed(4),
       }))
-    : SAMPLE_STOPS.map((s, i) => ({
+    : SAMPLE_STOPS.map((s: any, i: any) => ({
         order: i + 1,
         stop: s.name,
         lat: s.lat.toFixed(4),
@@ -153,7 +153,7 @@ export default function RoutesTab() {
         <DashboardChart
           title="Optimized Route Order"
           subtitle="Nearest-neighbor heuristic with priority boost"
-          data={optimizedRoute.orderedStops.map((s, i) => ({
+          data={optimizedRoute.orderedStops.map((s: any, i: any) => ({
             stop: s.name,
             order: i + 1,
             distance:

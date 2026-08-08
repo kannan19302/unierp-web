@@ -31,7 +31,7 @@ const makeWaveColumns = (
   {
     key: "waveNumber",
     header: "Wave #",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const w = row as unknown as PickWave;
       return (
         <span
@@ -59,7 +59,7 @@ const makeWaveColumns = (
   {
     key: "id",
     header: "",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const w = row as unknown as PickWave;
       return (
         <div className={styles.s2}>
@@ -140,7 +140,7 @@ export default function PickWavesPage() {
         warehouseId,
         salesOrderIds: orderIds
           .split(",")
-          .map((s) => s.trim())
+          .map((s: any) => s.trim())
           .filter(Boolean),
       });
       setIsCreateModalOpen(false);
@@ -238,7 +238,7 @@ export default function PickWavesPage() {
             ) : (
               <div className="ui-stack-3">
                 <div className="font-semibold">{selectedWave.waveNumber}</div>
-                {selectedWave.items.map((item) => (
+                {selectedWave.items.map((item: any) => (
                   <div key={item.id} className={styles.s7}>
                     <span>
                       {item.product?.name} — bin {item.binLocation?.code || "—"}
@@ -250,7 +250,7 @@ export default function PickWavesPage() {
                       className={styles.s8}
                       placeholder="Scan serial(s), comma-sep"
                       value={scanInputs[item.id] || ""}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScanInputs({
                           ...scanInputs,
                           [item.id]: e.target.value,
@@ -266,7 +266,7 @@ export default function PickWavesPage() {
                           Number(item.quantity),
                           (scanInputs[item.id] || "")
                             .split(",")
-                            .map((s) => s.trim())
+                            .map((s: any) => s.trim())
                             .filter(Boolean),
                         )
                       }
@@ -309,7 +309,7 @@ export default function PickWavesPage() {
                       id="wave-warehouse-id"
                       type="text"
                       value={warehouseId}
-                      onChange={(e) => setWarehouseId(e.target.value)}
+                      onChange={(e: any) => setWarehouseId(e.target.value)}
                       required
                     />
                   </FormField>
@@ -322,7 +322,7 @@ export default function PickWavesPage() {
                       id="wave-order-ids"
                       type="text"
                       value={orderIds}
-                      onChange={(e) => setOrderIds(e.target.value)}
+                      onChange={(e: any) => setOrderIds(e.target.value)}
                       required
                     />
                   </FormField>

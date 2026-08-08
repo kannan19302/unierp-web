@@ -72,7 +72,7 @@ export default function CPQConfigurator() {
     setOptionPrice(optPrice);
 
     // Recalculate total cost roll-up (Base Product Cost + Selected Configuration Options + Workstation Overhead Rate)
-    const product = products.find((p) => p.id === selectedProductId);
+    const product = products.find((p: any) => p.id === selectedProductId);
     const costPrice = product ? Number(product.costPrice) : 650.0;
     setBasePrice(costPrice);
     setTotalCost(costPrice + optPrice + routingOverhead);
@@ -82,7 +82,7 @@ export default function CPQConfigurator() {
     if (!selectedProductId) return;
     try {
       setGenerating(true);
-      const product = products.find((p) => p.id === selectedProductId);
+      const product = products.find((p: any) => p.id === selectedProductId);
       if (!product) return;
 
       const bomCode = `BOM-CFG-${new Date().getTime().toString().slice(-6)}`;
@@ -166,10 +166,10 @@ export default function CPQConfigurator() {
                 <label className="ui-text-xs-label">BASE PRODUCT MODEL</label>
                 <select
                   value={selectedProductId}
-                  onChange={(e) => setSelectedProductId(e.target.value)}
+                  onChange={(e: any) => setSelectedProductId(e.target.value)}
                   className={styles.p5}
                 >
-                  {products.map((p) => (
+                  {products.map((p: any) => (
                     <option key={p.id} value={p.id}>
                       {p.name} ({p.sku})
                     </option>
@@ -182,7 +182,7 @@ export default function CPQConfigurator() {
                 <div>
                   <label className={styles.p6}>1. PROCESSOR UNIT</label>
                   <div className={styles.p7}>
-                    {["i5", "i7", "i9"].map((proc) => (
+                    {["i5", "i7", "i9"].map((proc: any) => (
                       <button
                         key={proc}
                         onClick={() => setProcessor(proc)}
@@ -211,7 +211,7 @@ export default function CPQConfigurator() {
                 <div>
                   <label className={styles.p8}>2. SYSTEM MEMORY (RAM)</label>
                   <div className={styles.p9}>
-                    {["16gb", "32gb", "64gb"].map((size) => (
+                    {["16gb", "32gb", "64gb"].map((size: any) => (
                       <button
                         key={size}
                         onClick={() => setRam(size)}
@@ -240,7 +240,7 @@ export default function CPQConfigurator() {
                 <div>
                   <label className={styles.p10}>3. DISPLAY TECHNOLOGY</label>
                   <div className={styles.p11}>
-                    {["1080p", "4k", "oled"].map((disp) => (
+                    {["1080p", "4k", "oled"].map((disp: any) => (
                       <button
                         key={disp}
                         onClick={() => setDisplay(disp)}

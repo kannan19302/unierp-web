@@ -398,7 +398,7 @@ export default function CustomerDetailPage() {
               {
                 key: "contractNumber",
                 header: "Contract Number",
-                render: (v, row) => (
+                render: (v: any, row: any) => (
                   <a
                     onClick={() => router.push(`/crm/contracts/${row.id}`)}
                     className={styles.p23}
@@ -416,7 +416,7 @@ export default function CustomerDetailPage() {
               {
                 key: "value",
                 header: "Value",
-                render: (v, row) =>
+                render: (v: any, row: any) =>
                   `${row.currency} ${Number(v).toLocaleString()}`,
               },
               {
@@ -987,7 +987,7 @@ export default function CustomerDetailPage() {
         <div className={styles.p239}>
           {(
             ["profile", "orders", "invoices", "contracts", "cases"] as const
-          ).map((tab) => (
+          ).map((tab: any) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -1044,7 +1044,7 @@ export default function CustomerDetailPage() {
               <form onSubmit={handleLogActivity} className="ui-stack-3">
                 <select
                   value={activityForm.type}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setActivityForm({ ...activityForm, type: e.target.value })
                   }
                   className={styles.p245}
@@ -1059,7 +1059,7 @@ export default function CustomerDetailPage() {
                   placeholder="Subject *"
                   required
                   value={activityForm.subject}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setActivityForm({
                       ...activityForm,
                       subject: e.target.value,
@@ -1070,7 +1070,7 @@ export default function CustomerDetailPage() {
                 <textarea
                   placeholder="Description"
                   value={activityForm.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setActivityForm({
                       ...activityForm,
                       description: e.target.value,
@@ -1082,7 +1082,7 @@ export default function CustomerDetailPage() {
                 <input
                   type="date"
                   value={activityForm.dueDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setActivityForm({
                       ...activityForm,
                       dueDate: e.target.value,

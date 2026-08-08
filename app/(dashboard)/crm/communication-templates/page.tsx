@@ -100,7 +100,7 @@ export default function CommunicationTemplatesPage() {
   };
 
   const filteredTemplates = selectedChannel
-    ? templates.filter((t) => t.channelId === selectedChannel)
+    ? templates.filter((t: any) => t.channelId === selectedChannel)
     : templates;
 
   if (loading) return <Spinner />;
@@ -154,16 +154,16 @@ export default function CommunicationTemplatesPage() {
               <input
                 className="input-style mb-2"
                 value={channelForm.name}
-                onChange={(e) =>
-                  setChannelForm((p) => ({ ...p, name: e.target.value }))
+                onChange={(e: any) =>
+                  setChannelForm((p: any) => ({ ...p, name: e.target.value }))
                 }
                 placeholder="Channel name"
               />
               <select
                 className="input-style mb-2"
                 value={channelForm.channelType}
-                onChange={(e) =>
-                  setChannelForm((p) => ({ ...p, channelType: e.target.value }))
+                onChange={(e: any) =>
+                  setChannelForm((p: any) => ({ ...p, channelType: e.target.value }))
                 }
               >
                 <option value="EMAIL">Email</option>
@@ -175,8 +175,8 @@ export default function CommunicationTemplatesPage() {
               <input
                 className="input-style mb-2"
                 value={channelForm.provider}
-                onChange={(e) =>
-                  setChannelForm((p) => ({ ...p, provider: e.target.value }))
+                onChange={(e: any) =>
+                  setChannelForm((p: any) => ({ ...p, provider: e.target.value }))
                 }
                 placeholder="Provider (e.g. Twilio)"
               />
@@ -195,7 +195,7 @@ export default function CommunicationTemplatesPage() {
             </div>
           )}
           <ul className="space-y-1">
-            {channels.map((ch) => (
+            {channels.map((ch: any) => (
               <li
                 key={ch.id}
                 className={`flex items-center justify-between p-2 hover:bg-gray-50 rounded cursor-pointer ${selectedChannel === ch.id ? "bg-blue-50" : ""}`}
@@ -221,7 +221,7 @@ export default function CommunicationTemplatesPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={(e) => {
+                      onClick={(e: any) => {
                         e.stopPropagation();
                         deleteChannel(ch.id);
                       }}
@@ -238,7 +238,7 @@ export default function CommunicationTemplatesPage() {
         <Card
           title={
             selectedChannel
-              ? `Templates (${channels.find((c) => c.id === selectedChannel)?.name})`
+              ? `Templates (${channels.find((c: any) => c.id === selectedChannel)?.name})`
               : "All Templates"
           }
         >
@@ -246,7 +246,7 @@ export default function CommunicationTemplatesPage() {
             <p className="text-sm text-gray-400">No templates</p>
           ) : (
             <ul className="space-y-2">
-              {filteredTemplates.map((t) => (
+              {filteredTemplates.map((t: any) => (
                 <li key={t.id} className="p-2 border rounded hover:bg-gray-50">
                   <div className="flex items-center justify-between">
                     <span className="font-medium">{t.name}</span>

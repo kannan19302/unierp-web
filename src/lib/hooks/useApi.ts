@@ -33,7 +33,7 @@ export function useApiPost<TData = unknown, TBody = unknown>(
   >,
 ) {
   return useMutation<TData, ApiRequestError, TBody>({
-    mutationFn: (body) => apiPost<TData>(path, body),
+    mutationFn: (body: any) => apiPost<TData>(path, body),
     ...options,
   });
 }
@@ -46,7 +46,7 @@ export function useApiPatch<TData = unknown, TBody = unknown>(
   >,
 ) {
   return useMutation<TData, ApiRequestError, TBody>({
-    mutationFn: (body) => apiPatch<TData>(path, body),
+    mutationFn: (body: any) => apiPatch<TData>(path, body),
     ...options,
   });
 }

@@ -16,7 +16,7 @@ export default function SearchAnalyticsPage() {
 
   useEffect(() => {
     fetch("/api/search/analytics")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setAnalytics)
       .finally(() => setLoading(false));
   }, []);
@@ -49,7 +49,7 @@ export default function SearchAnalyticsPage() {
               {analytics.topQueries.length === 0 && (
                 <div className="text-gray-500">No data yet</div>
               )}
-              {analytics.topQueries.map((q, i) => (
+              {analytics.topQueries.map((q: any, i: any) => (
                 <div
                   key={i}
                   className="flex justify-between py-1 border-b border-gray-100"
@@ -64,7 +64,7 @@ export default function SearchAnalyticsPage() {
               {analytics.zeroResultQueries.length === 0 && (
                 <div className="text-gray-500">No data yet</div>
               )}
-              {analytics.zeroResultQueries.map((q, i) => (
+              {analytics.zeroResultQueries.map((q: any, i: any) => (
                 <div
                   key={i}
                   className="flex justify-between py-1 border-b border-gray-100"

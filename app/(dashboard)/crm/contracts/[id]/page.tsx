@@ -189,8 +189,8 @@ export default function ContractDetailPage() {
     ];
 
     const csvString = csvContent
-      .map((e) =>
-        e.map((val) => `"${String(val).replace(/"/g, '""')}"`).join(","),
+      .map((e: any) =>
+        e.map((val: any) => `"${String(val).replace(/"/g, '""')}"`).join(","),
       )
       .join("\n");
     const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
@@ -302,7 +302,7 @@ export default function ContractDetailPage() {
                     contract.status === "ACTIVE",
                 },
                 { label: "Active", active: contract.status === "ACTIVE" },
-              ].map((step, idx) => (
+              ].map((step: any, idx: any) => (
                 <div key={idx} className={styles.p22}>
                   <div
                     style={{
@@ -342,7 +342,7 @@ export default function ContractDetailPage() {
                   { id: "details", label: "Details & Terms" },
                   { id: "items", label: "Products & Lines" },
                   { id: "revisions", label: "Amendments & Lineage" },
-                ].map((tab) => (
+                ].map((tab: any) => (
                   <Button
                     key={tab.id}
                     variant={activeTab === tab.id ? "primary" : "outline"}
@@ -646,7 +646,7 @@ export default function ContractDetailPage() {
                     : "12"
                 }
                 value={renewForm.renewalTermMonths}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRenewForm({
                     ...renewForm,
                     renewalTermMonths: e.target.value,
@@ -661,7 +661,7 @@ export default function ContractDetailPage() {
                 type="number"
                 placeholder={String(contract.value)}
                 value={renewForm.newValue}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRenewForm({ ...renewForm, newValue: e.target.value })
                 }
                 className="ui-input"
@@ -697,7 +697,7 @@ export default function ContractDetailPage() {
                 placeholder="Name"
                 required
                 value={inviteForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInviteForm({ ...inviteForm, name: e.target.value })
                 }
                 className="ui-input"
@@ -710,7 +710,7 @@ export default function ContractDetailPage() {
                 placeholder="Email"
                 required
                 value={inviteForm.email}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInviteForm({ ...inviteForm, email: e.target.value })
                 }
                 className="ui-input"

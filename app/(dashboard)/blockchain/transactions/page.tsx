@@ -110,7 +110,7 @@ export default function TransactionsPage() {
             className="ui-input u-w-96"
             placeholder="Search by tx hash, from, or to address..."
             value={search}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setSearch(e.target.value);
               setPage(1);
             }}

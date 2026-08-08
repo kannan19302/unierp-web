@@ -114,7 +114,7 @@ export default function WinLossCategoriesPage() {
               <input
                 className="ui-input"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -122,7 +122,7 @@ export default function WinLossCategoriesPage() {
               <input
                 className="ui-input"
                 value={form.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, description: e.target.value })
                 }
               />
@@ -132,7 +132,7 @@ export default function WinLossCategoriesPage() {
               <select
                 className="ui-input"
                 value={form.type}
-                onChange={(e) => setForm({ ...form, type: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, type: e.target.value })}
               >
                 <option value="WIN_REASON">Win Reason</option>
                 <option value="LOSS_REASON">Loss Reason</option>
@@ -145,7 +145,7 @@ export default function WinLossCategoriesPage() {
                 className="ui-input"
                 type="number"
                 value={form.sortOrder}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, sortOrder: parseInt(e.target.value) || 0 })
                 }
               />

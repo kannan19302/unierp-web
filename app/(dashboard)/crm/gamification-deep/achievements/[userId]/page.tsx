@@ -85,7 +85,7 @@ export default function AchievementsPage() {
             {data.badges.length === 0 ? (
               <p>No badges earned yet.</p>
             ) : (
-              data.badges.map((b) => (
+              data.badges.map((b: any) => (
                 <div
                   key={b.id}
                   className="ui-flex-row"
@@ -112,7 +112,7 @@ export default function AchievementsPage() {
             {data.streaks.length === 0 ? (
               <p>No streaks yet.</p>
             ) : (
-              data.streaks.map((s) => (
+              data.streaks.map((s: any) => (
                 <div
                   key={s.streakType}
                   className="ui-flex-row"
@@ -138,7 +138,7 @@ export default function AchievementsPage() {
             {data.leaderboardHistory.length === 0 ? (
               <p>No leaderboard history.</p>
             ) : (
-              data.leaderboardHistory.map((h) => (
+              data.leaderboardHistory.map((h: any) => (
                 <div
                   key={h.period}
                   className="ui-flex-row"

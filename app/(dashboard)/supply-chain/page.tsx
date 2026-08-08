@@ -98,7 +98,7 @@ export default function SupplyChainDashboard() {
     }
   };
 
-  const filtered = shipments.filter((s) => {
+  const filtered = shipments.filter((s: any) => {
     const matchesSearch =
       !search ||
       s.shipmentNumber.toLowerCase().includes(search.toLowerCase()) ||
@@ -108,18 +108,18 @@ export default function SupplyChainDashboard() {
   });
 
   const totalCost = shipments.reduce(
-    (a, s) => a + Number(s.shippingCost || 0),
+    (a: any, s: any) => a + Number(s.shippingCost || 0),
     0,
   );
-  const inTransit = shipments.filter((s) => s.status === "IN_TRANSIT").length;
-  const delivered = shipments.filter((s) => s.status === "DELIVERED").length;
+  const inTransit = shipments.filter((s: any) => s.status === "IN_TRANSIT").length;
+  const delivered = shipments.filter((s: any) => s.status === "DELIVERED").length;
 
   const statusChart = useMemo(() => {
     const counts: Record<string, number> = {};
-    shipments.forEach((s) => {
+    shipments.forEach((s: any) => {
       counts[s.status] = (counts[s.status] || 0) + 1;
     });
-    return Object.entries(counts).map(([name, value]) => ({
+    return Object.entries(counts).map(([name, value]: any) => ({
       name: name.replace("_", " "),
       value,
     }));
@@ -127,10 +127,10 @@ export default function SupplyChainDashboard() {
 
   const typeChart = useMemo(() => {
     const counts: Record<string, number> = {};
-    shipments.forEach((s) => {
+    shipments.forEach((s: any) => {
       counts[s.type] = (counts[s.type] || 0) + 1;
     });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
+    return Object.entries(counts).map(([name, value]: any) => ({ name, value }));
   }, [shipments]);
 
   const columns: Column<Shipment>[] = [
@@ -339,7 +339,7 @@ export default function SupplyChainDashboard() {
                     type="text"
                     placeholder="Search shipments..."
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e: any) => setSearch(e.target.value)}
                     className={styles.searchInput}
                   />
                 </div>
@@ -350,7 +350,7 @@ export default function SupplyChainDashboard() {
                     "IN_TRANSIT",
                     "DELIVERED",
                     "CANCELLED",
-                  ].map((s) => (
+                  ].map((s: any) => (
                     <button
                       key={s}
                       onClick={() => setStatusFilter(s)}
@@ -384,7 +384,7 @@ export default function SupplyChainDashboard() {
         <div>
           <h3 className={styles.sectionHeading}>Operations</h3>
           <div className={styles.quickLinksGrid}>
-            {quickLinks.map((link) => (
+            {quickLinks.map((link: any) => (
               <Link
                 href={link.href}
                 key={link.title}
@@ -433,14 +433,14 @@ export default function SupplyChainDashboard() {
                 required
                 placeholder="SHP-2026-001"
                 value={form.shipmentNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, shipmentNumber: e.target.value })
                 }
               />
               <FormField label="Type" required>
                 <Select
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="OUTBOUND">Outbound</option>
                   <option value="INBOUND">Inbound</option>
@@ -453,7 +453,7 @@ export default function SupplyChainDashboard() {
                 label="Carrier Name"
                 placeholder="FedEx"
                 value={form.carrierName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, carrierName: e.target.value })
                 }
               />
@@ -461,7 +461,7 @@ export default function SupplyChainDashboard() {
                 label="Tracking Number"
                 placeholder="1Z999..."
                 value={form.trackingNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, trackingNumber: e.target.value })
                 }
               />
@@ -472,7 +472,7 @@ export default function SupplyChainDashboard() {
               min={0}
               step={0.1}
               value={form.weight || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, weight: parseFloat(e.target.value) || 0 })
               }
             />

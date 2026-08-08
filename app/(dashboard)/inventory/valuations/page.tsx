@@ -27,7 +27,7 @@ const columns: ListColumn[] = [
   {
     key: "quantity",
     header: "Qty Balance",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as ValuationItem;
       return `${v} ${r.unit}`;
     },
@@ -81,7 +81,7 @@ export default function ValuationsPage() {
   }, []);
 
   const filteredItems = valuationItems.filter(
-    (v) =>
+    (v: any) =>
       v.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
       v.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
@@ -125,7 +125,7 @@ export default function ValuationsPage() {
               className={`ui-input ${styles.s7}`}
               placeholder="Search valuations by SKU or product name..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
             />
           </div>
         </Card>

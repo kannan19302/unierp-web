@@ -149,7 +149,7 @@ export default function ScheduledReportsPage() {
   const handleSubmit = async () => {
     const recipients = formRecipients
       .split(",")
-      .map((e) => e.trim())
+      .map((e: any) => e.trim())
       .filter(Boolean);
     const payload = {
       name: formName,
@@ -170,7 +170,7 @@ export default function ScheduledReportsPage() {
       await fetchReports();
     } catch {
       if (!editingId) {
-        setReports((prev) => [
+        setReports((prev: any) => [
           {
             id: `sr-${Date.now()}`,
             ...payload,
@@ -182,8 +182,8 @@ export default function ScheduledReportsPage() {
           ...prev,
         ]);
       } else {
-        setReports((prev) =>
-          prev.map((r) => (r.id === editingId ? { ...r, ...payload } : r)),
+        setReports((prev: any) =>
+          prev.map((r: any) => (r.id === editingId ? { ...r, ...payload } : r)),
         );
       }
     }
@@ -195,7 +195,7 @@ export default function ScheduledReportsPage() {
       await client.delete(`/reporting/scheduled/${id}`);
       await fetchReports();
     } catch {
-      setReports((prev) => prev.filter((r) => r.id !== id));
+      setReports((prev: any) => prev.filter((r: any) => r.id !== id));
     }
   };
 
@@ -205,8 +205,8 @@ export default function ScheduledReportsPage() {
       await client.post(`/reporting/scheduled/${id}/run`);
       await fetchReports();
     } catch {
-      setReports((prev) =>
-        prev.map((r) =>
+      setReports((prev: any) =>
+        prev.map((r: any) =>
           r.id === id ? { ...r, lastRunAt: new Date().toISOString() } : r,
         ),
       );
@@ -215,9 +215,9 @@ export default function ScheduledReportsPage() {
   };
 
   const reportTypeLabel = (val: string) =>
-    REPORT_TYPES.find((t) => t.value === val)?.label || val;
+    REPORT_TYPES.find((t: any) => t.value === val)?.label || val;
   const scheduleLabel = (val: string) =>
-    SCHEDULE_OPTIONS.find((s) => s.value === val)?.label || val;
+    SCHEDULE_OPTIONS.find((s: any) => s.value === val)?.label || val;
 
   return (
     <RouteGuard permission="settings.scheduled-reports.read">
@@ -273,7 +273,7 @@ export default function ScheduledReportsPage() {
                   <label className={styles.label}>Name</label>
                   <input
                     value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
+                    onChange={(e: any) => setFormName(e.target.value)}
                     placeholder="Report name"
                     className={styles.input}
                   />
@@ -283,10 +283,10 @@ export default function ScheduledReportsPage() {
                     <label className={styles.label}>Report Type</label>
                     <select
                       value={formType}
-                      onChange={(e) => setFormType(e.target.value)}
+                      onChange={(e: any) => setFormType(e.target.value)}
                       className={styles.input}
                     >
-                      {REPORT_TYPES.map((t) => (
+                      {REPORT_TYPES.map((t: any) => (
                         <option key={t.value} value={t.value}>
                           {t.label}
                         </option>
@@ -297,10 +297,10 @@ export default function ScheduledReportsPage() {
                     <label className={styles.label}>Schedule</label>
                     <select
                       value={formSchedule}
-                      onChange={(e) => setFormSchedule(e.target.value)}
+                      onChange={(e: any) => setFormSchedule(e.target.value)}
                       className={styles.input}
                     >
-                      {SCHEDULE_OPTIONS.map((s) => (
+                      {SCHEDULE_OPTIONS.map((s: any) => (
                         <option key={s.value} value={s.value}>
                           {s.label}
                         </option>
@@ -312,7 +312,7 @@ export default function ScheduledReportsPage() {
                   <label className={styles.label}>Format</label>
                   <select
                     value={formFormat}
-                    onChange={(e) => setFormFormat(e.target.value)}
+                    onChange={(e: any) => setFormFormat(e.target.value)}
                     className={styles.input}
                   >
                     <option value="pdf">PDF</option>
@@ -326,7 +326,7 @@ export default function ScheduledReportsPage() {
                   </label>
                   <input
                     value={formRecipients}
-                    onChange={(e) => setFormRecipients(e.target.value)}
+                    onChange={(e: any) => setFormRecipients(e.target.value)}
                     placeholder="user@example.com, another@example.com"
                     className={styles.input}
                   />
@@ -358,7 +358,7 @@ export default function ScheduledReportsPage() {
               {
                 key: "name",
                 header: "Name",
-                render: (v, row) => (
+                render: (v: any, row: any) => (
                   <div>
                     <span className="font-semibold">{String(v)}</span>
                     {(row.recipients as unknown[]).length > 0 && (
@@ -416,7 +416,7 @@ export default function ScheduledReportsPage() {
               {
                 key: "id",
                 header: "Actions",
-                render: (v, row) => (
+                render: (v: any, row: any) => (
                   <div className="ui-flex ui-gap-1">
                     <button
                       onClick={() => handleRun(String(v))}

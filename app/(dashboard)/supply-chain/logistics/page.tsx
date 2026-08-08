@@ -251,25 +251,25 @@ export default function LogisticsPage() {
             <TextField
               label="Carrier Name"
               value={form.carrierName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, carrierName: e.target.value })
               }
             />
             <TextField
               label="Origin"
               value={form.originName}
-              onChange={(e) => setForm({ ...form, originName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, originName: e.target.value })}
             />
           </div>
           <TextField
             label="Destination"
             value={form.destName}
-            onChange={(e) => setForm({ ...form, destName: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, destName: e.target.value })}
           />
           <TextField
             label="Notes"
             value={form.notes}
-            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
           />
         </form>
       </Modal>

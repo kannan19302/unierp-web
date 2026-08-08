@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { FileDown, Plus, X, Play, Trash2 } from "lucide-react";
@@ -56,7 +56,7 @@ export default function ExportsPage() {
       const scheduleConfig = JSON.parse(newExport.scheduleConfig);
       const recipients = newExport.recipients
         .split(",")
-        .map((r) => r.trim())
+        .map((r: any) => r.trim())
         .filter(Boolean);
       await client.post("/analytics/scheduled-exports", {
         ...newExport,
@@ -178,8 +178,8 @@ export default function ExportsPage() {
                   <input
                     className="ui-input"
                     value={newExport.name}
-                    onChange={(e) =>
-                      setNewExport((p) => ({ ...p, name: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewExport((p: any) => ({ ...p, name: e.target.value }))
                     }
                     required
                   />
@@ -189,11 +189,11 @@ export default function ExportsPage() {
                   <select
                     className="ui-input"
                     value={newExport.source}
-                    onChange={(e) =>
-                      setNewExport((p) => ({ ...p, source: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewExport((p: any) => ({ ...p, source: e.target.value }))
                     }
                   >
-                    {sources.map((s) => (
+                    {sources.map((s: any) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
@@ -207,11 +207,11 @@ export default function ExportsPage() {
                   <select
                     className="ui-input"
                     value={newExport.format}
-                    onChange={(e) =>
-                      setNewExport((p) => ({ ...p, format: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewExport((p: any) => ({ ...p, format: e.target.value }))
                     }
                   >
-                    {formats.map((f) => (
+                    {formats.map((f: any) => (
                       <option key={f} value={f}>
                         {f}
                       </option>
@@ -223,14 +223,14 @@ export default function ExportsPage() {
                   <select
                     className="ui-input"
                     value={newExport.scheduleType}
-                    onChange={(e) =>
-                      setNewExport((p) => ({
+                    onChange={(e: any) =>
+                      setNewExport((p: any) => ({
                         ...p,
                         scheduleType: e.target.value,
                       }))
                     }
                   >
-                    {schedules.map((s) => (
+                    {schedules.map((s: any) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
@@ -242,8 +242,8 @@ export default function ExportsPage() {
                   <input
                     className="ui-input"
                     value={newExport.recipients}
-                    onChange={(e) =>
-                      setNewExport((p) => ({
+                    onChange={(e: any) =>
+                      setNewExport((p: any) => ({
                         ...p,
                         recipients: e.target.value,
                       }))
@@ -257,8 +257,8 @@ export default function ExportsPage() {
                 <textarea
                   className={styles.codeInput}
                   value={newExport.scheduleConfig}
-                  onChange={(e) =>
-                    setNewExport((p) => ({
+                  onChange={(e: any) =>
+                    setNewExport((p: any) => ({
                       ...p,
                       scheduleConfig: e.target.value,
                     }))

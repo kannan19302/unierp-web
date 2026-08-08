@@ -166,15 +166,15 @@ export default function CreditRiskPage() {
     }
   };
 
-  const filtered = list.filter((c) =>
+  const filtered = list.filter((c: any) =>
     c.name.toLowerCase().includes(searchQ.toLowerCase()),
   );
 
   // Stats
-  const totalOutstanding = list.reduce((s, c) => s + c.outstanding, 0);
-  const onHold = list.filter((c) => c.creditHold).length;
+  const totalOutstanding = list.reduce((s: any, c: any) => s + c.outstanding, 0);
+  const onHold = list.filter((c: any) => c.creditHold).length;
   const highRisk = list.filter(
-    (c) => c.riskRating === "HIGH" || c.riskRating === "CRITICAL",
+    (c: any) => c.riskRating === "HIGH" || c.riskRating === "CRITICAL",
   ).length;
 
   if (loading) {
@@ -234,7 +234,7 @@ export default function CreditRiskPage() {
               color: "var(--color-primary)",
               bg: "rgba(59,130,246,0.08)",
             },
-          ].map((kpi) => (
+          ].map((kpi: any) => (
             <Card key={kpi.label} className="ui-card p-5">
               <div className="ui-flex-between">
                 <div>
@@ -267,7 +267,7 @@ export default function CreditRiskPage() {
                   className={`ui-input ${styles.s8}`}
                   placeholder="Search..."
                   value={searchQ}
-                  onChange={(e) => setSearchQ(e.target.value)}
+                  onChange={(e: any) => setSearchQ(e.target.value)}
                 />
               </div>
             </div>
@@ -277,7 +277,7 @@ export default function CreditRiskPage() {
                   {
                     key: "name",
                     header: "Customer",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <span
                         className={styles.s9}
                         onClick={() =>
@@ -357,9 +357,9 @@ export default function CreditRiskPage() {
                   {
                     key: "customerId",
                     header: "Actions",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <button
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                           e.stopPropagation();
                           handleToggleHold(String(v), Boolean(row.creditHold));
                         }}
@@ -456,7 +456,7 @@ export default function CreditRiskPage() {
                           value: `Net ${summary.paymentTerms}`,
                         },
                         { label: "Risk Rating", value: summary.riskRating },
-                      ].map((row) => (
+                      ].map((row: any) => (
                         <div key={row.label} className={styles.s22}>
                           <span className="ui-text-muted">{row.label}</span>
                           <span
@@ -480,7 +480,7 @@ export default function CreditRiskPage() {
                           step="100"
                           placeholder="e.g. 50000"
                           value={editData.creditLimit}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setEditData({
                               ...editData,
                               creditLimit: e.target.value,
@@ -495,7 +495,7 @@ export default function CreditRiskPage() {
                           type="number"
                           min="1"
                           value={editData.paymentTerms}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setEditData({
                               ...editData,
                               paymentTerms: e.target.value,
@@ -508,7 +508,7 @@ export default function CreditRiskPage() {
                         <select
                           className="ui-input"
                           value={editData.riskRating}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setEditData({
                               ...editData,
                               riskRating: e.target.value,
@@ -526,7 +526,7 @@ export default function CreditRiskPage() {
                           type="checkbox"
                           id="hold-check"
                           checked={editData.creditHold}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setEditData({
                               ...editData,
                               creditHold: e.target.checked,
@@ -544,7 +544,7 @@ export default function CreditRiskPage() {
                             className="ui-input"
                             placeholder="Reason for hold..."
                             value={editData.creditHoldReason}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setEditData({
                                 ...editData,
                                 creditHoldReason: e.target.value,

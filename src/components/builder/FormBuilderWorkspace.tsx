@@ -270,8 +270,8 @@ export function FormBuilderWorkspace({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      const oldIndex = fields.findIndex((f) => f.id === active.id);
-      const newIndex = fields.findIndex((f) => f.id === over.id);
+      const oldIndex = fields.findIndex((f: any) => f.id === active.id);
+      const newIndex = fields.findIndex((f: any) => f.id === over.id);
       moveField(oldIndex, newIndex);
     }
   };
@@ -374,7 +374,7 @@ export function FormBuilderWorkspace({
               ["tablet", Tablet, "Tablet"],
               ["mobile", Smartphone, "Mobile"],
             ] as const
-          ).map(([v, Icon, label]) => (
+          ).map(([v, Icon, label]: any) => (
             <button
               key={v}
               onClick={() => setViewport(v)}
@@ -405,7 +405,7 @@ export function FormBuilderWorkspace({
           }}
         >
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               const prompt = window.prompt(
                 "What kind of form do you want to generate? (e.g., 'A patient intake form with medical history')",
@@ -420,8 +420,8 @@ export function FormBuilderWorkspace({
                 },
                 body: JSON.stringify({ prompt }),
               })
-                .then((res) => res.json())
-                .then((data) => {
+                .then((res: any) => res.json())
+                .then((data: any) => {
                   if (data.schema) {
                     setFields(data.schema);
                     showToast("Form generated successfully!", "success");
@@ -450,7 +450,7 @@ export function FormBuilderWorkspace({
             <Sparkles size={14} /> <span>AI Generate</span>
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setShowCopilot(!showCopilot);
             }}
@@ -477,7 +477,7 @@ export function FormBuilderWorkspace({
             <Sparkles size={14} /> <span>AI Copilot</span>
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setPreviewMode(!previewMode);
             }}
@@ -506,7 +506,7 @@ export function FormBuilderWorkspace({
           </button>
           {!embedded && (
             <button
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 setShowDeployModal(true);
               }}
@@ -528,7 +528,7 @@ export function FormBuilderWorkspace({
             </button>
           )}
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleSave(false);
             }}
@@ -590,7 +590,7 @@ export function FormBuilderWorkspace({
             wheel={{ step: 0.1 }}
             doubleClick={{ disabled: true }}
           >
-            {({ zoomIn, zoomOut, resetTransform }) => (
+            {({ zoomIn, zoomOut, resetTransform }: any) => (
               <>
                 <div
                   style={{
@@ -718,7 +718,7 @@ export function FormBuilderWorkspace({
                         onDragEnd={handleDragEnd}
                       >
                         <SortableContext
-                          items={fields.map((f) => f.id)}
+                          items={fields.map((f: any) => f.id)}
                           strategy={rectSortingStrategy}
                         >
                           <div
@@ -743,7 +743,7 @@ export function FormBuilderWorkspace({
                                 build your layout.
                               </div>
                             )}
-                            {fields.map((field) => (
+                            {fields.map((field: any) => (
                               <SortableField
                                 key={field.id}
                                 field={field}
@@ -768,8 +768,8 @@ export function FormBuilderWorkspace({
           <AiCopilotSidebar
             type="form"
             componentId={currentId}
-            onSuggestFields={(newFields) => {
-              const cleaned = newFields.map((nf, idx) => ({
+            onSuggestFields={(newFields: any) => {
+              const cleaned = newFields.map((nf: any, idx: any) => ({
                 id: `f_ai_${Date.now()}_${idx}`,
                 type: nf.type || "Text",
                 label: nf.label || "New Field",
@@ -796,8 +796,8 @@ export function FormBuilderWorkspace({
           existingModule={deploySettings.module}
           existingSlug={deploySettings.slug}
           existingTitle={deploySettings.title}
-          onPublished={(result) => {
-            setDeploySettings((prev) => ({
+          onPublished={(result: any) => {
+            setDeploySettings((prev: any) => ({
               module: prev.module || result.route.split("/")[2] || "",
               slug: prev.slug || result.route.split("/")[3] || "",
               title: prev.title,

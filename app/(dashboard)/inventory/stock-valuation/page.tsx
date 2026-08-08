@@ -301,7 +301,7 @@ export default function StockValuationPage() {
         )}
 
         <div className="flex gap-2 border-b mb-6 flex-wrap">
-          {tabs.map((t) => (
+          {tabs.map((t: any) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -333,7 +333,7 @@ export default function StockValuationPage() {
                   label: "Revaluation Impact",
                   value: `$${dashboard.totalRevaluationImpact.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
                 },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div key={c.label} className="bg-white border rounded-lg p-4">
                   <div className="text-2xl font-bold">{c.value}</div>
                   <div className="text-sm text-gray-500 mt-1">{c.label}</div>
@@ -390,8 +390,8 @@ export default function StockValuationPage() {
                   <input
                     placeholder="Product ID (optional)"
                     value={policyForm.productId}
-                    onChange={(e) =>
-                      setPolicyForm((f) => ({
+                    onChange={(e: any) =>
+                      setPolicyForm((f: any) => ({
                         ...f,
                         productId: e.target.value,
                       }))
@@ -401,8 +401,8 @@ export default function StockValuationPage() {
                   <input
                     placeholder="Warehouse ID (optional)"
                     value={policyForm.warehouseId}
-                    onChange={(e) =>
-                      setPolicyForm((f) => ({
+                    onChange={(e: any) =>
+                      setPolicyForm((f: any) => ({
                         ...f,
                         warehouseId: e.target.value,
                       }))
@@ -411,20 +411,20 @@ export default function StockValuationPage() {
                   />
                   <select
                     value={policyForm.method}
-                    onChange={(e) =>
-                      setPolicyForm((f) => ({ ...f, method: e.target.value }))
+                    onChange={(e: any) =>
+                      setPolicyForm((f: any) => ({ ...f, method: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   >
-                    {METHODS.map((m) => (
+                    {METHODS.map((m: any) => (
                       <option key={m}>{m}</option>
                     ))}
                   </select>
                   <input
                     placeholder="Standard Cost (if STANDARD_COST)"
                     value={policyForm.standardCost}
-                    onChange={(e) =>
-                      setPolicyForm((f) => ({
+                    onChange={(e: any) =>
+                      setPolicyForm((f: any) => ({
                         ...f,
                         standardCost: e.target.value,
                       }))
@@ -435,8 +435,8 @@ export default function StockValuationPage() {
                   <input
                     placeholder="Currency"
                     value={policyForm.currency}
-                    onChange={(e) =>
-                      setPolicyForm((f) => ({
+                    onChange={(e: any) =>
+                      setPolicyForm((f: any) => ({
                         ...f,
                         currency: e.target.value,
                       }))
@@ -446,8 +446,8 @@ export default function StockValuationPage() {
                   <input
                     placeholder="Notes"
                     value={policyForm.notes}
-                    onChange={(e) =>
-                      setPolicyForm((f) => ({ ...f, notes: e.target.value }))
+                    onChange={(e: any) =>
+                      setPolicyForm((f: any) => ({ ...f, notes: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
@@ -542,16 +542,16 @@ export default function StockValuationPage() {
                   <input
                     placeholder="Product ID*"
                     value={adjForm.productId}
-                    onChange={(e) =>
-                      setAdjForm((f) => ({ ...f, productId: e.target.value }))
+                    onChange={(e: any) =>
+                      setAdjForm((f: any) => ({ ...f, productId: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
                   <input
                     placeholder="Warehouse ID (optional)"
                     value={adjForm.warehouseId}
-                    onChange={(e) =>
-                      setAdjForm((f) => ({
+                    onChange={(e: any) =>
+                      setAdjForm((f: any) => ({
                         ...f,
                         warehouseId: e.target.value,
                       }))
@@ -562,8 +562,8 @@ export default function StockValuationPage() {
                     type="number"
                     placeholder="Old Unit Cost*"
                     value={adjForm.oldUnitCost}
-                    onChange={(e) =>
-                      setAdjForm((f) => ({
+                    onChange={(e: any) =>
+                      setAdjForm((f: any) => ({
                         ...f,
                         oldUnitCost: e.target.value,
                       }))
@@ -574,8 +574,8 @@ export default function StockValuationPage() {
                     type="number"
                     placeholder="New Unit Cost*"
                     value={adjForm.newUnitCost}
-                    onChange={(e) =>
-                      setAdjForm((f) => ({
+                    onChange={(e: any) =>
+                      setAdjForm((f: any) => ({
                         ...f,
                         newUnitCost: e.target.value,
                       }))
@@ -586,16 +586,16 @@ export default function StockValuationPage() {
                     type="number"
                     placeholder="Qty*"
                     value={adjForm.qty}
-                    onChange={(e) =>
-                      setAdjForm((f) => ({ ...f, qty: e.target.value }))
+                    onChange={(e: any) =>
+                      setAdjForm((f: any) => ({ ...f, qty: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
                   <input
                     placeholder="Reason*"
                     value={adjForm.reason}
-                    onChange={(e) =>
-                      setAdjForm((f) => ({ ...f, reason: e.target.value }))
+                    onChange={(e: any) =>
+                      setAdjForm((f: any) => ({ ...f, reason: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
@@ -670,7 +670,7 @@ export default function StockValuationPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <div className={styles.s1}>
                         {row.status === "PENDING" && (
                           <button
@@ -717,7 +717,7 @@ export default function StockValuationPage() {
               <div className="text-gray-500">Loading...</div>
             ) : (
               <div className="space-y-4">
-                {revaluations.map((r) => (
+                {revaluations.map((r: any) => (
                   <div key={r.id} className="border rounded-lg p-4">
                     <div className="flex justify-between items-start">
                       <div>

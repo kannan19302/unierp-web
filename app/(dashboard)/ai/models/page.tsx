@@ -70,7 +70,7 @@ export default function ModelsPage() {
           </div>
         ) : (
           <div className="ui-grid-2">
-            {models.map((m) => (
+            {models.map((m: any) => (
               <Card key={m.id} className="p-6 ui-stack-4">
                 <div className="flex items-start justify-between">
                   <div>
@@ -95,7 +95,7 @@ export default function ModelsPage() {
                   <div>
                     <p className="text-sm font-medium mb-2">Accuracy Metrics</p>
                     <div className="ui-stack-2">
-                      {m.accuracyMetrics.slice(-5).map((met) => (
+                      {m.accuracyMetrics.slice(-5).map((met: any) => (
                         <div
                           key={met.id}
                           className="ui-flex ui-gap-2 text-sm items-center"

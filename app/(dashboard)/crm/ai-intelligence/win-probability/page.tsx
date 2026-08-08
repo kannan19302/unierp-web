@@ -31,7 +31,7 @@ export default function WinProbabilityPage() {
   const runBatch = useCallback(async () => {
     const ids = batchIds
       .split(",")
-      .map((s) => s.trim())
+      .map((s: any) => s.trim())
       .filter(Boolean);
     if (ids.length === 0) return;
     setLoading(true);
@@ -65,7 +65,7 @@ export default function WinProbabilityPage() {
             <input
               className="ui-input"
               value={oppId}
-              onChange={(e) => setOppId(e.target.value)}
+              onChange={(e: any) => setOppId(e.target.value)}
               placeholder="Enter opportunity ID"
             />
           </div>
@@ -196,7 +196,7 @@ export default function WinProbabilityPage() {
             <input
               className="ui-input"
               value={batchIds}
-              onChange={(e) => setBatchIds(e.target.value)}
+              onChange={(e: any) => setBatchIds(e.target.value)}
               placeholder="opp-1, opp-2, opp-3"
             />
           </div>

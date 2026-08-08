@@ -119,7 +119,7 @@ export default function CpqQuoteAnalysisPage() {
           <Input
             placeholder="Enter quotation ID..."
             value={quotationId}
-            onChange={(e) => setQuotationId(e.target.value)}
+            onChange={(e: any) => setQuotationId(e.target.value)}
             className="ui-input"
             style={{ flex: 1 }}
           />
@@ -185,13 +185,13 @@ export default function CpqQuoteAnalysisPage() {
             <Input
               placeholder="Version A ID"
               value={compareA}
-              onChange={(e) => setCompareA(e.target.value)}
+              onChange={(e: any) => setCompareA(e.target.value)}
               className="ui-input"
             />
             <Input
               placeholder="Version B ID"
               value={compareB}
-              onChange={(e) => setCompareB(e.target.value)}
+              onChange={(e: any) => setCompareB(e.target.value)}
               className="ui-input"
             />
             <Button

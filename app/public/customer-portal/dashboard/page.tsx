@@ -395,7 +395,7 @@ export default function CustomerPortalDashboardPage() {
         {tab === "cases" && (
           <>
             <div className={styles.s10}>
-              <Button size="sm" onClick={() => setShowNewCase((v) => !v)}>
+              <Button size="sm" onClick={() => setShowNewCase((v: any) => !v)}>
                 <Plus size={14} /> New case
               </Button>
             </div>
@@ -406,7 +406,7 @@ export default function CustomerPortalDashboardPage() {
                   <input
                     className="ui-input"
                     value={newCaseSubject}
-                    onChange={(e) => setNewCaseSubject(e.target.value)}
+                    onChange={(e: any) => setNewCaseSubject(e.target.value)}
                   />
                 </div>
                 <div className="ui-form-group">
@@ -415,7 +415,7 @@ export default function CustomerPortalDashboardPage() {
                     className="ui-input"
                     rows={3}
                     value={newCaseDescription}
-                    onChange={(e) => setNewCaseDescription(e.target.value)}
+                    onChange={(e: any) => setNewCaseDescription(e.target.value)}
                   />
                 </div>
                 <Button

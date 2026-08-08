@@ -105,7 +105,7 @@ export default function DeliveryNotesPage() {
   };
 
   // Filters
-  const filteredNotes = deliveryNotes.filter((dn) => {
+  const filteredNotes = deliveryNotes.filter((dn: any) => {
     const matchesSearch =
       dn.deliveryNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
       dn.salesOrderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -144,13 +144,13 @@ export default function DeliveryNotesPage() {
                 type="text"
                 placeholder="Search Delivery Note, Order, Carrier..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e: any) => setSearchQuery(e.target.value)}
                 className={["ui-input", styles.p5].join(" ")}
               />
             </div>
 
             <div className="ui-flex ui-gap-1">
-              {["ALL", "PENDING", "IN_TRANSIT", "DELIVERED"].map((status) => (
+              {["ALL", "PENDING", "IN_TRANSIT", "DELIVERED"].map((status: any) => (
                 <button
                   key={status}
                   onClick={() => setStatusFilter(status)}
@@ -239,7 +239,7 @@ export default function DeliveryNotesPage() {
               }
               data={filteredNotes as unknown as Record<string, unknown>[]}
               loading={loading}
-              onRowClick={(row) =>
+              onRowClick={(row: any) =>
                 loadNoteDetails(row as unknown as (typeof filteredNotes)[0])
               }
               emptyTitle="No delivery notes found"

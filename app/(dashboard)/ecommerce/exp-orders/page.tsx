@@ -74,12 +74,12 @@ export default function EcommerceExpOrdersPage() {
               className="ui-input"
               placeholder="Store ID"
               value={storeId}
-              onChange={(e) => setStoreId(e.target.value)}
+              onChange={(e: any) => setStoreId(e.target.value)}
             />
             <select
               className="ui-input"
               value={statusFilter}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
@@ -206,14 +206,14 @@ export default function EcommerceExpOrdersPage() {
                 <button
                   className="ui-btn-icon"
                   disabled={page <= 1}
-                  onClick={() => setPage((p) => p - 1)}
+                  onClick={() => setPage((p: any) => p - 1)}
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   className="ui-btn-icon"
                   disabled={page >= totalPages}
-                  onClick={() => setPage((p) => p + 1)}
+                  onClick={() => setPage((p: any) => p + 1)}
                 >
                   <ChevronRight size={16} />
                 </button>

@@ -105,7 +105,7 @@ export default function ShiftsPage() {
   };
 
   const getEmpName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -150,7 +150,7 @@ export default function ShiftsPage() {
               <div className="ui-heading-lg">
                 {
                   shifts.filter(
-                    (s) => isToday(s.startTime) || isToday(s.endTime),
+                    (s: any) => isToday(s.startTime) || isToday(s.endTime),
                   ).length
                 }
               </div>
@@ -166,7 +166,7 @@ export default function ShiftsPage() {
             </div>
             <div>
               <div className="ui-heading-lg">
-                {shifts.filter((s) => isNightShift(s.note, s.startTime)).length}
+                {shifts.filter((s: any) => isNightShift(s.note, s.startTime)).length}
               </div>
               <div className="ui-text-xs-muted">Night Shifts</div>
             </div>
@@ -183,11 +183,11 @@ export default function ShiftsPage() {
             <select
               className="ui-input"
               value={form.employeeId}
-              onChange={(e) => setForm({ ...form, employeeId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, employeeId: e.target.value })}
               required
             >
               <option value="">Select Employee</option>
-              {employees.map((e) => (
+              {employees.map((e: any) => (
                 <option key={e.id} value={e.id}>
                   {e.firstName} {e.lastName}
                 </option>
@@ -200,7 +200,7 @@ export default function ShiftsPage() {
                   type="datetime-local"
                   className="ui-input"
                   value={form.startTime}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, startTime: e.target.value })
                   }
                   required
@@ -212,7 +212,7 @@ export default function ShiftsPage() {
                   type="datetime-local"
                   className="ui-input"
                   value={form.endTime}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, endTime: e.target.value })
                   }
                   required
@@ -224,7 +224,7 @@ export default function ShiftsPage() {
               className="ui-input"
               placeholder="Note/Designation (e.g. Night Support Duty)"
               value={form.note}
-              onChange={(e) => setForm({ ...form, note: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, note: e.target.value })}
             />
             <div className="ui-flex-end ui-gap-2">
               <Button
@@ -251,7 +251,7 @@ export default function ShiftsPage() {
           {/* Filter / Search Bar */}
           <div className={styles.s5}>
             <div className={styles.s6}>
-              {(["ALL", "TODAY", "UPCOMING"] as const).map((tab) => (
+              {(["ALL", "TODAY", "UPCOMING"] as const).map((tab: any) => (
                 <button
                   key={tab}
                   type="button"
@@ -280,14 +280,14 @@ export default function ShiftsPage() {
                 type="text"
                 placeholder="Search employee..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e: any) => setSearchQuery(e.target.value)}
                 className={styles.s8}
               />
             </div>
           </div>
 
           {(() => {
-            const filteredShifts = shifts.filter((s) => {
+            const filteredShifts = shifts.filter((s: any) => {
               if (
                 filterType === "TODAY" &&
                 !isToday(s.startTime) &&
@@ -316,7 +316,7 @@ export default function ShiftsPage() {
               {
                 key: "startTime",
                 header: "Shift Timing",
-                render: (v, row) => {
+                render: (v: any, row: any) => {
                   const s = row as unknown as ShiftSchedule;
                   return (
                     <div className={styles.s9}>

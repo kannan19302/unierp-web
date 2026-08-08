@@ -101,7 +101,7 @@ export default function EmailTemplatesTab() {
     setCreating(true);
     try {
       const d = await client.post<any>("/crm/email-templates", form);
-      setTemplates((prev) => [d, ...prev]);
+      setTemplates((prev: any) => [d, ...prev]);
       setCreateOpen(false);
       setForm({ name: "", category: "GENERAL", subject: "", body: "" });
     } catch {
@@ -112,7 +112,7 @@ export default function EmailTemplatesTab() {
   };
 
   const filtered = templates.filter(
-    (t) =>
+    (t: any) =>
       !search ||
       t.name.toLowerCase().includes(search.toLowerCase()) ||
       t.subject.toLowerCase().includes(search.toLowerCase()),
@@ -161,7 +161,7 @@ export default function EmailTemplatesTab() {
         <div className={styles.style2}>
           <button
             title="Preview"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setSelected(row);
               setPreviewOpen(true);
@@ -172,7 +172,7 @@ export default function EmailTemplatesTab() {
           </button>
           <button
             title="Duplicate"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className={styles.style4}
@@ -181,7 +181,7 @@ export default function EmailTemplatesTab() {
           </button>
           <button
             title="Edit"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className={styles.style5}
@@ -210,7 +210,7 @@ export default function EmailTemplatesTab() {
         />
         <KPICard
           title="Active"
-          value={templates.filter((t) => t.isActive).length}
+          value={templates.filter((t: any) => t.isActive).length}
           icon={<Send size={18} />}
           color="var(--color-success)"
         />
@@ -223,7 +223,7 @@ export default function EmailTemplatesTab() {
             type="text"
             placeholder="Search templates..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value)}
             className={styles.style8}
           />
         </div>
@@ -235,7 +235,7 @@ export default function EmailTemplatesTab() {
           data={filtered}
           loading={loading}
           rowKey={(r: any) => r.id}
-          onRowClick={(r) => {
+          onRowClick={(r: any) => {
             setSelected(r);
             setPreviewOpen(true);
           }}
@@ -273,14 +273,14 @@ export default function EmailTemplatesTab() {
               required
               placeholder="Welcome Email"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
             />
             <FormField label="Category" required>
               <Select
                 value={form.category}
-                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, category: e.target.value })}
               >
-                {CATEGORIES.map((c) => (
+                {CATEGORIES.map((c: any) => (
                   <option key={c} value={c}>
                     {c.charAt(0) + c.slice(1).toLowerCase()}
                   </option>
@@ -293,7 +293,7 @@ export default function EmailTemplatesTab() {
             required
             placeholder="Welcome {{customer.name}}!"
             value={form.subject}
-            onChange={(e) => setForm({ ...form, subject: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, subject: e.target.value })}
             hint="Use {{variable}} syntax for dynamic content"
           />
           <FormField
@@ -304,7 +304,7 @@ export default function EmailTemplatesTab() {
             <Textarea
               rows={10}
               value={form.body}
-              onChange={(e) => setForm({ ...form, body: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, body: e.target.value })}
               placeholder="Dear {{customer.name}},&#10;&#10;Thank you for..."
               className={styles.style10}
             />

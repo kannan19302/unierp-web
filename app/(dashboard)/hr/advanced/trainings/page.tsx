@@ -113,11 +113,11 @@ export default function TrainingsPage() {
 
   // Stats
   const totalCourses = trainings.length;
-  const activeTrainings = trainings.filter((t) => {
+  const activeTrainings = trainings.filter((t: any) => {
     const now = new Date();
     return now >= new Date(t.startDate) && now <= new Date(t.endDate);
   }).length;
-  const completedTrainings = trainings.filter((t) => {
+  const completedTrainings = trainings.filter((t: any) => {
     const now = new Date();
     return now > new Date(t.endDate);
   }).length;
@@ -189,14 +189,14 @@ export default function TrainingsPage() {
               className="ui-input"
               placeholder="Course Name (e.g. Advanced TypeScript Security)"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               required
             />
             <input
               className="ui-input"
               placeholder="Instructor Name"
               value={form.instructor}
-              onChange={(e) => setForm({ ...form, instructor: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, instructor: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <div>
@@ -205,7 +205,7 @@ export default function TrainingsPage() {
                   type="date"
                   className="ui-input"
                   value={form.startDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, startDate: e.target.value })
                   }
                   required
@@ -217,7 +217,7 @@ export default function TrainingsPage() {
                   type="date"
                   className="ui-input"
                   value={form.endDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, endDate: e.target.value })
                   }
                   required
@@ -228,7 +228,7 @@ export default function TrainingsPage() {
               className="ui-input"
               placeholder="Course Syllabus/Description"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               rows={3}
@@ -265,7 +265,7 @@ export default function TrainingsPage() {
               </Card>
             </div>
           ) : (
-            trainings.map((t) => {
+            trainings.map((t: any) => {
               const status = getTrainingStatus(t.startDate, t.endDate);
               const partCount = getParticipantsCount(t.id);
               return (
@@ -307,7 +307,7 @@ export default function TrainingsPage() {
                     <div className={styles.s17}>
                       {/* Avatar Initials stack */}
                       <div className={styles.s18}>
-                        {["JD", "AM", "TL"].map((init, i) => (
+                        {["JD", "AM", "TL"].map((init: any, i: any) => (
                           <div
                             key={i}
                             className={styles.dyn1}

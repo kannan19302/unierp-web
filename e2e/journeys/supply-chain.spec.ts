@@ -3,11 +3,11 @@ import { test, loginAsAdmin } from "../fixtures/auth.fixture";
 import { SupplyChainPage } from "../pages/supply-chain.page";
 
 test.describe("Supply Chain E2E", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }: any) => {
     await loginAsAdmin(page);
   });
 
-  test("create and verify a shipment", async ({ page }) => {
+  test("create and verify a shipment", async ({ page }: any) => {
     const supplyChainPage = new SupplyChainPage(page);
     await supplyChainPage.goto();
 

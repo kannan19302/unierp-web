@@ -171,16 +171,16 @@ export default function WinLossPage() {
               <input
                 className={inputStyle}
                 value={reasonForm.name}
-                onChange={(e) =>
-                  setReasonForm((p) => ({ ...p, name: e.target.value }))
+                onChange={(e: any) =>
+                  setReasonForm((p: any) => ({ ...p, name: e.target.value }))
                 }
                 placeholder="Reason name"
               />
               <select
                 className={inputStyle}
                 value={reasonForm.category}
-                onChange={(e) =>
-                  setReasonForm((p) => ({
+                onChange={(e: any) =>
+                  setReasonForm((p: any) => ({
                     ...p,
                     category: e.target.value as "WIN" | "LOSS",
                   }))
@@ -204,7 +204,7 @@ export default function WinLossPage() {
             </div>
           )}
           <ul className="space-y-1">
-            {reasons.map((r) => (
+            {reasons.map((r: any) => (
               <li
                 key={r.id}
                 className="flex items-center justify-between p-2 hover:bg-gray-50 rounded"
@@ -243,16 +243,16 @@ export default function WinLossPage() {
               <input
                 className={inputStyle}
                 value={compForm.name}
-                onChange={(e) =>
-                  setCompForm((p) => ({ ...p, name: e.target.value }))
+                onChange={(e: any) =>
+                  setCompForm((p: any) => ({ ...p, name: e.target.value }))
                 }
                 placeholder="Competitor name"
               />
               <input
                 className={inputStyle}
                 value={compForm.website}
-                onChange={(e) =>
-                  setCompForm((p) => ({ ...p, website: e.target.value }))
+                onChange={(e: any) =>
+                  setCompForm((p: any) => ({ ...p, website: e.target.value }))
                 }
                 placeholder="Website (optional)"
               />
@@ -271,7 +271,7 @@ export default function WinLossPage() {
             </div>
           )}
           <ul className="space-y-1">
-            {competitors.map((c) => (
+            {competitors.map((c: any) => (
               <li
                 key={c.id}
                 className="flex items-center justify-between p-2 hover:bg-gray-50 rounded"

@@ -29,7 +29,7 @@ const makeColumns = (
   {
     key: "stockEntry",
     header: "Stock Entry",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const a = row as unknown as Approval;
       return (
         <span className="font-mono">
@@ -208,7 +208,7 @@ export default function TransferApprovalsPage() {
                       type="text"
                       className="ui-input"
                       value={warehouseId}
-                      onChange={(e) => setWarehouseId(e.target.value)}
+                      onChange={(e: any) => setWarehouseId(e.target.value)}
                     />
                   </div>
                   <div className="ui-form-group">
@@ -217,7 +217,7 @@ export default function TransferApprovalsPage() {
                       type="number"
                       className="ui-input"
                       value={thresholdValue}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setThresholdValue(Number(e.target.value))
                       }
                       required

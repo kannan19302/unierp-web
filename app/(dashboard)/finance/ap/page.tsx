@@ -143,7 +143,7 @@ function DebitNotesPanel() {
           onSuccess={() => {
             setShowCreate(false);
             success("Debit note created");
-            setRefreshKey((k) => k + 1);
+            setRefreshKey((k: any) => k + 1);
           }}
           onCancel={() => setShowCreate(false)}
         />
@@ -193,7 +193,7 @@ export default function APPage() {
         paidAmount: number;
       }>("/finance/vendor-bills", { pageSize: 500 }),
     ])
-      .then(([stats, billsResult]) => {
+      .then(([stats, billsResult]: any) => {
         if (cancelled) return;
         const bills = billsResult.data ?? [];
         const now = new Date();
@@ -237,7 +237,7 @@ export default function APPage() {
         });
         setSummaryError(null);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (cancelled) return;
         const message =
           err instanceof Error ? err.message : "Failed to load AP summary";
@@ -352,7 +352,7 @@ export default function APPage() {
               onSuccess={() => {
                 setShowCreateBill(false);
                 success("Vendor bill created");
-                setBillsKey((k) => k + 1);
+                setBillsKey((k: any) => k + 1);
               }}
               onCancel={() => setShowCreateBill(false)}
             />

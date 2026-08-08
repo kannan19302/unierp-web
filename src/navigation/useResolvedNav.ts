@@ -111,9 +111,9 @@ export function useResolvedNav(
     const transform = (list: SidebarItem[]): SidebarItem[] =>
       list
         .filter(
-          (it) => !(it.href && hidden.has(it.href)) && !hidden.has(it.name),
+          (it: any) => !(it.href && hidden.has(it.href)) && !hidden.has(it.name),
         )
-        .map((it) => {
+        .map((it: any) => {
           const newName = (it.href && renames[it.href]) || renames[it.name];
           const node: SidebarItem = { ...it, name: newName || it.name };
           if (node.items) node.items = transform(node.items);
@@ -133,15 +133,15 @@ export function useResolvedNav(
         const i = config.order!.indexOf(key(it));
         return i === -1 ? 999 : i;
       };
-      items = [...items].sort((a, b) => rank(a) - rank(b));
+      items = [...items].sort((a: any, b: any) => rank(a) - rank(b));
     }
 
     // Additive submodule sections (App Studio).
     const submoduleSections: SidebarItem[] = (overlay?.submodules || []).map(
-      (sm) => ({
+      (sm: any) => ({
         name: sm.name,
         isHeader: true,
-        items: sm.pages.map((p) => ({
+        items: sm.pages.map((p: any) => ({
           name: p.title,
           href: `/app/${activeModule}/${p.slug}`,
           icon: FileText,
@@ -151,7 +151,7 @@ export function useResolvedNav(
 
     // Legacy non-submodule custom pages, kept under a generic section.
     const moduleCustomPages = customPages.filter(
-      (p) =>
+      (p: any) =>
         p.module?.toLowerCase() === activeModule.toLowerCase() &&
         !p.isOverride &&
         !p.submodule &&
@@ -163,7 +163,7 @@ export function useResolvedNav(
             {
               name: "Custom Extensions",
               isHeader: true,
-              items: moduleCustomPages.map((p) => ({
+              items: moduleCustomPages.map((p: any) => ({
                 name: p.title || p.pageName || "Custom Page",
                 href: `/app/${p.module}/${p.slug}`,
                 icon: FileText,

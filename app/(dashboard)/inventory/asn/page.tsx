@@ -179,7 +179,7 @@ export default function AsnPage() {
       <div className="p-6 space-y-4">
         <PageHeader title="Advance Shipping Notices" />
         <div className="flex gap-2 flex-wrap">
-          {tabs.map((t) => (
+          {tabs.map((t: any) => (
             <Button
               key={t.key}
               variant={tab === t.key ? "primary" : "secondary"}
@@ -208,7 +208,7 @@ export default function AsnPage() {
         {tab === "dashboard" && dashboard && (
           <div className="space-y-4">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {dashboard.byStatus.map((s) => (
+              {dashboard.byStatus.map((s: any) => (
                 <Card key={s.status} className="p-4">
                   <div className="text-sm text-gray-500">
                     {s.status.replace(/_/g, " ")}
@@ -226,7 +226,7 @@ export default function AsnPage() {
                   Open Discrepancies
                 </div>
                 <div className="flex gap-4">
-                  {dashboard.discrepancyStats.map((d) => (
+                  {dashboard.discrepancyStats.map((d: any) => (
                     <div key={d.discrepancyType} className="text-sm">
                       <Badge
                         variant={STATUS_COLORS[d.discrepancyType] ?? "default"}
@@ -407,14 +407,14 @@ export default function AsnPage() {
                   className="border rounded px-2 py-1 text-sm w-full"
                   placeholder="Line Item ID"
                   value={receiveItemId}
-                  onChange={(e) => setReceiveItemId(e.target.value)}
+                  onChange={(e: any) => setReceiveItemId(e.target.value)}
                 />
                 <input
                   className="border rounded px-2 py-1 text-sm w-32"
                   placeholder="Qty"
                   type="number"
                   value={receiveQty}
-                  onChange={(e) => setReceiveQty(e.target.value)}
+                  onChange={(e: any) => setReceiveQty(e.target.value)}
                 />
                 <Button variant="primary" onClick={receiveItem}>
                   <CheckCircle size={14} className="mr-1" />
@@ -439,7 +439,7 @@ export default function AsnPage() {
                 ["Tracking Number", "trackingNumber", "text"],
                 ["Expected Arrival", "expectedArrival", "date"],
               ] as const
-            ).map(([label, key, type]) => (
+            ).map(([label, key, type]: any) => (
               <div key={key}>
                 <label className="block text-xs text-gray-500 mb-1">
                   {label}
@@ -448,8 +448,8 @@ export default function AsnPage() {
                   type={type}
                   className="border rounded px-2 py-1 w-full text-sm"
                   value={asnForm[key as keyof typeof asnForm]}
-                  onChange={(e) =>
-                    setAsnForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setAsnForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                 />
               </div>

@@ -124,11 +124,11 @@ export default function ScmControlTowerPage() {
   const kpiHistory = kpis.history?.onTimeInFull ?? [];
   const invHistory = kpis.history?.inventoryTurnover ?? [];
 
-  const otifChartData = kpiHistory.map((h) => ({
+  const otifChartData = kpiHistory.map((h: any) => ({
     name: h.period,
     value: h.value,
   }));
-  const invChartData = invHistory.map((h) => ({
+  const invChartData = invHistory.map((h: any) => ({
     name: h.period,
     value: h.value,
   }));
@@ -202,7 +202,7 @@ export default function ScmControlTowerPage() {
       />
 
       {/* Cross-module Alerts Banner */}
-      {alerts.filter((a) => a.severity === "HIGH").length > 0 && (
+      {alerts.filter((a: any) => a.severity === "HIGH").length > 0 && (
         <Card
           style={{
             border: "1px solid var(--danger-300)",
@@ -220,7 +220,7 @@ export default function ScmControlTowerPage() {
             }}
           >
             <Bell size={16} />
-            {alerts.filter((a) => a.severity === "HIGH").length} critical supply
+            {alerts.filter((a: any) => a.severity === "HIGH").length} critical supply
             chain alert(s) require attention
           </div>
         </Card>
@@ -293,7 +293,7 @@ export default function ScmControlTowerPage() {
             kpi: k?.procurementCycleTimeDays,
             metric: kpis.supplierFillRate,
           },
-        ].map(({ id, label, metric }) => (
+        ].map(({ id, label, metric }: any) => (
           <div
             id={id}
             key={id}

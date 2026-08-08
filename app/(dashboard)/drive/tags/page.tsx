@@ -20,8 +20,8 @@ export default function TagsPage() {
   useEffect(() => {
     client
       .get<Tag[]>("/drive/tags")
-      .then((res) => setTags((res as any) || []))
-      .catch((e) =>
+      .then((res: any) => setTags((res as any) || []))
+      .catch((e: any) =>
         toast({
           title: "Failed to load tags",
           description: e.message,

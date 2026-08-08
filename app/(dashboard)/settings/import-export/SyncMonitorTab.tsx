@@ -115,8 +115,8 @@ export default function SyncMonitorTab() {
         method: "PUT",
         body: JSON.stringify(body),
       });
-      setEntries((prev) =>
-        prev.map((e) =>
+      setEntries((prev: any) =>
+        prev.map((e: any) =>
           e.id === id
             ? { ...e, status, errorMessage: errorMessage ?? null }
             : e,
@@ -127,8 +127,8 @@ export default function SyncMonitorTab() {
         "success",
       );
     } catch {
-      setEntries((prev) =>
-        prev.map((e) =>
+      setEntries((prev: any) =>
+        prev.map((e: any) =>
           e.id === id
             ? { ...e, status, errorMessage: errorMessage ?? null }
             : e,
@@ -146,13 +146,13 @@ export default function SyncMonitorTab() {
   const filtered =
     filterTab === "ALL"
       ? entries
-      : entries.filter((e) => e.status === filterTab);
+      : entries.filter((e: any) => e.status === filterTab);
 
-  const pendingCount = entries.filter((e) => e.status === "PENDING").length;
+  const pendingCount = entries.filter((e: any) => e.status === "PENDING").length;
   const reconciledCount = entries.filter(
-    (e) => e.status === "RECONCILED",
+    (e: any) => e.status === "RECONCILED",
   ).length;
-  const conflictCount = entries.filter((e) => e.status === "CONFLICT").length;
+  const conflictCount = entries.filter((e: any) => e.status === "CONFLICT").length;
 
   const statusIcon = (status: string) => {
     switch (status) {
@@ -311,7 +311,7 @@ export default function SyncMonitorTab() {
               {
                 key: "id",
                 header: "Action",
-                render: (v, row) => {
+                render: (v: any, row: any) => {
                   const status = row.status as string;
                   const id = String(v);
                   if (status === "PENDING") {

@@ -111,14 +111,14 @@ export default function POSOrderTypesPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Add"} Order Type</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -126,7 +126,7 @@ export default function POSOrderTypesPage() {
                 <input
                   className="ui-input"
                   value={form.code}
-                  onChange={(e) => setForm({ ...form, code: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, code: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -134,7 +134,7 @@ export default function POSOrderTypesPage() {
                 <textarea
                   className="ui-input"
                   value={form.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, description: e.target.value })
                   }
                 />
@@ -143,7 +143,7 @@ export default function POSOrderTypesPage() {
                 <input
                   type="checkbox"
                   checked={form.isDefault}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, isDefault: e.target.checked })
                   }
                 />{" "}

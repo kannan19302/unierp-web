@@ -50,13 +50,13 @@ export default function TenantsPage() {
         />
         <KPICard
           title="Active Leases"
-          value={tenants.filter((t) => t.status === "Active").length}
+          value={tenants.filter((t: any) => t.status === "Active").length}
           icon={<Key size={18} />}
           color="var(--color-success)"
         />
       </div>
       <div className="ui-stack-3">
-        {tenants.map((t) => (
+        {tenants.map((t: any) => (
           <Card key={t.id}>
             <div className={styles.s1}>
               <div>

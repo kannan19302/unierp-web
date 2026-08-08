@@ -30,7 +30,7 @@ export default function TrashPage() {
       client.get<{ data: any[] }>("/drive/files?view=trash"),
       client.get<{ data: any[] }>("/drive/folders?view=trash"),
     ])
-      .then(([filesRes, foldersRes]) => {
+      .then(([filesRes, foldersRes]: any) => {
         const files = (filesRes.data || []).map((f: any) => ({
           ...f,
           type: "file",
@@ -42,7 +42,7 @@ export default function TrashPage() {
         setItems([...folders, ...files]);
         setLoadError(null);
       })
-      .catch((e) => {
+      .catch((e: any) => {
         // Distinct error state — a failed fetch must never render as
         // "Trash is empty", which is a different, valid condition.
         const message = e instanceof Error ? e.message : "Failed to load trash";
@@ -55,7 +55,7 @@ export default function TrashPage() {
   const handleRestore = async (id: string, type: string) => {
     try {
       await client.request(`/drive/${type}s/${id}/restore`, { method: "POST" });
-      setItems((prev) => prev.filter((i) => i.id !== id));
+      setItems((prev: any) => prev.filter((i: any) => i.id !== id));
     } catch (e) {
       notifyError(
         "Failed to restore item",

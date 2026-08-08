@@ -86,7 +86,7 @@ export default function EducationParentsPage() {
               <input
                 className="ui-input"
                 value={form.firstName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, firstName: e.target.value })
                 }
               />
@@ -96,7 +96,7 @@ export default function EducationParentsPage() {
               <input
                 className="ui-input"
                 value={form.lastName}
-                onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, lastName: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -105,7 +105,7 @@ export default function EducationParentsPage() {
                 className="ui-input"
                 type="email"
                 value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, email: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -113,7 +113,7 @@ export default function EducationParentsPage() {
               <input
                 className="ui-input"
                 value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, phone: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -121,7 +121,7 @@ export default function EducationParentsPage() {
               <select
                 className="ui-input"
                 value={form.relation}
-                onChange={(e) => setForm({ ...form, relation: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, relation: e.target.value })}
               >
                 <option value="PARENT">Parent</option>
                 <option value="GUARDIAN">Guardian</option>

@@ -148,17 +148,17 @@ export function OnboardingChecklist({
       const prev = prevChecklistRef.current;
       if (prev) {
         const newlyDone = ONBOARDING_CHECKLIST_KEYS.filter(
-          (k) => !prev[k] && res[k],
+          (k: any) => !prev[k] && res[k],
         );
         if (newlyDone.length > 0) {
           setJustCompleted(new Set(newlyDone));
           window.setTimeout(() => setJustCompleted(new Set()), 1400);
         }
         const prevProgress = ONBOARDING_CHECKLIST_KEYS.filter(
-          (k) => prev[k],
+          (k: any) => prev[k],
         ).length;
         const nextProgress = ONBOARDING_CHECKLIST_KEYS.filter(
-          (k) => res[k],
+          (k: any) => res[k],
         ).length;
         if (
           prevProgress < ONBOARDING_CHECKLIST_KEYS.length &&
@@ -207,7 +207,7 @@ export function OnboardingChecklist({
     if (variant === "full") {
       client
         .get<any>("/auth/me")
-        .then((me) => {
+        .then((me: any) => {
           if (!cancelled && me?.tenant)
             setDemoLoaded(!!me.tenant.demoDataLoaded);
         })
@@ -240,14 +240,14 @@ export function OnboardingChecklist({
       ? checklist.checklistOrder
       : [...ONBOARDING_CHECKLIST_KEYS];
     // Keep it defensive against unexpected/legacy payloads.
-    const known = order.filter((k) => ITEM_META[k]);
-    const missing = ONBOARDING_CHECKLIST_KEYS.filter((k) => !known.includes(k));
+    const known = order.filter((k: any) => ITEM_META[k]);
+    const missing = ONBOARDING_CHECKLIST_KEYS.filter((k: any) => !known.includes(k));
     return [...known, ...missing];
   }, [checklist.checklistOrder]);
 
   const total = ONBOARDING_CHECKLIST_KEYS.length;
   const progress = useMemo(
-    () => ONBOARDING_CHECKLIST_KEYS.filter((k) => checklist[k]).length,
+    () => ONBOARDING_CHECKLIST_KEYS.filter((k: any) => checklist[k]).length,
     [checklist],
   );
 
@@ -332,7 +332,7 @@ export function OnboardingChecklist({
             </div>
 
             <div className={styles.grid}>
-              {orderedKeys.map((key) => {
+              {orderedKeys.map((key: any) => {
                 const item = ITEM_META[key];
                 const done = checklist[key];
                 return (
@@ -422,7 +422,7 @@ export function OnboardingChecklist({
       )}
 
       <div className={styles.fullGrid}>
-        {orderedKeys.map((key) => {
+        {orderedKeys.map((key: any) => {
           const item = ITEM_META[key];
           const done = checklist[key];
           return (

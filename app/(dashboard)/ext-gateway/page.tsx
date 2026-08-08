@@ -23,19 +23,19 @@ export default function ExtGatewayPage() {
   useEffect(() => {
     Promise.all([
       fetch("/api/ext-gateway/connections")
-        .then((r) => r.json())
-        .then((d) => setConnections(d.items || []))
+        .then((r: any) => r.json())
+        .then((d: any) => setConnections(d.items || []))
         .catch(() => {}),
       fetch("/api/ext-gateway/connections/status")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setStatusSummary)
         .catch(() => {}),
       fetch("/api/ext-gateway/webhooks/stats")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setWebhookStats)
         .catch(() => {}),
       fetch("/api/ext-gateway/analytics")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setAnalytics)
         .catch(() => {}),
     ]).finally(() => setLoading(false));
@@ -69,7 +69,7 @@ export default function ExtGatewayPage() {
       header: "Actions",
       render: (r: any) => (
         <button
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
           }}
           className="ui-btn-icon"

@@ -66,7 +66,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
   trend,
   description,
   icon: Icon,
-}) => {
+}: any) => {
   return (
     <Card hover padding="md" className="ui-stack-3">
       <div className="ui-flex-between ui-items-start">
@@ -158,7 +158,7 @@ function DashboardContent() {
       .get<{ firstName: string; lastName: string; tenant?: { id: string } }>(
         "/auth/me",
       )
-      .then((profile) => {
+      .then((profile: any) => {
         if (mounted)
           setUser({
             firstName: profile.firstName,
@@ -179,7 +179,7 @@ function DashboardContent() {
       setLoadingCustom(true);
       client
         .get<DashboardPayload>(`/builder/dashboards/${dashboardId}`)
-        .then((data) => {
+        .then((data: any) => {
           setCustomDashboard(data);
           if (data.layout)
             setCustomLayout(
@@ -204,7 +204,7 @@ function DashboardContent() {
       setLoadingGlobal(true);
       client
         .get<Record<string, unknown>>("/builder/dashboards/global-stats")
-        .then((data) => {
+        .then((data: any) => {
           setGlobalStats(data);
         })
         .catch(console.error)
@@ -333,8 +333,8 @@ function DashboardContent() {
                 isResizable={false}
                 margin={[16, 16]}
               >
-                {customLayout.map((l) => {
-                  const widget = customWidgets.find((w) => w.id === l.i);
+                {customLayout.map((l: any) => {
+                  const widget = customWidgets.find((w: any) => w.id === l.i);
                   if (!widget) return <div key={l.i}></div>;
 
                   const typeIcons: Record<string, any> = {
@@ -683,7 +683,7 @@ function DashboardContent() {
 
                 <div key="kpis" className={styles.widget}>
                   <div className={`h-full ${styles.metricsGrid}`}>
-                    {metrics.map((metric) => (
+                    {metrics.map((metric: any) => (
                       <MetricCard key={metric.title} {...metric} />
                     ))}
                   </div>
@@ -734,7 +734,7 @@ function DashboardContent() {
                   <Card padding="lg" className="h-full overflow-hidden">
                     <h3 className={styles.sectionTitle}>Activity Feed</h3>
                     <div className="ui-stack-4">
-                      {recentLogs.map((log) => (
+                      {recentLogs.map((log: any) => (
                         <div key={log.id} className="ui-flex-between">
                           <div className={styles.logEntry}>
                             <span className="ui-heading-sm">{log.action}</span>

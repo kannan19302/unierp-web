@@ -60,18 +60,18 @@ export default function WarehouseKpisPage() {
 
   const avgPicks = data.length
     ? Math.round(
-        data.reduce((s, k) => s + Number(k.picksPerHour || 0), 0) / data.length,
+        data.reduce((s: any, k: any) => s + Number(k.picksPerHour || 0), 0) / data.length,
       )
     : 0;
   const avgAccuracy = data.length
     ? Math.round(
-        data.reduce((s, k) => s + Number(k.orderAccuracyPct || 0), 0) /
+        data.reduce((s: any, k: any) => s + Number(k.orderAccuracyPct || 0), 0) /
           data.length,
       )
     : 0;
   const avgLabor = data.length
     ? (
-        data.reduce((s, k) => s + Number(k.laborCostPerOrder || 0), 0) /
+        data.reduce((s: any, k: any) => s + Number(k.laborCostPerOrder || 0), 0) /
         data.length
       ).toFixed(2)
     : "0";
@@ -175,7 +175,7 @@ export default function WarehouseKpisPage() {
             label="Lines Picked"
             type="number"
             value={form.linesPicked || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({ ...form, linesPicked: parseInt(e.target.value) || 0 })
             }
           />
@@ -183,7 +183,7 @@ export default function WarehouseKpisPage() {
             label="Orders Shipped"
             type="number"
             value={form.ordersShipped || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({ ...form, ordersShipped: parseInt(e.target.value) || 0 })
             }
           />
@@ -192,7 +192,7 @@ export default function WarehouseKpisPage() {
             type="number"
             step="0.1"
             value={form.picksPerHour || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({
                 ...form,
                 picksPerHour: parseFloat(e.target.value) || 0,
@@ -204,7 +204,7 @@ export default function WarehouseKpisPage() {
             type="number"
             step="0.1"
             value={form.orderAccuracyPct || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({
                 ...form,
                 orderAccuracyPct: parseFloat(e.target.value) || 0,
@@ -215,7 +215,7 @@ export default function WarehouseKpisPage() {
             label="Active Workers"
             type="number"
             value={form.activeWorkers || ""}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({ ...form, activeWorkers: parseInt(e.target.value) || 0 })
             }
           />

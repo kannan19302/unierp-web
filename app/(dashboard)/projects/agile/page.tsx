@@ -98,12 +98,12 @@ export default function AgilePage() {
   if (loading) return <Spinner size="lg" />;
   if (error) return <div className="ui-alert ui-alert-danger">{error}</div>;
 
-  const activeSprint = sprints.find((s) => s.status === "ACTIVE");
+  const activeSprint = sprints.find((s: any) => s.status === "ACTIVE");
   const totalStoryPoints = sprints.reduce(
-    (s, sp) =>
+    (s: any, sp: any) =>
       s +
       (sp.sprintItems || []).reduce(
-        (ss, si) => ss + (si.backlogItem.storyPoints || 0),
+        (ss: any, si: any) => ss + (si.backlogItem.storyPoints || 0),
         0,
       ),
     0,
@@ -148,13 +148,13 @@ export default function AgilePage() {
               },
               {
                 label: "Ready",
-                value: backlog.filter((b) => b.status === "READY").length,
+                value: backlog.filter((b: any) => b.status === "READY").length,
                 icon: <CheckCircle2 size={16} />,
                 color: "var(--chart-2)",
               },
               {
                 label: "In Progress",
-                value: backlog.filter((b) => b.status === "IN_PROGRESS").length,
+                value: backlog.filter((b: any) => b.status === "IN_PROGRESS").length,
                 icon: <Activity size={16} />,
                 color: "var(--chart-3)",
               },
@@ -167,7 +167,7 @@ export default function AgilePage() {
             ]}
           />
           <div className="ui-stack-3">
-            {backlog.map((item) => (
+            {backlog.map((item: any) => (
               <Card key={item.id} className="ui-flex-between">
                 <div>
                   <div className="ui-hstack-2">
@@ -202,24 +202,24 @@ export default function AgilePage() {
       )}
       {activeTab === "board" && (
         <div className="ui-grid-3">
-          {(["TODO", "IN_PROGRESS", "DONE"] as const).map((status) => (
+          {(["TODO", "IN_PROGRESS", "DONE"] as const).map((status: any) => (
             <div key={status} className="ui-stack-3">
               <h3 className="ui-text-label">
                 {status.replace("_", " ")} (
                 {
                   backlog.filter(
-                    (b) =>
+                    (b: any) =>
                       b.status === status ||
                       (activeSprint?.sprintItems || []).filter(
-                        (si) => si.status === status,
+                        (si: any) => si.status === status,
                       ).length,
                   ).length
                 }
                 )
               </h3>
               {backlog
-                .filter((b) => b.status === status)
-                .map((item) => (
+                .filter((b: any) => b.status === status)
+                .map((item: any) => (
                   <Card key={item.id} className="p-2">
                     <strong>{item.title}</strong>
                     <p className="ui-text-micro">{item.storyPoints || 0} pts</p>
@@ -259,7 +259,7 @@ export default function AgilePage() {
                     label: "Completed",
                     value:
                       activeSprint.sprintItems?.filter(
-                        (si) => si.status === "DONE",
+                        (si: any) => si.status === "DONE",
                       ).length || 0,
                     icon: <CheckCircle2 size={16} />,
                     color: "var(--chart-2)",
@@ -268,7 +268,7 @@ export default function AgilePage() {
                     label: "Remaining",
                     value:
                       activeSprint.sprintItems?.filter(
-                        (si) => si.status !== "DONE",
+                        (si: any) => si.status !== "DONE",
                       ).length || 0,
                     icon: <Clock size={16} />,
                     color: "var(--chart-3)",
@@ -285,7 +285,7 @@ export default function AgilePage() {
       )}
       {activeTab === "velocity" && (
         <div className="ui-grid-auto">
-          {sprints.map((s) => (
+          {sprints.map((s: any) => (
             <Card key={s.id} className="ui-stack-2">
               <div className="ui-flex-between">
                 <h4 className="ui-text-label">{s.name}</h4>

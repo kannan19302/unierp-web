@@ -187,11 +187,11 @@ export default function AppStorePage() {
     let mounted = true;
     client
       .get<{ kernelSlugs: string[] }>("/admin/marketplace/slug-map")
-      .then((data) => {
+      .then((data: any) => {
         if (mounted && Array.isArray(data?.kernelSlugs))
           setKernelSlugs(new Set(data.kernelSlugs));
       })
-      .catch((e) => {
+      .catch((e: any) => {
         // Best-effort — falls back to DEFAULT_KERNEL_SLUGS, so a failure
         // here is non-critical and doesn't warrant a user-facing error.
         console.warn("Failed to load kernel slug map", e);
@@ -251,8 +251,8 @@ export default function AppStorePage() {
       const list = await client.get<InstalledAppRow[]>(
         "/admin/marketplace/installed",
       );
-      setInstalledSlugs(new Set(list.map((a) => a.appSlug)));
-      setInstalledInfo(new Map(list.map((a) => [a.appSlug, a])));
+      setInstalledSlugs(new Set(list.map((a: any) => a.appSlug)));
+      setInstalledInfo(new Map(list.map((a: any) => [a.appSlug, a])));
     } catch (e) {
       // Best-effort — falls back to "Get" instead of "Open" for installed
       // apps, non-critical for the browse experience.
@@ -267,7 +267,7 @@ export default function AppStorePage() {
       );
       setFavoriteSlugs(
         new Set(
-          list.map((f) => f.app?.slug).filter((s): s is string => Boolean(s)),
+          list.map((f: any) => f.app?.slug).filter((s: any): s is string => Boolean(s)),
         ),
       );
     } catch (e) {
@@ -286,7 +286,7 @@ export default function AppStorePage() {
   }, [loadApps]);
 
   const toggleCategory = (cat: string) => {
-    setSelectedCategories((prev) => {
+    setSelectedCategories((prev: any) => {
       const next = new Set(prev);
       if (next.has(cat)) next.delete(cat);
       else next.add(cat);
@@ -306,7 +306,7 @@ export default function AppStorePage() {
     setInstallingSlug(slug);
     try {
       await client.post(`/admin/marketplace/install/${slug}`);
-      setInstalledSlugs((prev) => new Set([...prev, slug]));
+      setInstalledSlugs((prev: any) => new Set([...prev, slug]));
       showToast("Installed");
       loadInstalled();
     } catch {
@@ -338,7 +338,7 @@ export default function AppStorePage() {
     setInstallingSlug(slug);
     try {
       await client.delete(`/admin/marketplace/uninstall/${slug}`);
-      setInstalledSlugs((prev) => {
+      setInstalledSlugs((prev: any) => {
         const s = new Set(prev);
         s.delete(slug);
         return s;
@@ -357,14 +357,14 @@ export default function AppStorePage() {
     try {
       if (isFav) {
         await client.delete(`/admin/marketplace/favorites/${slug}`);
-        setFavoriteSlugs((prev) => {
+        setFavoriteSlugs((prev: any) => {
           const s = new Set(prev);
           s.delete(slug);
           return s;
         });
       } else {
         await client.post(`/admin/marketplace/favorites/${slug}`);
-        setFavoriteSlugs((prev) => new Set([...prev, slug]));
+        setFavoriteSlugs((prev: any) => new Set([...prev, slug]));
       }
     } catch (e) {
       showToast(
@@ -383,7 +383,7 @@ export default function AppStorePage() {
     const r = Number(rating) || 0;
     return (
       <div className="ui-hstack-1">
-        {[1, 2, 3, 4, 5].map((s) => (
+        {[1, 2, 3, 4, 5].map((s: any) => (
           <Star
             key={s}
             size={size}
@@ -438,7 +438,7 @@ export default function AppStorePage() {
               type="text"
               placeholder="Search apps..."
               value={searchQuery}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setSearchQuery(e.target.value);
                 setPage(1);
               }}
@@ -485,7 +485,7 @@ export default function AppStorePage() {
               <div className={styles.filterDropdown}>
                 <div className={styles.filterSection}>
                   <div className={styles.filterLabel}>Category</div>
-                  {allCategories.map((cat) => (
+                  {allCategories.map((cat: any) => (
                     <label key={cat} className={styles.filterCheckItem}>
                       <input
                         type="checkbox"
@@ -499,7 +499,7 @@ export default function AppStorePage() {
                 <div className={styles.filterDivider} />
                 <div className={styles.filterSection}>
                   <div className={styles.filterLabel}>Pricing</div>
-                  {pricingOptions.map((opt) => (
+                  {pricingOptions.map((opt: any) => (
                     <label key={opt.value} className={styles.filterCheckItem}>
                       <input
                         type="radio"
@@ -526,7 +526,7 @@ export default function AppStorePage() {
           {/* Sort */}
           <select
             value={sortBy}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setSortBy(e.target.value as any);
               setPage(1);
             }}
@@ -561,7 +561,7 @@ export default function AppStorePage() {
         {/* App Grid */}
         {apps.length > 0 ? (
           <div className={styles.appGrid}>
-            {apps.map((app) => {
+            {apps.map((app: any) => {
               const slug = app.slug;
               const installed = isInst(slug);
               const busy = isBusy(slug);
@@ -585,7 +585,7 @@ export default function AppStorePage() {
                       {getAppIcon(slug, app.icon)}
                     </div>
                     <button
-                      onClick={(e) => {
+                      onClick={(e: any) => {
                         e.preventDefault();
                         toggleFavorite(slug);
                       }}
@@ -622,7 +622,7 @@ export default function AppStorePage() {
                     ) : installed ? (
                       <button
                         className={`${styles.getBtn} ${styles.getBtnInstalled}`}
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                           e.preventDefault();
                           updateAvail && requestInstall(app);
                         }}
@@ -636,7 +636,7 @@ export default function AppStorePage() {
                     ) : (
                       <button
                         className={styles.getBtn}
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                           e.preventDefault();
                           requestInstall(app);
                         }}
@@ -667,7 +667,7 @@ export default function AppStorePage() {
         {totalPages > 1 && (
           <div className={styles.pageNav}>
             <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              onClick={() => setPage((p: any) => Math.max(1, p - 1))}
               disabled={page <= 1}
               className={styles.pageBtn}
             >
@@ -677,7 +677,7 @@ export default function AppStorePage() {
               Page {page} of {totalPages}
             </span>
             <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              onClick={() => setPage((p: any) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
               className={styles.pageBtn}
             >
@@ -694,7 +694,7 @@ export default function AppStorePage() {
           >
             <div
               className={styles.dialogCard}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: any) => e.stopPropagation()}
             >
               <h3 className={styles.dialogTitle}>
                 Uninstall {uninstallTarget.name}?
@@ -733,7 +733,7 @@ export default function AppStorePage() {
           >
             <div
               className={styles.dialogCard}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: any) => e.stopPropagation()}
             >
               <h3 className={styles.dialogTitle}>
                 Install {installTarget.name}
@@ -743,7 +743,7 @@ export default function AppStorePage() {
                 <div style={{ marginBottom: "var(--space-3)" }}>
                   <div className={styles.dialogSectionLabel}>Features</div>
                   <ul className={styles.dialogList}>
-                    {installTarget.features.slice(0, 6).map((f) => (
+                    {installTarget.features.slice(0, 6).map((f: any) => (
                       <li key={f}>{f}</li>
                     ))}
                   </ul>

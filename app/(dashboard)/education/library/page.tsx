@@ -108,8 +108,8 @@ export default function LibraryPage() {
     }
   };
 
-  const totalBooks = books.reduce((a, b) => a + (b.quantity || 0), 0);
-  const checkedOut = transactions.filter((t) => !t.returnedDate).length;
+  const totalBooks = books.reduce((a: any, b: any) => a + (b.quantity || 0), 0);
+  const checkedOut = transactions.filter((t: any) => !t.returnedDate).length;
 
   const bookColumns: Column<Book>[] = [
     {
@@ -310,7 +310,7 @@ export default function LibraryPage() {
               label="Title"
               required
               value={bookForm.title}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setBookForm({ ...bookForm, title: e.target.value })
               }
             />
@@ -319,14 +319,14 @@ export default function LibraryPage() {
                 label="ISBN"
                 required
                 value={bookForm.isbn}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setBookForm({ ...bookForm, isbn: e.target.value })
                 }
               />
               <TextField
                 label="Author"
                 value={bookForm.author}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setBookForm({ ...bookForm, author: e.target.value })
                 }
               />
@@ -335,7 +335,7 @@ export default function LibraryPage() {
               label="Quantity"
               type="number"
               value={String(bookForm.quantity)}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setBookForm({ ...bookForm, quantity: Number(e.target.value) })
               }
             />
@@ -370,7 +370,7 @@ export default function LibraryPage() {
               label="Student ID"
               required
               value={checkoutForm.studentId}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setCheckoutForm({ ...checkoutForm, studentId: e.target.value })
               }
             />
@@ -382,7 +382,7 @@ export default function LibraryPage() {
                 }
               >
                 <option value="">Select book...</option>
-                {books.map((b) => (
+                {books.map((b: any) => (
                   <option key={b.id} value={b.id}>
                     {b.title}
                   </option>
@@ -393,7 +393,7 @@ export default function LibraryPage() {
               label="Due Date"
               type="date"
               value={checkoutForm.dueDate}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setCheckoutForm({ ...checkoutForm, dueDate: e.target.value })
               }
             />

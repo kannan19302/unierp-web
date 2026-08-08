@@ -63,11 +63,11 @@ const allModules: ModuleDefinition[] = [
 
 const registry = createRegistry(registeredModules);
 
-const linkFields = allModules.flatMap((module) =>
-  module.resources.flatMap((resource) =>
+const linkFields = allModules.flatMap((module: any) =>
+  module.resources.flatMap((resource: any) =>
     (resource.fields ?? [])
-      .filter((field) => field.type === "link")
-      .map((field) => ({
+      .filter((field: any) => field.type === "link")
+      .map((field: any) => ({
         module: module.id,
         resource: resource.name,
         field: field.name,
@@ -78,8 +78,8 @@ const linkFields = allModules.flatMap((module) =>
 
 describe("registered modules", () => {
   it("registers every module the app defines", () => {
-    const registeredIds = registeredModules.map((m) => m.id).sort();
-    expect(registeredIds).toEqual(allModules.map((m) => m.id).sort());
+    const registeredIds = registeredModules.map((m: any) => m.id).sort();
+    expect(registeredIds).toEqual(allModules.map((m: any) => m.id).sort());
   });
 
   it("exposes link fields to check", () => {

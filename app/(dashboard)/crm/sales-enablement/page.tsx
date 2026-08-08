@@ -33,7 +33,7 @@ export default function SalesEnablementPage() {
 
   useEffect(() => {
     apiGet<DashboardData>("/crm/content/dashboard")
-      .then((d) => {
+      .then((d: any) => {
         setData(d as DashboardData);
       })
       .catch(() => {})
@@ -117,7 +117,7 @@ export default function SalesEnablementPage() {
           </p>
         ) : (
           <ul className="space-y-2">
-            {data.topContent.map((item) => (
+            {data.topContent.map((item: any) => (
               <li
                 key={item.id}
                 className="flex items-center justify-between p-2 hover:bg-gray-50 rounded"

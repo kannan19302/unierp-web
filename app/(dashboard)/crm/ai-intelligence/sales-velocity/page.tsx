@@ -91,7 +91,7 @@ export default function SalesVelocityPage() {
           className="ui-input"
           style={{ width: 120 }}
           value={period}
-          onChange={(e) => setPeriod(e.target.value)}
+          onChange={(e: any) => setPeriod(e.target.value)}
           placeholder="YYYY-MM"
         />
         <Button

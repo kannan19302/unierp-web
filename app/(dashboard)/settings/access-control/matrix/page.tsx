@@ -21,7 +21,7 @@ interface RoleData {
 
 function allModules(): string[] {
   const set = new Set<string>();
-  PERMISSION_REGISTRY.forEach((p) => set.add(p.module));
+  PERMISSION_REGISTRY.forEach((p: any) => set.add(p.module));
   return Array.from(set);
 }
 
@@ -68,14 +68,14 @@ export default function MatrixPage() {
   }, [client]);
 
   const modules = allModules().filter(
-    (m) =>
+    (m: any) =>
       !moduleFilter || m.toLowerCase().includes(moduleFilter.toLowerCase()),
   );
 
   const getAccessLevel = (role: RoleData, mod: string): AccessLevel => {
     const modPerms = getPermissionsByModule(mod);
     if (modPerms.length === 0) return "none";
-    const count = modPerms.filter((p) =>
+    const count = modPerms.filter((p: any) =>
       role.permissions.includes(p.code),
     ).length;
     if (count === modPerms.length) return "full";
@@ -114,7 +114,7 @@ export default function MatrixPage() {
             type="text"
             placeholder="Filter modules..."
             value={moduleFilter}
-            onChange={(e) => setModuleFilter(e.target.value)}
+            onChange={(e: any) => setModuleFilter(e.target.value)}
             className={styles.s2}
           />
         </div>
@@ -145,7 +145,7 @@ export default function MatrixPage() {
                     </div>
                   )
                 },
-                ...modules.map(mod => {
+                ...modules.map((mod: any) => {
                   const categories = getCategoriesForModule(mod);
                   const hasCategories = categories.length > 0;
                   return {
@@ -164,7 +164,7 @@ export default function MatrixPage() {
                       const level = getAccessLevel(role, mod);
                       const config = levelConfig[level];
                       const modPerms = getPermissionsByModule(mod);
-                      const count = modPerms.filter((p) =>
+                      const count = modPerms.filter((p: any) =>
                         role.permissions.includes(p.code),
                       ).length;
                       const cellInner = (
@@ -219,7 +219,7 @@ export default function MatrixPage() {
 
             {/* Legend */}
             <div className={styles.s13}>
-              {Object.entries(levelConfig).map(([key, config]) => (
+              {Object.entries(levelConfig).map(([key, config]: any) => (
                 <span key={key} className="ui-flex ui-items-center ui-gap-1">
                   <span style={{ color: config.color }}>{config.icon}</span>{" "}
                   {config.label} access
@@ -257,9 +257,9 @@ function AdminCategoryBreakdown({ role }: { role: RoleData }) {
 
   return (
     <div className="ui-stack-3">
-      {categories.map((category) => {
+      {categories.map((category: any) => {
         const perms = getPermissionsByCategory("admin", category);
-        const granted = perms.filter((p) =>
+        const granted = perms.filter((p: any) =>
           role.permissions.includes(p.code),
         ).length;
         const percentage =
@@ -299,7 +299,7 @@ function AdminCategoryBreakdown({ role }: { role: RoleData }) {
                   />
                 </div>
                 <div className="ui-stack-2">
-                  {perms.map((perm) => {
+                  {perms.map((perm: any) => {
                     const has = role.permissions.includes(perm.code);
                     return (
                       <div

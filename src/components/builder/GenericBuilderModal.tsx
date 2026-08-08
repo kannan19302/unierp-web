@@ -96,7 +96,7 @@ export function GenericBuilderModal({
           borderRadius: "var(--radius-xl)",
           boxShadow: "var(--shadow-xl)",
         }}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: any) => e.stopPropagation()}
       >
         {/* Header */}
         <div
@@ -163,7 +163,7 @@ export function GenericBuilderModal({
             gap: "var(--space-4)",
           }}
         >
-          {fields.map((field) => (
+          {fields.map((field: any) => (
             <div
               key={field.name}
               className="ui-form-group"
@@ -183,7 +183,7 @@ export function GenericBuilderModal({
                   className="ui-input"
                   required={field.required}
                   value={(formData[field.name] as string) || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setFormData({ ...formData, [field.name]: e.target.value })
                   }
                   style={{
@@ -198,7 +198,7 @@ export function GenericBuilderModal({
                   className="ui-input"
                   required={field.required}
                   value={(formData[field.name] as string) || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setFormData({ ...formData, [field.name]: e.target.value })
                   }
                   style={{ width: "100%" }}
@@ -206,7 +206,7 @@ export function GenericBuilderModal({
                   <option value="">
                     Select {field.label.toLowerCase()}...
                   </option>
-                  {field.options?.map((opt) => (
+                  {field.options?.map((opt: any) => (
                     <option key={opt.value} value={opt.value}>
                       {opt.label}
                     </option>
@@ -269,7 +269,7 @@ export function GenericBuilderModal({
                   className="ui-input"
                   required={field.required}
                   value={(formData[field.name] as string | number) || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setFormData({
                       ...formData,
                       [field.name]:

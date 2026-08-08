@@ -233,7 +233,7 @@ export default function CommissionsPage() {
 
   const [ruleSortBy, setRuleSortBy] = useState("name");
   const [ruleSortOrder, setRuleSortOrder] = useState<SortOrder>("asc");
-  const sortedRules = [...rules].sort((a, b) => {
+  const sortedRules = [...rules].sort((a: any, b: any) => {
     let cmp = 0;
     if (ruleSortBy === "name") cmp = a.name.localeCompare(b.name);
     else if (ruleSortBy === "rate") cmp = a.rate - b.rate;
@@ -242,7 +242,7 @@ export default function CommissionsPage() {
 
   const [entrySortBy, setEntrySortBy] = useState("createdAt");
   const [entrySortOrder, setEntrySortOrder] = useState<SortOrder>("desc");
-  const sortedEntries = [...entries].sort((a, b) => {
+  const sortedEntries = [...entries].sort((a: any, b: any) => {
     let cmp = 0;
     if (entrySortBy === "amount") cmp = a.amount - b.amount;
     else if (entrySortBy === "createdAt")
@@ -311,7 +311,7 @@ export default function CommissionsPage() {
       width: "80px",
       render: (r: any) => (
         <button
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             handleDeleteRule(r);
           }}
@@ -464,7 +464,7 @@ export default function CommissionsPage() {
               rowKey={(r: any) => r.id}
               sortBy={ruleSortBy}
               sortOrder={ruleSortOrder}
-              onSortChange={(key, order) => {
+              onSortChange={(key: any, order: any) => {
                 setRuleSortBy(key);
                 setRuleSortOrder(order);
               }}
@@ -480,7 +480,7 @@ export default function CommissionsPage() {
               rowKey={(e: any) => e.id}
               sortBy={entrySortBy}
               sortOrder={entrySortOrder}
-              onSortChange={(key, order) => {
+              onSortChange={(key: any, order: any) => {
                 setEntrySortBy(key);
                 setEntrySortOrder(order);
               }}
@@ -582,7 +582,7 @@ export default function CommissionsPage() {
                       required
                       placeholder="e.g. Standard Sales Commission"
                       value={ruleName}
-                      onChange={(e) => setRuleName(e.target.value)}
+                      onChange={(e: any) => setRuleName(e.target.value)}
                       className="ui-input"
                       style={inputStyle}
                     />
@@ -592,7 +592,7 @@ export default function CommissionsPage() {
                       <label style={labelStyle}>Type</label>
                       <select
                         value={ruleType}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setRuleType(
                             e.target.value as "PERCENTAGE" | "FLAT" | "TIERED",
                           )
@@ -615,7 +615,7 @@ export default function CommissionsPage() {
                         min={0}
                         step={ruleType === "PERCENTAGE" ? 0.5 : 1}
                         value={ruleRate}
-                        onChange={(e) => setRuleRate(Number(e.target.value))}
+                        onChange={(e: any) => setRuleRate(Number(e.target.value))}
                         className="ui-input"
                         style={inputStyle}
                       />
@@ -625,7 +625,7 @@ export default function CommissionsPage() {
                     <label style={labelStyle}>Applies To</label>
                     <select
                       value={ruleAppliesTo}
-                      onChange={(e) => setRuleAppliesTo(e.target.value)}
+                      onChange={(e: any) => setRuleAppliesTo(e.target.value)}
                       className="ui-input"
                       style={inputStyle}
                     >
@@ -686,7 +686,7 @@ export default function CommissionsPage() {
                       type="date"
                       required
                       value={calcStart}
-                      onChange={(e) => setCalcStart(e.target.value)}
+                      onChange={(e: any) => setCalcStart(e.target.value)}
                       className="ui-input"
                       style={inputStyle}
                     />
@@ -697,7 +697,7 @@ export default function CommissionsPage() {
                       type="date"
                       required
                       value={calcEnd}
-                      onChange={(e) => setCalcEnd(e.target.value)}
+                      onChange={(e: any) => setCalcEnd(e.target.value)}
                       className="ui-input"
                       style={inputStyle}
                     />

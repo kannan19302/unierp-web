@@ -111,7 +111,7 @@ export default function ShopFloorTerminal() {
       const data = await client.get<WorkOrder[]>("/manufacturing/work-orders");
       setWorkOrders(
         data.filter(
-          (w) => w.status !== "COMPLETED" && w.status !== "CANCELLED",
+          (w: any) => w.status !== "COMPLETED" && w.status !== "CANCELLED",
         ),
       );
     } catch {
@@ -249,13 +249,13 @@ export default function ShopFloorTerminal() {
             <label className={styles.p6}>ACTIVE MACHINE / WORKSTATION</label>
             <select
               value={selectedWorkstationId}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setSelectedWorkstationId(e.target.value);
                 setActiveWO(null);
               }}
               className={styles.p7}
             >
-              {workstations.map((ws) => (
+              {workstations.map((ws: any) => (
                 <option key={ws.id} value={ws.id}>
                   {ws.name} ({ws.code})
                 </option>
@@ -270,7 +270,7 @@ export default function ShopFloorTerminal() {
               <div className="text-center p-12">Loading queue...</div>
             ) : (
               <div className={styles.p9}>
-                {workOrders.map((wo) => (
+                {workOrders.map((wo: any) => (
                   <div
                     key={wo.id}
                     onClick={() => handleSelectWorkOrder(wo)}
@@ -323,7 +323,7 @@ export default function ShopFloorTerminal() {
               <div>Loading operations blueprint...</div>
             ) : (
               <div className={styles.p18}>
-                {operations.map((op) => (
+                {operations.map((op: any) => (
                   <div key={op.id} className={styles.p19}>
                     <div className="ui-flex-between">
                       <div>
@@ -402,7 +402,7 @@ export default function ShopFloorTerminal() {
                   type="number"
                   min="0"
                   value={scrapQty}
-                  onChange={(e) => setScrapQty(e.target.value)}
+                  onChange={(e: any) => setScrapQty(e.target.value)}
                   className={styles.p29}
                 />
               </div>
@@ -419,11 +419,11 @@ export default function ShopFloorTerminal() {
                     </label>
                     <select
                       value={componentProductId}
-                      onChange={(e) => setComponentProductId(e.target.value)}
+                      onChange={(e: any) => setComponentProductId(e.target.value)}
                       className={styles.p33}
                     >
                       <option value="">Select component...</option>
-                      {products.map((p) => (
+                      {products.map((p: any) => (
                         <option key={p.id} value={p.id}>
                           {p.name}
                         </option>
@@ -438,7 +438,7 @@ export default function ShopFloorTerminal() {
                       type="text"
                       placeholder="e.g. LOT-RAM-101"
                       value={lotNumberConsumed}
-                      onChange={(e) => setLotNumberConsumed(e.target.value)}
+                      onChange={(e: any) => setLotNumberConsumed(e.target.value)}
                       className={styles.p34}
                     />
                   </div>
@@ -452,7 +452,7 @@ export default function ShopFloorTerminal() {
                 </label>
                 <select
                   value={downtimeCode}
-                  onChange={(e) => setDowntimeCode(e.target.value)}
+                  onChange={(e: any) => setDowntimeCode(e.target.value)}
                   className={styles.p37}
                 >
                   <option value="">No Downtime Occurred</option>

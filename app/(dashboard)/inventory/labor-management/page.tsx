@@ -227,7 +227,7 @@ export default function LaborManagementPage() {
 
         {/* Tabs */}
         <div className="flex gap-1 border-b">
-          {(["dashboard", "standards", "shifts"] as const).map((t) => (
+          {(["dashboard", "standards", "shifts"] as const).map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -338,7 +338,7 @@ export default function LaborManagementPage() {
                       "TRANSFER",
                       "LABEL",
                       "SORT",
-                    ].map((t) => (
+                    ].map((t: any) => (
                       <option key={t} value={t}>
                         {t}
                       </option>
@@ -414,7 +414,7 @@ export default function LaborManagementPage() {
                     name="dayOfWeek"
                     className="mt-1 w-full border rounded px-2 py-1.5 text-sm bg-background"
                   >
-                    {DAY_NAMES.map((d, i) => (
+                    {DAY_NAMES.map((d: any, i: any) => (
                       <option key={i} value={i}>
                         {d}
                       </option>

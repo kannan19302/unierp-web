@@ -126,7 +126,7 @@ export default function POSKitchenDisplayPage() {
             </button>
             <h2 className="mb-4">Kitchen Orders</h2>
             <div className="ui-grid-3">
-              {orders.map((o) => (
+              {orders.map((o: any) => (
                 <div key={o.id} className="ui-card p-3">
                   <div className="flex justify-between items-center mb-2">
                     <strong>{o.orderNumber}</strong>
@@ -214,14 +214,14 @@ export default function POSKitchenDisplayPage() {
         )}
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Add"} Kitchen Display</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -229,7 +229,7 @@ export default function POSKitchenDisplayPage() {
                 <input
                   className="ui-input"
                   value={form.code}
-                  onChange={(e) => setForm({ ...form, code: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, code: e.target.value })}
                 />
               </div>
               <div className="ui-hstack-2 mt-4">

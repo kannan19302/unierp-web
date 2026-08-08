@@ -171,7 +171,7 @@ export default function CasesSlaPage() {
             </h3>
             {calendar && (
               <div className="ui-stack-4">
-                {calendar.slaTiers.map((t) => (
+                {calendar.slaTiers.map((t: any) => (
                   <div key={t.priority} className={styles.p218}>
                     <span className="font-semibold">{t.priority} Priority</span>
                     <div className={styles.p219}>

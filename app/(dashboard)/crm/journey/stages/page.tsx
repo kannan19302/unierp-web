@@ -146,7 +146,7 @@ export default function JourneyStagesPage() {
                   render: (row: any) => (
                     <div className="ui-flex ui-gap-2">
                       <button
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                           e.stopPropagation();
                           openEdit(row);
                         }}
@@ -155,7 +155,7 @@ export default function JourneyStagesPage() {
                         <Pencil className="ui-w-4 ui-h-4" />
                       </button>
                       <button
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                           e.stopPropagation();
                           handleDelete(row.id);
                         }}
@@ -182,7 +182,7 @@ export default function JourneyStagesPage() {
               <input
                 className="ui-input"
                 value={formData.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
                 placeholder="e.g. Onboarding"
@@ -192,7 +192,7 @@ export default function JourneyStagesPage() {
               <textarea
                 className="ui-input"
                 value={formData.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
                 rows={3}
@@ -204,7 +204,7 @@ export default function JourneyStagesPage() {
                   <input
                     type="color"
                     value={formData.color}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, color: e.target.value })
                     }
                     className="ui-w-10 ui-h-10"
@@ -217,7 +217,7 @@ export default function JourneyStagesPage() {
                   type="number"
                   className="ui-input"
                   value={formData.sortOrder}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setFormData({
                       ...formData,
                       sortOrder: Number(e.target.value),
@@ -230,7 +230,7 @@ export default function JourneyStagesPage() {
               <input
                 className="ui-input"
                 value={formData.icon}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, icon: e.target.value })
                 }
                 placeholder="e.g. user-plus"

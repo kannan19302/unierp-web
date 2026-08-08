@@ -74,7 +74,7 @@ export default function AgentPerformancePage() {
           className="ui-input"
           style={{ maxWidth: 200 }}
           value={period}
-          onChange={(e) => setPeriod(e.target.value)}
+          onChange={(e: any) => setPeriod(e.target.value)}
         >
           <option value="2026-07">July 2026</option>
           <option value="2026-06">June 2026</option>

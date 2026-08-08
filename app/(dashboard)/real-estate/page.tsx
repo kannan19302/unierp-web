@@ -209,7 +209,7 @@ export default function RealEstateDashboard() {
           <div className="p-5">
             <h3 className="ui-heading-base mb-4">Quick Access</h3>
             <div className={styles.s1}>
-              {quickLinks.map((link) => (
+              {quickLinks.map((link: any) => (
                 <Link key={link.href} href={link.href} className={styles.s2}>
                   <div className={`${styles.s3} ${styles.qlHover}`}>
                     <div

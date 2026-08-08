@@ -174,7 +174,7 @@ export default function MeetingsPage() {
               label="Topic"
               required
               value={form.topic}
-              onChange={(e) => setForm({ ...form, topic: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, topic: e.target.value })}
               placeholder="Project updates and roadmap"
             />
             <TextField
@@ -182,14 +182,14 @@ export default function MeetingsPage() {
               type="datetime-local"
               required
               value={form.startTime}
-              onChange={(e) => setForm({ ...form, startTime: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, startTime: e.target.value })}
             />
             <TextField
               label="Duration (Minutes)"
               type="number"
               required
               value={String(form.durationMinutes)}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, durationMinutes: Number(e.target.value) })
               }
             />

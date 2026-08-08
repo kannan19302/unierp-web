@@ -279,7 +279,7 @@ export default function AdvancedInventoryPage() {
         name: kitName,
         sellPrice: Number(kitPrice),
         discount: Number(kitDiscount),
-        components: kitComps.filter((c) => c.productId !== ""),
+        components: kitComps.filter((c: any) => c.productId !== ""),
       };
     }
 
@@ -621,7 +621,7 @@ export default function AdvancedInventoryPage() {
                           id="cat-name"
                           type="text"
                           value={catName}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             setCatName(e.target.value);
                             setCatSlug(
                               e.target.value.toLowerCase().replace(/ /g, "-"),
@@ -635,7 +635,7 @@ export default function AdvancedInventoryPage() {
                           id="cat-slug"
                           type="text"
                           value={catSlug}
-                          onChange={(e) => setCatSlug(e.target.value)}
+                          onChange={(e: any) => setCatSlug(e.target.value)}
                           required
                         />
                       </FormField>
@@ -643,10 +643,10 @@ export default function AdvancedInventoryPage() {
                         <Select
                           id="cat-parent"
                           value={catParent}
-                          onChange={(e) => setCatParent(e.target.value)}
+                          onChange={(e: any) => setCatParent(e.target.value)}
                         >
                           <option value="">-- Root --</option>
-                          {categories.map((c) => (
+                          {categories.map((c: any) => (
                             <option key={c.id} value={c.id}>
                               {c.name}
                             </option>
@@ -663,7 +663,7 @@ export default function AdvancedInventoryPage() {
                           id="uom-name"
                           type="text"
                           value={uomName}
-                          onChange={(e) => setUomName(e.target.value)}
+                          onChange={(e: any) => setUomName(e.target.value)}
                           required
                         />
                       </FormField>
@@ -672,7 +672,7 @@ export default function AdvancedInventoryPage() {
                           id="uom-abbr"
                           type="text"
                           value={uomAbbr}
-                          onChange={(e) => setUomAbbr(e.target.value)}
+                          onChange={(e: any) => setUomAbbr(e.target.value)}
                           required
                         />
                       </FormField>
@@ -685,11 +685,11 @@ export default function AdvancedInventoryPage() {
                         <Select
                           id="rule-prod"
                           value={ruleProd}
-                          onChange={(e) => setRuleProd(e.target.value)}
+                          onChange={(e: any) => setRuleProd(e.target.value)}
                           required
                         >
                           <option value="">-- Select --</option>
-                          {products.map((p) => (
+                          {products.map((p: any) => (
                             <option key={p.id} value={p.id}>
                               {p.name}
                             </option>
@@ -701,7 +701,7 @@ export default function AdvancedInventoryPage() {
                           id="rule-min"
                           type="number"
                           value={ruleMin}
-                          onChange={(e) => setRuleMin(Number(e.target.value))}
+                          onChange={(e: any) => setRuleMin(Number(e.target.value))}
                           required
                         />
                       </FormField>
@@ -713,7 +713,7 @@ export default function AdvancedInventoryPage() {
                           id="rule-reorder"
                           type="number"
                           value={ruleReorder}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setRuleReorder(Number(e.target.value))
                           }
                           required
@@ -728,11 +728,11 @@ export default function AdvancedInventoryPage() {
                         <Select
                           id="kit-prod"
                           value={kitProd}
-                          onChange={(e) => setKitProd(e.target.value)}
+                          onChange={(e: any) => setKitProd(e.target.value)}
                           required
                         >
                           <option value="">-- Select --</option>
-                          {products.map((p) => (
+                          {products.map((p: any) => (
                             <option key={p.id} value={p.id}>
                               {p.name}
                             </option>
@@ -744,7 +744,7 @@ export default function AdvancedInventoryPage() {
                           id="kit-name"
                           type="text"
                           value={kitName}
-                          onChange={(e) => setKitName(e.target.value)}
+                          onChange={(e: any) => setKitName(e.target.value)}
                           required
                         />
                       </FormField>
@@ -753,7 +753,7 @@ export default function AdvancedInventoryPage() {
                           id="kit-price"
                           type="number"
                           value={kitPrice}
-                          onChange={(e) => setKitPrice(Number(e.target.value))}
+                          onChange={(e: any) => setKitPrice(Number(e.target.value))}
                           required
                         />
                       </FormField>

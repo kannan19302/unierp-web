@@ -77,7 +77,7 @@ export default function SalesAnalyticsPage() {
           ]}
           actions={
             <div className="ui-hstack-2">
-              {["7d", "30d", "90d", "1y"].map((p) => (
+              {["7d", "30d", "90d", "1y"].map((p: any) => (
                 <Button
                   key={p}
                   variant={period === p ? "primary" : "outline"}
@@ -167,7 +167,7 @@ export default function SalesAnalyticsPage() {
                 <div className="ui-p-4">
                   {data.revenueByDay.length > 0 ? (
                     <div className="ui-stack-2">
-                      {data.revenueByDay.slice(-14).map((d) => (
+                      {data.revenueByDay.slice(-14).map((d: any) => (
                         <div key={d.date} className="ui-flex-between">
                           <span className="ui-text-xs">
                             {new Date(d.date).toLocaleDateString()}
@@ -176,7 +176,7 @@ export default function SalesAnalyticsPage() {
                             <div
                               className="ui-h-2 ui-rounded-sm"
                               style={{
-                                width: `${Math.max(4, (d.revenue / Math.max(...data.revenueByDay.map((x) => x.revenue))) * 100)}px`,
+                                width: `${Math.max(4, (d.revenue / Math.max(...data.revenueByDay.map((x: any) => x.revenue))) * 100)}px`,
                                 background: "var(--color-primary)",
                               }}
                             />

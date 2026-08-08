@@ -189,8 +189,8 @@ export default function Form1099ReportingPage() {
   };
 
   const toggleFormSelection = (id: string) => {
-    setSelectedFormIds((prev) =>
-      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id],
+    setSelectedFormIds((prev: any) =>
+      prev.includes(id) ? prev.filter((f: any) => f !== id) : [...prev, id],
     );
   };
 
@@ -228,7 +228,7 @@ export default function Form1099ReportingPage() {
     }
   };
 
-  const readyForms = forms.filter((f) => f.status === "READY" && !f.batchId);
+  const readyForms = forms.filter((f: any) => f.status === "READY" && !f.batchId);
 
   const vendorColumns: Column<VendorRow>[] = [
     {
@@ -297,7 +297,7 @@ export default function Form1099ReportingPage() {
           <Button
             variant="secondary"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleMark1099Vendor(
                 v.vendorId,
@@ -311,7 +311,7 @@ export default function Form1099ReportingPage() {
             variant="secondary"
             size="sm"
             className="flex items-center gap-1 inline-flex"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleTinMatch(v.vendorId);
             }}
@@ -333,11 +333,11 @@ export default function Form1099ReportingPage() {
           <input
             type="checkbox"
             checked={selectedFormIds.includes(f.id)}
-            onChange={(e) => {
+            onChange={(e: any) => {
               e.stopPropagation();
               toggleFormSelection(f.id);
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: any) => e.stopPropagation()}
           />
         ) : null,
     },
@@ -383,7 +383,7 @@ export default function Form1099ReportingPage() {
             <Button
               variant="secondary"
               size="sm"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleMarkReady(f.id);
               }}
@@ -396,7 +396,7 @@ export default function Form1099ReportingPage() {
               variant="primary"
               size="sm"
               className="flex items-center gap-1 inline-flex"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleFile(f.id);
               }}
@@ -448,7 +448,7 @@ export default function Form1099ReportingPage() {
             variant="primary"
             size="sm"
             className="flex items-center gap-1 inline-flex"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleEfileBatch(b.id);
             }}
@@ -475,9 +475,9 @@ export default function Form1099ReportingPage() {
           <select
             className="ui-input text-sm"
             value={taxYear}
-            onChange={(e) => setTaxYear(Number(e.target.value))}
+            onChange={(e: any) => setTaxYear(Number(e.target.value))}
           >
-            {[CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2].map((y) => (
+            {[CURRENT_YEAR, CURRENT_YEAR - 1, CURRENT_YEAR - 2].map((y: any) => (
               <option key={y} value={y}>
                 {y}
               </option>
@@ -521,7 +521,7 @@ export default function Form1099ReportingPage() {
           <Card className="p-4">
             <p className="text-xs ui-text-muted">Filed</p>
             <p className="text-2xl font-bold text-green-600">
-              {summary.byStatus.find((s) => s.status === "FILED")?.count || 0}
+              {summary.byStatus.find((s: any) => s.status === "FILED")?.count || 0}
             </p>
           </Card>
           <Card className="p-4">

@@ -124,7 +124,7 @@ export default function LeadDetailPage() {
                 type="text"
                 placeholder="Customer Name"
                 value={convertForm.customerName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConvertForm({
                     ...convertForm,
                     customerName: e.target.value,
@@ -139,7 +139,7 @@ export default function LeadDetailPage() {
                 type="text"
                 placeholder="Opportunity Name"
                 value={convertForm.opportunityName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConvertForm({
                     ...convertForm,
                     opportunityName: e.target.value,
@@ -154,7 +154,7 @@ export default function LeadDetailPage() {
                 type="number"
                 placeholder="Opportunity Amount"
                 value={convertForm.opportunityAmount}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConvertForm({
                     ...convertForm,
                     opportunityAmount: e.target.value,

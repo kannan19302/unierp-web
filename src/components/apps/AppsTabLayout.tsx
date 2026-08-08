@@ -22,7 +22,7 @@ export {
   type SubTab,
 } from "@kannan19302/ui/layout";
 
-export const AppsTabLayout: FC<ModuleTabLayoutProps> = (props) => {
+export const AppsTabLayout: FC<ModuleTabLayoutProps> = (props: any) => {
   return <ModuleTabLayout variant="card" {...props} />;
 };
 

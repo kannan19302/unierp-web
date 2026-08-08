@@ -102,7 +102,7 @@ export default function WorkflowsPage() {
 
   const toggleActive = async (id: string) => {
     const prev = rules;
-    setRules(rules.map((r) => (r.id === id ? { ...r, active: !r.active } : r))); // optimistic
+    setRules(rules.map((r: any) => (r.id === id ? { ...r, active: !r.active } : r))); // optimistic
     try {
       await client.patch(`/crm/workflows/${id}/toggle`, {});
     } catch (err) {
@@ -116,7 +116,7 @@ export default function WorkflowsPage() {
 
   const deleteRule = async (id: string) => {
     const prev = rules;
-    setRules(rules.filter((r) => r.id !== id)); // optimistic
+    setRules(rules.filter((r: any) => r.id !== id)); // optimistic
     try {
       await client.delete(`/crm/workflows/${id}`);
       toast.success("Workflow deleted");
@@ -171,7 +171,7 @@ export default function WorkflowsPage() {
       { field: "", operator: "equals", value: "" },
     ]);
   const removeCondition = (idx: number) =>
-    setFormConditions(formConditions.filter((_, i) => i !== idx));
+    setFormConditions(formConditions.filter((_: any, i: any) => i !== idx));
   const updateCondition = (
     idx: number,
     key: keyof WorkflowCondition,
@@ -187,17 +187,17 @@ export default function WorkflowsPage() {
   const addAction = () =>
     setFormActions([...formActions, { type: "SEND_EMAIL", config: {} }]);
   const removeAction = (idx: number) =>
-    setFormActions(formActions.filter((_, i) => i !== idx));
+    setFormActions(formActions.filter((_: any, i: any) => i !== idx));
   const updateActionType = (idx: number, type: string) => {
     const updated = [...formActions];
     updated[idx] = { type, config: {} };
     setFormActions(updated);
   };
 
-  const activeCount = rules.filter((r) => r.active).length;
+  const activeCount = rules.filter((r: any) => r.active).length;
   const entityCounts = ENTITIES.reduce(
-    (acc, e) => {
-      acc[e] = rules.filter((r) => r.entity === e).length;
+    (acc: any, e: any) => {
+      acc[e] = rules.filter((r: any) => r.entity === e).length;
       return acc;
     },
     {} as Record<string, number>,
@@ -302,7 +302,7 @@ export default function WorkflowsPage() {
               {
                 key: "active",
                 header: "Active",
-                render: (v, row) => {
+                render: (v: any, row: any) => {
                   const rule = row as unknown as WorkflowRule;
                   return (
                     <button
@@ -348,7 +348,7 @@ export default function WorkflowsPage() {
         {isModalOpen && (
           <div
             className={styles.style0}
-            onClick={(e) => {
+            onClick={(e: any) => {
               if (e.target === e.currentTarget) setIsModalOpen(false);
             }}
           >
@@ -367,7 +367,7 @@ export default function WorkflowsPage() {
                   <label className={styles.style4}>Rule Name</label>
                   <input
                     value={formName}
-                    onChange={(e) => setFormName(e.target.value)}
+                    onChange={(e: any) => setFormName(e.target.value)}
                     required
                     placeholder="e.g. Auto-assign hot leads"
                     style={inputStyle}
@@ -378,10 +378,10 @@ export default function WorkflowsPage() {
                     <label className={styles.style5}>Entity</label>
                     <select
                       value={formEntity}
-                      onChange={(e) => setFormEntity(e.target.value)}
+                      onChange={(e: any) => setFormEntity(e.target.value)}
                       style={selectStyle}
                     >
-                      {ENTITIES.map((e) => (
+                      {ENTITIES.map((e: any) => (
                         <option key={e} value={e}>
                           {e}
                         </option>
@@ -392,10 +392,10 @@ export default function WorkflowsPage() {
                     <label className={styles.style6}>Trigger</label>
                     <select
                       value={formTrigger}
-                      onChange={(e) => setFormTrigger(e.target.value)}
+                      onChange={(e: any) => setFormTrigger(e.target.value)}
                       style={selectStyle}
                     >
-                      {TRIGGERS.map((t) => (
+                      {TRIGGERS.map((t: any) => (
                         <option key={t} value={t}>
                           {t.replace(/_/g, " ")}
                         </option>
@@ -417,24 +417,24 @@ export default function WorkflowsPage() {
                       <Plus size={12} /> Add
                     </Button>
                   </div>
-                  {formConditions.map((cond, idx) => (
+                  {formConditions.map((cond: any, idx: any) => (
                     <div key={idx} className={styles.style8}>
                       <input
                         placeholder="Field"
                         value={cond.field}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateCondition(idx, "field", e.target.value)
                         }
                         style={inputStyle}
                       />
                       <select
                         value={cond.operator}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateCondition(idx, "operator", e.target.value)
                         }
                         style={selectStyle}
                       >
-                        {OPERATORS.map((op) => (
+                        {OPERATORS.map((op: any) => (
                           <option key={op} value={op}>
                             {op.replace(/_/g, " ")}
                           </option>
@@ -443,7 +443,7 @@ export default function WorkflowsPage() {
                       <input
                         placeholder="Value"
                         value={cond.value}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateCondition(idx, "value", e.target.value)
                         }
                         style={inputStyle}
@@ -474,15 +474,15 @@ export default function WorkflowsPage() {
                       <Plus size={12} /> Add
                     </Button>
                   </div>
-                  {formActions.map((action, idx) => (
+                  {formActions.map((action: any, idx: any) => (
                     <div key={idx} className={styles.style11}>
                       <select
                         value={action.type}
-                        onChange={(e) => updateActionType(idx, e.target.value)}
+                        onChange={(e: any) => updateActionType(idx, e.target.value)}
                         style={{ ...selectStyle }}
                         className={styles.s2}
                       >
-                        {ACTION_TYPES.map((t) => (
+                        {ACTION_TYPES.map((t: any) => (
                           <option key={t} value={t}>
                             {t.replace(/_/g, " ")}
                           </option>
@@ -505,7 +505,7 @@ export default function WorkflowsPage() {
                   <input
                     type="checkbox"
                     checked={formActive}
-                    onChange={(e) => setFormActive(e.target.checked)}
+                    onChange={(e: any) => setFormActive(e.target.checked)}
                   />
                   Active (rule will execute immediately)
                 </label>

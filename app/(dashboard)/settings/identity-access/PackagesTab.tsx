@@ -19,7 +19,7 @@ interface AccessPackageData {
 
 function allModules(): string[] {
   const set = new Set<string>();
-  PERMISSION_REGISTRY.forEach((p) => set.add(p.module));
+  PERMISSION_REGISTRY.forEach((p: any) => set.add(p.module));
   return Array.from(set);
 }
 
@@ -86,7 +86,7 @@ export default function PackagesTab() {
       header: "Assigned To",
       render: (row: any) => (
         <div className={styles.s3}>
-          {row.assignedRoles.map((r) => (
+          {row.assignedRoles.map((r: any) => (
             <Badge key={r} variant="success">
               {r}
             </Badge>
@@ -168,7 +168,7 @@ function CreatePackageModal({
   const modules = allModules();
 
   const togglePerm = (code: string) => {
-    setSelectedPerms((prev) => {
+    setSelectedPerms((prev: any) => {
       const next = new Set(prev);
       next.has(code) ? next.delete(code) : next.add(code);
       return next;
@@ -235,24 +235,24 @@ function CreatePackageModal({
           placeholder="e.g. Finance Full Access"
           required
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: any) => setName(e.target.value)}
         />
         <TextField
           label="Description"
           placeholder="What does this package grant?"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e: any) => setDescription(e.target.value)}
         />
 
         <FormField label={`Permissions (${selectedPerms.size} selected)`}>
           <div className={styles.s8}>
-            {modules.map((mod) => {
+            {modules.map((mod: any) => {
               const modPerms = getPermissionsByModule(mod);
               return (
                 <div key={mod} className={styles.s9}>
                   <span className={styles.s10}>{mod}</span>
                   <div className={styles.s11}>
-                    {modPerms.map((perm) => (
+                    {modPerms.map((perm: any) => (
                       <label key={perm.code} className={styles.s12}>
                         <input
                           type="checkbox"
@@ -277,7 +277,7 @@ function CreatePackageModal({
           <Textarea
             rows={3}
             value={fieldRules}
-            onChange={(e) => setFieldRules(e.target.value)}
+            onChange={(e: any) => setFieldRules(e.target.value)}
             placeholder="finance.invoice.amount:hidden"
           />
         </FormField>
@@ -289,7 +289,7 @@ function CreatePackageModal({
           <Textarea
             rows={3}
             value={recordFilters}
-            onChange={(e) => setRecordFilters(e.target.value)}
+            onChange={(e: any) => setRecordFilters(e.target.value)}
             placeholder="crm.lead:owned_by_user"
           />
         </FormField>

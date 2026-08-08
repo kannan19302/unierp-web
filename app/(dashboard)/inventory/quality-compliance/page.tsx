@@ -506,7 +506,7 @@ export default function QualityCompliancePage() {
         </div>
         <div className="border-b border-gray-200 dark:border-gray-700">
           <nav className="flex gap-1 -mb-px">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}

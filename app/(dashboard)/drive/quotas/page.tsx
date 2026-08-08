@@ -76,9 +76,9 @@ export default function DriveQuotasPage() {
   }
 
   // Calculate totals
-  const totalUsed = tenants.reduce((sum, t) => sum + t.usedMB, 0);
-  const totalQuota = tenants.reduce((sum, t) => sum + t.quotaMB, 0);
-  const totalFiles = tenants.reduce((sum, t) => sum + t.filesCount, 0);
+  const totalUsed = tenants.reduce((sum: any, t: any) => sum + t.usedMB, 0);
+  const totalQuota = tenants.reduce((sum: any, t: any) => sum + t.quotaMB, 0);
+  const totalFiles = tenants.reduce((sum: any, t: any) => sum + t.filesCount, 0);
 
   return (
     <RouteGuard permission="drive.quotas.read">
@@ -117,7 +117,7 @@ export default function DriveQuotasPage() {
               value: tenants.length.toString(),
               color: "var(--color-text)",
             },
-          ].map((m, i) => (
+          ].map((m: any, i: any) => (
             <div key={i} className="ui-card p-4">
               <div className={styles.p2}>{m.label}</div>
               <div className={styles.p3} style={{ color: m.color }}>
@@ -129,7 +129,7 @@ export default function DriveQuotasPage() {
 
         {/* Tenant Cards */}
         <div className={styles.p4}>
-          {tenants.map((t) => {
+          {tenants.map((t: any) => {
             const usagePercent = (t.usedMB / t.quotaMB) * 100;
             const usageColor =
               usagePercent > 90

@@ -112,10 +112,10 @@ export default function SentimentAnalysisPage() {
           </span>
           <select
             value={selectedLead}
-            onChange={(e) => setSelectedLead(e.target.value)}
+            onChange={(e: any) => setSelectedLead(e.target.value)}
             className={styles.leadSelect}
           >
-            {leads.map((l) => (
+            {leads.map((l: any) => (
               <option key={l.id} value={l.id}>
                 {l.firstName} {l.lastName} ({l.company || "No Company"})
               </option>

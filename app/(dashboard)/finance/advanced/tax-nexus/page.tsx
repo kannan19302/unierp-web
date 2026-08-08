@@ -144,7 +144,7 @@ export default function EconomicNexusMonitoringPage() {
 
   const handleRegisterState = async (state: string) => {
     try {
-      const existing = registrations.find((r) => r.state === state);
+      const existing = registrations.find((r: any) => r.state === state);
       if (existing) {
         await apiPatch(
           `/advanced-finance/tax/nexus/registrations/${existing.id}`,
@@ -219,7 +219,7 @@ export default function EconomicNexusMonitoringPage() {
             variant="primary"
             size="sm"
             className="flex items-center gap-1 inline-flex"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleRegisterState(s.state);
             }}

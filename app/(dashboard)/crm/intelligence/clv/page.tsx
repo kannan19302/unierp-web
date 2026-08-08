@@ -114,10 +114,10 @@ export default function ClvAnalyticsPage() {
           <span className="ui-text-xs-bold-muted">SELECT CUSTOMER ACCOUNT</span>
           <select
             value={selectedCustomer}
-            onChange={(e) => setSelectedCustomer(e.target.value)}
+            onChange={(e: any) => setSelectedCustomer(e.target.value)}
             className={styles.select}
           >
-            {customers.map((c) => (
+            {customers.map((c: any) => (
               <option key={c.id} value={c.id}>
                 {c.name} ({c.type})
               </option>

@@ -144,7 +144,7 @@ export default function DispatchBoardPage() {
           />
           <KPICard
             title="Scheduled"
-            value={dispatches.filter((d) => d.status === "SCHEDULED").length}
+            value={dispatches.filter((d: any) => d.status === "SCHEDULED").length}
             icon={<Clock size={18} />}
             color="var(--color-warning)"
           />
@@ -184,13 +184,13 @@ export default function DispatchBoardPage() {
               label="Ticket ID"
               required
               value={form.ticketId}
-              onChange={(e) => setForm({ ...form, ticketId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, ticketId: e.target.value })}
             />
             <TextField
               label="Technician ID"
               required
               value={form.technicianId}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, technicianId: e.target.value })
               }
             />
@@ -198,7 +198,7 @@ export default function DispatchBoardPage() {
               label="Scheduled Time"
               type="datetime-local"
               value={form.scheduledTime}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, scheduledTime: e.target.value })
               }
             />

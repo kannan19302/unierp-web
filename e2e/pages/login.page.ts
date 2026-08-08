@@ -22,7 +22,7 @@ export class LoginPage {
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
     await this.submitButton.click();
-    await this.page.waitForURL((url) => !url.pathname.includes("/login"), {
+    await this.page.waitForURL((url: any) => !url.pathname.includes("/login"), {
       timeout: 15_000,
     });
   }

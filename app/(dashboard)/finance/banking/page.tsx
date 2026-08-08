@@ -141,16 +141,16 @@ export default function BankingPage() {
       .list<{ balance: number }>("/advanced-finance/bank-accounts", {
         pageSize: 500,
       })
-      .then((res) => {
+      .then((res: any) => {
         if (cancelled) return;
         const accounts = res.data ?? [];
         setSummary({
-          totalCash: accounts.reduce((s, a) => s + Number(a.balance || 0), 0),
+          totalCash: accounts.reduce((s: any, a: any) => s + Number(a.balance || 0), 0),
           accountCount: res.total ?? accounts.length,
         });
         setSummaryError(null);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (cancelled) return;
         const message =
           err instanceof Error ? err.message : "Failed to load banking summary";

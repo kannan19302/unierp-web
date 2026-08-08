@@ -65,7 +65,7 @@ export default function SubscriptionsHomePage() {
         description="Subscription billing and lifecycle management"
       />
       <div className="ui-grid-3">
-        {sections.map((s) => {
+        {sections.map((s: any) => {
           const Icon = s.icon;
           return (
             <Link key={s.name} href={s.href}>

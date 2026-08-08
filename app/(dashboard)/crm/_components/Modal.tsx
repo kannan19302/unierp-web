@@ -22,7 +22,7 @@ export function Modal({
       <div
         className={styles.dialog}
         style={{ maxWidth }}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: any) => e.stopPropagation()}
       >
         <div className="ui-flex-between mb-4">
           <h3 className="m-0 font-semibold">{title}</h3>

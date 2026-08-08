@@ -485,7 +485,7 @@ export default function SubscriptionDetailPage() {
                 <Input
                   type="date"
                   value={usageForm.usageDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setUsageForm({ ...usageForm, usageDate: e.target.value })
                   }
                   required
@@ -496,7 +496,7 @@ export default function SubscriptionDetailPage() {
                   type="text"
                   placeholder="e.g. api_calls"
                   value={usageForm.metricName}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setUsageForm({ ...usageForm, metricName: e.target.value })
                   }
                   required
@@ -508,7 +508,7 @@ export default function SubscriptionDetailPage() {
                     type="number"
                     min="1"
                     value={usageForm.quantity}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setUsageForm({
                         ...usageForm,
                         quantity: Number(e.target.value),
@@ -523,7 +523,7 @@ export default function SubscriptionDetailPage() {
                     min="0"
                     step="0.001"
                     value={usageForm.unitAmount}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setUsageForm({
                         ...usageForm,
                         unitAmount: Number(e.target.value),

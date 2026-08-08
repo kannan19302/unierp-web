@@ -113,7 +113,7 @@ export default function DocumentsPage() {
 
   const handleDelete = async (id: string) => {
     const prev = documents;
-    setDocuments(prev.filter((d) => d.id !== id)); // optimistic
+    setDocuments(prev.filter((d: any) => d.id !== id)); // optimistic
     try {
       await client.delete(`/crm/documents/${id}`);
       toast.success("Document removed");
@@ -167,11 +167,11 @@ export default function DocumentsPage() {
   const filtered =
     entityFilter === "ALL"
       ? documents
-      : documents.filter((d) => d.entityType === entityFilter);
+      : documents.filter((d: any) => d.entityType === entityFilter);
 
   const [docSortBy, setDocSortBy] = useState<string>("createdAt");
   const [docSortOrder, setDocSortOrder] = useState<SortOrder>("desc");
-  const sortedDocs = [...filtered].sort((a, b) => {
+  const sortedDocs = [...filtered].sort((a: any, b: any) => {
     let cmp = 0;
     if (docSortBy === "name") cmp = a.name.localeCompare(b.name);
     else if (docSortBy === "fileSize") cmp = a.fileSize - b.fileSize;
@@ -223,7 +223,7 @@ export default function DocumentsPage() {
       width: "80px",
       render: (d: any) => (
         <button
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             handleDelete(d.id);
           }}
@@ -267,7 +267,7 @@ export default function DocumentsPage() {
 
         {/* Entity Filter Tabs */}
         <div className={styles.entityTabs}>
-          {entityTabs.map((tab) => (
+          {entityTabs.map((tab: any) => (
             <button
               key={tab}
               onClick={() => setEntityFilter(tab)}
@@ -277,7 +277,7 @@ export default function DocumentsPage() {
                 ? "All"
                 : tab.charAt(0) + tab.slice(1).toLowerCase()}
               {tab !== "ALL" &&
-                ` (${documents.filter((d) => d.entityType === tab).length})`}
+                ` (${documents.filter((d: any) => d.entityType === tab).length})`}
             </button>
           ))}
         </div>
@@ -301,7 +301,7 @@ export default function DocumentsPage() {
               rowKey={(d: any) => d.id}
               sortBy={docSortBy}
               sortOrder={docSortOrder}
-              onSortChange={(key, order) => {
+              onSortChange={(key: any, order: any) => {
                 setDocSortBy(key);
                 setDocSortOrder(order);
               }}
@@ -338,7 +338,7 @@ export default function DocumentsPage() {
                       required
                       placeholder="e.g. Acme Corp Proposal.pdf"
                       value={docName}
-                      onChange={(e) => setDocName(e.target.value)}
+                      onChange={(e: any) => setDocName(e.target.value)}
                       className={`ui-input ${styles.fieldInput}`}
                     />
                   </div>
@@ -347,7 +347,7 @@ export default function DocumentsPage() {
                       <label className={styles.fieldLabel}>Document Type</label>
                       <select
                         value={docType}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setDocType(e.target.value as typeof docType)
                         }
                         className={`ui-input ${styles.fieldInput}`}
@@ -362,7 +362,7 @@ export default function DocumentsPage() {
                       <label className={styles.fieldLabel}>Entity Type</label>
                       <select
                         value={entityType}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setEntityType(e.target.value as typeof entityType)
                         }
                         className={`ui-input ${styles.fieldInput}`}
@@ -382,7 +382,7 @@ export default function DocumentsPage() {
                       required
                       placeholder="Related record ID"
                       value={entityId}
-                      onChange={(e) => setEntityId(e.target.value)}
+                      onChange={(e: any) => setEntityId(e.target.value)}
                       className={`ui-input ${styles.fieldInput}`}
                     />
                   </div>
@@ -393,7 +393,7 @@ export default function DocumentsPage() {
                       required
                       placeholder="https://..."
                       value={fileUrl}
-                      onChange={(e) => setFileUrl(e.target.value)}
+                      onChange={(e: any) => setFileUrl(e.target.value)}
                       className={`ui-input ${styles.fieldInput}`}
                     />
                   </div>
@@ -407,7 +407,7 @@ export default function DocumentsPage() {
                         required
                         min={0}
                         value={fileSize}
-                        onChange={(e) => setFileSize(Number(e.target.value))}
+                        onChange={(e: any) => setFileSize(Number(e.target.value))}
                         className={`ui-input ${styles.fieldInput}`}
                       />
                     </div>
@@ -417,7 +417,7 @@ export default function DocumentsPage() {
                         type="text"
                         placeholder="application/pdf"
                         value={mimeType}
-                        onChange={(e) => setMimeType(e.target.value)}
+                        onChange={(e: any) => setMimeType(e.target.value)}
                         className={`ui-input ${styles.fieldInput}`}
                       />
                     </div>

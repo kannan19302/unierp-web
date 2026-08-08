@@ -19,7 +19,7 @@ export default function TemplatesPage() {
 
   useEffect(() => {
     fetch("/api/ext-gateway/templates")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setItems)
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -56,7 +56,7 @@ export default function TemplatesPage() {
       header: "Actions",
       render: (r: any) => (
         <button
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
           }}
           className="ui-btn-icon"

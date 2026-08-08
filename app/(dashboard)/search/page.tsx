@@ -52,7 +52,7 @@ export default function SearchPage() {
             className="ui-input flex-1"
             placeholder="Search across all modules..."
             value={query}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setQuery(e.target.value);
               doSearch(e.target.value);
             }}
@@ -80,7 +80,7 @@ export default function SearchPage() {
               className="ui-input flex-1"
               placeholder="Name this search..."
               value={saveName}
-              onChange={(e) => setSaveName(e.target.value)}
+              onChange={(e: any) => setSaveName(e.target.value)}
             />
             <button className="ui-btn ui-btn-secondary" onClick={saveSearch}>
               <Save className="w-4 h-4 mr-2" /> Save

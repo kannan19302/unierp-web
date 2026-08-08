@@ -189,7 +189,7 @@ export default function SelfServicePage() {
                   <input
                     className="ui-input"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e: any) => setPhone(e.target.value)}
                     placeholder="+1 (555) 0123"
                   />
                 </div>
@@ -198,7 +198,7 @@ export default function SelfServicePage() {
                   <input
                     className="ui-input"
                     value={addressLine}
-                    onChange={(e) => setAddressLine(e.target.value)}
+                    onChange={(e: any) => setAddressLine(e.target.value)}
                     placeholder="123 Stark Tower"
                   />
                 </div>
@@ -208,7 +208,7 @@ export default function SelfServicePage() {
                     <input
                       className="ui-input"
                       value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      onChange={(e: any) => setCity(e.target.value)}
                       placeholder="New York"
                     />
                   </div>
@@ -217,7 +217,7 @@ export default function SelfServicePage() {
                     <input
                       className="ui-input"
                       value={country}
-                      onChange={(e) => setCountry(e.target.value)}
+                      onChange={(e: any) => setCountry(e.target.value)}
                       placeholder="US"
                     />
                   </div>
@@ -228,7 +228,7 @@ export default function SelfServicePage() {
                     className="ui-input"
                     type="password"
                     value={bankAccount}
-                    onChange={(e) => setBankAccount(e.target.value)}
+                    onChange={(e: any) => setBankAccount(e.target.value)}
                     placeholder="XXXX-XXXX-XXXX"
                   />
                 </div>
@@ -336,7 +336,7 @@ export default function SelfServicePage() {
                 {data.assignedAssets.length === 0 ? (
                   <div className={styles.s20}>No company assets assigned.</div>
                 ) : (
-                  data.assignedAssets.map((asset) => (
+                  data.assignedAssets.map((asset: any) => (
                     <Card key={asset.id} padding="sm" className={styles.s21}>
                       <div className={styles.s22}>{asset.assetName}</div>
                       <div className="ui-text-caption">
@@ -361,7 +361,7 @@ export default function SelfServicePage() {
                 {data.documents.length === 0 ? (
                   <div className={styles.s25}>No documents uploaded.</div>
                 ) : (
-                  data.documents.map((doc) => (
+                  data.documents.map((doc: any) => (
                     <div key={doc.id} className={styles.s26}>
                       <div className="text-sm">
                         <span className="font-semibold">{doc.name}</span>

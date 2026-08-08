@@ -128,7 +128,7 @@ function DashboardTab() {
       apiFetch<DashboardData>("/inventory/logistics/dashboard"),
       apiFetch<OutboundShipment[]>("/inventory/logistics/exceptions"),
     ])
-      .then(([d, e]) => {
+      .then(([d, e]: any) => {
         setData(d);
         setExceptions(e);
       })
@@ -172,7 +172,7 @@ function DashboardTab() {
             Shipment Exceptions ({exceptions.length})
           </h3>
           <div className="space-y-2">
-            {exceptions.map((e) => (
+            {exceptions.map((e: any) => (
               <div
                 key={e.id}
                 className="flex items-center justify-between text-sm"
@@ -192,7 +192,7 @@ function DashboardTab() {
         </h3>
         {data.recentActivity?.length ? (
           <div className="space-y-2">
-            {data.recentActivity.map((a) => (
+            {data.recentActivity.map((a: any) => (
               <div
                 key={a.id}
                 className="flex items-center justify-between text-sm"
@@ -464,7 +464,7 @@ export default function LogisticsPage() {
         </div>
         <div className="border-b border-gray-200 dark:border-gray-700">
           <nav className="flex gap-1 -mb-px">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}

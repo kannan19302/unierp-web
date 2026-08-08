@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState, useEffect } from "react";
 
 export default function ContractTemplatesPage() {
@@ -9,9 +9,9 @@ export default function ContractTemplatesPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/crm/contract-deep/templates").then((r) => r.json()),
-      fetch("/api/crm/contract-deep/template-categories").then((r) => r.json()),
-    ]).then(([t, c]) => {
+      fetch("/api/crm/contract-deep/templates").then((r: any) => r.json()),
+      fetch("/api/crm/contract-deep/template-categories").then((r: any) => r.json()),
+    ]).then(([t, c]: any) => {
       setTemplates(t.data || []);
       setCategories(c.data || []);
       setLoading(false);

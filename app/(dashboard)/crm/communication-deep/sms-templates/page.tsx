@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState, useEffect } from "react";
 
 export default function SmsTemplatesPage() {
@@ -8,8 +8,8 @@ export default function SmsTemplatesPage() {
 
   useEffect(() => {
     fetch("/api/crm/communication-deep/sms-templates")
-      .then((r) => r.json())
-      .then((d) => {
+      .then((r: any) => r.json())
+      .then((d: any) => {
         setTemplates(d.data || []);
         setLoading(false);
       })

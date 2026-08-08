@@ -95,7 +95,7 @@ export default function ProjectHealthPage() {
         {/* Project List */}
         <div className="ui-stack-2">
           <h3 className={styles.p4}>Select Project</h3>
-          {projects.map((p) => {
+          {projects.map((p: any) => {
             const isSelected = selectedProject?.id === p.id;
             return (
               <button

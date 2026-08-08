@@ -150,7 +150,7 @@ export default function BlanketAgreementsPage() {
 
   const handleRemoveItemRow = (index: number) => {
     if (items.length === 1) return;
-    setItems(items.filter((_, i) => i !== index));
+    setItems(items.filter((_: any, i: any) => i !== index));
   };
 
   const handleItemChange = (index: number, key: string, value: any) => {
@@ -162,7 +162,7 @@ export default function BlanketAgreementsPage() {
     newItems[index] = updated;
 
     if (key === "productId") {
-      const prod = products.find((p) => p.id === value);
+      const prod = products.find((p: any) => p.id === value);
       if (prod) {
         updated.description = prod.name;
         updated.unitPrice = 50; // Mock default price
@@ -172,7 +172,7 @@ export default function BlanketAgreementsPage() {
 
     // Auto-calculate agreementLimit if user edited rows
     const total = newItems.reduce(
-      (sum, item) => sum + item.quantity * item.unitPrice,
+      (sum: any, item: any) => sum + item.quantity * item.unitPrice,
       0,
     );
     setAgreementLimit(total);
@@ -191,7 +191,7 @@ export default function BlanketAgreementsPage() {
         agreementLimit: Number(agreementLimit),
         currency,
         notes: notes || undefined,
-        lineItems: items.map((item) => ({
+        lineItems: items.map((item: any) => ({
           productId: item.productId || undefined,
           description: item.description,
           quantity: Number(item.quantity),
@@ -212,7 +212,7 @@ export default function BlanketAgreementsPage() {
   const handleOpenReleaseModal = (agreement: BlanketAgreement) => {
     setSelectedAgreement(agreement);
     const initialQty: Record<string, number> = {};
-    agreement.lineItems?.forEach((item) => {
+    agreement.lineItems?.forEach((item: any) => {
       // default release to remaining quantity under agreement
       const remaining = Number(item.quantity) - Number(item.releasedQty);
       initialQty[item.id] = remaining > 0 ? remaining : 0;
@@ -231,11 +231,11 @@ export default function BlanketAgreementsPage() {
     setReleasing(true);
     try {
       const itemsPayload = Object.entries(releaseQuantities)
-        .map(([itemId, qty]) => ({
+        .map(([itemId, qty]: any) => ({
           agreementItemId: itemId,
           quantity: Number(qty),
         }))
-        .filter((item) => item.quantity > 0);
+        .filter((item: any) => item.quantity > 0);
 
       if (itemsPayload.length === 0) {
         alert("Please specify at least one item quantity to release.");
@@ -260,7 +260,7 @@ export default function BlanketAgreementsPage() {
 
       // Update local state to reflect release drawdown
       let addAmount = 0;
-      const updatedLines = selectedAgreement.lineItems?.map((line) => {
+      const updatedLines = selectedAgreement.lineItems?.map((line: any) => {
         const rel = releaseQuantities[line.id] || 0;
         addAmount += rel * Number(line.unitPrice);
         return {
@@ -270,7 +270,7 @@ export default function BlanketAgreementsPage() {
       });
 
       setAgreements(
-        agreements.map((ba) => {
+        agreements.map((ba: any) => {
           if (ba.id === selectedAgreement.id) {
             return {
               ...ba,
@@ -323,7 +323,7 @@ export default function BlanketAgreementsPage() {
               <div>
                 <div className={styles.p2}>Active Agreements</div>
                 <div className={styles.p3}>
-                  {agreements.filter((a) => a.status === "ACTIVE").length}
+                  {agreements.filter((a: any) => a.status === "ACTIVE").length}
                 </div>
               </div>
               <div className={styles.p4}>
@@ -338,7 +338,7 @@ export default function BlanketAgreementsPage() {
                 <div className={styles.p6}>
                   $
                   {agreements
-                    .reduce((sum, a) => sum + Number(a.agreementLimit), 0)
+                    .reduce((sum: any, a: any) => sum + Number(a.agreementLimit), 0)
                     .toLocaleString()}
                 </div>
               </div>
@@ -354,7 +354,7 @@ export default function BlanketAgreementsPage() {
                 <div className={styles.p9}>
                   $
                   {agreements
-                    .reduce((sum, a) => sum + Number(a.releasedAmount), 0)
+                    .reduce((sum: any, a: any) => sum + Number(a.releasedAmount), 0)
                     .toLocaleString()}
                 </div>
               </div>
@@ -478,7 +478,7 @@ export default function BlanketAgreementsPage() {
                       type="text"
                       required
                       value={agreementNumber}
-                      onChange={(e) => setAgreementNumber(e.target.value)}
+                      onChange={(e: any) => setAgreementNumber(e.target.value)}
                       className="ui-input"
                     />
                   </div>
@@ -489,7 +489,7 @@ export default function BlanketAgreementsPage() {
                       required
                       placeholder="e.g. FY2026 Steel Sheet Agreement"
                       value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      onChange={(e: any) => setTitle(e.target.value)}
                       className="ui-input"
                     />
                   </div>
@@ -501,11 +501,11 @@ export default function BlanketAgreementsPage() {
                     <select
                       required
                       value={selectedVendor}
-                      onChange={(e) => setSelectedVendor(e.target.value)}
+                      onChange={(e: any) => setSelectedVendor(e.target.value)}
                       className="ui-input"
                     >
                       <option value="">Select Vendor...</option>
-                      {vendors.map((v) => (
+                      {vendors.map((v: any) => (
                         <option key={v.id} value={v.id}>
                           {v.name}
                         </option>
@@ -516,7 +516,7 @@ export default function BlanketAgreementsPage() {
                     <label className="ui-label">Currency</label>
                     <select
                       value={currency}
-                      onChange={(e) => setCurrency(e.target.value)}
+                      onChange={(e: any) => setCurrency(e.target.value)}
                       className="ui-input"
                     >
                       <option value="USD">USD ($)</option>
@@ -534,7 +534,7 @@ export default function BlanketAgreementsPage() {
                       type="date"
                       required
                       value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={(e: any) => setStartDate(e.target.value)}
                       className="ui-input"
                     />
                   </div>
@@ -544,7 +544,7 @@ export default function BlanketAgreementsPage() {
                       type="date"
                       required
                       value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      onChange={(e: any) => setEndDate(e.target.value)}
                       className="ui-input"
                     />
                   </div>
@@ -568,7 +568,7 @@ export default function BlanketAgreementsPage() {
                   </div>
 
                   <div className="ui-stack-2">
-                    {items.map((item, idx) => (
+                    {items.map((item: any, idx: any) => (
                       <div key={idx} className={styles.p37}>
                         <div
                           className={["ui-form-group", styles.p38].join(" ")}
@@ -578,13 +578,13 @@ export default function BlanketAgreementsPage() {
                           </label>
                           <select
                             value={item.productId}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(idx, "productId", e.target.value)
                             }
                             className="ui-input"
                           >
                             <option value="">Custom Item / Service</option>
-                            {products.map((p) => (
+                            {products.map((p: any) => (
                               <option key={p.id} value={p.id}>
                                 {p.name} ({p.sku})
                               </option>
@@ -603,7 +603,7 @@ export default function BlanketAgreementsPage() {
                             required
                             placeholder="Contract specifications"
                             value={item.description}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(
                                 idx,
                                 "description",
@@ -623,7 +623,7 @@ export default function BlanketAgreementsPage() {
                             required
                             min={1}
                             value={item.quantity}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(
                                 idx,
                                 "quantity",
@@ -645,7 +645,7 @@ export default function BlanketAgreementsPage() {
                             required
                             min={0}
                             value={item.unitPrice}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(
                                 idx,
                                 "unitPrice",
@@ -687,7 +687,7 @@ export default function BlanketAgreementsPage() {
                         required
                         min={0}
                         value={agreementLimit}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setAgreementLimit(Number(e.target.value))
                         }
                         className="ui-input"
@@ -699,7 +699,7 @@ export default function BlanketAgreementsPage() {
                         $
                         {items
                           .reduce(
-                            (sum, item) => sum + item.quantity * item.unitPrice,
+                            (sum: any, item: any) => sum + item.quantity * item.unitPrice,
                             0,
                           )
                           .toLocaleString()}
@@ -713,7 +713,7 @@ export default function BlanketAgreementsPage() {
                   <textarea
                     placeholder="Detail penalty parameters, shipment delays allowances, delivery terms..."
                     value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                    onChange={(e: any) => setNotes(e.target.value)}
                     className="ui-input"
                     rows={2}
                   />
@@ -802,7 +802,7 @@ export default function BlanketAgreementsPage() {
                                                                   max={remQty}
                                                                   required
                                                                   value={releaseQuantities[item.id] || 0}
-                                                                  onChange={(e) =>
+                                                                  onChange={(e: any) =>
                                                                     handleReleaseQuantityChange(
                                                                       item.id,
                                                                       Number(e.target.value),
@@ -824,7 +824,7 @@ export default function BlanketAgreementsPage() {
                     <span className={styles.p66}>
                       $
                       {selectedAgreement.lineItems
-                        ?.reduce((sum, item) => {
+                        ?.reduce((sum: any, item: any) => {
                           const qty = releaseQuantities[item.id] || 0;
                           return sum + qty * Number(item.unitPrice);
                         }, 0)

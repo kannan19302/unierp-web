@@ -66,7 +66,7 @@ export default function LaneRatesPage() {
         "/supply-chain/lane-rates",
         form,
       );
-      setRates((prev) => [created, ...prev]);
+      setRates((prev: any) => [created, ...prev]);
       setCreateOpen(false);
       setForm({
         origin: "",
@@ -103,7 +103,7 @@ export default function LaneRatesPage() {
       setBestRate(result);
     } catch {
       const matches = rates.filter(
-        (r) =>
+        (r: any) =>
           r.origin.toLowerCase().includes(searchForm.origin.toLowerCase()) &&
           r.destination
             .toLowerCase()
@@ -112,7 +112,7 @@ export default function LaneRatesPage() {
       );
       if (matches.length > 0) {
         const sorted = [...matches].sort(
-          (a, b) => a.ratePerUnit - b.ratePerUnit,
+          (a: any, b: any) => a.ratePerUnit - b.ratePerUnit,
         );
         if (sorted[0]) setBestRate(sorted[0]);
       }
@@ -240,7 +240,7 @@ export default function LaneRatesPage() {
                 required
                 placeholder="Shanghai"
                 value={searchForm.origin}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSearchForm({ ...searchForm, origin: e.target.value })
                 }
               />
@@ -249,7 +249,7 @@ export default function LaneRatesPage() {
                 required
                 placeholder="Los Angeles"
                 value={searchForm.destination}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSearchForm({ ...searchForm, destination: e.target.value })
                 }
               />
@@ -258,7 +258,7 @@ export default function LaneRatesPage() {
               <FormField label="Mode">
                 <Select
                   value={searchForm.mode}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setSearchForm({ ...searchForm, mode: e.target.value })
                   }
                 >
@@ -273,7 +273,7 @@ export default function LaneRatesPage() {
                 type="number"
                 min={0}
                 value={searchForm.weight || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSearchForm({
                     ...searchForm,
                     weight: parseInt(e.target.value) || 0,
@@ -372,14 +372,14 @@ export default function LaneRatesPage() {
                 required
                 placeholder="Shanghai"
                 value={form.origin}
-                onChange={(e) => setForm({ ...form, origin: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, origin: e.target.value })}
               />
               <TextField
                 label="Destination"
                 required
                 placeholder="Los Angeles"
                 value={form.destination}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, destination: e.target.value })
                 }
               />
@@ -390,12 +390,12 @@ export default function LaneRatesPage() {
                 required
                 placeholder="Maersk"
                 value={form.carrier}
-                onChange={(e) => setForm({ ...form, carrier: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, carrier: e.target.value })}
               />
               <FormField label="Mode">
                 <Select
                   value={form.mode}
-                  onChange={(e) => setForm({ ...form, mode: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, mode: e.target.value })}
                 >
                   <option value="OCEAN">Ocean</option>
                   <option value="AIR">Air</option>
@@ -411,7 +411,7 @@ export default function LaneRatesPage() {
                 min={0}
                 step={0.01}
                 value={form.ratePerUnit || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({
                     ...form,
                     ratePerUnit: parseFloat(e.target.value) || 0,
@@ -424,7 +424,7 @@ export default function LaneRatesPage() {
                 min={0}
                 step={0.01}
                 value={form.minCharge || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({
                     ...form,
                     minCharge: parseFloat(e.target.value) || 0,
@@ -437,7 +437,7 @@ export default function LaneRatesPage() {
                 label="Transit Time"
                 placeholder="14 days"
                 value={form.transitTime}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, transitTime: e.target.value })
                 }
               />
@@ -445,7 +445,7 @@ export default function LaneRatesPage() {
                 label="Valid Until"
                 type="date"
                 value={form.validUntil}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, validUntil: e.target.value })
                 }
               />

@@ -43,7 +43,7 @@ export default function CompetitorIntelligencePage() {
         description="Track competitors, manage battlecards, and analyze win/loss patterns"
       />
       <div className="ui-grid-3" style={{ gap: "1rem" }}>
-        {features.map((f) => (
+        {features.map((f: any) => (
           <Link key={f.name} href={f.href} style={{ textDecoration: "none" }}>
             <Card hover>
               <div

@@ -145,7 +145,7 @@ export default function CrmQuotationsPage() {
   }, [fetchQuotations]);
 
   // Client-side filter + sort + pagination (backend does not support these params yet)
-  const filteredQuotations = allQuotations.filter((q) => {
+  const filteredQuotations = allQuotations.filter((q: any) => {
     if (statusFilter !== "ALL" && q.status !== statusFilter) return false;
     if (!debouncedSearch) return true;
     const query = debouncedSearch.toLowerCase();
@@ -154,7 +154,7 @@ export default function CrmQuotationsPage() {
       q.customerName.toLowerCase().includes(query)
     );
   });
-  const sortedQuotations = [...filteredQuotations].sort((a, b) => {
+  const sortedQuotations = [...filteredQuotations].sort((a: any, b: any) => {
     let cmp = 0;
     if (sortBy === "totalAmount")
       cmp = Number(a.totalAmount) - Number(b.totalAmount);
@@ -190,7 +190,7 @@ export default function CrmQuotationsPage() {
     setCreating(true);
     try {
       const total = lineItems.reduce(
-        (a, li) => a + li.quantity * li.unitPrice * (1 + li.taxRate / 100),
+        (a: any, li: any) => a + li.quantity * li.unitPrice * (1 + li.taxRate / 100),
         0,
       );
       const newQ: Quotation = {
@@ -204,7 +204,7 @@ export default function CrmQuotationsPage() {
         lineItems,
         notes: form.notes,
       };
-      setAllQuotations((prev) => [newQ, ...prev]);
+      setAllQuotations((prev: any) => [newQ, ...prev]);
       setCreateOpen(false);
       setForm({
         quotationNumber: "",
@@ -228,16 +228,16 @@ export default function CrmQuotationsPage() {
   };
 
   const totalValue = sortedQuotations.reduce(
-    (a, q) => a + Number(q.totalAmount),
+    (a: any, q: any) => a + Number(q.totalAmount),
     0,
   );
   const draftCount = sortedQuotations.filter(
-    (q) => q.status === "DRAFT",
+    (q: any) => q.status === "DRAFT",
   ).length;
-  const sentCount = sortedQuotations.filter((q) => q.status === "SENT").length;
+  const sentCount = sortedQuotations.filter((q: any) => q.status === "SENT").length;
   const acceptedValue = sortedQuotations
-    .filter((q) => q.status === "ACCEPTED")
-    .reduce((a, q) => a + Number(q.totalAmount), 0);
+    .filter((q: any) => q.status === "ACCEPTED")
+    .reduce((a: any, q: any) => a + Number(q.totalAmount), 0);
 
   const columns: Column<Quotation>[] = [
     {
@@ -299,7 +299,7 @@ export default function CrmQuotationsPage() {
         <div className={styles.style1}>
           <button
             title="View"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setSelected(row);
               setDetailOpen(true);
@@ -310,7 +310,7 @@ export default function CrmQuotationsPage() {
           </button>
           <button
             title="Duplicate"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className={styles.style3}
@@ -320,7 +320,7 @@ export default function CrmQuotationsPage() {
           {row.status === "DRAFT" && (
             <button
               title="Send"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
               }}
               className={styles.style4}
@@ -391,13 +391,13 @@ export default function CrmQuotationsPage() {
                 type="text"
                 placeholder="Search quotations..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e: any) => setSearch(e.target.value)}
                 className={styles.style8}
               />
             </div>
             <select
               value={`${sortBy}:${sortOrder}`}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 const parts = e.target.value.split(":");
                 if (parts[0] && parts[1]) {
                   setSortBy(parts[0]);
@@ -411,7 +411,7 @@ export default function CrmQuotationsPage() {
               <option value="quotationNumber:asc">Quote No. (A-Z)</option>
             </select>
             <div className="ui-flex ui-gap-2">
-              {["ALL", "DRAFT", "SENT", "ACCEPTED", "EXPIRED"].map((s) => (
+              {["ALL", "DRAFT", "SENT", "ACCEPTED", "EXPIRED"].map((s: any) => (
                 <button
                   key={s}
                   onClick={() => {
@@ -447,7 +447,7 @@ export default function CrmQuotationsPage() {
             data={data}
             loading={loading}
             rowKey={(r: any) => r.id}
-            onRowClick={(r) => {
+            onRowClick={(r: any) => {
               setSelected(r);
               setDetailOpen(true);
             }}
@@ -469,7 +469,7 @@ export default function CrmQuotationsPage() {
                   size="sm"
                   variant="outline"
                   disabled={page === 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  onClick={() => setPage((p: any) => Math.max(1, p - 1))}
                 >
                   Previous
                 </Button>
@@ -477,7 +477,7 @@ export default function CrmQuotationsPage() {
                   size="sm"
                   variant="outline"
                   disabled={page === totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  onClick={() => setPage((p: any) => Math.min(totalPages, p + 1))}
                 >
                   Next
                 </Button>
@@ -514,7 +514,7 @@ export default function CrmQuotationsPage() {
                 label="Quotation Number"
                 placeholder="Q-2026-005"
                 value={form.quotationNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, quotationNumber: e.target.value })
                 }
               />
@@ -523,7 +523,7 @@ export default function CrmQuotationsPage() {
                 placeholder="Customer name"
                 required
                 value={form.customerName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, customerName: e.target.value })
                 }
               />
@@ -533,7 +533,7 @@ export default function CrmQuotationsPage() {
                 label="Valid Until"
                 type="date"
                 value={form.validUntil}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, validUntil: e.target.value })
                 }
               />
@@ -541,7 +541,7 @@ export default function CrmQuotationsPage() {
                 label="Notes"
                 placeholder="Optional notes"
                 value={form.notes}
-                onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
               />
             </div>
 
@@ -567,14 +567,14 @@ export default function CrmQuotationsPage() {
                 </Button>
               </div>
               <div className="ui-stack-2">
-                {lineItems.map((item, idx) => (
+                {lineItems.map((item: any, idx: any) => (
                   <div key={idx} className={styles.style13}>
                     <input
                       type="text"
                       required
                       placeholder="Description"
                       value={item.description}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const n = [...lineItems];
                         n[idx] = { ...n[idx]!, description: e.target.value };
                         setLineItems(n);
@@ -586,7 +586,7 @@ export default function CrmQuotationsPage() {
                       required
                       min="1"
                       value={item.quantity}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const n = [...lineItems];
                         n[idx] = {
                           ...n[idx]!,
@@ -602,7 +602,7 @@ export default function CrmQuotationsPage() {
                       min="0"
                       step="0.01"
                       value={item.unitPrice}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const n = [...lineItems];
                         n[idx] = {
                           ...n[idx]!,
@@ -616,7 +616,7 @@ export default function CrmQuotationsPage() {
                       type="number"
                       min="0"
                       value={item.taxRate}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const n = [...lineItems];
                         n[idx] = {
                           ...n[idx]!,
@@ -630,7 +630,7 @@ export default function CrmQuotationsPage() {
                       type="button"
                       onClick={() => {
                         if (lineItems.length > 1)
-                          setLineItems(lineItems.filter((_, i) => i !== idx));
+                          setLineItems(lineItems.filter((_: any, i: any) => i !== idx));
                       }}
                       className={styles.style18}
                     >
@@ -643,7 +643,7 @@ export default function CrmQuotationsPage() {
                 Total:{" "}
                 {fmtCurrency(
                   lineItems.reduce(
-                    (a, li) =>
+                    (a: any, li: any) =>
                       a + li.quantity * li.unitPrice * (1 + li.taxRate / 100),
                     0,
                   ),

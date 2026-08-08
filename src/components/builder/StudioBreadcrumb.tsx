@@ -16,7 +16,7 @@ export interface Crumb {
 export function StudioBreadcrumb({ items }: { items: Crumb[] }) {
   return (
     <nav className="ui-breadcrumb" aria-label="Breadcrumb">
-      {items.map((c, i) => {
+      {items.map((c: any, i: any) => {
         const last = i === items.length - 1;
         return (
           <React.Fragment key={`${c.label}-${i}`}>
@@ -78,7 +78,7 @@ function labelFor(segment: string): string {
   if (/^[0-9a-f]{8,}$/i.test(segment) || segment.length > 20) return "Detail";
   return segment
     .split(/[-_]/)
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .map((w: any) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
 }
 
@@ -94,7 +94,7 @@ export function StudioAutoBreadcrumb() {
 
   const items: Crumb[] = [{ label: "Home", href: "/dashboard" }];
   let acc = "";
-  segments.forEach((seg, i) => {
+  segments.forEach((seg: any, i: any) => {
     acc += `/${seg}`;
     const last = i === segments.length - 1;
     items.push({ label: labelFor(seg), href: last ? undefined : acc });

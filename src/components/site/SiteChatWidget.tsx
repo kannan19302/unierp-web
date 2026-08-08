@@ -155,7 +155,7 @@ export function SiteChatWidget({ name, host, config }: Props) {
             {config.greeting || `Hi! I'm ${name}. How can I help you?`}
           </div>
         )}
-        {messages.map((m, i) => (
+        {messages.map((m: any, i: any) => (
           <div
             key={i}
             style={{
@@ -182,7 +182,7 @@ export function SiteChatWidget({ name, host, config }: Props) {
         <div ref={bottomRef} />
       </div>
       <form
-        onSubmit={(e) => {
+        onSubmit={(e: any) => {
           e.preventDefault();
           send();
         }}
@@ -190,7 +190,7 @@ export function SiteChatWidget({ name, host, config }: Props) {
       >
         <input
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e: any) => setInput(e.target.value)}
           placeholder="Type a message…"
           style={{
             flex: 1,

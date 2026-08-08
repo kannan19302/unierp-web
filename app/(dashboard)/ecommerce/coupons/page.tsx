@@ -85,7 +85,7 @@ export default function EcommerceCouponsPage() {
               className="ui-input"
               placeholder="Store ID"
               value={storeId}
-              onChange={(e) => setStoreId(e.target.value)}
+              onChange={(e: any) => setStoreId(e.target.value)}
             />
             <button
               className="ui-btn"
@@ -147,14 +147,14 @@ export default function EcommerceCouponsPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Add"} Coupon</h2>
               <div className="ui-form-group">
                 <label>Code</label>
                 <input
                   className="ui-input"
                   value={form.code}
-                  onChange={(e) => setForm({ ...form, code: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, code: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -162,7 +162,7 @@ export default function EcommerceCouponsPage() {
                 <select
                   className="ui-input"
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="PERCENTAGE">Percentage</option>
                   <option value="FIXED">Fixed</option>
@@ -175,7 +175,7 @@ export default function EcommerceCouponsPage() {
                   type="number"
                   className="ui-input"
                   value={form.value}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, value: Number(e.target.value) })
                   }
                 />

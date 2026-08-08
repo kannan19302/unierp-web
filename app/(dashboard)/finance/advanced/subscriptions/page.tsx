@@ -203,7 +203,7 @@ export default function SubscriptionsListPage() {
       render: (row: Subscription) => (
         <div
           className="flex items-center gap-2"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Link href={`/finance/advanced/subscriptions/${row.id}`}>
             <Button size="sm" variant="secondary" className="p-1">
@@ -344,14 +344,14 @@ export default function SubscriptionsListPage() {
               type="text"
               placeholder="Search subscriptions..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className="pl-9 pr-4 py-2 w-full border border-slate-200 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
           <div className="flex items-center gap-2">
             <select
               value={status}
-              onChange={(e) => setStatus(e.target.value)}
+              onChange={(e: any) => setStatus(e.target.value)}
               className="border border-slate-200 rounded-md text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
             >
               <option value="">All Statuses</option>
@@ -377,7 +377,7 @@ export default function SubscriptionsListPage() {
                   variant="secondary"
                   size="sm"
                   disabled={page === 1}
-                  onClick={() => setPage((p) => p - 1)}
+                  onClick={() => setPage((p: any) => p - 1)}
                 >
                   Prev
                 </Button>
@@ -388,7 +388,7 @@ export default function SubscriptionsListPage() {
                   variant="secondary"
                   size="sm"
                   disabled={page >= totalPages}
-                  onClick={() => setPage((p) => p + 1)}
+                  onClick={() => setPage((p: any) => p + 1)}
                 >
                   Next
                 </Button>

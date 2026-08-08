@@ -84,7 +84,7 @@ export default function TaxFilingSummaryPage() {
             <select
               className={`ui-input ${styles.s1}`}
               value={year}
-              onChange={(e) => setYear(e.target.value)}
+              onChange={(e: any) => setYear(e.target.value)}
             >
               <option value="2025">Year 2025</option>
               <option value="2026">Year 2026</option>

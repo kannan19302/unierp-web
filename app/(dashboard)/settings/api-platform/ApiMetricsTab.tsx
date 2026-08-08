@@ -57,20 +57,20 @@ export default function ApiMetricsTab() {
           {
             label: "Total Calls (24h)",
             value: apiMetrics
-              .reduce((s, m) => s + m.calls24h, 0)
+              .reduce((s: any, m: any) => s + m.calls24h, 0)
               .toLocaleString(),
             icon: <BarChart3 size={20} />,
             color: "var(--color-primary)",
           },
           {
             label: "Avg Latency",
-            value: `${(apiMetrics.reduce((s, m) => s + m.avgLatencyMs, 0) / apiMetrics.length).toFixed(0)} ms`,
+            value: `${(apiMetrics.reduce((s: any, m: any) => s + m.avgLatencyMs, 0) / apiMetrics.length).toFixed(0)} ms`,
             icon: <Clock size={20} />,
             color: "var(--color-success)",
           },
           {
             label: "Error Rate",
-            value: `${(apiMetrics.reduce((s, m) => s + m.errorRate, 0) / apiMetrics.length).toFixed(1)}%`,
+            value: `${(apiMetrics.reduce((s: any, m: any) => s + m.errorRate, 0) / apiMetrics.length).toFixed(1)}%`,
             icon: <AlertTriangle size={20} />,
             color: "var(--color-warning)",
           },
@@ -80,7 +80,7 @@ export default function ApiMetricsTab() {
             icon: <CheckCircle size={20} />,
             color: "var(--color-success)",
           },
-        ].map((m, i) => (
+        ].map((m: any, i: any) => (
           <div key={i} className={styles.s2}>
             <div style={{ color: m.color }}>{m.icon}</div>
             <div>

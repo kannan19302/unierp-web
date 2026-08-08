@@ -220,7 +220,7 @@ export default function InventoryAnalyticsPage() {
                 icon: Package,
                 color: "text-purple-600",
               },
-            ].map((s) => (
+            ].map((s: any) => (
               <Card key={s.label} className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -235,7 +235,7 @@ export default function InventoryAnalyticsPage() {
         )}
 
         <div className="flex gap-1 border-b overflow-x-auto">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
@@ -313,7 +313,7 @@ export default function InventoryAnalyticsPage() {
                 ["Moving Rate", `${health.movingProductRate}%`],
                 ["Low Stock SKUs", health.lowStockProducts],
                 ["Active Holds", health.activeHolds],
-              ].map(([label, value]) => (
+              ].map(([label, value]: any) => (
                 <div key={String(label)} className="border rounded p-3">
                   <p className="text-muted-foreground text-xs">{label}</p>
                   <p className="font-bold text-lg">{value}</p>
@@ -407,9 +407,9 @@ export default function InventoryAnalyticsPage() {
               }
               data={
                 dio.products
-                  .filter((p) => p.daysInventoryOutstanding !== null)
+                  .filter((p: any) => p.daysInventoryOutstanding !== null)
                   .sort(
-                    (a, b) =>
+                    (a: any, b: any) =>
                       (b.daysInventoryOutstanding ?? 0) -
                       (a.daysInventoryOutstanding ?? 0),
                   )
@@ -444,7 +444,7 @@ export default function InventoryAnalyticsPage() {
                 ["Partial", fillRate.partialWaves],
                 ["Total Order Lines", fillRate.totalOrderLines],
                 ["Fulfilled Lines", fillRate.fulfilledOrderLines],
-              ].map(([label, value]) => (
+              ].map(([label, value]: any) => (
                 <div key={String(label)} className="border rounded p-3">
                   <p className="text-muted-foreground text-xs">{label}</p>
                   <p className="font-bold text-lg">{value}</p>
@@ -492,7 +492,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "inbound",
                     header: "Net",
-                    render: (v, row) => {
+                    render: (v: any, row: any) => {
                       const net = Number(v) - Number(row.outbound);
                       return (
                         <span
@@ -577,7 +577,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "warehouse",
                     header: "Warehouse",
-                    render: (v, row) =>
+                    render: (v: any, row: any) =>
                       String((v as any)?.name ?? row.warehouseId),
                   },
                   {
@@ -616,7 +616,7 @@ export default function InventoryAnalyticsPage() {
                   {
                     key: "warehouse",
                     header: "Warehouse",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <span className="font-medium">
                         {String((v as any)?.name ?? row.warehouseId)}
                       </span>

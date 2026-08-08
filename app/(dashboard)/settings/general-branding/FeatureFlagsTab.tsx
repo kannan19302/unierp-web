@@ -45,7 +45,7 @@ export default function FeatureFlagsTab() {
       });
       {
         setFlags(
-          flags.map((f) =>
+          flags.map((f: any) =>
             f.key === key ? { ...f, enabled: !currentStatus } : f,
           ),
         );
@@ -82,7 +82,7 @@ export default function FeatureFlagsTab() {
             {
               key: "name",
               header: "Feature Flag Key / Name",
-              render: (v, row) => (
+              render: (v: any, row: any) => (
                 <div>
                   <div className="ui-heading-sm">{String(v)}</div>
                   <code className="ui-text-micro ui-text-muted">
@@ -118,7 +118,7 @@ export default function FeatureFlagsTab() {
             {
               key: "key",
               header: "Toggle",
-              render: (v, row) => (
+              render: (v: any, row: any) => (
                 <button
                   onClick={() =>
                     handleToggleFlag(String(v), Boolean(row.enabled))

@@ -22,15 +22,15 @@ export default function ChurnPage() {
 
   useEffect(() => {
     fetch("/api/crm/churn-predictions")
-      .then((r) => r.json())
-      .then((data) => setPredictions(Array.isArray(data) ? data : []))
+      .then((r: any) => r.json())
+      .then((data: any) => setPredictions(Array.isArray(data) ? data : []))
       .catch(() => setPredictions([]))
       .finally(() => setLoading(false));
   }, []);
 
-  const critical = predictions.filter((p) => p.riskLevel === "CRITICAL").length;
-  const high = predictions.filter((p) => p.riskLevel === "HIGH").length;
-  const medium = predictions.filter((p) => p.riskLevel === "MEDIUM").length;
+  const critical = predictions.filter((p: any) => p.riskLevel === "CRITICAL").length;
+  const high = predictions.filter((p: any) => p.riskLevel === "HIGH").length;
+  const medium = predictions.filter((p: any) => p.riskLevel === "MEDIUM").length;
 
   return (
     <RouteGuard permission="crm.churn-predictions.read">

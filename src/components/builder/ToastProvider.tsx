@@ -28,15 +28,15 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const showToast = useCallback(
     (message: string, type: ToastType = "success") => {
       const id = ++toastIdCounter;
-      setToasts((prev) => [...prev, { id, message, type }]);
+      setToasts((prev: any) => [...prev, { id, message, type }]);
 
       // Auto-dismiss after 3s
       setTimeout(() => {
-        setToasts((prev) =>
-          prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)),
+        setToasts((prev: any) =>
+          prev.map((t: any) => (t.id === id ? { ...t, exiting: true } : t)),
         );
         setTimeout(() => {
-          setToasts((prev) => prev.filter((t) => t.id !== id));
+          setToasts((prev: any) => prev.filter((t: any) => t.id !== id));
         }, 200);
       }, 3000);
     },
@@ -44,11 +44,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   );
 
   const dismissToast = useCallback((id: number) => {
-    setToasts((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, exiting: true } : t)),
+    setToasts((prev: any) =>
+      prev.map((t: any) => (t.id === id ? { ...t, exiting: true } : t)),
     );
     setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
+      setToasts((prev: any) => prev.filter((t: any) => t.id !== id));
     }, 200);
   }, []);
 
@@ -84,7 +84,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {children}
       {toasts.length > 0 && (
         <div className="toast-container">
-          {toasts.map((toast) => (
+          {toasts.map((toast: any) => (
             <div
               key={toast.id}
               className={`toast-item toast-${toast.type} ${toast.exiting ? "toast-exiting" : ""}`}

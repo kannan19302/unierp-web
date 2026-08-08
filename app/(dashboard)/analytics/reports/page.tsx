@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { BarChart2, Plus, X, Trash2 } from "lucide-react";
@@ -145,8 +145,8 @@ export default function ReportsPage() {
                   <input
                     className="ui-input"
                     value={newReport.reportName}
-                    onChange={(e) =>
-                      setNewReport((p) => ({
+                    onChange={(e: any) =>
+                      setNewReport((p: any) => ({
                         ...p,
                         reportName: e.target.value,
                       }))
@@ -159,11 +159,11 @@ export default function ReportsPage() {
                   <select
                     className="ui-input"
                     value={newReport.source}
-                    onChange={(e) =>
-                      setNewReport((p) => ({ ...p, source: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewReport((p: any) => ({ ...p, source: e.target.value }))
                     }
                   >
-                    {sources.map((s) => (
+                    {sources.map((s: any) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
@@ -176,8 +176,8 @@ export default function ReportsPage() {
                 <textarea
                   className={styles.codeInput}
                   value={newReport.filters}
-                  onChange={(e) =>
-                    setNewReport((p) => ({ ...p, filters: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewReport((p: any) => ({ ...p, filters: e.target.value }))
                   }
                   placeholder='{"status": "PENDING"}'
                   rows={3}
@@ -190,8 +190,8 @@ export default function ReportsPage() {
                   <input
                     className="ui-input"
                     value={newReport.sortBy}
-                    onChange={(e) =>
-                      setNewReport((p) => ({ ...p, sortBy: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewReport((p: any) => ({ ...p, sortBy: e.target.value }))
                     }
                   />
                 </div>
@@ -200,8 +200,8 @@ export default function ReportsPage() {
                   <select
                     className="ui-input"
                     value={newReport.sortOrder}
-                    onChange={(e) =>
-                      setNewReport((p) => ({ ...p, sortOrder: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewReport((p: any) => ({ ...p, sortOrder: e.target.value }))
                     }
                   >
                     <option value="asc">Ascending</option>

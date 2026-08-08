@@ -25,7 +25,7 @@ export default function CasesPage() {
 
         <ListView
           resource={caseResource}
-          onRowClick={(row) => router.push(`/crm/cases/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/crm/cases/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
 

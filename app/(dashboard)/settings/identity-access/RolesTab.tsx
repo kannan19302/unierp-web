@@ -32,7 +32,7 @@ interface RoleData {
 
 function allModules(): string[] {
   const set = new Set<string>();
-  PERMISSION_REGISTRY.forEach((p) => set.add(p.module));
+  PERMISSION_REGISTRY.forEach((p: any) => set.add(p.module));
   return Array.from(set);
 }
 
@@ -65,7 +65,7 @@ export default function RolesTab() {
   }, [client, loaded]);
 
   const filteredRoles = roles.filter(
-    (r) =>
+    (r: any) =>
       !searchQuery ||
       r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       r.description.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -98,7 +98,7 @@ export default function RolesTab() {
               type="text"
               placeholder="Search roles..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
               className={styles.s4}
             />
           </div>
@@ -115,7 +115,7 @@ export default function RolesTab() {
         </div>
       ) : (
         <div className="ui-stack-3">
-          {filteredRoles.map((role) => (
+          {filteredRoles.map((role: any) => (
             <RoleCard
               key={role.id}
               role={role}
@@ -213,10 +213,10 @@ function RoleCard({
             )}
           </div>
           <div className={styles.s12}>
-            {modules.map((mod) => {
+            {modules.map((mod: any) => {
               const modPerms = getPermissionsByModule(mod);
               if (modPerms.length === 0) return null;
-              const grantedCount = modPerms.filter((p) =>
+              const grantedCount = modPerms.filter((p: any) =>
                 role.permissions.includes(p.code),
               ).length;
               const percentage = Math.round(
@@ -257,12 +257,12 @@ function RoleCard({
                   </div>
                   {categories.length > 0 ? (
                     <div className="ui-stack-3">
-                      {categories.map((category) => {
+                      {categories.map((category: any) => {
                         const catPerms = getPermissionsByCategory(
                           mod,
                           category,
                         );
-                        const catGranted = catPerms.filter((p) =>
+                        const catGranted = catPerms.filter((p: any) =>
                           role.permissions.includes(p.code),
                         ).length;
                         return (
@@ -274,7 +274,7 @@ function RoleCard({
                               </span>
                             </div>
                             <div className={styles.s20}>
-                              {catPerms.map((perm) => {
+                              {catPerms.map((perm: any) => {
                                 const has = role.permissions.includes(
                                   perm.code,
                                 );
@@ -305,7 +305,7 @@ function RoleCard({
                     </div>
                   ) : (
                     <div className={styles.s23}>
-                      {modPerms.map((perm) => {
+                      {modPerms.map((perm: any) => {
                         const has = role.permissions.includes(perm.code);
                         return (
                           <label
@@ -358,7 +358,7 @@ function CreateRoleModal({
   const modules = allModules();
 
   const togglePerm = (code: string) => {
-    setSelectedPerms((prev) => {
+    setSelectedPerms((prev: any) => {
       const next = new Set(prev);
       next.has(code) ? next.delete(code) : next.add(code);
       return next;
@@ -367,10 +367,10 @@ function CreateRoleModal({
 
   const toggleModule = (mod: string) => {
     const modPerms = getPermissionsByModule(mod);
-    const allSelected = modPerms.every((p) => selectedPerms.has(p.code));
-    setSelectedPerms((prev) => {
+    const allSelected = modPerms.every((p: any) => selectedPerms.has(p.code));
+    setSelectedPerms((prev: any) => {
       const next = new Set(prev);
-      modPerms.forEach((p) => {
+      modPerms.forEach((p: any) => {
         allSelected ? next.delete(p.code) : next.add(p.code);
       });
       return next;
@@ -379,10 +379,10 @@ function CreateRoleModal({
 
   const toggleCategory = (mod: string, category: string) => {
     const catPerms = getPermissionsByCategory(mod, category);
-    const allSelected = catPerms.every((p) => selectedPerms.has(p.code));
-    setSelectedPerms((prev) => {
+    const allSelected = catPerms.every((p: any) => selectedPerms.has(p.code));
+    setSelectedPerms((prev: any) => {
       const next = new Set(prev);
-      catPerms.forEach((p) => {
+      catPerms.forEach((p: any) => {
         allSelected ? next.delete(p.code) : next.add(p.code);
       });
       return next;
@@ -453,13 +453,13 @@ function CreateRoleModal({
             placeholder="e.g. Sales Manager"
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: any) => setName(e.target.value)}
           />
           <TextField
             label="Description"
             placeholder="Brief description"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e: any) => setDescription(e.target.value)}
           />
         </div>
 
@@ -473,18 +473,18 @@ function CreateRoleModal({
               type="text"
               placeholder="Filter permissions..."
               value={permSearch}
-              onChange={(e) => setPermSearch(e.target.value)}
+              onChange={(e: any) => setPermSearch(e.target.value)}
               className={styles.s29}
             />
           </div>
           <div className={styles.s30}>
-            {modules.map((mod) => {
+            {modules.map((mod: any) => {
               const allModPerms = getPermissionsByModule(mod);
-              const modPerms = allModPerms.filter((p) =>
+              const modPerms = allModPerms.filter((p: any) =>
                 matchesSearch(p.description || p.code, p.code),
               );
               if (modPerms.length === 0) return null;
-              const selectedCount = modPerms.filter((p) =>
+              const selectedCount = modPerms.filter((p: any) =>
                 selectedPerms.has(p.code),
               ).length;
               const categories = getCategoriesForModule(mod);
@@ -496,7 +496,7 @@ function CreateRoleModal({
                       checked={
                         selectedCount === modPerms.length && modPerms.length > 0
                       }
-                      ref={(el) => {
+                      ref={(el: any) => {
                         if (el)
                           el.indeterminate =
                             selectedCount > 0 &&
@@ -513,16 +513,16 @@ function CreateRoleModal({
 
                   {categories.length > 0 ? (
                     <div className={styles.s34}>
-                      {categories.map((category) => {
+                      {categories.map((category: any) => {
                         const allCatPerms = getPermissionsByCategory(
                           mod,
                           category,
                         );
-                        const catPerms = allCatPerms.filter((p) =>
+                        const catPerms = allCatPerms.filter((p: any) =>
                           matchesSearch(p.description || p.code, p.code),
                         );
                         if (catPerms.length === 0) return null;
-                        const catSelectedCount = catPerms.filter((p) =>
+                        const catSelectedCount = catPerms.filter((p: any) =>
                           selectedPerms.has(p.code),
                         ).length;
                         return (
@@ -534,7 +534,7 @@ function CreateRoleModal({
                                   catSelectedCount === catPerms.length &&
                                   catPerms.length > 0
                                 }
-                                ref={(el) => {
+                                ref={(el: any) => {
                                   if (el)
                                     el.indeterminate =
                                       catSelectedCount > 0 &&
@@ -549,7 +549,7 @@ function CreateRoleModal({
                               </span>
                             </label>
                             <div className={styles.s38}>
-                              {catPerms.map((perm) => (
+                              {catPerms.map((perm: any) => (
                                 <label key={perm.code} className={styles.s39}>
                                   <input
                                     type="checkbox"
@@ -567,7 +567,7 @@ function CreateRoleModal({
                     </div>
                   ) : (
                     <div className={styles.s41}>
-                      {modPerms.map((perm) => (
+                      {modPerms.map((perm: any) => (
                         <label key={perm.code} className={styles.s42}>
                           <input
                             type="checkbox"

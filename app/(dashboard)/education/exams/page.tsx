@@ -100,7 +100,7 @@ export default function EducationExamsPage() {
               <select
                 className="ui-input"
                 value={form.courseId}
-                onChange={(e) => setForm({ ...form, courseId: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, courseId: e.target.value })}
               >
                 <option value="">Select</option>
                 {courses.map((c: any) => (
@@ -115,7 +115,7 @@ export default function EducationExamsPage() {
               <input
                 className="ui-input"
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, title: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -124,7 +124,7 @@ export default function EducationExamsPage() {
                 className="ui-input"
                 type="date"
                 value={form.examDate}
-                onChange={(e) => setForm({ ...form, examDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, examDate: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -133,7 +133,7 @@ export default function EducationExamsPage() {
                 className="ui-input"
                 type="time"
                 value={form.startTime}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startTime: e.target.value })
                 }
               />
@@ -143,7 +143,7 @@ export default function EducationExamsPage() {
               <input
                 className="ui-input"
                 value={form.room}
-                onChange={(e) => setForm({ ...form, room: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, room: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -152,7 +152,7 @@ export default function EducationExamsPage() {
                 className="ui-input"
                 type="number"
                 value={form.maxScore}
-                onChange={(e) => setForm({ ...form, maxScore: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, maxScore: e.target.value })}
               />
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function EducationExamsPage() {
         <select
           className="ui-input w-56"
           value={courseFilter}
-          onChange={(e) => setCourseFilter(e.target.value)}
+          onChange={(e: any) => setCourseFilter(e.target.value)}
         >
           <option value="">All Courses</option>
           {courses.map((c: any) => (
@@ -228,7 +228,7 @@ export default function EducationExamsPage() {
                                 { key: "col_3", header: "Enter Score" , render: (r: any) => (<><input
                                                         className="ui-input w-20"
                                                         type="number"
-                                                        onBlur={(ev) =>
+                                                        onBlur={(ev: any) =>
                                                           addResult(
                                                             selectedExam.id,
                                                             r.studentId,

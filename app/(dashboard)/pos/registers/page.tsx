@@ -87,7 +87,7 @@ export default function POSRegistersPage() {
             <select
               className="ui-input"
               value={statusFilter}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
@@ -136,14 +136,14 @@ export default function POSRegistersPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Open Register</h2>
               <div className="ui-form-group">
                 <label>Terminal ID</label>
                 <input
                   className="ui-input"
                   value={modalData.terminalId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setModalData({ ...modalData, terminalId: e.target.value })
                   }
                 />
@@ -154,7 +154,7 @@ export default function POSRegistersPage() {
                   type="number"
                   className="ui-input"
                   value={modalData.startingCash}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setModalData({
                       ...modalData,
                       startingCash: Number(e.target.value),

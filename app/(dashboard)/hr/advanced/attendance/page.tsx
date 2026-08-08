@@ -138,10 +138,10 @@ export default function AttendancePage() {
               <select
                 className={`ui-input ${styles.employeeSelect}`}
                 value={selectedEmployee}
-                onChange={(e) => setSelectedEmployee(e.target.value)}
+                onChange={(e: any) => setSelectedEmployee(e.target.value)}
               >
                 <option value="">Select Employee</option>
-                {employees.map((e) => (
+                {employees.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.firstName} {e.lastName} ({e.employeeCode})
                   </option>
@@ -221,7 +221,7 @@ export default function AttendancePage() {
                   className="ui-input"
                   placeholder="e.g. EMP-001"
                   value={simCode}
-                  onChange={(e) => setSimCode(e.target.value)}
+                  onChange={(e: any) => setSimCode(e.target.value)}
                   required
                 />
               </div>
@@ -230,7 +230,7 @@ export default function AttendancePage() {
                 <select
                   className="ui-input"
                   value={simAction}
-                  onChange={(e) => setSimAction(e.target.value)}
+                  onChange={(e: any) => setSimAction(e.target.value)}
                 >
                   <option value="CHECK_IN">Card Tap Check-In</option>
                   <option value="CHECK_OUT">Card Tap Check-Out</option>

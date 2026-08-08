@@ -14,7 +14,7 @@ export default function FixedAssetsPage() {
       apiGet("/fixed-assets"),
       apiGet("/fixed-assets/reports/summary"),
     ])
-      .then(([a, s]) => {
+      .then(([a, s]: any) => {
         setAssets(Array.isArray(a) ? a : []);
         setSummary(s);
       })

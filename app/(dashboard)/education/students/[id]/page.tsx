@@ -40,7 +40,7 @@ export default function StudentDetailPage() {
         );
         {
           const list = Array.isArray(data) ? data : data?.data || [];
-          setStudent(list.find((s) => s.id === id) || null);
+          setStudent(list.find((s: any) => s.id === id) || null);
         }
       } catch {
         /* empty */
@@ -130,7 +130,7 @@ export default function StudentDetailPage() {
                       : "—",
                   ],
                   ["Parent Contact", student.parentContact || "—"],
-                ].map(([label, value]) => (
+                ].map(([label, value]: any) => (
                   <div key={label as string} className={styles.s4}>
                     <span className="ui-text-sm-muted">{label}</span>
                     <span className="ui-heading-sm">{value}</span>

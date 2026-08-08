@@ -67,7 +67,7 @@ export default function PropertiesPage() {
   };
 
   const filtered = properties.filter(
-    (p) => !search || p.name.toLowerCase().includes(search.toLowerCase()),
+    (p: any) => !search || p.name.toLowerCase().includes(search.toLowerCase()),
   );
   const columns: Column<Property>[] = [
     {
@@ -155,7 +155,7 @@ export default function PropertiesPage() {
               type="text"
               placeholder="Search properties..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.s5}
             />
           </div>
@@ -195,7 +195,7 @@ export default function PropertiesPage() {
               label="Property Name"
               required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <FormField label="Type">
@@ -213,7 +213,7 @@ export default function PropertiesPage() {
               <TextField
                 label="Portfolio"
                 value={form.portfolio}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, portfolio: e.target.value })
                 }
               />
@@ -221,7 +221,7 @@ export default function PropertiesPage() {
             <TextField
               label="Address"
               value={form.address}
-              onChange={(e) => setForm({ ...form, address: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, address: e.target.value })}
             />
           </div>
         </Modal>

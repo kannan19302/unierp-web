@@ -64,7 +64,7 @@ export default function TrackingTab() {
         : outboundRes.data || [];
 
       const displayList: DisplayTracking[] = [
-        ...inbound.map((item) => {
+        ...inbound.map((item: any) => {
           let progress = 20;
           if (item.status === "IN_TRANSIT") progress = 60;
           if (item.status === "ARRIVED") progress = 85;
@@ -82,7 +82,7 @@ export default function TrackingTab() {
             progress,
           };
         }),
-        ...outbound.map((item) => {
+        ...outbound.map((item: any) => {
           let progress = 15;
           if (item.status === "PACKED") progress = 30;
           if (item.status === "SHIPPED") progress = 50;
@@ -117,7 +117,7 @@ export default function TrackingTab() {
   }, [client]);
 
   const filtered = tracked.filter(
-    (t) =>
+    (t: any) =>
       t.shipmentNumber.toLowerCase().includes(search.toLowerCase()) ||
       t.trackingNumber.toLowerCase().includes(search.toLowerCase()),
   );
@@ -204,7 +204,7 @@ export default function TrackingTab() {
             title="In Transit / Shipped"
             value={
               tracked.filter(
-                (t) => t.status === "IN_TRANSIT" || t.status === "SHIPPED",
+                (t: any) => t.status === "IN_TRANSIT" || t.status === "SHIPPED",
               ).length
             }
             icon={<Truck size={18} />}
@@ -214,7 +214,7 @@ export default function TrackingTab() {
             title="Delivered / Completed"
             value={
               tracked.filter(
-                (t) => t.status === "DELIVERED" || t.status === "COMPLETE",
+                (t: any) => t.status === "DELIVERED" || t.status === "COMPLETE",
               ).length
             }
             icon={<Package size={18} />}
@@ -229,7 +229,7 @@ export default function TrackingTab() {
               type="text"
               placeholder="Search by shipment or tracking number..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.trackingSearchInput}
             />
           </div>

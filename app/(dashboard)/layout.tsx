@@ -369,7 +369,7 @@ export default function DashboardLayout({
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setCmdPaletteOpen((prev) => !prev);
+        setCmdPaletteOpen((prev: any) => !prev);
       }
     };
     document.addEventListener("keydown", handleKeyDown);
@@ -395,7 +395,7 @@ export default function DashboardLayout({
 
         client
           .get<any>("/saas/subscription")
-          .then((sub) => {
+          .then((sub: any) => {
             if (mounted) setSubscription(sub);
           })
           .catch(() => {});
@@ -404,9 +404,9 @@ export default function DashboardLayout({
           .get<
             Array<{ userId: string; presence: string; visibility?: string }>
           >("/communication/presence")
-          .then((rows) => {
+          .then((rows: any) => {
             if (!mounted) return;
-            const mine = rows.find((r) => r.userId === profile.id);
+            const mine = rows.find((r: any) => r.userId === profile.id);
             setPresenceColor(
               mine
                 ? (PRESENCE_COLORS[mine.presence] ?? PRESENCE_COLORS.INACTIVE)
@@ -419,7 +419,7 @@ export default function DashboardLayout({
           .get<Array<{ id: string; name: string; slug: string }>>(
             "/auth/tenants",
           )
-          .then((list) => {
+          .then((list: any) => {
             if (mounted && Array.isArray(list)) setTenants(list);
           })
           .catch(() => {});
@@ -483,7 +483,7 @@ export default function DashboardLayout({
 
         client
           .get<{ loaded?: boolean }>("/admin/demo/status")
-          .then((data) => {
+          .then((data: any) => {
             if (mounted && data?.loaded) setDemoDataLoaded(true);
           })
           .catch(() => {});
@@ -549,7 +549,7 @@ export default function DashboardLayout({
     });
 
     let currentPath = "";
-    pathSegments.forEach((segment) => {
+    pathSegments.forEach((segment: any) => {
       currentPath += `/${segment}`;
       if (segment === "apps") return;
 
@@ -561,34 +561,34 @@ export default function DashboardLayout({
   }
 
   const activeApps = allApplications.filter(
-    (app) => KERNEL_APP_IDS.has(app.id) || installedApps.includes(app.id),
+    (app: any) => KERNEL_APP_IDS.has(app.id) || installedApps.includes(app.id),
   );
-  const folderAppIds = switcherFolders.flatMap((f) => f.appIds);
-  const rootApps = activeApps.filter((app) => !folderAppIds.includes(app.id));
+  const folderAppIds = switcherFolders.flatMap((f: any) => f.appIds);
+  const rootApps = activeApps.filter((app: any) => !folderAppIds.includes(app.id));
   const visibleFolders = switcherFolders.filter(
-    (f) => activeApps.filter((a) => f.appIds.includes(a.id)).length > 0,
+    (f: any) => activeApps.filter((a: any) => f.appIds.includes(a.id)).length > 0,
   );
 
   const switcherItems = useMemo(
     () =>
       [
-        ...visibleFolders.map((folder) => ({
+        ...visibleFolders.map((folder: any) => ({
           type: "folder" as const,
           id: folder.id,
           name: folder.name,
           color: folder.color,
           apps: activeApps
-            .filter((a) => folder.appIds.includes(a.id))
-            .sort((a, b) => a.name.localeCompare(b.name)),
+            .filter((a: any) => folder.appIds.includes(a.id))
+            .sort((a: any, b: any) => a.name.localeCompare(b.name)),
         })),
-        ...rootApps.map((app) => ({
+        ...rootApps.map((app: any) => ({
           type: "app" as const,
           id: app.id,
           name: app.name,
           href: app.href,
           icon: app.icon,
         })),
-      ].sort((a, b) => a.name.localeCompare(b.name)),
+      ].sort((a: any, b: any) => a.name.localeCompare(b.name)),
     [visibleFolders, activeApps, rootApps],
   );
 

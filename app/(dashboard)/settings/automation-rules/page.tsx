@@ -334,7 +334,7 @@ export default function AutomationRulesPage() {
   const removeCondition = (idx: number) =>
     setForm({
       ...form,
-      conditions: form.conditions.filter((_, i) => i !== idx),
+      conditions: form.conditions.filter((_: any, i: any) => i !== idx),
     });
 
   const addAction = () =>
@@ -348,7 +348,7 @@ export default function AutomationRulesPage() {
     setForm({ ...form, actions: a });
   };
   const removeAction = (idx: number) =>
-    setForm({ ...form, actions: form.actions.filter((_, i) => i !== idx) });
+    setForm({ ...form, actions: form.actions.filter((_: any, i: any) => i !== idx) });
 
   const tabBtn = (
     t: "rules" | "history",
@@ -444,7 +444,7 @@ export default function AutomationRulesPage() {
                 {
                   key: "name",
                   header: "Name",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div>
                       <div className="font-semibold">{String(v)}</div>
                       {Boolean(row.description) && (
@@ -490,7 +490,7 @@ export default function AutomationRulesPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className="ui-flex-end ui-gap-2">
                       <button
                         onClick={() => {
@@ -597,7 +597,7 @@ export default function AutomationRulesPage() {
           <div
             style={{ ...modal }}
             className={styles.s5}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: any) => e.stopPropagation()}
           >
             <h3 className={styles.p4}>Delete Rule?</h3>
             <p className={styles.p5}>
@@ -626,7 +626,7 @@ export default function AutomationRulesPage() {
           <div
             style={{ ...modal }}
             className={styles.s7}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: any) => e.stopPropagation()}
           >
             <div className="ui-flex-between mb-4">
               <h3 className="ui-heading-lg">Test Rule</h3>
@@ -642,7 +642,7 @@ export default function AutomationRulesPage() {
               style={{ ...inputStyle }}
               className={styles.s8}
               value={testInput}
-              onChange={(e) => setTestInput(e.target.value)}
+              onChange={(e: any) => setTestInput(e.target.value)}
             />
             <button
               onClick={handleTest}
@@ -660,7 +660,7 @@ export default function AutomationRulesPage() {
       {/* create/edit modal */}
       {showModal && (
         <div style={overlay} onClick={() => setShowModal(false)}>
-          <div style={modal} onClick={(e) => e.stopPropagation()}>
+          <div style={modal} onClick={(e: any) => e.stopPropagation()}>
             <div className="ui-flex-between mb-4">
               <h3 className="ui-heading-lg">
                 {editingId ? "Edit Rule" : "Create Rule"}
@@ -680,7 +680,7 @@ export default function AutomationRulesPage() {
                 <input
                   style={inputStyle}
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g. Send welcome email on signup"
                 />
               </div>
@@ -692,7 +692,7 @@ export default function AutomationRulesPage() {
                   style={{ ...inputStyle }}
                   className={styles.s11}
                   value={form.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, description: e.target.value })
                   }
                 />
@@ -705,11 +705,11 @@ export default function AutomationRulesPage() {
                   <select
                     style={inputStyle}
                     value={form.trigger}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setForm({ ...form, trigger: e.target.value as Trigger })
                     }
                   >
-                    {TRIGGERS.map((t) => (
+                    {TRIGGERS.map((t: any) => (
                       <option key={t} value={t}>
                         {t}
                       </option>
@@ -721,7 +721,7 @@ export default function AutomationRulesPage() {
                   <select
                     style={inputStyle}
                     value={form.status}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setForm({ ...form, status: e.target.value as Status })
                     }
                   >
@@ -749,13 +749,13 @@ export default function AutomationRulesPage() {
                     No conditions. Rule will trigger unconditionally.
                   </p>
                 )}
-                {form.conditions.map((c, idx) => (
+                {form.conditions.map((c: any, idx: any) => (
                   <div key={idx} className={styles.p7}>
                     <input
                       style={{ ...inputStyle }}
                       className={styles.s13}
                       value={c.field}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateCondition(idx, { field: e.target.value })
                       }
                       placeholder="Field"
@@ -764,11 +764,11 @@ export default function AutomationRulesPage() {
                       style={{ ...inputStyle }}
                       className={styles.s13}
                       value={c.operator}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateCondition(idx, { operator: e.target.value })
                       }
                     >
-                      {OPERATORS.map((o) => (
+                      {OPERATORS.map((o: any) => (
                         <option key={o} value={o}>
                           {o}
                         </option>
@@ -778,7 +778,7 @@ export default function AutomationRulesPage() {
                       style={{ ...inputStyle }}
                       className={styles.s13}
                       value={c.value}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateCondition(idx, { value: e.target.value })
                       }
                       placeholder="Value"
@@ -808,19 +808,19 @@ export default function AutomationRulesPage() {
                 {form.actions.length === 0 && (
                   <p className="ui-text-xs-muted">No actions defined.</p>
                 )}
-                {form.actions.map((a, idx) => (
+                {form.actions.map((a: any, idx: any) => (
                   <div key={idx} className={styles.p10}>
                     <select
                       style={{ ...inputStyle }}
                       className={styles.s14}
                       value={a.type}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateAction(idx, {
                           type: e.target.value as ActionType,
                         })
                       }
                     >
-                      {ACTION_TYPES.map((t) => (
+                      {ACTION_TYPES.map((t: any) => (
                         <option key={t} value={t}>
                           {t.replace("_", " ")}
                         </option>
@@ -830,7 +830,7 @@ export default function AutomationRulesPage() {
                       style={{ ...inputStyle }}
                       className={styles.s13}
                       value={a.config}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateAction(idx, { config: e.target.value })
                       }
                       placeholder="Config (JSON or value)"
@@ -855,7 +855,7 @@ export default function AutomationRulesPage() {
                     <input
                       type="checkbox"
                       checked={form.runOnce}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, runOnce: e.target.checked })
                       }
                     />
@@ -865,7 +865,7 @@ export default function AutomationRulesPage() {
                     <input
                       type="checkbox"
                       checked={form.logExecution}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, logExecution: e.target.checked })
                       }
                     />
@@ -875,7 +875,7 @@ export default function AutomationRulesPage() {
                     <input
                       type="checkbox"
                       checked={form.haltOnError}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, haltOnError: e.target.checked })
                       }
                     />

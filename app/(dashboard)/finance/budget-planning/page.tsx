@@ -98,21 +98,21 @@ export default function BudgetPlanningPage() {
         "/finance/budgets",
         { pageSize: 500 },
       )
-      .then((res) => {
+      .then((res: any) => {
         if (cancelled) return;
         const budgets = res.data ?? [];
-        const active = budgets.filter((b) => b.status === "ACTIVE");
+        const active = budgets.filter((b: any) => b.status === "ACTIVE");
         setSummary({
-          totalBudget: budgets.reduce((s, b) => s + Number(b.amount || 0), 0),
+          totalBudget: budgets.reduce((s: any, b: any) => s + Number(b.amount || 0), 0),
           totalSpent: budgets.reduce(
-            (s, b) => s + Number(b.spentAmount || 0),
+            (s: any, b: any) => s + Number(b.spentAmount || 0),
             0,
           ),
           activeBudgets: active.length,
         });
         setSummaryError(null);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (cancelled) return;
         const message =
           err instanceof Error ? err.message : "Failed to load budget summary";

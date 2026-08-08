@@ -25,7 +25,7 @@ export default function OpportunitiesPage() {
 
         <ListView
           resource={opportunityResource}
-          onRowClick={(row) => router.push(`/crm/opportunities/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/crm/opportunities/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
 

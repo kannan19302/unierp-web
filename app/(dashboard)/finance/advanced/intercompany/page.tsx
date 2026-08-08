@@ -72,7 +72,7 @@ export default function IntercompanyPage() {
     {
       key: "amount",
       header: "Amount",
-      render: (val, row) => `${row.currency} ${Number(val).toLocaleString()}`,
+      render: (val: any, row: any) => `${row.currency} ${Number(val).toLocaleString()}`,
     },
     {
       key: "status",

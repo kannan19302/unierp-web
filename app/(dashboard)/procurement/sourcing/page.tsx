@@ -86,7 +86,7 @@ export default function SourcingPage() {
   };
 
   const filtered = data.filter(
-    (p) =>
+    (p: any) =>
       !search ||
       p.projectName.toLowerCase().includes(search.toLowerCase()) ||
       p.projectNumber.toLowerCase().includes(search.toLowerCase()),
@@ -162,7 +162,7 @@ export default function SourcingPage() {
         <TextField
           placeholder="Search projects..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           style={{ marginBottom: "1rem" }}
         />
         <DataTable
@@ -207,7 +207,7 @@ export default function SourcingPage() {
               required
               placeholder="SP-2026-001"
               value={form.projectNumber}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, projectNumber: e.target.value })
               }
             />
@@ -216,7 +216,7 @@ export default function SourcingPage() {
               required
               placeholder="Q1 Raw Materials"
               value={form.projectName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, projectName: e.target.value })
               }
             />
@@ -226,13 +226,13 @@ export default function SourcingPage() {
               label="Category"
               placeholder="Raw Materials"
               value={form.category}
-              onChange={(e) => setForm({ ...form, category: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, category: e.target.value })}
             />
             <TextField
               label="Est. Value"
               type="number"
               value={form.estimatedValue || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({
                   ...form,
                   estimatedValue: parseFloat(e.target.value) || 0,
@@ -243,7 +243,7 @@ export default function SourcingPage() {
           <TextField
             label="Notes"
             value={form.notes}
-            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
           />
         </form>
       </Modal>

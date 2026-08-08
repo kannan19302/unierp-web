@@ -95,9 +95,9 @@ export default function PartnersPage() {
     }
   };
 
-  const activeCount = partners.filter((p) => p.status === "ACTIVE").length;
+  const activeCount = partners.filter((p: any) => p.status === "ACTIVE").length;
   const totalCommission = partners.reduce(
-    (s, p) => s + (p.totalSales * p.commissionRate) / 100,
+    (s: any, p: any) => s + (p.totalSales * p.commissionRate) / 100,
     0,
   );
 
@@ -152,7 +152,7 @@ export default function PartnersPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setEditItem(row);
               setForm(row);
@@ -164,7 +164,7 @@ export default function PartnersPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleDelete(row.id);
             }}
@@ -223,7 +223,7 @@ export default function PartnersPage() {
                 },
                 {
                   label: "Avg Rate",
-                  value: `${(partners.reduce((s, p) => s + p.commissionRate, 0) / Math.max(partners.length, 1)).toFixed(1)}%`,
+                  value: `${(partners.reduce((s: any, p: any) => s + p.commissionRate, 0) / Math.max(partners.length, 1)).toFixed(1)}%`,
                   icon: React.createElement(DollarSign, { size: 16 }),
                   color: "blue",
                 },
@@ -235,7 +235,7 @@ export default function PartnersPage() {
                 },
                 {
                   label: "Referral Codes",
-                  value: partners.filter((p) => p.referralCode).length,
+                  value: partners.filter((p: any) => p.referralCode).length,
                   icon: React.createElement(Globe, { size: 16 }),
                   color: "amber",
                 },
@@ -269,7 +269,7 @@ export default function PartnersPage() {
                     <input
                       className="ui-input"
                       value={form.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, name: e.target.value })
                       }
                       required
@@ -281,7 +281,7 @@ export default function PartnersPage() {
                       className="ui-input"
                       type="email"
                       value={form.email}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, email: e.target.value })
                       }
                       required
@@ -294,7 +294,7 @@ export default function PartnersPage() {
                     <select
                       className="ui-input"
                       value={form.tier}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, tier: e.target.value })
                       }
                     >
@@ -313,7 +313,7 @@ export default function PartnersPage() {
                       type="number"
                       step="0.1"
                       value={form.commissionRate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({
                           ...form,
                           commissionRate: Number(e.target.value),
@@ -329,7 +329,7 @@ export default function PartnersPage() {
                     <input
                       className="ui-input"
                       value={form.referralCode}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, referralCode: e.target.value })
                       }
                     />
@@ -339,7 +339,7 @@ export default function PartnersPage() {
                     <select
                       className="ui-input"
                       value={form.status}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, status: e.target.value })
                       }
                     >

@@ -67,7 +67,7 @@ export default function CollectionDetailPage() {
           ),
         ]);
         setCollection(colRes);
-        setInstalledSlugs(new Set(instRes.map((a) => a.appSlug)));
+        setInstalledSlugs(new Set(instRes.map((a: any) => a.appSlug)));
         setLoadError(null);
       } catch (e) {
         // Distinct error state — a failed fetch must never render as
@@ -85,7 +85,7 @@ export default function CollectionDetailPage() {
     setInstallingSlug(appSlug);
     try {
       await client.post(`/admin/marketplace/install/${appSlug}`);
-      setInstalledSlugs((prev) => new Set([...prev, appSlug]));
+      setInstalledSlugs((prev: any) => new Set([...prev, appSlug]));
       setToast({ message: "App installed!", type: "success" });
     } catch (e) {
       setToast({
@@ -168,7 +168,7 @@ export default function CollectionDetailPage() {
         </div>
 
         <div className={styles.appGrid}>
-          {collection.items.map(({ app }) => {
+          {collection.items.map(({ app }: any) => {
             const isInstalled = installedSlugs.has(app.slug);
             const isBusy = installingSlug === app.slug;
             return (
@@ -194,7 +194,7 @@ export default function CollectionDetailPage() {
                   <p className={styles.description}>{app.description}</p>
                   <div className="ui-hstack-2">
                     <div className={styles.starRow}>
-                      {[1, 2, 3, 4, 5].map((s) => (
+                      {[1, 2, 3, 4, 5].map((s: any) => (
                         <Star
                           key={s}
                           size={10}

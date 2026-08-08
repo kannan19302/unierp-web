@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { AlertTriangle, Plus, X, DollarSign } from "lucide-react";
@@ -74,8 +74,8 @@ export default function ScrapPage() {
     }
   };
 
-  const totalScrapped = records.reduce((s, r) => s + r.scrappedQty, 0);
-  const totalCostImpact = records.reduce((s, r) => s + (r.costImpact || 0), 0);
+  const totalScrapped = records.reduce((s: any, r: any) => s + r.scrappedQty, 0);
+  const totalCostImpact = records.reduce((s: any, r: any) => s + (r.costImpact || 0), 0);
 
   return (
     <div className="ui-stack-6">
@@ -141,8 +141,8 @@ export default function ScrapPage() {
                 <input
                   className="ui-input"
                   value={newRecord.workOrderId}
-                  onChange={(e) =>
-                    setNewRecord((p) => ({ ...p, workOrderId: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewRecord((p: any) => ({ ...p, workOrderId: e.target.value }))
                   }
                   required
                 />
@@ -152,8 +152,8 @@ export default function ScrapPage() {
                 <input
                   className="ui-input"
                   value={newRecord.productId}
-                  onChange={(e) =>
-                    setNewRecord((p) => ({ ...p, productId: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewRecord((p: any) => ({ ...p, productId: e.target.value }))
                   }
                   required
                 />
@@ -165,8 +165,8 @@ export default function ScrapPage() {
                     className="ui-input"
                     type="number"
                     value={newRecord.scrappedQty}
-                    onChange={(e) =>
-                      setNewRecord((p) => ({
+                    onChange={(e: any) =>
+                      setNewRecord((p: any) => ({
                         ...p,
                         scrappedQty: e.target.value,
                       }))
@@ -180,8 +180,8 @@ export default function ScrapPage() {
                     className="ui-input"
                     type="number"
                     value={newRecord.costImpact}
-                    onChange={(e) =>
-                      setNewRecord((p) => ({
+                    onChange={(e: any) =>
+                      setNewRecord((p: any) => ({
                         ...p,
                         costImpact: e.target.value,
                       }))
@@ -194,8 +194,8 @@ export default function ScrapPage() {
                 <input
                   className="ui-input"
                   value={newRecord.reason}
-                  onChange={(e) =>
-                    setNewRecord((p) => ({ ...p, reason: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewRecord((p: any) => ({ ...p, reason: e.target.value }))
                   }
                   required
                   placeholder="e.g. MATERIAL_DEFECT, OPERATOR_ERROR"
@@ -206,8 +206,8 @@ export default function ScrapPage() {
                 <textarea
                   className="ui-input"
                   value={newRecord.reasonDetail}
-                  onChange={(e) =>
-                    setNewRecord((p) => ({
+                  onChange={(e: any) =>
+                    setNewRecord((p: any) => ({
                       ...p,
                       reasonDetail: e.target.value,
                     }))

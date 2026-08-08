@@ -36,7 +36,7 @@ export default function StorageAlertsPage() {
       render: (_v: any, row: any) => (
         <button
           className="ui-btn-icon"
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             apiDelete(`/storage/alerts/${row.id}`).then(load);
           }}

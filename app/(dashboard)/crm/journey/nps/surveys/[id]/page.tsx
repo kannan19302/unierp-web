@@ -63,9 +63,9 @@ export default function SurveyDetailPage() {
     load();
   }, [params.id]);
 
-  const promoters = responses.filter((r) => r.category === "PROMOTER").length;
-  const passives = responses.filter((r) => r.category === "PASSIVE").length;
-  const detractors = responses.filter((r) => r.category === "DETRACTOR").length;
+  const promoters = responses.filter((r: any) => r.category === "PROMOTER").length;
+  const passives = responses.filter((r: any) => r.category === "PASSIVE").length;
+  const detractors = responses.filter((r: any) => r.category === "DETRACTOR").length;
   const score =
     responses.length > 0
       ? Math.round(((promoters - detractors) / responses.length) * 100)

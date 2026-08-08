@@ -38,7 +38,7 @@ export default function PropertyDetailPage() {
           "/ext/real-estate/properties",
         );
         const list = Array.isArray(d) ? d : d.data || [];
-        setProperty(list.find((p) => p.id === id) || null);
+        setProperty(list.find((p: any) => p.id === id) || null);
         setLoadError(null);
       } catch (err) {
         const message =
@@ -127,7 +127,7 @@ export default function PropertyDetailPage() {
               ["Type", property.type],
               ["Portfolio", property.portfolio || "—"],
               ["Address", property.address || "—"],
-            ].map(([l, v]) => (
+            ].map(([l, v]: any) => (
               <div key={l as string} className={styles.s4}>
                 <span className="ui-text-sm-muted">{l}</span>
                 <span className="ui-heading-sm">{v}</span>

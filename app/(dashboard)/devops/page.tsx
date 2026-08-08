@@ -47,16 +47,16 @@ export default function DevopsPage() {
   useEffect(() => {
     Promise.all([
       fetch("/api/devops/deployments")
-        .then((r) => r.json())
-        .then((d) => setDeployments(d.items || []))
+        .then((r: any) => r.json())
+        .then((d: any) => setDeployments(d.items || []))
         .catch(() => {}),
       fetch("/api/devops/environments")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setEnvironments)
         .catch(() => {}),
       fetch("/api/devops/releases")
-        .then((r) => r.json())
-        .then((d) => setReleases(d.items || []))
+        .then((r: any) => r.json())
+        .then((d: any) => setReleases(d.items || []))
         .catch(() => {}),
     ]).finally(() => setLoading(false));
   }, []);
@@ -100,7 +100,7 @@ export default function DevopsPage() {
         />
         <KPICard
           title="Active Deployments"
-          value={deployments.filter((d) => d.status === "IN_PROGRESS").length}
+          value={deployments.filter((d: any) => d.status === "IN_PROGRESS").length}
           icon={<Activity size={20} />}
         />
         <KPICard

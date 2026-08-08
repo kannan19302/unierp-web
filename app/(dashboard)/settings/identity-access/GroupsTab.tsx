@@ -286,7 +286,7 @@ export default function GroupsTab() {
               />
             )}
             <div className={styles.s5}>
-              {groups.map((g) => (
+              {groups.map((g: any) => (
                 <div
                   key={g.id}
                   onClick={() => selectGroup(g)}
@@ -311,7 +311,7 @@ export default function GroupsTab() {
                   <div className="ui-flex ui-gap-1">
                     <ProtectedComponent permission="admin.user-group.update">
                       <button
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                           e.stopPropagation();
                           setSelectedGroup(g);
                           setGroupForm({
@@ -328,7 +328,7 @@ export default function GroupsTab() {
                     </ProtectedComponent>
                     <ProtectedComponent permission="admin.user-group.delete">
                       <button
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                           e.stopPropagation();
                           handleDeleteGroup(g.id);
                         }}
@@ -375,7 +375,7 @@ export default function GroupsTab() {
                   />
                 ) : (
                   <div className={styles.s12}>
-                    {members.map((m) => (
+                    {members.map((m: any) => (
                       <div key={m.id} className={styles.s13}>
                         <div>
                           <div className="ui-heading-sm">
@@ -444,7 +444,7 @@ export default function GroupsTab() {
             label="Group Name"
             required
             value={groupForm.name}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setGroupForm({ ...groupForm, name: e.target.value })
             }
           />
@@ -452,7 +452,7 @@ export default function GroupsTab() {
             <Textarea
               rows={3}
               value={groupForm.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setGroupForm({ ...groupForm, description: e.target.value })
               }
             />
@@ -496,7 +496,7 @@ export default function GroupsTab() {
             label="Group Name"
             required
             value={groupForm.name}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setGroupForm({ ...groupForm, name: e.target.value })
             }
           />
@@ -504,7 +504,7 @@ export default function GroupsTab() {
             <Textarea
               rows={3}
               value={groupForm.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setGroupForm({ ...groupForm, description: e.target.value })
               }
             />
@@ -546,8 +546,8 @@ export default function GroupsTab() {
       >
         <div className={styles.s15}>
           {allUsers
-            .filter((user) => !members.some((member) => member.id === user.id))
-            .map((user) => {
+            .filter((user: any) => !members.some((member: any) => member.id === user.id))
+            .map((user: any) => {
               const isChecked = selectedUserIds.includes(user.id);
               return (
                 <div key={user.id} className={styles.s16}>
@@ -557,7 +557,7 @@ export default function GroupsTab() {
                     onChange={() => {
                       if (isChecked) {
                         setSelectedUserIds(
-                          selectedUserIds.filter((id) => id !== user.id),
+                          selectedUserIds.filter((id: any) => id !== user.id),
                         );
                       } else {
                         setSelectedUserIds([...selectedUserIds, user.id]);

@@ -54,7 +54,7 @@ export default function POSDiagnosticsPage() {
   }, [client]);
 
   const addLog = (msg: string) => {
-    setLogs((prev) => [
+    setLogs((prev: any) => [
       `[${new Date().toLocaleTimeString()}] ${msg}`,
       ...prev.slice(0, 19),
     ]);
@@ -80,7 +80,7 @@ export default function POSDiagnosticsPage() {
     addLog("Starting hardware loop diagnostic checks...");
 
     // Simulate latency
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise((resolve: any) => setTimeout(resolve, 800));
 
     try {
       const nextDiag = {
@@ -154,12 +154,12 @@ export default function POSDiagnosticsPage() {
                 <select
                   className={["ui-input", styles.p6].join(" ")}
                   value={selectedTerminal}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setSelectedTerminal(e.target.value);
                     loadDiagnostics(e.target.value);
                   }}
                 >
-                  {terminals.map((t) => (
+                  {terminals.map((t: any) => (
                     <option key={t.id} value={t.id}>
                       {t.name} ({t.code})
                     </option>
@@ -282,7 +282,7 @@ export default function POSDiagnosticsPage() {
             </h3>
 
             <div className={styles.p22}>
-              {logs.map((log, idx) => (
+              {logs.map((log: any, idx: any) => (
                 <div key={idx} className={styles.p23}>
                   {log}
                 </div>

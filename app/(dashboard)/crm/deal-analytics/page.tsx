@@ -123,7 +123,7 @@ export default function DealAnalyticsPage() {
                   "funnel",
                   "close-rate-trend",
                   "deal-age",
-                ].map((metric) => (
+                ].map((metric: any) => (
                   <a
                     key={metric}
                     href={`#${metric}`}
@@ -132,7 +132,7 @@ export default function DealAnalyticsPage() {
                     <span className={styles.metricDot} />
                     {metric
                       .replace(/-/g, " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
+                      .replace(/\b\w/g, (c: any) => c.toUpperCase())}
                   </a>
                 ))}
               </div>
@@ -146,7 +146,7 @@ export default function DealAnalyticsPage() {
                   "competitor-win-loss",
                   "deals-by-source",
                   "revenue-leakage",
-                ].map((metric) => (
+                ].map((metric: any) => (
                   <a
                     key={metric}
                     href={`#${metric}`}
@@ -155,7 +155,7 @@ export default function DealAnalyticsPage() {
                     <span className={styles.metricDot} />
                     {metric
                       .replace(/-/g, " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
+                      .replace(/\b\w/g, (c: any) => c.toUpperCase())}
                   </a>
                 ))}
               </div>
@@ -172,7 +172,7 @@ export default function DealAnalyticsPage() {
                   "pipeline-coverage",
                   "historical-forecast-accuracy",
                   "probability-scoring",
-                ].map((metric) => (
+                ].map((metric: any) => (
                   <a
                     key={metric}
                     href={`#${metric}`}
@@ -181,7 +181,7 @@ export default function DealAnalyticsPage() {
                     <span className={styles.metricDot} />
                     {metric
                       .replace(/-/g, " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
+                      .replace(/\b\w/g, (c: any) => c.toUpperCase())}
                   </a>
                 ))}
               </div>
@@ -195,7 +195,7 @@ export default function DealAnalyticsPage() {
                   "team-quota-rollup",
                   "velocity-by-channel",
                   "pipeline-by-assignee",
-                ].map((metric) => (
+                ].map((metric: any) => (
                   <a
                     key={metric}
                     href={`#${metric}`}
@@ -204,7 +204,7 @@ export default function DealAnalyticsPage() {
                     <span className={styles.metricDot} />
                     {metric
                       .replace(/-/g, " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
+                      .replace(/\b\w/g, (c: any) => c.toUpperCase())}
                   </a>
                 ))}
               </div>
@@ -223,12 +223,12 @@ export default function DealAnalyticsPage() {
                 "by-industry",
                 "negotiation-success",
                 "scorecard",
-              ].map((feat) => (
+              ].map((feat: any) => (
                 <div key={feat} className={styles.featureCard}>
                   <div className={styles.featureTitle}>
                     {feat
                       .replace(/-/g, " ")
-                      .replace(/\b\w/g, (c) => c.toUpperCase())}
+                      .replace(/\b\w/g, (c: any) => c.toUpperCase())}
                   </div>
                   <div className={styles.featureBadge}>Available</div>
                 </div>

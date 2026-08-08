@@ -448,45 +448,45 @@ export default function ManufacturingDashboard() {
   // Computed values
   const averageOee = useMemo(() => {
     const validScores = workOrders
-      .filter((w) => w.oeeScore !== null && w.oeeScore !== undefined)
-      .map((w) => Number(w.oeeScore));
+      .filter((w: any) => w.oeeScore !== null && w.oeeScore !== undefined)
+      .map((w: any) => Number(w.oeeScore));
     if (validScores.length === 0) return 85; // default OEE target
     return Math.round(
-      validScores.reduce((a, b) => a + b, 0) / validScores.length,
+      validScores.reduce((a: any, b: any) => a + b, 0) / validScores.length,
     );
   }, [workOrders]);
 
   const totalScrap = useMemo(() => {
     return workOrders.reduce(
-      (sum, w) => sum + (Number(w.scrapQuantity) || 0),
+      (sum: any, w: any) => sum + (Number(w.scrapQuantity) || 0),
       0,
     );
   }, [workOrders]);
 
   const totalCostVariance = useMemo(() => {
     return workOrders.reduce(
-      (sum, w) => sum + (Number(w.costVariance) || 0),
+      (sum: any, w: any) => sum + (Number(w.costVariance) || 0),
       0,
     );
   }, [workOrders]);
 
   const activeMaintenanceCount = useMemo(() => {
-    return maintenance.filter((m) => m.status !== "RESOLVED").length;
+    return maintenance.filter((m: any) => m.status !== "RESOLVED").length;
   }, [maintenance]);
 
   // Chart data
   const oeeTrendData = useMemo(() => {
     return workOrders
-      .filter((w) => w.oeeScore !== null && w.oeeScore !== undefined)
+      .filter((w: any) => w.oeeScore !== null && w.oeeScore !== undefined)
       .slice(0, 10)
-      .map((w) => ({
+      .map((w: any) => ({
         name: w.workOrderNumber,
         OEE: Number(w.oeeScore),
       }));
   }, [workOrders]);
 
   const capacityLoadChartData = useMemo(() => {
-    return loadBalancing.map((lb) => ({
+    return loadBalancing.map((lb: any) => ({
       name: lb.workstation,
       Allocated: Math.round(lb.allocatedHours),
       Capacity: Math.round(lb.capacityHours),
@@ -496,9 +496,9 @@ export default function ManufacturingDashboard() {
 
   const costComparisonData = useMemo(() => {
     return workOrders
-      .filter((w) => w.standardCost && w.actualCost)
+      .filter((w: any) => w.standardCost && w.actualCost)
       .slice(0, 8)
-      .map((w) => ({
+      .map((w: any) => ({
         name: w.workOrderNumber,
         Standard: Number(w.standardCost),
         Actual: Number(w.actualCost),
@@ -507,10 +507,10 @@ export default function ManufacturingDashboard() {
 
   const workOrderStatusData = useMemo(() => {
     const counts: Record<string, number> = {};
-    workOrders.forEach((w) => {
+    workOrders.forEach((w: any) => {
       counts[w.status] = (counts[w.status] || 0) + 1;
     });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
+    return Object.entries(counts).map(([name, value]: any) => ({ name, value }));
   }, [workOrders]);
 
   return (
@@ -536,7 +536,7 @@ export default function ManufacturingDashboard() {
                     {
                       label: "Active Work Orders",
                       value: workOrders.filter(
-                        (w) => w.status === "IN_PROGRESS",
+                        (w: any) => w.status === "IN_PROGRESS",
                       ).length,
                       icon: <Play size={16} />,
                       color: "var(--chart-1)",
@@ -656,7 +656,7 @@ export default function ManufacturingDashboard() {
                 </div>
 
                 <div className="ui-stack-3">
-                  {workOrders.map((wo) => (
+                  {workOrders.map((wo: any) => (
                     <div key={wo.id} className={styles.p4}>
                       <div>
                         <p className="ui-heading-sm font-bold">
@@ -749,7 +749,7 @@ export default function ManufacturingDashboard() {
                     Finite Capacity Load Utilization
                   </h3>
                   <div className={styles.p12}>
-                    {loadBalancing.map((load, idx) => (
+                    {loadBalancing.map((load: any, idx: any) => (
                       <div key={idx} className={styles.p13}>
                         <div className="ui-flex-between">
                           <div>
@@ -806,7 +806,7 @@ export default function ManufacturingDashboard() {
                     </button>
                   </div>
                   <div className={styles.p18}>
-                    {shifts.map((s) => (
+                    {shifts.map((s: any) => (
                       <div key={s.id} className={styles.p19}>
                         <div>
                           <p className={styles.p20}>{s.name}</p>
@@ -842,7 +842,7 @@ export default function ManufacturingDashboard() {
                 </div>
 
                 <div className="ui-stack-3">
-                  {maintenance.map((req) => (
+                  {maintenance.map((req: any) => (
                     <div key={req.id} className={styles.p24}>
                       <div>
                         <p className={styles.p25}>{req.title}</p>
@@ -909,7 +909,7 @@ export default function ManufacturingDashboard() {
                 </div>
 
                 <div className="ui-stack-3">
-                  {subcontracting.map((sub) => (
+                  {subcontracting.map((sub: any) => (
                     <div key={sub.id} className={styles.p29}>
                       <div>
                         <p className={styles.p30}>{sub.product.name}</p>
@@ -967,7 +967,7 @@ export default function ManufacturingDashboard() {
               <div className={styles.p35}>
                 <h3 className="ui-heading-lg">Equipment tools cycle limits</h3>
                 <div className={styles.p36}>
-                  {tools.map((t) => (
+                  {tools.map((t: any) => (
                     <div key={t.id} className={styles.p37}>
                       <div className="ui-flex-between">
                         <h4 className={styles.p38}>{t.name}</h4>
@@ -1031,13 +1031,13 @@ export default function ManufacturingDashboard() {
                 <select
                   required
                   value={newWO.bomId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewWO({ ...newWO, bomId: e.target.value })
                   }
                   className={styles.p44}
                 >
                   <option value="">Select BOM...</option>
-                  {boms.map((b) => (
+                  {boms.map((b: any) => (
                     <option key={b.id} value={b.id}>
                       {b.name} ({b.code})
                     </option>
@@ -1050,13 +1050,13 @@ export default function ManufacturingDashboard() {
                 <select
                   required
                   value={newWO.workstationId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewWO({ ...newWO, workstationId: e.target.value })
                   }
                   className={styles.p45}
                 >
                   <option value="">Select Machine Workstation...</option>
-                  {workstations.map((ws) => (
+                  {workstations.map((ws: any) => (
                     <option key={ws.id} value={ws.id}>
                       {ws.name} ({ws.code})
                     </option>
@@ -1071,7 +1071,7 @@ export default function ManufacturingDashboard() {
                   type="text"
                   placeholder="e.g. WO-2026-101"
                   value={newWO.workOrderNumber}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewWO({ ...newWO, workOrderNumber: e.target.value })
                   }
                   className={styles.p46}
@@ -1086,7 +1086,7 @@ export default function ManufacturingDashboard() {
                     type="number"
                     min="1"
                     value={newWO.quantity}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewWO({ ...newWO, quantity: e.target.value })
                     }
                     className={styles.p47}
@@ -1097,7 +1097,7 @@ export default function ManufacturingDashboard() {
                   <input
                     type="date"
                     value={newWO.startDate}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewWO({ ...newWO, startDate: e.target.value })
                     }
                     className={styles.p48}
@@ -1132,13 +1132,13 @@ export default function ManufacturingDashboard() {
                 <select
                   required
                   value={newCmms.workstationId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewCmms({ ...newCmms, workstationId: e.target.value })
                   }
                   className={styles.p53}
                 >
                   <option value="">Select Workstation...</option>
-                  {workstations.map((ws) => (
+                  {workstations.map((ws: any) => (
                     <option key={ws.id} value={ws.id}>
                       {ws.name}
                     </option>
@@ -1151,7 +1151,7 @@ export default function ManufacturingDashboard() {
                   <label className="ui-text-xs-label">Type</label>
                   <select
                     value={newCmms.type}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewCmms({ ...newCmms, type: e.target.value })
                     }
                     className={styles.p54}
@@ -1164,7 +1164,7 @@ export default function ManufacturingDashboard() {
                   <label className="ui-text-xs-label">Priority</label>
                   <select
                     value={newCmms.priority}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewCmms({ ...newCmms, priority: e.target.value })
                     }
                     className={styles.p55}
@@ -1183,7 +1183,7 @@ export default function ManufacturingDashboard() {
                   type="text"
                   placeholder="e.g. Clean main calibration dial"
                   value={newCmms.title}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewCmms({ ...newCmms, title: e.target.value })
                   }
                   className={styles.p56}
@@ -1194,7 +1194,7 @@ export default function ManufacturingDashboard() {
                 <label className="ui-text-xs-label">Detailed Description</label>
                 <textarea
                   value={newCmms.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewCmms({ ...newCmms, description: e.target.value })
                   }
                   className={styles.p57}
@@ -1230,13 +1230,13 @@ export default function ManufacturingDashboard() {
                 <select
                   required
                   value={newSub.vendorId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewSub({ ...newSub, vendorId: e.target.value })
                   }
                   className={styles.p62}
                 >
                   <option value="">Select Vendor...</option>
-                  {vendors.map((v) => (
+                  {vendors.map((v: any) => (
                     <option key={v.id} value={v.id}>
                       {v.name}
                     </option>
@@ -1251,13 +1251,13 @@ export default function ManufacturingDashboard() {
                 <select
                   required
                   value={newSub.productId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewSub({ ...newSub, productId: e.target.value })
                   }
                   className={styles.p63}
                 >
                   <option value="">Select Product...</option>
-                  {products.map((p) => (
+                  {products.map((p: any) => (
                     <option key={p.id} value={p.id}>
                       {p.name}
                     </option>
@@ -1273,7 +1273,7 @@ export default function ManufacturingDashboard() {
                     type="number"
                     min="1"
                     value={newSub.quantity}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewSub({ ...newSub, quantity: e.target.value })
                     }
                     className={styles.p64}
@@ -1287,7 +1287,7 @@ export default function ManufacturingDashboard() {
                     min="0.1"
                     step="0.1"
                     value={newSub.unitCost}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewSub({ ...newSub, unitCost: e.target.value })
                     }
                     className={styles.p65}
@@ -1300,7 +1300,7 @@ export default function ManufacturingDashboard() {
                 <input
                   type="date"
                   value={newSub.deliveryDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewSub({ ...newSub, deliveryDate: e.target.value })
                   }
                   className={styles.p66}
@@ -1342,7 +1342,7 @@ export default function ManufacturingDashboard() {
                 </label>
                 <select
                   value={issueForm.warehouseId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setIssueForm({ ...issueForm, warehouseId: e.target.value })
                   }
                   className={styles.p71}
@@ -1357,7 +1357,7 @@ export default function ManufacturingDashboard() {
                   required
                   type="number"
                   value={issueForm.quantity}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setIssueForm({ ...issueForm, quantity: e.target.value })
                   }
                   className={styles.p72}
@@ -1391,13 +1391,13 @@ export default function ManufacturingDashboard() {
                 <select
                   required
                   value={newShift.workstationId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewShift({ ...newShift, workstationId: e.target.value })
                   }
                   className={styles.p77}
                 >
                   <option value="">Select workstation...</option>
-                  {workstations.map((w) => (
+                  {workstations.map((w: any) => (
                     <option key={w.id} value={w.id}>
                       {w.name}
                     </option>
@@ -1412,7 +1412,7 @@ export default function ManufacturingDashboard() {
                   type="text"
                   placeholder="e.g. Morning Shift"
                   value={newShift.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewShift({ ...newShift, name: e.target.value })
                   }
                   className={styles.p78}
@@ -1426,7 +1426,7 @@ export default function ManufacturingDashboard() {
                     type="text"
                     placeholder="e.g. 08:00"
                     value={newShift.startTime}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewShift({ ...newShift, startTime: e.target.value })
                     }
                     className={styles.p79}
@@ -1438,7 +1438,7 @@ export default function ManufacturingDashboard() {
                     type="text"
                     placeholder="e.g. 16:00"
                     value={newShift.endTime}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewShift({ ...newShift, endTime: e.target.value })
                     }
                     className={styles.p80}

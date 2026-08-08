@@ -89,7 +89,7 @@ export default function PpmEnterpriseHub() {
       setCreateOpen(false);
       fetchData();
     } catch {
-      setPortfolios((prev) => [
+      setPortfolios((prev: any) => [
         ...prev,
         {
           id: String(Date.now()),
@@ -209,7 +209,7 @@ export default function PpmEnterpriseHub() {
             <FormField label="Portfolio Name">
               <TextField
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g. NextGen Core ERP Modernization"
                 required
               />
@@ -217,7 +217,7 @@ export default function PpmEnterpriseHub() {
             <FormField label="Strategic Initiative Goal">
               <TextField
                 value={form.strategicGoal}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, strategicGoal: e.target.value })
                 }
                 placeholder="e.g. Expand Market Share in APAC"
@@ -228,7 +228,7 @@ export default function PpmEnterpriseHub() {
               <TextField
                 type="number"
                 value={form.budget}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, budget: Number(e.target.value) })
                 }
                 required

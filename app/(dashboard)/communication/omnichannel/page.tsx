@@ -75,7 +75,7 @@ export default function OmnichannelPage() {
           <span className="font-medium">{r.contactName}</span>
           {r.tags?.length > 0 && (
             <div className="flex gap-1 mt-1">
-              {r.tags.slice(0, 3).map((t, i) => (
+              {r.tags.slice(0, 3).map((t: any, i: any) => (
                 <Badge key={i} variant="default" className="text-xs">
                   {t}
                 </Badge>

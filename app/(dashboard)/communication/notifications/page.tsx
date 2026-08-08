@@ -42,8 +42,8 @@ export default function NotificationListPage() {
       await client.put(`/communication/notifications/${id}/status`, {
         status: "READ",
       });
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, status: "READ" } : n)),
+      setNotifications((prev: any) =>
+        prev.map((n: any) => (n.id === id ? { ...n, status: "READ" } : n)),
       );
     } catch {
       /* empty */
@@ -55,8 +55,8 @@ export default function NotificationListPage() {
       await client.put(`/communication/notifications/${id}/status`, {
         status: "ARCHIVED",
       });
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, status: "ARCHIVED" } : n)),
+      setNotifications((prev: any) =>
+        prev.map((n: any) => (n.id === id ? { ...n, status: "ARCHIVED" } : n)),
       );
     } catch {
       /* empty */
@@ -152,7 +152,7 @@ export default function NotificationListPage() {
     );
   }
 
-  const unreadCount = notifications.filter((n) => n.status === "UNREAD").length;
+  const unreadCount = notifications.filter((n: any) => n.status === "UNREAD").length;
 
   return (
     <div className="ui-page">

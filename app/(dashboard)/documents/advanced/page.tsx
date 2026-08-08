@@ -24,7 +24,7 @@ export default function DocumentsAdvancedPage() {
       apiGet("/documents/analytics"),
       apiGet("/documents/search?q=").catch(() => []),
     ])
-      .then(([s]) => {
+      .then(([s]: any) => {
         setStats(s);
       })
       .finally(() => setLoading(false));

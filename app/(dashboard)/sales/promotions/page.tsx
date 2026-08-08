@@ -183,7 +183,7 @@ export default function PromotionsPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setEditPromo(row);
               setForm(row);
@@ -195,7 +195,7 @@ export default function PromotionsPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleDelete(row.id);
             }}
@@ -250,7 +250,7 @@ export default function PromotionsPage() {
               stats={[
                 {
                   label: "Active Promotions",
-                  value: promotions.filter((p) => p.isActive).length,
+                  value: promotions.filter((p: any) => p.isActive).length,
                   icon: React.createElement(Percent, { size: 16 }),
                   color: "green",
                 },
@@ -262,7 +262,7 @@ export default function PromotionsPage() {
                 },
                 {
                   label: "Total Used",
-                  value: promotions.reduce((s, p) => s + p.usedCount, 0),
+                  value: promotions.reduce((s: any, p: any) => s + p.usedCount, 0),
                   icon: React.createElement(Gift, { size: 16 }),
                   color: "purple",
                 },
@@ -364,7 +364,7 @@ export default function PromotionsPage() {
                     <input
                       className="ui-input"
                       value={form.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, name: e.target.value })
                       }
                       required
@@ -375,7 +375,7 @@ export default function PromotionsPage() {
                     <select
                       className="ui-input"
                       value={form.type}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, type: e.target.value })
                       }
                     >
@@ -392,7 +392,7 @@ export default function PromotionsPage() {
                       className="ui-input"
                       type="number"
                       value={form.value}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, value: Number(e.target.value) })
                       }
                       required
@@ -403,7 +403,7 @@ export default function PromotionsPage() {
                     <select
                       className="ui-input"
                       value={form.isActive ? "true" : "false"}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({
                           ...form,
                           isActive: e.target.value === "true",
@@ -422,7 +422,7 @@ export default function PromotionsPage() {
                       className="ui-input"
                       type="date"
                       value={form.startDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, startDate: e.target.value })
                       }
                       required
@@ -434,7 +434,7 @@ export default function PromotionsPage() {
                       className="ui-input"
                       type="date"
                       value={form.endDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, endDate: e.target.value })
                       }
                       required

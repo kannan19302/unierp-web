@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Eye, Copy } from "lucide-react";
@@ -121,7 +121,7 @@ export default function NotificationTemplatesPage() {
             const [k, ...v] = l.split("=");
             return k ? [k.trim(), v.join("=").trim()] : [];
           })
-          .filter((pair) => pair.length > 0),
+          .filter((pair: any) => pair.length > 0),
       );
       const res = await fetch(`/api/notifications/templates/${id}/render`, {
         method: "POST",
@@ -145,7 +145,7 @@ export default function NotificationTemplatesPage() {
         <select
           className="ui-input"
           value={channelFilter}
-          onChange={(e) => setChannelFilter(e.target.value)}
+          onChange={(e: any) => setChannelFilter(e.target.value)}
         >
           <option value="">All Channels</option>
           <option value="EMAIL">Email</option>
@@ -165,7 +165,7 @@ export default function NotificationTemplatesPage() {
               <input
                 className="ui-input"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -173,7 +173,7 @@ export default function NotificationTemplatesPage() {
               <select
                 className="ui-input"
                 value={form.channel}
-                onChange={(e) => setForm({ ...form, channel: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, channel: e.target.value })}
               >
                 <option value="EMAIL">Email</option>
                 <option value="SMS">SMS</option>
@@ -187,7 +187,7 @@ export default function NotificationTemplatesPage() {
             <input
               className="ui-input"
               value={form.subject}
-              onChange={(e) => setForm({ ...form, subject: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, subject: e.target.value })}
             />
           </div>
           <div className="ui-form-group">
@@ -196,7 +196,7 @@ export default function NotificationTemplatesPage() {
               className="ui-input"
               rows={5}
               value={form.body}
-              onChange={(e) => setForm({ ...form, body: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, body: e.target.value })}
             />
           </div>
           <div className="ui-grid-2">
@@ -205,7 +205,7 @@ export default function NotificationTemplatesPage() {
               <input
                 className="ui-input"
                 value={form.variables}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, variables: e.target.value })
                 }
               />
@@ -215,7 +215,7 @@ export default function NotificationTemplatesPage() {
               <input
                 className="ui-input"
                 value={form.eventType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, eventType: e.target.value })
                 }
               />
@@ -285,7 +285,7 @@ export default function NotificationTemplatesPage() {
               className="ui-input"
               rows={3}
               value={renderVars}
-              onChange={(e) => setRenderVars(e.target.value)}
+              onChange={(e: any) => setRenderVars(e.target.value)}
             />
           </div>
           <button

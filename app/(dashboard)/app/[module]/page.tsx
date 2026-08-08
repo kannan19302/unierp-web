@@ -77,11 +77,11 @@ export default function AppShellPage() {
   const toggle = async (slug: string, enabled: boolean) => {
     setBusy(slug);
     // optimistic
-    setShell((s) =>
+    setShell((s: any) =>
       s
         ? {
             ...s,
-            modules: s.modules.map((m) =>
+            modules: s.modules.map((m: any) =>
               m.slug === slug ? { ...m, enabled } : m,
             ),
           }
@@ -93,11 +93,11 @@ export default function AppShellPage() {
         { method: "PUT", body: JSON.stringify({ enabled }) },
       );
     } catch {
-      setShell((s) =>
+      setShell((s: any) =>
         s
           ? {
               ...s,
-              modules: s.modules.map((m) =>
+              modules: s.modules.map((m: any) =>
                 m.slug === slug ? { ...m, enabled: !enabled } : m,
               ),
             }
@@ -129,7 +129,7 @@ export default function AppShellPage() {
     );
   }
 
-  const enabledModules = shell.modules.filter((m) => m.enabled);
+  const enabledModules = shell.modules.filter((m: any) => m.enabled);
 
   return (
     <RouteGuard permission="apps.shell.read">
@@ -208,7 +208,7 @@ export default function AppShellPage() {
                   {enabledModules.length === 1 ? "" : "s"} enabled.
                 </div>
                 <div className={styles.s13}>
-                  {enabledModules.map((m) => {
+                  {enabledModules.map((m: any) => {
                     const first = m.pages[0];
                     const inner = (
                       <>
@@ -269,7 +269,7 @@ export default function AppShellPage() {
                 re-enabled.
               </p>
             </div>
-            {shell.modules.map((m) => (
+            {shell.modules.map((m: any) => (
               <div key={m.slug} className={styles.s21}>
                 <span className={styles.s22}>{m.icon || "📦"}</span>
                 <div className="flex-1">
@@ -281,7 +281,7 @@ export default function AppShellPage() {
                     <span className="ui-text-caption ui-text-tertiary">
                       {m.pages.length} page{m.pages.length === 1 ? "" : "s"}
                     </span>
-                    {(m.roles || []).map((role) => (
+                    {(m.roles || []).map((role: any) => (
                       <span key={role} className={styles.s25}>
                         {role}
                       </span>

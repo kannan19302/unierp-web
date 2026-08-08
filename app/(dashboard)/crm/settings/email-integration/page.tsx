@@ -222,7 +222,7 @@ export default function EmailIntegrationSettingsPage() {
                 {
                   key: "status",
                   header: "Status",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div>
                       <Badge
                         variant={
@@ -254,13 +254,13 @@ export default function EmailIntegrationSettingsPage() {
                 {
                   key: "lastSyncMessages",
                   header: "Last Sync Results",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     `${v} email(s), ${row.lastSyncEvents} event(s)`,
                 },
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.style3}>
                       <ProtectedComponent permission="crm.mailbox.update">
                         <button

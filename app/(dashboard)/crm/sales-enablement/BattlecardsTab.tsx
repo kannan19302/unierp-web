@@ -122,9 +122,9 @@ export default function BattlecardsTab() {
     try {
       await client.post("/crm/battlecards", {
         competitorName: form.competitorName.trim(),
-        strengths: form.strengths.filter((s) => s.trim()),
-        weaknesses: form.weaknesses.filter((w) => w.trim()),
-        objections: form.objections.filter((o) => o.objection.trim()),
+        strengths: form.strengths.filter((s: any) => s.trim()),
+        weaknesses: form.weaknesses.filter((w: any) => w.trim()),
+        objections: form.objections.filter((o: any) => o.objection.trim()),
         winStrategy: form.winStrategy.trim(),
       });
       setShowModal(false);
@@ -146,7 +146,7 @@ export default function BattlecardsTab() {
   const addRow = (field: "strengths" | "weaknesses") =>
     setForm({ ...form, [field]: [...form[field], ""] });
   const removeRow = (field: "strengths" | "weaknesses", i: number) =>
-    setForm({ ...form, [field]: form[field].filter((_, idx) => idx !== i) });
+    setForm({ ...form, [field]: form[field].filter((_: any, idx: any) => idx !== i) });
   const updateRow = (
     field: "strengths" | "weaknesses",
     i: number,
@@ -164,7 +164,7 @@ export default function BattlecardsTab() {
   const removeObjection = (i: number) =>
     setForm({
       ...form,
-      objections: form.objections.filter((_, idx) => idx !== i),
+      objections: form.objections.filter((_: any, idx: any) => idx !== i),
     });
   const updateObjection = (
     i: number,
@@ -179,7 +179,7 @@ export default function BattlecardsTab() {
     }
   };
 
-  const filtered = battlecards.filter((bc) =>
+  const filtered = battlecards.filter((bc: any) =>
     bc.competitorName.toLowerCase().includes(search.toLowerCase()),
   );
 
@@ -203,14 +203,14 @@ export default function BattlecardsTab() {
         <Search className={styles.style4} />
         <Input
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           placeholder="Search competitors..."
           className={styles.style5}
         />
       </div>
 
       <div className={styles.style6}>
-        {filtered.map((bc) => (
+        {filtered.map((bc: any) => (
           <Card key={bc.id} className={styles.style7}>
             <div className={styles.style8}>
               <Swords className={styles.style9} />
@@ -223,7 +223,7 @@ export default function BattlecardsTab() {
                   <Shield className={styles.style13} /> Strengths
                 </div>
                 <ul className={styles.s1}>
-                  {bc.strengths.map((s, i) => (
+                  {bc.strengths.map((s: any, i: any) => (
                     <li key={i}>{s}</li>
                   ))}
                 </ul>
@@ -233,7 +233,7 @@ export default function BattlecardsTab() {
                   <AlertTriangle className={styles.style15} /> Weaknesses
                 </div>
                 <ul className={styles.s1}>
-                  {bc.weaknesses.map((w, i) => (
+                  {bc.weaknesses.map((w: any, i: any) => (
                     <li key={i}>{w}</li>
                   ))}
                 </ul>
@@ -297,21 +297,21 @@ export default function BattlecardsTab() {
           <FormField label="Competitor Name" required>
             <Input
               value={form.competitorName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, competitorName: e.target.value })
               }
               placeholder="e.g. Acme Corp"
             />
           </FormField>
 
-          {(["strengths", "weaknesses"] as const).map((field) => (
+          {(["strengths", "weaknesses"] as const).map((field: any) => (
             <div key={field} className={styles.style23}>
               <label className={styles.style24}>{field}</label>
-              {form[field].map((val, i) => (
+              {form[field].map((val: any, i: any) => (
                 <div key={i} className={styles.style25}>
                   <Input
                     value={val}
-                    onChange={(e) => updateRow(field, i, e.target.value)}
+                    onChange={(e: any) => updateRow(field, i, e.target.value)}
                     placeholder={`Add ${field.slice(0, -1)}...`}
                     className="flex-1"
                   />
@@ -333,19 +333,19 @@ export default function BattlecardsTab() {
 
           <div className={styles.style28}>
             <label className={styles.style29}>Objections</label>
-            {form.objections.map((obj, i) => (
+            {form.objections.map((obj: any, i: any) => (
               <div key={i} className={styles.style30}>
                 <div className={styles.style31}>
                   <Input
                     value={obj.objection}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateObjection(i, "objection", e.target.value)
                     }
                     placeholder="Objection..."
                   />
                   <Input
                     value={obj.response}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateObjection(i, "response", e.target.value)
                     }
                     placeholder="Response..."
@@ -369,7 +369,7 @@ export default function BattlecardsTab() {
           <FormField label="Win Strategy">
             <Textarea
               value={form.winStrategy}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, winStrategy: e.target.value })
               }
               placeholder="How to win against this competitor..."

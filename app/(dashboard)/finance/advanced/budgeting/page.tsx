@@ -520,8 +520,8 @@ export default function BudgetingPage() {
       key: "transfer",
       header: "Transfer Detail",
       render: (r: any) => {
-        const sourceLine = r.lines.find((l) => l.type === "SOURCE");
-        const destLine = r.lines.find((l) => l.type === "DESTINATION");
+        const sourceLine = r.lines.find((l: any) => l.type === "SOURCE");
+        const destLine = r.lines.find((l: any) => l.type === "DESTINATION");
         if (!sourceLine || !destLine) return "Invalid Lines";
         return (
           <span className="ui-hstack-2">
@@ -697,7 +697,7 @@ export default function BudgetingPage() {
                 <FormField label="GL Account" required>
                   <Select
                     value={budgetData.accountId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setBudgetData({
                         ...budgetData,
                         accountId: e.target.value,
@@ -705,7 +705,7 @@ export default function BudgetingPage() {
                     }
                   >
                     <option value="">Select Account</option>
-                    {accounts.map((acc) => (
+                    {accounts.map((acc: any) => (
                       <option key={acc.id} value={acc.id}>
                         {acc.code} - {acc.name}
                       </option>
@@ -718,7 +718,7 @@ export default function BudgetingPage() {
                   required
                   placeholder="50000"
                   value={budgetData.amount}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setBudgetData({ ...budgetData, amount: e.target.value })
                   }
                 />
@@ -730,7 +730,7 @@ export default function BudgetingPage() {
                   type="date"
                   required
                   value={budgetData.startDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setBudgetData({ ...budgetData, startDate: e.target.value })
                   }
                 />
@@ -739,14 +739,14 @@ export default function BudgetingPage() {
                   type="date"
                   required
                   value={budgetData.endDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setBudgetData({ ...budgetData, endDate: e.target.value })
                   }
                 />
                 <FormField label="Spread Method" required>
                   <Select
                     value={budgetData.spreadMethod}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setBudgetData({
                         ...budgetData,
                         spreadMethod: e.target.value,
@@ -765,7 +765,7 @@ export default function BudgetingPage() {
                 <FormField label="Cost Center (Optional)">
                   <Select
                     value={budgetData.costCenterId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setBudgetData({
                         ...budgetData,
                         costCenterId: e.target.value,
@@ -778,7 +778,7 @@ export default function BudgetingPage() {
                 <FormField label="Project (Optional)">
                   <Select
                     value={budgetData.projectId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setBudgetData({
                         ...budgetData,
                         projectId: e.target.value,
@@ -826,14 +826,14 @@ export default function BudgetingPage() {
                   required
                   placeholder="FY2027 Optimistic Case"
                   value={scenarioData.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setScenarioData({ ...scenarioData, name: e.target.value })
                   }
                 />
                 <FormField label="Status" required>
                   <Select
                     value={scenarioData.status}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setScenarioData({
                         ...scenarioData,
                         status: e.target.value,
@@ -849,7 +849,7 @@ export default function BudgetingPage() {
                 label="Description"
                 placeholder="Reflects 15% revenue growth projection"
                 value={scenarioData.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setScenarioData({
                     ...scenarioData,
                     description: e.target.value,
@@ -894,7 +894,7 @@ export default function BudgetingPage() {
                 <FormField label="Source Budget (Transfer FROM)" required>
                   <Select
                     value={reallocData.sourceBudgetId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setReallocData({
                         ...reallocData,
                         sourceBudgetId: e.target.value,
@@ -902,7 +902,7 @@ export default function BudgetingPage() {
                     }
                   >
                     <option value="">Select Source Budget</option>
-                    {budgets.map((b) => (
+                    {budgets.map((b: any) => (
                       <option key={b.id} value={b.id}>
                         {b.account
                           ? `${b.account.code} - ${b.account.name}`
@@ -916,7 +916,7 @@ export default function BudgetingPage() {
                 <FormField label="Destination Budget (Transfer TO)" required>
                   <Select
                     value={reallocData.destBudgetId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setReallocData({
                         ...reallocData,
                         destBudgetId: e.target.value,
@@ -924,7 +924,7 @@ export default function BudgetingPage() {
                     }
                   >
                     <option value="">Select Destination Budget</option>
-                    {budgets.map((b) => (
+                    {budgets.map((b: any) => (
                       <option key={b.id} value={b.id}>
                         {b.account
                           ? `${b.account.code} - ${b.account.name}`
@@ -943,7 +943,7 @@ export default function BudgetingPage() {
                   required
                   placeholder="5000"
                   value={reallocData.amount}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReallocData({ ...reallocData, amount: e.target.value })
                   }
                 />
@@ -951,7 +951,7 @@ export default function BudgetingPage() {
                   label="Description"
                   placeholder="Reallocate surplus department funds"
                   value={reallocData.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReallocData({
                       ...reallocData,
                       description: e.target.value,
@@ -997,7 +997,7 @@ export default function BudgetingPage() {
                 {scenarios.length === 0 ? (
                   <div className={styles.s18}>No scenarios defined</div>
                 ) : (
-                  scenarios.map((scn) => (
+                  scenarios.map((scn: any) => (
                     <div key={scn.id} className={styles.s19}>
                       <div className={styles.s20}>
                         <span className={styles.s21}>{scn.name}</span>
@@ -1065,7 +1065,7 @@ export default function BudgetingPage() {
                   </div>
                   <Select
                     value={config.enforcementAction}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setConfig({
                         ...config,
                         enforcementAction: e.target
@@ -1091,7 +1091,7 @@ export default function BudgetingPage() {
                   required
                   hint="Allowed percentage override buffer above the strict budget limit."
                   value={config.tolerancePercentage}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setConfig({
                       ...config,
                       tolerancePercentage: parseFloat(e.target.value) || 0,
@@ -1108,7 +1108,7 @@ export default function BudgetingPage() {
                     <input
                       type="checkbox"
                       checked={config.checkJournals}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setConfig({
                           ...config,
                           checkJournals: e.target.checked,
@@ -1122,7 +1122,7 @@ export default function BudgetingPage() {
                     <input
                       type="checkbox"
                       checked={config.checkExpenses}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setConfig({
                           ...config,
                           checkExpenses: e.target.checked,
@@ -1136,7 +1136,7 @@ export default function BudgetingPage() {
                     <input
                       type="checkbox"
                       checked={config.checkInvoices}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setConfig({
                           ...config,
                           checkInvoices: e.target.checked,

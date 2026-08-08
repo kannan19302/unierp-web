@@ -129,7 +129,7 @@ export default function CustomerHealthPage() {
                             <span>
                               {key
                                 .replace(/([A-Z])/g, " $1")
-                                .replace(/^./, (s) => s.toUpperCase())}
+                                .replace(/^./, (s: any) => s.toUpperCase())}
                             </span>
                             <span>
                               {dim.score}/{dim.maxScore}

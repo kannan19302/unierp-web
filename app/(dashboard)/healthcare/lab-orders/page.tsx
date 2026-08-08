@@ -117,7 +117,7 @@ export default function HealthcareLabOrdersPage() {
               <select
                 className="ui-input"
                 value={form.patientId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, patientId: e.target.value })
                 }
               >
@@ -134,7 +134,7 @@ export default function HealthcareLabOrdersPage() {
               <input
                 className="ui-input"
                 value={form.testName}
-                onChange={(e) => setForm({ ...form, testName: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, testName: e.target.value })}
                 placeholder="e.g. Complete Blood Count"
               />
             </div>
@@ -143,7 +143,7 @@ export default function HealthcareLabOrdersPage() {
               <input
                 className="ui-input"
                 value={form.testCode}
-                onChange={(e) => setForm({ ...form, testCode: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, testCode: e.target.value })}
                 placeholder="e.g. CBC"
               />
             </div>
@@ -152,7 +152,7 @@ export default function HealthcareLabOrdersPage() {
               <input
                 className="ui-input"
                 value={form.specimenType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, specimenType: e.target.value })
                 }
                 placeholder="e.g. Blood"
@@ -163,7 +163,7 @@ export default function HealthcareLabOrdersPage() {
               <select
                 className="ui-input"
                 value={form.priority}
-                onChange={(e) => setForm({ ...form, priority: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, priority: e.target.value })}
               >
                 <option value="ROUTINE">Routine</option>
                 <option value="URGENT">Urgent</option>
@@ -175,7 +175,7 @@ export default function HealthcareLabOrdersPage() {
               <input
                 className="ui-input"
                 value={form.notes}
-                onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
               />
             </div>
           </div>
@@ -200,7 +200,7 @@ export default function HealthcareLabOrdersPage() {
         <select
           className="ui-input w-44"
           value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+          onChange={(e: any) => setStatusFilter(e.target.value)}
         >
           <option value="">All Status</option>
           <option value="ORDERED">Ordered</option>

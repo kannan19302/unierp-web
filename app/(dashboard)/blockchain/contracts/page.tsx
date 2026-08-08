@@ -97,7 +97,7 @@ export default function ContractsPage() {
           size="sm"
           variant="ghost"
           leftIcon={<Trash2 size={14} />}
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             handleDelete(r.id);
           }}
@@ -135,7 +135,7 @@ export default function ContractsPage() {
           title="Register Smart Contract"
         >
           <div className="ui-form-group">
-            {["name", "address", "network", "version"].map((f) => (
+            {["name", "address", "network", "version"].map((f: any) => (
               <div key={f} className="ui-form-group">
                 <label className="ui-label">
                   {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -143,7 +143,7 @@ export default function ContractsPage() {
                 <input
                   className="ui-input"
                   value={(form as any)[f]}
-                  onChange={(e) => setForm({ ...form, [f]: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, [f]: e.target.value })}
                   placeholder={f}
                 />
               </div>

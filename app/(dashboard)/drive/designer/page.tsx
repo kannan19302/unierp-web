@@ -71,7 +71,7 @@ export default function DriveDesignerPage() {
   };
 
   const addBlock = (type: TemplateBlock["type"]) => {
-    setTemplateBlocks((prev) => [
+    setTemplateBlocks((prev: any) => [
       ...prev,
       {
         id: `blk-${Date.now()}`,
@@ -83,12 +83,12 @@ export default function DriveDesignerPage() {
   };
 
   const removeBlock = (id: string) => {
-    setTemplateBlocks((prev) => prev.filter((b) => b.id !== id));
+    setTemplateBlocks((prev: any) => prev.filter((b: any) => b.id !== id));
   };
 
   const moveBlock = (id: string, dir: "up" | "down") => {
-    setTemplateBlocks((prev) => {
-      const idx = prev.findIndex((b) => b.id === id);
+    setTemplateBlocks((prev: any) => {
+      const idx = prev.findIndex((b: any) => b.id === id);
       if (
         (dir === "up" && idx === 0) ||
         (dir === "down" && idx === prev.length - 1)
@@ -125,7 +125,7 @@ export default function DriveDesignerPage() {
           <h3 className={styles.p2}>Add Block</h3>
           {(
             ["header", "text", "image", "table", "signature", "footer"] as const
-          ).map((type) => (
+          ).map((type: any) => (
             <button
               key={type}
               onClick={() => addBlock(type)}
@@ -150,7 +150,7 @@ export default function DriveDesignerPage() {
             </div>
           </div>
           <div className="ui-stack-2">
-            {templateBlocks.map((block, idx) => (
+            {templateBlocks.map((block: any, idx: any) => (
               <div
                 key={block.id}
                 className={styles.templateBlock}
@@ -163,9 +163,9 @@ export default function DriveDesignerPage() {
                     </span>
                     <input
                       value={block.label}
-                      onChange={(e) =>
-                        setTemplateBlocks((prev) =>
-                          prev.map((b) =>
+                      onChange={(e: any) =>
+                        setTemplateBlocks((prev: any) =>
+                          prev.map((b: any) =>
                             b.id === block.id
                               ? { ...b, label: e.target.value }
                               : b,
@@ -211,9 +211,9 @@ export default function DriveDesignerPage() {
                 </div>
                 <textarea
                   value={block.content}
-                  onChange={(e) =>
-                    setTemplateBlocks((prev) =>
-                      prev.map((b) =>
+                  onChange={(e: any) =>
+                    setTemplateBlocks((prev: any) =>
+                      prev.map((b: any) =>
                         b.id === block.id
                           ? { ...b, content: e.target.value }
                           : b,
@@ -240,7 +240,7 @@ export default function DriveDesignerPage() {
             { label: "Font Family", value: "Inter", type: "select" },
             { label: "Font Size (pt)", value: "10", type: "number" },
             { label: "Margin (mm)", value: "20", type: "number" },
-          ].map((prop, i) => (
+          ].map((prop: any, i: any) => (
             <div key={i} className={styles.p14}>
               <label className={styles.p15}>{prop.label}</label>
               <input

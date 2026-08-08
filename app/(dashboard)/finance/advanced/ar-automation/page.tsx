@@ -250,7 +250,7 @@ export default function ARAutomationPage() {
                 color: "var(--color-success)",
                 bg: "var(--color-success-light)",
               },
-            ].map((kpi) => (
+            ].map((kpi: any) => (
               <Card key={kpi.label} className="ui-card p-5">
                 <div className="ui-flex-between">
                   <div>
@@ -312,7 +312,7 @@ export default function ARAutomationPage() {
                     required
                     placeholder="Enter Invoice ID"
                     value={pauseInvoiceId}
-                    onChange={(e) => setPauseInvoiceId(e.target.value)}
+                    onChange={(e: any) => setPauseInvoiceId(e.target.value)}
                   />
                 </div>
                 <Button
@@ -349,7 +349,7 @@ export default function ARAutomationPage() {
                       required
                       placeholder="First Notice"
                       value={levelData.levelName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setLevelData({
                           ...levelData,
                           levelName: e.target.value,
@@ -365,7 +365,7 @@ export default function ARAutomationPage() {
                       required
                       placeholder="15"
                       value={levelData.daysOverdue}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setLevelData({
                           ...levelData,
                           daysOverdue: e.target.value,
@@ -381,7 +381,7 @@ export default function ARAutomationPage() {
                       step="0.01"
                       placeholder="25.00"
                       value={levelData.feeAmount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setLevelData({
                           ...levelData,
                           feeAmount: e.target.value,
@@ -480,7 +480,7 @@ export default function ARAutomationPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <button
                             onClick={() =>
                               handleDeleteLevel(
@@ -574,7 +574,7 @@ export default function ARAutomationPage() {
               <h3 className="ui-heading-base">Performance by Dunning Level</h3>
             </div>
             <div className={styles.s27}>
-              {stats.byLevel.map((lvl) => (
+              {stats.byLevel.map((lvl: any) => (
                 <div key={lvl.level} className={styles.s28}>
                   <p className={styles.s29}>{lvl.level}</p>
                   <p className="ui-text-xs-muted mt-1">

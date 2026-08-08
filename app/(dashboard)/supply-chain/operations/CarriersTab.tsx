@@ -164,7 +164,7 @@ export default function CarriersTab() {
         <div className="ui-grid-auto">
           <KPICard
             title="Active Carriers"
-            value={carriers.filter((c) => c.isActive).length}
+            value={carriers.filter((c: any) => c.isActive).length}
             icon={<Truck size={18} />}
             color="var(--color-primary)"
           />
@@ -212,20 +212,20 @@ export default function CarriersTab() {
               label="Carrier Code (Unique)"
               required
               value={form.code}
-              onChange={(e) => setForm({ ...form, code: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, code: e.target.value })}
               placeholder="FEDEX"
             />
             <TextField
               label="Carrier Name"
               required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               placeholder="FedEx"
             />
             <TextField
               label="Tracking URL Format"
               value={form.trackingUrl}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, trackingUrl: e.target.value })
               }
               placeholder="https://track.fedex.com/track/input?tracknum={trackingNumber}"
@@ -235,7 +235,7 @@ export default function CarriersTab() {
                 label="Contact Email"
                 type="email"
                 value={form.contactEmail}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, contactEmail: e.target.value })
                 }
                 placeholder="business@carrier.com"
@@ -243,7 +243,7 @@ export default function CarriersTab() {
               <TextField
                 label="Contact Phone"
                 value={form.contactPhone}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, contactPhone: e.target.value })
                 }
                 placeholder="+1-800-000-0000"

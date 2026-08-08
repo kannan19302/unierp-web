@@ -67,7 +67,7 @@ export default function ReportsPage() {
   };
 
   const filtered = showFavorites
-    ? reports.filter((r) => r.isFavorite)
+    ? reports.filter((r: any) => r.isFavorite)
     : reports;
 
   const columns: Column<any>[] = [
@@ -98,7 +98,7 @@ export default function ReportsPage() {
         <div className="ui-flex" style={{ gap: "var(--space-1)" }}>
           <button
             className="ui-btn ui-btn-sm ui-btn-ghost"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleFavorite(row.id, row.isFavorite);
             }}
@@ -107,7 +107,7 @@ export default function ReportsPage() {
           </button>
           <button
             className="ui-btn ui-btn-sm ui-btn-ghost"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleDuplicate(row.id);
             }}
@@ -116,7 +116,7 @@ export default function ReportsPage() {
           </button>
           <button
             className="ui-btn ui-btn-sm ui-btn-ghost"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleDelete(row.id);
             }}

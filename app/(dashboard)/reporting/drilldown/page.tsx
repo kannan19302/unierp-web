@@ -100,7 +100,7 @@ export default function ReportingDrilldownPage() {
           </label>
           <select
             value={dimension}
-            onChange={(e) => setDimension(e.target.value)}
+            onChange={(e: any) => setDimension(e.target.value)}
             style={{
               width: "100%",
               padding: "8px 12px",
@@ -142,7 +142,7 @@ export default function ReportingDrilldownPage() {
         <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
           Available Drilldown Dimension Paths
         </h3>
-        {paths.map((p) => (
+        {paths.map((p: any) => (
           <div
             key={p.id}
             style={{

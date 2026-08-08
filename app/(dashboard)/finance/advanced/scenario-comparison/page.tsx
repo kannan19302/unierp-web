@@ -111,7 +111,7 @@ export default function ScenarioComparisonPage() {
 
   // Map of accountId to account details for quick lookup
   const accountMap = React.useMemo(() => {
-    return new Map(accounts.map((a) => [a.id, a]));
+    return new Map(accounts.map((a: any) => [a.id, a]));
   }, [accounts]);
 
   return (
@@ -151,11 +151,11 @@ export default function ScenarioComparisonPage() {
               <select
                 className="ui-input"
                 value={scenarioAId}
-                onChange={(e) => setScenarioAId(e.target.value)}
+                onChange={(e: any) => setScenarioAId(e.target.value)}
                 disabled={loading}
               >
                 <option value="">Choose Scenario A...</option>
-                {scenarios.map((s) => (
+                {scenarios.map((s: any) => (
                   <option key={s.id} value={s.id}>
                     {s.name} ({s.type})
                   </option>
@@ -168,11 +168,11 @@ export default function ScenarioComparisonPage() {
               <select
                 className="ui-input"
                 value={scenarioBId}
-                onChange={(e) => setScenarioBId(e.target.value)}
+                onChange={(e: any) => setScenarioBId(e.target.value)}
                 disabled={loading}
               >
                 <option value="actuals">Actuals (GL Balance Sheet/P&L)</option>
-                {scenarios.map((s) => (
+                {scenarios.map((s: any) => (
                   <option key={s.id} value={s.id}>
                     {s.name} ({s.type})
                   </option>
@@ -186,7 +186,7 @@ export default function ScenarioComparisonPage() {
                 type="number"
                 className="ui-input"
                 value={fiscalYear}
-                onChange={(e) => setFiscalYear(e.target.value)}
+                onChange={(e: any) => setFiscalYear(e.target.value)}
                 disabled={loading}
               />
             </div>
@@ -242,7 +242,7 @@ export default function ScenarioComparisonPage() {
                   {
                     key: "accountId",
                     header: "GL Account",
-                    render: (v, row) => {
+                    render: (v: any, row: any) => {
                       const acc = accountMap.get(v as string);
                       return (
                         <div>
@@ -303,7 +303,7 @@ export default function ScenarioComparisonPage() {
                   {
                     key: "variancePercent",
                     header: "Variance %",
-                    render: (v, row) => {
+                    render: (v: any, row: any) => {
                       const va = Number(
                         (row as unknown as ComparisonRow).varianceAmount,
                       );

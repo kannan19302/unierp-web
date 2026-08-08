@@ -137,8 +137,8 @@ export default function EnterpriseSearchPage() {
                     className="ui-input"
                     placeholder="Search messages, articles, tickets, files..."
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                    onChange={(e: any) => setQuery(e.target.value)}
+                    onKeyDown={(e: any) => e.key === "Enter" && handleSearch()}
                   />
                 </div>
                 <Button onClick={handleSearch}>
@@ -212,7 +212,7 @@ export default function EnterpriseSearchPage() {
             </div>
             <Card className="p-5">
               <h3 className="ui-heading-base mb-3">Top Queries</h3>
-              {analytics.topQueries?.map((q, i) => (
+              {analytics.topQueries?.map((q: any, i: any) => (
                 <div
                   key={i}
                   className="flex justify-between py-2 border-b last:border-0"

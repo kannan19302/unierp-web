@@ -289,10 +289,10 @@ export default function CloseTasksPage() {
             <select
               className="ui-input min-w-[200px]"
               value={selectedPeriodId}
-              onChange={(e) => setSelectedPeriodId(e.target.value)}
+              onChange={(e: any) => setSelectedPeriodId(e.target.value)}
             >
               <option value="">Select Financial Period...</option>
-              {periods.map((p) => (
+              {periods.map((p: any) => (
                 <option key={p.id} value={p.id}>
                   {p.name} ({p.status})
                 </option>
@@ -331,7 +331,7 @@ export default function CloseTasksPage() {
                   {stats.completionPercent}%
                 </span>
                 <span className="text-sm text-gray-500">
-                  ({tasks.filter((t) => t.status === "DONE").length} of{" "}
+                  ({tasks.filter((t: any) => t.status === "DONE").length} of{" "}
                   {stats.totalTasks} complete)
                 </span>
               </div>
@@ -437,7 +437,7 @@ export default function CloseTasksPage() {
                     <input
                       className="ui-input"
                       value={taskForm.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({ ...taskForm, name: e.target.value })
                       }
                       placeholder="e.g. Accrue Q3 Software Subscriptions"
@@ -448,7 +448,7 @@ export default function CloseTasksPage() {
                     <select
                       className="ui-input"
                       value={taskForm.category}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({ ...taskForm, category: e.target.value })
                       }
                     >
@@ -466,7 +466,7 @@ export default function CloseTasksPage() {
                     <select
                       className="ui-input"
                       value={taskForm.priority}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({ ...taskForm, priority: e.target.value })
                       }
                     >
@@ -482,7 +482,7 @@ export default function CloseTasksPage() {
                       type="date"
                       className="ui-input"
                       value={taskForm.dueDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({ ...taskForm, dueDate: e.target.value })
                       }
                     />
@@ -495,7 +495,7 @@ export default function CloseTasksPage() {
                       className="ui-input"
                       rows={2}
                       value={taskForm.description}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({
                           ...taskForm,
                           description: e.target.value,
@@ -545,7 +545,7 @@ export default function CloseTasksPage() {
                       {
                         key: "id",
                         header: "",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <button
                             onClick={() =>
                               handleToggleTaskStatus(
@@ -562,7 +562,7 @@ export default function CloseTasksPage() {
                       {
                         key: "name",
                         header: "Closing Duty Name",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <div>
                             <div className="font-semibold">{String(v)}</div>
                             {Boolean(row.description) && (
@@ -657,7 +657,7 @@ export default function CloseTasksPage() {
                     type="number"
                     className="ui-input max-w-[80px]"
                     value={threshold}
-                    onChange={(e) => setThreshold(e.target.value)}
+                    onChange={(e: any) => setThreshold(e.target.value)}
                     min="1"
                     max="100"
                   />
@@ -755,7 +755,7 @@ export default function CloseTasksPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <div className="flex gap-1">
                             {row.status === "OPEN" && (
                               <button

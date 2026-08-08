@@ -65,7 +65,7 @@ export default function BankReconMatchingPage() {
       setTransactions(body.data);
       if (body.data.length > 0) {
         // Keep selection if it still exists in the list, otherwise select first
-        const found = body.data.find((x) => x.id === selectedTx?.id);
+        const found = body.data.find((x: any) => x.id === selectedTx?.id);
         setSelectedTx(found || body.data[0] || null);
       } else {
         setSelectedTx(null);
@@ -185,7 +185,7 @@ export default function BankReconMatchingPage() {
             { key: "UNMATCHED", label: "Unmatched Transactions" },
             { key: "MATCHED", label: "Matched Records" },
             { key: "IGNORED", label: "Ignored / Suppressed" },
-          ].map((tab) => (
+          ].map((tab: any) => (
             <button
               key={tab.key}
               onClick={() => {
@@ -220,7 +220,7 @@ export default function BankReconMatchingPage() {
               </div>
             ) : (
               <div className={styles.s10}>
-                {transactions.map((tx) => {
+                {transactions.map((tx: any) => {
                   const amt = Number(tx.amount);
                   const isSelected = selectedTx?.id === tx.id;
                   return (
@@ -352,7 +352,7 @@ export default function BankReconMatchingPage() {
                             <select
                               className="ui-input w-full"
                               value={targetEntityType}
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 setTargetEntityType(e.target.value as any)
                               }
                             >
@@ -373,7 +373,7 @@ export default function BankReconMatchingPage() {
                               className="ui-input w-full"
                               placeholder="e.g. clx123..."
                               value={targetEntityId}
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 setTargetEntityId(e.target.value)
                               }
                               required

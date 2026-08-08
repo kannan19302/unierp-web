@@ -63,7 +63,7 @@ export default function DealAlertsPage() {
             <Input
               placeholder="Enter opportunity ID"
               value={opportunityId}
-              onChange={(e) => setOpportunityId(e.target.value)}
+              onChange={(e: any) => setOpportunityId(e.target.value)}
             />
           </div>
           <div className="ui-form-group" style={{ alignSelf: "flex-end" }}>

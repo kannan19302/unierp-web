@@ -145,7 +145,7 @@ export default function CommissionsPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setEditPlan(row);
               setForm(row);
@@ -189,11 +189,11 @@ export default function CommissionsPage() {
   ];
 
   const totalPending = payouts
-    .filter((p) => p.status === "PENDING")
-    .reduce((s, p) => s + p.amount, 0);
+    .filter((p: any) => p.status === "PENDING")
+    .reduce((s: any, p: any) => s + p.amount, 0);
   const totalPaid = payouts
-    .filter((p) => p.status === "PAID")
-    .reduce((s, p) => s + p.amount, 0);
+    .filter((p: any) => p.status === "PAID")
+    .reduce((s: any, p: any) => s + p.amount, 0);
 
   return (
     <RouteGuard permission="sales.commission.read">
@@ -217,14 +217,14 @@ export default function CommissionsPage() {
               stats={[
                 {
                   label: "Active Plans",
-                  value: plans.filter((p) => p.isActive).length,
+                  value: plans.filter((p: any) => p.isActive).length,
                   icon: React.createElement(Award, { size: 16 }),
                   color: "green",
                 },
                 {
                   label: "Sales People",
                   value: payouts.reduce(
-                    (s, p) => s.add(p.salesPersonName),
+                    (s: any, p: any) => s.add(p.salesPersonName),
                     new Set(),
                   ).size,
                   icon: React.createElement(Users, { size: 16 }),
@@ -325,7 +325,7 @@ export default function CommissionsPage() {
                     <input
                       className="ui-input"
                       value={form.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, name: e.target.value })
                       }
                       required
@@ -336,7 +336,7 @@ export default function CommissionsPage() {
                     <select
                       className="ui-input"
                       value={form.targetType}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, targetType: e.target.value })
                       }
                     >
@@ -355,7 +355,7 @@ export default function CommissionsPage() {
                       type="number"
                       step="0.1"
                       value={form.rate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, rate: Number(e.target.value) })
                       }
                       required
@@ -367,7 +367,7 @@ export default function CommissionsPage() {
                       className="ui-input"
                       type="number"
                       value={form.threshold}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({ ...form, threshold: Number(e.target.value) })
                       }
                     />
@@ -382,7 +382,7 @@ export default function CommissionsPage() {
                       className="ui-input"
                       type="number"
                       value={form.maxPayout || ""}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({
                           ...form,
                           maxPayout: e.target.value
@@ -397,7 +397,7 @@ export default function CommissionsPage() {
                     <select
                       className="ui-input"
                       value={form.isActive ? "true" : "false"}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setForm({
                           ...form,
                           isActive: e.target.value === "true",

@@ -241,7 +241,7 @@ export default function CpqBundleDetailPage() {
         title="Add Item to Bundle"
       >
         <form
-          onSubmit={async (e) => {
+          onSubmit={async (e: any) => {
             e.preventDefault();
             const form = e.target as HTMLFormElement;
             const data = Object.fromEntries(new FormData(form));

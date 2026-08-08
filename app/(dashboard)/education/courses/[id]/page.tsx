@@ -30,7 +30,7 @@ export default function CourseDetailPage() {
           "/ext/education/courses",
         );
         const list = Array.isArray(data) ? data : data.data || [];
-        setCourse(list.find((c) => c.id === id) || null);
+        setCourse(list.find((c: any) => c.id === id) || null);
       } catch {
         /* empty */
       } finally {
@@ -109,7 +109,7 @@ export default function CourseDetailPage() {
                     "Description",
                     course.description || "No description provided",
                   ],
-                ].map(([label, value]) => (
+                ].map(([label, value]: any) => (
                   <div key={label as string} className={styles.s4}>
                     <span className="ui-text-sm-muted">{label}</span>
                     <span className="ui-heading-sm">{value}</span>

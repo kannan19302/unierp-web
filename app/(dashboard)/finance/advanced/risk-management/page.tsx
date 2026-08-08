@@ -261,8 +261,8 @@ export default function RiskManagementPage() {
     }
   };
 
-  const pendingEvents = events.filter((e) => e.status === "OPEN").length;
-  const unhedgedExposures = exposures.filter((e) => !e.hedged).length;
+  const pendingEvents = events.filter((e: any) => e.status === "OPEN").length;
+  const unhedgedExposures = exposures.filter((e: any) => !e.hedged).length;
 
   return (
     <RouteGuard permission="finance.risk.read">
@@ -379,7 +379,7 @@ export default function RiskManagementPage() {
                     <input
                       className="ui-input"
                       value={scorecardForm.customerName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScorecardForm({
                           ...scorecardForm,
                           customerName: e.target.value,
@@ -393,7 +393,7 @@ export default function RiskManagementPage() {
                       className="ui-input"
                       placeholder="e.g. payment_history:0.4,debt_ratio:0.3"
                       value={scorecardForm.factors}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScorecardForm({
                           ...scorecardForm,
                           factors: e.target.value,
@@ -503,7 +503,7 @@ export default function RiskManagementPage() {
                     <input
                       className="ui-input"
                       value={assessmentForm.vendorName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAssessmentForm({
                           ...assessmentForm,
                           vendorName: e.target.value,
@@ -516,7 +516,7 @@ export default function RiskManagementPage() {
                     <select
                       className="ui-input"
                       value={assessmentForm.category}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAssessmentForm({
                           ...assessmentForm,
                           category: e.target.value,
@@ -653,7 +653,7 @@ export default function RiskManagementPage() {
                     {
                       key: "id",
                       header: "Actions",
-                      render: (v, row) => (
+                      render: (v: any, row: any) => (
                         <div className="flex gap-1">
                           {!row.hedged && (
                             <button
@@ -739,7 +739,7 @@ export default function RiskManagementPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           row.status !== "RESOLVED" && (
                             <button
                               onClick={() => handleResolveEvent(String(v))}
@@ -780,7 +780,7 @@ export default function RiskManagementPage() {
                       <input
                         className="ui-input"
                         value={controlForm.controlName}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setControlForm({
                             ...controlForm,
                             controlName: e.target.value,
@@ -793,7 +793,7 @@ export default function RiskManagementPage() {
                       <select
                         className="ui-input"
                         value={controlForm.controlType}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setControlForm({
                             ...controlForm,
                             controlType: e.target.value,
@@ -810,7 +810,7 @@ export default function RiskManagementPage() {
                       <input
                         className="ui-input"
                         value={controlForm.owner}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setControlForm({
                             ...controlForm,
                             owner: e.target.value,

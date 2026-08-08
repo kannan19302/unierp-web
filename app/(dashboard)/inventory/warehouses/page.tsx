@@ -25,7 +25,7 @@ export default function WarehousesPage() {
 
         <ListView
           resource={warehouseResource}
-          onRowClick={(row) => setEditorId(String(row.id))}
+          onRowClick={(row: any) => setEditorId(String(row.id))}
           onCreate={() => setEditorId(null)}
         />
 

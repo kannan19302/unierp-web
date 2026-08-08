@@ -192,7 +192,7 @@ export default function ProfilePage() {
           visibility?: PresenceVisibility;
         }>
       >("/communication/presence");
-      const mine = all.find((p) => p.userId === userId);
+      const mine = all.find((p: any) => p.userId === userId);
       if (mine) {
         setPresence(mine.presence);
         setVisibility(mine.visibility ?? "EVERYONE");
@@ -249,8 +249,8 @@ export default function ProfilePage() {
     setPushSupported(true);
     navigator.serviceWorker
       .getRegistration("/mfa-push-sw.js")
-      .then((reg) => reg?.pushManager.getSubscription())
-      .then((sub) => setThisDeviceEndpoint(sub?.endpoint ?? null))
+      .then((reg: any) => reg?.pushManager.getSubscription())
+      .then((sub: any) => setThisDeviceEndpoint(sub?.endpoint ?? null))
       .catch(() => {});
   }, []);
 
@@ -259,7 +259,7 @@ export default function ProfilePage() {
     const raw = window.atob(
       (base64 + padding).replace(/-/g, "+").replace(/_/g, "/"),
     );
-    return Uint8Array.from([...raw].map((c) => c.charCodeAt(0)));
+    return Uint8Array.from([...raw].map((c: any) => c.charCodeAt(0)));
   };
 
   const enablePushOnThisDevice = async () => {
@@ -400,7 +400,7 @@ export default function ProfilePage() {
         "/auth/me/avatar",
         { method: "POST", body },
       );
-      setUser((prev) => (prev ? { ...prev, avatar: result.avatar } : prev));
+      setUser((prev: any) => (prev ? { ...prev, avatar: result.avatar } : prev));
       setMessage({ type: "success", text: "Profile photo updated." });
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
@@ -436,7 +436,7 @@ export default function ProfilePage() {
         message: string;
         recoveryCodes?: string[];
       }>("/auth/mfa/verify", { code: mfaCode, enable });
-      setUser((prev) => (prev ? { ...prev, mfaEnabled: enable } : prev));
+      setUser((prev: any) => (prev ? { ...prev, mfaEnabled: enable } : prev));
       if (enable && result.recoveryCodes) {
         setMfaRecoveryCodes(result.recoveryCodes);
       } else {
@@ -509,7 +509,7 @@ export default function ProfilePage() {
         }>
       >("/communication/presence");
       const map: Record<string, PresenceStatus> = {};
-      all.forEach((p) => {
+      all.forEach((p: any) => {
         if (p.visibility !== "NOBODY") {
           map[p.userId] = p.presence;
         } else {
@@ -634,7 +634,7 @@ export default function ProfilePage() {
                   placeholder="Search people..."
                   className={`ui-input ${styles.searchInput}`}
                   value={directorySearch}
-                  onChange={(e) => setDirectorySearch(e.target.value)}
+                  onChange={(e: any) => setDirectorySearch(e.target.value)}
                 />
               </div>
               <div className={styles.memberList}>
@@ -675,7 +675,7 @@ export default function ProfilePage() {
 
                 <div className="border-t border-border/50 my-2" />
 
-                {directory.map((member) => {
+                {directory.map((member: any) => {
                   const isSelected = selectedUserId === member.id;
                   const isMe = member.id === user?.id;
                   if (isMe) return null; // Already shown on top
@@ -759,9 +759,9 @@ export default function ProfilePage() {
                 <ProfileDirectorySection
                   targetUserId={selectedUserId}
                   theme={formData.theme}
-                  setTheme={(t) => setTheme(t as any)}
+                  setTheme={(t: any) => setTheme(t as any)}
                   density={density}
-                  setDensity={(d) => setDensity(d as any)}
+                  setDensity={(d: any) => setDensity(d as any)}
                   language={formData.language}
                 />
               </div>
@@ -813,12 +813,12 @@ export default function ProfilePage() {
                   <ProfileDirectorySection
                     targetUserId={undefined}
                     theme={formData.theme}
-                    setTheme={(t) => setTheme(t as any)}
+                    setTheme={(t: any) => setTheme(t as any)}
                     density={density}
-                    setDensity={(d) => setDensity(d as any)}
+                    setDensity={(d: any) => setDensity(d as any)}
                     language={formData.language}
-                    onSavePreferences={async (updated) => {
-                      setFormData((prev) => ({ ...prev, ...updated }));
+                    onSavePreferences={async (updated: any) => {
+                      setFormData((prev: any) => ({ ...prev, ...updated }));
                       await handleInfoSubmit(updated);
                     }}
                   />
@@ -841,7 +841,7 @@ export default function ProfilePage() {
                           className="ui-input"
                           placeholder="••••••••"
                           value={securityData.currentPassword}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setSecurityData({
                               ...securityData,
                               currentPassword: e.target.value,
@@ -857,7 +857,7 @@ export default function ProfilePage() {
                             className="ui-input"
                             placeholder="••••••••"
                             value={securityData.newPassword}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setSecurityData({
                                 ...securityData,
                                 newPassword: e.target.value,
@@ -872,7 +872,7 @@ export default function ProfilePage() {
                             className="ui-input"
                             placeholder="••••••••"
                             value={securityData.confirmPassword}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setSecurityData({
                                 ...securityData,
                                 confirmPassword: e.target.value,
@@ -955,7 +955,7 @@ export default function ProfilePage() {
                               placeholder="6-digit code"
                               value={mfaCode}
                               maxLength={6}
-                              onChange={(e) => setMfaCode(e.target.value)}
+                              onChange={(e: any) => setMfaCode(e.target.value)}
                             />
                             <button
                               className="ui-btn ui-btn-secondary"
@@ -990,7 +990,7 @@ export default function ProfilePage() {
                               placeholder="6-digit code"
                               value={mfaCode}
                               maxLength={6}
-                              onChange={(e) => setMfaCode(e.target.value)}
+                              onChange={(e: any) => setMfaCode(e.target.value)}
                             />
                             <button
                               className="ui-btn ui-btn-secondary"
@@ -1019,7 +1019,7 @@ export default function ProfilePage() {
                             used once if you lose access to your authenticator.
                           </p>
                           <div className="ui-grid-2">
-                            {mfaRecoveryCodes.map((c) => (
+                            {mfaRecoveryCodes.map((c: any) => (
                               <code key={c}>{c}</code>
                             ))}
                           </div>
@@ -1080,7 +1080,7 @@ export default function ProfilePage() {
                                 Registered Devices
                               </label>
                               <div className="ui-stack-2">
-                                {pushDevices.map((d) => (
+                                {pushDevices.map((d: any) => (
                                   <div key={d.id} className={styles.deviceRow}>
                                     <div className={styles.deviceRowInfo}>
                                       <span className={styles.deviceRowLabel}>
@@ -1127,7 +1127,7 @@ export default function ProfilePage() {
                         className={styles.s10}
                         disabled={
                           revoking ||
-                          sessions.filter((s) => !s.isCurrent).length === 0
+                          sessions.filter((s: any) => !s.isCurrent).length === 0
                         }
                         onClick={handleRevokeOthers}
                       >

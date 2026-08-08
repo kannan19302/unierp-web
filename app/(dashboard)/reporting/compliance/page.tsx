@@ -110,7 +110,7 @@ export default function ReportingCompliancePage() {
             type="text"
             placeholder="Compliance Report Title (e.g. FY2026 SOX Section 404 Audit)..."
             value={reportName}
-            onChange={(e) => setReportName(e.target.value)}
+            onChange={(e: any) => setReportName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",

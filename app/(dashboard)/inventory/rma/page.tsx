@@ -83,7 +83,7 @@ export default function RmaPage() {
   };
 
   const filtered = data.filter(
-    (r) =>
+    (r: any) =>
       !search ||
       r.rmaNumber.toLowerCase().includes(search.toLowerCase()) ||
       (r.customerName || "").toLowerCase().includes(search.toLowerCase()) ||
@@ -159,7 +159,7 @@ export default function RmaPage() {
             <TextField
               placeholder="Search RMAs..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
             />
           </div>
         </div>
@@ -204,12 +204,12 @@ export default function RmaPage() {
             required
             placeholder="RMA-2026-001"
             value={form.rmaNumber}
-            onChange={(e) => setForm({ ...form, rmaNumber: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, rmaNumber: e.target.value })}
           />
           <FormField label="Source">
             <Select
               value={form.source}
-              onChange={(e) => setForm({ ...form, source: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, source: e.target.value })}
             >
               <option value="CUSTOMER_RETURN">Customer Return</option>
               <option value="VENDOR_RETURN">Vendor Return</option>
@@ -221,25 +221,25 @@ export default function RmaPage() {
             <TextField
               label="Customer Name"
               value={form.customerName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, customerName: e.target.value })
               }
             />
             <TextField
               label="Vendor Name"
               value={form.vendorName}
-              onChange={(e) => setForm({ ...form, vendorName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, vendorName: e.target.value })}
             />
           </div>
           <TextField
             label="Return Reason"
             value={form.returnReason}
-            onChange={(e) => setForm({ ...form, returnReason: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, returnReason: e.target.value })}
           />
           <FormField label="Priority">
             <Select
               value={form.priority}
-              onChange={(e) => setForm({ ...form, priority: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, priority: e.target.value })}
             >
               <option value="LOW">Low</option>
               <option value="MEDIUM">Medium</option>
@@ -249,7 +249,7 @@ export default function RmaPage() {
           <TextField
             label="Notes"
             value={form.notes}
-            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
           />
         </form>
       </Modal>

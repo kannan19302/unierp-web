@@ -111,7 +111,7 @@ export default function JourneyTimelinePage() {
   }, [selectedEntity, selectedEntityType, attributionModel, client]);
 
   const handleEntityChange = (id: string) => {
-    const found = entities.find((e) => e.id === id);
+    const found = entities.find((e: any) => e.id === id);
     if (found) {
       setSelectedEntity(found.id);
       setSelectedEntityType(found.type);
@@ -182,10 +182,10 @@ export default function JourneyTimelinePage() {
               </span>
               <select
                 value={selectedEntity}
-                onChange={(e) => handleEntityChange(e.target.value)}
+                onChange={(e: any) => handleEntityChange(e.target.value)}
                 className={styles.select}
               >
-                {entities.map((e) => (
+                {entities.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.name} ({e.type})
                   </option>
@@ -196,7 +196,7 @@ export default function JourneyTimelinePage() {
               <span className="ui-text-xs-bold-muted">ATTRIBUTION MODEL</span>
               <select
                 value={attributionModel}
-                onChange={(e) => setAttributionModel(e.target.value)}
+                onChange={(e: any) => setAttributionModel(e.target.value)}
                 className={styles.select}
               >
                 <option value="first_touch">First Touch</option>
@@ -224,7 +224,7 @@ export default function JourneyTimelinePage() {
               </div>
 
               <div className={styles.timeline}>
-                {timeline.map((tp) => (
+                {timeline.map((tp: any) => (
                   <div key={tp.id} className={styles.touchpoint}>
                     {/* Timeline node dot */}
                     <div

@@ -191,7 +191,7 @@ export default function BudgetsPage() {
             <Wallet size={18} className="ui-text-secondary" />
             <Select
               value={fiscalYear}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setFiscalYear(e.target.value);
                 setPage(1);
               }}
@@ -252,7 +252,7 @@ export default function BudgetsPage() {
               required
               placeholder="BGT-2026-001"
               value={form.budgetNumber}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, budgetNumber: e.target.value })
               }
             />
@@ -260,7 +260,7 @@ export default function BudgetsPage() {
               <FormField label="Fiscal Year">
                 <Select
                   value={form.fiscalYear}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, fiscalYear: e.target.value })
                   }
                 >
@@ -273,7 +273,7 @@ export default function BudgetsPage() {
               <FormField label="Category">
                 <Select
                   value={form.category}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, category: e.target.value })
                   }
                 >
@@ -291,7 +291,7 @@ export default function BudgetsPage() {
               min={0}
               step={0.01}
               value={form.totalBudget || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({
                   ...form,
                   totalBudget: parseFloat(e.target.value) || 0,

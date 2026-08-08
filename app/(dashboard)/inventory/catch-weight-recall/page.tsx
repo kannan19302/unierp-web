@@ -122,7 +122,7 @@ export default function CatchWeightRecallPage() {
 
         <div className="border-b border-gray-200">
           <nav className="flex gap-4">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
@@ -170,7 +170,7 @@ export default function CatchWeightRecallPage() {
                   label: "Completed Recalls",
                   value: dashboard.recalls.completed,
                 },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div
                   key={c.label}
                   className={`rounded-lg border p-4 ${c.warn ? "border-red-200 bg-red-50" : "bg-white"}`}
@@ -189,7 +189,7 @@ export default function CatchWeightRecallPage() {
                 Recalls by Status
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {Object.entries(dashboard.recalls).map(([k, v]) => (
+                {Object.entries(dashboard.recalls).map(([k, v]: any) => (
                   <div key={k} className="text-center">
                     <div className="text-xl font-bold">{v}</div>
                     <div className="text-xs text-gray-500 capitalize">
@@ -222,7 +222,7 @@ export default function CatchWeightRecallPage() {
                 {
                   key: "tolerancePctPlus",
                   header: "Tolerance (+/-)",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     `+${Number(v).toFixed(1)}% / -${Number(row.tolerancePctMinus).toFixed(1)}%`,
                 },
                 { key: "pricingBasis", header: "Pricing Basis" },
@@ -299,7 +299,7 @@ export default function CatchWeightRecallPage() {
                     <div className="font-bold text-lg">
                       {
                         selectedRecall.customerNotices.filter(
-                          (n) => n.acknowledgedAt,
+                          (n: any) => n.acknowledgedAt,
                         ).length
                       }
                       /{selectedRecall.customerNotices.length}
@@ -364,7 +364,7 @@ export default function CatchWeightRecallPage() {
                 </div>
               </div>
             ) : (
-              recalls.map((r) => (
+              recalls.map((r: any) => (
                 <div
                   key={r.id}
                   className="bg-white rounded-lg border p-4 cursor-pointer hover:border-blue-300"

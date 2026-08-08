@@ -63,7 +63,7 @@ export default function FinancialRatiosPage() {
       .get<{ success: boolean; data: RatiosData }>(
         `/finance/reports/financial-ratios?asOfDate=${new Date().toISOString()}`,
       )
-      .then((res) => setData(res?.data ?? EMPTY_RATIOS))
+      .then((res: any) => setData(res?.data ?? EMPTY_RATIOS))
       .catch(() => setData(EMPTY_RATIOS))
       .finally(() => setLoading(false));
   }, [client]);
@@ -153,7 +153,7 @@ export default function FinancialRatiosPage() {
       </div>
 
       <div className={styles.s2}>
-        {ratios.map((r) => {
+        {ratios.map((r: any) => {
           const status = statusFor(
             r.value,
             r.benchmark,

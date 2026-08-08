@@ -54,7 +54,7 @@ export default function ProcurementDashboard() {
       ]);
 
       if (Array.isArray(poRes)) {
-        const normalizedPos = poRes.map((p) => ({
+        const normalizedPos = poRes.map((p: any) => ({
           ...p,
           columnKey: p.status || "DRAFT",
         }));
@@ -77,56 +77,56 @@ export default function ProcurementDashboard() {
   }, [client]);
 
   const totalPOSpend = useMemo(
-    () => pos.reduce((acc, p) => acc + p.totalAmount, 0),
+    () => pos.reduce((acc: any, p: any) => acc + p.totalAmount, 0),
     [pos],
   );
   const approvedSpend = useMemo(
     () =>
       pos
-        .filter((p) => p.status === "APPROVED" || p.status === "RECEIVED")
-        .reduce((acc, p) => acc + p.totalAmount, 0),
+        .filter((p: any) => p.status === "APPROVED" || p.status === "RECEIVED")
+        .reduce((acc: any, p: any) => acc + p.totalAmount, 0),
     [pos],
   );
   const pendingOrdersCount = useMemo(
     () =>
-      pos.filter((p) => p.status === "DRAFT" || p.status === "SUBMITTED")
+      pos.filter((p: any) => p.status === "DRAFT" || p.status === "SUBMITTED")
         .length,
     [pos],
   );
   const rfqBids = useMemo(
-    () => rfqs.reduce((acc, r) => acc + r.quotesCount, 0),
+    () => rfqs.reduce((acc: any, r: any) => acc + r.quotesCount, 0),
     [rfqs],
   );
 
   // Compute chart data
   const monthlySpendData = useMemo(() => {
     const months: Record<string, number> = {};
-    pos.forEach((p) => {
+    pos.forEach((p: any) => {
       const month = p.orderDate ? p.orderDate.substring(0, 7) : "Unknown";
       months[month] = (months[month] || 0) + p.totalAmount;
     });
     return Object.entries(months)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([name, value]) => ({ name, value }));
+      .sort(([a]: any, [b]: any) => a.localeCompare(b))
+      .map(([name, value]: any) => ({ name, value }));
   }, [pos]);
 
   const poStatusDistribution = useMemo(() => {
     const counts: Record<string, number> = {};
-    pos.forEach((p) => {
+    pos.forEach((p: any) => {
       counts[p.status] = (counts[p.status] || 0) + 1;
     });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
+    return Object.entries(counts).map(([name, value]: any) => ({ name, value }));
   }, [pos]);
 
   const vendorSpendData = useMemo(() => {
     const vMap: Record<string, number> = {};
-    pos.forEach((p) => {
+    pos.forEach((p: any) => {
       vMap[p.vendorName] = (vMap[p.vendorName] || 0) + p.totalAmount;
     });
     return Object.entries(vMap)
-      .sort((a, b) => b[1] - a[1])
+      .sort((a: any, b: any) => b[1] - a[1])
       .slice(0, 8)
-      .map(([name, value]) => ({ name: name.substring(0, 15), value }));
+      .map(([name, value]: any) => ({ name: name.substring(0, 15), value }));
   }, [pos]);
 
   const PO_STATUS_COLUMNS: KanbanColumn[] = [
@@ -147,8 +147,8 @@ export default function ProcurementDashboard() {
       });
       loadDashboardData();
     } catch {
-      setPos((prev) =>
-        prev.map((p) =>
+      setPos((prev: any) =>
+        prev.map((p: any) =>
           p.id === itemId ? { ...p, status: toColumn, columnKey: toColumn } : p,
         ),
       );
@@ -278,7 +278,7 @@ export default function ProcurementDashboard() {
                 columns={PO_STATUS_COLUMNS}
                 items={pos}
                 onCardMove={handleKanbanMove}
-                renderCard={(item) => (
+                renderCard={(item: any) => (
                   <div>
                     <div className={styles.p3}>{item.poNumber}</div>
                     <div className={styles.p4}>{item.vendorName}</div>
@@ -367,7 +367,7 @@ export default function ProcurementDashboard() {
                       </div>
                       <div className={styles.p17}>
                         <span className="ui-text-xs-muted">
-                          {rfqs.filter((r) => r.status === "SENT").length} RFQs
+                          {rfqs.filter((r: any) => r.status === "SENT").length} RFQs
                           active in market
                         </span>
                         <Link href="/procurement/rfqs" className={styles.p18}>

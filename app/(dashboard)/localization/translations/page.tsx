@@ -9,7 +9,7 @@ export default function TranslationsPage() {
 
   useEffect(() => {
     apiGet("/admin/localization/translations")
-      .then((d) => setTranslations(Array.isArray(d) ? d : []))
+      .then((d: any) => setTranslations(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

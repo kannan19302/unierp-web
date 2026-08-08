@@ -193,10 +193,10 @@ export default function CpqPage() {
                 <label className={styles.p15}>Product</label>
                 <select
                   value={selectedProduct}
-                  onChange={(e) => setSelectedProduct(e.target.value)}
+                  onChange={(e: any) => setSelectedProduct(e.target.value)}
                   className={styles.p16}
                 >
-                  {products.map((p) => (
+                  {products.map((p: any) => (
                     <option key={p.id} value={p.id}>
                       {p.name}
                     </option>
@@ -247,7 +247,7 @@ export default function CpqPage() {
             </h3>
             {profitability && (
               <div className="ui-stack-4">
-                {profitability.byCategory.map((c) => (
+                {profitability.byCategory.map((c: any) => (
                   <div key={c.category}>
                     <div className={styles.p26}>
                       <span>{c.category}</span>

@@ -297,10 +297,10 @@ export default function AiAnalyticsPage() {
     }
   };
 
-  const activeScenarios = scenarios.filter((s) => s.active).length;
-  const totalAnomalies = anomalyResults.filter((r) => !r.reviewed).length;
+  const activeScenarios = scenarios.filter((s: any) => s.active).length;
+  const totalAnomalies = anomalyResults.filter((r: any) => !r.reviewed).length;
   const pendingSuggestions = glSuggestions.filter(
-    (s) => s.accepted === null,
+    (s: any) => s.accepted === null,
   ).length;
 
   return (
@@ -426,7 +426,7 @@ export default function AiAnalyticsPage() {
                     <input
                       className="ui-input"
                       value={scenarioForm.scenarioName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScenarioForm({
                           ...scenarioForm,
                           scenarioName: e.target.value,
@@ -439,7 +439,7 @@ export default function AiAnalyticsPage() {
                     <select
                       className="ui-input"
                       value={scenarioForm.type}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScenarioForm({
                           ...scenarioForm,
                           type: e.target.value,
@@ -483,7 +483,7 @@ export default function AiAnalyticsPage() {
                     <input
                       className="ui-input"
                       value={lineForm.accountName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setLineForm({
                           ...lineForm,
                           accountName: e.target.value,
@@ -497,7 +497,7 @@ export default function AiAnalyticsPage() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q3"
                       value={lineForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setLineForm({ ...lineForm, period: e.target.value })
                       }
                     />
@@ -508,7 +508,7 @@ export default function AiAnalyticsPage() {
                       className="ui-input"
                       type="number"
                       value={lineForm.forecastAmount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setLineForm({
                           ...lineForm,
                           forecastAmount: e.target.value,
@@ -577,7 +577,7 @@ export default function AiAnalyticsPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <div className="flex gap-1">
                             <button
                               onClick={() =>
@@ -675,7 +675,7 @@ export default function AiAnalyticsPage() {
                     <input
                       className="ui-input"
                       value={anomalyForm.runName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAnomalyForm({
                           ...anomalyForm,
                           runName: e.target.value,
@@ -688,7 +688,7 @@ export default function AiAnalyticsPage() {
                     <select
                       className="ui-input"
                       value={anomalyForm.modelUsed}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAnomalyForm({
                           ...anomalyForm,
                           modelUsed: e.target.value,
@@ -836,7 +836,7 @@ export default function AiAnalyticsPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           !row.reviewed && (
                             <button
                               onClick={() => handleReviewResult(String(v))}
@@ -933,7 +933,7 @@ export default function AiAnalyticsPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           row.accepted === null && (
                             <div className="flex gap-1">
                               <button
@@ -985,7 +985,7 @@ export default function AiAnalyticsPage() {
                       rows={3}
                       placeholder="e.g. 'Show me total revenue for Q2 2026 by region'"
                       value={nlpForm.query}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setNlpForm({ ...nlpForm, query: e.target.value })
                       }
                     />

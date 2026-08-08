@@ -114,7 +114,7 @@ export default function CrmAdvancedPage() {
         ]}
       />
 
-      {groups.map((group) => (
+      {groups.map((group: any) => (
         <div key={group.title} className="ui-stack-3">
           <div className={styles.p20}>
             <div className="ui-text-primary">{group.icon}</div>
@@ -125,7 +125,7 @@ export default function CrmAdvancedPage() {
           </div>
 
           <div className={styles.p22}>
-            {group.modules.map((mod) => (
+            {group.modules.map((mod: any) => (
               <Link key={mod.href} href={mod.href} className={styles.p23}>
                 <Card
                   padding="md"

@@ -202,7 +202,7 @@ export default function CustomerConsignmentPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
           >
@@ -211,7 +211,7 @@ export default function CustomerConsignmentPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setConsumeTarget(row);
               setConsumeForm({
@@ -228,7 +228,7 @@ export default function CustomerConsignmentPage() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleClose(row.id);
               }}
@@ -341,7 +341,7 @@ export default function CustomerConsignmentPage() {
             <FormField label="Customer ID" required>
               <Input
                 value={form.customerId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, customerId: e.target.value })
                 }
                 placeholder="Customer ID"
@@ -351,7 +351,7 @@ export default function CustomerConsignmentPage() {
               <FormField label="Product ID" required>
                 <Input
                   value={form.productId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, productId: e.target.value })
                   }
                   placeholder="Product ID"
@@ -360,7 +360,7 @@ export default function CustomerConsignmentPage() {
               <FormField label="Warehouse ID" required>
                 <Input
                   value={form.warehouseId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, warehouseId: e.target.value })
                   }
                   placeholder="Warehouse ID"
@@ -372,7 +372,7 @@ export default function CustomerConsignmentPage() {
                 <Input
                   type="number"
                   value={form.quantityOnHand}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       quantityOnHand: parseInt(e.target.value) || 0,
@@ -385,7 +385,7 @@ export default function CustomerConsignmentPage() {
                   type="number"
                   step="0.01"
                   value={form.unitPrice}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       unitPrice: parseFloat(e.target.value) || 0,
@@ -399,7 +399,7 @@ export default function CustomerConsignmentPage() {
                 <Input
                   type="number"
                   value={form.maxQuantity}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       maxQuantity: parseInt(e.target.value) || 0,
@@ -411,7 +411,7 @@ export default function CustomerConsignmentPage() {
                 <Input
                   type="number"
                   value={form.reorderPoint}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       reorderPoint: parseInt(e.target.value) || 0,
@@ -465,7 +465,7 @@ export default function CustomerConsignmentPage() {
               <Input
                 type="number"
                 value={consumeForm.quantity}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConsumeForm({
                     ...consumeForm,
                     quantity: parseInt(e.target.value) || 0,
@@ -478,7 +478,7 @@ export default function CustomerConsignmentPage() {
                 type="number"
                 step="0.01"
                 value={consumeForm.totalValue}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConsumeForm({
                     ...consumeForm,
                     totalValue: parseFloat(e.target.value) || 0,
@@ -489,7 +489,7 @@ export default function CustomerConsignmentPage() {
             <FormField label="Reference">
               <Input
                 value={consumeForm.reference}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConsumeForm({
                     ...consumeForm,
                     reference: e.target.value,

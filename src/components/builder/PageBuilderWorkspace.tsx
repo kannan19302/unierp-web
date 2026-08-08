@@ -71,7 +71,7 @@ export function PageBuilderWorkspace({
     }
   }, [initialLayout]);
 
-  const selectedWidget = widgets.find((w) => w.id === selectedWidgetId);
+  const selectedWidget = widgets.find((w: any) => w.id === selectedWidgetId);
 
   const handleAddWidget = (type: PageWidget["type"]) => {
     const id = `${type}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
@@ -126,14 +126,14 @@ export function PageBuilderWorkspace({
       };
     }
 
-    setWidgets((prev) => [...prev, newWidget]);
+    setWidgets((prev: any) => [...prev, newWidget]);
     setSelectedWidgetId(id);
     showToast(`Added ${type} widget.`, "success");
   };
 
   const handleRemoveWidget = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setWidgets((prev) => prev.filter((w) => w.id !== id));
+    setWidgets((prev: any) => prev.filter((w: any) => w.id !== id));
     if (selectedWidgetId === id) setSelectedWidgetId(null);
     showToast("Widget removed.", "success");
   };
@@ -156,14 +156,14 @@ export function PageBuilderWorkspace({
   };
 
   const handleUpdateWidget = (id: string, updates: Partial<PageWidget>) => {
-    setWidgets((prev) =>
-      prev.map((w) => (w.id === id ? { ...w, ...updates } : w)),
+    setWidgets((prev: any) =>
+      prev.map((w: any) => (w.id === id ? { ...w, ...updates } : w)),
     );
   };
 
   const handleUpdateConfig = (id: string, key: string, value: any) => {
-    setWidgets((prev) =>
-      prev.map((w) =>
+    setWidgets((prev: any) =>
+      prev.map((w: any) =>
         w.id === id ? { ...w, config: { ...w.config, [key]: value } } : w,
       ),
     );
@@ -335,7 +335,7 @@ export function PageBuilderWorkspace({
               ["tablet", Tablet, "Tablet"],
               ["mobile", Smartphone, "Mobile"],
             ] as const
-          ).map(([v, Icon, label]) => (
+          ).map(([v, Icon, label]: any) => (
             <button
               key={v}
               onClick={() => setViewport(v)}
@@ -459,7 +459,7 @@ export function PageBuilderWorkspace({
             >
               Add Component
             </h3>
-            {widgetPalette.map((p) => (
+            {widgetPalette.map((p: any) => (
               <button
                 key={p.type}
                 onClick={() => handleAddWidget(p.type)}
@@ -476,11 +476,11 @@ export function PageBuilderWorkspace({
                   width: "100%",
                   transition: "all 0.2s ease-in-out",
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={(e: any) => {
                   e.currentTarget.style.background = "rgba(255,255,255,0.06)";
                   e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
                 }}
-                onMouseLeave={(e) => {
+                onMouseLeave={(e: any) => {
                   e.currentTarget.style.background = "rgba(255,255,255,0.02)";
                   e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
                 }}
@@ -618,7 +618,7 @@ export function PageBuilderWorkspace({
                   gap: "var(--space-4)",
                 }}
               >
-                {widgets.map((w, index) => {
+                {widgets.map((w: any, index: any) => {
                   const isSelected = selectedWidgetId === w.id;
                   return (
                     <div
@@ -656,7 +656,7 @@ export function PageBuilderWorkspace({
                           }}
                         >
                           <button
-                            onClick={(e) => handleMoveWidget(index, "up", e)}
+                            onClick={(e: any) => handleMoveWidget(index, "up", e)}
                             disabled={index === 0}
                             style={{
                               padding: 2,
@@ -672,7 +672,7 @@ export function PageBuilderWorkspace({
                             <ArrowUp size={12} />
                           </button>
                           <button
-                            onClick={(e) => handleMoveWidget(index, "down", e)}
+                            onClick={(e: any) => handleMoveWidget(index, "down", e)}
                             disabled={index === widgets.length - 1}
                             style={{
                               padding: 2,
@@ -691,7 +691,7 @@ export function PageBuilderWorkspace({
                             <ArrowDown size={12} />
                           </button>
                           <button
-                            onClick={(e) => handleRemoveWidget(w.id, e)}
+                            onClick={(e: any) => handleRemoveWidget(w.id, e)}
                             style={{
                               padding: 2,
                               border: "none",
@@ -1176,7 +1176,7 @@ export function PageBuilderWorkspace({
                   </label>
                   <input
                     value={selectedWidget.title}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       handleUpdateWidget(selectedWidget.id, {
                         title: e.target.value,
                       })
@@ -1208,7 +1208,7 @@ export function PageBuilderWorkspace({
                   </label>
                   <select
                     value={selectedWidget.gridSpan}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       handleUpdateWidget(selectedWidget.id, {
                         gridSpan: Number(e.target.value),
                       })
@@ -1247,7 +1247,7 @@ export function PageBuilderWorkspace({
                       </label>
                       <input
                         value={selectedWidget.config.subtitle || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateConfig(
                             selectedWidget.id,
                             "subtitle",
@@ -1279,7 +1279,7 @@ export function PageBuilderWorkspace({
                       </label>
                       <input
                         value={selectedWidget.config.badge || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateConfig(
                             selectedWidget.id,
                             "badge",
@@ -1316,7 +1316,7 @@ export function PageBuilderWorkspace({
                       </label>
                       <textarea
                         value={selectedWidget.config.text || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateConfig(
                             selectedWidget.id,
                             "text",
@@ -1350,7 +1350,7 @@ export function PageBuilderWorkspace({
                       </label>
                       <select
                         value={selectedWidget.config.type || "info"}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateConfig(
                             selectedWidget.id,
                             "type",
@@ -1391,11 +1391,11 @@ export function PageBuilderWorkspace({
                     </label>
                     <select
                       value={selectedWidget.config.formId || ""}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const val = e.target.value;
-                        const selectedForm = forms.find((f) => f.id === val);
-                        setWidgets((prev) =>
-                          prev.map((w) =>
+                        const selectedForm = forms.find((f: any) => f.id === val);
+                        setWidgets((prev: any) =>
+                          prev.map((w: any) =>
                             w.id === selectedWidget.id
                               ? {
                                   ...w,
@@ -1421,7 +1421,7 @@ export function PageBuilderWorkspace({
                       }}
                     >
                       <option value="">Select a Form...</option>
-                      {forms.map((f) => (
+                      {forms.map((f: any) => (
                         <option key={f.id} value={f.id}>
                           {f.name}
                         </option>
@@ -1446,10 +1446,10 @@ export function PageBuilderWorkspace({
                       </label>
                       <select
                         value={selectedWidget.config.dataModelId || ""}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const val = e.target.value;
                           const selectedDm = dataModels.find(
-                            (dm) => dm.id === val,
+                            (dm: any) => dm.id === val,
                           );
                           const dmSlug = selectedDm
                             ? String(selectedDm.name || "model")
@@ -1457,8 +1457,8 @@ export function PageBuilderWorkspace({
                                 .replace(/[^a-z0-9]+/g, "-")
                                 .replace(/(^-|-$)/g, "")
                             : "";
-                          setWidgets((prev) =>
-                            prev.map((w) =>
+                          setWidgets((prev: any) =>
+                            prev.map((w: any) =>
                               w.id === selectedWidget.id
                                 ? {
                                     ...w,
@@ -1484,7 +1484,7 @@ export function PageBuilderWorkspace({
                         }}
                       >
                         <option value="">Select a Data Model...</option>
-                        {dataModels.map((dm) => (
+                        {dataModels.map((dm: any) => (
                           <option key={dm.id} value={dm.id}>
                             {dm.name}
                           </option>
@@ -1508,7 +1508,7 @@ export function PageBuilderWorkspace({
                         min={1}
                         max={20}
                         value={selectedWidget.config.maxRows || 5}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateConfig(
                             selectedWidget.id,
                             "maxRows",
@@ -1545,7 +1545,7 @@ export function PageBuilderWorkspace({
                       </label>
                       <select
                         value={selectedWidget.config.dashboardId || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateConfig(
                             selectedWidget.id,
                             "dashboardId",
@@ -1563,7 +1563,7 @@ export function PageBuilderWorkspace({
                         }}
                       >
                         <option value="">Select a Dashboard...</option>
-                        {dashboards.map((d) => (
+                        {dashboards.map((d: any) => (
                           <option key={d.id} value={d.id}>
                             {d.name}
                           </option>
@@ -1584,7 +1584,7 @@ export function PageBuilderWorkspace({
                       </label>
                       <select
                         value={selectedWidget.config.chartType || "bar"}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateConfig(
                             selectedWidget.id,
                             "chartType",
@@ -1644,7 +1644,7 @@ export function PageBuilderWorkspace({
                             <input
                               placeholder="Label"
                               value={item.label}
-                              onChange={(e) => {
+                              onChange={(e: any) => {
                                 const nextItems = [
                                   ...selectedWidget.config.items,
                                 ];
@@ -1668,7 +1668,7 @@ export function PageBuilderWorkspace({
                             <input
                               placeholder="Value"
                               value={item.value}
-                              onChange={(e) => {
+                              onChange={(e: any) => {
                                 const nextItems = [
                                   ...selectedWidget.config.items,
                                 ];
@@ -1702,7 +1702,7 @@ export function PageBuilderWorkspace({
                               value={
                                 item.color || "var(--studio-accent-bright)"
                               }
-                              onChange={(e) => {
+                              onChange={(e: any) => {
                                 const nextItems = [
                                   ...selectedWidget.config.items,
                                 ];

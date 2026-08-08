@@ -76,7 +76,7 @@ export function AICopilot({ theme }: AICopilotProps) {
     setChatTyping(true);
 
     try {
-      const messages = updatedMessages.map((m) => ({
+      const messages = updatedMessages.map((m: any) => ({
         role: m.sender === "user" ? ("user" as const) : ("assistant" as const),
         content: m.text,
       }));
@@ -91,10 +91,10 @@ export function AICopilot({ theme }: AICopilotProps) {
         minute: "2-digit",
       });
       const actionSuffix = data.actions?.length
-        ? `\n\n_Action taken: ${data.actions.map((a) => a.tool).join(", ")}_`
+        ? `\n\n_Action taken: ${data.actions.map((a: any) => a.tool).join(", ")}_`
         : "";
 
-      setChatMessages((prev) => [
+      setChatMessages((prev: any) => [
         ...prev,
         { sender: "ai", text: `${data.reply}${actionSuffix}`, time: replyTime },
       ]);
@@ -103,7 +103,7 @@ export function AICopilot({ theme }: AICopilotProps) {
         hour: "2-digit",
         minute: "2-digit",
       });
-      setChatMessages((prev) => [
+      setChatMessages((prev: any) => [
         ...prev,
         {
           sender: "ai",
@@ -164,7 +164,7 @@ export function AICopilot({ theme }: AICopilotProps) {
 
           {/* Messages Area */}
           <div className={styles.messagesArea}>
-            {chatMessages.map((msg, idx) => {
+            {chatMessages.map((msg: any, idx: any) => {
               const isAi = msg.sender === "ai";
               const bubbleWrapperClass = `${styles.messageBubbleWrapper} ${isAi ? styles.bubbleAi : styles.bubbleUser}`;
 
@@ -205,7 +205,7 @@ export function AICopilot({ theme }: AICopilotProps) {
               type="text"
               placeholder="Ask UniERP AI..."
               value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
+              onChange={(e: any) => setChatInput(e.target.value)}
               className={chatInputClass}
             />
             <button

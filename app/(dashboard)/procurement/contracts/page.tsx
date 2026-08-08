@@ -42,7 +42,7 @@ export default function ProcurementContractsPage() {
   }, [fetchData]);
 
   const filtered = data.filter(
-    (c) =>
+    (c: any) =>
       !search ||
       c.contractName.toLowerCase().includes(search.toLowerCase()) ||
       c.contractNumber.toLowerCase().includes(search.toLowerCase()),
@@ -102,7 +102,7 @@ export default function ProcurementContractsPage() {
         <TextField
           placeholder="Search contracts..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           style={{ marginBottom: "1rem" }}
         />
         <DataTable

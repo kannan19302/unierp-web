@@ -64,14 +64,14 @@ function SidebarNavigation({
         return (
           <React.Fragment key={itemKey}>
             <div className={styles.subHeaderDivider} />
-            {item.items?.map((sub, subIdx) => renderItem(sub, true, subIdx))}
+            {item.items?.map((sub: any, subIdx: any) => renderItem(sub, true, subIdx))}
           </React.Fragment>
         );
       }
       return (
         <div key={itemKey} className={styles.subHeader}>
           <div className={styles.subHeaderTitle}>{item.name}</div>
-          {item.items?.map((sub, subIdx) => renderItem(sub, true, subIdx))}
+          {item.items?.map((sub: any, subIdx: any) => renderItem(sub, true, subIdx))}
         </div>
       );
     }
@@ -146,7 +146,7 @@ function SidebarNavigation({
     );
   };
 
-  return <>{enhancedItems.map((item, idx) => renderItem(item, false, idx))}</>;
+  return <>{enhancedItems.map((item: any, idx: any) => renderItem(item, false, idx))}</>;
 }
 
 export function AppSidebar({

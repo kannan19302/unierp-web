@@ -54,7 +54,7 @@ export default function BankReconciliationPage() {
       setAccounts(accts || []);
 
       const perAccount = await Promise.all(
-        (accts || []).map(async (a) => {
+        (accts || []).map(async (a: any) => {
           const txns = await client
             .get<
               BankTransaction[]
@@ -64,8 +64,8 @@ export default function BankReconciliationPage() {
         }),
       );
 
-      const recons: Reconciliation[] = perAccount.map(({ account, txns }) => {
-        const matchedCount = txns.filter((t) => t.reconciled).length;
+      const recons: Reconciliation[] = perAccount.map(({ account, txns }: any) => {
+        const matchedCount = txns.filter((t: any) => t.reconciled).length;
         return {
           id: account.id,
           bankName: `${account.bankName} — ${account.accountName}`,
@@ -80,7 +80,7 @@ export default function BankReconciliationPage() {
         };
       });
       setReconciliations(recons);
-      setStatements(perAccount.flatMap((p) => p.txns));
+      setStatements(perAccount.flatMap((p: any) => p.txns));
     } catch {
       setReconciliations([]);
       setStatements([]);
@@ -103,11 +103,11 @@ export default function BankReconciliationPage() {
   };
 
   const matchedTotal = statements
-    .filter((s) => s.reconciled)
-    .reduce((a, s) => a + Math.abs(s.amount), 0);
+    .filter((s: any) => s.reconciled)
+    .reduce((a: any, s: any) => a + Math.abs(s.amount), 0);
   const unmatchedTotal = statements
-    .filter((s) => !s.reconciled)
-    .reduce((a, s) => a + Math.abs(s.amount), 0);
+    .filter((s: any) => !s.reconciled)
+    .reduce((a: any, s: any) => a + Math.abs(s.amount), 0);
 
   const reconColumns: Column<Reconciliation>[] = [
     {
@@ -322,7 +322,7 @@ export default function BankReconciliationPage() {
           open={importOpen}
           onClose={() => setImportOpen(false)}
           accounts={accounts}
-          onSubmit={async (accountId, data) => {
+          onSubmit={async (accountId: any, data: any) => {
             await client.post(
               `/finance/bank-accounts/${accountId}/transactions`,
               data,
@@ -416,7 +416,7 @@ function BankTransactionModal({
               setAccountId(e.target.value)
             }
           >
-            {accounts.map((a) => (
+            {accounts.map((a: any) => (
               <option key={a.id} value={a.id}>
                 {a.bankName} — {a.accountName}
               </option>

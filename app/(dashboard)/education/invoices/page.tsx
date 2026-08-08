@@ -104,7 +104,7 @@ export default function EducationInvoicesPage() {
               <select
                 className="ui-input"
                 value={form.studentId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, studentId: e.target.value })
                 }
               >
@@ -121,7 +121,7 @@ export default function EducationInvoicesPage() {
               <input
                 className="ui-input"
                 value={form.invoiceNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, invoiceNumber: e.target.value })
                 }
               />
@@ -132,7 +132,7 @@ export default function EducationInvoicesPage() {
                 className="ui-input"
                 type="number"
                 value={form.totalAmount}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, totalAmount: e.target.value })
                 }
               />
@@ -143,7 +143,7 @@ export default function EducationInvoicesPage() {
                 className="ui-input"
                 type="date"
                 value={form.dueDate}
-                onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, dueDate: e.target.value })}
               />
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function EducationInvoicesPage() {
         <select
           className="ui-input w-44"
           value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+          onChange={(e: any) => setStatusFilter(e.target.value)}
         >
           <option value="">All</option>
           <option value="PENDING">Pending</option>
@@ -218,7 +218,7 @@ export default function EducationInvoicesPage() {
                     className="ui-input"
                     type="number"
                     value={payForm.amount}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPayForm({ ...payForm, amount: e.target.value })
                     }
                   />
@@ -228,7 +228,7 @@ export default function EducationInvoicesPage() {
                   <select
                     className="ui-input"
                     value={payForm.method}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPayForm({ ...payForm, method: e.target.value })
                     }
                   >
@@ -243,7 +243,7 @@ export default function EducationInvoicesPage() {
                   <input
                     className="ui-input"
                     value={payForm.reference}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPayForm({ ...payForm, reference: e.target.value })
                     }
                   />

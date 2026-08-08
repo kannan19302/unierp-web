@@ -41,7 +41,7 @@ export function PublicPageRenderer({
   // Convert tokens to CSS custom properties string
   let cssVars = "";
   if (themeTokens?.colors) {
-    Object.entries(themeTokens.colors).forEach(([key, value]) => {
+    Object.entries(themeTokens.colors).forEach(([key, value]: any) => {
       cssVars += `--color-${key}: ${value};\n`;
     });
   }
@@ -69,7 +69,7 @@ export function PublicPageRenderer({
       />
       {!hideHeaderFooter && <TenantHeader settings={settings} />}
       <main style={{ flex: 1 }}>
-        {sections.map((section) => {
+        {sections.map((section: any) => {
           const BlockComponent = (BLOCK_REGISTRY[section.type] ||
             BLOCK_REGISTRY["text"])!;
           return (

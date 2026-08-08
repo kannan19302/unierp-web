@@ -21,7 +21,7 @@ export default function PushSubscriptionsPage() {
 
   useEffect(() => {
     fetch("/api/admin/pwa/push-subscriptions")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setItems)
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -54,7 +54,7 @@ export default function PushSubscriptionsPage() {
       header: "Actions",
       render: (r: any) => (
         <button
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
           }}
           className="ui-btn-icon"

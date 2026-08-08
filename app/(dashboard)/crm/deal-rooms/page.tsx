@@ -147,7 +147,7 @@ export default function DealRoomsPage() {
             columns={columns}
             data={rooms}
             rowKey={(r: any) => r.id}
-            onRowClick={(r) => router.push(`/crm/deal-rooms/${r.id}`)}
+            onRowClick={(r: any) => router.push(`/crm/deal-rooms/${r.id}`)}
           />
         )}
       </Card>
@@ -168,7 +168,7 @@ export default function DealRoomsPage() {
               <input
                 placeholder="Opportunity ID"
                 value={form.opportunityId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, opportunityId: e.target.value })
                 }
                 className="p-2"
@@ -176,7 +176,7 @@ export default function DealRoomsPage() {
               <input
                 placeholder="Deal room name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 className="p-2"
               />
               <Button

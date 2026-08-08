@@ -28,7 +28,7 @@ export default function LotExpiryPage() {
       <div className="ui-page-shell">
         <h1 className="text-2xl font-bold">Lot/Batch Expiry Management</h1>
         <div className="flex gap-2 border-b">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -67,7 +67,7 @@ function DashboardTab() {
   ];
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {cards.map(([label, value]) => (
+      {cards.map(([label, value]: any) => (
         <div
           key={label as string}
           className={`bg-white border rounded-lg p-4 shadow-sm ${(label as string).startsWith("Expir") || label === "Open Alerts" ? "border-orange-200" : ""}`}
@@ -96,7 +96,7 @@ function LotsTab() {
 
   const load = useCallback(() => {
     apiFetch<{ items: any[]; total: number }>("/lots")
-      .then((r) => {
+      .then((r: any) => {
         setLots(r.items);
         setTotal(r.total);
       })
@@ -169,7 +169,7 @@ function LotsTab() {
         <h2 className="font-semibold text-sm">Register Lot</h2>
         <div className="grid grid-cols-3 gap-3">
           {(["lotNumber", "productId", "warehouseId", "qty"] as const).map(
-            (key) => (
+            (key: any) => (
               <div key={key}>
                 <label className="text-xs text-gray-600 capitalize">
                   {key} *
@@ -178,8 +178,8 @@ function LotsTab() {
                   type={key === "qty" ? "number" : "text"}
                   className="w-full border rounded px-2 py-1 text-sm"
                   value={form[key]}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                   required
                 />
@@ -192,8 +192,8 @@ function LotsTab() {
               type="date"
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.expiryDate}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, expiryDate: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, expiryDate: e.target.value }))
               }
               required
             />
@@ -203,8 +203,8 @@ function LotsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.notes}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, notes: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, notes: e.target.value }))
               }
             />
           </div>
@@ -249,7 +249,7 @@ function LotsTab() {
               {
                 key: "id",
                 header: "Actions",
-                render: (v, row) => (
+                render: (v: any, row: any) => (
                   <div className={styles.s1}>
                     {row.status === "ACTIVE" && (
                       <button
@@ -311,14 +311,14 @@ function FEFOTab() {
         <h2 className="font-semibold text-sm">
           FEFO (First-Expired-First-Out) Pick Plan
         </h2>
-        {(["productId", "warehouseId"] as const).map((key) => (
+        {(["productId", "warehouseId"] as const).map((key: any) => (
           <div key={key}>
             <label className="text-xs text-gray-600 capitalize">{key} *</label>
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form[key]}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, [key]: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, [key]: e.target.value }))
               }
               required
             />
@@ -330,7 +330,7 @@ function FEFOTab() {
             type="number"
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.qty}
-            onChange={(e) => setForm((f) => ({ ...f, qty: e.target.value }))}
+            onChange={(e: any) => setForm((f: any) => ({ ...f, qty: e.target.value }))}
             required
           />
         </div>
@@ -512,7 +512,7 @@ function DisposalsTab() {
           <input
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.lotId}
-            onChange={(e) => setForm((f) => ({ ...f, lotId: e.target.value }))}
+            onChange={(e: any) => setForm((f: any) => ({ ...f, lotId: e.target.value }))}
             required
           />
         </div>
@@ -521,12 +521,12 @@ function DisposalsTab() {
           <select
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.disposalMethod}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, disposalMethod: e.target.value }))
+            onChange={(e: any) =>
+              setForm((f: any) => ({ ...f, disposalMethod: e.target.value }))
             }
           >
             {["DESTROY", "RETURN_TO_VENDOR", "DONATE", "REWORK", "OTHER"].map(
-              (m) => (
+              (m: any) => (
                 <option key={m}>{m}</option>
               ),
             )}
@@ -538,8 +538,8 @@ function DisposalsTab() {
             type="number"
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.qtyDisposed}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, qtyDisposed: e.target.value }))
+            onChange={(e: any) =>
+              setForm((f: any) => ({ ...f, qtyDisposed: e.target.value }))
             }
             required
           />
@@ -549,7 +549,7 @@ function DisposalsTab() {
           <input
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.reason}
-            onChange={(e) => setForm((f) => ({ ...f, reason: e.target.value }))}
+            onChange={(e: any) => setForm((f: any) => ({ ...f, reason: e.target.value }))}
             required
           />
         </div>

@@ -26,6 +26,8 @@ export default function TenantDetailPage() {
   }, [params?.id]);
 
   const [internalAuditLogs, setInternalAuditLogs] = useState<any[]>([]);
+  const [usageRecords, setUsageRecords] = useState<any[]>([]);
+  const [isReconciling, setIsReconciling] = useState(false);
 
   async function loadTenant(id: string) {
     try {
@@ -36,10 +38,26 @@ export default function TenantDetailPage() {
       if (logs && logs.data) {
         setInternalAuditLogs(logs.data);
       }
+
+      const usageData = (await api.get(`/platform/v1/metering/${id}/usage`)) as any;
+      setUsageRecords(usageData || []);
     } catch (err) {
       console.error("Failed to load tenant", err);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleReconcile(metric: string) {
+    setIsReconciling(true);
+    try {
+      const res = await api.post(`/platform/v1/metering/${params?.id}/reconcile/${metric}`, {});
+      alert(`Reconciliation complete. True Sum: ${(res as any).trueSum}. Drifted: ${(res as any).drifted}`);
+      loadTenant(params!.id);
+    } catch (err: any) {
+      alert(`Reconciliation failed: ${err.message}`);
+    } finally {
+      setIsReconciling(false);
     }
   }
 
@@ -343,7 +361,49 @@ export default function TenantDetailPage() {
           </div>
         </Card>
 
-      </div>
+      {/* Metering & Usage Panel */}
+      <Card className="mt-8">
+        <div className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Activity className="w-5 h-5 text-gray-500" />
+            <h2 className="text-lg font-semibold">Usage & Metering</h2>
+          </div>
+          <div className="mb-4">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-gray-50 dark:bg-gray-800">
+                <tr>
+                  <th className="px-4 py-2">Metric</th>
+                  <th className="px-4 py-2">Current Usage</th>
+                  <th className="px-4 py-2">Last Updated</th>
+                  <th className="px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usageRecords.map(ur => (
+                  <tr key={ur.metric} className="border-b dark:border-gray-700">
+                    <td className="px-4 py-2 font-mono">{ur.metric}</td>
+                    <td className="px-4 py-2">{ur.currentValue}</td>
+                    <td className="px-4 py-2 text-gray-600">
+                      {new Date(ur.updatedAt).toLocaleString()}
+                    </td>
+                    <td className="px-4 py-2 flex gap-2">
+                      <Button variant="outline" size="sm" onClick={() => handleReconcile(ur.metric)} disabled={isReconciling}>
+                        Reconcile
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+                {usageRecords.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="px-4 py-4 text-center text-gray-500">No usage recorded</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Card>
+    </div>
     </RouteGuard>
   );
 }

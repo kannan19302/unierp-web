@@ -111,7 +111,7 @@ export default function SecurityPage() {
           size="sm"
           variant="ghost"
           leftIcon={<Trash2 size={14} />}
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             deleteIpEntry(r.id);
           }}
@@ -146,7 +146,7 @@ export default function SecurityPage() {
                     className="ui-input"
                     type="number"
                     value={policy.minLength}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPolicy({
                         ...policy,
                         minLength: parseInt(e.target.value),
@@ -168,7 +168,7 @@ export default function SecurityPage() {
                     className="ui-input"
                     type="number"
                     value={policy.expiryDays}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPolicy({
                         ...policy,
                         expiryDays: parseInt(e.target.value),
@@ -192,7 +192,7 @@ export default function SecurityPage() {
                     className="ui-input"
                     type="number"
                     value={policy.historyCount}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPolicy({
                         ...policy,
                         historyCount: parseInt(e.target.value),
@@ -215,7 +215,7 @@ export default function SecurityPage() {
                   "requireLowercase",
                   "requireNumber",
                   "requireSpecial",
-                ].map((k) => (
+                ].map((k: any) => (
                   <label
                     key={k}
                     className="ui-flex-row ui-gap-2 u-items-center"
@@ -223,7 +223,7 @@ export default function SecurityPage() {
                     <input
                       type="checkbox"
                       checked={(policy as any)[k]}
-                      onChange={(e) => updatePolicy(k, e.target.checked)}
+                      onChange={(e: any) => updatePolicy(k, e.target.checked)}
                     />
                     {k.replace("require", "Require ")}
                   </label>
@@ -241,7 +241,7 @@ export default function SecurityPage() {
                 className="ui-input u-flex-1"
                 placeholder="e.g. 192.168.1.0/24"
                 value={newIp}
-                onChange={(e) => setNewIp(e.target.value)}
+                onChange={(e: any) => setNewIp(e.target.value)}
               />
               <Button
                 leftIcon={<Plus size={16} />}

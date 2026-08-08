@@ -66,7 +66,7 @@ export default function POSHeldOrdersPage() {
           </div>
         ) : (
           <div className={styles.p3}>
-            {heldOrders.map((order) => (
+            {heldOrders.map((order: any) => (
               <div key={order.id} className="ui-card p-4">
                 <div className={styles.p4}>
                   <div>

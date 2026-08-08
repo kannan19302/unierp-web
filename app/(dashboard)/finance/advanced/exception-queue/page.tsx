@@ -75,7 +75,7 @@ export default function ExceptionQueuePage() {
     }
   };
 
-  const pendingCount = exceptions.filter((e) => e.status === "PENDING").length;
+  const pendingCount = exceptions.filter((e: any) => e.status === "PENDING").length;
 
   return (
     <RouteGuard permission="finance.payables.read">
@@ -112,7 +112,7 @@ export default function ExceptionQueuePage() {
 
         <div className="ui-filter-bar mb-4">
           <Filter size={16} />
-          {(["", "PENDING", "APPROVED", "REJECTED"] as const).map((s) => (
+          {(["", "PENDING", "APPROVED", "REJECTED"] as const).map((s: any) => (
             <button
               key={s}
               className={`ui-filter-chip ${statusFilter === s ? "ui-filter-chip-active" : ""}`}
@@ -138,7 +138,7 @@ export default function ExceptionQueuePage() {
             </div>
           ) : (
             <div className="ui-list-body">
-              {exceptions.map((exc) => (
+              {exceptions.map((exc: any) => (
                 <div key={exc.id} className="ui-list-row">
                   <div className="ui-list-row-main">
                     <div className="ui-list-row-title">
@@ -178,7 +178,7 @@ export default function ExceptionQueuePage() {
                         className="ui-input ui-input-sm"
                         placeholder="Resolution note (optional)"
                         value={noteMap[exc.id] ?? ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNoteMap({ ...noteMap, [exc.id]: e.target.value })
                         }
                       />

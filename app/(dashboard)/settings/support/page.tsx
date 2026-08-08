@@ -89,7 +89,7 @@ export default function SaasPortalSupportPage() {
             type="text"
             placeholder="Brief subject of your issue..."
             value={subject}
-            onChange={(e) => setSubject(e.target.value)}
+            onChange={(e: any) => setSubject(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",

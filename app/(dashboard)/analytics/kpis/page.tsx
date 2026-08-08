@@ -109,7 +109,7 @@ export default function KpisPage() {
       </div>
       {kpis.length > 0 && (
         <div className={styles.kpiGrid}>
-          {kpis.map((k) => {
+          {kpis.map((k: any) => {
             const pct = change(k.value, k.previousValue);
             const meetingTarget =
               k.targetValue !== null ? k.value >= k.targetValue : null;
@@ -177,8 +177,8 @@ export default function KpisPage() {
                   <input
                     className="ui-input"
                     value={newKpi.kpiName}
-                    onChange={(e) =>
-                      setNewKpi((p) => ({ ...p, kpiName: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewKpi((p: any) => ({ ...p, kpiName: e.target.value }))
                     }
                     required
                   />
@@ -188,11 +188,11 @@ export default function KpisPage() {
                   <select
                     className="ui-input"
                     value={newKpi.category}
-                    onChange={(e) =>
-                      setNewKpi((p) => ({ ...p, category: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewKpi((p: any) => ({ ...p, category: e.target.value }))
                     }
                   >
-                    {categories.map((c) => (
+                    {categories.map((c: any) => (
                       <option key={c} value={c}>
                         {c}
                       </option>
@@ -208,8 +208,8 @@ export default function KpisPage() {
                     type="number"
                     step="any"
                     value={newKpi.value}
-                    onChange={(e) =>
-                      setNewKpi((p) => ({ ...p, value: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewKpi((p: any) => ({ ...p, value: e.target.value }))
                     }
                     required
                   />
@@ -221,8 +221,8 @@ export default function KpisPage() {
                     type="number"
                     step="any"
                     value={newKpi.previousValue}
-                    onChange={(e) =>
-                      setNewKpi((p) => ({
+                    onChange={(e: any) =>
+                      setNewKpi((p: any) => ({
                         ...p,
                         previousValue: e.target.value,
                       }))
@@ -236,8 +236,8 @@ export default function KpisPage() {
                     type="number"
                     step="any"
                     value={newKpi.targetValue}
-                    onChange={(e) =>
-                      setNewKpi((p) => ({ ...p, targetValue: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewKpi((p: any) => ({ ...p, targetValue: e.target.value }))
                     }
                   />
                 </div>
@@ -247,8 +247,8 @@ export default function KpisPage() {
                 <input
                   className="ui-input"
                   value={newKpi.unit}
-                  onChange={(e) =>
-                    setNewKpi((p) => ({ ...p, unit: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewKpi((p: any) => ({ ...p, unit: e.target.value }))
                   }
                 />
               </div>

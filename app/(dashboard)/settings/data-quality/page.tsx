@@ -78,14 +78,14 @@ export default function DataQualityPage() {
   }, [fetchDuplicates]);
 
   const handleScan = async (entityType: string) => {
-    setScanning((s) => ({ ...s, [entityType]: true }));
+    setScanning((s: any) => ({ ...s, [entityType]: true }));
     try {
       await client.post(`/admin/data-quality/scan/${entityType.toLowerCase()}`);
       await fetchDuplicates();
     } catch (e) {
       console.error("Scan error", e);
     } finally {
-      setScanning((s) => ({ ...s, [entityType]: false }));
+      setScanning((s: any) => ({ ...s, [entityType]: false }));
     }
   };
 
@@ -114,7 +114,7 @@ export default function DataQualityPage() {
   };
 
   const toggleExpand = (id: string) => {
-    setExpandedSets((prev) => {
+    setExpandedSets((prev: any) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
@@ -161,7 +161,7 @@ export default function DataQualityPage() {
               icon: <X size={18} />,
               color: "var(--color-text-secondary)",
             },
-          ].map((s) => (
+          ].map((s: any) => (
             <div key={s.label} className={styles.s5}>
               <div style={{ color: s.color }}>{s.icon}</div>
               <div>
@@ -174,7 +174,7 @@ export default function DataQualityPage() {
 
         {/* Entity Scan Cards */}
         <div className={styles.s7}>
-          {ENTITY_TYPES.map((type) => (
+          {ENTITY_TYPES.map((type: any) => (
             <div key={type} className={styles.s8}>
               <div className={styles.s9}>{type}</div>
               <button
@@ -203,11 +203,11 @@ export default function DataQualityPage() {
           <Filter size={16} className="ui-text-muted" />
           <select
             value={filterEntity}
-            onChange={(e) => setFilterEntity(e.target.value)}
+            onChange={(e: any) => setFilterEntity(e.target.value)}
             className={styles.s12}
           >
             <option value="">All Entity Types</option>
-            {ENTITY_TYPES.map((t) => (
+            {ENTITY_TYPES.map((t: any) => (
               <option key={t} value={t}>
                 {t}
               </option>
@@ -215,7 +215,7 @@ export default function DataQualityPage() {
           </select>
           <select
             value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
+            onChange={(e: any) => setFilterStatus(e.target.value)}
             className={styles.s12}
           >
             <option value="PENDING">Pending</option>
@@ -238,7 +238,7 @@ export default function DataQualityPage() {
           </div>
         ) : (
           <div className="ui-stack-3">
-            {duplicates.map((set) => (
+            {duplicates.map((set: any) => (
               <div key={set.id} className={styles.s14}>
                 <div
                   className={styles.s15}
@@ -265,7 +265,7 @@ export default function DataQualityPage() {
                   {set.status === "PENDING" && (
                     <div
                       className="ui-flex ui-gap-2"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e: any) => e.stopPropagation()}
                     >
                       <button
                         onClick={() => {
@@ -329,7 +329,7 @@ export default function DataQualityPage() {
                 Choose the record to keep. Other records will be merged into it.
               </p>
               <div className={styles.s27}>
-                {mergeModal.records.map((r) => (
+                {mergeModal.records.map((r: any) => (
                   <label
                     key={r.id}
                     style={{

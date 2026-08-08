@@ -248,7 +248,7 @@ export default function FinanceDashboardPage() {
       const periodsRes = await client.get<{
         data: Array<{ id: string; name: string; status: string }>;
       }>("/finance/close/financial-periods");
-      const openPeriod = periodsRes?.data?.find((p) => p.status === "OPEN");
+      const openPeriod = periodsRes?.data?.find((p: any) => p.status === "OPEN");
 
       let closePct: number | null = null;
       if (openPeriod) {
@@ -636,7 +636,7 @@ export default function FinanceDashboardPage() {
                       : "Not run",
                 variant: compliance.icEliminationsRun ? "success" : "neutral",
               },
-            ].map((item) => (
+            ].map((item: any) => (
               <div
                 key={item.label}
                 className="ui-flex-between border-b"
@@ -695,7 +695,7 @@ export default function FinanceDashboardPage() {
                     ? "var(--color-danger)"
                     : "var(--color-success)",
               },
-            ].map((item) => (
+            ].map((item: any) => (
               <div
                 key={item.label}
                 style={{ display: "flex", flexDirection: "column", gap: "2px" }}
@@ -731,7 +731,7 @@ export default function FinanceDashboardPage() {
       <div className="ui-stack-1">
         <h3 className="text-xs font-semibold m-0">Finance Workspaces</h3>
         <div className="ui-grid-4 gap-2">
-          {QUICK_LINKS.map((link) => (
+          {QUICK_LINKS.map((link: any) => (
             <NavCard
               key={link.title}
               title={link.title}
@@ -766,7 +766,7 @@ export default function FinanceDashboardPage() {
         </div>
         <ListView
           resource={invoiceResource}
-          onRowClick={(row) => router.push(`/finance/invoices/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/finance/invoices/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
       </div>

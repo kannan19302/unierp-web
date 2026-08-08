@@ -107,7 +107,7 @@ export function BuilderProperties() {
   const webhooks = formSettings?.webhooks || [];
   const scripts = formSettings?.scripts || [];
 
-  const selectedField = fields.find((f) => f.id === selectedFieldId);
+  const selectedField = fields.find((f: any) => f.id === selectedFieldId);
   const generateName = (label: string) =>
     label
       .toLowerCase()
@@ -172,7 +172,7 @@ export function BuilderProperties() {
 
         <div style={{ overflowY: "auto", flex: 1 }}>
           <AccordionSection title="Webhooks" icon={Activity} defaultOpen={true}>
-            {(webhooks || []).map((wh, idx) => (
+            {(webhooks || []).map((wh: any, idx: any) => (
               <div
                 key={idx}
                 style={{
@@ -205,7 +205,7 @@ export function BuilderProperties() {
                   <select
                     style={inputStyle}
                     value={wh.event}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const newHooks = [...(webhooks || [])];
                       if (newHooks[idx]) {
                         newHooks[idx].event = e.target.value;
@@ -231,7 +231,7 @@ export function BuilderProperties() {
                     style={inputStyle}
                     placeholder="https://api.example.com/hook"
                     value={wh.url}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const newHooks = [...(webhooks || [])];
                       if (newHooks[idx]) {
                         newHooks[idx].url = e.target.value;
@@ -271,7 +271,7 @@ export function BuilderProperties() {
             icon={Cpu}
             defaultOpen={true}
           >
-            {(scripts || []).map((script, idx) => {
+            {(scripts || []).map((script: any, idx: any) => {
               return (
                 <div
                   key={idx}
@@ -305,7 +305,7 @@ export function BuilderProperties() {
                     <select
                       style={inputStyle}
                       value={script.event}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const newScripts = [...scripts];
                         if (newScripts[idx]) {
                           newScripts[idx].event = e.target.value;
@@ -335,7 +335,7 @@ export function BuilderProperties() {
                       }}
                       placeholder="data.total = data.qty * data.price; return data;"
                       value={script.code}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const newScripts = [...scripts];
                         if (newScripts[idx]) {
                           newScripts[idx].code = e.target.value;
@@ -421,7 +421,7 @@ export function BuilderProperties() {
               type="text"
               style={inputStyle}
               value={selectedField.label}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 const label = e.target.value;
                 updateField(selectedField.id, {
                   label,
@@ -439,7 +439,7 @@ export function BuilderProperties() {
                 color: "var(--studio-400)",
               }}
               value={selectedField.name}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 updateField(selectedField.id, { name: e.target.value })
               }
             />
@@ -448,7 +448,7 @@ export function BuilderProperties() {
             <textarea
               style={{ ...inputStyle, minHeight: "60px" }}
               value={selectedField.description || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 updateField(selectedField.id, { description: e.target.value })
               }
             />
@@ -464,7 +464,7 @@ export function BuilderProperties() {
                     type="text"
                     style={inputStyle}
                     value={selectedField.placeholder || ""}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateField(selectedField.id, {
                         placeholder: e.target.value,
                       })
@@ -477,7 +477,7 @@ export function BuilderProperties() {
                     type="text"
                     style={inputStyle}
                     value={selectedField.defaultValue || ""}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateField(selectedField.id, {
                         defaultValue: e.target.value,
                       })
@@ -506,7 +506,7 @@ export function BuilderProperties() {
               <input
                 type="checkbox"
                 checked={selectedField.required}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, { required: e.target.checked })
                 }
                 style={{ accentColor: "var(--studio-success)" }}
@@ -524,7 +524,7 @@ export function BuilderProperties() {
               <input
                 type="checkbox"
                 checked={selectedField.readOnly}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, { readOnly: e.target.checked })
                 }
                 style={{ accentColor: "var(--studio-success)" }}
@@ -542,7 +542,7 @@ export function BuilderProperties() {
               <input
                 type="checkbox"
                 checked={selectedField.inListView || false}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, {
                     inListView: e.target.checked,
                   })
@@ -568,7 +568,7 @@ export function BuilderProperties() {
                 max="10"
                 step="1"
                 value={selectedField.weight || 1}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, {
                     weight: parseInt(e.target.value),
                   })
@@ -590,7 +590,7 @@ export function BuilderProperties() {
                   max="12"
                   step="1"
                   value={selectedField.columnSpan || 12}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     updateField(selectedField.id, {
                       columnSpan: parseInt(e.target.value),
                     })
@@ -613,7 +613,7 @@ export function BuilderProperties() {
                     style={inputStyle}
                     placeholder="Auto"
                     value={selectedField.height || ""}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateField(selectedField.id, {
                         height: e.target.value
                           ? parseInt(e.target.value)
@@ -630,7 +630,7 @@ export function BuilderProperties() {
               type="text"
               style={{ ...inputStyle, fontFamily: "monospace" }}
               value={selectedField.cssClass || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 updateField(selectedField.id, { cssClass: e.target.value })
               }
               placeholder="e.g. ui-text-bold"
@@ -664,7 +664,7 @@ export function BuilderProperties() {
               <textarea
                 style={{ ...inputStyle, minHeight: "120px" }}
                 value={selectedField.options || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, { options: e.target.value })
                 }
                 placeholder={
@@ -701,7 +701,7 @@ export function BuilderProperties() {
                   type="number"
                   style={inputStyle}
                   value={selectedField.minLength || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     updateField(selectedField.id, {
                       minLength: e.target.value
                         ? parseInt(e.target.value)
@@ -715,7 +715,7 @@ export function BuilderProperties() {
                   type="number"
                   style={inputStyle}
                   value={selectedField.maxLength || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     updateField(selectedField.id, {
                       maxLength: e.target.value
                         ? parseInt(e.target.value)
@@ -732,7 +732,7 @@ export function BuilderProperties() {
                 style={{ ...inputStyle, fontFamily: "monospace" }}
                 placeholder="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
                 value={selectedField.regexPattern || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, {
                     regexPattern: e.target.value || undefined,
                   })
@@ -770,7 +770,7 @@ export function BuilderProperties() {
                   <select
                     style={{ ...inputStyle, flex: 1, minHeight: "32px" }}
                     value={selectedField.visibilityRule?.split(" ")[0] || ""}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const rest =
                         selectedField.visibilityRule
                           ?.split(" ")
@@ -786,12 +786,12 @@ export function BuilderProperties() {
                     <option value="">Select field...</option>
                     {fields
                       .filter(
-                        (f) =>
+                        (f: any) =>
                           f.id !== selectedField.id &&
                           f.type !== "Section Break" &&
                           f.type !== "Column Break",
                       )
-                      .map((f) => (
+                      .map((f: any) => (
                         <option key={f.id} value={`{${f.name}}`}>
                           {f.label}
                         </option>
@@ -808,7 +808,7 @@ export function BuilderProperties() {
                         /(==|!=|>|<|>=|<=|contains)/,
                       )?.[0] || "=="
                     }
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const fieldName =
                         selectedField.visibilityRule?.split(" ")[0] ||
                         "{field}";
@@ -843,7 +843,7 @@ export function BuilderProperties() {
                         .join(" ")
                         .replace(/^'|'$/g, "") || ""
                     }
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const fieldName =
                         selectedField.visibilityRule?.split(" ")[0] ||
                         "{field}";
@@ -893,7 +893,7 @@ export function BuilderProperties() {
                 style={{ ...inputStyle, fontFamily: "monospace" }}
                 placeholder="e.g. {qty} * {rate}"
                 value={selectedField.formula || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, {
                     formula: e.target.value || undefined,
                     readOnly: e.target.value ? true : selectedField.readOnly,
@@ -918,7 +918,7 @@ export function BuilderProperties() {
               style={inputStyle}
               placeholder="e.g. Admin, Manager"
               value={selectedField.readRoles || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 updateField(selectedField.id, {
                   readRoles: e.target.value || undefined,
                 })
@@ -935,7 +935,7 @@ export function BuilderProperties() {
               style={inputStyle}
               placeholder="e.g. Admin"
               value={selectedField.writeRoles || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 updateField(selectedField.id, {
                   writeRoles: e.target.value || undefined,
                 })
@@ -958,7 +958,7 @@ export function BuilderProperties() {
                 style={inputStyle}
                 placeholder="e.g. /api/v1/customers"
                 value={selectedField.dataSource || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, {
                     dataSource: e.target.value || undefined,
                   })
@@ -975,7 +975,7 @@ export function BuilderProperties() {
                 style={inputStyle}
                 placeholder="e.g. $.data[*].name"
                 value={selectedField.dataFilter || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   updateField(selectedField.id, {
                     dataFilter: e.target.value || undefined,
                   })

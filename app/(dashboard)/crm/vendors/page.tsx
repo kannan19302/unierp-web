@@ -25,7 +25,7 @@ export default function VendorsPage() {
 
         <ListView
           resource={vendorResource}
-          onRowClick={(row) => router.push(`/crm/vendors/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/crm/vendors/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
 

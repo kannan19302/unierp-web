@@ -95,12 +95,12 @@ export default function ProgramsPage() {
   if (loading) return <Spinner size="lg" />;
   if (error) return <div className="ui-alert ui-alert-danger">{error}</div>;
 
-  const totalBudget = programs.reduce((s, p) => s + Number(p.budget || 0), 0);
+  const totalBudget = programs.reduce((s: any, p: any) => s + Number(p.budget || 0), 0);
   const totalSpend = programs.reduce(
-    (s, p) => s + Number(p.actualSpend || 0),
+    (s: any, p: any) => s + Number(p.actualSpend || 0),
     0,
   );
-  const activePrograms = programs.filter((p) => p.status === "ACTIVE").length;
+  const activePrograms = programs.filter((p: any) => p.status === "ACTIVE").length;
 
   return (
     <div className="ui-stack-6">
@@ -152,7 +152,7 @@ export default function ProgramsPage() {
             ]}
           />
           <div className="ui-grid-auto">
-            {programs.map((p) => (
+            {programs.map((p: any) => (
               <Card key={p.id} className="ui-stack-3">
                 <div className="ui-flex-between">
                   <h3 className="ui-text-label">
@@ -190,8 +190,8 @@ export default function ProgramsPage() {
       )}
       {activeTab === "projects" && (
         <div className="ui-stack-4">
-          {programs.flatMap((p) =>
-            (p.programProjects || []).map((pp) => (
+          {programs.flatMap((p: any) =>
+            (p.programProjects || []).map((pp: any) => (
               <Card
                 key={`${p.id}-${pp.project.id}`}
                 className="ui-flex-between p-3"
@@ -204,15 +204,15 @@ export default function ProgramsPage() {
               </Card>
             )),
           )}
-          {programs.every((p) => !p.programProjects?.length) && (
+          {programs.every((p: any) => !p.programProjects?.length) && (
             <p className="ui-text-muted">No projects linked to programs.</p>
           )}
         </div>
       )}
       {activeTab === "benefits" && (
         <div className="ui-grid-auto">
-          {programs.flatMap((p) =>
-            (p.programBenefits || []).map((b) => (
+          {programs.flatMap((p: any) =>
+            (p.programBenefits || []).map((b: any) => (
               <Card key={b.id} className="ui-stack-2">
                 <div className="ui-flex-between">
                   <h4 className="ui-text-label">{b.name}</h4>
@@ -230,18 +230,18 @@ export default function ProgramsPage() {
               </Card>
             )),
           )}
-          {programs.every((p) => !p.programBenefits?.length) && (
+          {programs.every((p: any) => !p.programBenefits?.length) && (
             <p className="ui-text-muted">No benefits tracked yet.</p>
           )}
         </div>
       )}
       {activeTab === "financials" && (
         <div className="ui-stack-4">
-          {programs.map((p) => (
+          {programs.map((p: any) => (
             <Card key={p.id} className="ui-stack-3">
               <h4 className="ui-text-label">{p.name} - Financials</h4>
               <div className="ui-grid-3">
-                {(p.programFinancials || []).map((f) => (
+                {(p.programFinancials || []).map((f: any) => (
                   <div key={f.id} className="ui-card p-2">
                     <p className="ui-text-micro">
                       {f.fiscalYear} {f.period ? `- ${f.period}` : ""}

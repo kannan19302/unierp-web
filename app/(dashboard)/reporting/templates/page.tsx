@@ -89,7 +89,7 @@ export default function ReportingTemplatesPage() {
             type="text"
             placeholder="Report Template Title (e.g. Executive Balance Sheet & P&L)..."
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e: any) => setTitle(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",
@@ -121,7 +121,7 @@ export default function ReportingTemplatesPage() {
             </p>
           </Card>
         ) : (
-          templates.map((t) => (
+          templates.map((t: any) => (
             <Card key={t.id} style={{ padding: "20px" }}>
               <div
                 style={{

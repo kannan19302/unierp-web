@@ -32,7 +32,7 @@ function MarketingDeepContent() {
         .get("/crm/marketing-deep/performance-summary")
         .catch(() => ({ campaigns: [], totals: {} })),
       client.get("/crm/marketing-deep/calendar").catch(() => []),
-    ]).then(([s, c]) => {
+    ]).then(([s, c]: any) => {
       setSummary(s);
       setCalendar(Array.isArray(c) ? c : []);
       setLoading(false);

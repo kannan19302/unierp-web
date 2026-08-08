@@ -9,7 +9,7 @@ export default function DisposalsPage() {
 
   useEffect(() => {
     apiGet("/fixed-assets/disposals")
-      .then((d) => setDisposals(Array.isArray(d) ? d : []))
+      .then((d: any) => setDisposals(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

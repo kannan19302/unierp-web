@@ -120,7 +120,7 @@ export default function DashboardsPage() {
           <Plus size={18} /> New Dashboard
         </button>
       </div>
-      {dashboards.map((d) => (
+      {dashboards.map((d: any) => (
         <div key={d.id} className={styles.dashboardCard}>
           <div className="ui-flex-between">
             <div>
@@ -146,7 +146,7 @@ export default function DashboardsPage() {
           </div>
           {d.widgets.length > 0 && (
             <div className={styles.widgetGrid}>
-              {d.widgets.map((w) => (
+              {d.widgets.map((w: any) => (
                 <div key={w.id} className={styles.widgetCard}>
                   <span className={styles.widgetIcon}>
                     {widgetTypeIcons[w.widgetType] || "📦"}
@@ -187,8 +187,8 @@ export default function DashboardsPage() {
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, name: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((p: any) => ({ ...p, name: e.target.value }))
                   }
                   required
                 />
@@ -198,8 +198,8 @@ export default function DashboardsPage() {
                 <textarea
                   className="ui-input"
                   value={form.description}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, description: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((p: any) => ({ ...p, description: e.target.value }))
                   }
                 />
               </div>

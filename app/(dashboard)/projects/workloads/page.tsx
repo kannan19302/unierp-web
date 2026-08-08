@@ -57,7 +57,7 @@ export default function ResourceWorkloadsPage() {
           <div className="text-center p-12">Loading team workloads...</div>
         ) : (
           <div className={styles.p3}>
-            {resourceWorkloads.map((wl) => {
+            {resourceWorkloads.map((wl: any) => {
               const dailyHours = wl.allocatedHours / 5;
               const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
@@ -120,7 +120,7 @@ export default function ResourceWorkloadsPage() {
                   <div className={styles.p15}>
                     <p className={styles.p16}>Availability Heat Map</p>
                     <div className="ui-flex ui-gap-2">
-                      {days.map((day, idx) => {
+                      {days.map((day: any, idx: any) => {
                         // Determine heat color based on dailyHours
                         let heatBg = "var(--color-success-light)";
                         let heatBorder = "1px solid var(--color-success)";

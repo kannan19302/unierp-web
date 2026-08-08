@@ -88,7 +88,7 @@ export default function StorefrontHomePage() {
       const cart = await storefrontGet<{ items: { quantity: number }[] }>(
         `/store/${tenantSlug}/cart/${token}`,
       );
-      setCartCount(cart.items.reduce((sum, i) => sum + i.quantity, 0));
+      setCartCount(cart.items.reduce((sum: any, i: any) => sum + i.quantity, 0));
     } catch {
       setCartCount(0);
     }
@@ -207,7 +207,7 @@ export default function StorefrontHomePage() {
             >
               All Products
             </Button>
-            {categories.map((cat) => (
+            {categories.map((cat: any) => (
               <Button
                 key={cat.id}
                 variant={activeCategoryId === cat.id ? "primary" : "outline"}
@@ -231,7 +231,7 @@ export default function StorefrontHomePage() {
           </Card>
         ) : (
           <div className={styles.s18}>
-            {products.map((product) => (
+            {products.map((product: any) => (
               <Card key={product.listingId} padding="none">
                 <div
                   role="link"
@@ -272,7 +272,7 @@ export default function StorefrontHomePage() {
                     variant="primary"
                     className={styles.s26}
                     disabled={addingId === product.listingId}
-                    onClick={(e) => {
+                    onClick={(e: any) => {
                       e.stopPropagation();
                       handleAddToCart(product);
                     }}

@@ -19,8 +19,8 @@ export default function DeadLettersPage() {
 
   useEffect(() => {
     fetch("/api/outbox/dead-letters")
-      .then((r) => r.json())
-      .then((d) => setItems(d.items || []))
+      .then((r: any) => r.json())
+      .then((d: any) => setItems(d.items || []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -63,7 +63,7 @@ export default function DeadLettersPage() {
       render: (r: any) => (
         <div className="flex gap-2">
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"
@@ -71,7 +71,7 @@ export default function DeadLettersPage() {
             <RotateCcw size={16} />
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"

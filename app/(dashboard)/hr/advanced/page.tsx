@@ -180,7 +180,7 @@ export default function AdvancedHRPage() {
         ]}
       />
 
-      {groups.map((group) => (
+      {groups.map((group: any) => (
         <div key={group.title} className="ui-stack-4">
           <div className={styles.groupHeader}>
             <div
@@ -198,7 +198,7 @@ export default function AdvancedHRPage() {
           </div>
 
           <div className="ui-grid-3">
-            {group.modules.map((mod) => (
+            {group.modules.map((mod: any) => (
               <Link
                 key={mod.href}
                 href={mod.href}

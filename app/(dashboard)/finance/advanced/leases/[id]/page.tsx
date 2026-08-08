@@ -156,7 +156,7 @@ export default function LeaseDetailPage() {
   if (loading) return <div className="p-6 ui-text-muted">Loading…</div>;
   if (!lease) return <div className="p-6 text-red-600">Lease not found.</div>;
 
-  const posted = schedule.filter((s) => s.journalPosted).length;
+  const posted = schedule.filter((s: any) => s.journalPosted).length;
 
   return (
     <div className="p-6 space-y-6">
@@ -252,7 +252,7 @@ export default function LeaseDetailPage() {
             label: "Schedule Progress",
             value: `${posted} / ${schedule.length} periods posted`,
           },
-        ].map(({ label, value }) => (
+        ].map(({ label, value }: any) => (
           <Card key={label} className="p-4">
             <p className="text-xs ui-text-muted mb-1">{label}</p>
             <p className="text-sm font-semibold ui-text-primary">{value}</p>
@@ -271,7 +271,7 @@ export default function LeaseDetailPage() {
             type="date"
             className="ui-input text-sm"
             value={terminationDate}
-            onChange={(e) => setTerminationDate(e.target.value)}
+            onChange={(e: any) => setTerminationDate(e.target.value)}
           />
           <div className="flex gap-2">
             <Button
@@ -304,7 +304,7 @@ export default function LeaseDetailPage() {
             type="date"
             className="ui-input text-sm"
             value={renewEnd}
-            onChange={(e) => setRenewEnd(e.target.value)}
+            onChange={(e: any) => setRenewEnd(e.target.value)}
           />
           <div className="flex gap-2">
             <Button
@@ -377,7 +377,7 @@ export default function LeaseDetailPage() {
               {
                 key: "id",
                 header: "Action",
-                render: (v, row) =>
+                render: (v: any, row: any) =>
                   !row.journalPosted && lease.status === "ACTIVE" ? (
                     <Button
                       variant="secondary"
@@ -405,12 +405,12 @@ export default function LeaseDetailPage() {
           <div className="flex gap-8 text-sm font-semibold border-t pt-2 mt-2">
             <span>Total</span>
             <span>
-              {fmt(schedule.reduce((s, r) => s + Number(r.paymentAmount), 0))}
+              {fmt(schedule.reduce((s: any, r: any) => s + Number(r.paymentAmount), 0))}
             </span>
             <span>
               {fmt(
                 schedule.reduce(
-                  (s, r) => s + Number(r.interestExpense ?? 0),
+                  (s: any, r: any) => s + Number(r.interestExpense ?? 0),
                   0,
                 ),
               )}
@@ -418,7 +418,7 @@ export default function LeaseDetailPage() {
             <span>
               {fmt(
                 schedule.reduce(
-                  (s, r) => s + Number(r.principalRepayment ?? 0),
+                  (s: any, r: any) => s + Number(r.principalRepayment ?? 0),
                   0,
                 ),
               )}
@@ -426,7 +426,7 @@ export default function LeaseDetailPage() {
             <span>
               {fmt(
                 schedule.reduce(
-                  (s, r) => s + Number(r.rouAmortization ?? 0),
+                  (s: any, r: any) => s + Number(r.rouAmortization ?? 0),
                   0,
                 ),
               )}

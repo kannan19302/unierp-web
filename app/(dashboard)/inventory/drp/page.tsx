@@ -95,7 +95,7 @@ export default function DrpPlanningPage() {
       await apiPost("/inventory/drp/runs", {
         ...form,
         includeWarehouses: form.includeWarehouses
-          ? form.includeWarehouses.split(",").map((s) => s.trim())
+          ? form.includeWarehouses.split(",").map((s: any) => s.trim())
           : [],
       });
       setCreateOpen(false);
@@ -159,7 +159,7 @@ export default function DrpPlanningPage() {
             <Button
               variant="primary"
               size="sm"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleExecuteRun(row.id);
               }}
@@ -170,7 +170,7 @@ export default function DrpPlanningPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: any) => e.stopPropagation()}
           >
             <Eye size={14} />
           </Button>
@@ -218,7 +218,7 @@ export default function DrpPlanningPage() {
       key: "actions",
       header: "Actions",
       render: (row: any) => (
-        <Button variant="ghost" size="sm" onClick={(e) => e.stopPropagation()}>
+        <Button variant="ghost" size="sm" onClick={(e: any) => e.stopPropagation()}>
           <Eye size={14} />
         </Button>
       ),
@@ -329,7 +329,7 @@ export default function DrpPlanningPage() {
             <FormField label="Run Number" required>
               <Input
                 value={form.runNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, runNumber: e.target.value })
                 }
                 placeholder="DRP-2026-001"
@@ -339,7 +339,7 @@ export default function DrpPlanningPage() {
               <Input
                 type="number"
                 value={form.horizonDays}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({
                     ...form,
                     horizonDays: parseInt(e.target.value) || 0,
@@ -352,7 +352,7 @@ export default function DrpPlanningPage() {
                 <Input
                   type="date"
                   value={form.startDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, startDate: e.target.value })
                   }
                 />
@@ -361,7 +361,7 @@ export default function DrpPlanningPage() {
                 <Input
                   type="date"
                   value={form.endDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, endDate: e.target.value })
                   }
                 />
@@ -370,7 +370,7 @@ export default function DrpPlanningPage() {
             <FormField label="Include Warehouses (comma-separated IDs)">
               <Input
                 value={form.includeWarehouses}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, includeWarehouses: e.target.value })
                 }
                 placeholder="wh-001, wh-002"

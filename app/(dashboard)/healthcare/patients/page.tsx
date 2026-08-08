@@ -75,7 +75,7 @@ export default function PatientRegistryPage() {
   };
 
   const filtered = patients.filter(
-    (p) =>
+    (p: any) =>
       !search ||
       `${p.firstName} ${p.lastName}`
         .toLowerCase()
@@ -175,7 +175,7 @@ export default function PatientRegistryPage() {
           title="New This Month"
           value={
             patients.filter(
-              (p) =>
+              (p: any) =>
                 p.createdAt &&
                 new Date(p.createdAt) > new Date(Date.now() - 30 * 86400000),
             ).length
@@ -192,7 +192,7 @@ export default function PatientRegistryPage() {
             type="text"
             placeholder="Search patients..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value)}
             className={styles.s5}
           />
         </div>
@@ -235,13 +235,13 @@ export default function PatientRegistryPage() {
               label="First Name"
               required
               value={form.firstName}
-              onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, firstName: e.target.value })}
             />
             <TextField
               label="Last Name"
               required
               value={form.lastName}
-              onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, lastName: e.target.value })}
             />
           </div>
           <div className="ui-grid-2 ui-gap-3">
@@ -249,7 +249,7 @@ export default function PatientRegistryPage() {
               label="Date of Birth"
               type="date"
               value={form.dateOfBirth}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, dateOfBirth: e.target.value })
               }
             />
@@ -271,12 +271,12 @@ export default function PatientRegistryPage() {
               label="Email"
               type="email"
               value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, email: e.target.value })}
             />
             <TextField
               label="Phone"
               value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, phone: e.target.value })}
             />
           </div>
         </div>

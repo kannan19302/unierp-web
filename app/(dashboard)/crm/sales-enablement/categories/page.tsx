@@ -85,7 +85,7 @@ export default function ContentCategoriesPage() {
             <input
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
               value={catName}
-              onChange={(e) => setCatName(e.target.value)}
+              onChange={(e: any) => setCatName(e.target.value)}
               placeholder="e.g. Sales Decks, Case Studies"
             />
             <div className="flex gap-2 mt-2">

@@ -123,9 +123,9 @@ export default function SchedulingPage() {
   };
 
   const workstationName = (id: string) =>
-    workstations.find((w) => w.id === id)?.name || id;
+    workstations.find((w: any) => w.id === id)?.name || id;
   const workOrderNumber = (id: string) =>
-    workOrders.find((w) => w.id === id)?.workOrderNumber || id;
+    workOrders.find((w: any) => w.id === id)?.workOrderNumber || id;
   const fmtTime = (iso: string) =>
     new Date(iso).toLocaleString(undefined, {
       month: "short",
@@ -187,7 +187,7 @@ export default function SchedulingPage() {
               <select
                 className="ui-input"
                 value={algorithm}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAlgorithm(e.target.value as "FORWARD" | "BACKWARD")
                 }
               >
@@ -236,7 +236,7 @@ export default function SchedulingPage() {
                   {result.unscheduled.length} work order(s) could not be
                   scheduled (no operations defined or no matching workstation):{" "}
                   {result.unscheduled
-                    .map((id) => workOrderNumber(id))
+                    .map((id: any) => workOrderNumber(id))
                     .join(", ")}
                 </div>
               </Card>

@@ -161,15 +161,15 @@ export default function UsersTab() {
   };
 
   const handleRoleToggle = (roleId: string) => {
-    setInviteForm((prev) => ({
+    setInviteForm((prev: any) => ({
       ...prev,
       roleIds: prev.roleIds.includes(roleId)
-        ? prev.roleIds.filter((id) => id !== roleId)
+        ? prev.roleIds.filter((id: any) => id !== roleId)
         : [...prev.roleIds, roleId],
     }));
   };
 
-  const filteredUsers = users.filter((u) => {
+  const filteredUsers = users.filter((u: any) => {
     const term = searchQuery.toLowerCase();
     const matchesSearch =
       !term ||
@@ -182,9 +182,9 @@ export default function UsersTab() {
 
   const statusCounts = {
     all: users.length,
-    active: users.filter((u) => u.status === "ACTIVE").length,
-    invited: users.filter((u) => u.status === "INVITED").length,
-    suspended: users.filter((u) => u.status === "SUSPENDED").length,
+    active: users.filter((u: any) => u.status === "ACTIVE").length,
+    invited: users.filter((u: any) => u.status === "INVITED").length,
+    suspended: users.filter((u: any) => u.status === "SUSPENDED").length,
   };
 
   const columns: Column<UserData>[] = [
@@ -224,7 +224,7 @@ export default function UsersTab() {
       header: "Roles",
       render: (row: any) => (
         <div className={styles.s3}>
-          {row.roles.slice(0, 2).map((r) => (
+          {row.roles.slice(0, 2).map((r: any) => (
             <Badge key={r.id} variant="info">
               {r.name}
             </Badge>
@@ -258,7 +258,7 @@ export default function UsersTab() {
             <IconButton
               icon={<Edit2 size={14} />}
               title="Edit"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 setSelectedUser(row);
                 setDrawerOpen(true);
@@ -271,7 +271,7 @@ export default function UsersTab() {
                 icon={<Lock size={14} />}
                 title="Suspend"
                 danger
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   setSuspendTarget(row);
                 }}
@@ -280,7 +280,7 @@ export default function UsersTab() {
               <IconButton
                 icon={<Unlock size={14} />}
                 title="Reactivate"
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                 }}
               />
@@ -288,7 +288,7 @@ export default function UsersTab() {
               <IconButton
                 icon={<Mail size={14} />}
                 title="Resend Invite"
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                 }}
               />
@@ -349,12 +349,12 @@ export default function UsersTab() {
               type="text"
               placeholder="Search by name, email, or role..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
               className={styles.s9}
             />
           </div>
           <div className="ui-flex ui-gap-2">
-            {["ALL", "ACTIVE", "INVITED", "SUSPENDED"].map((s) => (
+            {["ALL", "ACTIVE", "INVITED", "SUSPENDED"].map((s: any) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
@@ -388,7 +388,7 @@ export default function UsersTab() {
           data={filteredUsers}
           loading={loading}
           rowKey={(row: any) => row.id}
-          onRowClick={(row) => {
+          onRowClick={(row: any) => {
             setSelectedUser(row);
             setDrawerOpen(true);
           }}
@@ -403,7 +403,7 @@ export default function UsersTab() {
         <Pagination
           page={meta.page}
           pageCount={meta.totalPages}
-          onChange={(p) => fetchUsers(p)}
+          onChange={(p: any) => fetchUsers(p)}
         />
       )}
 
@@ -451,7 +451,7 @@ export default function UsersTab() {
               placeholder="Jane"
               required
               value={inviteForm.firstName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setInviteForm({ ...inviteForm, firstName: e.target.value })
               }
             />
@@ -460,7 +460,7 @@ export default function UsersTab() {
               placeholder="Doe"
               required
               value={inviteForm.lastName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setInviteForm({ ...inviteForm, lastName: e.target.value })
               }
             />
@@ -472,14 +472,14 @@ export default function UsersTab() {
             placeholder="jane.doe@company.com"
             required
             value={inviteForm.email}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setInviteForm({ ...inviteForm, email: e.target.value })
             }
           />
 
           <FormField label="Assign Roles" required>
             <div className={styles.s12}>
-              {AVAILABLE_ROLES.map((role) => (
+              {AVAILABLE_ROLES.map((role: any) => (
                 <label key={role.id} className={styles.s13}>
                   <input
                     type="checkbox"
@@ -567,7 +567,7 @@ export default function UsersTab() {
             <div>
               <h4 className={styles.s22}>Assigned Roles</h4>
               <div className="ui-stack-2">
-                {selectedUser.roles.map((r) => (
+                {selectedUser.roles.map((r: any) => (
                   <div key={r.id} className={styles.s23}>
                     <div className="ui-hstack-2">
                       <Shield size={14} className="ui-text-primary" />

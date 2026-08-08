@@ -66,9 +66,9 @@ export default function ComplianceTab() {
   };
 
   // Status counters
-  const failures = checks.filter((c) => c.status === "FAILED").length;
-  const warnings = checks.filter((c) => c.status === "WARNING").length;
-  const passed = checks.filter((c) => c.status === "PASSED").length;
+  const failures = checks.filter((c: any) => c.status === "FAILED").length;
+  const warnings = checks.filter((c: any) => c.status === "WARNING").length;
+  const passed = checks.filter((c: any) => c.status === "PASSED").length;
 
   return (
     <div className="ui-stack-6">

@@ -31,7 +31,7 @@ export default function PartnerPerformancePage() {
           className="ui-input flex-1"
           placeholder="Partner ID"
           value={partnerId}
-          onChange={(e) => setPartnerId(e.target.value)}
+          onChange={(e: any) => setPartnerId(e.target.value)}
         />
         <button className="ui-btn" onClick={fetchMetrics} disabled={loading}>
           Load Metrics

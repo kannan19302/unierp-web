@@ -157,14 +157,14 @@ export default function CollaborationPage() {
               },
               {
                 label: "Pinned",
-                value: discussions.filter((d) => d.isPinned).length,
+                value: discussions.filter((d: any) => d.isPinned).length,
                 icon: <Pin size={16} />,
                 color: "var(--chart-2)",
               },
               {
                 label: "Replies",
                 value: discussions.reduce(
-                  (s, d) => s + (d.replies?.length || 0),
+                  (s: any, d: any) => s + (d.replies?.length || 0),
                   0,
                 ),
                 icon: <Reply size={16} />,
@@ -173,7 +173,7 @@ export default function CollaborationPage() {
             ]}
           />
           <div className="ui-stack-3">
-            {discussions.map((d) => (
+            {discussions.map((d: any) => (
               <Card key={d.id} className="ui-stack-2">
                 <div className="ui-flex-between">
                   <div className="ui-hstack-2">
@@ -195,7 +195,7 @@ export default function CollaborationPage() {
                 </div>
                 {(d.replies || []).length > 0 && (
                   <div className="ui-stack-2 ml-4">
-                    {d.replies?.slice(0, 3).map((r) => (
+                    {d.replies?.slice(0, 3).map((r: any) => (
                       <div key={r.id} className="ui-flex-between ui-card p-2">
                         <p className="ui-text-micro">
                           {r.content.substring(0, 100)}
@@ -214,7 +214,7 @@ export default function CollaborationPage() {
       )}
       {activeTab === "reviews" && (
         <div className="ui-stack-3">
-          {reviews.map((r) => (
+          {reviews.map((r: any) => (
             <Card key={r.id} className="ui-flex-between">
               <div>
                 <strong>{r.title}</strong>
@@ -236,7 +236,7 @@ export default function CollaborationPage() {
       )}
       {activeTab === "feed" && (
         <div className="ui-stack-3">
-          {feed.map((f) => (
+          {feed.map((f: any) => (
             <Card key={f.id} className="ui-flex-between">
               <div>
                 <div className="ui-hstack-2">

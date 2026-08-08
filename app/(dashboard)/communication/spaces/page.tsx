@@ -60,7 +60,7 @@ export default function SpacesPage() {
   };
 
   const filtered = channels.filter(
-    (c) => !search || c.name.toLowerCase().includes(search.toLowerCase()),
+    (c: any) => !search || c.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const columns: Column<Channel>[] = [
@@ -135,7 +135,7 @@ export default function SpacesPage() {
               type="text"
               placeholder="Search spaces..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.s5}
             />
           </div>
@@ -177,13 +177,13 @@ export default function SpacesPage() {
               label="Channel Name"
               required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               placeholder="project-updates"
             />
             <TextField
               label="Description"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               placeholder="Project updates and team feedback"
@@ -193,7 +193,7 @@ export default function SpacesPage() {
                 type="checkbox"
                 id="isPrivate"
                 checked={form.isPrivate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, isPrivate: e.target.checked })
                 }
               />

@@ -25,31 +25,31 @@ type JourneyFixtures = {
 };
 
 export const test = base.extend<JourneyFixtures>({
-  loginPage: async ({ page }, use) => {
+  loginPage: async ({ page }: any, use: any) => {
     await use(new LoginPage(page));
   },
-  dashboardPage: async ({ page }, use) => {
+  dashboardPage: async ({ page }: any, use: any) => {
     await use(new DashboardPage(page));
   },
-  salesOrderPage: async ({ page }, use) => {
+  salesOrderPage: async ({ page }: any, use: any) => {
     await use(new SalesOrderPage(page));
   },
-  invoicePage: async ({ page }, use) => {
+  invoicePage: async ({ page }: any, use: any) => {
     await use(new InvoicePage(page));
   },
-  paymentPage: async ({ page }, use) => {
+  paymentPage: async ({ page }: any, use: any) => {
     await use(new PaymentPage(page));
   },
-  purchaseOrderPage: async ({ page }, use) => {
+  purchaseOrderPage: async ({ page }: any, use: any) => {
     await use(new PurchaseOrderPage(page));
   },
-  goodsReceiptPage: async ({ page }, use) => {
+  goodsReceiptPage: async ({ page }: any, use: any) => {
     await use(new GoodsReceiptPage(page));
   },
-  glJournalPage: async ({ page }, use) => {
+  glJournalPage: async ({ page }: any, use: any) => {
     await use(new GLJournalPage(page));
   },
-  inventoryPage: async ({ page }, use) => {
+  inventoryPage: async ({ page }: any, use: any) => {
     await use(new InventoryPage(page));
   },
 });

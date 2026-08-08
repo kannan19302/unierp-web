@@ -16,14 +16,14 @@ import { test, loginAsAdmin } from "../fixtures/auth.fixture";
  * @critical-path true
  */
 test.describe("Tenant Isolation", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }: any) => {
     await loginAsAdmin(page);
   });
 
   test("data created by tenant A is visible to tenant A", async ({
     page,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(90_000);
 
     const uniqueRef = `ISO-${Date.now()}`;
@@ -72,7 +72,7 @@ test.describe("Tenant Isolation", () => {
   test("tenant-switch mechanism is accessible", async ({
     page,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(60_000);
 
     // Navigate to admin settings or user menu where tenant switch lives
@@ -109,7 +109,7 @@ test.describe("Tenant Isolation", () => {
     await dashboardPage.expectNoErrorBoundaries();
   });
 
-  test("unauthenticated user cannot access tenant data", async ({ page }) => {
+  test("unauthenticated user cannot access tenant data", async ({ page }: any) => {
     // Clear any stored session by navigating to a protected route without login
     await page.goto("/sales/orders");
     await page.waitForLoadState("domcontentloaded");

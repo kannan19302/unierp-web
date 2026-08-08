@@ -201,7 +201,7 @@ export default function MaintenanceRequestsPage() {
         <select
           className="ui-input-sm"
           value={r.status}
-          onChange={(e) => handleStatusChange(r.id, e.target.value)}
+          onChange={(e: any) => handleStatusChange(r.id, e.target.value)}
         >
           <option value="OPEN">Open</option>
           <option value="ASSIGNED">Assigned</option>
@@ -297,18 +297,18 @@ export default function MaintenanceRequestsPage() {
               label="Property ID"
               required
               value={form.propertyId}
-              onChange={(e) => setForm({ ...form, propertyId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, propertyId: e.target.value })}
             />
             <TextField
               label="Title"
               required
               value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, title: e.target.value })}
             />
             <TextField
               label="Description"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
             />
@@ -316,7 +316,7 @@ export default function MaintenanceRequestsPage() {
               <FormField label="Category">
                 <Select
                   value={form.category}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, category: e.target.value })
                   }
                 >
@@ -332,7 +332,7 @@ export default function MaintenanceRequestsPage() {
               <FormField label="Priority">
                 <Select
                   value={form.priority}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, priority: e.target.value })
                   }
                 >
@@ -347,20 +347,20 @@ export default function MaintenanceRequestsPage() {
             <TextField
               label="Vendor ID"
               value={form.vendorId}
-              onChange={(e) => setForm({ ...form, vendorId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, vendorId: e.target.value })}
             />
             <TextField
               label="Estimated Cost ($)"
               type="number"
               value={form.estimatedCost}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, estimatedCost: e.target.value })
               }
             />
             <TextField
               label="Notes"
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </div>
         </Modal>

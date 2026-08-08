@@ -69,7 +69,7 @@ function Dashboard() {
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-      {cards.map((c) => (
+      {cards.map((c: any) => (
         <div
           key={c.label}
           className="bg-white dark:bg-gray-800 rounded-lg shadow p-4"
@@ -159,11 +159,11 @@ function ApprovedSuppliers() {
         <h2 className="text-lg font-semibold flex-1">Approved Supplier List</h2>
         <select
           value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
+          onChange={(e: any) => setFilterStatus(e.target.value)}
           className="border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
         >
           <option value="">All Statuses</option>
-          {ASL_STATUSES.map((s) => (
+          {ASL_STATUSES.map((s: any) => (
             <option key={s} value={s}>
               {s.replace(/_/g, " ")}
             </option>
@@ -196,7 +196,7 @@ function ApprovedSuppliers() {
               { key: "moq", label: "Min Order Qty" },
               { key: "leadTimeDays", label: "Lead Time (days)" },
               { key: "expiryDate", label: "Approval Expiry", type: "date" },
-            ].map(({ key, label, type }) => (
+            ].map(({ key, label, type }: any) => (
               <div key={key}>
                 <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
                   {label}
@@ -204,8 +204,8 @@ function ApprovedSuppliers() {
                 <input
                   type={type ?? "text"}
                   value={form[key] ?? ""}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                   className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -255,7 +255,7 @@ function ApprovedSuppliers() {
             {
               key: "unitPrice",
               header: "Unit Price",
-              render: (v, row) =>
+              render: (v: any, row: any) =>
                 v ? `${row.currency} ${Number(v).toFixed(4)}` : "—",
             },
             { key: "moq", header: "MOQ", render: (v: any) => (v ? String(v) : "—") },
@@ -283,7 +283,7 @@ function ApprovedSuppliers() {
             {
               key: "id",
               header: "Actions",
-              render: (v, row) => (
+              render: (v: any, row: any) => (
                 <div className={styles.s1}>
                   {row.status === "PENDING_APPROVAL" && (
                     <button
@@ -398,7 +398,7 @@ function Compliance() {
         <div className="flex gap-3">
           <input
             value={checkId}
-            onChange={(e) => setCheckId(e.target.value)}
+            onChange={(e: any) => setCheckId(e.target.value)}
             placeholder="Product ID"
             className="border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600 flex-1"
           />
@@ -423,7 +423,7 @@ function Compliance() {
             </p>
             {(checkResult.issues as string[]).length > 0 && (
               <ul className="mt-1 list-disc list-inside">
-                {(checkResult.issues as string[]).map((issue, i) => (
+                {(checkResult.issues as string[]).map((issue: any, i: any) => (
                   <li key={i}>{issue}</li>
                 ))}
               </ul>
@@ -442,15 +442,15 @@ function Compliance() {
             },
             { key: "minApprovedVendors", label: "Min Approved Vendors" },
             { key: "notes", label: "Notes" },
-          ].map(({ key, label }) => (
+          ].map(({ key, label }: any) => (
             <div key={key} className={key === "notes" ? "col-span-2" : ""}>
               <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
                 {label}
               </label>
               <input
                 value={form[key] ?? ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, [key]: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, [key]: e.target.value }))
                 }
                 className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
               />
@@ -459,14 +459,14 @@ function Compliance() {
           {[
             { key: "requiresQualification", label: "Requires Qualification" },
             { key: "requiresPreferred", label: "Requires Preferred Vendor" },
-          ].map(({ key, label }) => (
+          ].map(({ key, label }: any) => (
             <div key={key} className="flex items-center gap-2">
               <input
                 type="checkbox"
                 id={key}
                 checked={form[key] === "true"}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, [key]: String(e.target.checked) }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, [key]: String(e.target.checked) }))
                 }
                 className="rounded"
               />
@@ -551,7 +551,7 @@ function SourcingReport() {
       <div className="flex gap-3">
         <input
           value={productId}
-          onChange={(e) => setProductId(e.target.value)}
+          onChange={(e: any) => setProductId(e.target.value)}
           placeholder="Product ID"
           className="border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600 flex-1 max-w-xs"
         />
@@ -587,7 +587,7 @@ function SourcingReport() {
                     ? `${report.shortestLeadTime}d`
                     : "N/A",
               },
-            ].map((c) => (
+            ].map((c: any) => (
               <div
                 key={c.label}
                 className="bg-white dark:bg-gray-800 rounded-lg shadow p-3"
@@ -617,7 +617,7 @@ function SourcingReport() {
                 {
                   key: "unitPrice",
                   header: "Unit Price",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     v ? `${row.currency} ${Number(v).toFixed(4)}` : "—",
                 },
                 {
@@ -673,7 +673,7 @@ export default function AslPage() {
         </div>
 
         <div className="border-b flex gap-0 overflow-x-auto">
-          {TABS.map(({ id, label }) => (
+          {TABS.map(({ id, label }: any) => (
             <button
               key={id}
               onClick={() => setTab(id)}

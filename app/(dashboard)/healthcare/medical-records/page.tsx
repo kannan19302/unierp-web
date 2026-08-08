@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 

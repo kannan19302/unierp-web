@@ -193,7 +193,7 @@ export function FinanceDemoDataCard() {
           <div
             style={{ display: "flex", gap: "var(--space-4)", flexWrap: "wrap" }}
           >
-            {Object.entries(status.entityCounts).map(([entity, count]) => (
+            {Object.entries(status.entityCounts).map(([entity, count]: any) => (
               <div key={entity} style={{ fontSize: "var(--text-xs)" }}>
                 <span
                   style={{

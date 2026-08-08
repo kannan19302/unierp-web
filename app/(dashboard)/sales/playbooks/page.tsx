@@ -56,7 +56,7 @@ export default function SalesPlaybooksPage() {
           paddingBottom: "8px",
         }}
       >
-        {stages.map((stg) => (
+        {stages.map((stg: any) => (
           <button
             key={stg}
             onClick={() => setActiveStage(stg)}
@@ -107,7 +107,7 @@ export default function SalesPlaybooksPage() {
               No playbooks configured for stage <strong>{activeStage}</strong>.
             </Card>
           ) : (
-            playbooks.map((pb) => (
+            playbooks.map((pb: any) => (
               <Card key={pb.id} style={{ padding: "20px" }}>
                 <div
                   style={{

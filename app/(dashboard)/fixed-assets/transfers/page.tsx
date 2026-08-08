@@ -10,7 +10,7 @@ export default function AssetTransfersPage() {
 
   useEffect(() => {
     apiGet("/fixed-assets-deep/transfers")
-      .then((d) => setTransfers(Array.isArray(d) ? d : []))
+      .then((d: any) => setTransfers(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 
@@ -30,7 +30,7 @@ export default function AssetTransfersPage() {
         <div
           className="ui-flex"
           style={{ gap: "var(--space-2)" }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button size="sm" variant="ghost">
             <Eye size={14} />

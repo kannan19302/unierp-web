@@ -127,7 +127,7 @@ export default function HolidaysTab() {
             <Input
               placeholder="e.g. New Year's Day"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               required
             />
           </FormField>
@@ -135,14 +135,14 @@ export default function HolidaysTab() {
             <Input
               type="date"
               value={form.date}
-              onChange={(e) => setForm({ ...form, date: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, date: e.target.value })}
               required
             />
           </FormField>
           <FormField label="Region" required>
             <Select
               value={form.region}
-              onChange={(e) => setForm({ ...form, region: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, region: e.target.value })}
               required
             >
               <option value="GLOBAL">Global</option>

@@ -178,7 +178,7 @@ function ResetPasswordContent() {
                       className="auth-input"
                       placeholder="••••••••"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e: any) => setPassword(e.target.value)}
                       autoComplete="new-password"
                     />
                     <button
@@ -194,7 +194,7 @@ function ResetPasswordContent() {
                   {password && (
                     <div className={styles.s12}>
                       <div className={styles.s13}>
-                        {[1, 2, 3, 4, 5].map((level) => (
+                        {[1, 2, 3, 4, 5].map((level: any) => (
                           <div
                             key={level}
                             style={{
@@ -232,7 +232,7 @@ function ResetPasswordContent() {
                       className="auth-input"
                       placeholder="••••••••"
                       value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onChange={(e: any) => setConfirmPassword(e.target.value)}
                       style={{
                         borderColor: !passwordsMatch
                           ? "var(--color-danger)"

@@ -50,7 +50,7 @@ export default function NewReportPage() {
             <input
               className="ui-input"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               required
               placeholder="e.g. Monthly Pipeline Summary"
             />
@@ -60,7 +60,7 @@ export default function NewReportPage() {
             <textarea
               className="ui-input"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               rows={2}
@@ -71,7 +71,7 @@ export default function NewReportPage() {
             <select
               className="ui-input"
               value={form.module}
-              onChange={(e) => setForm({ ...form, module: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, module: e.target.value })}
             >
               <option value="crm">CRM</option>
               <option value="opportunities">Opportunities</option>
@@ -85,7 +85,7 @@ export default function NewReportPage() {
             <select
               className="ui-input"
               value={form.type}
-              onChange={(e) => setForm({ ...form, type: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, type: e.target.value })}
             >
               <option value="TABLE">Table</option>
               <option value="CHART">Chart</option>

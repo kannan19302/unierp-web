@@ -562,7 +562,7 @@ export const formatSegment = (segment: string): string => {
   }
   return segment
     .split(/[-_]/)
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word: any) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
 

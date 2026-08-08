@@ -139,12 +139,12 @@ export default function BenefitsPage() {
 
   // Helper to find employee name by ID
   const getEmployeeName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : "System User";
   };
 
   const getEmployeeCode = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? emp.employeeCode : "";
   };
 
@@ -214,7 +214,7 @@ export default function BenefitsPage() {
             <h4 className={styles.statValue}>
               $
               {enrollments
-                .reduce((sum, e) => sum + Number(e.scheme.employerCostShare), 0)
+                .reduce((sum: any, e: any) => sum + Number(e.scheme.employerCostShare), 0)
                 .toFixed(2)}{" "}
               /mo
             </h4>
@@ -230,7 +230,7 @@ export default function BenefitsPage() {
                   className="ui-input"
                   placeholder="Scheme Name (e.g. Premium Medical)"
                   value={schemeForm.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setSchemeForm({ ...schemeForm, name: e.target.value })
                   }
                   required
@@ -238,7 +238,7 @@ export default function BenefitsPage() {
                 <select
                   className="ui-input"
                   value={schemeForm.type}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setSchemeForm({ ...schemeForm, type: e.target.value })
                   }
                   required
@@ -255,7 +255,7 @@ export default function BenefitsPage() {
                   className="ui-input"
                   placeholder="Provider (e.g. Blue Shield)"
                   value={schemeForm.provider}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setSchemeForm({ ...schemeForm, provider: e.target.value })
                   }
                   required
@@ -266,7 +266,7 @@ export default function BenefitsPage() {
                   step="0.01"
                   placeholder="Employee Share ($)"
                   value={schemeForm.employeeCostShare || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setSchemeForm({
                       ...schemeForm,
                       employeeCostShare: parseFloat(e.target.value) || 0,
@@ -280,7 +280,7 @@ export default function BenefitsPage() {
                   step="0.01"
                   placeholder="Employer Share ($)"
                   value={schemeForm.employerCostShare || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setSchemeForm({
                       ...schemeForm,
                       employerCostShare: parseFloat(e.target.value) || 0,
@@ -294,7 +294,7 @@ export default function BenefitsPage() {
                 placeholder="Description"
                 rows={3}
                 value={schemeForm.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSchemeForm({ ...schemeForm, description: e.target.value })
                 }
               />
@@ -324,13 +324,13 @@ export default function BenefitsPage() {
                 <select
                   className="ui-input"
                   value={enrollForm.employeeId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEnrollForm({ ...enrollForm, employeeId: e.target.value })
                   }
                   required
                 >
                   <option value="">Select Employee</option>
-                  {employees.map((e) => (
+                  {employees.map((e: any) => (
                     <option key={e.id} value={e.id}>
                       {e.firstName} {e.lastName} ({e.employeeCode})
                     </option>
@@ -339,13 +339,13 @@ export default function BenefitsPage() {
                 <select
                   className="ui-input"
                   value={enrollForm.schemeId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEnrollForm({ ...enrollForm, schemeId: e.target.value })
                   }
                   required
                 >
                   <option value="">Select Plan</option>
-                  {schemes.map((s) => (
+                  {schemes.map((s: any) => (
                     <option key={s.id} value={s.id}>
                       {s.name} ({s.provider})
                     </option>
@@ -357,7 +357,7 @@ export default function BenefitsPage() {
                   step="0.01"
                   placeholder="Coverage Amount (Optional)"
                   value={enrollForm.coverageAmount || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEnrollForm({
                       ...enrollForm,
                       coverageAmount: parseFloat(e.target.value) || 0,
@@ -393,7 +393,7 @@ export default function BenefitsPage() {
               {schemes.length === 0 ? (
                 <div className={styles.emptySchemes}>No active schemes.</div>
               ) : (
-                schemes.map((s) => (
+                schemes.map((s: any) => (
                   <Card key={s.id} padding="sm">
                     <div className={styles.schemeHeader}>
                       <span className={styles.schemeName}>{s.name}</span>
@@ -425,7 +425,7 @@ export default function BenefitsPage() {
                   {
                     key: "employeeId",
                     header: "Employee",
-                    render: (v, row) => {
+                    render: (v: any, row: any) => {
                       const enr = row as unknown as Enrollment;
                       return (
                         <div>
@@ -442,7 +442,7 @@ export default function BenefitsPage() {
                   {
                     key: "schemeId",
                     header: "Scheme Details",
-                    render: (_v, row) => {
+                    render: (_v: any, row: any) => {
                       const enr = row as unknown as Enrollment;
                       return (
                         <div>
@@ -459,7 +459,7 @@ export default function BenefitsPage() {
                   {
                     key: "coverageAmount",
                     header: "Costs (EE/ER)",
-                    render: (_v, row) => {
+                    render: (_v: any, row: any) => {
                       const enr = row as unknown as Enrollment;
                       return (
                         <div>

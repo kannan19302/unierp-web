@@ -134,7 +134,7 @@ export default function POSShiftsPage() {
             <select
               className="ui-input"
               value={statusFilter}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
@@ -274,14 +274,14 @@ export default function POSShiftsPage() {
                 <button
                   className="ui-btn-icon"
                   disabled={page <= 1}
-                  onClick={() => setPage((p) => p - 1)}
+                  onClick={() => setPage((p: any) => p - 1)}
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   className="ui-btn-icon"
                   disabled={page >= totalPages}
-                  onClick={() => setPage((p) => p + 1)}
+                  onClick={() => setPage((p: any) => p + 1)}
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -295,7 +295,7 @@ export default function POSShiftsPage() {
             className="ui-modal-overlay"
             onClick={() => setShowCloseModal(false)}
           >
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Close Shift</h2>
               <div className="ui-form-group">
                 <label>Closing Cash</label>
@@ -303,7 +303,7 @@ export default function POSShiftsPage() {
                   type="number"
                   className="ui-input"
                   value={closeData.closingCash}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setCloseData({
                       ...closeData,
                       closingCash: Number(e.target.value),
@@ -317,7 +317,7 @@ export default function POSShiftsPage() {
                   type="number"
                   className="ui-input"
                   value={closeData.declaredCash}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setCloseData({
                       ...closeData,
                       declaredCash: Number(e.target.value),
@@ -330,7 +330,7 @@ export default function POSShiftsPage() {
                 <textarea
                   className="ui-input"
                   value={closeData.notes}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setCloseData({ ...closeData, notes: e.target.value })
                   }
                 />

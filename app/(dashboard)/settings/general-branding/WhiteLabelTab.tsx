@@ -30,7 +30,7 @@ export default function WhiteLabelTab() {
       const data = await client.get<Partial<typeof settings>>(
         `${API_BASE}/white-label`,
       );
-      setSettings((prev) => ({ ...prev, ...data }));
+      setSettings((prev: any) => ({ ...prev, ...data }));
     } catch {
       /* defaults */
     }
@@ -101,7 +101,7 @@ export default function WhiteLabelTab() {
             <input
               type="text"
               value={settings.appName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setSettings({ ...settings, appName: e.target.value })
               }
               className="ui-field-box"
@@ -112,7 +112,7 @@ export default function WhiteLabelTab() {
             <label className="ui-label">Font Family</label>
             <select
               value={settings.fontFamily}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setSettings({ ...settings, fontFamily: e.target.value })
               }
               className="ui-field-box"
@@ -130,7 +130,7 @@ export default function WhiteLabelTab() {
               <input
                 type="color"
                 value={settings.primaryColor}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSettings({ ...settings, primaryColor: e.target.value })
                 }
                 className={styles.s7}
@@ -138,7 +138,7 @@ export default function WhiteLabelTab() {
               <input
                 type="text"
                 value={settings.primaryColor}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSettings({ ...settings, primaryColor: e.target.value })
                 }
                 className={styles.s8}
@@ -152,7 +152,7 @@ export default function WhiteLabelTab() {
               <input
                 type="color"
                 value={settings.secondaryColor}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSettings({ ...settings, secondaryColor: e.target.value })
                 }
                 className={styles.s9}
@@ -160,7 +160,7 @@ export default function WhiteLabelTab() {
               <input
                 type="text"
                 value={settings.secondaryColor}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSettings({ ...settings, secondaryColor: e.target.value })
                 }
                 className={styles.s10}
@@ -193,7 +193,7 @@ export default function WhiteLabelTab() {
             <input
               type="checkbox"
               checked={settings.enablePWA}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setSettings({ ...settings, enablePWA: e.target.checked })
               }
               className={styles.s20}

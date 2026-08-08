@@ -205,7 +205,7 @@ export default function LicensePlatesPage() {
                     {
                       key: "id",
                       header: "Actions",
-                      render: (v, row) =>
+                      render: (v: any, row: any) =>
                         row.status === "OPEN" ? (
                           <button
                             onClick={() => handleCloseLicensePlate(String(v))}
@@ -287,7 +287,7 @@ export default function LicensePlatesPage() {
                       type="text"
                       className="ui-input"
                       value={code}
-                      onChange={(e) => setCode(e.target.value)}
+                      onChange={(e: any) => setCode(e.target.value)}
                       placeholder="e.g. LP-000123 (scan barcode)"
                       required
                     />
@@ -297,10 +297,10 @@ export default function LicensePlatesPage() {
                     <select
                       className="ui-input"
                       value={warehouseId}
-                      onChange={(e) => setWarehouseId(e.target.value)}
+                      onChange={(e: any) => setWarehouseId(e.target.value)}
                       required
                     >
-                      {warehouses.map((w) => (
+                      {warehouses.map((w: any) => (
                         <option key={w.id} value={w.id}>
                           {w.name}
                         </option>

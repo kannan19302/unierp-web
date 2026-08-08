@@ -62,7 +62,7 @@ export default function ContainersPage() {
         "/supply-chain/containers",
         form,
       );
-      setContainers((prev) => [created, ...prev]);
+      setContainers((prev: any) => [created, ...prev]);
       setCreateOpen(false);
       setForm({
         containerNumber: "",
@@ -205,7 +205,7 @@ export default function ContainersPage() {
             columns={columns}
             data={containers}
             rowKey={(r: any) => r.id}
-            onRowClick={(row) =>
+            onRowClick={(row: any) =>
               setExpandedId(expandedId === row.id ? null : row.id)
             }
             emptyTitle="No containers"
@@ -216,7 +216,7 @@ export default function ContainersPage() {
 
         {expandedId &&
           (() => {
-            const c = containers.find((x) => x.id === expandedId);
+            const c = containers.find((x: any) => x.id === expandedId);
             if (!c || !c.events?.length) return null;
             return (
               <Card key={c.id}>
@@ -228,7 +228,7 @@ export default function ContainersPage() {
                     </h4>
                   </div>
                   <div className="ui-stack-2">
-                    {c.events.map((ev, i) => (
+                    {c.events.map((ev: any, i: any) => (
                       <div
                         key={i}
                         className="ui-flex ui-gap-3"
@@ -292,7 +292,7 @@ export default function ContainersPage() {
               required
               placeholder="MSCU-1234567"
               value={form.containerNumber}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, containerNumber: e.target.value })
               }
             />
@@ -300,20 +300,20 @@ export default function ContainersPage() {
               label="Carrier"
               placeholder="Maersk"
               value={form.carrier}
-              onChange={(e) => setForm({ ...form, carrier: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, carrier: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <TextField
                 label="Origin"
                 placeholder="Shanghai"
                 value={form.origin}
-                onChange={(e) => setForm({ ...form, origin: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, origin: e.target.value })}
               />
               <TextField
                 label="Destination"
                 placeholder="Los Angeles"
                 value={form.destination}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, destination: e.target.value })
                 }
               />
@@ -322,7 +322,7 @@ export default function ContainersPage() {
               label="ETA"
               type="date"
               value={form.eta}
-              onChange={(e) => setForm({ ...form, eta: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, eta: e.target.value })}
             />
           </form>
         </Modal>

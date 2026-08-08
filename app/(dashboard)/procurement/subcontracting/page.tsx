@@ -125,7 +125,7 @@ export default function SubcontractingPage() {
           <input
             className="ui-input"
             value={form.vendorId}
-            onChange={(e) => setForm({ ...form, vendorId: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, vendorId: e.target.value })}
           />
         </div>
         <div className="ui-form-group">
@@ -133,7 +133,7 @@ export default function SubcontractingPage() {
           <input
             className="ui-input"
             value={form.productId}
-            onChange={(e) => setForm({ ...form, productId: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, productId: e.target.value })}
           />
         </div>
         <div className="ui-grid-2">
@@ -143,7 +143,7 @@ export default function SubcontractingPage() {
               className="ui-input"
               type="number"
               value={form.quantity}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, quantity: Number(e.target.value) })
               }
             />
@@ -155,7 +155,7 @@ export default function SubcontractingPage() {
               type="number"
               step="0.01"
               value={form.unitCost}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, unitCost: Number(e.target.value) })
               }
             />
@@ -167,7 +167,7 @@ export default function SubcontractingPage() {
             className="ui-input"
             type="date"
             value={form.deliveryDate}
-            onChange={(e) => setForm({ ...form, deliveryDate: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, deliveryDate: e.target.value })}
           />
         </div>
         <div

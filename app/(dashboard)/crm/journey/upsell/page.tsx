@@ -62,11 +62,11 @@ export default function UpsellPage() {
   };
 
   const pendingCount = recommendations.filter(
-    (r) => r.status === "PENDING",
+    (r: any) => r.status === "PENDING",
   ).length;
   const totalValue = recommendations
-    .filter((r) => r.status === "PENDING")
-    .reduce((s, r) => s + Number(r.estimatedValue || 0), 0);
+    .filter((r: any) => r.status === "PENDING")
+    .reduce((s: any, r: any) => s + Number(r.estimatedValue || 0), 0);
 
   return (
     <RouteGuard permission="crm.upsell-recommendations.read">
@@ -126,7 +126,7 @@ export default function UpsellPage() {
                       row.status === "PENDING" ? (
                         <div className="ui-flex ui-gap-2">
                           <button
-                            onClick={(e) => {
+                            onClick={(e: any) => {
                               e.stopPropagation();
                               handleAction(row.id, "accept");
                             }}
@@ -135,7 +135,7 @@ export default function UpsellPage() {
                             <Check className="ui-w-4 ui-h-4" />
                           </button>
                           <button
-                            onClick={(e) => {
+                            onClick={(e: any) => {
                               e.stopPropagation();
                               handleAction(row.id, "dismiss");
                             }}

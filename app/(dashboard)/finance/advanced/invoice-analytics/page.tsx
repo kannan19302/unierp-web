@@ -106,7 +106,7 @@ export default function InvoiceAnalyticsPage() {
             <select
               className={`ui-input ${styles.s1}`}
               value={months}
-              onChange={(e) => setMonths(parseInt(e.target.value))}
+              onChange={(e: any) => setMonths(parseInt(e.target.value))}
             >
               <option value={3}>Last 3 Months</option>
               <option value={6}>Last 6 Months</option>
@@ -191,7 +191,7 @@ export default function InvoiceAnalyticsPage() {
                     {
                       key: "invoiced",
                       header: "Rate",
-                      render: (v, row) => {
+                      render: (v: any, row: any) => {
                         const r = row as unknown as MonthlyTrend;
                         const rate =
                           r.invoiced > 0 ? (r.paid / r.invoiced) * 100 : 0;
@@ -296,7 +296,7 @@ export default function InvoiceAnalyticsPage() {
                 </h3>
               </div>
               <div className={styles.s8}>
-                {data.statusBreakdown.map((stat) => {
+                {data.statusBreakdown.map((stat: any) => {
                   const isPaid = stat.status === "PAID";
                   const isOverdue = stat.status === "OVERDUE";
                   const color = isPaid

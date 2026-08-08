@@ -112,7 +112,7 @@ export default function VendorReturnsTab() {
             icon={<DollarSign size={18} />}
             color="var(--color-success)"
           />
-          {Object.entries(stats.statusCounts).map(([status, count]) => (
+          {Object.entries(stats.statusCounts).map(([status, count]: any) => (
             <KPICard
               key={status}
               title={status}

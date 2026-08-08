@@ -28,7 +28,7 @@ export default function DevopsAnalyticsPage() {
 
   useEffect(() => {
     fetch("/api/devops/analytics")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setItems)
       .catch(() => {})
       .finally(() => setLoading(false));

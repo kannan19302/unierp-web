@@ -159,7 +159,7 @@ export default function BulkOperationsPage() {
         criteria: JSON.parse(criteria),
       };
       if (operationType === "MASS_UPDATE")
-        body.changes = updateFields.filter((f) => f.field);
+        body.changes = updateFields.filter((f: any) => f.field);
       if (operationType === "MASS_TRANSFER") body.newOwner = transferOwner;
       const op = await client.post<BulkOperation>(
         "/admin/bulk-operations",
@@ -214,7 +214,7 @@ export default function BulkOperationsPage() {
     }
     if (step === 4) {
       if (operationType === "MASS_UPDATE")
-        return updateFields.some((f) => f.field && f.value);
+        return updateFields.some((f: any) => f.field && f.value);
       if (operationType === "MASS_DELETE") return deleteConfirm;
       if (operationType === "MASS_TRANSFER") return !!transferOwner;
     }
@@ -258,7 +258,7 @@ export default function BulkOperationsPage() {
           <div className={styles.p2}>
             {(
               ["Customer", "Vendor", "Product", "Employee", "Invoice"] as const
-            ).map((e) => (
+            ).map((e: any) => (
               <div
                 key={e}
                 onClick={() => setEntityType(e)}
@@ -294,7 +294,7 @@ export default function BulkOperationsPage() {
           <h3 className={styles.p6}>Step 2: Choose Operation</h3>
           <div className="ui-stack-3">
             {(["MASS_UPDATE", "MASS_DELETE", "MASS_TRANSFER"] as const).map(
-              (op) => (
+              (op: any) => (
                 <div
                   key={op}
                   onClick={() => setOperationType(op)}
@@ -353,7 +353,7 @@ export default function BulkOperationsPage() {
           </p>
           <textarea
             value={criteria}
-            onChange={(e) => setCriteria(e.target.value)}
+            onChange={(e: any) => setCriteria(e.target.value)}
             rows={8}
             className={styles.s2}
           />
@@ -386,12 +386,12 @@ export default function BulkOperationsPage() {
           <h3 className={styles.p11}>Step 4: Configure Changes</h3>
           {operationType === "MASS_UPDATE" && (
             <div className="ui-stack-3">
-              {updateFields.map((f, i) => (
+              {updateFields.map((f: any, i: any) => (
                 <div key={i} className={styles.p12}>
                   <input
                     placeholder="Field name"
                     value={f.field}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const u = [...updateFields];
                       const item = u[i];
                       if (item) {
@@ -404,7 +404,7 @@ export default function BulkOperationsPage() {
                   <input
                     placeholder="New value"
                     value={f.value}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const u = [...updateFields];
                       const item = u[i];
                       if (item) {
@@ -417,7 +417,7 @@ export default function BulkOperationsPage() {
                   {updateFields.length > 1 && (
                     <button
                       onClick={() =>
-                        setUpdateFields(updateFields.filter((_, j) => j !== i))
+                        setUpdateFields(updateFields.filter((_: any, j: any) => j !== i))
                       }
                       style={{ ...btnOutline }}
                       className={styles.s4}
@@ -446,7 +446,7 @@ export default function BulkOperationsPage() {
               <input
                 type="checkbox"
                 checked={deleteConfirm}
-                onChange={(e) => setDeleteConfirm(e.target.checked)}
+                onChange={(e: any) => setDeleteConfirm(e.target.checked)}
                 id="del-confirm"
               />
               <label htmlFor="del-confirm" className={styles.p13}>
@@ -461,7 +461,7 @@ export default function BulkOperationsPage() {
               <label className={styles.p15}>New Owner (User ID or email)</label>
               <input
                 value={transferOwner}
-                onChange={(e) => setTransferOwner(e.target.value)}
+                onChange={(e: any) => setTransferOwner(e.target.value)}
                 placeholder="user@example.com"
                 className={styles.s7}
               />
@@ -488,8 +488,8 @@ export default function BulkOperationsPage() {
               <div className="text-sm">
                 <strong>Updates:</strong>{" "}
                 {updateFields
-                  .filter((f) => f.field)
-                  .map((f) => `${f.field} = ${f.value}`)
+                  .filter((f: any) => f.field)
+                  .map((f: any) => `${f.field} = ${f.value}`)
                   .join(", ")}
               </div>
             )}
@@ -625,7 +625,7 @@ export default function BulkOperationsPage() {
             label: "History",
             icon: <History size={14} />,
           },
-        ].map((t) => (
+        ].map((t: any) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
@@ -651,7 +651,7 @@ export default function BulkOperationsPage() {
         <div>
           {/* Step indicators */}
           <div className={styles.p22}>
-            {[1, 2, 3, 4, 5].map((s) => (
+            {[1, 2, 3, 4, 5].map((s: any) => (
               <div
                 key={s}
                 style={{

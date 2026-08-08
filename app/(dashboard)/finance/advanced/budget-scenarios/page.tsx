@@ -256,7 +256,7 @@ export default function BudgetScenariosPage() {
     month: number,
     value: string,
   ) => {
-    setEditedCells((prev) => ({
+    setEditedCells((prev: any) => ({
       ...prev,
       [`${accountId}-${month}`]: value,
     }));
@@ -279,7 +279,7 @@ export default function BudgetScenariosPage() {
       );
       {
         // Clear edited indicator
-        setEditedCells((prev) => {
+        setEditedCells((prev: any) => {
           const c = { ...prev };
           delete c[key];
           return c;
@@ -302,7 +302,7 @@ export default function BudgetScenariosPage() {
 
   const monthColumns: Column<GLAccount>[] = Array.from(
     { length: 12 },
-    (_, i) => {
+    (_: any, i: any) => {
       const month = i + 1;
       return {
         key: `month-${month}`,
@@ -324,7 +324,7 @@ export default function BudgetScenariosPage() {
                     : "border-gray-200 focus:ring-blue-500"
               }`}
               value={displayVal}
-              onChange={(e) => handleCellChange(acc.id, month, e.target.value)}
+              onChange={(e: any) => handleCellChange(acc.id, month, e.target.value)}
               onBlur={() => handleSaveCell(acc.id, month)}
               disabled={selectedScenario?.isLocked}
             />
@@ -470,7 +470,7 @@ export default function BudgetScenariosPage() {
                     {
                       key: "name",
                       header: "Scenario Name",
-                      render: (v, row) => (
+                      render: (v: any, row: any) => (
                         <div
                           onClick={() => setSelectedScenario(row as any)}
                           className="cursor-pointer"
@@ -521,7 +521,7 @@ export default function BudgetScenariosPage() {
                       header: "Actions",
                       render: (v: any) => (
                         <button
-                          onClick={(e) => {
+                          onClick={(e: any) => {
                             e.stopPropagation();
                             handleDelete(String(v));
                           }}
@@ -586,7 +586,7 @@ export default function BudgetScenariosPage() {
                   <input
                     className="ui-input"
                     value={createForm.name}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setCreateForm({ ...createForm, name: e.target.value })
                     }
                     placeholder="e.g. FY2026 Base Draft"
@@ -597,7 +597,7 @@ export default function BudgetScenariosPage() {
                   <input
                     className="ui-input"
                     value={createForm.description}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setCreateForm({
                         ...createForm,
                         description: e.target.value,
@@ -612,7 +612,7 @@ export default function BudgetScenariosPage() {
                     <select
                       className="ui-input"
                       value={createForm.type}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCreateForm({ ...createForm, type: e.target.value })
                       }
                     >
@@ -628,7 +628,7 @@ export default function BudgetScenariosPage() {
                       type="number"
                       className="ui-input"
                       value={createForm.fiscalYear}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCreateForm({
                           ...createForm,
                           fiscalYear: parseInt(e.target.value, 10) || 2026,
@@ -668,7 +668,7 @@ export default function BudgetScenariosPage() {
                   <input
                     className="ui-input"
                     value={cloneForm.name}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setCloneForm({ ...cloneForm, name: e.target.value })
                     }
                     placeholder="e.g. FY2026 High Inflation"
@@ -679,7 +679,7 @@ export default function BudgetScenariosPage() {
                   <select
                     className="ui-input"
                     value={cloneForm.type}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setCloneForm({ ...cloneForm, type: e.target.value })
                     }
                   >
@@ -717,7 +717,7 @@ export default function BudgetScenariosPage() {
                   <select
                     className="ui-input"
                     value={driverForm.accountId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setDriverForm({
                         ...driverForm,
                         accountId: e.target.value,
@@ -725,7 +725,7 @@ export default function BudgetScenariosPage() {
                     }
                   >
                     <option value="">Select Account...</option>
-                    {accounts.map((a) => (
+                    {accounts.map((a: any) => (
                       <option key={a.id} value={a.id}>
                         {a.code} — {a.name}
                       </option>
@@ -737,7 +737,7 @@ export default function BudgetScenariosPage() {
                   <select
                     className="ui-input"
                     value={driverForm.driverType}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setDriverForm({
                         ...driverForm,
                         driverType: e.target.value as any,
@@ -766,7 +766,7 @@ export default function BudgetScenariosPage() {
                       type="number"
                       className="ui-input"
                       value={driverForm.driverValue}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setDriverForm({
                           ...driverForm,
                           driverValue: e.target.value,
@@ -786,7 +786,7 @@ export default function BudgetScenariosPage() {
                       type="number"
                       className="ui-input"
                       value={driverForm.driverRate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setDriverForm({
                           ...driverForm,
                           driverRate: e.target.value,

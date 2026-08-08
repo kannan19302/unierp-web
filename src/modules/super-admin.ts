@@ -76,10 +76,108 @@ export const adminUserResource = defineResource({
   },
 });
 
+export const planResource = defineResource({
+  name: "saas-plans",
+  labelSingular: "Plan",
+  labelPlural: "Plans",
+  endpoint: "/platform/v1/plans",
+  titleField: "name",
+  permissions: {
+    read: "system.superadmin.access",
+    create: "system.superadmin.access",
+    update: "system.superadmin.access",
+  },
+  status: {
+    field: "status",
+    tones: {
+      ACTIVE: "success",
+      ARCHIVED: "neutral",
+      GRANDFATHERED: "warning",
+      COMING_SOON: "info",
+    },
+  },
+  fields: [
+    { name: "name", label: "Plan Name", type: "text", required: true },
+    { name: "version", label: "Version", type: "number", readOnly: true },
+    { name: "maxUsers", label: "Max Users", type: "number", required: true },
+    { name: "maxStorage", label: "Max Storage (MB)", type: "number", required: true },
+    { name: "maxApiCalls", label: "Max API Calls", type: "number", required: true },
+    { name: "status", label: "Status", type: "text", readOnly: true },
+    { name: "isPublic", label: "Is Public", type: "boolean" },
+    { name: "createdAt", label: "Created At", type: "datetime", readOnly: true },
+  ],
+  list: {
+    columns: ["name", "version", "status", "maxUsers", "maxStorage", "isPublic"],
+    searchable: true,
+    pageSize: 25,
+    defaultSort: { field: "createdAt", direction: "desc" },
+  },
+});
+
+export const meteringResource = defineResource({
+  name: "tenant-metering",
+  labelSingular: "Usage Record",
+  labelPlural: "Usage Records",
+  endpoint: "/platform/v1/metering",
+  titleField: "metric",
+  permissions: {
+    read: "system.superadmin.access",
+  },
+  fields: [
+    { name: "metric", label: "Metric", type: "text", readOnly: true },
+    { name: "currentValue", label: "Current Usage", type: "number", readOnly: true },
+    { name: "limitValue", label: "Limit", type: "number", readOnly: true },
+    { name: "updatedAt", label: "Last Updated", type: "datetime", readOnly: true },
+  ],
+  list: {
+    columns: ["metric", "currentValue", "limitValue", "updatedAt"],
+    searchable: true,
+    pageSize: 50,
+    defaultSort: { field: "metric", direction: "asc" },
+  },
+});
+
+export const subscriptionResource = defineResource({
+  name: "tenant-subscriptions",
+  labelSingular: "Subscription",
+  labelPlural: "Subscriptions",
+  endpoint: "/platform/v1/subscriptions",
+  titleField: "status",
+  permissions: {
+    read: "system.superadmin.access",
+    create: "system.superadmin.access",
+    update: "system.superadmin.access",
+  },
+  status: {
+    field: "status",
+    tones: {
+      ACTIVE: "success",
+      PAUSED: "warning",
+      CANCELLED: "danger",
+      TRIAL: "info",
+    },
+  },
+  fields: [
+    { name: "tenantId", label: "Tenant ID", type: "text", required: true },
+    { name: "planId", label: "Plan ID", type: "text", required: true },
+    { name: "status", label: "Status", type: "text", readOnly: true },
+    { name: "billingPeriod", label: "Billing Period", type: "text", required: true },
+    { name: "currency", label: "Currency", type: "text", defaultValue: "USD" },
+    { name: "startDate", label: "Start Date", type: "datetime", readOnly: true },
+    { name: "endDate", label: "End Date", type: "datetime", readOnly: true },
+  ],
+  list: {
+    columns: ["tenantId", "status", "billingPeriod", "currency", "startDate", "endDate"],
+    searchable: true,
+    pageSize: 25,
+    defaultSort: { field: "startDate", direction: "desc" },
+  },
+});
+
 export const superAdminModule = defineModule({
   id: "super-admin",
   title: "Super Admin",
   basePath: "/settings/super-admin",
   permission: "system.tenant.read",
-  resources: [tenantResource, adminUserResource],
+  resources: [tenantResource, adminUserResource, planResource, meteringResource, subscriptionResource],
 });

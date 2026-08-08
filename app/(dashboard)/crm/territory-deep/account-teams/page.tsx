@@ -62,7 +62,7 @@ export default function AccountTeamsPage() {
             className="ui-input"
             placeholder="Enter Customer ID..."
             value={customerId}
-            onChange={(e) => setCustomerId(e.target.value)}
+            onChange={(e: any) => setCustomerId(e.target.value)}
           />
           <Button
             onClick={() => customerId && loadTeams(customerId)}

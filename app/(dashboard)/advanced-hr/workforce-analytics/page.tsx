@@ -100,7 +100,7 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
             icon: <Star size={20} />,
             color: "var(--chart-9)",
           },
-        ].map((kpi, i) => (
+        ].map((kpi: any, i: any) => (
           <Card
             key={i}
             style={{

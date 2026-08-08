@@ -22,8 +22,8 @@ export default function TemplatesPage() {
   useEffect(() => {
     client
       .get<Template[]>("/documents/templates")
-      .then((res) => setTemplates((res as any) || []))
-      .catch((e) =>
+      .then((res: any) => setTemplates((res as any) || []))
+      .catch((e: any) =>
         toast({
           title: "Failed to load templates",
           description: e.message,

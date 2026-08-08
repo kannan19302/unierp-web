@@ -95,11 +95,11 @@ export default function RFQsPage() {
         rfqNumber,
         expectedDate: expectedDate || undefined,
         notes,
-        lineItems: items.map((item) => ({
+        lineItems: items.map((item: any) => ({
           productId: item.productId || undefined,
           description:
             item.description ||
-            products.find((p) => p.id === item.productId)?.name ||
+            products.find((p: any) => p.id === item.productId)?.name ||
             "Custom item",
           quantity: item.quantity,
         })),
@@ -118,7 +118,7 @@ export default function RFQsPage() {
         itemsCount: items.length,
         quotesCount: 0,
       };
-      setRfqs((prev) => [newMock, ...prev]);
+      setRfqs((prev: any) => [newMock, ...prev]);
       setIsModalOpen(false);
       resetForm();
     } finally {
@@ -137,7 +137,7 @@ export default function RFQsPage() {
     {
       key: "rfqNumber",
       header: "RFQ ID",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const rfq = row as unknown as RFQ;
         return <span className="font-bold">{rfq.rfqNumber}</span>;
       },
@@ -145,7 +145,7 @@ export default function RFQsPage() {
     {
       key: "notes",
       header: "Notes",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const rfq = row as unknown as RFQ;
         return <span className="ui-text-muted">{rfq.notes || "No notes"}</span>;
       },
@@ -153,7 +153,7 @@ export default function RFQsPage() {
     {
       key: "expectedDate",
       header: "Target Date",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const rfq = row as unknown as RFQ;
         return (
           <span className="ui-text-muted">
@@ -167,7 +167,7 @@ export default function RFQsPage() {
     {
       key: "itemsCount",
       header: "Items",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const rfq = row as unknown as RFQ;
         return <span>{rfq.itemsCount} line items</span>;
       },
@@ -175,7 +175,7 @@ export default function RFQsPage() {
     {
       key: "quotesCount",
       header: "Bids Evaluated",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const rfq = row as unknown as RFQ;
         return (
           <Badge variant={rfq.quotesCount > 0 ? "info" : "default"}>
@@ -187,7 +187,7 @@ export default function RFQsPage() {
     {
       key: "status",
       header: "Status",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const rfq = row as unknown as RFQ;
         return (
           <Badge variant={rfq.status === "SENT" ? "success" : "default"}>
@@ -265,7 +265,7 @@ export default function RFQsPage() {
                         type="text"
                         className="ui-input"
                         value={rfqNumber}
-                        onChange={(e) => setRfqNumber(e.target.value)}
+                        onChange={(e: any) => setRfqNumber(e.target.value)}
                         placeholder="e.g. RFQ-2026-001"
                         required
                       />
@@ -278,7 +278,7 @@ export default function RFQsPage() {
                         type="date"
                         className="ui-input"
                         value={expectedDate}
-                        onChange={(e) => setExpectedDate(e.target.value)}
+                        onChange={(e: any) => setExpectedDate(e.target.value)}
                       />
                     </div>
                   </div>
@@ -291,7 +291,7 @@ export default function RFQsPage() {
                       type="text"
                       className="ui-input"
                       value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
+                      onChange={(e: any) => setNotes(e.target.value)}
                       placeholder="Reference office upgrade or inventory shortage"
                     />
                   </div>
@@ -315,12 +315,12 @@ export default function RFQsPage() {
                       </button>
                     </div>
 
-                    {items.map((item, idx) => (
+                    {items.map((item: any, idx: any) => (
                       <div key={idx} className={styles.p9}>
                         <select
                           className={["ui-input", styles.p10].join(" ")}
                           value={item.productId}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].productId = e.target.value;
@@ -329,7 +329,7 @@ export default function RFQsPage() {
                           }}
                         >
                           <option value="">-- Catalog Product --</option>
-                          {products.map((p) => (
+                          {products.map((p: any) => (
                             <option key={p.id} value={p.id}>
                               {p.name} ({p.sku})
                             </option>
@@ -340,7 +340,7 @@ export default function RFQsPage() {
                           className={["ui-input", styles.p11].join(" ")}
                           placeholder="Custom spec..."
                           value={item.description}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].description = e.target.value;
@@ -352,7 +352,7 @@ export default function RFQsPage() {
                           type="number"
                           className={["ui-input", styles.p12].join(" ")}
                           value={item.quantity}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].quantity =
@@ -367,7 +367,7 @@ export default function RFQsPage() {
                           <button
                             type="button"
                             onClick={() =>
-                              setItems(items.filter((_, i) => i !== idx))
+                              setItems(items.filter((_: any, i: any) => i !== idx))
                             }
                             className={styles.p13}
                           >

@@ -84,7 +84,7 @@ export default function CalendarPage() {
           directory={directory}
           onCreate={handleCreate}
           onDelete={handleDelete}
-          onJoin={(ev) => {
+          onJoin={(ev: any) => {
             if (ev.meetingCode) {
               router.push(`/communication/meetings?code=${ev.meetingCode}`);
             }

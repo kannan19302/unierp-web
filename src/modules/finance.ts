@@ -274,7 +274,7 @@ export const creditNoteResource = defineResource({
         label: "Apply",
         tone: "default",
         permission: "finance.credit.update",
-        onClick: async (row) => {
+        onClick: async (row: any) => {
           if (row.status !== "DRAFT") return;
           await apiPost(`/finance/credit-notes/${row.id}/apply`, {});
           window.location.reload();
@@ -284,7 +284,7 @@ export const creditNoteResource = defineResource({
         label: "Void",
         tone: "danger",
         permission: "finance.credit.update",
-        onClick: async (row) => {
+        onClick: async (row: any) => {
           if (row.status === "VOID") return;
           if (!window.confirm("Void this credit note? This cannot be undone."))
             return;
@@ -380,7 +380,7 @@ export const vendorBillResource = defineResource({
         label: "Approve",
         tone: "default",
         permission: "finance.payables.update",
-        onClick: async (row) => {
+        onClick: async (row: any) => {
           if (row.status !== "DRAFT") return;
           await apiPost(`/finance/vendor-bills/${row.id}/approve`, {});
           window.location.reload();
@@ -390,7 +390,7 @@ export const vendorBillResource = defineResource({
         label: "Void",
         tone: "danger",
         permission: "finance.payables.update",
-        onClick: async (row) => {
+        onClick: async (row: any) => {
           if (row.status === "VOID" || row.status === "PAID") return;
           if (!window.confirm("Void this vendor bill? This cannot be undone."))
             return;
@@ -510,7 +510,7 @@ export const debitNoteResource = defineResource({
         label: "Apply",
         tone: "default",
         permission: "finance.debit.update",
-        onClick: async (row) => {
+        onClick: async (row: any) => {
           if (row.status !== "DRAFT") return;
           await apiPost(`/finance/debit-notes/${row.id}/apply`, {});
           window.location.reload();
@@ -520,7 +520,7 @@ export const debitNoteResource = defineResource({
         label: "Void",
         tone: "danger",
         permission: "finance.debit.update",
-        onClick: async (row) => {
+        onClick: async (row: any) => {
           if (row.status === "VOID") return;
           if (!window.confirm("Void this debit note? This cannot be undone."))
             return;

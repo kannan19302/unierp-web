@@ -93,7 +93,7 @@ export default function AnalyticsCustomDashboardsPage() {
             type="text"
             placeholder="Dashboard Title (e.g. Executive Quarterly KPI)..."
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: any) => setName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",
@@ -125,7 +125,7 @@ export default function AnalyticsCustomDashboardsPage() {
             </p>
           </Card>
         ) : (
-          dashboards.map((dash) => (
+          dashboards.map((dash: any) => (
             <Card key={dash.id} style={{ padding: "20px" }}>
               <div
                 style={{

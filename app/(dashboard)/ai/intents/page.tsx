@@ -144,8 +144,8 @@ export default function IntentsPage() {
               className="ui-input flex-1"
               placeholder="Enter text to classify..."
               value={classifyText}
-              onChange={(e) => setClassifyText(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && classify()}
+              onChange={(e: any) => setClassifyText(e.target.value)}
+              onKeyDown={(e: any) => e.key === "Enter" && classify()}
             />
             <Button
               onClick={classify}
@@ -172,7 +172,7 @@ export default function IntentsPage() {
                 <p>
                   <strong>Entities:</strong>{" "}
                   {classification.entities
-                    .map((e) => `${e.entity}:${e.value}`)
+                    .map((e: any) => `${e.entity}:${e.value}`)
                     .join(", ")}
                 </p>
               )}
@@ -180,7 +180,7 @@ export default function IntentsPage() {
                 <div className="mt-2">
                   <p className="text-sm font-medium">All Scores:</p>
                   {Object.entries(classification.allScores).map(
-                    ([intent, score]) => (
+                    ([intent, score]: any) => (
                       <div key={intent} className="ui-flex ui-gap-2 text-sm">
                         <span>{intent}:</span>
                         <div className="flex-1 ui-bg-muted rounded h-4 mt-1">
@@ -209,7 +209,7 @@ export default function IntentsPage() {
             </div>
           ) : (
             <div className="ui-stack-3">
-              {examples.map((ex) => (
+              {examples.map((ex: any) => (
                 <div
                   key={ex.id}
                   className="ui-flex ui-gap-3 ui-items-start p-3 ui-bg-subtle rounded-lg"
@@ -224,7 +224,7 @@ export default function IntentsPage() {
                     <p className="text-sm mt-1">{ex.text}</p>
                     {ex.entities && ex.entities.length > 0 && (
                       <div className="ui-hstack-2 mt-1">
-                        {ex.entities.map((ent, i) => (
+                        {ex.entities.map((ent: any, i: any) => (
                           <span
                             key={i}
                             className="ui-badge-info text-xs px-2 py-0.5 rounded"
@@ -265,7 +265,7 @@ export default function IntentsPage() {
                 className="ui-input"
                 placeholder="Intent name"
                 value={newExample.intent}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewExample({ ...newExample, intent: e.target.value })
                 }
               />
@@ -274,7 +274,7 @@ export default function IntentsPage() {
                 placeholder="Example text"
                 rows={3}
                 value={newExample.text}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewExample({ ...newExample, text: e.target.value })
                 }
               />
@@ -282,7 +282,7 @@ export default function IntentsPage() {
                 className="ui-input"
                 placeholder="Language code (en)"
                 value={newExample.language}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewExample({ ...newExample, language: e.target.value })
                 }
               />
@@ -293,7 +293,7 @@ export default function IntentsPage() {
                     className="ui-input flex-1"
                     placeholder="Entity name"
                     value={newExample.entityName}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewExample({
                         ...newExample,
                         entityName: e.target.value,
@@ -304,7 +304,7 @@ export default function IntentsPage() {
                     className="ui-input flex-1"
                     placeholder="Entity value"
                     value={newExample.entityValue}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewExample({
                         ...newExample,
                         entityValue: e.target.value,
@@ -315,7 +315,7 @@ export default function IntentsPage() {
                     Add
                   </Button>
                 </div>
-                {entities.map((e, i) => (
+                {entities.map((e: any, i: any) => (
                   <span
                     key={i}
                     className="ui-badge-info text-xs px-2 py-0.5 rounded"

@@ -306,7 +306,7 @@ export const EMOJI_CATEGORIES: EmojiCategory[] = [
 ];
 
 export const ALL_EMOJIS: EmojiEntry[] = EMOJI_CATEGORIES.flatMap(
-  (c) => c.emojis,
+  (c: any) => c.emojis,
 );
 
 export const STATUS_SUGGESTIONS: {
@@ -591,7 +591,7 @@ export const uid = (p = "id") =>
 export const initials = (name: string) =>
   (name || "?")
     .split(" ")
-    .map((p) => p[0])
+    .map((p: any) => p[0])
     .filter(Boolean)
     .slice(0, 2)
     .join("")
@@ -799,7 +799,7 @@ export function uploadAttachment(
 } {
   const xhr = new XMLHttpRequest();
   const promise = new Promise<{ documentId: string; attachment: Attachment }>(
-    (resolve, reject) => {
+    (resolve: any, reject: any) => {
       xhr.open("POST", `${BASE}/channels/${channelId}/attachments`);
       xhr.withCredentials = true; // send the csrf_token cookie cross-origin — see req()'s comment above
       const token =
@@ -809,7 +809,7 @@ export function uploadAttachment(
       if (token) xhr.setRequestHeader("Authorization", `Bearer ${token}`);
       const csrf = getCsrfToken();
       if (csrf) xhr.setRequestHeader("x-csrf-token", csrf);
-      xhr.upload.onprogress = (e) => {
+      xhr.upload.onprogress = (e: any) => {
         if (e.lengthComputable)
           onProgress(Math.round((e.loaded / e.total) * 100));
       };
@@ -1332,11 +1332,11 @@ export const api = {
     file: File,
     onProgress?: (pct: number) => void,
   ) => {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<any>((resolve: any, reject: any) => {
       const xhr = new XMLHttpRequest();
       const form = new FormData();
       form.append("file", file);
-      xhr.upload.onprogress = (e) => {
+      xhr.upload.onprogress = (e: any) => {
         if (e.lengthComputable && onProgress)
           onProgress(Math.round((e.loaded / e.total) * 100));
       };

@@ -45,7 +45,7 @@ function ImportExportHubContent() {
   const [visited, setVisited] = useState<Set<TabKey>>(new Set([activeTab]));
 
   useEffect(() => {
-    setVisited((prev) =>
+    setVisited((prev: any) =>
       prev.has(activeTab) ? prev : new Set(prev).add(activeTab),
     );
   }, [activeTab]);

@@ -83,7 +83,7 @@ export default function CollectionsPage() {
           </div>
         ) : (
           <div className={styles.colGrid}>
-            {collections.map((col) => (
+            {collections.map((col: any) => (
               <Link
                 key={col.slug}
                 href={`/apps/store/collections/${col.slug}`}
@@ -105,7 +105,7 @@ export default function CollectionsPage() {
                   <p className={styles.colDesc}>{col.description}</p>
                   <div className="ui-hstack-2">
                     <div className={styles.avatarStack}>
-                      {col.items.slice(0, 4).map((item, i) => (
+                      {col.items.slice(0, 4).map((item: any, i: any) => (
                         <div key={i} className={styles.appAvatar}>
                           {item.app.icon || "📦"}
                         </div>

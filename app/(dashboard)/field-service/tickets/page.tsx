@@ -76,7 +76,7 @@ export default function ServiceTicketsPage() {
   };
 
   const filtered = tickets.filter(
-    (t) =>
+    (t: any) =>
       !search ||
       t.title.toLowerCase().includes(search.toLowerCase()) ||
       t.customerName.toLowerCase().includes(search.toLowerCase()),
@@ -168,7 +168,7 @@ export default function ServiceTicketsPage() {
           />
           <KPICard
             title="Open Tickets"
-            value={tickets.filter((t) => t.status !== "COMPLETED").length}
+            value={tickets.filter((t: any) => t.status !== "COMPLETED").length}
             icon={<AlertTriangle size={18} />}
             color="var(--color-warning)"
           />
@@ -180,7 +180,7 @@ export default function ServiceTicketsPage() {
               type="text"
               placeholder="Search tickets..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.s4}
             />
           </div>
@@ -220,13 +220,13 @@ export default function ServiceTicketsPage() {
               label="Ticket Title"
               required
               value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, title: e.target.value })}
             />
             <TextField
               label="Customer Name"
               required
               value={form.customerName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, customerName: e.target.value })
               }
             />
@@ -248,7 +248,7 @@ export default function ServiceTicketsPage() {
                 label="SLA Deadline"
                 type="date"
                 value={form.slaDeadline}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, slaDeadline: e.target.value })
                 }
               />
@@ -256,7 +256,7 @@ export default function ServiceTicketsPage() {
             <TextField
               label="Description"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
             />

@@ -99,9 +99,9 @@ export default function OffboardingPage() {
 
     const parsedItems = tasksText
       .split("\n")
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0)
-      .map((t, idx) => ({
+      .map((t: any) => t.trim())
+      .filter((t: any) => t.length > 0)
+      .map((t: any, idx: any) => ({
         task: t,
         sortOrder: idx + 1,
       }));
@@ -158,7 +158,7 @@ export default function OffboardingPage() {
         { task },
       );
       {
-        setNewItemTexts((prev) => ({ ...prev, [checklistId]: "" }));
+        setNewItemTexts((prev: any) => ({ ...prev, [checklistId]: "" }));
         fetchData();
       }
     } catch (err) {
@@ -179,7 +179,7 @@ export default function OffboardingPage() {
   };
 
   const getEmpName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -218,11 +218,11 @@ export default function OffboardingPage() {
               <select
                 className="ui-input"
                 value={employeeId}
-                onChange={(e) => setEmployeeId(e.target.value)}
+                onChange={(e: any) => setEmployeeId(e.target.value)}
                 required
               >
                 <option value="">Select Employee</option>
-                {employees.map((e) => (
+                {employees.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.firstName} {e.lastName}
                   </option>
@@ -235,7 +235,7 @@ export default function OffboardingPage() {
                     type="date"
                     className="ui-input"
                     value={exitDate}
-                    onChange={(e) => setExitDate(e.target.value)}
+                    onChange={(e: any) => setExitDate(e.target.value)}
                     required
                   />
                 </div>
@@ -246,7 +246,7 @@ export default function OffboardingPage() {
                   <select
                     className="ui-input"
                     value={exitReason}
-                    onChange={(e) => setExitReason(e.target.value)}
+                    onChange={(e: any) => setExitReason(e.target.value)}
                   >
                     <option value="Career Advancement">
                       Career Advancement
@@ -269,7 +269,7 @@ export default function OffboardingPage() {
                 <textarea
                   className="ui-input"
                   value={tasksText}
-                  onChange={(e) => setTasksText(e.target.value)}
+                  onChange={(e: any) => setTasksText(e.target.value)}
                   rows={5}
                   required
                 />
@@ -306,7 +306,7 @@ export default function OffboardingPage() {
                 </Card>
               </div>
             ) : (
-              checklists.map((list) => (
+              checklists.map((list: any) => (
                 <Card key={list.id} padding="md">
                   <div className={styles.s5}>
                     <div>
@@ -324,7 +324,7 @@ export default function OffboardingPage() {
                   </div>
 
                   <div className={styles.s8}>
-                    {list.items.map((item) => {
+                    {list.items.map((item: any) => {
                       const itemStatus =
                         item.status ||
                         (item.isCompleted ? "COMPLETED" : "PENDING");
@@ -379,7 +379,7 @@ export default function OffboardingPage() {
                                   type="text"
                                   className={`ui-input ${styles.s13}`}
                                   value={editTaskText}
-                                  onChange={(e) =>
+                                  onChange={(e: any) =>
                                     setEditTaskText(e.target.value)
                                   }
                                   autoFocus
@@ -425,7 +425,7 @@ export default function OffboardingPage() {
                                 <select
                                   className={`ui-input ${styles.s16}`}
                                   value={itemStatus}
-                                  onChange={(e) =>
+                                  onChange={(e: any) =>
                                     handleUpdateItem(item.id, {
                                       status: e.target.value,
                                     })
@@ -476,7 +476,7 @@ export default function OffboardingPage() {
                                       : "var(--color-bg-sunken)",
                                 }}
                                 defaultValue={item.comments || ""}
-                                onBlur={(e) =>
+                                onBlur={(e: any) =>
                                   handleUpdateItem(item.id, {
                                     comments: e.target.value,
                                   })
@@ -495,13 +495,13 @@ export default function OffboardingPage() {
                         placeholder="Add exit task inline..."
                         className={`ui-input ${styles.s21}`}
                         value={newItemTexts[list.id] || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewItemTexts({
                             ...newItemTexts,
                             [list.id]: e.target.value,
                           })
                         }
-                        onKeyDown={(e) => {
+                        onKeyDown={(e: any) => {
                           if (e.key === "Enter") {
                             handleAddItem(list.id, newItemTexts[list.id] || "");
                           }

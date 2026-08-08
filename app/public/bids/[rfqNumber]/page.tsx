@@ -138,7 +138,7 @@ export default function PublicBiddingPage() {
     field: "unitPrice" | "taxRate",
     val: number,
   ) => {
-    setLinePrices((prev) => {
+    setLinePrices((prev: any) => {
       const current = prev[itemId] || { unitPrice: 0, taxRate: 0 };
       return {
         ...prev,
@@ -156,7 +156,7 @@ export default function PublicBiddingPage() {
     try {
       if (!rfq) return;
 
-      const itemsPayload = rfq.lineItems.map((item) => {
+      const itemsPayload = rfq.lineItems.map((item: any) => {
         const prc = linePrices[item.id] || { unitPrice: 0, taxRate: 0 };
         return {
           productId: item.productId || undefined,
@@ -193,7 +193,7 @@ export default function PublicBiddingPage() {
   let subtotal = 0;
   let taxAmount = 0;
   if (rfq) {
-    rfq.lineItems.forEach((item) => {
+    rfq.lineItems.forEach((item: any) => {
       const prc = linePrices[item.id] || { unitPrice: 0, taxRate: 0 };
       const itemSubtotal = item.quantity * prc.unitPrice;
       const itemTax = itemSubtotal * (prc.taxRate / 100);
@@ -273,11 +273,11 @@ export default function PublicBiddingPage() {
                   <select
                     required
                     value={selectedVendor}
-                    onChange={(e) => setSelectedVendor(e.target.value)}
+                    onChange={(e: any) => setSelectedVendor(e.target.value)}
                     className="ui-input"
                   >
                     <option value="">Choose Supplier Profile...</option>
-                    {vendors.map((v) => (
+                    {vendors.map((v: any) => (
                       <option key={v.id} value={v.id}>
                         {v.name}
                       </option>
@@ -291,7 +291,7 @@ export default function PublicBiddingPage() {
                     required
                     placeholder="e.g. QT-998822"
                     value={quotationNumber}
-                    onChange={(e) => setQuotationNumber(e.target.value)}
+                    onChange={(e: any) => setQuotationNumber(e.target.value)}
                     className="ui-input"
                   />
                 </div>
@@ -304,7 +304,7 @@ export default function PublicBiddingPage() {
                     type="date"
                     required
                     value={validUntil}
-                    onChange={(e) => setValidUntil(e.target.value)}
+                    onChange={(e: any) => setValidUntil(e.target.value)}
                     className="ui-input"
                   />
                 </div>
@@ -315,7 +315,7 @@ export default function PublicBiddingPage() {
               <h3 className={styles.s18}>RFQ Items Pricing Proposal</h3>
 
               <div className={styles.s20}>
-                {rfq?.lineItems.map((item) => {
+                {rfq?.lineItems.map((item: any) => {
                   const prc = linePrices[item.id] || {
                     unitPrice: 0,
                     taxRate: 0,
@@ -346,7 +346,7 @@ export default function PublicBiddingPage() {
                             required
                             min={0}
                             value={prc.unitPrice}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handlePriceChange(
                                 item.id,
                                 "unitPrice",
@@ -366,7 +366,7 @@ export default function PublicBiddingPage() {
                             min={0}
                             max={100}
                             value={prc.taxRate}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handlePriceChange(
                                 item.id,
                                 "taxRate",
@@ -402,7 +402,7 @@ export default function PublicBiddingPage() {
                 <textarea
                   placeholder="Detail shipping schedules, carrier specifications, or payment milestones..."
                   value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
+                  onChange={(e: any) => setNotes(e.target.value)}
                   className="ui-input"
                   rows={3}
                 />

@@ -23,8 +23,8 @@ export default function ApprovalsPage() {
   useEffect(() => {
     client
       .get<Approval[]>("/documents/approvals")
-      .then((res) => setApprovals((res as any) || []))
-      .catch((e) =>
+      .then((res: any) => setApprovals((res as any) || []))
+      .catch((e: any) =>
         toast({
           title: "Failed to load approvals",
           description: e.message,

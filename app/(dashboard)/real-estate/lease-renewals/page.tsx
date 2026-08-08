@@ -352,10 +352,10 @@ export default function LeaseRenewalsPage() {
     );
 
   const pendingCount = renewals.filter(
-    (r) => r.status === "DRAFT" || r.status === "NEGOTIATING",
+    (r: any) => r.status === "DRAFT" || r.status === "NEGOTIATING",
   ).length;
   const activeEscalations = escalations.filter(
-    (r) => r.status === "ACTIVE",
+    (r: any) => r.status === "ACTIVE",
   ).length;
 
   return (
@@ -457,13 +457,13 @@ export default function LeaseRenewalsPage() {
                 label="Lease ID"
                 required
                 value={form.leaseId}
-                onChange={(e) => setForm({ ...form, leaseId: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, leaseId: e.target.value })}
               />
               <TextField
                 label="Property ID"
                 required
                 value={form.propertyId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, propertyId: e.target.value })
                 }
               />
@@ -472,14 +472,14 @@ export default function LeaseRenewalsPage() {
               label="Tenant Name"
               required
               value={form.tenantName}
-              onChange={(e) => setForm({ ...form, tenantName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, tenantName: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <TextField
                 label="Current Rent ($)"
                 type="number"
                 value={form.currentRent}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, currentRent: e.target.value })
                 }
               />
@@ -487,7 +487,7 @@ export default function LeaseRenewalsPage() {
                 label="Proposed Rent ($)"
                 type="number"
                 value={form.proposedRent}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, proposedRent: e.target.value })
                 }
               />
@@ -497,7 +497,7 @@ export default function LeaseRenewalsPage() {
                 label="Term (months)"
                 type="number"
                 value={form.renewalTermMonths}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, renewalTermMonths: e.target.value })
                 }
               />
@@ -505,7 +505,7 @@ export default function LeaseRenewalsPage() {
                 label="Escalation Rate (%)"
                 type="number"
                 value={form.escalationRate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, escalationRate: e.target.value })
                 }
               />
@@ -515,7 +515,7 @@ export default function LeaseRenewalsPage() {
                 label="Current End Date"
                 type="date"
                 value={form.currentEndDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, currentEndDate: e.target.value })
                 }
               />
@@ -523,7 +523,7 @@ export default function LeaseRenewalsPage() {
                 label="Proposed Start"
                 type="date"
                 value={form.proposedStartDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, proposedStartDate: e.target.value })
                 }
               />
@@ -531,7 +531,7 @@ export default function LeaseRenewalsPage() {
                 label="Proposed End"
                 type="date"
                 value={form.proposedEndDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, proposedEndDate: e.target.value })
                 }
               />
@@ -539,7 +539,7 @@ export default function LeaseRenewalsPage() {
             <TextField
               label="Notes"
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </div>
         </Modal>

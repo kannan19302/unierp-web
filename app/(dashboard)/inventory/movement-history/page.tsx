@@ -92,13 +92,13 @@ export default function MovementHistoryPage() {
               className="ui-input flex-1"
               placeholder="Product ID"
               value={productId}
-              onChange={(e) => setProductId(e.target.value)}
+              onChange={(e: any) => setProductId(e.target.value)}
             />
             <input
               className="ui-input flex-1"
               placeholder="Warehouse ID"
               value={warehouseId}
-              onChange={(e) => setWarehouseId(e.target.value)}
+              onChange={(e: any) => setWarehouseId(e.target.value)}
             />
             <Button variant="primary" onClick={search} className="ui-hstack-2">
               <Search size={14} /> Search
@@ -136,7 +136,7 @@ export default function MovementHistoryPage() {
             <select
               className={`ui-input ${styles.s4}`}
               value={labelType}
-              onChange={(e) => setLabelType(e.target.value as typeof labelType)}
+              onChange={(e: any) => setLabelType(e.target.value as typeof labelType)}
             >
               <option value="product">Product</option>
               <option value="batch">Batch</option>
@@ -147,7 +147,7 @@ export default function MovementHistoryPage() {
               className="ui-input flex-1"
               placeholder="Record ID"
               value={labelLookupId}
-              onChange={(e) => setLabelLookupId(e.target.value)}
+              onChange={(e: any) => setLabelLookupId(e.target.value)}
             />
             <Button
               variant="primary"

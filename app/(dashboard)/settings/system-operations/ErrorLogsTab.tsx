@@ -69,8 +69,8 @@ export default function ErrorLogsTab() {
   const resolveLog = async (id: string) => {
     try {
       await client.post(`/admin/operations/logs/${id}/resolve`);
-      setLogs((prev) =>
-        prev.map((l) => (l.id === id ? { ...l, resolved: true } : l)),
+      setLogs((prev: any) =>
+        prev.map((l: any) => (l.id === id ? { ...l, resolved: true } : l)),
       );
       setToast({ message: "Error resolved", type: "success" });
     } catch {
@@ -103,7 +103,7 @@ export default function ErrorLogsTab() {
     };
   };
 
-  const filteredLogs = logs.filter((log) => {
+  const filteredLogs = logs.filter((log: any) => {
     const ctx = log.context || log.source || "";
     const matchesSearch =
       log.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -128,13 +128,13 @@ export default function ErrorLogsTab() {
             type="text"
             placeholder="Filter by context, message or stack trace..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e: any) => setSearchTerm(e.target.value)}
             className={styles.s5}
           />
         </div>
 
         <div className="ui-flex ui-gap-2">
-          {["ALL", "ERROR", "WARN"].map((lvl) => (
+          {["ALL", "ERROR", "WARN"].map((lvl: any) => (
             <button
               key={lvl}
               onClick={() => setLevelFilter(lvl)}
@@ -161,7 +161,7 @@ export default function ErrorLogsTab() {
           </div>
         ) : (
           <div className="ui-flex-col">
-            {filteredLogs.map((log, idx) => (
+            {filteredLogs.map((log: any, idx: any) => (
               <div
                 key={log.id || idx}
                 className={styles.s8}
@@ -211,7 +211,7 @@ export default function ErrorLogsTab() {
         <div className={styles.s14}>
           <button
             disabled={page <= 1}
-            onClick={() => setPage((p) => p - 1)}
+            onClick={() => setPage((p: any) => p - 1)}
             className="ui-btn ui-btn-secondary text-sm"
           >
             Previous
@@ -221,7 +221,7 @@ export default function ErrorLogsTab() {
           </span>
           <button
             disabled={page >= totalPages}
-            onClick={() => setPage((p) => p + 1)}
+            onClick={() => setPage((p: any) => p + 1)}
             className="ui-btn ui-btn-secondary text-sm"
           >
             Next

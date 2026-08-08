@@ -96,7 +96,7 @@ export default function AppraisalsPage() {
   const averageManagerScore = totalAppraisals
     ? Number(
         (
-          appraisals.reduce((sum, a) => sum + a.score, 0) / totalAppraisals
+          appraisals.reduce((sum: any, a: any) => sum + a.score, 0) / totalAppraisals
         ).toFixed(1),
       )
     : 0;
@@ -106,7 +106,7 @@ export default function AppraisalsPage() {
 
   // Score distribution count (1-5)
   const distribution = [0, 0, 0, 0, 0];
-  appraisals.forEach((app) => {
+  appraisals.forEach((app: any) => {
     const s = Math.round(app.score);
     if (s >= 1 && s <= 5) {
       const idx = s - 1;
@@ -200,7 +200,7 @@ export default function AppraisalsPage() {
               <span className={styles.distributionLabel}>
                 Rating Distribution
               </span>
-              {[5, 4, 3, 2, 1].map((star) => {
+              {[5, 4, 3, 2, 1].map((star: any) => {
                 const count = distribution[star - 1] ?? 0;
                 const pct = totalAppraisals
                   ? (count / totalAppraisals) * 100
@@ -231,13 +231,13 @@ export default function AppraisalsPage() {
               <select
                 className="ui-input"
                 value={form.employeeId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, employeeId: e.target.value })
                 }
                 required
               >
                 <option value="">Select Employee</option>
-                {employees.map((e) => (
+                {employees.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.firstName} {e.lastName}
                   </option>
@@ -249,7 +249,7 @@ export default function AppraisalsPage() {
                   className="ui-input"
                   placeholder="Appraisal Period (e.g. Q2 2026, FY 2026)"
                   value={form.appraisalPeriod}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, appraisalPeriod: e.target.value })
                   }
                   required
@@ -257,7 +257,7 @@ export default function AppraisalsPage() {
                 <select
                   className="ui-input"
                   value={form.score}
-                  onChange={(e) => setForm({ ...form, score: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, score: e.target.value })}
                   required
                 >
                   <option value="5">
@@ -281,7 +281,7 @@ export default function AppraisalsPage() {
                 className="ui-input"
                 placeholder="Feedback & key accomplishments notes..."
                 value={form.feedback}
-                onChange={(e) => setForm({ ...form, feedback: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, feedback: e.target.value })}
                 rows={4}
               />
               <div className="ui-flex-end ui-gap-2">
@@ -316,7 +316,7 @@ export default function AppraisalsPage() {
                 </Card>
               </div>
             ) : (
-              appraisals.map((app) => (
+              appraisals.map((app: any) => (
                 <Card key={app.id} padding="md">
                   <div className={styles.appraisalHeader}>
                     <div>

@@ -270,7 +270,7 @@ export default function ExpensePoliciesPage() {
       render: (r: any) => (
         <Link
           href={`/finance/advanced/corporate-cards/${r.id}`}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button variant="secondary">
             <Sliders size={13} className="mr-2" /> Spend Limits
@@ -439,7 +439,7 @@ export default function ExpensePoliciesPage() {
             <FormField label="Category">
               <Select
                 value={pCategory}
-                onChange={(e) => setPCategory(e.target.value)}
+                onChange={(e: any) => setPCategory(e.target.value)}
               >
                 <option value="TRAVEL">Travel</option>
                 <option value="MEALS">Meals</option>
@@ -454,13 +454,13 @@ export default function ExpensePoliciesPage() {
               label="Max Amount Per Item"
               type="number"
               value={pMax}
-              onChange={(e) => setPMax(e.target.value)}
+              onChange={(e: any) => setPMax(e.target.value)}
             />
             <TextField
               label="Receipt Required Above"
               type="number"
               value={pReceiptAbove}
-              onChange={(e) => setPReceiptAbove(e.target.value)}
+              onChange={(e: any) => setPReceiptAbove(e.target.value)}
             />
           </div>
         </Modal>
@@ -490,14 +490,14 @@ export default function ExpensePoliciesPage() {
               type="number"
               required
               value={mRate}
-              onChange={(e) => setMRate(e.target.value)}
+              onChange={(e: any) => setMRate(e.target.value)}
             />
             <TextField
               label="Effective Date"
               type="date"
               required
               value={mDate}
-              onChange={(e) => setMDate(e.target.value)}
+              onChange={(e: any) => setMDate(e.target.value)}
             />
           </div>
         </Modal>
@@ -526,14 +526,14 @@ export default function ExpensePoliciesPage() {
               label="Location"
               required
               value={dLocation}
-              onChange={(e) => setDLocation(e.target.value)}
+              onChange={(e: any) => setDLocation(e.target.value)}
             />
             <TextField
               label="Daily Rate"
               type="number"
               required
               value={dRate}
-              onChange={(e) => setDRate(e.target.value)}
+              onChange={(e: any) => setDRate(e.target.value)}
             />
           </div>
         </Modal>
@@ -559,12 +559,12 @@ export default function ExpensePoliciesPage() {
               label="Employee ID"
               required
               value={cEmployeeId}
-              onChange={(e) => setCEmployeeId(e.target.value)}
+              onChange={(e: any) => setCEmployeeId(e.target.value)}
             />
             <FormField label="Provider">
               <Select
                 value={cProvider}
-                onChange={(e) => setCProvider(e.target.value)}
+                onChange={(e: any) => setCProvider(e.target.value)}
               >
                 <option value="VISA">Visa</option>
                 <option value="MASTERCARD">Mastercard</option>
@@ -576,7 +576,7 @@ export default function ExpensePoliciesPage() {
               label="Last 4 Digits"
               required
               value={cLast4}
-              onChange={(e) => setCLast4(e.target.value)}
+              onChange={(e: any) => setCLast4(e.target.value)}
               maxLength={4}
             />
           </div>

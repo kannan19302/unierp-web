@@ -51,7 +51,7 @@ export default function DocumentsPage() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setForm((prev) => ({
+        setForm((prev: any) => ({
           ...prev,
           fileUrl: reader.result as string,
           fileName: file.name,
@@ -199,10 +199,10 @@ export default function DocumentsPage() {
         <select
           className="ui-input"
           value={selectedEmpId}
-          onChange={(e) => setSelectedEmpId(e.target.value)}
+          onChange={(e: any) => setSelectedEmpId(e.target.value)}
         >
           <option value="">-- Select Employee --</option>
-          {employees.map((e) => (
+          {employees.map((e: any) => (
             <option key={e.id} value={e.id}>
               {e.firstName} {e.lastName}
             </option>
@@ -218,14 +218,14 @@ export default function DocumentsPage() {
               className="ui-input"
               placeholder="Document Title (e.g. NDA Signature, IRS W-4)"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               required
             />
             <div className="ui-grid-2 ui-gap-3">
               <select
                 className="ui-input"
                 value={form.docType}
-                onChange={(e) => setForm({ ...form, docType: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, docType: e.target.value })}
               >
                 <option value="CONTRACT">Employment Contract</option>
                 <option value="ID_PROOF">Government ID</option>
@@ -238,7 +238,7 @@ export default function DocumentsPage() {
                 className="ui-input"
                 placeholder="Expiration Date (if applicable)"
                 value={form.expiryDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, expiryDate: e.target.value })
                 }
               />
@@ -259,7 +259,7 @@ export default function DocumentsPage() {
               className="ui-input"
               placeholder="Or enter Document URL / Cloud Link (optional)"
               value={form.fileUrl.startsWith("data:") ? "" : form.fileUrl}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, fileUrl: e.target.value, fileName: "" })
               }
             />
@@ -304,7 +304,7 @@ export default function DocumentsPage() {
             {
               key: "fileUrl",
               header: "Action",
-              render: (v, row) => {
+              render: (v: any, row: any) => {
                 const doc = row as unknown as EmployeeDocument;
                 return v ? (
                   <Button

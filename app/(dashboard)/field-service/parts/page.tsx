@@ -196,8 +196,8 @@ export default function PartsPage() {
       </div>
     );
 
-  const pendingCount = requests.filter((r) => r.status === "PENDING").length;
-  const approvedCount = requests.filter((r) => r.status === "APPROVED").length;
+  const pendingCount = requests.filter((r: any) => r.status === "PENDING").length;
+  const approvedCount = requests.filter((r: any) => r.status === "APPROVED").length;
 
   return (
     <RouteGuard permission="field-service.part-request.read">
@@ -283,32 +283,32 @@ export default function PartsPage() {
               label="Technician ID"
               required
               value={form.technicianId}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, technicianId: e.target.value })
               }
             />
             <TextField
               label="Ticket ID"
               value={form.ticketId}
-              onChange={(e) => setForm({ ...form, ticketId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, ticketId: e.target.value })}
             />
             <TextField
               label="Item ID"
               required
               value={form.itemId}
-              onChange={(e) => setForm({ ...form, itemId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, itemId: e.target.value })}
             />
             <TextField
               label="Item Name"
               required
               value={form.itemName}
-              onChange={(e) => setForm({ ...form, itemName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, itemName: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <TextField
                 label="Part #"
                 value={form.partNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, partNumber: e.target.value })
                 }
               />
@@ -316,7 +316,7 @@ export default function PartsPage() {
                 label="Quantity"
                 type="number"
                 value={form.quantityRequested}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, quantityRequested: e.target.value })
                 }
               />
@@ -325,7 +325,7 @@ export default function PartsPage() {
               <FormField label="Source">
                 <Select
                   value={form.source}
-                  onChange={(e) => setForm({ ...form, source: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, source: e.target.value })}
                 >
                   <option value="WAREHOUSE">Warehouse</option>
                   <option value="VAN">Van</option>
@@ -336,7 +336,7 @@ export default function PartsPage() {
               <FormField label="Priority">
                 <Select
                   value={form.priority}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, priority: e.target.value })
                   }
                 >
@@ -351,12 +351,12 @@ export default function PartsPage() {
               label="Unit Price ($)"
               type="number"
               value={form.unitPrice}
-              onChange={(e) => setForm({ ...form, unitPrice: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, unitPrice: e.target.value })}
             />
             <TextField
               label="Notes"
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </div>
         </Modal>

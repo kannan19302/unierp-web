@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState } from "react";
 
 export default function ObligationsPage() {
@@ -26,7 +26,7 @@ export default function ObligationsPage() {
           <input
             className="ui-input"
             value={contractId}
-            onChange={(e) => setContractId(e.target.value)}
+            onChange={(e: any) => setContractId(e.target.value)}
             placeholder="Enter contract ID"
           />
         </div>

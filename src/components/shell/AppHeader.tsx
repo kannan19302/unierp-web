@@ -129,7 +129,7 @@ function ThemeMenu({ iconBtnStyle }: { iconBtnStyle: string }) {
   return (
     <div className="relative" ref={ref}>
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen((v: any) => !v)}
         className={iconBtnStyle}
         aria-label="Choose color theme"
         title="Theme — switch between the design-system color themes"
@@ -153,7 +153,7 @@ function ThemeMenu({ iconBtnStyle }: { iconBtnStyle: string }) {
           >
             <Palette size={12} /> Theme
           </p>
-          {options.map((t) => {
+          {options.map((t: any) => {
             const info = THEME_INFO[t] ?? { label: t, hint: "" };
             const active = setting === t;
             return (
@@ -186,7 +186,7 @@ function ThemeMenu({ iconBtnStyle }: { iconBtnStyle: string }) {
           >
             <LayoutGrid size={12} /> Density
           </p>
-          {densities.map((d) => {
+          {densities.map((d: any) => {
             const info = DENSITY_INFO[d];
             if (!info) return null;
             const active = density === d;
@@ -327,7 +327,7 @@ export function AppHeader({
             {tenantDropdownOpen && tenants.length > 1 && (
               <div className="ui-dropdown ui-dropdown-left ui-dropdown-tenant">
                 <p className="ui-dropdown-header">Switch organization</p>
-                {tenants.map((t) => {
+                {tenants.map((t: any) => {
                   const isTenantActive = currentTenant.slug === t.slug;
                   return (
                     <button
@@ -354,7 +354,7 @@ export function AppHeader({
               {pathname
                 .split("/")
                 .filter(Boolean)
-                .map((part, i, arr) => (
+                .map((part: any, i: any, arr: any) => (
                   <React.Fragment key={i}>
                     {i > 0 && <span>/</span>}
                     <span
@@ -384,7 +384,7 @@ export function AppHeader({
                 placeholder="Search or type Cmd+K..."
                 value={searchQuery}
                 onClick={() => setCmdPaletteOpen(true)}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setSearchQuery(e.target.value);
                   setSearchOpen(e.target.value.length > 0);
                 }}
@@ -400,11 +400,11 @@ export function AppHeader({
             {searchOpen && searchQuery.length > 0 && (
               <div className="ui-dropdown ui-dropdown-right ui-dropdown-search">
                 <p className="ui-dropdown-header">Search Results</p>
-                {GLOBAL_SEARCH_ITEMS.filter((item) =>
+                {GLOBAL_SEARCH_ITEMS.filter((item: any) =>
                   item.name.toLowerCase().includes(searchQuery.toLowerCase()),
                 )
                   .slice(0, 10)
-                  .map((result) => (
+                  .map((result: any) => (
                     <button
                       key={result.name}
                       onClick={() => {
@@ -430,7 +430,7 @@ export function AppHeader({
                       </div>
                     </button>
                   ))}
-                {GLOBAL_SEARCH_ITEMS.filter((item) =>
+                {GLOBAL_SEARCH_ITEMS.filter((item: any) =>
                   item.name.toLowerCase().includes(searchQuery.toLowerCase()),
                 ).length === 0 && (
                   <div

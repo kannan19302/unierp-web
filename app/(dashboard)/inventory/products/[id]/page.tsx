@@ -72,7 +72,7 @@ const variantColumns: Column<VariantRow>[] = [
     header: "Attributes",
     render: (r: any) => (
       <span className={styles.s1}>
-        {Object.entries(r.attributes ?? {}).map(([k, v]) => (
+        {Object.entries(r.attributes ?? {}).map(([k, v]: any) => (
           <Badge key={k} variant="info">{`${k}: ${v}`}</Badge>
         ))}
       </span>
@@ -117,7 +117,7 @@ export default function ProductDetailPage({
 
   const stockRows = (
     (product?.inventoryItems as WarehouseStockRow[] | undefined) ?? []
-  ).map((item) => ({
+  ).map((item: any) => ({
     ...item,
     quantity: Number(item.quantity),
     reservedQty: Number(item.reservedQty ?? 0),
@@ -125,7 +125,7 @@ export default function ProductDetailPage({
   }));
   const variantRows = (
     (product?.variants as VariantRow[] | undefined) ?? []
-  ).map((v) => ({
+  ).map((v: any) => ({
     ...v,
     sellPrice: Number(v.sellPrice),
   }));
@@ -180,7 +180,7 @@ export default function ProductDetailPage({
 
           {tab === "ledger" && (
             <DataTable<FieldValues>
-              columns={stockLedgerResource.fields.map((f) => ({
+              columns={stockLedgerResource.fields.map((f: any) => ({
                 key: f.name,
                 header: f.label,
                 align:
@@ -224,7 +224,7 @@ export default function ProductDetailPage({
         <FormView
           resource={productVariantResource}
           initial={{ parentSkuId: productId }}
-          transform={(payload) => {
+          transform={(payload: any) => {
             const { color, size, ...rest } = payload;
             const attributes: Record<string, string> = {};
             if (color) attributes.Color = String(color);

@@ -79,7 +79,7 @@ export default function CrmSettingsPage() {
           ]}
         />
         <div className="ui-grid-3" style={{ padding: "var(--space-4)" }}>
-          {settingsCards.map((card) => {
+          {settingsCards.map((card: any) => {
             const Icon = card.icon;
             return (
               <Link key={card.href} href={card.href} className="no-underline">

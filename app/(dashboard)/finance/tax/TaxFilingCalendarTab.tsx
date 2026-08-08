@@ -142,12 +142,12 @@ export function TaxFilingCalendarTab() {
         `/advanced-finance/tax/filing-reminders/${id}/acknowledge`,
         {},
       );
-      setReminders((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, isAcknowledged: true } : r)),
+      setReminders((prev: any) =>
+        prev.map((r: any) => (r.id === id ? { ...r, isAcknowledged: true } : r)),
       );
     } catch {
-      setReminders((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, isAcknowledged: true } : r)),
+      setReminders((prev: any) =>
+        prev.map((r: any) => (r.id === id ? { ...r, isAcknowledged: true } : r)),
       );
     }
   };
@@ -199,7 +199,7 @@ export function TaxFilingCalendarTab() {
       </div>
 
       {reminders.some(
-        (r) => !r.isAcknowledged && r.severity === "CRITICAL",
+        (r: any) => !r.isAcknowledged && r.severity === "CRITICAL",
       ) && (
         <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -218,7 +218,7 @@ export function TaxFilingCalendarTab() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {schedules.map((item) => (
+        {schedules.map((item: any) => (
           <Card key={item.id} padding="md" className="border">
             <div className="flex items-center justify-between mb-2">
               <span className="font-bold text-base">

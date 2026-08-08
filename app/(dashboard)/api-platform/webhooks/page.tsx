@@ -10,7 +10,7 @@ export default function WebhooksPage() {
 
   useEffect(() => {
     apiGet("/admin/api-platform/webhooks")
-      .then((d) => setWebhooks(Array.isArray(d) ? d : []))
+      .then((d: any) => setWebhooks(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

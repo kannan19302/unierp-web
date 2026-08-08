@@ -51,7 +51,7 @@ export default function CashPositionPage() {
       .get<{ success: boolean; data: CashPosition }>(
         "/finance/reports/cash-position",
       )
-      .then((res) => setData(res?.data ?? EMPTY))
+      .then((res: any) => setData(res?.data ?? EMPTY))
       .catch(() => setData(EMPTY))
       .finally(() => setLoading(false));
   }, [client]);
@@ -134,7 +134,7 @@ export default function CashPositionPage() {
             {data.accounts.length === 0 && !loading && (
               <p className="ui-text-xs-muted">No bank accounts on file yet.</p>
             )}
-            {data.accounts.map((acc) => (
+            {data.accounts.map((acc: any) => (
               <div key={acc.name} className={styles.s3}>
                 <div>
                   <div className="ui-heading-sm">

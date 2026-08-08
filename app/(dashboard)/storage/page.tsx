@@ -11,7 +11,7 @@ export default function StoragePage() {
 
   useEffect(() => {
     Promise.all([apiGet("/storage/files"), apiGet("/storage/folders")])
-      .then(([f, d]) => {
+      .then(([f, d]: any) => {
         setFiles(Array.isArray(f) ? f : []);
         setFolders(Array.isArray(d) ? d : []);
       })

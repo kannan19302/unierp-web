@@ -202,7 +202,7 @@ export default function QuoteSignaturesPage() {
           <input
             placeholder="Quotation ID"
             value={quotationId}
-            onChange={(e) => setQuotationId(e.target.value)}
+            onChange={(e: any) => setQuotationId(e.target.value)}
             className={`ui-input ${styles.s1}`}
             style={{ ...inputStyle }}
           />
@@ -219,7 +219,7 @@ export default function QuoteSignaturesPage() {
                 <input
                   required
                   value={signerName}
-                  onChange={(e) => setSignerName(e.target.value)}
+                  onChange={(e: any) => setSignerName(e.target.value)}
                   className="ui-input"
                   style={inputStyle}
                 />
@@ -230,7 +230,7 @@ export default function QuoteSignaturesPage() {
                   required
                   type="email"
                   value={signerEmail}
-                  onChange={(e) => setSignerEmail(e.target.value)}
+                  onChange={(e: any) => setSignerEmail(e.target.value)}
                   className="ui-input"
                   style={inputStyle}
                 />

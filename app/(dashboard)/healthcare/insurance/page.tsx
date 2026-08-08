@@ -161,7 +161,7 @@ export default function HealthcareInsurancePage() {
               <select
                 className="ui-input"
                 value={policyForm.patientId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPolicyForm({ ...policyForm, patientId: e.target.value })
                 }
               >
@@ -178,7 +178,7 @@ export default function HealthcareInsurancePage() {
               <input
                 className="ui-input"
                 value={policyForm.providerName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPolicyForm({ ...policyForm, providerName: e.target.value })
                 }
               />
@@ -188,7 +188,7 @@ export default function HealthcareInsurancePage() {
               <input
                 className="ui-input"
                 value={policyForm.policyNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPolicyForm({ ...policyForm, policyNumber: e.target.value })
                 }
               />
@@ -198,7 +198,7 @@ export default function HealthcareInsurancePage() {
               <select
                 className="ui-input"
                 value={policyForm.coverageType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPolicyForm({ ...policyForm, coverageType: e.target.value })
                 }
               >
@@ -214,7 +214,7 @@ export default function HealthcareInsurancePage() {
                 className="ui-input"
                 type="date"
                 value={policyForm.startDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPolicyForm({ ...policyForm, startDate: e.target.value })
                 }
               />
@@ -225,7 +225,7 @@ export default function HealthcareInsurancePage() {
                 className="ui-input"
                 type="number"
                 value={policyForm.deductible}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPolicyForm({ ...policyForm, deductible: e.target.value })
                 }
               />
@@ -253,7 +253,7 @@ export default function HealthcareInsurancePage() {
               <select
                 className="ui-input"
                 value={claimForm.policyId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setClaimForm({ ...claimForm, policyId: e.target.value })
                 }
               >
@@ -270,7 +270,7 @@ export default function HealthcareInsurancePage() {
               <input
                 className="ui-input"
                 value={claimForm.claimNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setClaimForm({ ...claimForm, claimNumber: e.target.value })
                 }
               />
@@ -281,7 +281,7 @@ export default function HealthcareInsurancePage() {
                 className="ui-input"
                 type="date"
                 value={claimForm.serviceDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setClaimForm({ ...claimForm, serviceDate: e.target.value })
                 }
               />
@@ -292,7 +292,7 @@ export default function HealthcareInsurancePage() {
                 className="ui-input"
                 type="number"
                 value={claimForm.billedAmount}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setClaimForm({ ...claimForm, billedAmount: e.target.value })
                 }
               />
@@ -302,7 +302,7 @@ export default function HealthcareInsurancePage() {
               <input
                 className="ui-input"
                 value={claimForm.diagnosisCode}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setClaimForm({ ...claimForm, diagnosisCode: e.target.value })
                 }
               />
@@ -312,7 +312,7 @@ export default function HealthcareInsurancePage() {
               <input
                 className="ui-input"
                 value={claimForm.procedureCode}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setClaimForm({ ...claimForm, procedureCode: e.target.value })
                 }
               />

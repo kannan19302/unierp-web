@@ -98,30 +98,30 @@ export default function DashboardBuilderPage() {
       name,
       layout: [],
     });
-    setDashboards((prev) => [d, ...prev]);
+    setDashboards((prev: any) => [d, ...prev]);
     selectDashboard(d);
   };
 
   const addWidget = () => {
-    setWidgets((prev) => [...prev, newWidget()]);
+    setWidgets((prev: any) => [...prev, newWidget()]);
     setSaved(false);
   };
 
   const updateWidget = (id: string, patch: Partial<Widget>) => {
-    setWidgets((prev) =>
-      prev.map((w) => (w.id === id ? { ...w, ...patch } : w)),
+    setWidgets((prev: any) =>
+      prev.map((w: any) => (w.id === id ? { ...w, ...patch } : w)),
     );
     setSaved(false);
   };
 
   const removeWidget = (id: string) => {
-    setWidgets((prev) => prev.filter((w) => w.id !== id));
+    setWidgets((prev: any) => prev.filter((w: any) => w.id !== id));
     setSaved(false);
   };
 
   const onDrop = (targetIndex: number) => {
     if (dragIndex === null || dragIndex === targetIndex) return;
-    setWidgets((prev) => {
+    setWidgets((prev: any) => {
       const next = [...prev];
       const [moved] = next.splice(dragIndex, 1);
       if (moved) next.splice(targetIndex, 0, moved);
@@ -139,8 +139,8 @@ export default function DashboardBuilderPage() {
         layout: widgets,
       });
       setSaved(true);
-      setDashboards((prev) =>
-        prev.map((d) => (d.id === activeId ? { ...d, layout: widgets } : d)),
+      setDashboards((prev: any) =>
+        prev.map((d: any) => (d.id === activeId ? { ...d, layout: widgets } : d)),
       );
       setTimeout(() => setSaved(false), 2500);
     } catch {
@@ -160,7 +160,7 @@ export default function DashboardBuilderPage() {
   }
 
   const chartIcon = (t: Widget["chartType"]) =>
-    CHART_TYPES.find((c) => c.type === t)?.icon;
+    CHART_TYPES.find((c: any) => c.type === t)?.icon;
 
   return (
     <RouteGuard permission="analytics.dashboard.manage">
@@ -215,7 +215,7 @@ export default function DashboardBuilderPage() {
                 <Plus size={16} />
               </button>
             </div>
-            {dashboards.map((d) => (
+            {dashboards.map((d: any) => (
               <button
                 key={d.id}
                 onClick={() => selectDashboard(d)}
@@ -249,12 +249,12 @@ export default function DashboardBuilderPage() {
 
             {activeId && (
               <div className={styles.s12}>
-                {widgets.map((w, idx) => (
+                {widgets.map((w: any, idx: any) => (
                   <div
                     key={w.id}
                     draggable
                     onDragStart={() => setDragIndex(idx)}
-                    onDragOver={(e) => e.preventDefault()}
+                    onDragOver={(e: any) => e.preventDefault()}
                     onDrop={() => onDrop(idx)}
                     style={{
                       gridColumn: w.width === 2 ? "span 2" : "span 1",
@@ -266,7 +266,7 @@ export default function DashboardBuilderPage() {
                       <GripVertical size={16} className="ui-text-tertiary" />
                       <input
                         value={w.title}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateWidget(w.id, { title: e.target.value })
                         }
                         className={styles.s14}
@@ -280,7 +280,7 @@ export default function DashboardBuilderPage() {
                     </div>
 
                     <div className={styles.s15}>
-                      {CHART_TYPES.map((ct) => (
+                      {CHART_TYPES.map((ct: any) => (
                         <button
                           key={ct.type}
                           onClick={() =>
@@ -311,12 +311,12 @@ export default function DashboardBuilderPage() {
                     <div className={styles.s17}>
                       <select
                         value={w.source}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateWidget(w.id, { source: e.target.value })
                         }
                         className={styles.s18}
                       >
-                        {SOURCES.map((s) => (
+                        {SOURCES.map((s: any) => (
                           <option key={s} value={s}>
                             {s}
                           </option>

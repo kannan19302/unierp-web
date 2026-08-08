@@ -76,7 +76,7 @@ export default function SupplierPerformancePage() {
         "/supply-chain/supplier-performance/kpis",
         kpiForm,
       );
-      setKpis((prev) => [...prev, created]);
+      setKpis((prev: any) => [...prev, created]);
       setShowKpiForm(false);
       setKpiForm({
         name: "",
@@ -99,7 +99,7 @@ export default function SupplierPerformancePage() {
         "/supply-chain/supplier-performance/calculate",
         {},
       );
-      setScorecards((prev) => [created, ...prev]);
+      setScorecards((prev: any) => [created, ...prev]);
       setShowScoreModal(false);
     } catch {
       /* empty */
@@ -133,7 +133,7 @@ export default function SupplierPerformancePage() {
       header: "Actions",
       align: "right",
       render: (row: any) => (
-        <div className="ui-flex ui-gap-1" onClick={(e) => e.stopPropagation()}>
+        <div className="ui-flex ui-gap-1" onClick={(e: any) => e.stopPropagation()}>
           <button className="ui-btn-icon" title="Edit">
             <svg
               width="14"
@@ -192,9 +192,9 @@ export default function SupplierPerformancePage() {
   ];
 
   const filteredScorecards = vendorTrend
-    ? scorecards.filter((s) => s.vendor === vendorTrend)
+    ? scorecards.filter((s: any) => s.vendor === vendorTrend)
     : scorecards;
-  const vendors = [...new Set(scorecards.map((s) => s.vendor))];
+  const vendors = [...new Set(scorecards.map((s: any) => s.vendor))];
 
   if (loading)
     return (
@@ -261,10 +261,10 @@ export default function SupplierPerformancePage() {
             {vendors.length > 0 && (
               <Select
                 value={vendorTrend}
-                onChange={(e) => setVendorTrend(e.target.value)}
+                onChange={(e: any) => setVendorTrend(e.target.value)}
               >
                 <option value="">All Vendors</option>
-                {vendors.map((v) => (
+                {vendors.map((v: any) => (
                   <option key={v} value={v}>
                     {v}
                   </option>
@@ -311,12 +311,12 @@ export default function SupplierPerformancePage() {
               required
               placeholder="On-Time Delivery"
               value={kpiForm.name}
-              onChange={(e) => setKpiForm({ ...kpiForm, name: e.target.value })}
+              onChange={(e: any) => setKpiForm({ ...kpiForm, name: e.target.value })}
             />
             <FormField label="Category">
               <Select
                 value={kpiForm.category}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setKpiForm({ ...kpiForm, category: e.target.value })
                 }
               >
@@ -333,7 +333,7 @@ export default function SupplierPerformancePage() {
                 min={0}
                 step={0.1}
                 value={kpiForm.target || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setKpiForm({
                     ...kpiForm,
                     target: parseFloat(e.target.value) || 0,
@@ -346,7 +346,7 @@ export default function SupplierPerformancePage() {
                 min={0}
                 max={100}
                 value={kpiForm.weight || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setKpiForm({
                     ...kpiForm,
                     weight: parseFloat(e.target.value) || 0,
@@ -357,7 +357,7 @@ export default function SupplierPerformancePage() {
             <FormField label="Unit">
               <Select
                 value={kpiForm.unit}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setKpiForm({ ...kpiForm, unit: e.target.value })
                 }
               >

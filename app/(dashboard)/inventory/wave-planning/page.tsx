@@ -74,7 +74,7 @@ export default function WavePlanningPage() {
   };
 
   const filtered = data.filter(
-    (w) => !search || w.planNumber.toLowerCase().includes(search.toLowerCase()),
+    (w: any) => !search || w.planNumber.toLowerCase().includes(search.toLowerCase()),
   );
 
   const columns: Column<WavePlan>[] = [
@@ -128,7 +128,7 @@ export default function WavePlanningPage() {
         <TextField
           placeholder="Search wave plans..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           style={{ marginBottom: "1rem" }}
         />
         <DataTable
@@ -170,7 +170,7 @@ export default function WavePlanningPage() {
           <FormField label="Plan Type">
             <Select
               value={form.planType}
-              onChange={(e) => setForm({ ...form, planType: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, planType: e.target.value })}
             >
               <option value="PICK">Pick</option>
               <option value="PUTAWAY">Putaway</option>
@@ -180,7 +180,7 @@ export default function WavePlanningPage() {
           <FormField label="Optimization">
             <Select
               value={form.optimizationStrategy}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, optimizationStrategy: e.target.value })
               }
             >
@@ -193,7 +193,7 @@ export default function WavePlanningPage() {
           <TextField
             label="Notes"
             value={form.notes}
-            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
           />
         </form>
       </Modal>

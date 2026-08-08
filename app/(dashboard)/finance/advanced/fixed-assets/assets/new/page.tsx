@@ -91,8 +91,8 @@ export default function RegisterFixedAsset() {
 
   // Auto-fill configuration when category changes
   const handleCategoryChange = (catId: string) => {
-    const selectedCat = categories.find((c) => c.id === catId);
-    setFormData((prev) => ({
+    const selectedCat = categories.find((c: any) => c.id === catId);
+    setFormData((prev: any) => ({
       ...prev,
       categoryId: catId,
       depreciationMethod: selectedCat
@@ -189,7 +189,7 @@ export default function RegisterFixedAsset() {
                     className="ui-input"
                     placeholder="AST-IT-2026-0001"
                     value={formData.assetCode}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, assetCode: e.target.value })
                     }
                   />
@@ -202,7 +202,7 @@ export default function RegisterFixedAsset() {
                     className="ui-input"
                     placeholder="MacBook Pro 16 Inch"
                     value={formData.name}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
                   />
@@ -213,10 +213,10 @@ export default function RegisterFixedAsset() {
                   <select
                     className="ui-input"
                     value={formData.categoryId}
-                    onChange={(e) => handleCategoryChange(e.target.value)}
+                    onChange={(e: any) => handleCategoryChange(e.target.value)}
                   >
                     <option value="">Select Category (Optional)</option>
-                    {categories.map((cat) => (
+                    {categories.map((cat: any) => (
                       <option key={cat.id} value={cat.id}>
                         {cat.name}
                       </option>
@@ -231,7 +231,7 @@ export default function RegisterFixedAsset() {
                   className={`ui-input ${styles.s8}`}
                   placeholder="Specify brand, specs, serial number, etc..."
                   value={formData.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
                 />
@@ -252,7 +252,7 @@ export default function RegisterFixedAsset() {
                     required
                     className="ui-input"
                     value={formData.purchaseDate}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, purchaseDate: e.target.value })
                     }
                   />
@@ -269,7 +269,7 @@ export default function RegisterFixedAsset() {
                     className="ui-input"
                     placeholder="2500.00"
                     value={formData.purchaseValue}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({
                         ...formData,
                         purchaseValue: e.target.value,
@@ -286,7 +286,7 @@ export default function RegisterFixedAsset() {
                     className="ui-input"
                     placeholder="100.00"
                     value={formData.salvageValue}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, salvageValue: e.target.value })
                     }
                   />
@@ -301,7 +301,7 @@ export default function RegisterFixedAsset() {
                   <select
                     className="ui-input"
                     value={formData.depreciationMethod}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({
                         ...formData,
                         depreciationMethod: e.target.value,
@@ -323,7 +323,7 @@ export default function RegisterFixedAsset() {
                     className="ui-input"
                     placeholder="3"
                     value={formData.usefulLifeYears}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({
                         ...formData,
                         usefulLifeYears: e.target.value,
@@ -342,7 +342,7 @@ export default function RegisterFixedAsset() {
                     className="ui-input"
                     placeholder="20"
                     value={formData.depreciationRate}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({
                         ...formData,
                         depreciationRate: e.target.value,
@@ -368,14 +368,14 @@ export default function RegisterFixedAsset() {
                     required
                     className="ui-input"
                     value={formData.accountId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, accountId: e.target.value })
                     }
                   >
                     <option value="">Select Asset Account</option>
                     {accounts
-                      .filter((a) => a.type === "ASSET")
-                      .map((acc) => (
+                      .filter((a: any) => a.type === "ASSET")
+                      .map((acc: any) => (
                         <option key={acc.id} value={acc.id}>
                           {acc.code} - {acc.name}
                         </option>
@@ -391,7 +391,7 @@ export default function RegisterFixedAsset() {
                     required
                     className="ui-input"
                     value={formData.accumDepAccountId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({
                         ...formData,
                         accumDepAccountId: e.target.value,
@@ -400,8 +400,8 @@ export default function RegisterFixedAsset() {
                   >
                     <option value="">Select Contra Account</option>
                     {accounts
-                      .filter((a) => a.type === "ASSET")
-                      .map((acc) => (
+                      .filter((a: any) => a.type === "ASSET")
+                      .map((acc: any) => (
                         <option key={acc.id} value={acc.id}>
                           {acc.code} - {acc.name}
                         </option>
@@ -418,12 +418,12 @@ export default function RegisterFixedAsset() {
                   <select
                     className="ui-input"
                     value={formData.locationId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, locationId: e.target.value })
                     }
                   >
                     <option value="">Corporate / In-Transit Store</option>
-                    {warehouses.map((w) => (
+                    {warehouses.map((w: any) => (
                       <option key={w.id} value={w.id}>
                         {w.name} ({w.code})
                       </option>
@@ -436,12 +436,12 @@ export default function RegisterFixedAsset() {
                   <select
                     className="ui-input"
                     value={formData.custodianId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setFormData({ ...formData, custodianId: e.target.value })
                     }
                   >
                     <option value="">General Corporate Custody</option>
-                    {employees.map((emp) => (
+                    {employees.map((emp: any) => (
                       <option key={emp.id} value={emp.id}>
                         {emp.firstName} {emp.lastName} ({emp.employeeId})
                       </option>

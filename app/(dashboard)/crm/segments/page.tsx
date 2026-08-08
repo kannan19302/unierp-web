@@ -134,7 +134,7 @@ export default function SegmentsPage() {
   };
 
   const addRule = () =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
       criteria: {
         ...prev.criteria,
@@ -145,21 +145,21 @@ export default function SegmentsPage() {
       },
     }));
   const updateRule = (idx: number, patch: Partial<CriteriaRow>) =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
       criteria: {
         ...prev.criteria,
-        rules: prev.criteria.rules.map((r, i) =>
+        rules: prev.criteria.rules.map((r: any, i: any) =>
           i === idx ? { ...r, ...patch } : r,
         ),
       },
     }));
   const removeRule = (idx: number) =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
       criteria: {
         ...prev.criteria,
-        rules: prev.criteria.rules.filter((_, i) => i !== idx),
+        rules: prev.criteria.rules.filter((_: any, i: any) => i !== idx),
       },
     }));
 
@@ -207,7 +207,7 @@ export default function SegmentsPage() {
         </Card>
       ) : (
         <div className={styles.segmentGrid}>
-          {segments.map((s) => (
+          {segments.map((s: any) => (
             <Card key={s.id} padding="md">
               <div className={styles.segmentHeader}>
                 <Link
@@ -266,7 +266,7 @@ export default function SegmentsPage() {
                 style={inputStyle}
                 required
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
             </div>
             <div>
@@ -275,7 +275,7 @@ export default function SegmentsPage() {
                 style={{ ...inputStyle }}
                 className={styles.s1}
                 value={form.description ?? ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, description: e.target.value })
                 }
               />
@@ -286,7 +286,7 @@ export default function SegmentsPage() {
                 <select
                   style={inputStyle}
                   value={form.entity}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       entity: e.target.value as Segment["entity"],
@@ -303,7 +303,7 @@ export default function SegmentsPage() {
                 <select
                   style={inputStyle}
                   value={form.criteria.logic}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       criteria: {
@@ -321,16 +321,16 @@ export default function SegmentsPage() {
             <div>
               <label style={labelStyle}>Criteria</label>
               <div className="ui-stack-2">
-                {form.criteria.rules.map((r, idx) => (
+                {form.criteria.rules.map((r: any, idx: any) => (
                   <div key={idx} className={styles.ruleRow}>
                     <select
                       style={inputStyle}
                       value={r.field}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateRule(idx, { field: e.target.value })
                       }
                     >
-                      {CUSTOMER_FIELDS.map((f) => (
+                      {CUSTOMER_FIELDS.map((f: any) => (
                         <option key={f} value={f}>
                           {f}
                         </option>
@@ -339,11 +339,11 @@ export default function SegmentsPage() {
                     <select
                       style={inputStyle}
                       value={r.op}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateRule(idx, { op: e.target.value as CriteriaOp })
                       }
                     >
-                      {OPS.map((op) => (
+                      {OPS.map((op: any) => (
                         <option key={op} value={op}>
                           {op}
                         </option>
@@ -353,7 +353,7 @@ export default function SegmentsPage() {
                       style={inputStyle}
                       value={r.value}
                       placeholder="value"
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateRule(idx, { value: e.target.value })
                       }
                     />

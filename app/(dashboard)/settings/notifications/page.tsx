@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import React, { useState, useEffect } from "react";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
@@ -40,7 +40,7 @@ const DEFAULTS: Omit<PrefRow, "category"> = {
 export default function NotificationPreferencesPage() {
   const client = useApiClient();
   const [prefs, setPrefs] = useState<PrefRow[]>(
-    CATEGORIES.map((c) => ({ category: c, ...DEFAULTS })),
+    CATEGORIES.map((c: any) => ({ category: c, ...DEFAULTS })),
   );
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -61,7 +61,7 @@ export default function NotificationPreferencesPage() {
   }, [client]);
 
   const toggle = (catIdx: number, channel: string) => {
-    setPrefs((prev) => {
+    setPrefs((prev: any) => {
       const next = [...prev];
       const row = next[catIdx];
       if (row) {
@@ -96,7 +96,7 @@ export default function NotificationPreferencesPage() {
   };
 
   const resetDefaults = () => {
-    setPrefs(CATEGORIES.map((c) => ({ category: c, ...DEFAULTS })));
+    setPrefs(CATEGORIES.map((c: any) => ({ category: c, ...DEFAULTS })));
     setSaved(false);
   };
 
@@ -131,7 +131,7 @@ export default function NotificationPreferencesPage() {
             <>{(() => {
               const dataTableColumns = [
                 { key: "category", header: "Category", render: (row: any) => <>{row.category}</> },
-                ...CHANNELS.map(ch => ({
+                ...CHANNELS.map((ch: any) => ({
                   key: ch.key,
                   header: ch.label,
                   render: (row: any, idx: number) => {

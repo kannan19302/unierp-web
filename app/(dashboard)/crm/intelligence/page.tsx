@@ -168,7 +168,7 @@ export default function CrmIntelligencePage() {
         />
 
         <div className={`ui-grid-4 ${styles.kpiGrid}`}>
-          {cards.map((card) => (
+          {cards.map((card: any) => (
             <Link
               key={card.title}
               href={card.href}
@@ -194,7 +194,7 @@ export default function CrmIntelligencePage() {
           </div>
           <div className="ui-card-body">
             <div className="ui-grid-4">
-              {features.map((f) => (
+              {features.map((f: any) => (
                 <Link key={f.name} href={f.href} className={styles.featureLink}>
                   <div className={`ui-card ${styles.featureCard}`}>
                     <div className={styles.featureHeader}>

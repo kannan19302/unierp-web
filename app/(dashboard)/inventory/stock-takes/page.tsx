@@ -195,7 +195,7 @@ export default function StockTakesPage() {
       )}
 
       <div className="flex gap-2 border-b mb-6 flex-wrap">
-        {tabs.map((t) => (
+        {tabs.map((t: any) => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
@@ -223,7 +223,7 @@ export default function StockTakesPage() {
                 value: dashboard.variances.pending,
               },
               { label: "Posted", value: dashboard.byStatus.posted ?? 0 },
-            ].map((c) => (
+            ].map((c: any) => (
               <div key={c.label} className="bg-white border rounded-lg p-4">
                 <div className="text-2xl font-bold">{c.value}</div>
                 <div className="text-sm text-gray-500 mt-1">{c.label}</div>
@@ -233,7 +233,7 @@ export default function StockTakesPage() {
           <div className="bg-white border rounded-lg p-4">
             <h3 className="font-medium mb-3">By Status</h3>
             <div className="grid grid-cols-3 md:grid-cols-7 gap-2">
-              {Object.entries(dashboard.byStatus).map(([key, val]) => (
+              {Object.entries(dashboard.byStatus).map(([key, val]: any) => (
                 <div
                   key={key}
                   className={`rounded-lg p-2 text-center ${
@@ -277,35 +277,35 @@ export default function StockTakesPage() {
                 <input
                   placeholder="Warehouse ID*"
                   value={form.warehouseId}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, warehouseId: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, warehouseId: e.target.value }))
                   }
                   className="border rounded px-3 py-2 text-sm"
                 />
                 <input
                   type="date"
                   value={form.countDate}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, countDate: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, countDate: e.target.value }))
                   }
                   className="border rounded px-3 py-2 text-sm"
                 />
                 <select
                   value={form.countType}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, countType: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, countType: e.target.value }))
                   }
                   className="border rounded px-3 py-2 text-sm"
                 >
-                  {["FULL", "ZONE", "CATEGORY"].map((t) => (
+                  {["FULL", "ZONE", "CATEGORY"].map((t: any) => (
                     <option key={t}>{t}</option>
                   ))}
                 </select>
                 <input
                   placeholder="Notes"
                   value={form.notes}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, notes: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, notes: e.target.value }))
                   }
                   className="border rounded px-3 py-2 text-sm"
                 />
@@ -365,7 +365,7 @@ export default function StockTakesPage() {
                 {
                   key: "id",
                   header: "Variances",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <button
                       onClick={() => {
                         setTab("variances");
@@ -380,7 +380,7 @@ export default function StockTakesPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.s1}>
                       {row.status === "DRAFT" && (
                         <button
@@ -507,7 +507,7 @@ export default function StockTakesPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) =>
+                    render: (v: any, row: any) =>
                       row.status === "PENDING" ? (
                         <div className={styles.s2}>
                           <button

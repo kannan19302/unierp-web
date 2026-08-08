@@ -42,7 +42,7 @@ export default function NewSubscriptionPage() {
   };
 
   const handleRemoveLine = (idx: number) => {
-    setLines(lines.filter((_, i) => i !== idx));
+    setLines(lines.filter((_: any, i: any) => i !== idx));
   };
 
   const handleLineChange = (
@@ -75,7 +75,7 @@ export default function NewSubscriptionPage() {
         billingCycles: form.billingCycles
           ? Number(form.billingCycles)
           : undefined,
-        lines: lines.map((l) => ({
+        lines: lines.map((l: any) => ({
           description: l.description,
           unitAmount: Number(l.unitAmount),
           quantity: Number(l.quantity),
@@ -122,7 +122,7 @@ export default function NewSubscriptionPage() {
                 type="text"
                 placeholder="e.g. Enterprise SaaS Plan"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 required
               />
             </FormField>
@@ -131,7 +131,7 @@ export default function NewSubscriptionPage() {
                 type="text"
                 placeholder="Details of the subscription"
                 value={form.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, description: e.target.value })
                 }
               />
@@ -141,7 +141,7 @@ export default function NewSubscriptionPage() {
                 type="text"
                 placeholder="ID of the Customer"
                 value={form.customerId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, customerId: e.target.value })
                 }
               />
@@ -151,7 +151,7 @@ export default function NewSubscriptionPage() {
                 type="text"
                 placeholder="ID of the primary Product"
                 value={form.productId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, productId: e.target.value })
                 }
               />
@@ -167,7 +167,7 @@ export default function NewSubscriptionPage() {
             <FormField label="Currency">
               <Select
                 value={form.currency}
-                onChange={(e) => setForm({ ...form, currency: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, currency: e.target.value })}
               >
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
@@ -181,7 +181,7 @@ export default function NewSubscriptionPage() {
                 min="0"
                 step="0.01"
                 value={form.unitAmount}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, unitAmount: Number(e.target.value) })
                 }
                 required
@@ -192,7 +192,7 @@ export default function NewSubscriptionPage() {
                 type="number"
                 min="1"
                 value={form.quantity}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, quantity: Number(e.target.value) })
                 }
               />
@@ -200,7 +200,7 @@ export default function NewSubscriptionPage() {
             <FormField label="Billing Period">
               <Select
                 value={form.billingPeriod}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, billingPeriod: e.target.value })
                 }
               >
@@ -217,7 +217,7 @@ export default function NewSubscriptionPage() {
                 min="1"
                 placeholder="Infinite"
                 value={form.billingCycles}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, billingCycles: e.target.value })
                 }
               />
@@ -226,7 +226,7 @@ export default function NewSubscriptionPage() {
               <Input
                 type="date"
                 value={form.startDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
                 required
@@ -236,7 +236,7 @@ export default function NewSubscriptionPage() {
               <Input
                 type="date"
                 value={form.trialEndDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, trialEndDate: e.target.value })
                 }
               />
@@ -267,7 +267,7 @@ export default function NewSubscriptionPage() {
             </p>
           ) : (
             <div className="space-y-3">
-              {lines.map((line, idx) => (
+              {lines.map((line: any, idx: any) => (
                 <div
                   key={idx}
                   className="flex items-center gap-3 border p-3 rounded-lg bg-slate-50"
@@ -278,7 +278,7 @@ export default function NewSubscriptionPage() {
                         type="text"
                         placeholder="e.g. Hosting add-on"
                         value={line.description}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleLineChange(idx, "description", e.target.value)
                         }
                         required
@@ -292,7 +292,7 @@ export default function NewSubscriptionPage() {
                         min="0"
                         step="0.01"
                         value={line.unitAmount}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleLineChange(
                             idx,
                             "unitAmount",
@@ -309,7 +309,7 @@ export default function NewSubscriptionPage() {
                         type="number"
                         min="1"
                         value={line.quantity}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleLineChange(
                             idx,
                             "quantity",
@@ -326,7 +326,7 @@ export default function NewSubscriptionPage() {
                         type="number"
                         min="0"
                         value={line.taxRate}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleLineChange(
                             idx,
                             "taxRate",

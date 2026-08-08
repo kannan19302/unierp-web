@@ -163,7 +163,7 @@ export default function SalesIntelligencePage() {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "12px" }}
           >
-            {signals.map((sig) => (
+            {signals.map((sig: any) => (
               <div
                 key={sig.id}
                 style={{

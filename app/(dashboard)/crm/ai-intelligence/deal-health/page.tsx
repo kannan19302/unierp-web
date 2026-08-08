@@ -48,7 +48,7 @@ export default function DealHealthPage() {
             <input
               className="ui-input"
               value={oppId}
-              onChange={(e) => setOppId(e.target.value)}
+              onChange={(e: any) => setOppId(e.target.value)}
               placeholder="Enter opportunity ID"
             />
           </div>

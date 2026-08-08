@@ -185,7 +185,7 @@ export default function LeavesPage() {
   };
 
   const getEmpName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -228,7 +228,7 @@ export default function LeavesPage() {
               </div>
               <div>
                 <div className="ui-heading-lg">
-                  {requests.filter((r) => r.status === "PENDING").length}
+                  {requests.filter((r: any) => r.status === "PENDING").length}
                 </div>
                 <div className="ui-text-xs-muted">Pending Requests</div>
               </div>
@@ -242,7 +242,7 @@ export default function LeavesPage() {
               </div>
               <div>
                 <div className="ui-heading-lg">
-                  {requests.filter((r) => r.status === "APPROVED").length}
+                  {requests.filter((r: any) => r.status === "APPROVED").length}
                 </div>
                 <div className="ui-text-xs-muted">Total Approved Requests</div>
               </div>
@@ -280,7 +280,7 @@ export default function LeavesPage() {
                 className="ui-input"
                 placeholder="Policy Name (e.g. Sabbatical Leave)"
                 value={policyForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPolicyForm({ ...policyForm, name: e.target.value })
                 }
                 required
@@ -289,7 +289,7 @@ export default function LeavesPage() {
                 <select
                   className="ui-input"
                   value={policyForm.leaveType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setPolicyForm({ ...policyForm, leaveType: e.target.value })
                   }
                 >
@@ -304,7 +304,7 @@ export default function LeavesPage() {
                   className="ui-input"
                   placeholder="Allocation Days (e.g. 15)"
                   value={policyForm.annualAllocation}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setPolicyForm({
                       ...policyForm,
                       annualAllocation: e.target.value,
@@ -317,7 +317,7 @@ export default function LeavesPage() {
                   className="ui-input"
                   placeholder="Carry Limit Days (e.g. 5)"
                   value={policyForm.carryForwardLimit}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setPolicyForm({
                       ...policyForm,
                       carryForwardLimit: e.target.value,
@@ -349,13 +349,13 @@ export default function LeavesPage() {
               <select
                 className="ui-input"
                 value={requestForm.employeeId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRequestForm({ ...requestForm, employeeId: e.target.value })
                 }
                 required
               >
                 <option value="">Select Employee</option>
-                {employees.map((e) => (
+                {employees.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.firstName} {e.lastName}
                   </option>
@@ -364,13 +364,13 @@ export default function LeavesPage() {
               <select
                 className="ui-input"
                 value={requestForm.policyId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRequestForm({ ...requestForm, policyId: e.target.value })
                 }
                 required
               >
                 <option value="">Select Leave Policy</option>
-                {policies.map((p) => (
+                {policies.map((p: any) => (
                   <option key={p.id} value={p.id}>
                     {p.name} ({p.annualAllocation} days)
                   </option>
@@ -383,7 +383,7 @@ export default function LeavesPage() {
                     type="date"
                     className="ui-input"
                     value={requestForm.startDate}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRequestForm({
                         ...requestForm,
                         startDate: e.target.value,
@@ -398,7 +398,7 @@ export default function LeavesPage() {
                     type="date"
                     className="ui-input"
                     value={requestForm.endDate}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRequestForm({
                         ...requestForm,
                         endDate: e.target.value,
@@ -412,7 +412,7 @@ export default function LeavesPage() {
                 className="ui-input"
                 placeholder="Reason for Leave"
                 value={requestForm.reason}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRequestForm({ ...requestForm, reason: e.target.value })
                 }
                 rows={3}
@@ -448,7 +448,7 @@ export default function LeavesPage() {
               {/* Filter Tabs */}
               <div className={styles.filters}>
                 {(["ALL", "PENDING", "APPROVED", "REJECTED"] as const).map(
-                  (tab) => (
+                  (tab: any) => (
                     <button
                       key={tab}
                       type="button"
@@ -458,7 +458,7 @@ export default function LeavesPage() {
                       {tab} (
                       {tab === "ALL"
                         ? requests.length
-                        : requests.filter((r) => r.status === tab).length}
+                        : requests.filter((r: any) => r.status === tab).length}
                       )
                     </button>
                   ),
@@ -466,7 +466,7 @@ export default function LeavesPage() {
               </div>
 
               {requests.filter(
-                (req) => statusFilter === "ALL" || req.status === statusFilter,
+                (req: any) => statusFilter === "ALL" || req.status === statusFilter,
               ).length === 0 ? (
                 <Card>
                   <div className={styles.emptyState}>
@@ -477,10 +477,10 @@ export default function LeavesPage() {
               ) : (
                 requests
                   .filter(
-                    (req) =>
+                    (req: any) =>
                       statusFilter === "ALL" || req.status === statusFilter,
                   )
-                  .map((req) => (
+                  .map((req: any) => (
                     <Card key={req.id} padding="md">
                       <div className="ui-flex-between mb-2">
                         <div>
@@ -538,7 +538,7 @@ export default function LeavesPage() {
                       {
                         key: "policyName",
                         header: "Policy",
-                        render: (v, row) => {
+                        render: (v: any, row: any) => {
                           const bal = row as unknown as LeaveBalance;
                           return (
                             <div>

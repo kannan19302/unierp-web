@@ -110,7 +110,7 @@ export default function MaintenanceModeTab() {
               <label className="ui-label">Maintenance Display Message</label>
               <textarea
                 value={maintenance.message}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setMaintenance({ ...maintenance, message: e.target.value })
                 }
                 required

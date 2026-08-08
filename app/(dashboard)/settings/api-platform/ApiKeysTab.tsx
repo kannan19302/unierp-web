@@ -62,7 +62,7 @@ export default function ApiKeysTab() {
         rateLimit: newRate,
         scopes: newScopes,
       });
-      setKeys((prev) => [...prev, data]);
+      setKeys((prev: any) => [...prev, data]);
     } catch {
       /* handled */
     } finally {
@@ -94,7 +94,7 @@ export default function ApiKeysTab() {
                 {row.prefix}...
               </code>
               <button
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   handleCopy(row.prefix);
                 }}
@@ -117,7 +117,7 @@ export default function ApiKeysTab() {
       header: "Scopes",
       render: (row: any) => (
         <div className={styles.s3}>
-          {row.scopes.slice(0, 2).map((s) => (
+          {row.scopes.slice(0, 2).map((s: any) => (
             <Badge key={s} variant="info">
               {s.split(".").pop()}
             </Badge>
@@ -158,7 +158,7 @@ export default function ApiKeysTab() {
       width: "60px",
       render: (row: any) => (
         <button
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             setDeleteTarget(row);
           }}
@@ -224,12 +224,12 @@ export default function ApiKeysTab() {
             placeholder="e.g. Production Integration"
             required
             value={newName}
-            onChange={(e) => setNewName(e.target.value)}
+            onChange={(e: any) => setNewName(e.target.value)}
           />
           <FormField label="Rate Limit (requests/minute)">
             <Select
               value={newRate}
-              onChange={(e) => setNewRate(Number(e.target.value))}
+              onChange={(e: any) => setNewRate(Number(e.target.value))}
             >
               <option value={60}>60/min</option>
               <option value={120}>120/min</option>
@@ -240,16 +240,16 @@ export default function ApiKeysTab() {
           </FormField>
           <FormField label="Scopes" required>
             <div className={styles.s5}>
-              {SCOPES.map((scope) => (
+              {SCOPES.map((scope: any) => (
                 <label key={scope.value} className={styles.s6}>
                   <input
                     type="checkbox"
                     checked={newScopes.includes(scope.value)}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       setNewScopes(
                         e.target.checked
                           ? [...newScopes, scope.value]
-                          : newScopes.filter((s) => s !== scope.value),
+                          : newScopes.filter((s: any) => s !== scope.value),
                       );
                     }}
                     className={styles.s7}
@@ -267,7 +267,7 @@ export default function ApiKeysTab() {
         open={!!deleteTarget}
         onClose={() => setDeleteTarget(null)}
         onConfirm={() => {
-          setKeys(keys.filter((k) => k.id !== deleteTarget?.id));
+          setKeys(keys.filter((k: any) => k.id !== deleteTarget?.id));
           setDeleteTarget(null);
         }}
         title="Revoke API Key"

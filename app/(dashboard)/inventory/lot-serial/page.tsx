@@ -107,7 +107,7 @@ function DashboardTab() {
       apiFetch("/inventory/lot-serial/dashboard"),
       apiFetch("/inventory/lot-serial/expiry-report"),
     ])
-      .then(([d, e]) => {
+      .then(([d, e]: any) => {
         setData(d);
         setExpiry(e);
       })
@@ -231,7 +231,7 @@ function BatchesTab() {
   return (
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
-        {["", "ACTIVE", "QUARANTINE", "EXPIRED", "EXHAUSTED"].map((s) => (
+        {["", "ACTIVE", "QUARANTINE", "EXPIRED", "EXHAUSTED"].map((s: any) => (
           <button
             key={s}
             onClick={() => setStatus(s)}
@@ -304,7 +304,7 @@ function SerialsTab() {
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
         {["", "AVAILABLE", "RESERVED", "SOLD", "RETURNED", "SCRAPPED"].map(
-          (s) => (
+          (s: any) => (
             <button
               key={s}
               onClick={() => setStatus(s)}
@@ -375,7 +375,7 @@ function PickSuggestionsTab() {
   return (
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
-        {["", "PENDING", "CONFIRMED", "CANCELLED"].map((s) => (
+        {["", "PENDING", "CONFIRMED", "CANCELLED"].map((s: any) => (
           <button
             key={s}
             onClick={() => setStatus(s)}
@@ -513,7 +513,7 @@ function QuarantineTab() {
   return (
     <div>
       <div className="flex gap-2 mb-4 flex-wrap">
-        {["", "ACTIVE", "RELEASED", "SCRAPPED"].map((s) => (
+        {["", "ACTIVE", "RELEASED", "SCRAPPED"].map((s: any) => (
           <button
             key={s}
             onClick={() => setStatus(s)}
@@ -591,7 +591,7 @@ export default function LotSerialPage() {
 
         <div className="border-b border-gray-200 dark:border-gray-700 mb-6">
           <nav className="flex gap-0 -mb-px overflow-x-auto">
-            {TABS.map((t) => (
+            {TABS.map((t: any) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}

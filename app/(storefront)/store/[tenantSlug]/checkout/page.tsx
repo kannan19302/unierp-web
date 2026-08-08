@@ -233,8 +233,8 @@ export default function CheckoutPage() {
                   label="Full Name"
                   required
                   value={form.customerName}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, customerName: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, customerName: e.target.value }))
                   }
                   error={formErrors.customerName}
                 />
@@ -243,16 +243,16 @@ export default function CheckoutPage() {
                   type="email"
                   required
                   value={form.customerEmail}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, customerEmail: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, customerEmail: e.target.value }))
                   }
                   error={formErrors.customerEmail}
                 />
                 <TextField
                   label="Phone (optional)"
                   value={form.customerPhone}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, customerPhone: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, customerPhone: e.target.value }))
                   }
                 />
 
@@ -261,8 +261,8 @@ export default function CheckoutPage() {
                   label="Street Address"
                   required
                   value={form.street}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, street: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, street: e.target.value }))
                   }
                   error={formErrors.street}
                 />
@@ -271,8 +271,8 @@ export default function CheckoutPage() {
                     label="City"
                     required
                     value={form.city}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, city: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, city: e.target.value }))
                     }
                     error={formErrors.city}
                   />
@@ -280,8 +280,8 @@ export default function CheckoutPage() {
                     label="State / Province"
                     required
                     value={form.state}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, state: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, state: e.target.value }))
                     }
                     error={formErrors.state}
                   />
@@ -291,8 +291,8 @@ export default function CheckoutPage() {
                     label="Postal Code"
                     required
                     value={form.zip}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, zip: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, zip: e.target.value }))
                     }
                     error={formErrors.zip}
                   />
@@ -301,8 +301,8 @@ export default function CheckoutPage() {
                     required
                     maxLength={2}
                     value={form.country}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         country: e.target.value.toUpperCase(),
                       }))
@@ -314,8 +314,8 @@ export default function CheckoutPage() {
                 <FormField label="Order Notes (optional)">
                   <Textarea
                     value={form.notes}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, notes: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, notes: e.target.value }))
                     }
                   />
                 </FormField>
@@ -341,7 +341,7 @@ export default function CheckoutPage() {
           <Card>
             <div className={styles.s25}>
               <h3 className={styles.s20}>Order Summary</h3>
-              {cart.items.map((item) => (
+              {cart.items.map((item: any) => (
                 <div key={item.id} className={styles.s26}>
                   <span>
                     {item.productName} × {item.quantity}

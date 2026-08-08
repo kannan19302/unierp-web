@@ -101,7 +101,7 @@ export default function EducationGradebooksPage() {
               <select
                 className="ui-input"
                 value={form.courseId}
-                onChange={(e) => setForm({ ...form, courseId: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, courseId: e.target.value })}
               >
                 <option value="">Select</option>
                 {courses.map((c: any) => (
@@ -116,7 +116,7 @@ export default function EducationGradebooksPage() {
               <input
                 className="ui-input"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g. Midterm Exam"
               />
             </div>
@@ -126,7 +126,7 @@ export default function EducationGradebooksPage() {
                 className="ui-input"
                 type="number"
                 value={form.maxScore}
-                onChange={(e) => setForm({ ...form, maxScore: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, maxScore: e.target.value })}
               />
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function EducationGradebooksPage() {
         <select
           className="ui-input w-56"
           value={courseFilter}
-          onChange={(e) => setCourseFilter(e.target.value)}
+          onChange={(e: any) => setCourseFilter(e.target.value)}
         >
           <option value="">All Courses</option>
           {courses.map((c: any) => (
@@ -201,7 +201,7 @@ export default function EducationGradebooksPage() {
                                                         className="ui-input w-20"
                                                         type="number"
                                                         defaultValue={e.score}
-                                                        onBlur={(ev) =>
+                                                        onBlur={(ev: any) =>
                                                           upsertEntry(
                                                             selectedGb.id,
                                                             e.studentId,

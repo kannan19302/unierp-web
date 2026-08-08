@@ -62,7 +62,7 @@ export default function CatalogPage() {
         expression: newItem.expression,
         unit: newItem.unit || undefined,
         dimensions: newItem.dimensionsStr
-          ? newItem.dimensionsStr.split(",").map((s) => s.trim())
+          ? newItem.dimensionsStr.split(",").map((s: any) => s.trim())
           : [],
         isActive: newItem.isActive === "true",
       });
@@ -115,8 +115,8 @@ export default function CatalogPage() {
 
         <div className="ui-grid-3">
           {["FINANCE", "SALES", "HR", "OPERATIONS", "INVENTORY", "CRM"].map(
-            (cat) => {
-              const count = metrics.filter((m) => m.category === cat).length;
+            (cat: any) => {
+              const count = metrics.filter((m: any) => m.category === cat).length;
               return (
                 count > 0 && (
                   <Card key={cat} className="p-4">
@@ -146,7 +146,7 @@ export default function CatalogPage() {
                                 { key: "col_2", header: "Source" , render: (m: any) => (<>{m.source}</>) },
                                 { key: "col_3", header: "Expression" , render: (m: any) => (<>{m.expression}</>) },
                                 { key: "col_4", header: "Dimensions" , render: (m: any) => (<><div className="ui-hstack-2">
-                                                        {m.dimensions?.map((d, i) => (
+                                                        {m.dimensions?.map((d: any, i: any) => (
                                                           <span
                                                             key={i}
                                                             className="ui-badge-secondary text-xs px-1.5 py-0.5 rounded"
@@ -186,7 +186,7 @@ export default function CatalogPage() {
                 className="ui-input"
                 placeholder="Metric name"
                 value={newItem.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, name: e.target.value })
                 }
               />
@@ -194,7 +194,7 @@ export default function CatalogPage() {
                 className="ui-input"
                 placeholder="Description"
                 value={newItem.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, description: e.target.value })
                 }
               />
@@ -202,7 +202,7 @@ export default function CatalogPage() {
                 <select
                   className="ui-input flex-1"
                   value={newItem.category}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewItem({ ...newItem, category: e.target.value })
                   }
                 >
@@ -216,7 +216,7 @@ export default function CatalogPage() {
                 <select
                   className="ui-input flex-1"
                   value={newItem.source}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewItem({ ...newItem, source: e.target.value })
                   }
                 >
@@ -232,7 +232,7 @@ export default function CatalogPage() {
                 className="ui-input font-mono"
                 placeholder="Expression (e.g. SUM(amount))"
                 value={newItem.expression}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, expression: e.target.value })
                 }
               />
@@ -240,7 +240,7 @@ export default function CatalogPage() {
                 className="ui-input"
                 placeholder="Unit (e.g. USD, units)"
                 value={newItem.unit}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, unit: e.target.value })
                 }
               />
@@ -248,7 +248,7 @@ export default function CatalogPage() {
                 className="ui-input"
                 placeholder="Dimensions (comma-separated, e.g. region, department)"
                 value={newItem.dimensionsStr}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, dimensionsStr: e.target.value })
                 }
               />

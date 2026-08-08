@@ -93,7 +93,7 @@ export default function EcommerceShippingPage() {
               className="ui-input"
               placeholder="Store ID"
               value={storeId}
-              onChange={(e) => setStoreId(e.target.value)}
+              onChange={(e: any) => setStoreId(e.target.value)}
             />
             <button
               className="ui-btn"
@@ -160,14 +160,14 @@ export default function EcommerceShippingPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Add"} Shipping Zone</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -175,12 +175,12 @@ export default function EcommerceShippingPage() {
                 <input
                   className="ui-input"
                   value={form.countries.join(",")}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       countries: e.target.value
                         .split(",")
-                        .map((s) => s.trim())
+                        .map((s: any) => s.trim())
                         .filter(Boolean),
                     })
                   }
@@ -205,14 +205,14 @@ export default function EcommerceShippingPage() {
             className="ui-modal-overlay"
             onClick={() => setShowRateModal(false)}
           >
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Add Shipping Rate</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={rateForm.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRateForm({ ...rateForm, name: e.target.value })
                   }
                 />
@@ -223,7 +223,7 @@ export default function EcommerceShippingPage() {
                   type="number"
                   className="ui-input"
                   value={rateForm.baseRate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRateForm({
                       ...rateForm,
                       baseRate: Number(e.target.value),

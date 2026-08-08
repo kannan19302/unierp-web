@@ -170,10 +170,10 @@ export default function POSPage() {
 
   // Cart Management
   const addToCart = (product: POSProduct) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
+    setCart((prev: any) => {
+      const existing = prev.find((item: any) => item.id === product.id);
       if (existing) {
-        return prev.map((item) =>
+        return prev.map((item: any) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item,
@@ -184,8 +184,8 @@ export default function POSPage() {
   };
 
   const updateQuantity = (id: string, amount: number) => {
-    setCart((prev) =>
-      prev.map((item) => {
+    setCart((prev: any) =>
+      prev.map((item: any) => {
         if (item.id === id) {
           const nextQty = item.quantity + amount;
           return nextQty > 0 ? { ...item, quantity: nextQty } : item;
@@ -196,12 +196,12 @@ export default function POSPage() {
   };
 
   const removeFromCart = (id: string) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCart((prev: any) => prev.filter((item: any) => item.id !== id));
   };
 
   const getSubtotal = () =>
     cart.reduce(
-      (acc, item) => acc + parseFloat(item.sellPrice) * item.quantity,
+      (acc: any, item: any) => acc + parseFloat(item.sellPrice) * item.quantity,
       0,
     );
   const getTax = () => getSubtotal() * 0.1;
@@ -210,14 +210,14 @@ export default function POSPage() {
   const handleCheckout = () => {
     if (cart.length === 0) return;
     const finalTotal = getTotal();
-    const finalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+    const finalCount = cart.reduce((acc: any, item: any) => acc + item.quantity, 0);
 
     // Add to history
     const nowStr = new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     });
-    setSalesHistory((prev) => [
+    setSalesHistory((prev: any) => [
       ...prev,
       {
         id: Date.now().toString(),
@@ -233,32 +233,32 @@ export default function POSPage() {
 
   // Computations
   const totalSalesRevenue = useMemo(
-    () => salesHistory.reduce((sum, s) => sum + s.total, 0),
+    () => salesHistory.reduce((sum: any, s: any) => sum + s.total, 0),
     [salesHistory],
   );
   const totalItemsSold = useMemo(
-    () => salesHistory.reduce((sum, s) => sum + s.itemsCount, 0),
+    () => salesHistory.reduce((sum: any, s: any) => sum + s.itemsCount, 0),
     [salesHistory],
   );
   const drawerBalance = startingCash + totalSalesRevenue;
 
   // Chart data
   const hourlySalesData = useMemo(() => {
-    return salesHistory.map((s) => ({
+    return salesHistory.map((s: any) => ({
       name: s.date,
       value: s.total,
     }));
   }, [salesHistory]);
 
   const productDistributionData = useMemo(() => {
-    return products.slice(0, 5).map((p) => ({
+    return products.slice(0, 5).map((p: any) => ({
       name: p.name.substring(0, 12),
       value: parseFloat(p.sellPrice),
     }));
   }, [products]);
 
   const filteredProducts = products.filter(
-    (p) =>
+    (p: any) =>
       p.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
@@ -292,10 +292,10 @@ export default function POSPage() {
                   <label className={styles.p6}>Select Terminal</label>
                   <select
                     value={selectedTerminal}
-                    onChange={(e) => setSelectedTerminal(e.target.value)}
+                    onChange={(e: any) => setSelectedTerminal(e.target.value)}
                     className={["ui-input", styles.p7].join(" ")}
                   >
-                    {terminals.map((t) => (
+                    {terminals.map((t: any) => (
                       <option key={t.id} value={t.id}>
                         {t.name} ({t.code})
                       </option>
@@ -308,7 +308,7 @@ export default function POSPage() {
                   <input
                     type="number"
                     value={startingCash}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setStartingCash(parseFloat(e.target.value))
                     }
                     className={["ui-input", styles.p9].join(" ")}
@@ -371,7 +371,7 @@ export default function POSPage() {
                       type="text"
                       placeholder="Scan barcode or type product name..."
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={(e: any) => setSearchQuery(e.target.value)}
                       className={["ui-input", styles.p18].join(" ")}
                     />
                   </div>
@@ -405,7 +405,7 @@ export default function POSPage() {
               {posViewMode === "checkout" ? (
                 /* Grid list of products */
                 <div className={styles.p22}>
-                  {filteredProducts.map((p) => (
+                  {filteredProducts.map((p: any) => (
                     <div
                       key={p.id}
                       onClick={() => addToCart(p)}
@@ -499,13 +499,13 @@ export default function POSPage() {
                 <ShoppingCart size={18} className="ui-text-primary" />
                 <h2 className={styles.p31}>Checkout Cart</h2>
                 <span className={styles.p32}>
-                  {cart.reduce((acc, item) => acc + item.quantity, 0)}
+                  {cart.reduce((acc: any, item: any) => acc + item.quantity, 0)}
                 </span>
               </div>
 
               {/* Cart Items list */}
               <div className={styles.p33}>
-                {cart.map((item) => (
+                {cart.map((item: any) => (
                   <div key={item.id} className={styles.p34}>
                     <div className={styles.p35}>
                       <p className={styles.p36}>{item.name}</p>

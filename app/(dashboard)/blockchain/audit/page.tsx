@@ -93,7 +93,7 @@ export default function AuditPage() {
           <select
             className="ui-input u-w-48"
             value={entityType}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setEntityType(e.target.value);
               setPage(1);
             }}

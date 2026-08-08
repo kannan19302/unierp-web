@@ -24,7 +24,7 @@ export default function FinancialSummaryPage() {
           <input
             className="ui-input"
             value={contractId}
-            onChange={(e) => setContractId(e.target.value)}
+            onChange={(e: any) => setContractId(e.target.value)}
             placeholder="Enter contract ID"
           />
         </div>

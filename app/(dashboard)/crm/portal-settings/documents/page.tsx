@@ -88,7 +88,7 @@ export default function PortalDocumentsPage() {
             className="ui-input"
             placeholder="Customer ID..."
             value={customerId}
-            onChange={(e) => setCustomerId(e.target.value)}
+            onChange={(e: any) => setCustomerId(e.target.value)}
           />
         </div>
         <Button onClick={() => setShowUpload(true)} disabled={!customerId}>
@@ -105,7 +105,7 @@ export default function PortalDocumentsPage() {
               <input
                 className="ui-input"
                 value={uploadForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setUploadForm({ ...uploadForm, name: e.target.value })
                 }
               />
@@ -115,7 +115,7 @@ export default function PortalDocumentsPage() {
               <input
                 className="ui-input"
                 value={uploadForm.fileUrl}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setUploadForm({ ...uploadForm, fileUrl: e.target.value })
                 }
               />
@@ -125,7 +125,7 @@ export default function PortalDocumentsPage() {
               <select
                 className="ui-input"
                 value={uploadForm.fileType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setUploadForm({ ...uploadForm, fileType: e.target.value })
                 }
               >
@@ -142,7 +142,7 @@ export default function PortalDocumentsPage() {
                 className="ui-input"
                 type="number"
                 value={uploadForm.fileSize}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setUploadForm({
                     ...uploadForm,
                     fileSize: Number(e.target.value),

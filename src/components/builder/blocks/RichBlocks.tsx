@@ -82,7 +82,7 @@ export function GalleryBlock({ images, columns = 3, title }: any) {
     ? images
     : String(images || "")
         .split("\n")
-        .map((s) => s.trim())
+        .map((s: any) => s.trim())
         .filter(Boolean);
   return (
     <section style={section()}>
@@ -111,7 +111,7 @@ export function GalleryBlock({ images, columns = 3, title }: any) {
               gap: 16,
             }}
           >
-            {list.map((src, i) => (
+            {list.map((src: any, i: any) => (
               <img
                 key={i}
                 src={src}
@@ -144,7 +144,7 @@ export function ColumnsBlock({
     [col1Title, col1Body],
     [col2Title, col2Body],
     [col3Title, col3Body],
-  ].filter(([t, b]) => t || b);
+  ].filter(([t, b]: any) => t || b);
   const shown = cols.length
     ? cols
     : [
@@ -161,7 +161,7 @@ export function ColumnsBlock({
           gap: 32,
         }}
       >
-        {shown.map(([t, b], i) => (
+        {shown.map(([t, b]: any, i: any) => (
           <div key={i}>
             {t && (
               <h3
@@ -191,7 +191,7 @@ export function LogoCloudBlock({
     ? logos
     : String(logos || "")
         .split("\n")
-        .map((s) => s.trim())
+        .map((s: any) => s.trim())
         .filter(Boolean);
   const fallback = ["Acme", "Globex", "Initech", "Umbrella", "Hooli"];
   return (
@@ -217,7 +217,7 @@ export function LogoCloudBlock({
             alignItems: "center",
           }}
         >
-          {(list.length ? list : fallback).map((l, i) =>
+          {(list.length ? list : fallback).map((l: any, i: any) =>
             list.length ? (
               <img
                 key={i}
@@ -295,11 +295,11 @@ export function NavbarBlock({
         links || "Home=/\nProducts=/products\nAbout=/about\nContact=/contact",
       )
         .split("\n")
-        .map((l) => {
+        .map((l: any) => {
           const [label, url] = l.split("=");
           return { label: (label || "").trim(), url: (url || "#").trim() };
         })
-        .filter((l) => l.label);
+        .filter((l: any) => l.label);
   return (
     <header
       style={{
@@ -321,7 +321,7 @@ export function NavbarBlock({
       >
         <strong style={{ fontSize: "1.2rem" }}>{brand}</strong>
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          {list.map((l, i) => (
+          {list.map((l: any, i: any) => (
             <a
               key={i}
               href={l.url}
@@ -379,11 +379,11 @@ export function FooterBlock({
     ? links
     : String(links || "Privacy=/privacy\nTerms=/terms\nContact=/contact")
         .split("\n")
-        .map((l) => {
+        .map((l: any) => {
           const [label, url] = l.split("=");
           return { label: (label || "").trim(), url: (url || "#").trim() };
         })
-        .filter((l) => l.label);
+        .filter((l: any) => l.label);
   return (
     <footer
       style={{
@@ -410,7 +410,7 @@ export function FooterBlock({
           )}
         </div>
         <div style={{ display: "flex", gap: 28 }}>
-          {list.map((l, i) => (
+          {list.map((l: any, i: any) => (
             <a
               key={i}
               href={l.url}
@@ -536,7 +536,7 @@ export function ContactFormBlock({
             onSubmit={submit}
             style={{ display: "flex", flexDirection: "column", gap: 16 }}
           >
-            {fieldList.map((f) => (
+            {fieldList.map((f: any) => (
               <div key={f.name}>
                 <label
                   style={{
@@ -553,8 +553,8 @@ export function ContactFormBlock({
                   <textarea
                     required={f.required}
                     value={data[f.name] || ""}
-                    onChange={(e) =>
-                      setData((p) => ({ ...p, [f.name]: e.target.value }))
+                    onChange={(e: any) =>
+                      setData((p: any) => ({ ...p, [f.name]: e.target.value }))
                     }
                     style={{ ...inp, minHeight: 120, resize: "vertical" }}
                   />
@@ -563,8 +563,8 @@ export function ContactFormBlock({
                     type={f.type || "text"}
                     required={f.required}
                     value={data[f.name] || ""}
-                    onChange={(e) =>
-                      setData((p) => ({ ...p, [f.name]: e.target.value }))
+                    onChange={(e: any) =>
+                      setData((p: any) => ({ ...p, [f.name]: e.target.value }))
                     }
                     style={inp}
                   />
@@ -690,7 +690,7 @@ export function CartBlock({ title = "Your Cart", tenantSlug }: any) {
             <p style={{ opacity: 0.6 }}>Your cart is empty.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {cart.items.map((it, i) => (
+              {cart.items.map((it: any, i: any) => (
                 <div
                   key={i}
                   style={{
@@ -782,7 +782,7 @@ export function CartBlock({ title = "Your Cart", tenantSlug }: any) {
             required
             placeholder="Full name"
             value={customer.name}
-            onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
+            onChange={(e: any) => setCustomer({ ...customer, name: e.target.value })}
             style={inp}
           />
           <input
@@ -790,7 +790,7 @@ export function CartBlock({ title = "Your Cart", tenantSlug }: any) {
             type="email"
             placeholder="Email"
             value={customer.email}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setCustomer({ ...customer, email: e.target.value })
             }
             style={inp}
@@ -798,7 +798,7 @@ export function CartBlock({ title = "Your Cart", tenantSlug }: any) {
           <input
             placeholder="Phone (optional)"
             value={customer.phone}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setCustomer({ ...customer, phone: e.target.value })
             }
             style={inp}
@@ -806,7 +806,7 @@ export function CartBlock({ title = "Your Cart", tenantSlug }: any) {
           <textarea
             placeholder="Shipping address"
             value={customer.address}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setCustomer({ ...customer, address: e.target.value })
             }
             style={{ ...inp, minHeight: 70, resize: "vertical" }}

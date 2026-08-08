@@ -93,7 +93,7 @@ export default function EmailServerTab() {
                 <label className="ui-label">SMTP Host</label>
                 <input
                   value={config.host}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setConfig({ ...config, host: e.target.value })
                   }
                   required
@@ -106,7 +106,7 @@ export default function EmailServerTab() {
                 <input
                   type="number"
                   value={config.port}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setConfig({
                       ...config,
                       port: parseInt(e.target.value) || 0,
@@ -124,7 +124,7 @@ export default function EmailServerTab() {
                 <label className="ui-label">Username</label>
                 <input
                   value={config.username}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setConfig({ ...config, username: e.target.value })
                   }
                   placeholder="username"
@@ -136,7 +136,7 @@ export default function EmailServerTab() {
                 <input
                   type="password"
                   value={config.password}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setConfig({ ...config, password: e.target.value })
                   }
                   placeholder="••••••••"
@@ -150,7 +150,7 @@ export default function EmailServerTab() {
                 type="checkbox"
                 id="smtp-secure"
                 checked={config.secure}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConfig({ ...config, secure: e.target.checked })
                 }
               />
@@ -166,7 +166,7 @@ export default function EmailServerTab() {
                 <label className="ui-label">Sender Name</label>
                 <input
                   value={config.senderName}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setConfig({ ...config, senderName: e.target.value })
                   }
                   required
@@ -179,7 +179,7 @@ export default function EmailServerTab() {
                 <input
                   type="email"
                   value={config.senderEmail}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setConfig({ ...config, senderEmail: e.target.value })
                   }
                   required
@@ -194,7 +194,7 @@ export default function EmailServerTab() {
                 type="checkbox"
                 id="smtp-active"
                 checked={config.isActive}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConfig({ ...config, isActive: e.target.checked })
                 }
               />
@@ -234,7 +234,7 @@ export default function EmailServerTab() {
                 type="email"
                 placeholder="recipient@domain.com"
                 value={testEmail}
-                onChange={(e) => setTestEmail(e.target.value)}
+                onChange={(e: any) => setTestEmail(e.target.value)}
                 className={styles.p11}
               />
 

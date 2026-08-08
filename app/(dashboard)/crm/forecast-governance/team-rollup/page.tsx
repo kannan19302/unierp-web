@@ -86,7 +86,7 @@ export default function TeamRollupPage() {
           <Input
             placeholder="Enter manager user ID"
             value={managerId}
-            onChange={(e) => setManagerId(e.target.value)}
+            onChange={(e: any) => setManagerId(e.target.value)}
           />
           <Button
             variant="primary"

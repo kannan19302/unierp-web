@@ -142,7 +142,7 @@ export default function SegmentDetailPage() {
             <div className={styles.rules}>
               <div className={styles.rulesLabel}>Rules:</div>
               <ul className={styles.ruleList}>
-                {segment.criteria.rules.map((r, i) => (
+                {segment.criteria.rules.map((r: any, i: any) => (
                   <li key={i} className={styles.rule}>
                     {r.field} {r.op} {r.value}
                   </li>
@@ -170,7 +170,7 @@ export default function SegmentDetailPage() {
                   {
                     key: "id",
                     header: "Name",
-                    render: (v, row) => label(row as any),
+                    render: (v: any, row: any) => label(row as any),
                   },
                   {
                     key: "email",

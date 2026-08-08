@@ -23,7 +23,7 @@ export default function SharedPage() {
       client.get<{ data: any[] }>("/drive/files?view=shared"),
       client.get<{ data: any[] }>("/drive/folders?view=shared"),
     ])
-      .then(([filesRes, foldersRes]) => {
+      .then(([filesRes, foldersRes]: any) => {
         const files = (filesRes.data || []).map((f: any) => ({
           ...f,
           type: "file",

@@ -84,14 +84,14 @@ export default function RecommendationsPage() {
                 {recs.weakAreas.length > 0 && (
                   <div style={{ margin: "var(--space-3) 0" }}>
                     <strong>Weak Areas:</strong>
-                    {recs.weakAreas.map((w) => (
+                    {recs.weakAreas.map((w: any) => (
                       <div key={w}>
                         <Badge variant="warning">{w}</Badge>
                       </div>
                     ))}
                   </div>
                 )}
-                {recs.recommendations.map((p) => (
+                {recs.recommendations.map((p: any) => (
                   <div
                     key={p.id}
                     className="ui-flex-row"
@@ -113,7 +113,7 @@ export default function RecommendationsPage() {
             <h3>
               <Lightbulb size={20} /> Recommended Actions
             </h3>
-            {actions.map((a, idx) => (
+            {actions.map((a: any, idx: any) => (
               <div
                 key={idx}
                 className="ui-card"

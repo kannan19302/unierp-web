@@ -130,14 +130,14 @@ export default function EcommerceStoresPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Create"} Store</h2>
               <div className="ui-form-group">
                 <label>Store Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -145,7 +145,7 @@ export default function EcommerceStoresPage() {
                 <input
                   className="ui-input"
                   value={form.slug}
-                  onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, slug: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -153,7 +153,7 @@ export default function EcommerceStoresPage() {
                 <select
                   className="ui-input"
                   value={form.currency}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, currency: e.target.value })
                   }
                 >

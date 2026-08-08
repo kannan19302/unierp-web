@@ -205,7 +205,7 @@ export default function EducationDashboard() {
           <div className="p-5">
             <h3 className={styles.s1}>Quick Access</h3>
             <div className={styles.s2}>
-              {quickLinks.map((link) => (
+              {quickLinks.map((link: any) => (
                 <Link key={link.href} href={link.href} className={styles.s3}>
                   <div className={`${styles.s4} ${styles.qlHover}`}>
                     <div

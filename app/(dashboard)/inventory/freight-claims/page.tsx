@@ -33,7 +33,7 @@ export default function FreightClaimsPage() {
       <div className="ui-page-shell">
         <h1 className="text-2xl font-bold">Freight Claims & Cargo Damage</h1>
         <div className="flex gap-2 border-b">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -72,7 +72,7 @@ function DashboardTab() {
   ];
   return (
     <StatCardRow
-      stats={cards.map(([label, value]) => ({
+      stats={cards.map(([label, value]: any) => ({
         label: label as string,
         value: value as string | number,
       }))}
@@ -95,7 +95,7 @@ function DamageReportsTab() {
 
   const load = useCallback(() => {
     apiFetch<{ items: any[]; total: number }>("/damage-reports")
-      .then((r) => {
+      .then((r: any) => {
         setReports(r.items);
         setTotal(r.total);
       })
@@ -179,8 +179,8 @@ function DamageReportsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.description}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, description: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, description: e.target.value }))
               }
               required
             />
@@ -191,8 +191,8 @@ function DamageReportsTab() {
               type="datetime-local"
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.discoveredAt}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, discoveredAt: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, discoveredAt: e.target.value }))
               }
               required
             />
@@ -202,11 +202,11 @@ function DamageReportsTab() {
             <select
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.severity}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, severity: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, severity: e.target.value }))
               }
             >
-              {["MINOR", "MODERATE", "SEVERE"].map((s) => (
+              {["MINOR", "MODERATE", "SEVERE"].map((s: any) => (
                 <option key={s}>{s}</option>
               ))}
             </select>
@@ -216,8 +216,8 @@ function DamageReportsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.carrierId}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, carrierId: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, carrierId: e.target.value }))
               }
             />
           </div>
@@ -226,8 +226,8 @@ function DamageReportsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.notes}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, notes: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, notes: e.target.value }))
               }
             />
           </div>
@@ -312,14 +312,14 @@ function FileClaimTab() {
         },
         { label: "Currency", key: "currency" as const },
         { label: "Notes", key: "notes" as const },
-      ].map(({ label, key, required, type }) => (
+      ].map(({ label, key, required, type }: any) => (
         <div key={key}>
           <label className="text-xs text-gray-600">{label}</label>
           <input
             type={type ?? "text"}
             className="w-full border rounded px-2 py-1 text-sm"
             value={form[key]}
-            onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
+            onChange={(e: any) => setForm((f: any) => ({ ...f, [key]: e.target.value }))}
             required={required}
           />
         </div>
@@ -329,11 +329,11 @@ function FileClaimTab() {
         <select
           className="w-full border rounded px-2 py-1 text-sm"
           value={form.claimType}
-          onChange={(e) =>
-            setForm((f) => ({ ...f, claimType: e.target.value }))
+          onChange={(e: any) =>
+            setForm((f: any) => ({ ...f, claimType: e.target.value }))
           }
         >
-          {["DAMAGE", "SHORTAGE", "LOSS", "DELAY", "CONCEALED"].map((t) => (
+          {["DAMAGE", "SHORTAGE", "LOSS", "DELAY", "CONCEALED"].map((t: any) => (
             <option key={t}>{t}</option>
           ))}
         </select>
@@ -358,7 +358,7 @@ function ClaimsTab() {
 
   const load = useCallback(() => {
     apiFetch<{ items: any[]; total: number }>("/claims")
-      .then((r) => {
+      .then((r: any) => {
         setClaims(r.items);
         setTotal(r.total);
       })
@@ -411,8 +411,8 @@ function ClaimsTab() {
             <select
               className="border rounded px-1 py-0.5 text-xs"
               value={statusInputs[c.id] ?? ""}
-              onChange={(e) =>
-                setStatusInputs((s) => ({ ...s, [c.id]: e.target.value }))
+              onChange={(e: any) =>
+                setStatusInputs((s: any) => ({ ...s, [c.id]: e.target.value }))
               }
             >
               <option value="">-- select --</option>
@@ -424,7 +424,7 @@ function ClaimsTab() {
                 "ACCEPTED",
                 "REJECTED",
                 "CLOSED",
-              ].map((s) => (
+              ].map((s: any) => (
                 <option key={s}>{s}</option>
               ))}
             </select>
@@ -512,7 +512,7 @@ function EventsTab() {
           className="border rounded px-2 py-1 text-sm"
           placeholder="Claim ID"
           value={claimId}
-          onChange={(e) => setClaimId(e.target.value)}
+          onChange={(e: any) => setClaimId(e.target.value)}
         />
         <button
           onClick={load}
@@ -532,8 +532,8 @@ function EventsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.description}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, description: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, description: e.target.value }))
               }
               required
             />
@@ -543,8 +543,8 @@ function EventsTab() {
             <select
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.eventType}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, eventType: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, eventType: e.target.value }))
               }
             >
               {[
@@ -553,7 +553,7 @@ function EventsTab() {
                 "CARRIER_CONTACT",
                 "INSPECTION",
                 "STATUS_CHANGE",
-              ].map((t) => (
+              ].map((t: any) => (
                 <option key={t}>{t}</option>
               ))}
             </select>

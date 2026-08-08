@@ -67,7 +67,7 @@ export default function SupplierPortalPage() {
   useEffect(() => {
     client
       .get<Vendor[]>("/procurement/vendors")
-      .then((d) => setVendors(Array.isArray(d) ? d : []))
+      .then((d: any) => setVendors(Array.isArray(d) ? d : []))
       .catch(() => {});
   }, [client]);
 
@@ -188,7 +188,7 @@ export default function SupplierPortalPage() {
             <label className={styles.p2}>SELECT VENDOR</label>
             <div className="relative">
               <button
-                onClick={() => setVendorOpen((o) => !o)}
+                onClick={() => setVendorOpen((o: any) => !o)}
                 style={{
                   color: selectedVendor
                     ? "var(--color-text-primary)"
@@ -207,7 +207,7 @@ export default function SupplierPortalPage() {
                   {vendors.length === 0 ? (
                     <div className={styles.p5}>No vendors found</div>
                   ) : (
-                    vendors.map((v) => (
+                    vendors.map((v: any) => (
                       <button
                         key={v.id}
                         onClick={() => selectVendor(v)}
@@ -239,7 +239,7 @@ export default function SupplierPortalPage() {
           <>
             {/* Tabs */}
             <div className={styles.p8}>
-              {TABS.map((t) => (
+              {TABS.map((t: any) => (
                 <button
                   key={t.id}
                   onClick={() => switchTab(t.id)}
@@ -297,8 +297,8 @@ export default function SupplierPortalPage() {
                     <input
                       type="email"
                       value={inviteEmail}
-                      onChange={(e) => setInviteEmail(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && invite()}
+                      onChange={(e: any) => setInviteEmail(e.target.value)}
+                      onKeyDown={(e: any) => e.key === "Enter" && invite()}
                       placeholder="vendor@supplier.com"
                       className={styles.p16}
                     />

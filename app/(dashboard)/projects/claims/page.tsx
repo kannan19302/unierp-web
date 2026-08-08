@@ -86,9 +86,9 @@ export default function ClaimsPage() {
   if (loading) return <Spinner size="lg" />;
   if (error) return <div className="ui-alert ui-alert-danger">{error}</div>;
 
-  const totalClaimed = claims.reduce((s, c) => s + Number(c.claimedAmount), 0);
+  const totalClaimed = claims.reduce((s: any, c: any) => s + Number(c.claimedAmount), 0);
   const totalSettled = claims.reduce(
-    (s, c) => s + Number(c.settlementAmount || 0),
+    (s: any, c: any) => s + Number(c.settlementAmount || 0),
     0,
   );
 
@@ -130,7 +130,7 @@ export default function ClaimsPage() {
               {
                 label: "Open",
                 value: claims.filter(
-                  (c) =>
+                  (c: any) =>
                     c.status === "DRAFT" ||
                     c.status === "SUBMITTED" ||
                     c.status === "UNDER_EVALUATION",
@@ -140,7 +140,7 @@ export default function ClaimsPage() {
               },
               {
                 label: "Settled",
-                value: claims.filter((c) => c.status === "SETTLED").length,
+                value: claims.filter((c: any) => c.status === "SETTLED").length,
                 icon: <CheckCircle2 size={16} />,
                 color: "var(--chart-2)",
               },
@@ -153,7 +153,7 @@ export default function ClaimsPage() {
             ]}
           />
           <div className="ui-stack-3">
-            {claims.map((c) => (
+            {claims.map((c: any) => (
               <Card key={c.id} className="ui-stack-2">
                 <div className="ui-flex-between">
                   <div className="ui-hstack-2">
@@ -189,7 +189,7 @@ export default function ClaimsPage() {
       )}
       {activeTab === "variations" && (
         <div className="ui-stack-3">
-          {variations.map((v) => (
+          {variations.map((v: any) => (
             <Card key={v.id} className="ui-flex-between">
               <div>
                 <div className="ui-hstack-2">
@@ -215,8 +215,8 @@ export default function ClaimsPage() {
       )}
       {activeTab === "disputes" && (
         <div className="ui-stack-3">
-          {claims.flatMap((c) =>
-            (c.disputeResolutions || []).map((d) => (
+          {claims.flatMap((c: any) =>
+            (c.disputeResolutions || []).map((d: any) => (
               <Card key={d.id} className="ui-flex-between">
                 <div>
                   <strong>{d.method}</strong>
@@ -249,7 +249,7 @@ export default function ClaimsPage() {
             },
             {
               label: "Rejected",
-              value: claims.filter((c) => c.status === "REJECTED").length,
+              value: claims.filter((c: any) => c.status === "REJECTED").length,
               icon: <XCircle size={16} />,
               color: "var(--chart-4)",
             },

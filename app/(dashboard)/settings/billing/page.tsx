@@ -113,7 +113,7 @@ export default function SaasPortalBillingPage() {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "12px" }}
             >
-              {paymentMethods.map((pm) => (
+              {paymentMethods.map((pm: any) => (
                 <div
                   key={pm.id}
                   style={{

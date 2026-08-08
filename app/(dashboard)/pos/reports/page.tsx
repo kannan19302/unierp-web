@@ -85,7 +85,7 @@ export default function POSReportsPage() {
                   icon: <DollarSign size={20} />,
                   color: "var(--color-primary)",
                 },
-              ].map((stat, i) => (
+              ].map((stat: any, i: any) => (
                 <div key={i} className="ui-card p-4">
                   <div className={styles.p3}>
                     <div style={{ color: stat.color }}>{stat.icon}</div>
@@ -158,7 +158,7 @@ export default function POSReportsPage() {
                 endpoint: "/api/v1/pos/reports/customer-insights",
                 icon: <Users size={16} />,
               },
-            ].map((r, i) => (
+            ].map((r: any, i: any) => (
               <div
                 key={i}
                 className={styles.p8}

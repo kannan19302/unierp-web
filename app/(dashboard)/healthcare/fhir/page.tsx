@@ -41,7 +41,7 @@ export default function FHIRIntegrationPage() {
         <KPICard
           title="Total Records"
           value={fhirResources
-            .reduce((a, r) => a + r.count, 0)
+            .reduce((a: any, r: any) => a + r.count, 0)
             .toLocaleString()}
           icon={<Activity size={18} />}
           color="var(--color-success)"
@@ -58,7 +58,7 @@ export default function FHIRIntegrationPage() {
         <div className="p-5">
           <h3 className="ui-heading-base mb-4">FHIR Resource Types</h3>
           <div className={styles.s1}>
-            {fhirResources.map((resource) => (
+            {fhirResources.map((resource: any) => (
               <div key={resource.type} className={styles.s2}>
                 <div>
                   <div className="ui-heading-sm">{resource.type}</div>

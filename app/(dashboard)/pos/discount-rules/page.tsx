@@ -143,14 +143,14 @@ export default function POSDiscountRulesPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Add"} Discount Rule</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -158,7 +158,7 @@ export default function POSDiscountRulesPage() {
                 <select
                   className="ui-input"
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="PERCENTAGE">Percentage</option>
                   <option value="FIXED">Fixed</option>
@@ -172,7 +172,7 @@ export default function POSDiscountRulesPage() {
                   type="number"
                   className="ui-input"
                   value={form.value}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, value: Number(e.target.value) })
                   }
                 />

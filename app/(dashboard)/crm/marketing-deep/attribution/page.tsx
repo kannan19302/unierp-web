@@ -26,7 +26,7 @@ function AttributionPage() {
       client
         .get(`/crm/marketing-deep/campaigns/${campaignId}/attribution/summary`)
         .catch(() => null),
-    ]).then(([a, s]) => {
+    ]).then(([a, s]: any) => {
       setAttributions(Array.isArray(a) ? a : []);
       setSummary(s);
       setLoading(false);

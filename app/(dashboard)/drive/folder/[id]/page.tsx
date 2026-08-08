@@ -52,7 +52,7 @@ export default function FolderDetailPage({
       client.get<{ data: FileItem[] }>(`/drive/files?folderId=${id}`),
       client.get<{ data: FolderItem[] }>(`/drive/folders?parentId=${id}`),
     ])
-      .then(([folderData, filesRes, foldersRes]) => {
+      .then(([folderData, filesRes, foldersRes]: any) => {
         setFolder(folderData);
         setFiles(filesRes.data || []);
         setSubFolders(foldersRes.data || []);

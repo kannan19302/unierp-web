@@ -103,7 +103,7 @@ export default function SupplyChainControlHub() {
       setCreateOpen(false);
       fetchData();
     } catch {
-      setLcs((prev) => [
+      setLcs((prev: any) => [
         ...prev,
         {
           id: String(Date.now()),
@@ -258,7 +258,7 @@ export default function SupplyChainControlHub() {
             <FormField label="LC Reference Number">
               <TextField
                 value={form.lcNumber}
-                onChange={(e) => setForm({ ...form, lcNumber: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, lcNumber: e.target.value })}
                 placeholder="e.g. LC-2026-9901"
                 required
               />
@@ -266,7 +266,7 @@ export default function SupplyChainControlHub() {
             <FormField label="Issuing Bank">
               <TextField
                 value={form.issuingBank}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, issuingBank: e.target.value })
                 }
                 placeholder="Bank Name"
@@ -276,7 +276,7 @@ export default function SupplyChainControlHub() {
             <FormField label="LC Type">
               <Select
                 value={form.lcType}
-                onChange={(e) => setForm({ ...form, lcType: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, lcType: e.target.value })}
               >
                 <option value="DOCUMENTARY">Documentary Credit</option>
                 <option value="STANDBY">Standby LC</option>
@@ -288,7 +288,7 @@ export default function SupplyChainControlHub() {
               <TextField
                 type="number"
                 value={form.amount}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, amount: Number(e.target.value) })
                 }
                 required

@@ -161,7 +161,7 @@ export default function DealRoomDetailPage() {
           {room.milestones.length === 0 ? (
             <div className={styles.p23}>No milestones yet.</div>
           ) : (
-            room.milestones.map((m) => (
+            room.milestones.map((m: any) => (
               <div key={m.id} className={styles.p24}>
                 {m.status === "DONE" ? (
                   <CheckCircle2 size={18} color="var(--color-success)" />
@@ -223,7 +223,7 @@ export default function DealRoomDetailPage() {
           {room.stakeholders.length === 0 ? (
             <div className={styles.p28}>No stakeholders mapped yet.</div>
           ) : (
-            room.stakeholders.map((s) => (
+            room.stakeholders.map((s: any) => (
               <div key={s.id} className={styles.p29}>
                 <div className="flex-1">{s.name}</div>
                 <Badge variant="default">{s.role.replace(/_/g, " ")}</Badge>
@@ -259,7 +259,7 @@ export default function DealRoomDetailPage() {
           {room.documents.length === 0 ? (
             <div className={styles.p212}>No documents shared yet.</div>
           ) : (
-            room.documents.map((d) => (
+            room.documents.map((d: any) => (
               <div key={d.id} className={styles.p213}>
                 <a
                   href={d.url}
@@ -302,14 +302,14 @@ export default function DealRoomDetailPage() {
               <input
                 placeholder="Milestone title"
                 value={milestoneForm.title}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setMilestoneForm({ ...milestoneForm, title: e.target.value })
                 }
                 className="p-2"
               />
               <select
                 value={milestoneForm.ownerType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setMilestoneForm({
                     ...milestoneForm,
                     ownerType: e.target.value as "SELLER" | "BUYER" | "MUTUAL",
@@ -349,7 +349,7 @@ export default function DealRoomDetailPage() {
               <input
                 placeholder="Name"
                 value={stakeholderForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setStakeholderForm({
                     ...stakeholderForm,
                     name: e.target.value,
@@ -359,7 +359,7 @@ export default function DealRoomDetailPage() {
               />
               <select
                 value={stakeholderForm.role}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setStakeholderForm({
                     ...stakeholderForm,
                     role: e.target.value,
@@ -376,7 +376,7 @@ export default function DealRoomDetailPage() {
               </select>
               <select
                 value={stakeholderForm.side}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setStakeholderForm({
                     ...stakeholderForm,
                     side: e.target.value as "BUYER" | "SELLER",

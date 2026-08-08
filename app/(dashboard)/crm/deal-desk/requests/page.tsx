@@ -67,7 +67,7 @@ export default function DealDeskRequestsPage() {
             <select
               className="ui-input"
               value={statusFilter}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}

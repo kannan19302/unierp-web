@@ -156,26 +156,26 @@ export default function PlaybooksTab() {
         </Card>
         <Card className={styles.style6}>
           <div className={styles.style7}>
-            {playbooks.filter((p) => p.isActive).length}
+            {playbooks.filter((p: any) => p.isActive).length}
           </div>
           <div className={styles.style8}>Active</div>
         </Card>
         <Card className={styles.style9}>
           <div className={styles.style10}>
-            {playbooks.reduce((sum, p) => sum + p.stages.length, 0)}
+            {playbooks.reduce((sum: any, p: any) => sum + p.stages.length, 0)}
           </div>
           <div className={styles.style11}>Total Stages</div>
         </Card>
         <Card className={styles.style12}>
           <div className={styles.style13}>
-            {playbooks.reduce((sum, p) => sum + p.battlecards.length, 0)}
+            {playbooks.reduce((sum: any, p: any) => sum + p.battlecards.length, 0)}
           </div>
           <div className={styles.style14}>Total Battlecards</div>
         </Card>
       </div>
 
       <div className={styles.style15}>
-        {playbooks.map((pb) => (
+        {playbooks.map((pb: any) => (
           <Card key={pb.id} className={styles.style16}>
             <div className="ui-flex-between ui-items-start">
               <div className={styles.style17}>
@@ -260,14 +260,14 @@ export default function PlaybooksTab() {
           <FormField label="Name" required>
             <Input
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               placeholder="e.g. Enterprise Sales"
             />
           </FormField>
           <FormField label="Description">
             <Textarea
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               placeholder="Describe the sales playbook..."
@@ -277,7 +277,7 @@ export default function PlaybooksTab() {
           <FormField label="Pipeline ID (optional)">
             <Input
               value={form.pipelineId}
-              onChange={(e) => setForm({ ...form, pipelineId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, pipelineId: e.target.value })}
               placeholder="Link to a pipeline"
             />
           </FormField>

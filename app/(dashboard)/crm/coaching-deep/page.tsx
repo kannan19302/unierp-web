@@ -176,16 +176,16 @@ export default function CoachingDeepPage() {
                 className="ui-input"
                 placeholder="Name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
               <select
                 className="ui-input"
                 value={form.programType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, programType: e.target.value })
                 }
               >
-                {PROGRAM_TYPES.map((t) => (
+                {PROGRAM_TYPES.map((t: any) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
@@ -198,7 +198,7 @@ export default function CoachingDeepPage() {
                 <input
                   type="checkbox"
                   checked={form.isRequired}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, isRequired: e.target.checked })
                   }
                 />{" "}

@@ -363,7 +363,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={taskForm.taskName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({ ...taskForm, taskName: e.target.value })
                       }
                     />
@@ -373,7 +373,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={taskForm.dependsOn}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({ ...taskForm, dependsOn: e.target.value })
                       }
                     />
@@ -383,7 +383,7 @@ export default function CloseManagementPage() {
                     <select
                       className="ui-input"
                       value={taskForm.dependencyType}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTaskForm({
                           ...taskForm,
                           dependencyType: e.target.value,
@@ -422,7 +422,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={slaForm.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setSlaForm({ ...slaForm, name: e.target.value })
                       }
                     />
@@ -432,7 +432,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={slaForm.taskCategory}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setSlaForm({ ...slaForm, taskCategory: e.target.value })
                       }
                     />
@@ -443,7 +443,7 @@ export default function CloseManagementPage() {
                       className="ui-input"
                       type="number"
                       value={slaForm.slaHours}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setSlaForm({ ...slaForm, slaHours: e.target.value })
                       }
                     />
@@ -454,7 +454,7 @@ export default function CloseManagementPage() {
                       className="ui-input"
                       type="number"
                       value={slaForm.escalationAfter}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setSlaForm({
                           ...slaForm,
                           escalationAfter: e.target.value,
@@ -552,7 +552,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={eventForm.title}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEventForm({ ...eventForm, title: e.target.value })
                       }
                     />
@@ -563,7 +563,7 @@ export default function CloseManagementPage() {
                       className="ui-input"
                       type="date"
                       value={eventForm.eventDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEventForm({
                           ...eventForm,
                           eventDate: e.target.value,
@@ -576,7 +576,7 @@ export default function CloseManagementPage() {
                     <select
                       className="ui-input"
                       value={eventForm.eventType}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEventForm({
                           ...eventForm,
                           eventType: e.target.value,
@@ -594,7 +594,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={eventForm.assignee}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEventForm({ ...eventForm, assignee: e.target.value })
                       }
                     />
@@ -679,7 +679,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={ruleForm.ruleName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRuleForm({ ...ruleForm, ruleName: e.target.value })
                       }
                     />
@@ -689,7 +689,7 @@ export default function CloseManagementPage() {
                     <select
                       className="ui-input"
                       value={ruleForm.triggerCondition}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRuleForm({
                           ...ruleForm,
                           triggerCondition: e.target.value,
@@ -706,7 +706,7 @@ export default function CloseManagementPage() {
                     <input
                       className="ui-input"
                       value={ruleForm.escalateTo}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRuleForm({ ...ruleForm, escalateTo: e.target.value })
                       }
                     />
@@ -716,7 +716,7 @@ export default function CloseManagementPage() {
                     <select
                       className="ui-input"
                       value={ruleForm.priority}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRuleForm({ ...ruleForm, priority: e.target.value })
                       }
                     >

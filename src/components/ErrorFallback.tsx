@@ -272,7 +272,7 @@ export function ErrorFallback({
                     gap: "var(--space-2)",
                   }}
                 >
-                  {QUICK_LINKS.map((l) => (
+                  {QUICK_LINKS.map((l: any) => (
                     <button
                       key={l.href}
                       className="ui-btn ui-btn-secondary"
@@ -512,7 +512,7 @@ export function ErrorFallback({
                           type="text"
                           className="ui-input"
                           value={name}
-                          onChange={(e) => setName(e.target.value)}
+                          onChange={(e: any) => setName(e.target.value)}
                           placeholder="Optional name"
                         />
                       </div>
@@ -525,7 +525,7 @@ export function ErrorFallback({
                           type="email"
                           className="ui-input"
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e: any) => setEmail(e.target.value)}
                           placeholder="Optional email"
                         />
                       </div>
@@ -538,7 +538,7 @@ export function ErrorFallback({
                       <textarea
                         className="ui-input"
                         value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={(e: any) => setDescription(e.target.value)}
                         placeholder="e.g. I was trying to download the invoice list PDF when the screen crashed."
                         rows={4}
                         required

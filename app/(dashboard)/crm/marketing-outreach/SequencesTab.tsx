@@ -97,8 +97,8 @@ export default function SequencesTab() {
 
   const removeStep = (idx: number) => {
     const updated = formSteps
-      .filter((_, i) => i !== idx)
-      .map((s, i) => ({ ...s, sortOrder: i + 1 }));
+      .filter((_: any, i: any) => i !== idx)
+      .map((s: any, i: any) => ({ ...s, sortOrder: i + 1 }));
     setFormSteps(updated);
   };
 
@@ -107,7 +107,7 @@ export default function SequencesTab() {
     const existing = updated[idx];
     if (!existing) return;
     if (field === "templateId") {
-      const tpl = templates.find((t) => t.id === value);
+      const tpl = templates.find((t: any) => t.id === value);
       updated[idx] = {
         ...existing,
         templateId: value as string,
@@ -128,7 +128,7 @@ export default function SequencesTab() {
     if (item1 && item2) {
       updated[idx] = item2;
       updated[target] = item1;
-      setFormSteps(updated.map((s, i) => ({ ...s, sortOrder: i + 1 })));
+      setFormSteps(updated.map((s: any, i: any) => ({ ...s, sortOrder: i + 1 })));
     }
   };
 
@@ -160,7 +160,7 @@ export default function SequencesTab() {
     }
   };
 
-  const filtered = sequences.filter((s) =>
+  const filtered = sequences.filter((s: any) =>
     s.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
@@ -185,7 +185,7 @@ export default function SequencesTab() {
           <Search size={16} className={styles.style1} />
           <Input
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e: any) => setSearchQuery(e.target.value)}
             placeholder="Search sequences..."
             className={styles.style2}
           />
@@ -194,7 +194,7 @@ export default function SequencesTab() {
 
       {/* Sequence Cards Grid */}
       <div className={styles.style3}>
-        {filtered.map((seq) => (
+        {filtered.map((seq: any) => (
           <Card key={seq.id}>
             <div className="p-5">
               <div className={styles.style4}>
@@ -216,7 +216,7 @@ export default function SequencesTab() {
               </div>
               {/* Steps preview */}
               <div className={styles.style7}>
-                {seq.steps.map((step, idx) => (
+                {seq.steps.map((step: any, idx: any) => (
                   <div
                     key={idx}
                     style={{ marginBottom: idx < seq.steps.length - 1 ? 4 : 0 }}
@@ -268,7 +268,7 @@ export default function SequencesTab() {
           <FormField label="Sequence Name" required>
             <Input
               value={formName}
-              onChange={(e) => setFormName(e.target.value)}
+              onChange={(e: any) => setFormName(e.target.value)}
               required
               placeholder="e.g. New Lead Nurture"
             />
@@ -276,7 +276,7 @@ export default function SequencesTab() {
           <FormField label="Description">
             <Textarea
               value={formDesc}
-              onChange={(e) => setFormDesc(e.target.value)}
+              onChange={(e: any) => setFormDesc(e.target.value)}
               placeholder="Describe this sequence..."
               rows={2}
             />
@@ -296,7 +296,7 @@ export default function SequencesTab() {
               </Button>
             </div>
             <div className="ui-stack-3">
-              {formSteps.map((step, idx) => (
+              {formSteps.map((step: any, idx: any) => (
                 <div key={idx} className={styles.style13}>
                   <div className={styles.style14}>
                     <button
@@ -328,14 +328,14 @@ export default function SequencesTab() {
                   <span className={styles.style15}>#{step.sortOrder}</span>
                   <select
                     value={step.templateId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateStep(idx, "templateId", e.target.value)
                     }
                     required
                     className={`ui-input ${styles.style16}`}
                   >
                     <option value="">Select template...</option>
-                    {templates.map((t) => (
+                    {templates.map((t: any) => (
                       <option key={t.id} value={t.id}>
                         {t.name}
                       </option>
@@ -347,7 +347,7 @@ export default function SequencesTab() {
                       type="number"
                       min={0}
                       value={step.delayDays}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateStep(idx, "delayDays", e.target.value)
                       }
                       className={`ui-input ${styles.style19}`}

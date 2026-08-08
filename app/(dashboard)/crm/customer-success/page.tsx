@@ -72,7 +72,7 @@ export default function CrmCustomerSuccessPage() {
           paddingBottom: "var(--space-2)",
         }}
       >
-        {CS_TABS.map((tab) => (
+        {CS_TABS.map((tab: any) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}

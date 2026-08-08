@@ -262,7 +262,7 @@ export default function TaxProvisioningPage() {
     }
   };
 
-  const totalProvision = runs.reduce((s, r) => s + r.totalProvision, 0);
+  const totalProvision = runs.reduce((s: any, r: any) => s + r.totalProvision, 0);
 
   return (
     <RouteGuard permission="finance.tax.read">
@@ -375,7 +375,7 @@ export default function TaxProvisioningPage() {
                     <input
                       className="ui-input"
                       value={runForm.runName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunForm({ ...runForm, runName: e.target.value })
                       }
                     />
@@ -386,7 +386,7 @@ export default function TaxProvisioningPage() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={runForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunForm({ ...runForm, period: e.target.value })
                       }
                     />
@@ -396,7 +396,7 @@ export default function TaxProvisioningPage() {
                     <select
                       className="ui-input"
                       value={runForm.jurisdiction}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunForm({ ...runForm, jurisdiction: e.target.value })
                       }
                     >
@@ -468,7 +468,7 @@ export default function TaxProvisioningPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           row.status === "DRAFT" && (
                             <button
                               onClick={() => handleComputeProvision(String(v))}
@@ -506,7 +506,7 @@ export default function TaxProvisioningPage() {
                     <input
                       className="ui-input"
                       value={scheduleForm.accountName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleForm({
                           ...scheduleForm,
                           accountName: e.target.value,
@@ -520,7 +520,7 @@ export default function TaxProvisioningPage() {
                       className="ui-input"
                       type="number"
                       value={scheduleForm.temporaryDifference}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleForm({
                           ...scheduleForm,
                           temporaryDifference: e.target.value,
@@ -535,7 +535,7 @@ export default function TaxProvisioningPage() {
                       type="number"
                       step="0.1"
                       value={scheduleForm.taxRate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleForm({
                           ...scheduleForm,
                           taxRate: e.target.value,
@@ -548,7 +548,7 @@ export default function TaxProvisioningPage() {
                     <select
                       className="ui-input"
                       value={scheduleForm.classification}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleForm({
                           ...scheduleForm,
                           classification: e.target.value,
@@ -565,7 +565,7 @@ export default function TaxProvisioningPage() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={scheduleForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleForm({
                           ...scheduleForm,
                           period: e.target.value,
@@ -667,7 +667,7 @@ export default function TaxProvisioningPage() {
                     <input
                       className="ui-input"
                       value={positionForm.positionName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setPositionForm({
                           ...positionForm,
                           positionName: e.target.value,
@@ -680,7 +680,7 @@ export default function TaxProvisioningPage() {
                     <input
                       className="ui-input"
                       value={positionForm.taxAuthority}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setPositionForm({
                           ...positionForm,
                           taxAuthority: e.target.value,
@@ -694,7 +694,7 @@ export default function TaxProvisioningPage() {
                       className="ui-input"
                       type="number"
                       value={positionForm.exposureAmount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setPositionForm({
                           ...positionForm,
                           exposureAmount: e.target.value,
@@ -712,7 +712,7 @@ export default function TaxProvisioningPage() {
                       min="0"
                       max="100"
                       value={positionForm.probabilityOfSuccess}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setPositionForm({
                           ...positionForm,
                           probabilityOfSuccess: e.target.value,
@@ -785,7 +785,7 @@ export default function TaxProvisioningPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           row.status !== "EVALUATED" && (
                             <button
                               onClick={() => handleEvaluatePosition(String(v))}
@@ -823,7 +823,7 @@ export default function TaxProvisioningPage() {
                     <input
                       className="ui-input"
                       value={allowanceForm.entityName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
                           entityName: e.target.value,
@@ -837,7 +837,7 @@ export default function TaxProvisioningPage() {
                       className="ui-input"
                       type="number"
                       value={allowanceForm.deferredTaxAsset}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
                           deferredTaxAsset: e.target.value,
@@ -851,7 +851,7 @@ export default function TaxProvisioningPage() {
                       className="ui-input"
                       placeholder="Why partial allowance?"
                       value={allowanceForm.rationale}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
                           rationale: e.target.value,
@@ -865,7 +865,7 @@ export default function TaxProvisioningPage() {
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={allowanceForm.period}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
                           period: e.target.value,

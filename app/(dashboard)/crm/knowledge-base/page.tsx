@@ -150,7 +150,7 @@ export default function KnowledgeBasePage() {
             <input
               className={inputStyle}
               value={catName}
-              onChange={(e) => setCatName(e.target.value)}
+              onChange={(e: any) => setCatName(e.target.value)}
               placeholder="e.g. Sales, Onboarding"
             />
             <div className="flex gap-2 mt-2">
@@ -178,7 +178,7 @@ export default function KnowledgeBasePage() {
             <p className="text-sm text-gray-400">No categories yet</p>
           ) : (
             <ul className="space-y-1">
-              {categories.map((cat) => (
+              {categories.map((cat: any) => (
                 <li
                   key={cat.id}
                   className="flex items-center justify-between p-2 hover:bg-gray-50 rounded"
@@ -199,7 +199,7 @@ export default function KnowledgeBasePage() {
             <p className="text-sm text-gray-400">No articles yet</p>
           ) : (
             <ul className="space-y-2">
-              {articles.slice(0, 10).map((article) => (
+              {articles.slice(0, 10).map((article: any) => (
                 <li
                   key={article.id}
                   className="flex items-center justify-between p-2 hover:bg-gray-50 rounded"

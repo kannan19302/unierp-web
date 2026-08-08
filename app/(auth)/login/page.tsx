@@ -139,7 +139,7 @@ export default function LoginPage() {
   const [oauthProviders, setOauthProviders] = useState<string[]>([]);
   useEffect(() => {
     apiGet<{ providers: string[] }>("/auth/oauth/providers")
-      .then((res) => setOauthProviders(res.providers))
+      .then((res: any) => setOauthProviders(res.providers))
       .catch(() => setOauthProviders([]));
   }, []);
 
@@ -194,7 +194,7 @@ export default function LoginPage() {
   // Auto-rotate sidebar features
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % FEATURES.length);
+      setActiveFeature((prev: any) => (prev + 1) % FEATURES.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
@@ -212,7 +212,7 @@ export default function LoginPage() {
         samlEntryPoint: string | null;
         oidcAuthorizationUrl: string | null;
       }>(`/auth/sso/config/${tenantSlug}`)
-        .then((res) => {
+        .then((res: any) => {
           if (res.configured) {
             setIsSsoConfigured(true);
             setSsoUrls({
@@ -324,7 +324,7 @@ export default function LoginPage() {
               logoUrl?: string | null;
             }>;
           }>(`/auth/resolve-org?email=${encodeURIComponent(email)}`)
-            .then((res) => {
+            .then((res: any) => {
               if (res.tenants && res.tenants.length > 1) {
                 setAvailableTenants(res.tenants);
                 setShowTenantPicker(true);
@@ -613,7 +613,7 @@ export default function LoginPage() {
                         className={`auth-input ${styles.s13}`}
                         placeholder="123456"
                         value={mfaCode}
-                        onChange={(e) => setMfaCode(e.target.value)}
+                        onChange={(e: any) => setMfaCode(e.target.value)}
                         autoComplete="one-time-code"
                         autoFocus
                       />
@@ -683,7 +683,7 @@ export default function LoginPage() {
                       className="auth-input"
                       placeholder="name@company.com"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e: any) => setEmail(e.target.value)}
                       autoComplete="email"
                     />
                   </div>
@@ -714,7 +714,7 @@ export default function LoginPage() {
                         className={`auth-input ${styles.s21}`}
                         placeholder="••••••••"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e: any) => setPassword(e.target.value)}
                         autoComplete="current-password"
                       />
                       <button
@@ -742,7 +742,7 @@ export default function LoginPage() {
                         Please select one to continue.
                       </p>
                       <div className={styles.tenantList}>
-                        {availableTenants.map((tenant) => (
+                        {availableTenants.map((tenant: any) => (
                           <button
                             key={tenant.id}
                             type="button"
@@ -779,7 +779,7 @@ export default function LoginPage() {
                       type="checkbox"
                       id="remember-me"
                       checked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
+                      onChange={(e: any) => setRememberMe(e.target.checked)}
                       className={styles.s25}
                     />
                     <label htmlFor="remember-me" className={styles.s26}>

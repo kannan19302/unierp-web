@@ -39,7 +39,7 @@ export default function ContactsPage() {
 
         <ListView
           resource={contactResource}
-          onRowClick={(row) => router.push(`/crm/contacts/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/crm/contacts/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
 

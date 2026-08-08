@@ -130,7 +130,7 @@ export default function TpmPage() {
               Training, Safety.
             </p>
             <div className="ui-stack-2 ui-mt-4">
-              {dashboard?.pillars.map((p) => (
+              {dashboard?.pillars.map((p: any) => (
                 <div key={p.id} className="ui-flex-between py-1 border-b">
                   <span className="ui-text-sm font-semibold">{p.name}</span>
                   <Badge

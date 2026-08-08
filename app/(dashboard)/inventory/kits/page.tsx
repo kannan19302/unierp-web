@@ -212,9 +212,9 @@ export default function KitsPage() {
           <select
             className="ui-input"
             value={warehouseId}
-            onChange={(e) => setWarehouseId(e.target.value)}
+            onChange={(e: any) => setWarehouseId(e.target.value)}
           >
-            {warehouses.map((w) => (
+            {warehouses.map((w: any) => (
               <option key={w.id} value={w.id}>
                 {w.name}
               </option>
@@ -267,7 +267,7 @@ export default function KitsPage() {
                       className={`ui-input ${styles.s7}`}
                       value={assembleQty}
                       min={1}
-                      onChange={(e) => setAssembleQty(Number(e.target.value))}
+                      onChange={(e: any) => setAssembleQty(Number(e.target.value))}
                     />
                     <Button variant="primary" onClick={handleAssemble}>
                       Assemble
@@ -288,7 +288,7 @@ export default function KitsPage() {
                         Snapshot Version
                       </Button>
                     </div>
-                    {versions.map((v) => (
+                    {versions.map((v: any) => (
                       <div key={v.id} className={styles.s11}>
                         <span>
                           v{v.versionNo} {v.notes ? `— ${v.notes}` : ""}{" "}

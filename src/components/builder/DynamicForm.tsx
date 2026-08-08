@@ -46,23 +46,23 @@ export function DynamicForm({
   useEffect(() => {
     // Initialize defaults
     const init: Record<string, any> = { ...data };
-    (fields || []).forEach((f) => {
+    (fields || []).forEach((f: any) => {
       if (init[f.name] === undefined && f.defaultValue !== undefined) {
         init[f.name] = f.defaultValue;
       }
     });
     setFormData(init);
-  }, [(fields || []).map((f) => f.name).join(",")]);
+  }, [(fields || []).map((f: any) => f.name).join(",")]);
 
   const updateField = useCallback(
     (name: string, value: any) => {
       const next = { ...formData, [name]: value };
 
       // Compute formulas
-      (fields || []).forEach((f) => {
+      (fields || []).forEach((f: any) => {
         if (f.formula) {
           try {
-            const computed = f.formula.replace(/\{(\w+)\}/g, (_, key) =>
+            const computed = f.formula.replace(/\{(\w+)\}/g, (_: any, key: any) =>
               String(next[key] ?? 0),
             );
 
@@ -81,7 +81,7 @@ export function DynamicForm({
 
   const validate = useCallback((): boolean => {
     const errs: Record<string, string> = {};
-    (fields || []).forEach((f) => {
+    (fields || []).forEach((f: any) => {
       const val = formData[f.name];
       if (f.required && (val === undefined || val === "" || val === null)) {
         errs[f.name] = `${f.label} is required`;
@@ -191,7 +191,7 @@ export function DynamicForm({
             <input
               type="checkbox"
               checked={!!val}
-              onChange={(e) => updateField(field.name, e.target.checked)}
+              onChange={(e: any) => updateField(field.name, e.target.checked)}
               disabled={readOnly || field.readOnly}
               style={{ accentColor: "var(--color-primary)" }}
             />
@@ -248,7 +248,7 @@ export function DynamicForm({
                   name={field.name}
                   value={opt}
                   checked={val === opt}
-                  onChange={(e) => updateField(field.name, e.target.value)}
+                  onChange={(e: any) => updateField(field.name, e.target.value)}
                   disabled={readOnly || field.readOnly}
                 />
                 <span style={{ fontSize: "var(--text-sm)" }}>{opt}</span>
@@ -327,12 +327,12 @@ export function DynamicForm({
       >
         {(fields || [])
           .filter(
-            (f) =>
+            (f: any) =>
               f.type !== "Section Break" &&
               f.type !== "Column Break" &&
               isVisible(f),
           )
-          .map((field) => (
+          .map((field: any) => (
             <div
               key={field.id}
               style={{

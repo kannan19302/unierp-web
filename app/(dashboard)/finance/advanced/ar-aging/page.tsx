@@ -116,9 +116,9 @@ export default function ARAgingPage() {
     const rows: string[] = [
       "Bucket,Invoice #,Customer,Due Date,Amount,Days Overdue",
     ];
-    BUCKET_CONFIG.forEach(({ key, label }) => {
+    BUCKET_CONFIG.forEach(({ key, label }: any) => {
       const bucket = report.buckets[key];
-      bucket.invoices.forEach((inv) => {
+      bucket.invoices.forEach((inv: any) => {
         rows.push(
           `"${label}","${inv.invoiceNumber}","${inv.customer}","${new Date(inv.dueDate).toLocaleDateString()}",${inv.amount},${inv.daysOverdue}`,
         );
@@ -226,7 +226,7 @@ export default function ARAgingPage() {
               <Card className="ui-card p-5">
                 <h3 className={styles.s12}>Portfolio Distribution</h3>
                 <div className={styles.s13}>
-                  {BUCKET_CONFIG.map(({ key, color }) => {
+                  {BUCKET_CONFIG.map(({ key, color }: any) => {
                     const bucket = report.buckets[key];
                     const pct =
                       report.grandTotal > 0
@@ -244,7 +244,7 @@ export default function ARAgingPage() {
                   })}
                 </div>
                 <div className={styles.s14}>
-                  {BUCKET_CONFIG.map(({ key, label, color }) => {
+                  {BUCKET_CONFIG.map(({ key, label, color }: any) => {
                     const bucket = report.buckets[key];
                     const pct =
                       report.grandTotal > 0
@@ -269,7 +269,7 @@ export default function ARAgingPage() {
             {/* Bucket Breakdown */}
             <div className="ui-stack-4">
               {BUCKET_CONFIG.map(
-                ({ key, label, sublabel, color, bg, icon }) => {
+                ({ key, label, sublabel, color, bg, icon }: any) => {
                   const bucket = report.buckets[key];
                   const isExpanded = expandedBucket === key;
                   const pct =

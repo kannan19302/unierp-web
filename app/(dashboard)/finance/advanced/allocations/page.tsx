@@ -146,7 +146,7 @@ export default function AllocationsPage() {
   };
 
   const handleRemoveTarget = (index: number) => {
-    setTargets(targets.filter((_, i) => i !== index));
+    setTargets(targets.filter((_: any, i: any) => i !== index));
   };
 
   const handleTargetChange = (
@@ -169,7 +169,7 @@ export default function AllocationsPage() {
         allocationType,
         basisType: allocationType === "DYNAMIC_STAT" ? basisType : undefined,
         sourceAccountId,
-        targetAllocations: targets.map((t) => ({
+        targetAllocations: targets.map((t: any) => ({
           accountId: t.accountId,
           costCenterId: t.costCenterId || undefined,
           departmentId: t.departmentId || undefined,
@@ -315,7 +315,7 @@ export default function AllocationsPage() {
           </Card>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {rules.map((rule) => (
+            {rules.map((rule: any) => (
               <Card
                 key={rule.id}
                 className="p-5 flex flex-col justify-between space-y-4"
@@ -357,13 +357,13 @@ export default function AllocationsPage() {
                       Targets Allocation
                     </span>
                     <div className="max-h-24 overflow-y-auto space-y-1 bg-gray-50 p-2 rounded">
-                      {rule.targetAllocations.map((t, idx) => {
-                        const acc = accounts.find((a) => a.id === t.accountId);
+                      {rule.targetAllocations.map((t: any, idx: any) => {
+                        const acc = accounts.find((a: any) => a.id === t.accountId);
                         const cc = costCenters.find(
-                          (c) => c.id === t.costCenterId,
+                          (c: any) => c.id === t.costCenterId,
                         );
                         const dept = departments.find(
-                          (d) => d.id === t.departmentId,
+                          (d: any) => d.id === t.departmentId,
                         );
                         return (
                           <div
@@ -449,7 +449,7 @@ export default function AllocationsPage() {
                 {
                   key: "periodStart",
                   header: "Allocation Period",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     `${new Date(String(v)).toLocaleDateString()} - ${new Date(String(row.periodEnd)).toLocaleDateString()}`,
                 },
                 {
@@ -476,7 +476,7 @@ export default function AllocationsPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className="text-right">
                       {row.status === "DRAFT" && (
                         <Button
@@ -531,7 +531,7 @@ export default function AllocationsPage() {
                     className="ui-input w-full"
                     placeholder="e.g. Overhead IT Allocations"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e: any) => setName(e.target.value)}
                     required
                   />
                 </div>
@@ -542,11 +542,11 @@ export default function AllocationsPage() {
                   <select
                     className="ui-input w-full"
                     value={sourceAccountId}
-                    onChange={(e) => setSourceAccountId(e.target.value)}
+                    onChange={(e: any) => setSourceAccountId(e.target.value)}
                     required
                   >
                     <option value="">Select Pool Account</option>
-                    {accounts.map((a) => (
+                    {accounts.map((a: any) => (
                       <option key={a.id} value={a.id}>
                         {a.code} - {a.name} ({a.type})
                       </option>
@@ -563,7 +563,7 @@ export default function AllocationsPage() {
                   className="ui-input w-full h-16 resize-none"
                   placeholder="Purpose of this allocation rule..."
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(e: any) => setDescription(e.target.value)}
                 />
               </div>
 
@@ -575,7 +575,7 @@ export default function AllocationsPage() {
                   <select
                     className="ui-input w-full"
                     value={allocationType}
-                    onChange={(e) => setAllocationType(e.target.value as any)}
+                    onChange={(e: any) => setAllocationType(e.target.value as any)}
                     required
                   >
                     <option value="STATIC_PCT">Static Percentage</option>
@@ -592,7 +592,7 @@ export default function AllocationsPage() {
                     <select
                       className="ui-input w-full"
                       value={basisType}
-                      onChange={(e) => setBasisType(e.target.value as any)}
+                      onChange={(e: any) => setBasisType(e.target.value as any)}
                       required
                     >
                       <option value="HEADCOUNT">
@@ -626,18 +626,18 @@ export default function AllocationsPage() {
                 </div>
 
                 <div className="space-y-2 max-h-48 overflow-y-auto">
-                  {targets.map((t, idx) => (
+                  {targets.map((t: any, idx: any) => (
                     <div key={idx} className="flex gap-2 items-center">
                       <select
                         className="ui-input text-xs flex-1"
                         value={t.accountId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleTargetChange(idx, "accountId", e.target.value)
                         }
                         required
                       >
                         <option value="">Select Target Account</option>
-                        {accounts.map((a) => (
+                        {accounts.map((a: any) => (
                           <option key={a.id} value={a.id}>
                             {a.code} - {a.name}
                           </option>
@@ -649,7 +649,7 @@ export default function AllocationsPage() {
                         <select
                           className="ui-input text-xs w-36"
                           value={t.departmentId || ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleTargetChange(
                               idx,
                               "departmentId",
@@ -659,7 +659,7 @@ export default function AllocationsPage() {
                           required
                         >
                           <option value="">Select Department</option>
-                          {departments.map((d) => (
+                          {departments.map((d: any) => (
                             <option key={d.id} value={d.id}>
                               {d.name}
                             </option>
@@ -669,7 +669,7 @@ export default function AllocationsPage() {
                         <select
                           className="ui-input text-xs w-36"
                           value={t.costCenterId || ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleTargetChange(
                               idx,
                               "costCenterId",
@@ -678,7 +678,7 @@ export default function AllocationsPage() {
                           }
                         >
                           <option value="">Cost Center (Opt)</option>
-                          {costCenters.map((c) => (
+                          {costCenters.map((c: any) => (
                             <option key={c.id} value={c.id}>
                               {c.name}
                             </option>
@@ -692,7 +692,7 @@ export default function AllocationsPage() {
                           placeholder="%"
                           className="ui-input text-xs w-16 text-center"
                           value={t.percentage || ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleTargetChange(
                               idx,
                               "percentage",
@@ -777,7 +777,7 @@ export default function AllocationsPage() {
                     type="date"
                     className="ui-input w-full"
                     value={periodStart}
-                    onChange={(e) => setPeriodStart(e.target.value)}
+                    onChange={(e: any) => setPeriodStart(e.target.value)}
                     required
                   />
                 </div>
@@ -789,7 +789,7 @@ export default function AllocationsPage() {
                     type="date"
                     className="ui-input w-full"
                     value={periodEnd}
-                    onChange={(e) => setPeriodEnd(e.target.value)}
+                    onChange={(e: any) => setPeriodEnd(e.target.value)}
                     required
                   />
                 </div>

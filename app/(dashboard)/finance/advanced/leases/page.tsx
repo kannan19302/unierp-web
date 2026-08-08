@@ -140,7 +140,7 @@ export default function LeasesPage() {
               className="ui-input pl-8 w-full text-sm"
               placeholder="Search by ref or description…"
               value={search}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
@@ -149,7 +149,7 @@ export default function LeasesPage() {
           <select
             className="ui-input text-sm"
             value={leaseType}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setLeaseType(e.target.value);
               setPage(1);
             }}
@@ -161,7 +161,7 @@ export default function LeasesPage() {
           <select
             className="ui-input text-sm"
             value={status}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setStatus(e.target.value);
               setPage(1);
             }}
@@ -179,7 +179,7 @@ export default function LeasesPage() {
             {
               key: "leaseRef",
               header: "Ref / Description",
-              render: (v, row) => {
+              render: (v: any, row: any) => {
                 const l = row as unknown as Lease;
                 return (
                   <div>
@@ -289,7 +289,7 @@ export default function LeasesPage() {
               variant="secondary"
               size="sm"
               disabled={page === 1}
-              onClick={() => setPage((p) => p - 1)}
+              onClick={() => setPage((p: any) => p - 1)}
             >
               Prev
             </Button>
@@ -300,7 +300,7 @@ export default function LeasesPage() {
               variant="secondary"
               size="sm"
               disabled={page >= totalPages}
-              onClick={() => setPage((p) => p + 1)}
+              onClick={() => setPage((p: any) => p + 1)}
             >
               Next
             </Button>

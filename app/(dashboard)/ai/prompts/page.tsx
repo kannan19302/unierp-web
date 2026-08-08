@@ -56,7 +56,7 @@ export default function PromptsPage() {
         promptTemplate: newItem.promptTemplate,
         category: newItem.category,
         variables: newItem.variablesStr
-          ? newItem.variablesStr.split(",").map((s) => s.trim())
+          ? newItem.variablesStr.split(",").map((s: any) => s.trim())
           : [],
         isActive: newItem.isActive === "true",
       });
@@ -127,7 +127,7 @@ export default function PromptsPage() {
             </div>
           ) : (
             <div className="ui-stack-3">
-              {prompts.map((p) => (
+              {prompts.map((p: any) => (
                 <div key={p.id} className="p-4 ui-bg-subtle rounded-lg">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -154,7 +154,7 @@ export default function PromptsPage() {
                       </p>
                       {p.variables?.length > 0 && (
                         <div className="ui-hstack-2 mt-2">
-                          {p.variables.map((v, i) => (
+                          {p.variables.map((v: any, i: any) => (
                             <span
                               key={i}
                               className="ui-badge-secondary text-xs px-2 py-0.5 rounded"
@@ -203,14 +203,14 @@ export default function PromptsPage() {
                 className="ui-input"
                 placeholder="Prompt name"
                 value={newItem.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, name: e.target.value })
                 }
               />
               <select
                 className="ui-input"
                 value={newItem.category}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, category: e.target.value })
                 }
               >
@@ -225,7 +225,7 @@ export default function PromptsPage() {
                 placeholder="Template with {variables}"
                 rows={5}
                 value={newItem.promptTemplate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, promptTemplate: e.target.value })
                 }
               />
@@ -233,7 +233,7 @@ export default function PromptsPage() {
                 className="ui-input"
                 placeholder="Variables (comma-separated)"
                 value={newItem.variablesStr}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, variablesStr: e.target.value })
                 }
               />
@@ -262,7 +262,7 @@ export default function PromptsPage() {
               <input
                 className="ui-input"
                 value={editItem.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEditItem({ ...editItem, name: e.target.value })
                 }
               />
@@ -270,7 +270,7 @@ export default function PromptsPage() {
                 className="ui-textarea font-mono"
                 rows={5}
                 value={editItem.promptTemplate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEditItem({ ...editItem, promptTemplate: e.target.value })
                 }
               />

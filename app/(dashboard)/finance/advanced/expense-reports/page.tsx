@@ -119,19 +119,19 @@ export default function ExpenseManagementPage() {
   );
 
   const pending = reports.filter(
-    (r) => r.status === "SUBMITTED" || r.status === "PENDING_SECOND_APPROVAL",
+    (r: any) => r.status === "SUBMITTED" || r.status === "PENDING_SECOND_APPROVAL",
   ).length;
   const totalPending = reports
     .filter(
-      (r) => r.status === "SUBMITTED" || r.status === "PENDING_SECOND_APPROVAL",
+      (r: any) => r.status === "SUBMITTED" || r.status === "PENDING_SECOND_APPROVAL",
     )
-    .reduce((a, r) => a + Number(r.totalAmount), 0);
-  const violations = reports.filter((r) => r.hasPolicyViolation).length;
+    .reduce((a: any, r: any) => a + Number(r.totalAmount), 0);
+  const violations = reports.filter((r: any) => r.hasPolicyViolation).length;
 
   const filtered =
     activeTab === "all"
       ? reports
-      : reports.filter((r) => r.status === activeTab);
+      : reports.filter((r: any) => r.status === activeTab);
 
   const createReport = async () => {
     setSubmitting(true);
@@ -463,18 +463,18 @@ export default function ExpenseManagementPage() {
               placeholder="Client Visit - Chicago"
               required
               value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
+              onChange={(e: any) => setNewTitle(e.target.value)}
             />
             <TextField
               label="Employee ID"
               required
               value={newEmployeeId}
-              onChange={(e) => setNewEmployeeId(e.target.value)}
+              onChange={(e: any) => setNewEmployeeId(e.target.value)}
             />
             <TextField
               label="Description"
               value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
+              onChange={(e: any) => setNewDescription(e.target.value)}
             />
           </div>
         </Modal>
@@ -503,7 +503,7 @@ export default function ExpenseManagementPage() {
 
               <Card padding="sm">
                 <div className={styles.s5}>Line Items</div>
-                {(detailReport.items || []).map((item) => (
+                {(detailReport.items || []).map((item: any) => (
                   <div key={item.id} className={styles.s6}>
                     <div>
                       <div className="text-sm">
@@ -546,7 +546,7 @@ export default function ExpenseManagementPage() {
                         <TextField
                           placeholder="Paste receipt text here..."
                           value={ocrText}
-                          onChange={(e) => setOcrText(e.target.value)}
+                          onChange={(e: any) => setOcrText(e.target.value)}
                         />
                         <Button
                           variant="secondary"
@@ -561,7 +561,7 @@ export default function ExpenseManagementPage() {
                       <FormField label="Category">
                         <Select
                           value={itemCategory}
-                          onChange={(e) => setItemCategory(e.target.value)}
+                          onChange={(e: any) => setItemCategory(e.target.value)}
                         >
                           <option value="TRAVEL">Travel</option>
                           <option value="MEALS">Meals</option>
@@ -573,14 +573,14 @@ export default function ExpenseManagementPage() {
                       <TextField
                         label="Merchant"
                         value={itemMerchant}
-                        onChange={(e) => setItemMerchant(e.target.value)}
+                        onChange={(e: any) => setItemMerchant(e.target.value)}
                       />
                     </div>
                     <TextField
                       label="Description"
                       required
                       value={itemDescription}
-                      onChange={(e) => setItemDescription(e.target.value)}
+                      onChange={(e: any) => setItemDescription(e.target.value)}
                     />
                     <div className={styles.s8}>
                       <TextField
@@ -588,20 +588,20 @@ export default function ExpenseManagementPage() {
                         type="number"
                         required
                         value={itemAmount}
-                        onChange={(e) => setItemAmount(e.target.value)}
+                        onChange={(e: any) => setItemAmount(e.target.value)}
                       />
                       <TextField
                         label="Date"
                         type="date"
                         required
                         value={itemDate}
-                        onChange={(e) => setItemDate(e.target.value)}
+                        onChange={(e: any) => setItemDate(e.target.value)}
                       />
                     </div>
                     <TextField
                       label="Receipt URL (optional)"
                       value={itemReceipt}
-                      onChange={(e) => setItemReceipt(e.target.value)}
+                      onChange={(e: any) => setItemReceipt(e.target.value)}
                     />
                     <Button
                       variant="primary"

@@ -71,7 +71,7 @@ function OperationsServiceHubContent() {
   const [visited, setVisited] = useState<Set<TabKey>>(new Set([activeTab]));
 
   useEffect(() => {
-    setVisited((prev) => {
+    setVisited((prev: any) => {
       if (prev.has(activeTab)) return prev;
       const next = new Set(prev);
       next.add(activeTab);

@@ -48,7 +48,7 @@ export default function NewTerritoryPlanPage() {
             <input
               className="ui-input"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               required
               placeholder="e.g. FY2026 EMEA Plan"
             />
@@ -58,7 +58,7 @@ export default function NewTerritoryPlanPage() {
             <textarea
               className="ui-input"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               rows={3}
@@ -69,7 +69,7 @@ export default function NewTerritoryPlanPage() {
             <input
               className="ui-input"
               value={form.fiscalYear}
-              onChange={(e) => setForm({ ...form, fiscalYear: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, fiscalYear: e.target.value })}
               required
               placeholder="e.g. FY2026"
             />
@@ -79,7 +79,7 @@ export default function NewTerritoryPlanPage() {
             <select
               className="ui-input"
               value={form.status}
-              onChange={(e) => setForm({ ...form, status: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, status: e.target.value })}
             >
               <option value="DRAFT">Draft</option>
               <option value="ACTIVE">Active</option>

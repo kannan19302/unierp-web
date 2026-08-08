@@ -80,7 +80,7 @@ export default function SalesDocumentsPage() {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
-              {templates.map((tmpl) => (
+              {templates.map((tmpl: any) => (
                 <div
                   key={tmpl.id}
                   style={{

@@ -239,7 +239,7 @@ export default function ConversionAnalyticsPage() {
             <div className={styles.breakdownHeader}>
               <Filter size={16} />
               <span className="font-semibold">Breakdown by</span>
-              {(["source", "campaign", "rep"] as Breakdown[]).map((b) => (
+              {(["source", "campaign", "rep"] as Breakdown[]).map((b: any) => (
                 <button
                   key={b}
                   onClick={() => setBreakdown(b)}

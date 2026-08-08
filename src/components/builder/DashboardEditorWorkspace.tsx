@@ -209,7 +209,7 @@ export function DashboardEditorWorkspace({
   };
 
   const addWidget = (type: string) => {
-    const wt = WIDGET_TYPES.find((t) => t.type === type);
+    const wt = WIDGET_TYPES.find((t: any) => t.type === type);
     if (!wt) return;
     const id = "w_" + Math.random().toString(36).substr(2, 9);
     setWidgets([
@@ -230,16 +230,16 @@ export function DashboardEditorWorkspace({
   };
 
   const removeWidget = (id: string) => {
-    setWidgets(widgets.filter((w) => w.id !== id));
-    setLayout(layout.filter((l) => l.i !== id));
+    setWidgets(widgets.filter((w: any) => w.id !== id));
+    setLayout(layout.filter((l: any) => l.i !== id));
     if (selectedWidgetId === id) setSelectedWidgetId(null);
   };
 
-  const selectedWidget = widgets.find((w) => w.id === selectedWidgetId);
+  const selectedWidget = widgets.find((w: any) => w.id === selectedWidgetId);
   const updateWidgetConfig = (key: string, value: any) => {
     if (!selectedWidget) return;
     setWidgets(
-      widgets.map((w) =>
+      widgets.map((w: any) =>
         w.id === selectedWidget.id ? { ...w, [key]: value } : w,
       ),
     );
@@ -324,7 +324,7 @@ export function DashboardEditorWorkspace({
               <LayoutDashboard size={16} color="var(--studio-success)" />
               <input
                 value={dashboard?.name || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setDashboard({ ...(dashboard || {}), name: e.target.value })
                 }
                 style={{
@@ -418,7 +418,7 @@ export function DashboardEditorWorkspace({
               overflowY: "auto",
             }}
           >
-            {WIDGET_TYPES.map((wt) => (
+            {WIDGET_TYPES.map((wt: any) => (
               <button
                 key={wt.type}
                 onClick={() => addWidget(wt.type)}
@@ -435,11 +435,11 @@ export function DashboardEditorWorkspace({
                   textAlign: "left",
                   transition: "all 0.2s",
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={(e: any) => {
                   e.currentTarget.style.borderColor = wt.color;
                   e.currentTarget.style.background = "var(--studio-50)";
                 }}
-                onMouseLeave={(e) => {
+                onMouseLeave={(e: any) => {
                   e.currentTarget.style.borderColor = "var(--studio-200)";
                   e.currentTarget.style.background = "white";
                 }}
@@ -515,11 +515,11 @@ export function DashboardEditorWorkspace({
                 isResizable
                 margin={[16, 16]}
               >
-                {layout.map((l) => {
-                  const widget = widgets.find((w) => w.id === l.i);
+                {layout.map((l: any) => {
+                  const widget = widgets.find((w: any) => w.id === l.i);
                   if (!widget) return <div key={l.i} />;
                   const isSelected = selectedWidgetId === widget.id;
-                  const wt = WIDGET_TYPES.find((t) => t.type === widget.type);
+                  const wt = WIDGET_TYPES.find((t: any) => t.type === widget.type);
                   const Icon = wt?.icon || LayoutDashboard;
                   return (
                     <div
@@ -637,7 +637,7 @@ export function DashboardEditorWorkspace({
                   <input
                     type="text"
                     value={selectedWidget.title}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateWidgetConfig("title", e.target.value)
                     }
                     style={{
@@ -666,7 +666,7 @@ export function DashboardEditorWorkspace({
                   </label>
                   <select
                     value={selectedWidget.dataSource}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateWidgetConfig("dataSource", e.target.value)
                     }
                     style={{

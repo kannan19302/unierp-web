@@ -48,7 +48,7 @@ export function PermissionProvider({
     let mounted = true;
 
     apiGet<MeResponse>("/auth/me")
-      .then((me) => {
+      .then((me: any) => {
         if (mounted && Array.isArray(me.permissions)) {
           setPermissions(me.permissions);
         }

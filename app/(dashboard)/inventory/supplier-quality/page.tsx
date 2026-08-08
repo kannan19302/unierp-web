@@ -152,7 +152,7 @@ export default function SupplierQualityPage() {
                 icon: CheckCircle,
                 color: "text-purple-600",
               },
-            ].map((s) => (
+            ].map((s: any) => (
               <Card key={s.label} className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -167,7 +167,7 @@ export default function SupplierQualityPage() {
         )}
 
         <div className="flex gap-1 border-b">
-          {(["dashboard", "ncrs", "cars", "scorecards"] as const).map((t) => (
+          {(["dashboard", "ncrs", "cars", "scorecards"] as const).map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -279,7 +279,7 @@ export default function SupplierQualityPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) =>
+                    render: (v: any, row: any) =>
                       row.status !== "CLOSED" ? (
                         <div className={styles.s1}>
                           <button
@@ -334,7 +334,7 @@ export default function SupplierQualityPage() {
                       "DOCUMENTATION",
                       "LABELING",
                       "QUANTITY",
-                    ].map((t) => (
+                    ].map((t: any) => (
                       <option key={t} value={t}>
                         {t}
                       </option>
@@ -347,7 +347,7 @@ export default function SupplierQualityPage() {
                     name="severity"
                     className="mt-1 w-full border rounded px-2 py-1.5 text-sm bg-background"
                   >
-                    {["MINOR", "MAJOR", "CRITICAL"].map((s) => (
+                    {["MINOR", "MAJOR", "CRITICAL"].map((s: any) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
@@ -414,7 +414,7 @@ export default function SupplierQualityPage() {
                 Raise Corrective Action Request
               </h3>
               <form
-                onSubmit={(e) => raiseCar(showCarForm, e)}
+                onSubmit={(e: any) => raiseCar(showCarForm, e)}
                 className="space-y-3"
               >
                 <div>

@@ -74,7 +74,7 @@ export default function PortalForumPage() {
       const res = await apiGet(
         `/api/crm/portal/forum/topics/${topicId}/replies`,
       );
-      setReplies((prev) => ({
+      setReplies((prev: any) => ({
         ...prev,
         [topicId]: Array.isArray(res) ? res : (res as any)?.data || [],
       }));
@@ -123,7 +123,7 @@ export default function PortalForumPage() {
               <input
                 className="ui-input"
                 value={form.customerId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, customerId: e.target.value })
                 }
               />
@@ -133,7 +133,7 @@ export default function PortalForumPage() {
               <input
                 className="ui-input"
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, title: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -142,7 +142,7 @@ export default function PortalForumPage() {
                 className="ui-input"
                 rows={4}
                 value={form.content}
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, content: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -150,7 +150,7 @@ export default function PortalForumPage() {
               <select
                 className="ui-input"
                 value={form.category}
-                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, category: e.target.value })}
               >
                 <option value="GENERAL">General</option>
                 <option value="FEATURE_REQUEST">Feature Request</option>

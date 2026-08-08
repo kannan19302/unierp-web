@@ -103,7 +103,7 @@ export default function POSGiftCardsPage() {
             className="ui-input"
             placeholder="Search by code or recipient..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value)}
           />
         </div>
         {selected ? (
@@ -181,14 +181,14 @@ export default function POSGiftCardsPage() {
         )}
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Issue Gift Card</h2>
               <div className="ui-form-group">
                 <label>Code</label>
                 <input
                   className="ui-input"
                   value={form.code}
-                  onChange={(e) => setForm({ ...form, code: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, code: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -197,7 +197,7 @@ export default function POSGiftCardsPage() {
                   type="number"
                   className="ui-input"
                   value={form.initialBalance}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, initialBalance: Number(e.target.value) })
                   }
                 />
@@ -207,7 +207,7 @@ export default function POSGiftCardsPage() {
                 <input
                   className="ui-input"
                   value={form.issuedTo}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, issuedTo: e.target.value })
                   }
                 />
@@ -228,7 +228,7 @@ export default function POSGiftCardsPage() {
         )}
         {showTopUp && (
           <div className="ui-modal-overlay" onClick={() => setShowTopUp(null)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Top Up Gift Card</h2>
               <p>Add $50 to this gift card?</p>
               <div className="ui-hstack-2 mt-4">

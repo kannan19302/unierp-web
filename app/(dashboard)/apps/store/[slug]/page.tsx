@@ -139,7 +139,7 @@ export default function AppDetailPage() {
       const list = await client.get<Array<{ appSlug: string }>>(
         "/admin/marketplace/installed",
       );
-      setIsInstalled(list.some((a) => a.appSlug === slug));
+      setIsInstalled(list.some((a: any) => a.appSlug === slug));
     } catch (e) {
       // Best-effort background flag — install button falls back to "Get"
       // rather than misrepresenting install state as an error banner.
@@ -152,7 +152,7 @@ export default function AppDetailPage() {
       const list = await client.get<Array<{ app?: { slug?: string } }>>(
         "/admin/marketplace/favorites",
       );
-      setIsFavorite(list.some((f) => f.app?.slug === slug));
+      setIsFavorite(list.some((f: any) => f.app?.slug === slug));
     } catch (e) {
       console.warn("Failed to load favorite status", e);
     }
@@ -275,8 +275,8 @@ export default function AppDetailPage() {
   const markHelpful = async (reviewId: string) => {
     try {
       await client.post(`/admin/marketplace/reviews/${reviewId}/helpful`);
-      setAllReviews((prev) =>
-        prev.map((r) =>
+      setAllReviews((prev: any) =>
+        prev.map((r: any) =>
           r.id === reviewId ? { ...r, helpfulCount: r.helpfulCount + 1 } : r,
         ),
       );
@@ -289,7 +289,7 @@ export default function AppDetailPage() {
     const r = Number(rating) || 0;
     return (
       <div className="ui-hstack-1">
-        {[1, 2, 3, 4, 5].map((s) => (
+        {[1, 2, 3, 4, 5].map((s: any) => (
           <Star
             key={s}
             size={size}
@@ -358,8 +358,8 @@ export default function AppDetailPage() {
     caption: string;
   }[];
 
-  const ratingDistItems = [5, 4, 3, 2, 1].map((star) => {
-    const dist = (app.ratingDistribution || []).find((d) => d.rating === star);
+  const ratingDistItems = [5, 4, 3, 2, 1].map((star: any) => {
+    const dist = (app.ratingDistribution || []).find((d: any) => d.rating === star);
     const count = dist?.count || 0;
     const pct = app.reviewCount > 0 ? (count / app.reviewCount) * 100 : 0;
     return (
@@ -533,7 +533,7 @@ export default function AppDetailPage() {
               Screenshots
             </div>
             <div className={styles.screenshotScroll}>
-              {screenshots.map((ss, i) => (
+              {screenshots.map((ss: any, i: any) => (
                 <div
                   key={i}
                   className={styles.screenshotFrame}
@@ -633,7 +633,7 @@ export default function AppDetailPage() {
             { key: "reviews" as const, label: `Reviews (${app.reviewCount})` },
             { key: "changelog" as const, label: "Changelog" },
             { key: "support" as const, label: "Support" },
-          ].map((tab) => (
+          ].map((tab: any) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
@@ -710,7 +710,7 @@ export default function AppDetailPage() {
                   <div className="ui-form-group">
                     <label className="ui-label">Rating</label>
                     <div className="ui-hstack-1">
-                      {[1, 2, 3, 4, 5].map((s) => (
+                      {[1, 2, 3, 4, 5].map((s: any) => (
                         <button
                           key={s}
                           onClick={() => setReviewRating(s)}
@@ -742,7 +742,7 @@ export default function AppDetailPage() {
                     <label className="ui-label">Title (optional)</label>
                     <input
                       value={reviewTitle}
-                      onChange={(e) => setReviewTitle(e.target.value)}
+                      onChange={(e: any) => setReviewTitle(e.target.value)}
                       placeholder="Summary of your review"
                       className="ui-input"
                     />
@@ -751,7 +751,7 @@ export default function AppDetailPage() {
                     <label className="ui-label">Review</label>
                     <textarea
                       value={reviewBody}
-                      onChange={(e) => setReviewBody(e.target.value)}
+                      onChange={(e: any) => setReviewBody(e.target.value)}
                       placeholder="Share your experience..."
                       rows={4}
                       className="ui-textarea"
@@ -784,7 +784,7 @@ export default function AppDetailPage() {
                 </div>
               ) : (
                 <div>
-                  {allReviews.map((review) => (
+                  {allReviews.map((review: any) => (
                     <div
                       key={review.id}
                       className={`ui-card ${styles.reviewCard}`}
@@ -844,7 +844,7 @@ export default function AppDetailPage() {
                   className="ui-card"
                   style={{ padding: "4px var(--space-4)" }}
                 >
-                  {allChangelogs.map((cl) => (
+                  {allChangelogs.map((cl: any) => (
                     <div key={cl.id} className={styles.changelogItem}>
                       <span className={styles.changelogVersion}>
                         v{cl.version}

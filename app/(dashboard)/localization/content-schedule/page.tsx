@@ -10,7 +10,7 @@ export default function ContentSchedulePage() {
 
   useEffect(() => {
     apiGet("/admin/localization/content-schedules")
-      .then((d) => setSchedules(Array.isArray(d) ? d : []))
+      .then((d: any) => setSchedules(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 
@@ -29,7 +29,7 @@ export default function ContentSchedulePage() {
         <div
           className="ui-flex"
           style={{ gap: "var(--space-2)" }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button size="sm" variant="ghost">
             <Eye size={14} />

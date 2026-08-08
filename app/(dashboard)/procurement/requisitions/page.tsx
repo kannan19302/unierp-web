@@ -143,7 +143,7 @@ export default function RequisitionsPage() {
 
   const handleRemoveItemRow = (index: number) => {
     if (items.length === 1) return;
-    setItems(items.filter((_, i) => i !== index));
+    setItems(items.filter((_: any, i: any) => i !== index));
   };
 
   const handleItemChange = (index: number, key: string, value: unknown) => {
@@ -155,7 +155,7 @@ export default function RequisitionsPage() {
     newItems[index] = updated;
 
     if (key === "productId") {
-      const prod = products.find((p) => p.id === (value as string));
+      const prod = products.find((p: any) => p.id === (value as string));
       if (prod) {
         updated.description = prod.name;
         updated.estimatedPrice = 100;
@@ -175,7 +175,7 @@ export default function RequisitionsPage() {
         departmentId: selectedDepartment || undefined,
         requiredDate: requiredDate || undefined,
         notes: notes || undefined,
-        lineItems: items.map((item) => ({
+        lineItems: items.map((item: any) => ({
           productId: item.productId || undefined,
           description: item.description,
           quantity: Number(item.quantity),
@@ -204,7 +204,7 @@ export default function RequisitionsPage() {
       }
     } catch {
       setRequisitions(
-        requisitions.map((r) => {
+        requisitions.map((r: any) => {
           if (r.id === id) {
             return {
               ...r,
@@ -238,7 +238,7 @@ export default function RequisitionsPage() {
       setSelectedRequisition(null);
     } catch {
       setRequisitions(
-        requisitions.map((r) => {
+        requisitions.map((r: any) => {
           if (r.id === id) {
             return { ...r, status: "CONVERTED" };
           }
@@ -254,7 +254,7 @@ export default function RequisitionsPage() {
     }
   };
 
-  const filteredRequisitions = requisitions.filter((r) => {
+  const filteredRequisitions = requisitions.filter((r: any) => {
     if (statusFilter === "ALL") return true;
     return r.status === statusFilter;
   });
@@ -289,7 +289,7 @@ export default function RequisitionsPage() {
     {
       key: "requisitionNumber",
       header: "Requisition No.",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const req = row as unknown as Requisition;
         return <span className="font-semibold">{req.requisitionNumber}</span>;
       },
@@ -297,7 +297,7 @@ export default function RequisitionsPage() {
     {
       key: "title",
       header: "Title",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const req = row as unknown as Requisition;
         return (
           <div>
@@ -310,7 +310,7 @@ export default function RequisitionsPage() {
     {
       key: "departmentName",
       header: "Department",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const req = row as unknown as Requisition;
         return <span>{req.departmentName || "General"}</span>;
       },
@@ -318,7 +318,7 @@ export default function RequisitionsPage() {
     {
       key: "requiredDate",
       header: "Required Date",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const req = row as unknown as Requisition;
         return (
           <span>
@@ -332,7 +332,7 @@ export default function RequisitionsPage() {
     {
       key: "estimatedCost",
       header: "Est. Cost",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const req = row as unknown as Requisition;
         return (
           <span className="font-semibold">
@@ -344,7 +344,7 @@ export default function RequisitionsPage() {
     {
       key: "status",
       header: "Status",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const req = row as unknown as Requisition;
         return (
           <Badge variant={getStatusBadgeVariant(req.status)}>
@@ -356,12 +356,12 @@ export default function RequisitionsPage() {
     {
       key: "rowActions",
       header: "Actions",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const req = row as unknown as Requisition;
         return (
           <div className="ui-flex-end ui-gap-2">
             <Button
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 setSelectedRequisition(req);
               }}
@@ -372,7 +372,7 @@ export default function RequisitionsPage() {
             {req.status === "PENDING_APPROVAL" && (
               <>
                 <Button
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     e.stopPropagation();
                     handleUpdateStatus(req.id, "approve");
                   }}
@@ -381,7 +381,7 @@ export default function RequisitionsPage() {
                   Approve
                 </Button>
                 <Button
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     e.stopPropagation();
                     handleUpdateStatus(req.id, "reject");
                   }}
@@ -393,7 +393,7 @@ export default function RequisitionsPage() {
             )}
             {req.status === "APPROVED" && (
               <Button
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   handleConvertToPO(req.id);
                 }}
@@ -418,7 +418,7 @@ export default function RequisitionsPage() {
         "APPROVED",
         "REJECTED",
         "CONVERTED",
-      ].map((status) => (
+      ].map((status: any) => (
         <button
           key={status}
           onClick={() => setStatusFilter(status)}
@@ -472,26 +472,26 @@ export default function RequisitionsPage() {
           stats={[
             {
               label: "Total Requested",
-              value: `$${requisitions.reduce((acc, r) => acc + Number(r.estimatedCost), 0).toLocaleString()}`,
+              value: `$${requisitions.reduce((acc: any, r: any) => acc + Number(r.estimatedCost), 0).toLocaleString()}`,
               icon: <TrendingUp size={20} />,
               color: "var(--chart-1)",
             },
             {
               label: "Pending Approval",
-              value: requisitions.filter((r) => r.status === "PENDING_APPROVAL")
+              value: requisitions.filter((r: any) => r.status === "PENDING_APPROVAL")
                 .length,
               icon: <AlertCircle size={20} />,
               color: "var(--chart-3)",
             },
             {
               label: "Approved",
-              value: requisitions.filter((r) => r.status === "APPROVED").length,
+              value: requisitions.filter((r: any) => r.status === "APPROVED").length,
               icon: <Check size={20} />,
               color: "var(--chart-2)",
             },
             {
               label: "Converted to PO",
-              value: requisitions.filter((r) => r.status === "CONVERTED")
+              value: requisitions.filter((r: any) => r.status === "CONVERTED")
                 .length,
               icon: <FileText size={20} />,
               color: "var(--chart-5)",
@@ -534,7 +534,7 @@ export default function RequisitionsPage() {
                       type="text"
                       required
                       value={requisitionNumber}
-                      onChange={(e) => setRequisitionNumber(e.target.value)}
+                      onChange={(e: any) => setRequisitionNumber(e.target.value)}
                       className="ui-input"
                     />
                   </div>
@@ -545,7 +545,7 @@ export default function RequisitionsPage() {
                       required
                       placeholder="e.g. Q3 Engineering Software Subscriptions"
                       value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      onChange={(e: any) => setTitle(e.target.value)}
                       className="ui-input"
                     />
                   </div>
@@ -556,7 +556,7 @@ export default function RequisitionsPage() {
                   <textarea
                     placeholder="Describe the business need for this purchase..."
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e: any) => setDescription(e.target.value)}
                     className="ui-input"
                     rows={2}
                   />
@@ -567,11 +567,11 @@ export default function RequisitionsPage() {
                     <label className="ui-label">Department</label>
                     <select
                       value={selectedDepartment}
-                      onChange={(e) => setSelectedDepartment(e.target.value)}
+                      onChange={(e: any) => setSelectedDepartment(e.target.value)}
                       className="ui-input"
                     >
                       <option value="">Select Department...</option>
-                      {departments.map((d) => (
+                      {departments.map((d: any) => (
                         <option key={d.id} value={d.id}>
                           {d.name}
                         </option>
@@ -583,7 +583,7 @@ export default function RequisitionsPage() {
                     <input
                       type="date"
                       value={requiredDate}
-                      onChange={(e) => setRequiredDate(e.target.value)}
+                      onChange={(e: any) => setRequiredDate(e.target.value)}
                       className="ui-input"
                     />
                   </div>
@@ -604,7 +604,7 @@ export default function RequisitionsPage() {
                   </div>
 
                   <div className="ui-stack-2">
-                    {items.map((item, idx) => (
+                    {items.map((item: any, idx: any) => (
                       <div key={idx} className={styles.p19}>
                         <div
                           className={["ui-form-group", styles.p20].join(" ")}
@@ -614,7 +614,7 @@ export default function RequisitionsPage() {
                           </label>
                           <select
                             value={item.productId}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(idx, "productId", e.target.value)
                             }
                             className="ui-input"
@@ -622,7 +622,7 @@ export default function RequisitionsPage() {
                             <option value="">
                               Custom Item / Non-Inventory
                             </option>
-                            {products.map((p) => (
+                            {products.map((p: any) => (
                               <option key={p.id} value={p.id}>
                                 {p.name} ({p.sku})
                               </option>
@@ -641,7 +641,7 @@ export default function RequisitionsPage() {
                             required
                             placeholder="Item specifications"
                             value={item.description}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(
                                 idx,
                                 "description",
@@ -661,7 +661,7 @@ export default function RequisitionsPage() {
                             required
                             min={1}
                             value={item.quantity}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(
                                 idx,
                                 "quantity",
@@ -683,7 +683,7 @@ export default function RequisitionsPage() {
                             required
                             min={0}
                             value={item.estimatedPrice}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleItemChange(
                                 idx,
                                 "estimatedPrice",
@@ -725,7 +725,7 @@ export default function RequisitionsPage() {
                         $
                         {items
                           .reduce(
-                            (sum, item) =>
+                            (sum: any, item: any) =>
                               sum + item.quantity * item.estimatedPrice,
                             0,
                           )
@@ -740,7 +740,7 @@ export default function RequisitionsPage() {
                   <textarea
                     placeholder="Provide justifying budget and cost-benefit notes..."
                     value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                    onChange={(e: any) => setNotes(e.target.value)}
                     className="ui-input"
                     rows={2}
                   />

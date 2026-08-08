@@ -145,7 +145,7 @@ export default function SupportDeepPage() {
                     className="ui-input ui-mb-1"
                     placeholder="Name"
                     value={macroForm.name}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setMacroForm({ ...macroForm, name: e.target.value })
                     }
                   />
@@ -154,7 +154,7 @@ export default function SupportDeepPage() {
                     rows={3}
                     placeholder='Actions JSON e.g. [{"type":"set_status","value":"RESOLVED"}]'
                     value={macroForm.actions}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setMacroForm({ ...macroForm, actions: e.target.value })
                     }
                   />
@@ -172,7 +172,7 @@ export default function SupportDeepPage() {
                   </div>
                 </div>
               )}
-              {macros.map((m) => (
+              {macros.map((m: any) => (
                 <div
                   key={m.id}
                   className="ui-flex ui-items-center ui-justify-between ui-py-1 ui-border-b"
@@ -211,7 +211,7 @@ export default function SupportDeepPage() {
               <h3 className="ui-card-title">
                 <TrendingUp size={16} /> Escalations
               </h3>
-              {escalations.map((e) => (
+              {escalations.map((e: any) => (
                 <div
                   key={e.id}
                   className="ui-flex ui-items-center ui-justify-between ui-py-1 ui-border-b"
@@ -250,7 +250,7 @@ export default function SupportDeepPage() {
                     {csat.totalResponses} responses
                   </p>
                   <div className="ui-mt-2">
-                    {[5, 4, 3, 2, 1].map((s) => (
+                    {[5, 4, 3, 2, 1].map((s: any) => (
                       <div
                         key={s}
                         className="ui-flex ui-items-center ui-gap-1 ui-text-xs"

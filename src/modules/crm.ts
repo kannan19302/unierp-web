@@ -115,7 +115,7 @@ export const customerResource = defineResource({
     savedViews: true,
     inlineEdit: ["creditLimit"],
     render: {
-      paymentTerms: (row) => `Net ${row.paymentTerms}`,
+      paymentTerms: (row: any) => `Net ${row.paymentTerms}`,
     },
   },
   form: {

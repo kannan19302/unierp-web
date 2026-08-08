@@ -66,7 +66,7 @@ export default function CommissionsPage() {
       setCreating(false);
     }
   };
-  const totalPaid = commissions.reduce((a, c) => a + Number(c.amount || 0), 0);
+  const totalPaid = commissions.reduce((a: any, c: any) => a + Number(c.amount || 0), 0);
   const columns: Column<Commission>[] = [
     {
       key: "agent",
@@ -178,13 +178,13 @@ export default function CommissionsPage() {
               label="Agent ID"
               required
               value={form.agentId}
-              onChange={(e) => setForm({ ...form, agentId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, agentId: e.target.value })}
             />
             <TextField
               label="Amount ($)"
               type="number"
               value={String(form.amount)}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, amount: Number(e.target.value) })
               }
             />
@@ -192,14 +192,14 @@ export default function CommissionsPage() {
               label="Split Ratio (%)"
               type="number"
               value={String(form.splitRatio)}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, splitRatio: Number(e.target.value) })
               }
             />
             <TextField
               label="GL Reference"
               value={form.generalLedgerRef}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, generalLedgerRef: e.target.value })
               }
             />

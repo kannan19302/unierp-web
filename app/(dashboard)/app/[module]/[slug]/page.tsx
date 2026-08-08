@@ -74,14 +74,14 @@ function CustomAppPageContent() {
     : parsedLayout?.fields || [];
   const listColumns = formFields
     .filter(
-      (f) =>
+      (f: any) =>
         f.inListView && f.type !== "Section Break" && f.type !== "Column Break",
     )
     .slice(0, 6);
   if (listColumns.length === 0 && formFields.length > 0) {
     listColumns.push(
       ...formFields
-        .filter((f) => f.type === "Data" || f.type === "Select")
+        .filter((f: any) => f.type === "Data" || f.type === "Select")
         .slice(0, 3),
     );
   }
@@ -163,7 +163,7 @@ function CustomAppPageContent() {
 
   const handleSort = (colName: string) => {
     if (sortBy === colName) {
-      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+      setSortOrder((prev: any) => (prev === "asc" ? "desc" : "asc"));
     } else {
       setSortBy(colName);
       setSortOrder("asc");
@@ -276,7 +276,7 @@ function CustomAppPageContent() {
               className={`ui-input pl-8 ${styles.s10}`}
               placeholder="Search records..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
             />
             {search && (
               <button onClick={() => setSearch("")} className={styles.s11}>
@@ -289,7 +289,7 @@ function CustomAppPageContent() {
             <select
               className="ui-input w-auto"
               value={pageSize}
-              onChange={(e) => setPageSize(Number(e.target.value))}
+              onChange={(e: any) => setPageSize(Number(e.target.value))}
             >
               <option value={10}>10</option>
               <option value={25}>25</option>
@@ -426,12 +426,12 @@ function CustomAppPageContent() {
               <button
                 className="ui-btn ui-btn-icon ui-btn-secondary"
                 disabled={page <= 1}
-                onClick={() => setPage((p) => p - 1)}
+                onClick={() => setPage((p: any) => p - 1)}
               >
                 <ChevronLeft size={14} />
               </button>
               {/* Page numbers */}
-              {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
+              {Array.from({ length: Math.min(totalPages, 7) }, (_: any, i: any) => {
                 let pageNum: number;
                 if (totalPages <= 7) {
                   pageNum = i + 1;
@@ -455,7 +455,7 @@ function CustomAppPageContent() {
               <button
                 className="ui-btn ui-btn-icon ui-btn-secondary"
                 disabled={page >= totalPages}
-                onClick={() => setPage((p) => p + 1)}
+                onClick={() => setPage((p: any) => p + 1)}
               >
                 <ChevronRight size={14} />
               </button>
@@ -798,7 +798,7 @@ function RuntimeTableWidget({
 
   useEffect(() => {
     if (!dataModelId && !dataModelSlug) return;
-    const schema = schemas.find((s) => {
+    const schema = schemas.find((s: any) => {
       const cleanSlug = s.slug.replace(`${moduleName.toLowerCase()}_`, "");
       return (
         s.id === dataModelId ||
@@ -877,7 +877,7 @@ function RuntimeTableWidget({
             className={styles.s43}
             placeholder="Search..."
             value={search}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setSearch(e.target.value);
               setPage(1);
             }}
@@ -930,14 +930,14 @@ function RuntimeTableWidget({
               <button
                 className={`ui-btn ui-btn-icon ui-btn-secondary ${styles.s51}`}
                 disabled={page <= 1}
-                onClick={() => setPage((p) => p - 1)}
+                onClick={() => setPage((p: any) => p - 1)}
               >
                 Prev
               </button>
               <button
                 className={`ui-btn ui-btn-icon ui-btn-secondary ${styles.s51}`}
                 disabled={page >= totalPages}
-                onClick={() => setPage((p) => p + 1)}
+                onClick={() => setPage((p: any) => p + 1)}
               >
                 Next
               </button>
@@ -1039,7 +1039,7 @@ function RuntimeChartWidget({
     { label: "Sun", value: 45, color: "#14b8a6" },
   ];
 
-  const maxVal = Math.max(...fallbackData.map((d) => d.value));
+  const maxVal = Math.max(...fallbackData.map((d: any) => d.value));
 
   return (
     <div
@@ -1084,7 +1084,7 @@ function RuntimeChartWidget({
                 strokeWidth="2.5"
                 points={fallbackData
                   .map(
-                    (d, i) =>
+                    (d: any, i: any) =>
                       `${(i / (fallbackData.length - 1)) * 100}%,${100 - (d.value / maxVal) * 90}%`,
                   )
                   .join(" ")}
@@ -1093,11 +1093,11 @@ function RuntimeChartWidget({
               <path
                 fill="rgba(99, 102, 241, 0.08)"
                 stroke="none"
-                d={`M0,100 L${fallbackData.map((d, i) => `${(i / (fallbackData.length - 1)) * 100}%,${100 - (d.value / maxVal) * 90}%`).join(" L")} L100,100 Z`}
+                d={`M0,100 L${fallbackData.map((d: any, i: any) => `${(i / (fallbackData.length - 1)) * 100}%,${100 - (d.value / maxVal) * 90}%`).join(" L")} L100,100 Z`}
                 className={styles.s68}
               />
             </svg>
-            {fallbackData.map((d, i) => (
+            {fallbackData.map((d: any, i: any) => (
               <div key={i} className={styles.s69}>
                 <div
                   className={`bottom-full bg-text text-card text-[10px] py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${styles.s70}`}
@@ -1112,7 +1112,7 @@ function RuntimeChartWidget({
             ))}
           </div>
           <div className={styles.s72}>
-            {fallbackData.map((d, i) => (
+            {fallbackData.map((d: any, i: any) => (
               <span key={i}>{d.label}</span>
             ))}
           </div>
@@ -1120,7 +1120,7 @@ function RuntimeChartWidget({
       ) : (
         <div className={styles.s65}>
           <div className={styles.s73}>
-            {fallbackData.map((d, i) => (
+            {fallbackData.map((d: any, i: any) => (
               <div key={i} className={styles.s74}>
                 <div
                   className={`bottom-full bg-text text-card text-[10px] py-1 px-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${styles.s75}`}
@@ -1138,7 +1138,7 @@ function RuntimeChartWidget({
             ))}
           </div>
           <div className={styles.s72}>
-            {fallbackData.map((d, i) => (
+            {fallbackData.map((d: any, i: any) => (
               <span key={i} className={styles.s1}>
                 {d.label}
               </span>
@@ -1205,9 +1205,9 @@ function RemoteAppPageRenderer({
     ? columns
     : rows[0]
       ? Object.keys(rows[0])
-          .filter((k) => !k.startsWith("_"))
+          .filter((k: any) => !k.startsWith("_"))
           .slice(0, 6)
-          .map((k) => ({ key: k }))
+          .map((k: any) => ({ key: k }))
       : [];
 
   return (
@@ -1218,7 +1218,7 @@ function RemoteAppPageRenderer({
       {state === "ok" && (
         <div className={styles.s79}>
           <>{(() => {
-            const dataTableColumns = cols.map(c => ({
+            const dataTableColumns = cols.map((c: any) => ({
               key: c.key,
               header: c.label || c.key,
               render: (r: any) => <>{formatRemoteCell(r[c.key])}</>

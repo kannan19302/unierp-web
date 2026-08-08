@@ -94,7 +94,7 @@ export default function ManufacturingIndustryHub() {
       setCreateOpen(false);
       fetchData();
     } catch {
-      setCharts((prev) => [
+      setCharts((prev: any) => [
         ...prev,
         {
           id: String(Date.now()),
@@ -218,7 +218,7 @@ export default function ManufacturingIndustryHub() {
             <FormField label="Chart Name">
               <TextField
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g. Line 1 Pressure X-Bar Chart"
                 required
               />
@@ -226,7 +226,7 @@ export default function ManufacturingIndustryHub() {
             <FormField label="Chart Type">
               <Select
                 value={form.chartType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, chartType: e.target.value })
                 }
               >
@@ -243,7 +243,7 @@ export default function ManufacturingIndustryHub() {
                 type="number"
                 step="0.01"
                 value={form.nominalValue}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, nominalValue: Number(e.target.value) })
                 }
                 required
@@ -261,7 +261,7 @@ export default function ManufacturingIndustryHub() {
                   type="number"
                   step="0.01"
                   value={form.lcl}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, lcl: Number(e.target.value) })
                   }
                   required
@@ -272,7 +272,7 @@ export default function ManufacturingIndustryHub() {
                   type="number"
                   step="0.01"
                   value={form.ucl}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, ucl: Number(e.target.value) })
                   }
                   required

@@ -137,14 +137,14 @@ export default function POSPaymentMethodsPage() {
         </div>
         {showModal && (
           <div className="ui-modal-overlay" onClick={() => setShowModal(false)}>
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>{editId ? "Edit" : "Add"} Payment Method</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -152,7 +152,7 @@ export default function POSPaymentMethodsPage() {
                 <input
                   className="ui-input"
                   value={form.code}
-                  onChange={(e) => setForm({ ...form, code: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, code: e.target.value })}
                 />
               </div>
               <div className="ui-form-group">
@@ -160,7 +160,7 @@ export default function POSPaymentMethodsPage() {
                 <select
                   className="ui-input"
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="CASH">Cash</option>
                   <option value="CARD">Card</option>

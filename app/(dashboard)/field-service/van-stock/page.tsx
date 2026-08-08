@@ -272,7 +272,7 @@ export default function VanStockPage() {
               label="Technician ID"
               required
               value={form.technicianId}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, technicianId: e.target.value })
               }
             />
@@ -280,19 +280,19 @@ export default function VanStockPage() {
               label="Item ID"
               required
               value={form.itemId}
-              onChange={(e) => setForm({ ...form, itemId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, itemId: e.target.value })}
             />
             <TextField
               label="Item Name"
               required
               value={form.itemName}
-              onChange={(e) => setForm({ ...form, itemName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, itemName: e.target.value })}
             />
             <TextField
               label="Quantity on Van"
               type="number"
               value={form.quantityOnVan}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, quantityOnVan: e.target.value })
               }
             />
@@ -301,7 +301,7 @@ export default function VanStockPage() {
                 label="Min Stock"
                 type="number"
                 value={form.minStockLevel}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, minStockLevel: e.target.value })
                 }
               />
@@ -309,7 +309,7 @@ export default function VanStockPage() {
                 label="Max Stock"
                 type="number"
                 value={form.maxStockLevel}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, maxStockLevel: e.target.value })
                 }
               />
@@ -317,7 +317,7 @@ export default function VanStockPage() {
                 label="Reorder At"
                 type="number"
                 value={form.reorderPoint}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, reorderPoint: e.target.value })
                 }
               />
@@ -325,12 +325,12 @@ export default function VanStockPage() {
             <TextField
               label="Location (shelf/bin)"
               value={form.location}
-              onChange={(e) => setForm({ ...form, location: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, location: e.target.value })}
             />
             <TextField
               label="Notes"
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </div>
         </Modal>

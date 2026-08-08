@@ -44,8 +44,8 @@ export default function CustomerJourneyPage() {
 
   useEffect(() => {
     fetch(`/api/crm/customer-journey/${params.customerId}`)
-      .then((r) => r.json())
-      .then((d) => setData(d))
+      .then((r: any) => r.json())
+      .then((d: any) => setData(d))
       .catch(() => setData(null))
       .finally(() => setLoading(false));
   }, [params.customerId]);
@@ -65,8 +65,8 @@ export default function CustomerJourneyPage() {
       eventDate: new Date().toISOString().split("T")[0],
     });
     fetch(`/api/crm/customer-journey/${params.customerId}`)
-      .then((r) => r.json())
-      .then((d) => setData(d));
+      .then((r: any) => r.json())
+      .then((d: any) => setData(d));
   };
 
   const getEventIcon = (type: string) => {
@@ -112,7 +112,7 @@ export default function CustomerJourneyPage() {
             <Card className="ui-p-4 ui-col-span-1">
               <h3 className="ui-font-semibold ui-mb-3">Journey Stages</h3>
               <div className="ui-space-y-2">
-                {data.stages.map((stage) => (
+                {data.stages.map((stage: any) => (
                   <div
                     key={stage.id}
                     className="ui-flex ui-items-center ui-gap-2 ui-p-2 ui-rounded-lg ui-text-sm hover:ui-bg-gray-50"
@@ -143,7 +143,7 @@ export default function CustomerJourneyPage() {
             <Card className="ui-p-4 ui-col-span-2">
               <h3 className="ui-font-semibold ui-mb-3">Timeline</h3>
               <div className="ui-space-y-3">
-                {data.events.map((event) => (
+                {data.events.map((event: any) => (
                   <div
                     key={event.id}
                     className="ui-flex ui-items-start ui-gap-3 ui-p-3 ui-rounded-lg hover:ui-bg-gray-50 ui-border ui-border-gray-100"
@@ -205,7 +205,7 @@ export default function CustomerJourneyPage() {
               <select
                 className="ui-input"
                 value={formData.eventType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, eventType: e.target.value })
                 }
               >
@@ -227,12 +227,12 @@ export default function CustomerJourneyPage() {
               <select
                 className="ui-input"
                 value={formData.stageId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, stageId: e.target.value })
                 }
               >
                 <option value="">No stage</option>
-                {data?.stages.map((s) => (
+                {data?.stages.map((s: any) => (
                   <option key={s.id} value={s.id}>
                     {s.name}
                   </option>
@@ -243,7 +243,7 @@ export default function CustomerJourneyPage() {
               <input
                 className="ui-input"
                 value={formData.title}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
                 placeholder="Brief title for this event"
@@ -253,7 +253,7 @@ export default function CustomerJourneyPage() {
               <textarea
                 className="ui-input"
                 value={formData.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
                 rows={3}
@@ -264,7 +264,7 @@ export default function CustomerJourneyPage() {
                 type="date"
                 className="ui-input"
                 value={formData.eventDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setFormData({ ...formData, eventDate: e.target.value })
                 }
               />

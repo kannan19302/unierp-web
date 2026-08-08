@@ -65,7 +65,7 @@ export default function ClinicalNotesPage() {
   };
 
   const totalBilling = encounters.reduce(
-    (a, e) => a + Number(e.billingAmount || 0),
+    (a: any, e: any) => a + Number(e.billingAmount || 0),
     0,
   );
 
@@ -186,7 +186,7 @@ export default function ClinicalNotesPage() {
                 label="Patient ID"
                 required
                 value={form.patientId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, patientId: e.target.value })
                 }
               />
@@ -194,7 +194,7 @@ export default function ClinicalNotesPage() {
                 label="Practitioner ID"
                 required
                 value={form.practitionerId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, practitionerId: e.target.value })
                 }
               />
@@ -203,13 +203,13 @@ export default function ClinicalNotesPage() {
               label="Diagnosis"
               required
               value={form.diagnosis}
-              onChange={(e) => setForm({ ...form, diagnosis: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, diagnosis: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <TextField
                 label="Treatment Code"
                 value={form.treatmentCode}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, treatmentCode: e.target.value })
                 }
                 placeholder="ICD-10 code"
@@ -218,7 +218,7 @@ export default function ClinicalNotesPage() {
                 label="Billing Amount ($)"
                 type="number"
                 value={String(form.billingAmount)}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, billingAmount: Number(e.target.value) })
                 }
               />

@@ -212,7 +212,7 @@ export default function LeadScoringPage() {
                 {
                   key: "field",
                   header: "Condition",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span>
                       <code className="text-xs">{String(v)}</code>{" "}
                       {String(row.operator)}{" "}
@@ -251,7 +251,7 @@ export default function LeadScoringPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.style3}>
                       <ProtectedComponent permission="crm.lead-scoring.update">
                         <button
@@ -293,7 +293,7 @@ export default function LeadScoringPage() {
                 style={inputStyle}
                 required
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g. Enterprise customer"
               />
             </div>
@@ -303,9 +303,9 @@ export default function LeadScoringPage() {
                 <select
                   style={inputStyle}
                   value={form.field}
-                  onChange={(e) => setForm({ ...form, field: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, field: e.target.value })}
                 >
-                  {LEAD_FIELDS.map((f) => (
+                  {LEAD_FIELDS.map((f: any) => (
                     <option key={f} value={f}>
                       {f}
                     </option>
@@ -317,14 +317,14 @@ export default function LeadScoringPage() {
                 <select
                   style={inputStyle}
                   value={form.operator}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       operator: e.target.value as Rule["operator"],
                     })
                   }
                 >
-                  {OPERATORS.map((op) => (
+                  {OPERATORS.map((op: any) => (
                     <option key={op} value={op}>
                       {op}
                     </option>
@@ -337,7 +337,7 @@ export default function LeadScoringPage() {
               <input
                 style={inputStyle}
                 value={form.value}
-                onChange={(e) => setForm({ ...form, value: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, value: e.target.value })}
                 placeholder="e.g. QUALIFIED"
               />
             </div>
@@ -348,7 +348,7 @@ export default function LeadScoringPage() {
                   type="number"
                   style={inputStyle}
                   value={form.points}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, points: Number(e.target.value) })
                   }
                 />
@@ -357,7 +357,7 @@ export default function LeadScoringPage() {
                 <input
                   type="checkbox"
                   checked={form.active}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, active: e.target.checked })
                   }
                 />{" "}

@@ -76,7 +76,7 @@ export default function ContentLibraryPage() {
         <Input
           placeholder="Search content..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           className="max-w-sm"
         />
         <Button variant="secondary" size="sm" onClick={load}>

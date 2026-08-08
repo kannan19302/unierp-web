@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import styles from "./page.module.css";
 
@@ -394,9 +394,9 @@ export default function POSAdvancedPage() {
       {activeTab === "loyalty" && (
         <div className="ui-stack-4">
           <div className={styles.p16}>
-            {["BRONZE", "SILVER", "GOLD", "PLATINUM"].map((tier) => {
+            {["BRONZE", "SILVER", "GOLD", "PLATINUM"].map((tier: any) => {
               const count = loyaltyMembers.filter(
-                (m) => m.tier === tier,
+                (m: any) => m.tier === tier,
               ).length;
               return (
                 <div key={tier} className={styles.p17}>
@@ -433,7 +433,7 @@ export default function POSAdvancedPage() {
             </button>
           </div>
           <div className={styles.p29}>
-            {promotions.map((p) => (
+            {promotions.map((p: any) => (
               <div key={p.id} className={styles.p30}>
                 <div className="ui-flex-between ui-items-start">
                   <div>
@@ -476,7 +476,7 @@ export default function POSAdvancedPage() {
       {activeTab === "terminals" && (
         <div className="ui-stack-4">
           <div className={styles.p34}>
-            {terminals.map((t) => (
+            {terminals.map((t: any) => (
               <div key={t.id} className={styles.p35}>
                 <div className="ui-flex-between">
                   <div className="ui-hstack-2">
@@ -560,7 +560,7 @@ export default function POSAdvancedPage() {
                   desc: "Auto-resolve stock level conflicts using server-wins strategy",
                   enabled: true,
                 },
-              ].map((opt, i) => (
+              ].map((opt: any, i: any) => (
                 <div key={i} className={styles.p48}>
                   <div>
                     <div className="ui-heading-sm">{opt.label}</div>
@@ -607,7 +607,7 @@ export default function POSAdvancedPage() {
                 count: 23,
                 status: "PARTIAL",
               },
-            ].map((sync, i) => (
+            ].map((sync: any, i: any) => (
               <div
                 key={i}
                 style={{

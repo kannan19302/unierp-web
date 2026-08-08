@@ -65,7 +65,7 @@ export default function FixedAssetRegistry() {
   };
 
   // Client-side filtering
-  const filteredAssets = assets.filter((asset) => {
+  const filteredAssets = assets.filter((asset: any) => {
     const matchesSearch =
       asset.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       asset.assetCode.toLowerCase().includes(searchQuery.toLowerCase());
@@ -124,7 +124,7 @@ export default function FixedAssetRegistry() {
               className={`ui-input ${styles.s9}`}
               placeholder="Search assets by code or name..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
             />
           </div>
 
@@ -133,10 +133,10 @@ export default function FixedAssetRegistry() {
             <select
               className="ui-input"
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e: any) => setSelectedCategory(e.target.value)}
             >
               <option value="">All Categories</option>
-              {categories.map((cat) => (
+              {categories.map((cat: any) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
@@ -149,7 +149,7 @@ export default function FixedAssetRegistry() {
             <select
               className="ui-input"
               value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
+              onChange={(e: any) => setSelectedStatus(e.target.value)}
             >
               <option value="">All Statuses</option>
               <option value="ACTIVE">ACTIVE</option>
@@ -172,7 +172,7 @@ export default function FixedAssetRegistry() {
           {
             key: "category",
             header: "Category",
-            render: (_v, row) => (
+            render: (_v: any, row: any) => (
               <span>
                 {(row as unknown as FixedAsset).category?.name || "Unassigned"}
               </span>
@@ -181,7 +181,7 @@ export default function FixedAssetRegistry() {
           {
             key: "location",
             header: "Location",
-            render: (_v, row) => (
+            render: (_v: any, row: any) => (
               <span>
                 {(row as unknown as FixedAsset).location?.name ||
                   "In Transit / Store"}
@@ -191,7 +191,7 @@ export default function FixedAssetRegistry() {
           {
             key: "custodian",
             header: "Custodian",
-            render: (_v, row) => (
+            render: (_v: any, row: any) => (
               <span>
                 {(row as unknown as FixedAsset).custodian?.name || "Corporate"}
               </span>

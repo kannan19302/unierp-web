@@ -111,8 +111,8 @@ export default function Customer360Page() {
 
   useEffect(() => {
     fetch(`/api/crm/customer-360/${params.customerId}`)
-      .then((r) => r.json())
-      .then((d) => setData(d))
+      .then((r: any) => r.json())
+      .then((d: any) => setData(d))
       .catch(() => setData(null))
       .finally(() => setLoading(false));
   }, [params.customerId]);
@@ -228,7 +228,7 @@ export default function Customer360Page() {
                 </div>
                 {data.customer.tags.length > 0 && (
                   <div className="ui-flex ui-gap-1 ui-mt-3 ui-flex-wrap">
-                    {data.customer.tags.map((t) => (
+                    {data.customer.tags.map((t: any) => (
                       <span
                         key={t.id}
                         className="ui-px-2 ui-py-0.5 ui-rounded-full ui-text-xs"
@@ -267,7 +267,7 @@ export default function Customer360Page() {
             <Card className="ui-p-4">
               <h3 className="ui-font-semibold ui-mb-3">Journey Timeline</h3>
               <div className="ui-space-y-3">
-                {data.journey.events.slice(0, 10).map((event) => (
+                {data.journey.events.slice(0, 10).map((event: any) => (
                   <div
                     key={event.id}
                     className="ui-flex ui-items-start ui-gap-3 ui-p-2 ui-rounded-lg hover:ui-bg-gray-50"
@@ -339,7 +339,7 @@ export default function Customer360Page() {
               <Card className="ui-p-4">
                 <h3 className="ui-font-semibold ui-mb-3">NPS History</h3>
                 <div className="ui-space-y-2">
-                  {data.nps.slice(0, 5).map((r) => (
+                  {data.nps.slice(0, 5).map((r: any) => (
                     <div
                       key={r.id}
                       className="ui-flex ui-items-center ui-justify-between ui-text-sm"
@@ -371,7 +371,7 @@ export default function Customer360Page() {
                   Upsell Opportunities
                 </h3>
                 <div className="ui-space-y-2">
-                  {data.upsell.slice(0, 5).map((u) => (
+                  {data.upsell.slice(0, 5).map((u: any) => (
                     <div
                       key={u.id}
                       className="ui-flex ui-items-center ui-justify-between ui-text-sm"
@@ -394,7 +394,7 @@ export default function Customer360Page() {
             <Card className="ui-p-4">
               <h3 className="ui-font-semibold ui-mb-3">Recent Activities</h3>
               <div className="ui-space-y-2">
-                {data.recentActivities.slice(0, 10).map((a) => (
+                {data.recentActivities.slice(0, 10).map((a: any) => (
                   <div
                     key={a.id}
                     className="ui-flex ui-items-center ui-gap-3 ui-p-2 ui-rounded-lg hover:ui-bg-gray-50 ui-text-sm"

@@ -20,8 +20,8 @@ export default function SavedViewsPage() {
   useEffect(() => {
     setLoading(true);
     fetch(`/api/saved-views?resourceName=${resourceName}`)
-      .then((r) => r.json())
-      .then((data) => {
+      .then((r: any) => r.json())
+      .then((data: any) => {
         setViews(Array.isArray(data) ? data : []);
         setLoading(false);
       })
@@ -41,7 +41,7 @@ export default function SavedViewsPage() {
 
   const deleteView = async (id: string) => {
     await fetch(`/api/saved-views/${id}`, { method: "DELETE" });
-    setViews((prev) => prev.filter((v) => v.id !== id));
+    setViews((prev: any) => prev.filter((v: any) => v.id !== id));
     if (selectedView === id) {
       setSelectedView(null);
       setConfig(null);
@@ -55,7 +55,7 @@ export default function SavedViewsPage() {
       body: JSON.stringify({ name: `${name} (Copy)` }),
     });
     const cloned = await res.json();
-    setViews((prev) => [...prev, cloned]);
+    setViews((prev: any) => [...prev, cloned]);
   };
 
   return (
@@ -66,7 +66,7 @@ export default function SavedViewsPage() {
         <select
           className="ui-input"
           value={resourceName}
-          onChange={(e) => setResourceName(e.target.value)}
+          onChange={(e: any) => setResourceName(e.target.value)}
         >
           <option value="customer">Customers</option>
           <option value="lead">Leads</option>
@@ -80,7 +80,7 @@ export default function SavedViewsPage() {
       {!loading && views.length === 0 && (
         <div className="text-gray-500">No saved views for this resource.</div>
       )}
-      {views.map((v) => (
+      {views.map((v: any) => (
         <div key={v.id} className="border border-gray-200 rounded-lg mb-2">
           <div
             className="flex items-center justify-between p-3 hover:bg-gray-50 cursor-pointer"
@@ -98,7 +98,7 @@ export default function SavedViewsPage() {
             <div className="flex gap-2">
               <button
                 className="ui-btn ui-btn-ghost btn-sm"
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   cloneView(v.id, v.name);
                 }}
@@ -107,7 +107,7 @@ export default function SavedViewsPage() {
               </button>
               <button
                 className="ui-btn ui-btn-ghost btn-sm"
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   deleteView(v.id);
                 }}

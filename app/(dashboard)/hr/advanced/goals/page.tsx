@@ -133,7 +133,7 @@ export default function GoalsPage() {
       });
       {
         setCommentTexts({ ...commentTexts, [goalId]: "" });
-        setDraftAttachments((prev) => {
+        setDraftAttachments((prev: any) => {
           const updated = { ...prev };
           delete updated[goalId];
           return updated;
@@ -229,13 +229,13 @@ export default function GoalsPage() {
               <select
                 className="ui-input"
                 value={form.employeeId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, employeeId: e.target.value })
                 }
                 required
               >
                 <option value="">Select Employee</option>
-                {employees.map((e) => (
+                {employees.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.firstName} {e.lastName}
                   </option>
@@ -245,7 +245,7 @@ export default function GoalsPage() {
                 className="ui-input"
                 placeholder="Goal Title"
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, title: e.target.value })}
                 required
               />
               <div className="ui-grid-2 ui-gap-3">
@@ -253,7 +253,7 @@ export default function GoalsPage() {
                   className="ui-input"
                   type="date"
                   value={form.startDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, startDate: e.target.value })
                   }
                 />
@@ -261,7 +261,7 @@ export default function GoalsPage() {
                   className="ui-input"
                   type="date"
                   value={form.endDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, endDate: e.target.value })
                   }
                 />
@@ -279,7 +279,7 @@ export default function GoalsPage() {
             </div>
           )}
           {!loading &&
-            goals.map((g) => (
+            goals.map((g: any) => (
               <Card key={g.id} padding="md">
                 <div className={styles.goalHeader}>
                   <h3 className={styles.goalTitle}>{g.title}</h3>
@@ -297,14 +297,14 @@ export default function GoalsPage() {
                   />
                 </div>
                 <div className={styles.meta}>{g.progress}% complete</div>
-                {g.keyResults?.map((kr) => (
+                {g.keyResults?.map((kr: any) => (
                   <div key={kr.id} className={styles.keyResult}>
                     <span className={styles.keyResultTitle}>{kr.title}</span>
                     <input
                       type="number"
                       className={`ui-input ${styles.keyResultInput}`}
                       defaultValue={kr.current}
-                      onBlur={(e) =>
+                      onBlur={(e: any) =>
                         updateKR(kr.id, parseInt(e.target.value) || 0)
                       }
                     />
@@ -320,7 +320,7 @@ export default function GoalsPage() {
                   </h4>
 
                   <div className={styles.commentList}>
-                    {g.comments?.map((c) => (
+                    {g.comments?.map((c: any) => (
                       <div key={c.id} className={styles.commentCard}>
                         <div className={styles.commentHeader}>
                           <span className="font-semibold">{c.authorName}</span>
@@ -363,13 +363,13 @@ export default function GoalsPage() {
                         placeholder="Log efforts or add comments..."
                         className={`ui-input ${styles.commentInput}`}
                         value={commentTexts[g.id] || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setCommentTexts({
                             ...commentTexts,
                             [g.id]: e.target.value,
                           })
                         }
-                        onKeyDown={(e) => {
+                        onKeyDown={(e: any) => {
                           if (e.key === "Enter") submitComment(g.id);
                         }}
                       />
@@ -393,7 +393,7 @@ export default function GoalsPage() {
                           type="file"
                           accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain"
                           className={styles.fileInput}
-                          onChange={(e) => handleFileChange(g.id, e)}
+                          onChange={(e: any) => handleFileChange(g.id, e)}
                         />
                       </label>
                       {(() => {
@@ -406,7 +406,7 @@ export default function GoalsPage() {
                               size={10}
                               className={styles.removeAttachment}
                               onClick={() =>
-                                setDraftAttachments((prev) => {
+                                setDraftAttachments((prev: any) => {
                                   const updated = { ...prev };
                                   delete updated[g.id];
                                   return updated;

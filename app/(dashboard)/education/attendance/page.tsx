@@ -20,7 +20,7 @@ export default function AttendancePage() {
     new Date().toISOString().split("T")[0] || "",
   );
   const [attendance, setAttendance] = useState<Record<string, boolean>>(
-    Object.fromEntries(STUDENTS_MOCK.map((s) => [s.id, true])),
+    Object.fromEntries(STUDENTS_MOCK.map((s: any) => [s.id, true])),
   );
 
   const presentCount = Object.values(attendance).filter(Boolean).length;
@@ -29,7 +29,7 @@ export default function AttendancePage() {
     (presentCount / STUDENTS_MOCK.length) * 100,
   );
 
-  const weeklyData = WEEKDAYS.map((day) => ({
+  const weeklyData = WEEKDAYS.map((day: any) => ({
     name: day,
     present: Math.floor(Math.random() * 3) + STUDENTS_MOCK.length - 2,
     absent: Math.floor(Math.random() * 3),
@@ -80,7 +80,7 @@ export default function AttendancePage() {
           <input
             type="date"
             value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
+            onChange={(e: any) => setSelectedDate(e.target.value)}
             className={styles.s2}
           />
           <span className="ui-text-sm-muted">
@@ -98,7 +98,7 @@ export default function AttendancePage() {
         <div className="p-4">
           <h3 className="ui-heading-base mb-4">Mark Attendance</h3>
           <div className="ui-stack-2">
-            {STUDENTS_MOCK.map((student) => (
+            {STUDENTS_MOCK.map((student: any) => (
               <div
                 key={student.id}
                 style={{
@@ -113,7 +113,7 @@ export default function AttendancePage() {
                   <div className={styles.s4}>
                     {student.name
                       .split(" ")
-                      .map((n) => n[0])
+                      .map((n: any) => n[0])
                       .join("")}
                   </div>
                   <div>
@@ -124,7 +124,7 @@ export default function AttendancePage() {
                 <div className="ui-flex ui-gap-2">
                   <button
                     onClick={() =>
-                      setAttendance((p) => ({ ...p, [student.id]: true }))
+                      setAttendance((p: any) => ({ ...p, [student.id]: true }))
                     }
                     style={{
                       borderColor: attendance[student.id]
@@ -143,7 +143,7 @@ export default function AttendancePage() {
                   </button>
                   <button
                     onClick={() =>
-                      setAttendance((p) => ({ ...p, [student.id]: false }))
+                      setAttendance((p: any) => ({ ...p, [student.id]: false }))
                     }
                     style={{
                       borderColor: !attendance[student.id]

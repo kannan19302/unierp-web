@@ -21,7 +21,7 @@ export default function EnvironmentsPage() {
 
   useEffect(() => {
     fetch("/api/devops/environments")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setItems)
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -74,7 +74,7 @@ export default function EnvironmentsPage() {
       render: (r: any) => (
         <div className="flex gap-2">
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"
@@ -82,7 +82,7 @@ export default function EnvironmentsPage() {
             <Eye size={16} />
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"

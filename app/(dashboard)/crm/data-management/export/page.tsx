@@ -59,7 +59,7 @@ export default function ExportPage() {
             <select
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
               value={entityType}
-              onChange={(e) => setEntityType(e.target.value)}
+              onChange={(e: any) => setEntityType(e.target.value)}
             >
               <option value="LEAD">Leads</option>
               <option value="CONTACT">Contacts</option>
@@ -75,7 +75,7 @@ export default function ExportPage() {
             <select
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
               value={format}
-              onChange={(e) => setFormat(e.target.value)}
+              onChange={(e: any) => setFormat(e.target.value)}
             >
               <option value="CSV">CSV</option>
               <option value="JSON">JSON</option>

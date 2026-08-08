@@ -220,7 +220,7 @@ export default function QualityManagement() {
             <div className={styles.p6}>
               <h3 className={styles.p7}>Non-Conformance Reports (NCR)</h3>
               <div className="ui-stack-3">
-                {ncrs.map((ncr) => (
+                {ncrs.map((ncr: any) => (
                   <div key={ncr.id} className={styles.p8}>
                     <div className="ui-flex-between">
                       <h4 className="ui-heading-sm font-bold">{ncr.title}</h4>
@@ -282,7 +282,7 @@ export default function QualityManagement() {
             <div className={styles.p13}>
               <h3 className={styles.p14}>Inspection templates</h3>
               <div className="ui-stack-3">
-                {plans.map((plan) => (
+                {plans.map((plan: any) => (
                   <div key={plan.id} className={styles.p15}>
                     <p className="ui-heading-sm font-bold">{plan.name}</p>
                     <p className={styles.p16}>Code: {plan.code}</p>
@@ -320,13 +320,13 @@ export default function QualityManagement() {
                 <select
                   required
                   value={newPlan.productId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPlan({ ...newPlan, productId: e.target.value })
                   }
                   className={styles.p22}
                 >
                   <option value="">Select Product...</option>
-                  {products.map((p) => (
+                  {products.map((p: any) => (
                     <option key={p.id} value={p.id}>
                       {p.name} ({p.sku})
                     </option>
@@ -342,7 +342,7 @@ export default function QualityManagement() {
                     type="text"
                     placeholder="e.g. Dimensions Check"
                     value={newPlan.name}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewPlan({ ...newPlan, name: e.target.value })
                     }
                     className={styles.p23}
@@ -355,7 +355,7 @@ export default function QualityManagement() {
                     type="text"
                     placeholder="e.g. QP-LAP-01"
                     value={newPlan.code}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewPlan({ ...newPlan, code: e.target.value })
                     }
                     className={styles.p24}
@@ -389,14 +389,14 @@ export default function QualityManagement() {
                 </div>
 
                 <div className={styles.p27}>
-                  {planChecks.map((chk, idx) => (
+                  {planChecks.map((chk: any, idx: any) => (
                     <div key={idx} className={styles.p28}>
                       <input
                         required
                         type="text"
                         placeholder="Param Name"
                         value={chk.parameter}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...planChecks];
                           updated[idx]!.parameter = e.target.value;
                           setPlanChecks(updated);
@@ -406,7 +406,7 @@ export default function QualityManagement() {
 
                       <select
                         value={chk.type}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...planChecks];
                           updated[idx]!.type = e.target.value as any;
                           setPlanChecks(updated);
@@ -423,7 +423,7 @@ export default function QualityManagement() {
                         placeholder="Min"
                         disabled={chk.type === "PASS_FAIL"}
                         value={chk.minVal}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...planChecks];
                           updated[idx]!.minVal = e.target.value;
                           setPlanChecks(updated);
@@ -437,7 +437,7 @@ export default function QualityManagement() {
                         placeholder="Max"
                         disabled={chk.type === "PASS_FAIL"}
                         value={chk.maxVal}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...planChecks];
                           updated[idx]!.maxVal = e.target.value;
                           setPlanChecks(updated);
@@ -448,7 +448,7 @@ export default function QualityManagement() {
                       <button
                         type="button"
                         onClick={() =>
-                          setPlanChecks(planChecks.filter((_, i) => i !== idx))
+                          setPlanChecks(planChecks.filter((_: any, i: any) => i !== idx))
                         }
                         className={styles.p33}
                       >
@@ -489,7 +489,7 @@ export default function QualityManagement() {
                     type="text"
                     placeholder="e.g. INSP-2026-001"
                     value={inspectForm.inspectionNumber}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setInspectForm({
                         ...inspectForm,
                         inspectionNumber: e.target.value,
@@ -503,7 +503,7 @@ export default function QualityManagement() {
                   <select
                     required
                     value={inspectForm.productId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setInspectForm({
                         ...inspectForm,
                         productId: e.target.value,
@@ -512,7 +512,7 @@ export default function QualityManagement() {
                     className={styles.p39}
                   >
                     <option value="">Select Product...</option>
-                    {products.map((p) => (
+                    {products.map((p: any) => (
                       <option key={p.id} value={p.id}>
                         {p.name}
                       </option>
@@ -531,7 +531,7 @@ export default function QualityManagement() {
                     type="text"
                     placeholder="e.g. WO ID"
                     value={inspectForm.referenceId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setInspectForm({
                         ...inspectForm,
                         referenceId: e.target.value,
@@ -544,7 +544,7 @@ export default function QualityManagement() {
                   <label className="ui-text-xs-label">Overall Result</label>
                   <select
                     value={inspectForm.status}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setInspectForm({ ...inspectForm, status: e.target.value })
                     }
                     className={styles.p41}
@@ -563,7 +563,7 @@ export default function QualityManagement() {
                     type="number"
                     min="1"
                     value={inspectForm.inspectedQty}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setInspectForm({
                         ...inspectForm,
                         inspectedQty: e.target.value,
@@ -579,7 +579,7 @@ export default function QualityManagement() {
                     type="number"
                     min="0"
                     value={inspectForm.passedQty}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setInspectForm({
                         ...inspectForm,
                         passedQty: e.target.value,
@@ -616,14 +616,14 @@ export default function QualityManagement() {
                 </div>
 
                 <div className={styles.p47}>
-                  {inspectChecklist.map((item, idx) => (
+                  {inspectChecklist.map((item: any, idx: any) => (
                     <div key={idx} className={styles.p48}>
                       <input
                         required
                         type="text"
                         placeholder="Param"
                         value={item.parameter}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...inspectChecklist];
                           updated[idx]!.parameter = e.target.value;
                           setInspectChecklist(updated);
@@ -635,7 +635,7 @@ export default function QualityManagement() {
                         type="text"
                         placeholder="Target"
                         value={item.target}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...inspectChecklist];
                           updated[idx]!.target = e.target.value;
                           setInspectChecklist(updated);
@@ -647,7 +647,7 @@ export default function QualityManagement() {
                         type="text"
                         placeholder="Actual"
                         value={item.actual}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...inspectChecklist];
                           updated[idx]!.actual = e.target.value;
                           setInspectChecklist(updated);
@@ -656,7 +656,7 @@ export default function QualityManagement() {
                       />
                       <select
                         value={item.status}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...inspectChecklist];
                           updated[idx]!.status = e.target.value;
                           setInspectChecklist(updated);
@@ -670,7 +670,7 @@ export default function QualityManagement() {
                         type="button"
                         onClick={() =>
                           setInspectChecklist(
-                            inspectChecklist.filter((_, i) => i !== idx),
+                            inspectChecklist.filter((_: any, i: any) => i !== idx),
                           )
                         }
                         className={styles.p53}
@@ -715,7 +715,7 @@ export default function QualityManagement() {
                 </label>
                 <select
                   value={ncrForm.disposition}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNcrForm({ ...ncrForm, disposition: e.target.value })
                   }
                   className={styles.p58}
@@ -737,7 +737,7 @@ export default function QualityManagement() {
                 <label className="ui-text-xs-label">Resolution State</label>
                 <select
                   value={ncrForm.status}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNcrForm({ ...ncrForm, status: e.target.value })
                   }
                   className={styles.p59}

@@ -85,7 +85,7 @@ export default function DigitalTwinPage() {
       client.get<any>("/supply-chain/digital-twin/simulations?limit=20"),
       client.get<Dashboard>("/supply-chain/digital-twin/dashboard"),
     ])
-      .then(([list, simList, dash]) => {
+      .then(([list, simList, dash]: any) => {
         setTwins(list.data ?? []);
         setPageCount(list.totalPages ?? 1);
         setSimulations(simList.data ?? []);

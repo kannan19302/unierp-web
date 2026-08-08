@@ -220,7 +220,7 @@ export function StudioCommandPalette() {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        setOpen((o) => !o);
+        setOpen((o: any) => !o);
       }
       if (e.key === "Escape") close();
     };
@@ -247,7 +247,7 @@ export function StudioCommandPalette() {
     const q = query.trim().toLowerCase();
     if (!q) return STATIC_COMMANDS;
     return STATIC_COMMANDS.filter(
-      (c) =>
+      (c: any) =>
         c.label.toLowerCase().includes(q) || c.group.toLowerCase().includes(q),
     );
   }, [query]);
@@ -281,15 +281,15 @@ export function StudioCommandPalette() {
       }}
     >
       <div
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
+        onClick={(e: any) => e.stopPropagation()}
+        onKeyDown={(e: any) => {
           if (e.key === "ArrowDown") {
             e.preventDefault();
-            setActive((a) => Math.min(a + 1, results.length - 1));
+            setActive((a: any) => Math.min(a + 1, results.length - 1));
           }
           if (e.key === "ArrowUp") {
             e.preventDefault();
-            setActive((a) => Math.max(a - 1, 0));
+            setActive((a: any) => Math.max(a - 1, 0));
           }
           if (e.key === "Enter" && results[active]) {
             e.preventDefault();
@@ -321,7 +321,7 @@ export function StudioCommandPalette() {
           <input
             ref={inputRef}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e: any) => setQuery(e.target.value)}
             placeholder="Search Studio — pages, builders, actions…"
             style={{
               flex: 1,
@@ -346,7 +346,7 @@ export function StudioCommandPalette() {
               No matches for “{query}”
             </div>
           )}
-          {results.map((cmd, i) => (
+          {results.map((cmd: any, i: any) => (
             <button
               key={cmd.id}
               onMouseEnter={() => setActive(i)}

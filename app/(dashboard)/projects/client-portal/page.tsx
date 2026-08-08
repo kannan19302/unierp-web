@@ -91,7 +91,7 @@ export default function ClientPortalPage() {
 
   // Compute stats
   const completedTasks =
-    selectedProject?.tasks?.filter((t) => t.status === "DONE").length || 0;
+    selectedProject?.tasks?.filter((t: any) => t.status === "DONE").length || 0;
   const totalTasks = selectedProject?.tasks?.length || 0;
   const percentComplete =
     totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
@@ -121,7 +121,7 @@ export default function ClientPortalPage() {
           {loading ? (
             <option>Loading active projects...</option>
           ) : (
-            projects.map((p) => (
+            projects.map((p: any) => (
               <option key={p.id} value={p.id}>
                 {p.name} ({p.code})
               </option>
@@ -170,7 +170,7 @@ export default function ClientPortalPage() {
               <h3 className={styles.p15}>Project Tasks & Deliverables</h3>
               <div className="ui-stack-3">
                 {selectedProject.tasks && selectedProject.tasks.length > 0 ? (
-                  selectedProject.tasks.map((t) => (
+                  selectedProject.tasks.map((t: any) => (
                     <div key={t.id} className={styles.p16}>
                       <div>
                         <p className="ui-heading-sm">{t.name}</p>
@@ -246,7 +246,7 @@ export default function ClientPortalPage() {
               <div className="ui-stack-3">
                 {selectedProject.milestones &&
                 selectedProject.milestones.length > 0 ? (
-                  selectedProject.milestones.map((m) => (
+                  selectedProject.milestones.map((m: any) => (
                     <div key={m.id} className="ui-hstack-3">
                       <Award
                         size={16}

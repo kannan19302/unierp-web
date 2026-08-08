@@ -60,7 +60,7 @@ export default function CustomerPortalLoginPage() {
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: any) => setEmail(e.target.value)}
               placeholder="you@company.com"
             />
           </div>
@@ -71,7 +71,7 @@ export default function CustomerPortalLoginPage() {
               type="password"
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: any) => setPassword(e.target.value)}
             />
           </div>
           <Button

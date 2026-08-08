@@ -85,7 +85,7 @@ export default function AdvancedHrCompensationPage() {
             type="text"
             placeholder="Band name (e.g. IC4 — Senior Engineer)"
             value={bandName}
-            onChange={(e) => setBandName(e.target.value)}
+            onChange={(e: any) => setBandName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",
@@ -95,7 +95,7 @@ export default function AdvancedHrCompensationPage() {
           />
           <select
             value={jobLevel}
-            onChange={(e) => setJobLevel(e.target.value)}
+            onChange={(e: any) => setJobLevel(e.target.value)}
             style={{
               padding: "8px 12px",
               borderRadius: "6px",
@@ -113,7 +113,7 @@ export default function AdvancedHrCompensationPage() {
               "M3",
               "VP",
               "SVP",
-            ].map((l) => (
+            ].map((l: any) => (
               <option key={l}>{l}</option>
             ))}
           </select>

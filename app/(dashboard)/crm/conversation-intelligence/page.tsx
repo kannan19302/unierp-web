@@ -174,7 +174,7 @@ export default function ConversationIntelligencePage() {
           <ProtectedComponent permission="crm.activity.create">
             <Button
               variant="primary"
-              onClick={() => setShowForm((v) => !v)}
+              onClick={() => setShowForm((v: any) => !v)}
               className="ui-hstack-2"
             >
               {showForm ? <X size={16} /> : <PlusCircle size={16} />}{" "}
@@ -208,7 +208,7 @@ export default function ConversationIntelligencePage() {
               </div>
             </div>
           </Card>
-          {Object.entries(summary.bySentiment).map(([s, count]) => (
+          {Object.entries(summary.bySentiment).map(([s, count]: any) => (
             <Card key={s}>
               <div className="p-4">
                 <div className="ui-text-xs-muted">{s}</div>
@@ -225,23 +225,23 @@ export default function ConversationIntelligencePage() {
             <Input
               placeholder="Call subject"
               value={form.subject}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, subject: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, subject: e.target.value }))
               }
             />
             <Input
               placeholder="Opportunity ID"
               value={form.opportunityId}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, opportunityId: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, opportunityId: e.target.value }))
               }
             />
             <Textarea
               placeholder="Paste the call transcript here…"
               rows={6}
               value={form.transcriptText}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, transcriptText: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, transcriptText: e.target.value }))
               }
             />
             <div>

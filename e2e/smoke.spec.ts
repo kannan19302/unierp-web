@@ -216,22 +216,22 @@ async function login(page: Page) {
   await page.fill('[type="password"]', ADMIN_PASSWORD);
   await page.click('button[type="submit"]');
   // Any authenticated landing counts; error stays on /login.
-  await page.waitForURL((url) => !url.pathname.includes("/login"), {
+  await page.waitForURL((url: any) => !url.pathname.includes("/login"), {
     timeout: 15_000,
   });
 }
 
 test.describe("Smoke: core module surfaces render after login", () => {
-  test("login succeeds with seeded admin", async ({ page }) => {
+  test("login succeeds with seeded admin", async ({ page }: any) => {
     await login(page);
   });
 
   for (const route of SMOKE_ROUTES) {
-    test(`renders ${route.path} without errors`, async ({ page }) => {
+    test(`renders ${route.path} without errors`, async ({ page }: any) => {
       // Dev-mode first compile of a route can exceed the default 30s.
       test.setTimeout(90_000);
       const serverErrors: string[] = [];
-      page.on("response", (res) => {
+      page.on("response", (res: any) => {
         if (res.status() >= 500) {
           serverErrors.push(`${res.status()} ${res.url()}`);
         }

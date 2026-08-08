@@ -316,7 +316,7 @@ export default function IntercompanyEliminationsPage() {
                 color: "var(--color-primary)",
                 bg: "rgba(79,70,229,0.08)",
               },
-            ].map((kpi) => (
+            ].map((kpi: any) => (
               <Card key={kpi.label} className="ui-card p-5">
                 <div className="ui-flex-between">
                   <div>
@@ -430,7 +430,7 @@ export default function IntercompanyEliminationsPage() {
                   {
                     key: "id",
                     header: "Action",
-                    render: (v, row) =>
+                    render: (v: any, row: any) =>
                       row.status === "MATCHED" ? (
                         <Button
                           variant="primary"
@@ -489,7 +489,7 @@ export default function IntercompanyEliminationsPage() {
                         required
                         placeholder="e.g. Corporate Management Fee Offsets"
                         value={newRule.name}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({ ...newRule, name: e.target.value })
                         }
                       />
@@ -501,7 +501,7 @@ export default function IntercompanyEliminationsPage() {
                         className={`ui-input ${styles.s14}`}
                         placeholder="Optional details"
                         value={newRule.description}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             description: e.target.value,
@@ -519,7 +519,7 @@ export default function IntercompanyEliminationsPage() {
                       <select
                         className={`ui-input ${styles.s14}`}
                         value={newRule.sourceOrgId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             sourceOrgId: e.target.value,
@@ -527,7 +527,7 @@ export default function IntercompanyEliminationsPage() {
                         }
                       >
                         <option value="">Any Seller Org</option>
-                        {entities.map((ent) => (
+                        {entities.map((ent: any) => (
                           <option key={ent.id} value={ent.id}>
                             {ent.name}
                           </option>
@@ -541,7 +541,7 @@ export default function IntercompanyEliminationsPage() {
                       <select
                         className={`ui-input ${styles.s14}`}
                         value={newRule.destinationOrgId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             destinationOrgId: e.target.value,
@@ -549,7 +549,7 @@ export default function IntercompanyEliminationsPage() {
                         }
                       >
                         <option value="">Any Buyer Org</option>
-                        {entities.map((ent) => (
+                        {entities.map((ent: any) => (
                           <option key={ent.id} value={ent.id}>
                             {ent.name}
                           </option>
@@ -567,7 +567,7 @@ export default function IntercompanyEliminationsPage() {
                         className={`ui-input ${styles.s14}`}
                         required
                         value={newRule.sourceAccountId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             sourceAccountId: e.target.value,
@@ -575,7 +575,7 @@ export default function IntercompanyEliminationsPage() {
                         }
                       >
                         <option value="">Select Account</option>
-                        {accounts.map((acc) => (
+                        {accounts.map((acc: any) => (
                           <option key={acc.id} value={acc.id}>
                             {acc.code} - {acc.name} ({acc.type})
                           </option>
@@ -590,7 +590,7 @@ export default function IntercompanyEliminationsPage() {
                         className={`ui-input ${styles.s14}`}
                         required
                         value={newRule.destinationAccountId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             destinationAccountId: e.target.value,
@@ -598,7 +598,7 @@ export default function IntercompanyEliminationsPage() {
                         }
                       >
                         <option value="">Select Account</option>
-                        {accounts.map((acc) => (
+                        {accounts.map((acc: any) => (
                           <option key={acc.id} value={acc.id}>
                             {acc.code} - {acc.name} ({acc.type})
                           </option>
@@ -613,7 +613,7 @@ export default function IntercompanyEliminationsPage() {
                       <select
                         className={`ui-input ${styles.s14}`}
                         value={newRule.matchingCriteria}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             matchingCriteria: e.target.value,
@@ -635,7 +635,7 @@ export default function IntercompanyEliminationsPage() {
                         className={`ui-input ${styles.s14}`}
                         min={0}
                         value={newRule.toleranceDays}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             toleranceDays: parseInt(e.target.value) || 0,
@@ -671,7 +671,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "name",
                       header: "Name",
-                      render: (v, row) => (
+                      render: (v: any, row: any) => (
                         <div>
                           <div className="font-semibold">{String(v)}</div>
                           {Boolean(row.description) && (
@@ -695,7 +695,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "sourceAccount",
                       header: "GL Accounts (Source → Destination)",
-                      render: (v, row) => (
+                      render: (v: any, row: any) => (
                         <div>
                           <div className={styles.s17}>
                             <span className="ui-text-primary">
@@ -716,7 +716,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "matchingCriteria",
                       header: "Criteria",
-                      render: (v, row) => (
+                      render: (v: any, row: any) => (
                         <span className={styles.s20}>
                           {String(v)} (±{String(row.toleranceDays)}d)
                         </span>
@@ -780,7 +780,7 @@ export default function IntercompanyEliminationsPage() {
                     className={`ui-input ${styles.s14}`}
                     required
                     value={runPeriod.periodStart}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRunPeriod({
                         ...runPeriod,
                         periodStart: e.target.value,
@@ -795,7 +795,7 @@ export default function IntercompanyEliminationsPage() {
                     className={`ui-input ${styles.s14}`}
                     required
                     value={runPeriod.periodEnd}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRunPeriod({ ...runPeriod, periodEnd: e.target.value })
                     }
                   />
@@ -832,7 +832,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "periodStart",
                       header: "Period Range",
-                      render: (v, row) => (
+                      render: (v: any, row: any) => (
                         <span className="font-semibold">
                           {new Date(String(v)).toLocaleDateString()} –{" "}
                           {new Date(String(row.periodEnd)).toLocaleDateString()}
@@ -854,7 +854,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "journalId",
                       header: "Journal Entry",
-                      render: (v, row) =>
+                      render: (v: any, row: any) =>
                         v ? (
                           <span className={styles.s9}>
                             <FileText size={14} /> GL:{" "}
@@ -889,7 +889,7 @@ export default function IntercompanyEliminationsPage() {
                     {
                       key: "id",
                       header: "Action",
-                      render: (v, row) =>
+                      render: (v: any, row: any) =>
                         row.status === "DRAFT" ? (
                           <Button
                             variant="primary"

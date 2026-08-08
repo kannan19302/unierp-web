@@ -128,7 +128,7 @@ export default function ExpiryFefoPage() {
               className="ui-input flex-1"
               placeholder="Batch ID"
               value={recallBatchId}
-              onChange={(e) => setRecallBatchId(e.target.value)}
+              onChange={(e: any) => setRecallBatchId(e.target.value)}
             />
             <Button
               variant="primary"

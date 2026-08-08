@@ -9,7 +9,7 @@ export default function WorkflowInstancesPage() {
 
   useEffect(() => {
     apiGet("/workflow/instances")
-      .then((d) => setInstances(Array.isArray(d) ? d : []))
+      .then((d: any) => setInstances(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

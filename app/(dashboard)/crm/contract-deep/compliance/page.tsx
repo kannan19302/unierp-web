@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ export default function CompliancePage() {
 
   useEffect(() => {
     fetch("/api/crm/contract-deep/value-at-risk")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setRisk);
   }, []);
 

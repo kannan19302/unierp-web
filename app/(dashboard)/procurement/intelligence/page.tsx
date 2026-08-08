@@ -64,9 +64,9 @@ export default function IntelligencePage() {
     }
   };
 
-  const totalSpend = data.reduce((s, r) => s + Number(r.totalSpend || 0), 0);
+  const totalSpend = data.reduce((s: any, r: any) => s + Number(r.totalSpend || 0), 0);
   const totalSavings = data.reduce(
-    (s, r) => s + Number(r.totalSavings || 0),
+    (s: any, r: any) => s + Number(r.totalSavings || 0),
     0,
   );
 

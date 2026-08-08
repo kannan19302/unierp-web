@@ -74,7 +74,7 @@ export default function ContractsPage() {
 
         <ListView
           resource={contractResource}
-          onRowClick={(row) => router.push(`/crm/contracts/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/crm/contracts/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
 

@@ -66,7 +66,7 @@ export default function CourseCatalogPage() {
   };
 
   const filtered = courses.filter(
-    (c) =>
+    (c: any) =>
       !search ||
       c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.code.toLowerCase().includes(search.toLowerCase()),
@@ -147,7 +147,7 @@ export default function CourseCatalogPage() {
           />
           <KPICard
             title="Total Credits"
-            value={courses.reduce((a, c) => a + (c.credits || 0), 0)}
+            value={courses.reduce((a: any, c: any) => a + (c.credits || 0), 0)}
             icon={<Award size={18} />}
             color="var(--color-success)"
           />
@@ -160,7 +160,7 @@ export default function CourseCatalogPage() {
               type="text"
               placeholder="Search courses..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.s6}
             />
           </div>
@@ -202,7 +202,7 @@ export default function CourseCatalogPage() {
               label="Course Name"
               required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               placeholder="Introduction to Mathematics"
             />
             <div className="ui-grid-2 ui-gap-3">
@@ -210,14 +210,14 @@ export default function CourseCatalogPage() {
                 label="Course Code"
                 required
                 value={form.code}
-                onChange={(e) => setForm({ ...form, code: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, code: e.target.value })}
                 placeholder="MATH101"
               />
               <TextField
                 label="Credits"
                 type="number"
                 value={String(form.credits)}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, credits: Number(e.target.value) })
                 }
               />
@@ -225,7 +225,7 @@ export default function CourseCatalogPage() {
             <TextField
               label="Description"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               placeholder="Course description..."

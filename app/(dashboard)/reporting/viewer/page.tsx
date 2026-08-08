@@ -87,7 +87,7 @@ export default function ReportingViewerPage() {
             type="text"
             placeholder="Report Title (e.g. Board Q3 Quarterly Business Review)..."
             value={reportTitle}
-            onChange={(e) => setReportTitle(e.target.value)}
+            onChange={(e: any) => setReportTitle(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",

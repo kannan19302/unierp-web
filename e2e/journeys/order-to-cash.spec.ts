@@ -9,7 +9,7 @@ import { test, loginAsAdmin } from "../fixtures/auth.fixture";
  * @critical-path true
  */
 test.describe("Order-to-Cash", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }: any) => {
     await loginAsAdmin(page);
   });
 
@@ -19,7 +19,7 @@ test.describe("Order-to-Cash", () => {
     invoicePage,
     paymentPage,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(120_000);
 
     // 1. Navigate to sales orders and create one
@@ -190,7 +190,7 @@ test.describe("Order-to-Cash", () => {
     page,
     invoicePage,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(90_000);
 
     await invoicePage.goto();

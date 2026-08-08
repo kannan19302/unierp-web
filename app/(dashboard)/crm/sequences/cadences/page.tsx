@@ -101,15 +101,15 @@ export default function SalesCadencesPage() {
   }, []);
 
   const addStep = () =>
-    setSteps((s) => [
+    setSteps((s: any) => [
       ...s,
       { channel: "TASK", delayDays: 1, sortOrder: s.length },
     ]);
   const removeStep = (idx: number) =>
-    setSteps((s) => s.filter((_, i) => i !== idx));
+    setSteps((s: any) => s.filter((_: any, i: any) => i !== idx));
   const updateStep = (idx: number, patch: Partial<CadenceStepInput>) =>
-    setSteps((s) =>
-      s.map((step, i) => (i === idx ? { ...step, ...patch } : step)),
+    setSteps((s: any) =>
+      s.map((step: any, i: any) => (i === idx ? { ...step, ...patch } : step)),
     );
 
   const handleCreate = async (e: React.FormEvent) => {
@@ -304,7 +304,7 @@ export default function SalesCadencesPage() {
                 <input
                   required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e: any) => setName(e.target.value)}
                   className="ui-input"
                   style={inputStyle}
                   placeholder="e.g. Enterprise Outbound Q3"
@@ -312,11 +312,11 @@ export default function SalesCadencesPage() {
               </div>
               <div className="ui-stack-3">
                 <label style={labelStyle}>Steps</label>
-                {steps.map((step, idx) => (
+                {steps.map((step: any, idx: any) => (
                   <div key={idx} className={styles.style4}>
                     <select
                       value={step.channel}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateStep(idx, {
                           channel: e.target
                             .value as CadenceStepInput["channel"],
@@ -334,7 +334,7 @@ export default function SalesCadencesPage() {
                       <input
                         placeholder="Template ID"
                         value={step.templateId || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateStep(idx, { templateId: e.target.value })
                         }
                         className={`ui-input ${styles.s1}`}
@@ -344,7 +344,7 @@ export default function SalesCadencesPage() {
                       <input
                         placeholder="Instructions for rep"
                         value={step.instructions || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateStep(idx, { instructions: e.target.value })
                         }
                         className={`ui-input ${styles.s1}`}
@@ -355,7 +355,7 @@ export default function SalesCadencesPage() {
                       type="number"
                       title="Delay (days)"
                       value={step.delayDays}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateStep(idx, { delayDays: Number(e.target.value) })
                       }
                       className={`ui-input ${styles.s1}`}

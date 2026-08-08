@@ -101,7 +101,7 @@ export function SortableField({
     <div
       ref={setNodeRef}
       style={style}
-      onClick={(e) => {
+      onClick={(e: any) => {
         e.stopPropagation();
         onClick();
       }}
@@ -139,7 +139,7 @@ export function SortableField({
           }}
         >
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               removeField(field.id);
             }}

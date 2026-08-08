@@ -8,7 +8,7 @@ import { test, loginAsAdmin } from "../fixtures/auth.fixture";
  * @critical-path true
  */
 test.describe("Procure-to-Pay", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }: any) => {
     await loginAsAdmin(page);
   });
 
@@ -19,7 +19,7 @@ test.describe("Procure-to-Pay", () => {
     invoicePage,
     paymentPage,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(120_000);
 
     const ref = `PTP-${Date.now()}`;

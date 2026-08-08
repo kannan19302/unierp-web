@@ -32,7 +32,7 @@ export default function WorkflowCategoriesPage() {
         <div className="ui-flex" style={{ gap: "var(--space-2)" }}>
           <button
             className="ui-btn-icon"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
           >
@@ -40,7 +40,7 @@ export default function WorkflowCategoriesPage() {
           </button>
           <button
             className="ui-btn-icon"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               apiDelete(`/workflow/categories/${row.id}`).then(load);
             }}

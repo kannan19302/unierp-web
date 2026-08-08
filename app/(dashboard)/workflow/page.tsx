@@ -10,7 +10,7 @@ export default function WorkflowDefinitionsPage() {
 
   useEffect(() => {
     apiGet("/workflow/definitions")
-      .then((d) => setDefinitions(Array.isArray(d) ? d : []))
+      .then((d: any) => setDefinitions(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

@@ -173,11 +173,11 @@ export default function CpqPricingRulesPage() {
             data={rules}
             sortBy={sortBy}
             sortOrder={sortOrder}
-            onSortChange={(key, order) => {
+            onSortChange={(key: any, order: any) => {
               setSortBy(key);
               setSortOrder(order);
             }}
-            onRowClick={(row) =>
+            onRowClick={(row: any) =>
               router.push(`/crm/cpq/pricing-rules/${row.id}`)
             }
           />
@@ -190,7 +190,7 @@ export default function CpqPricingRulesPage() {
         title="New Pricing Rule"
       >
         <form
-          onSubmit={async (e) => {
+          onSubmit={async (e: any) => {
             e.preventDefault();
             setCreating(true);
             const form = e.target as HTMLFormElement;
@@ -221,7 +221,7 @@ export default function CpqPricingRulesPage() {
           <div className="ui-form-group">
             <label className="ui-label">Rule Type</label>
             <select name="ruleType" required className="ui-input">
-              {RULE_TYPES.map((t) => (
+              {RULE_TYPES.map((t: any) => (
                 <option key={t} value={t}>
                   {t.replace("_", " ")}
                 </option>
@@ -240,7 +240,7 @@ export default function CpqPricingRulesPage() {
           <div className="ui-form-group">
             <label className="ui-label">Applies To</label>
             <select name="appliedTo" className="ui-input">
-              {APPLIED_TO_OPTIONS.map((o) => (
+              {APPLIED_TO_OPTIONS.map((o: any) => (
                 <option key={o} value={o}>
                   {o}
                 </option>

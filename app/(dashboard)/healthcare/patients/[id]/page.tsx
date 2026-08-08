@@ -40,7 +40,7 @@ export default function PatientDetailPage() {
     (async () => {
       try {
         const data = await client.get<Patient[]>("/ext/healthcare/patients");
-        setPatient(data.find((p) => p.id === id) || null);
+        setPatient(data.find((p: any) => p.id === id) || null);
       } catch {
         /* empty */
       } finally {
@@ -129,7 +129,7 @@ export default function PatientDetailPage() {
                     ? new Date(patient.createdAt).toLocaleDateString()
                     : "—",
                 ],
-              ].map(([l, v]) => (
+              ].map(([l, v]: any) => (
                 <div key={l as string} className={styles.s4}>
                   <span className="ui-text-sm-muted">{l}</span>
                   <span className="ui-heading-sm">{v}</span>

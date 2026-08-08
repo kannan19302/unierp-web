@@ -108,7 +108,7 @@ export default function AnalyticsPipelinesPage() {
             type="text"
             placeholder="Pipeline Name (e.g. Postgres to ClickHouse Sales ETL)..."
             value={pipelineName}
-            onChange={(e) => setPipelineName(e.target.value)}
+            onChange={(e: any) => setPipelineName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",

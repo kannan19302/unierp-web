@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState } from "react";
 
 export default function CommunicationAnalyticsPage() {
@@ -9,10 +9,10 @@ export default function CommunicationAnalyticsPage() {
 
   useState(() => {
     fetch("/api/crm/communication-deep/analytics?period=" + period)
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setAnalytics);
     fetch("/api/crm/communication-deep/dashboard")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setDash);
   });
 
@@ -23,7 +23,7 @@ export default function CommunicationAnalyticsPage() {
         <select
           className="ui-input w-40"
           value={period}
-          onChange={(e) => setPeriod(e.target.value)}
+          onChange={(e: any) => setPeriod(e.target.value)}
         >
           <option value="7d">Last 7 days</option>
           <option value="30d">Last 30 days</option>

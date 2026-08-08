@@ -82,7 +82,7 @@ export default function ForecastScenariosPage() {
       ]);
       setScenarios(scnRes);
       setAccounts(
-        accRes.filter((a) => a.type === "REVENUE" || a.type === "EXPENSE"),
+        accRes.filter((a: any) => a.type === "REVENUE" || a.type === "EXPENSE"),
       );
     } catch {
     } finally {
@@ -135,7 +135,7 @@ export default function ForecastScenariosPage() {
         const list = await client.get<ForecastScenario[]>(
           `${API}/forecast-scenarios`,
         );
-        setSelected(list.find((s) => s.id === selected.id) || null);
+        setSelected(list.find((s: any) => s.id === selected.id) || null);
       }
     } catch {
     } finally {
@@ -144,7 +144,7 @@ export default function ForecastScenariosPage() {
   };
 
   const totalBudget = (s: ForecastScenario) =>
-    (s.budgets || []).reduce((sum, b) => sum + b.amount, 0);
+    (s.budgets || []).reduce((sum: any, b: any) => sum + b.amount, 0);
 
   if (loading) {
     return (
@@ -188,7 +188,7 @@ export default function ForecastScenariosPage() {
                       required
                       placeholder="e.g. Base Case 2026, Upside, Stress Test"
                       value={scenarioForm.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScenarioForm({
                           ...scenarioForm,
                           name: e.target.value,
@@ -201,7 +201,7 @@ export default function ForecastScenariosPage() {
                     <select
                       className="ui-input"
                       value={scenarioForm.status}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScenarioForm({
                           ...scenarioForm,
                           status: e.target.value,
@@ -221,7 +221,7 @@ export default function ForecastScenariosPage() {
                     rows={2}
                     placeholder="Assumptions, key drivers, or notes for this scenario…"
                     value={scenarioForm.description}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setScenarioForm({
                         ...scenarioForm,
                         description: e.target.value,
@@ -268,7 +268,7 @@ export default function ForecastScenariosPage() {
               </Card>
             )}
 
-            {scenarios.map((s) => (
+            {scenarios.map((s: any) => (
               <Card
                 key={s.id}
                 onClick={() => setSelected(s)}
@@ -364,7 +364,7 @@ export default function ForecastScenariosPage() {
                           className="ui-input"
                           required
                           value={budgetForm.accountId}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setBudgetForm({
                               ...budgetForm,
                               accountId: e.target.value,
@@ -372,7 +372,7 @@ export default function ForecastScenariosPage() {
                           }
                         >
                           <option value="">Select account…</option>
-                          {accounts.map((a) => (
+                          {accounts.map((a: any) => (
                             <option key={a.id} value={a.id}>
                               {a.code} — {a.name}
                             </option>
@@ -389,7 +389,7 @@ export default function ForecastScenariosPage() {
                             required
                             placeholder="0.00"
                             value={budgetForm.amount}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setBudgetForm({
                                 ...budgetForm,
                                 amount: e.target.value,
@@ -404,7 +404,7 @@ export default function ForecastScenariosPage() {
                             type="date"
                             required
                             value={budgetForm.startDate}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setBudgetForm({
                                 ...budgetForm,
                                 startDate: e.target.value,
@@ -419,7 +419,7 @@ export default function ForecastScenariosPage() {
                             type="date"
                             required
                             value={budgetForm.endDate}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setBudgetForm({
                                 ...budgetForm,
                                 endDate: e.target.value,
@@ -454,7 +454,7 @@ export default function ForecastScenariosPage() {
                     </div>
                   ) : (
                     <div className="ui-stack-2">
-                      {(selected.budgets || []).map((b) => (
+                      {(selected.budgets || []).map((b: any) => (
                         <div key={b.id} className={styles.s21}>
                           <div>
                             <span className="font-medium">

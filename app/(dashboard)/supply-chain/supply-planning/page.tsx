@@ -210,18 +210,18 @@ export default function SupplyPlanningPage() {
             label="Plan Name"
             required
             value={form.planName}
-            onChange={(e) => setForm({ ...form, planName: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, planName: e.target.value })}
           />
           <TextField
             label="Description"
             value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, description: e.target.value })}
           />
           <TextField
             label="Planning Horizon (months)"
             type="number"
             value={form.planningHorizon}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({
                 ...form,
                 planningHorizon: parseInt(e.target.value) || 12,

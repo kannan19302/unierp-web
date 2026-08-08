@@ -41,7 +41,7 @@ const makeColumns = (
   {
     key: "ruleId",
     header: "",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as ReorderDashboardRow;
       return r.isTriggered ? (
         <button
@@ -186,7 +186,7 @@ export default function ReorderRulesPage() {
                       type="text"
                       className="ui-input"
                       value={productId}
-                      onChange={(e) => setProductId(e.target.value)}
+                      onChange={(e: any) => setProductId(e.target.value)}
                       required
                     />
                   </div>
@@ -196,7 +196,7 @@ export default function ReorderRulesPage() {
                       type="number"
                       className="ui-input"
                       value={minQty}
-                      onChange={(e) => setMinQty(Number(e.target.value))}
+                      onChange={(e: any) => setMinQty(Number(e.target.value))}
                       required
                       min={0}
                     />
@@ -207,7 +207,7 @@ export default function ReorderRulesPage() {
                       type="number"
                       className="ui-input"
                       value={reorderQty}
-                      onChange={(e) => setReorderQty(Number(e.target.value))}
+                      onChange={(e: any) => setReorderQty(Number(e.target.value))}
                       required
                       min={1}
                     />
@@ -218,7 +218,7 @@ export default function ReorderRulesPage() {
                       type="number"
                       className="ui-input"
                       value={leadTimeDays}
-                      onChange={(e) => setLeadTimeDays(Number(e.target.value))}
+                      onChange={(e: any) => setLeadTimeDays(Number(e.target.value))}
                       required
                       min={0}
                     />

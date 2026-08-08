@@ -84,7 +84,7 @@ export default function NamedAccountsPage() {
       render: (_: string, row: any) => (
         <button
           className="ui-btn ui-btn-sm ui-btn-ghost"
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             handleDelete(row.id);
           }}
@@ -118,7 +118,7 @@ export default function NamedAccountsPage() {
               <input
                 className="ui-input"
                 value={form.customerId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, customerId: e.target.value })
                 }
                 required
@@ -129,7 +129,7 @@ export default function NamedAccountsPage() {
               <input
                 className="ui-input"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 required
               />
             </div>
@@ -138,7 +138,7 @@ export default function NamedAccountsPage() {
               <select
                 className="ui-input"
                 value={form.tier}
-                onChange={(e) => setForm({ ...form, tier: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, tier: e.target.value })}
               >
                 <option value="STANDARD">Standard</option>
                 <option value="KEY">Key</option>
@@ -152,7 +152,7 @@ export default function NamedAccountsPage() {
                 className="ui-input"
                 type="number"
                 value={form.targetRevenue}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, targetRevenue: Number(e.target.value) })
                 }
               />

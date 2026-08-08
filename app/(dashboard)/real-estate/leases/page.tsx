@@ -77,7 +77,7 @@ export default function LeasesPage() {
     }
   };
 
-  const totalRent = leases.reduce((a, l) => a + Number(l.rentAmount || 0), 0);
+  const totalRent = leases.reduce((a: any, l: any) => a + Number(l.rentAmount || 0), 0);
   const columns: Column<Lease>[] = [
     {
       key: "tenant",
@@ -207,20 +207,20 @@ export default function LeasesPage() {
               label="Property ID"
               required
               value={form.propertyId}
-              onChange={(e) => setForm({ ...form, propertyId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, propertyId: e.target.value })}
             />
             <TextField
               label="Tenant Name"
               required
               value={form.tenantName}
-              onChange={(e) => setForm({ ...form, tenantName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, tenantName: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <TextField
                 label="Start Date"
                 type="date"
                 value={form.startDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
               />
@@ -228,7 +228,7 @@ export default function LeasesPage() {
                 label="End Date"
                 type="date"
                 value={form.endDate}
-                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endDate: e.target.value })}
               />
             </div>
             <div className="ui-grid-2 ui-gap-3">
@@ -236,7 +236,7 @@ export default function LeasesPage() {
                 label="Monthly Rent ($)"
                 type="number"
                 value={String(form.rentAmount)}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, rentAmount: Number(e.target.value) })
                 }
               />
@@ -244,7 +244,7 @@ export default function LeasesPage() {
                 label="Security Deposit ($)"
                 type="number"
                 value={String(form.securityDeposit)}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, securityDeposit: Number(e.target.value) })
                 }
               />

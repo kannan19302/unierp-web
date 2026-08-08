@@ -10,7 +10,7 @@ export default function SubscriptionPlansPage() {
 
   useEffect(() => {
     apiGet("/subscriptions/plans")
-      .then((d) => setPlans(Array.isArray(d) ? d : []))
+      .then((d: any) => setPlans(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 
@@ -30,7 +30,7 @@ export default function SubscriptionPlansPage() {
         <div
           className="ui-flex"
           style={{ gap: "var(--space-2)" }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button size="sm" variant="ghost">
             <Eye size={14} />

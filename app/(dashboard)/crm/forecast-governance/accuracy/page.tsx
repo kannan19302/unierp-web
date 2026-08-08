@@ -46,7 +46,7 @@ export default function ForecastAccuracyPage() {
   const avgAccuracy =
     accuracy.length > 0
       ? Math.round(
-          accuracy.reduce((s, a) => s + a.accuracyPct, 0) / accuracy.length,
+          accuracy.reduce((s: any, a: any) => s + a.accuracyPct, 0) / accuracy.length,
         )
       : 0;
 

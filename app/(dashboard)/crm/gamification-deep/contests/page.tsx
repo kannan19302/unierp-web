@@ -181,7 +181,7 @@ export default function ContestsPage() {
           {r.status === "DRAFT" && (
             <button
               className="ui-btn-icon"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 startContest(r.id);
               }}
@@ -192,7 +192,7 @@ export default function ContestsPage() {
           {r.status === "ACTIVE" && (
             <button
               className="ui-btn-icon"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 endContest(r.id);
               }}
@@ -202,7 +202,7 @@ export default function ContestsPage() {
           )}
           <button
             className="ui-btn-icon"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               deleteContest(r.id);
             }}
@@ -244,16 +244,16 @@ export default function ContestsPage() {
                 className="ui-input"
                 placeholder="Name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
               <select
                 className="ui-input"
                 value={form.contestType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, contestType: e.target.value })
                 }
               >
-                {CONTEST_TYPES.map((t) => (
+                {CONTEST_TYPES.map((t: any) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
@@ -263,14 +263,14 @@ export default function ContestsPage() {
                 className="ui-input"
                 placeholder="Prize (optional)"
                 value={form.prize}
-                onChange={(e) => setForm({ ...form, prize: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, prize: e.target.value })}
               />
               <label>Start Date</label>
               <input
                 className="ui-input"
                 type="date"
                 value={form.startDate.split("T")[0] || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
               />
@@ -279,7 +279,7 @@ export default function ContestsPage() {
                 className="ui-input"
                 type="date"
                 value={form.endDate.split("T")[0] || ""}
-                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endDate: e.target.value })}
               />
               <div
                 className="ui-flex-row"

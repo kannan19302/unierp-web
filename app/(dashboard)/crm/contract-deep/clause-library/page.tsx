@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState, useEffect } from "react";
 
 export default function ClauseLibraryPage() {
@@ -8,8 +8,8 @@ export default function ClauseLibraryPage() {
 
   useEffect(() => {
     fetch("/api/crm/contract-deep/clause-library")
-      .then((r) => r.json())
-      .then((d) => {
+      .then((r: any) => r.json())
+      .then((d: any) => {
         setClauses(d.data || []);
         setLoading(false);
       })

@@ -81,9 +81,9 @@ export default function IntercompanyNettingPage() {
       const scheduleList = Array.isArray(scheduleData)
         ? scheduleData
         : scheduleData.items || [];
-      setInvoices(invoiceList.filter((invoice) => invoice.status !== "PAID"));
+      setInvoices(invoiceList.filter((invoice: any) => invoice.status !== "PAID"));
       setSchedules(
-        scheduleList.filter((schedule) => schedule.status !== "PAID"),
+        scheduleList.filter((schedule: any) => schedule.status !== "PAID"),
       );
       setStats(statsData);
     } catch {
@@ -217,11 +217,11 @@ export default function IntercompanyNettingPage() {
                 <select
                   className="ui-input"
                   value={selectedInvoiceId}
-                  onChange={(e) => setSelectedInvoiceId(e.target.value)}
+                  onChange={(e: any) => setSelectedInvoiceId(e.target.value)}
                   required
                 >
                   <option value="">-- Choose Invoice --</option>
-                  {invoices.map((inv) => (
+                  {invoices.map((inv: any) => (
                     <option key={inv.id} value={inv.id}>
                       {inv.invoiceNumber} — {fmt(Number(inv.totalAmount))} (
                       {inv.orgId})
@@ -238,11 +238,11 @@ export default function IntercompanyNettingPage() {
                 <select
                   className="ui-input"
                   value={selectedScheduleId}
-                  onChange={(e) => setSelectedScheduleId(e.target.value)}
+                  onChange={(e: any) => setSelectedScheduleId(e.target.value)}
                   required
                 >
                   <option value="">-- Choose Schedule --</option>
-                  {schedules.map((s) => (
+                  {schedules.map((s: any) => (
                     <option key={s.id} value={s.id}>
                       Schedule ID: {s.id.substring(0, 8)} —{" "}
                       {fmt(Number(s.amount))} ({s.orgId})
@@ -260,7 +260,7 @@ export default function IntercompanyNettingPage() {
                 type="text"
                 className="ui-input"
                 value={matchDescription}
-                onChange={(e) => setMatchDescription(e.target.value)}
+                onChange={(e: any) => setMatchDescription(e.target.value)}
                 placeholder="e.g. Netting for intercompany service fee invoice"
               />
             </div>

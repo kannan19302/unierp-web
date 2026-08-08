@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import React, { useState, useEffect } from "react";
 import { DollarSign } from "lucide-react";
@@ -76,10 +76,10 @@ function AsyncLinkSelect({
       style={style}
       disabled={disabled || loading}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e: any) => onChange(e.target.value)}
     >
       <option value="">{loading ? "Loading..." : `Select ${slug}...`}</option>
-      {options.map((opt) => (
+      {options.map((opt: any) => (
         <option key={opt.id} value={opt.id}>
           {opt.label}
         </option>
@@ -110,7 +110,7 @@ export function DynamicFormRenderer({
     // Pre-populate default values if no initialData is given
     const initial = { ...initialData };
     if (Array.isArray(schema) && Object.keys(initial).length === 0) {
-      schema.forEach((f) => {
+      schema.forEach((f: any) => {
         if (f.defaultValue) initial[f.name] = f.defaultValue;
       });
     }
@@ -124,7 +124,7 @@ export function DynamicFormRenderer({
 
   useEffect(() => {
     if (!schema || !Array.isArray(schema)) return;
-    schema.forEach((f) => {
+    schema.forEach((f: any) => {
       if (
         (f.type === "Select" || f.type === "Radio" || f.type === "Link") &&
         f.dataSource
@@ -139,17 +139,17 @@ export function DynamicFormRenderer({
             },
           },
         )
-          .then((res) => res.json())
-          .then((data) => {
+          .then((res: any) => res.json())
+          .then((data: any) => {
             const arr = Array.isArray(data) ? data : data.data || [];
             let mapped = arr.map((item: any) =>
               typeof item === "object"
                 ? item.name || item.title || item.id
                 : String(item),
             );
-            setDynamicOptions((prev) => ({ ...prev, [f.name]: mapped }));
+            setDynamicOptions((prev: any) => ({ ...prev, [f.name]: mapped }));
           })
-          .catch((err) =>
+          .catch((err: any) =>
             console.error("Failed to fetch data source for", f.name, err),
           );
       }
@@ -161,7 +161,7 @@ export function DynamicFormRenderer({
       setFields(schema);
       if (Object.keys(initialData).length === 0) {
         const initial = { ...initialData };
-        schema.forEach((f) => {
+        schema.forEach((f: any) => {
           if (f.defaultValue && !initial[f.name])
             initial[f.name] = f.defaultValue;
         });
@@ -197,9 +197,9 @@ export function DynamicFormRenderer({
   }, [formId, schema, initialData]);
 
   const handleChange = (name: string, value: any) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev: any) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
+      setErrors((prev: any) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -209,7 +209,7 @@ export function DynamicFormRenderer({
     let updated = false;
     const nextData = { ...formData };
 
-    fields.forEach((f) => {
+    fields.forEach((f: any) => {
       if (f.formula) {
         let expression = f.formula;
         // Extract all {field_name} tokens
@@ -217,7 +217,7 @@ export function DynamicFormRenderer({
         let canEvaluate = true;
 
         if (tokens) {
-          tokens.forEach((token) => {
+          tokens.forEach((token: any) => {
             const key = token.slice(1, -1);
             let val = nextData[key];
             if (val === undefined || val === null || val === "") {
@@ -260,7 +260,7 @@ export function DynamicFormRenderer({
     const newErrors: Record<string, string> = {};
     let isValid = true;
 
-    fields.forEach((f) => {
+    fields.forEach((f: any) => {
       const value = formData[f.name];
 
       if (
@@ -351,7 +351,7 @@ export function DynamicFormRenderer({
       case "Select": {
         const manualOptions = (f.options || "")
           .split("\n")
-          .map((o) => o.trim())
+          .map((o: any) => o.trim())
           .filter(Boolean);
         const optionsList = dynamicOptions[f.name] || manualOptions;
 
@@ -361,10 +361,10 @@ export function DynamicFormRenderer({
             style={inputStyle}
             disabled={f.readOnly}
             value={value}
-            onChange={(e) => handleChange(f.name, e.target.value)}
+            onChange={(e: any) => handleChange(f.name, e.target.value)}
           >
             <option value="">Select an option...</option>
-            {optionsList.map((opt, i) => (
+            {optionsList.map((opt: any, i: any) => (
               <option key={i} value={opt}>
                 {opt}
               </option>
@@ -377,7 +377,7 @@ export function DynamicFormRenderer({
           <AsyncLinkSelect
             slug={f.options?.trim() || ""}
             value={value}
-            onChange={(v) => handleChange(f.name, v)}
+            onChange={(v: any) => handleChange(f.name, v)}
             disabled={f.readOnly}
             style={inputStyle}
           />
@@ -389,7 +389,7 @@ export function DynamicFormRenderer({
             style={{ width: "16px", height: "16px" }}
             disabled={f.readOnly}
             checked={!!value}
-            onChange={(e) => handleChange(f.name, e.target.checked)}
+            onChange={(e: any) => handleChange(f.name, e.target.checked)}
           />
         );
       case "Text Editor":
@@ -416,7 +416,7 @@ export function DynamicFormRenderer({
               placeholder="Rich Text Editor (Markdown/WYSIWYG Supported)"
               disabled={f.readOnly}
               value={value}
-              onChange={(e) => handleChange(f.name, e.target.value)}
+              onChange={(e: any) => handleChange(f.name, e.target.value)}
             />
           </div>
         );
@@ -481,7 +481,7 @@ export function DynamicFormRenderer({
         const cols = (f.options || "")
           .split("\n")
           .filter(Boolean)
-          .map((line) => {
+          .map((line: any) => {
             const [colName, colType] = line.split(":");
             return {
               name: colName?.trim() || "Column",
@@ -533,7 +533,7 @@ export function DynamicFormRenderer({
               <>{(() => {
                 const dataTableColumns = [
                   { key: "col_num", header: "#", render: (row: any, idx: number) => idx + 1 },
-                  ...cols.map((c, i) => ({
+                  ...cols.map((c: any, i: any) => ({
                     key: `col_${i}`,
                     header: c.name,
                     render: (row: any, idx: number) => (
@@ -555,7 +555,7 @@ export function DynamicFormRenderer({
                         }}
                         value={row[c.name] || ""}
                         disabled={f.readOnly}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleRowChange(idx, c.name, e.target.value)
                         }
                         placeholder={`Enter ${c.name}...`}
@@ -640,7 +640,7 @@ export function DynamicFormRenderer({
             style={inputStyle}
             disabled={f.readOnly}
             value={value}
-            onChange={(e) => handleChange(f.name, e.target.value)}
+            onChange={(e: any) => handleChange(f.name, e.target.value)}
           />
         );
       case "Int":
@@ -670,7 +670,7 @@ export function DynamicFormRenderer({
               placeholder={`0${f.type === "Currency" ? ".00" : ""}`}
               disabled={f.readOnly}
               value={value}
-              onChange={(e) => handleChange(f.name, e.target.value)}
+              onChange={(e: any) => handleChange(f.name, e.target.value)}
             />
           </div>
         );
@@ -682,7 +682,7 @@ export function DynamicFormRenderer({
             style={inputStyle}
             disabled={f.readOnly}
             value={value}
-            onChange={(e) => handleChange(f.name, e.target.value)}
+            onChange={(e: any) => handleChange(f.name, e.target.value)}
           />
         );
       default:
@@ -694,7 +694,7 @@ export function DynamicFormRenderer({
             placeholder={`Enter ${f.label}...`}
             disabled={f.readOnly}
             value={value}
-            onChange={(e) => handleChange(f.name, e.target.value)}
+            onChange={(e: any) => handleChange(f.name, e.target.value)}
           />
         );
     }
@@ -714,7 +714,7 @@ export function DynamicFormRenderer({
   let currentSection: SectionNode = { columns: [{ fields: [] }] };
   sections.push(currentSection);
 
-  fields.forEach((f) => {
+  fields.forEach((f: any) => {
     if (f.type === "Section Break") {
       currentSection = { breakField: f, columns: [{ fields: [] }] };
       sections.push(currentSection);
@@ -740,12 +740,12 @@ export function DynamicFormRenderer({
         boxShadow: "var(--shadow-sm)",
       }}
     >
-      {sections.map((section, sIdx) => {
-        const colWeights = section.columns.map((c, i) => {
+      {sections.map((section: any, sIdx: any) => {
+        const colWeights = section.columns.map((c: any, i: any) => {
           if (i === 0) return section.breakField?.weight || 1;
           return c.breakField?.weight || 1;
         });
-        const gridTemplate = colWeights.map((w) => `${w}fr`).join(" ");
+        const gridTemplate = colWeights.map((w: any) => `${w}fr`).join(" ");
 
         return (
           <React.Fragment key={`sec_${sIdx}`}>
@@ -774,7 +774,7 @@ export function DynamicFormRenderer({
                 gap: "var(--space-8)",
               }}
             >
-              {section.columns.map((col, cIdx) => (
+              {section.columns.map((col: any, cIdx: any) => (
                 <div
                   key={`col_${sIdx}_${cIdx}`}
                   style={{
@@ -793,7 +793,7 @@ export function DynamicFormRenderer({
                       alignContent: "start",
                     }}
                   >
-                    {col.fields.map((fNode) => {
+                    {col.fields.map((fNode: any) => {
                       const evaluateVisibility = (rule?: string) => {
                         if (!rule) return true;
                         let expr = rule.startsWith("eval:")
@@ -801,7 +801,7 @@ export function DynamicFormRenderer({
                           : rule;
                         const tokens = expr.match(/\{[a-zA-Z0-9_]+\}/g);
                         if (tokens) {
-                          tokens.forEach((t) => {
+                          tokens.forEach((t: any) => {
                             const k = t.slice(1, -1);
                             const val = formData[k];
                             const safeVal =

@@ -39,7 +39,7 @@ export default function StorageEncryptionPage() {
       render: (_v: any, row: any) => (
         <button
           className="ui-btn-icon"
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             apiDelete(`/storage/encryption/${row.fileId}`).then(load);
           }}

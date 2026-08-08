@@ -117,7 +117,7 @@ export default function HelpdeskTab() {
   };
 
   const getEmpName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -146,7 +146,7 @@ export default function HelpdeskTab() {
               className="ui-input"
               placeholder="Resolution details notes..."
               value={resolution}
-              onChange={(e) => setResolution(e.target.value)}
+              onChange={(e: any) => setResolution(e.target.value)}
               rows={3}
               required
             />
@@ -180,7 +180,7 @@ export default function HelpdeskTab() {
               </div>
             </Card>
           ) : (
-            tickets.map((t) => (
+            tickets.map((t: any) => (
               <Card key={t.id} padding="md">
                 <div className={styles.s3}>
                   <div>
@@ -261,11 +261,11 @@ export default function HelpdeskTab() {
           <FormField label="Employee" required>
             <Select
               value={form.employeeId}
-              onChange={(e) => setForm({ ...form, employeeId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, employeeId: e.target.value })}
               required
             >
               <option value="">Select Employee</option>
-              {employees.map((e) => (
+              {employees.map((e: any) => (
                 <option key={e.id} value={e.id}>
                   {e.firstName} {e.lastName}
                 </option>
@@ -277,7 +277,7 @@ export default function HelpdeskTab() {
             <FormField label="Category">
               <Select
                 value={form.category}
-                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, category: e.target.value })}
               >
                 <option value="PAYROLL">Payroll / Salaries</option>
                 <option value="BENEFITS">Benefits & Perks</option>
@@ -289,7 +289,7 @@ export default function HelpdeskTab() {
             <FormField label="Priority">
               <Select
                 value={form.priority}
-                onChange={(e) => setForm({ ...form, priority: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, priority: e.target.value })}
               >
                 <option value="LOW">Low Priority</option>
                 <option value="MEDIUM">Medium Priority</option>
@@ -301,7 +301,7 @@ export default function HelpdeskTab() {
             <Input
               placeholder="Brief summary subject"
               value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, title: e.target.value })}
               required
             />
           </FormField>
@@ -310,7 +310,7 @@ export default function HelpdeskTab() {
             <Textarea
               placeholder="Provide exact details for the request..."
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               rows={3}

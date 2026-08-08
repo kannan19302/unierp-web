@@ -67,7 +67,7 @@ export default function ArticlesPage() {
           className="ui-input"
           placeholder="Search articles..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
         />
       </div>
       {loading ? (

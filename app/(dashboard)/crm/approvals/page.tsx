@@ -129,9 +129,9 @@ export default function ApprovalsPage() {
         method: "POST",
         body: JSON.stringify({ comments }),
       });
-      setRequests((prev) => prev.filter((r) => r.id !== request.id));
-      if (type === "approve") setApprovedToday((p) => p + 1);
-      else setRejectedToday((p) => p + 1);
+      setRequests((prev: any) => prev.filter((r: any) => r.id !== request.id));
+      if (type === "approve") setApprovedToday((p: any) => p + 1);
+      else setRejectedToday((p: any) => p + 1);
       toast.success(
         type === "approve" ? "Request approved" : "Request rejected",
       );
@@ -147,7 +147,7 @@ export default function ApprovalsPage() {
     }
   };
 
-  const urgentCount = requests.filter((r) => {
+  const urgentCount = requests.filter((r: any) => {
     const submitted = new Date(r.submittedAt);
     const hoursAgo = (Date.now() - submitted.getTime()) / (1000 * 60 * 60);
     return hoursAgo > 24;
@@ -188,7 +188,7 @@ export default function ApprovalsPage() {
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
 
   const filteredRequests = requests
-    .filter((r) => {
+    .filter((r: any) => {
       const matchesSearch =
         !searchQuery ||
         r.entityId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -197,7 +197,7 @@ export default function ApprovalsPage() {
         filterEntity === "ALL" || r.entityType === filterEntity;
       return matchesSearch && matchesEntity;
     })
-    .sort((a, b) => {
+    .sort((a: any, b: any) => {
       let cmp = 0;
       if (sortBy === "submittedAt")
         cmp =
@@ -254,7 +254,7 @@ export default function ApprovalsPage() {
       render: (r: any) => (
         <div className={styles.p21}>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setActionModal({ type: "approve", request: r });
               setComments("");
@@ -264,7 +264,7 @@ export default function ApprovalsPage() {
             <CheckCircle size={14} /> Approve
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setActionModal({ type: "reject", request: r });
               setComments("");
@@ -298,7 +298,7 @@ export default function ApprovalsPage() {
         />
 
         <div className={styles.p26}>
-          {kpis.map((kpi) => (
+          {kpis.map((kpi: any) => (
             <Card key={kpi.label}>
               <div className={styles.p27}>
                 <div
@@ -329,13 +329,13 @@ export default function ApprovalsPage() {
                   className={`ui-input ${styles.searchInput}`}
                   placeholder="Search by ID or process..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e: any) => setSearchQuery(e.target.value)}
                 />
               </div>
               <select
                 className={`ui-input ${styles.filter}`}
                 value={filterEntity}
-                onChange={(e) => setFilterEntity(e.target.value)}
+                onChange={(e: any) => setFilterEntity(e.target.value)}
               >
                 <option value="ALL">All Types</option>
                 <option value="QUOTATION">Quotation</option>
@@ -351,7 +351,7 @@ export default function ApprovalsPage() {
             rowKey={(r: any) => r.id}
             sortBy={sortBy}
             sortOrder={sortOrder}
-            onSortChange={(key, order) => {
+            onSortChange={(key: any, order: any) => {
               setSortBy(key);
               setSortOrder(order);
             }}
@@ -400,7 +400,7 @@ export default function ApprovalsPage() {
                 <textarea
                   className={`ui-input ${styles.commentArea}`}
                   value={comments}
-                  onChange={(e) => setComments(e.target.value)}
+                  onChange={(e: any) => setComments(e.target.value)}
                   placeholder={
                     actionModal.type === "approve"
                       ? "Optional approval notes..."

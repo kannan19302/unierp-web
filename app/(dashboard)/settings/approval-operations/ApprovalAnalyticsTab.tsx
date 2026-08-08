@@ -32,7 +32,7 @@ export default function ApprovalAnalyticsTab() {
             trend: "6 pending",
             trendColor: "var(--color-warning)",
           },
-        ].map((m, i) => (
+        ].map((m: any, i: any) => (
           <div key={i} className="ui-card p-4">
             <div className={styles.s1}>{m.label}</div>
             <div className="text-2xl">{m.value}</div>
@@ -70,7 +70,7 @@ export default function ApprovalAnalyticsTab() {
               avgTime: "12.0 hrs",
               load: "HIGH",
             },
-          ].map((a, i) => (
+          ].map((a: any, i: any) => (
             <div
               key={i}
               style={{
@@ -132,7 +132,7 @@ export default function ApprovalAnalyticsTab() {
               breachRate: "12%",
               impact: "MEDIUM",
             },
-          ].map((b, i) => (
+          ].map((b: any, i: any) => (
             <div key={i} className={styles.s7}>
               <div className="ui-flex-between">
                 <span className="ui-heading-sm">{b.step}</span>

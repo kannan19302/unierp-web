@@ -28,7 +28,7 @@ export default function DataManagementPage() {
 
   useEffect(() => {
     apiGet<QualityDashboard>("/crm/data/quality/dashboard")
-      .then((d) => {
+      .then((d: any) => {
         setQuality(d as QualityDashboard);
       })
       .catch(() => {})
@@ -88,7 +88,7 @@ export default function DataManagementPage() {
       />
 
       <div className="ui-grid-3">
-        {cards.map((card) => (
+        {cards.map((card: any) => (
           <Link key={card.href} href={card.href}>
             <Card className="hover:shadow-md transition-shadow cursor-pointer">
               <div className={`${card.color} mb-2`}>{card.icon}</div>

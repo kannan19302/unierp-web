@@ -144,8 +144,8 @@ export default function TransferOrdersPage() {
             : undefined,
           expectedDate: form.expectedDate || undefined,
           lines: lines
-            .filter((l) => l.productId)
-            .map((l) => ({ ...l, requestedQty: parseFloat(l.requestedQty) })),
+            .filter((l: any) => l.productId)
+            .map((l: any) => ({ ...l, requestedQty: parseFloat(l.requestedQty) })),
         }),
       });
       setShowForm(false);
@@ -192,7 +192,7 @@ export default function TransferOrdersPage() {
         )}
 
         <div className="flex gap-2 border-b mb-6 flex-wrap">
-          {tabs.map((t) => (
+          {tabs.map((t: any) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -215,7 +215,7 @@ export default function TransferOrdersPage() {
                   value: dashboard.byStatus.pendingApproval,
                 },
                 { label: "Completed", value: dashboard.byStatus.completed },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div key={c.label} className="bg-white border rounded-lg p-4">
                   <div className="text-2xl font-bold">{c.value}</div>
                   <div className="text-sm text-gray-500 mt-1">{c.label}</div>
@@ -223,7 +223,7 @@ export default function TransferOrdersPage() {
               ))}
             </div>
             <div className="grid grid-cols-3 md:grid-cols-7 gap-3">
-              {Object.entries(dashboard.byStatus).map(([key, val]) => (
+              {Object.entries(dashboard.byStatus).map(([key, val]: any) => (
                 <div
                   key={key}
                   className={`border rounded-lg p-3 text-center ${
@@ -265,8 +265,8 @@ export default function TransferOrdersPage() {
                   <input
                     placeholder="From Warehouse ID*"
                     value={form.fromWarehouseId}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         fromWarehouseId: e.target.value,
                       }))
@@ -276,8 +276,8 @@ export default function TransferOrdersPage() {
                   <input
                     placeholder="To Warehouse ID*"
                     value={form.toWarehouseId}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         toWarehouseId: e.target.value,
                       }))
@@ -286,12 +286,12 @@ export default function TransferOrdersPage() {
                   />
                   <select
                     value={form.priority}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, priority: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, priority: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   >
-                    {PRIORITIES.map((p) => (
+                    {PRIORITIES.map((p: any) => (
                       <option key={p}>{p}</option>
                     ))}
                   </select>
@@ -299,16 +299,16 @@ export default function TransferOrdersPage() {
                     type="date"
                     placeholder="Expected Date"
                     value={form.expectedDate}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, expectedDate: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, expectedDate: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
                   <input
                     placeholder="Carrier"
                     value={form.carrier}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, carrier: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, carrier: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
@@ -316,8 +316,8 @@ export default function TransferOrdersPage() {
                     type="number"
                     placeholder="Estimated Cost"
                     value={form.estimatedCost}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         estimatedCost: e.target.value,
                       }))
@@ -327,14 +327,14 @@ export default function TransferOrdersPage() {
                 </div>
                 <div className="mb-3">
                   <h4 className="text-sm font-medium mb-2">Lines</h4>
-                  {lines.map((l, i) => (
+                  {lines.map((l: any, i: any) => (
                     <div key={i} className="flex gap-2 mb-2">
                       <input
                         placeholder="Product ID*"
                         value={l.productId}
-                        onChange={(e) =>
-                          setLines((ls) =>
-                            ls.map((x, j) =>
+                        onChange={(e: any) =>
+                          setLines((ls: any) =>
+                            ls.map((x: any, j: any) =>
                               j === i ? { ...x, productId: e.target.value } : x,
                             ),
                           )
@@ -345,9 +345,9 @@ export default function TransferOrdersPage() {
                         type="number"
                         placeholder="Qty*"
                         value={l.requestedQty}
-                        onChange={(e) =>
-                          setLines((ls) =>
-                            ls.map((x, j) =>
+                        onChange={(e: any) =>
+                          setLines((ls: any) =>
+                            ls.map((x: any, j: any) =>
                               j === i
                                 ? { ...x, requestedQty: e.target.value }
                                 : x,
@@ -359,9 +359,9 @@ export default function TransferOrdersPage() {
                       <input
                         placeholder="UOM"
                         value={l.uom}
-                        onChange={(e) =>
-                          setLines((ls) =>
-                            ls.map((x, j) =>
+                        onChange={(e: any) =>
+                          setLines((ls: any) =>
+                            ls.map((x: any, j: any) =>
                               j === i ? { ...x, uom: e.target.value } : x,
                             ),
                           )
@@ -371,7 +371,7 @@ export default function TransferOrdersPage() {
                       {lines.length > 1 && (
                         <button
                           onClick={() =>
-                            setLines((ls) => ls.filter((_, j) => j !== i))
+                            setLines((ls: any) => ls.filter((_: any, j: any) => j !== i))
                           }
                           className="text-red-500 text-sm px-2"
                         >
@@ -382,7 +382,7 @@ export default function TransferOrdersPage() {
                   ))}
                   <button
                     onClick={() =>
-                      setLines((ls) => [
+                      setLines((ls: any) => [
                         ...ls,
                         { productId: "", requestedQty: "", uom: "UNIT" },
                       ])
@@ -463,7 +463,7 @@ export default function TransferOrdersPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <div className={styles.s1}>
                         {row.status === "DRAFT" && (
                           <button
@@ -530,7 +530,7 @@ export default function TransferOrdersPage() {
               <div className="text-gray-500">Loading...</div>
             ) : (
               <div className="space-y-3">
-                {inTransit.map((o) => (
+                {inTransit.map((o: any) => (
                   <div
                     key={o.id}
                     className="border rounded-lg p-4 bg-purple-50"

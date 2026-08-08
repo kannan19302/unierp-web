@@ -80,9 +80,9 @@ export default function CapexPage() {
   if (loading) return <Spinner size="lg" />;
   if (error) return <div className="ui-alert ui-alert-danger">{error}</div>;
 
-  const totalBudget = projects.reduce((s, p) => s + Number(p.totalBudget), 0);
+  const totalBudget = projects.reduce((s: any, p: any) => s + Number(p.totalBudget), 0);
   const totalSpent = projects.reduce(
-    (s, p) => s + Number(p.spentToDate || 0),
+    (s: any, p: any) => s + Number(p.spentToDate || 0),
     0,
   );
 
@@ -114,7 +114,7 @@ export default function CapexPage() {
               },
               {
                 label: "Pending Approval",
-                value: projects.filter((p) => p.status === "PENDING_APPROVAL")
+                value: projects.filter((p: any) => p.status === "PENDING_APPROVAL")
                   .length,
                 icon: <Clock size={16} />,
                 color: "var(--chart-3)",
@@ -122,7 +122,7 @@ export default function CapexPage() {
               {
                 label: "Approved",
                 value: projects.filter(
-                  (p) => p.status === "APPROVED" || p.status === "IN_PROGRESS",
+                  (p: any) => p.status === "APPROVED" || p.status === "IN_PROGRESS",
                 ).length,
                 icon: <CheckCircle2 size={16} />,
                 color: "var(--chart-2)",
@@ -136,7 +136,7 @@ export default function CapexPage() {
             ]}
           />
           <div className="ui-grid-auto">
-            {projects.map((p) => (
+            {projects.map((p: any) => (
               <Card key={p.id} className="ui-stack-3">
                 <div className="ui-flex-between">
                   <h3 className="ui-text-label">
@@ -170,11 +170,11 @@ export default function CapexPage() {
       )}
       {activeTab === "budgets" && (
         <div className="ui-stack-4">
-          {projects.map((p) => (
+          {projects.map((p: any) => (
             <Card key={p.id} className="ui-stack-3">
               <h4 className="ui-text-label">{p.name} - Budget Lines</h4>
               <div className="ui-stack-2">
-                {(p.budgetLines || []).map((bl) => (
+                {(p.budgetLines || []).map((bl: any) => (
                   <div key={bl.id} className="ui-flex-between ui-card p-2">
                     <div>
                       <strong>{bl.description}</strong>
@@ -194,8 +194,8 @@ export default function CapexPage() {
       )}
       {activeTab === "gates" && (
         <div className="ui-stack-4">
-          {projects.flatMap((p) =>
-            (p.gateReviews || []).map((g) => (
+          {projects.flatMap((p: any) =>
+            (p.gateReviews || []).map((g: any) => (
               <Card key={g.id} className="ui-flex-between">
                 <div>
                   <strong>{g.gateName}</strong>

@@ -151,11 +151,11 @@ export default function CpqBundlesPage() {
             data={bundles}
             sortBy={sortBy}
             sortOrder={sortOrder}
-            onSortChange={(key, order) => {
+            onSortChange={(key: any, order: any) => {
               setSortBy(key);
               setSortOrder(order);
             }}
-            onRowClick={(row) => router.push(`/crm/cpq/bundles/${row.id}`)}
+            onRowClick={(row: any) => router.push(`/crm/cpq/bundles/${row.id}`)}
           />
         )}
       </Card>
@@ -166,7 +166,7 @@ export default function CpqBundlesPage() {
         title="New Product Bundle"
       >
         <form
-          onSubmit={async (e) => {
+          onSubmit={async (e: any) => {
             e.preventDefault();
             setCreating(true);
             const form = e.target as HTMLFormElement;

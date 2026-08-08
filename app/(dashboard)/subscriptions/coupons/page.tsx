@@ -10,7 +10,7 @@ export default function SubscriptionCouponsPage() {
 
   useEffect(() => {
     apiGet("/subscriptions/coupons")
-      .then((d) => setCoupons(Array.isArray(d) ? d : []))
+      .then((d: any) => setCoupons(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 
@@ -30,7 +30,7 @@ export default function SubscriptionCouponsPage() {
         <div
           className="ui-flex"
           style={{ gap: "var(--space-2)" }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button size="sm" variant="ghost">
             <Eye size={14} />

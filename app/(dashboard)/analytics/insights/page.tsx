@@ -75,12 +75,12 @@ export default function SmartInsightsPage() {
 
   const insights = data?.insights ?? [];
   const counts: Record<Severity, number> = {
-    critical: insights.filter((i) => i.severity === "critical").length,
-    warning: insights.filter((i) => i.severity === "warning").length,
-    info: insights.filter((i) => i.severity === "info").length,
+    critical: insights.filter((i: any) => i.severity === "critical").length,
+    warning: insights.filter((i: any) => i.severity === "warning").length,
+    info: insights.filter((i: any) => i.severity === "info").length,
   };
   const filtered =
-    filter === "all" ? insights : insights.filter((i) => i.severity === filter);
+    filter === "all" ? insights : insights.filter((i: any) => i.severity === filter);
 
   return (
     <RouteGuard permission="analytics.insights.read">
@@ -109,7 +109,7 @@ export default function SmartInsightsPage() {
 
         {/* Severity summary cards */}
         <div className={styles.s3}>
-          {(["critical", "warning", "info"] as Severity[]).map((sev) => {
+          {(["critical", "warning", "info"] as Severity[]).map((sev: any) => {
             const s = SEVERITY_STYLE[sev];
             const active = filter === sev;
             return (
@@ -155,7 +155,7 @@ export default function SmartInsightsPage() {
                 ← Show all severities
               </button>
             )}
-            {filtered.map((ins) => {
+            {filtered.map((ins: any) => {
               const s = SEVERITY_STYLE[ins.severity];
               return (
                 <div

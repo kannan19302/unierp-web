@@ -24,7 +24,7 @@ export default function MachineTranslationPage() {
           <FormField label="Source Language">
             <Select
               value={sourceLang}
-              onChange={(e) => setSourceLang(e.target.value)}
+              onChange={(e: any) => setSourceLang(e.target.value)}
             >
               <option value="en">English</option>
               <option value="es">Spanish</option>
@@ -36,7 +36,7 @@ export default function MachineTranslationPage() {
           <FormField label="Target Language">
             <Select
               value={targetLang}
-              onChange={(e) => setTargetLang(e.target.value)}
+              onChange={(e: any) => setTargetLang(e.target.value)}
             >
               <option value="es">Spanish</option>
               <option value="fr">French</option>
@@ -50,7 +50,7 @@ export default function MachineTranslationPage() {
               type="text"
               placeholder="Enter text to translate..."
               value={sourceText}
-              onChange={(e) => setSourceText(e.target.value)}
+              onChange={(e: any) => setSourceText(e.target.value)}
             />
           </FormField>
           <div className="ui-flex" style={{ justifyContent: "flex-end" }}>

@@ -185,11 +185,11 @@ export default function CustomFieldsPage() {
         ...form,
         options: form.fieldType === "PICKLIST" ? form.options : undefined,
       });
-      setFields((prev) => [...prev, created]);
+      setFields((prev: any) => [...prev, created]);
       setShowModal(false);
       setForm(emptyForm(activeEntity));
     } catch {
-      setFields((prev) => [
+      setFields((prev: any) => [
         ...prev,
         {
           ...form,
@@ -212,11 +212,11 @@ export default function CustomFieldsPage() {
     } catch {
       /* proceed with local removal */
     }
-    setFields((prev) => prev.filter((f) => f.id !== id));
+    setFields((prev: any) => prev.filter((f: any) => f.id !== id));
   };
 
   const addOption = () =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
       options: [
         ...prev.options,
@@ -224,19 +224,19 @@ export default function CustomFieldsPage() {
       ],
     }));
   const removeOption = (idx: number) =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
-      options: prev.options.filter((_, i) => i !== idx),
+      options: prev.options.filter((_: any, i: any) => i !== idx),
     }));
   const updateOption = (idx: number, key: keyof PicklistOption, val: string) =>
-    setForm((prev) => ({
+    setForm((prev: any) => ({
       ...prev,
-      options: prev.options.map((o, i) =>
+      options: prev.options.map((o: any, i: any) =>
         i === idx ? { ...o, [key]: val } : o,
       ),
     }));
 
-  const filtered = fields.filter((f) => f.entity === activeEntity);
+  const filtered = fields.filter((f: any) => f.entity === activeEntity);
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
@@ -293,7 +293,7 @@ export default function CustomFieldsPage() {
         />
 
         <div className={styles.style2}>
-          {ENTITIES.map((e) => (
+          {ENTITIES.map((e: any) => (
             <button
               key={e}
               onClick={() => setActiveEntity(e)}
@@ -423,8 +423,8 @@ export default function CustomFieldsPage() {
                       <input
                         style={inputStyle}
                         value={form.label}
-                        onChange={(e) =>
-                          setForm((p) => ({
+                        onChange={(e: any) =>
+                          setForm((p: any) => ({
                             ...p,
                             label: e.target.value,
                             fieldName: e.target.value
@@ -441,8 +441,8 @@ export default function CustomFieldsPage() {
                       <input
                         style={inputStyle}
                         value={form.fieldName}
-                        onChange={(e) =>
-                          setForm((p) => ({ ...p, fieldName: e.target.value }))
+                        onChange={(e: any) =>
+                          setForm((p: any) => ({ ...p, fieldName: e.target.value }))
                         }
                         required
                       />
@@ -454,11 +454,11 @@ export default function CustomFieldsPage() {
                       <select
                         style={inputStyle}
                         value={form.fieldType}
-                        onChange={(e) =>
-                          setForm((p) => ({ ...p, fieldType: e.target.value }))
+                        onChange={(e: any) =>
+                          setForm((p: any) => ({ ...p, fieldType: e.target.value }))
                         }
                       >
-                        {FIELD_TYPES.map((t) => (
+                        {FIELD_TYPES.map((t: any) => (
                           <option key={t} value={t}>
                             {t}
                           </option>
@@ -470,8 +470,8 @@ export default function CustomFieldsPage() {
                       <input
                         style={inputStyle}
                         value={form.section}
-                        onChange={(e) =>
-                          setForm((p) => ({ ...p, section: e.target.value }))
+                        onChange={(e: any) =>
+                          setForm((p: any) => ({ ...p, section: e.target.value }))
                         }
                         placeholder="e.g. General, Financial"
                       />
@@ -483,8 +483,8 @@ export default function CustomFieldsPage() {
                       <input
                         style={inputStyle}
                         value={form.defaultValue}
-                        onChange={(e) =>
-                          setForm((p) => ({
+                        onChange={(e: any) =>
+                          setForm((p: any) => ({
                             ...p,
                             defaultValue: e.target.value,
                           }))
@@ -497,8 +497,8 @@ export default function CustomFieldsPage() {
                         style={inputStyle}
                         type="number"
                         value={form.sortOrder}
-                        onChange={(e) =>
-                          setForm((p) => ({
+                        onChange={(e: any) =>
+                          setForm((p: any) => ({
                             ...p,
                             sortOrder: Number(e.target.value),
                           }))
@@ -511,8 +511,8 @@ export default function CustomFieldsPage() {
                       type="checkbox"
                       id="isRequired"
                       checked={form.isRequired}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, isRequired: e.target.checked }))
+                      onChange={(e: any) =>
+                        setForm((p: any) => ({ ...p, isRequired: e.target.checked }))
                       }
                     />
                     <label htmlFor="isRequired" className={styles.style20}>
@@ -532,13 +532,13 @@ export default function CustomFieldsPage() {
                           <Plus size={14} /> Add Option
                         </button>
                       </div>
-                      {form.options.map((opt, idx) => (
+                      {form.options.map((opt: any, idx: any) => (
                         <div key={idx} className={styles.style23}>
                           <input
                             style={inputStyle}
                             placeholder="Value"
                             value={opt.value}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateOption(idx, "value", e.target.value)
                             }
                           />
@@ -546,14 +546,14 @@ export default function CustomFieldsPage() {
                             style={inputStyle}
                             placeholder="Label"
                             value={opt.label}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateOption(idx, "label", e.target.value)
                             }
                           />
                           <input
                             type="color"
                             value={opt.color}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateOption(idx, "color", e.target.value)
                             }
                             className={styles.style24}

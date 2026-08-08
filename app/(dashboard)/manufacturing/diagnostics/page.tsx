@@ -137,8 +137,8 @@ export default function MESDiagnosticsPage() {
     setIsSimulating(true);
     let runCount = 0;
     const interval = setInterval(() => {
-      setSensors((prev) =>
-        prev.map((s) => {
+      setSensors((prev: any) =>
+        prev.map((s: any) => {
           const tempDelta = (Math.random() - 0.4) * 5;
           const vibDelta = (Math.random() - 0.4) * 0.4;
           const nextTemp = Math.round((s.temperature + tempDelta) * 10) / 10;
@@ -155,12 +155,12 @@ export default function MESDiagnosticsPage() {
       );
 
       const logMsg = `IoT Diagnostic check ${++runCount}: CNC Temp: ${(Math.random() * 5 + 60).toFixed(1)}°C, Vibration within safe limits.`;
-      setSimLog((prev) => [logMsg, ...prev.slice(0, 4)]);
+      setSimLog((prev: any) => [logMsg, ...prev.slice(0, 4)]);
 
       if (runCount >= 5) {
         clearInterval(interval);
         setIsSimulating(false);
-        setSimLog((prev) => [
+        setSimLog((prev: any) => [
           "IoT Simulation cycle complete. Status green.",
           ...prev,
         ]);
@@ -241,7 +241,7 @@ export default function MESDiagnosticsPage() {
                     type="text"
                     placeholder="Enter Lot Number to trace (e.g. LOT-CHASSIS-CNC-2026)..."
                     value={searchLot}
-                    onChange={(e) => setSearchLot(e.target.value)}
+                    onChange={(e: any) => setSearchLot(e.target.value)}
                     className={styles.p17}
                   />
                   <button
@@ -268,7 +268,7 @@ export default function MESDiagnosticsPage() {
                             {genealogy.upstream.workOrderNumber} (Yield:{" "}
                             {genealogy.upstream.quantityProduced} units)
                           </div>
-                          {genealogy.upstream.components.map((c, i) => (
+                          {genealogy.upstream.components.map((c: any, i: any) => (
                             <div key={i} className={styles.p24}>
                               <span>
                                 {c.productName} ({c.sku})
@@ -295,7 +295,7 @@ export default function MESDiagnosticsPage() {
                       {genealogy.downstream &&
                       genealogy.downstream.length > 0 ? (
                         <div className={styles.p28}>
-                          {genealogy.downstream.map((d, i) => (
+                          {genealogy.downstream.map((d: any, i: any) => (
                             <div key={i} className={styles.p29}>
                               <div className={styles.p30}>
                                 <span>Assembly: {d.finishedProductName}</span>
@@ -339,7 +339,7 @@ export default function MESDiagnosticsPage() {
                 </div>
 
                 <div className="ui-stack-3">
-                  {sensors.map((sens, index) => (
+                  {sensors.map((sens: any, index: any) => (
                     <div key={index} className={styles.p34}>
                       <p className={styles.p35}>{sens.machineName}</p>
                       <div>
@@ -385,7 +385,7 @@ export default function MESDiagnosticsPage() {
                 <div className={styles.p39}>
                   <p className={styles.p40}>Diagnostics Telemetry Logs</p>
                   <div className="ui-stack-1">
-                    {simLog.map((log, index) => (
+                    {simLog.map((log: any, index: any) => (
                       <p key={index} className={styles.p41}>
                         &gt; {log}
                       </p>

@@ -47,7 +47,7 @@ export default function SandboxesTab() {
       </div>
 
       <div className={styles.s3}>
-        {sandboxes.map((sb) => (
+        {sandboxes.map((sb: any) => (
           <div
             key={sb.id}
             style={{ opacity: sb.status === "EXPIRED" ? 0.6 : 1 }}

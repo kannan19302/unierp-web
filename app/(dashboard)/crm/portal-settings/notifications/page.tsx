@@ -81,7 +81,7 @@ export default function PortalNotificationsPage() {
           className="ui-input"
           placeholder="Customer ID..."
           value={customerId}
-          onChange={(e) => setCustomerId(e.target.value)}
+          onChange={(e: any) => setCustomerId(e.target.value)}
         />
       </div>
       {loading ? (
@@ -96,7 +96,7 @@ export default function PortalNotificationsPage() {
                   : "Enter a Customer ID to view notifications"}
               </p>
             ) : (
-              notifications.map((n) => (
+              notifications.map((n: any) => (
                 <div
                   key={n.id}
                   className="ui-flex ui-items-start ui-gap-3 ui-py-2 ui-border-b"

@@ -276,7 +276,7 @@ export default function DeveloperPortalPage() {
         )}
 
         <div className="ui-tabs">
-          {(["apps", "review"] as const).map((t) => (
+          {(["apps", "review"] as const).map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -309,7 +309,7 @@ export default function DeveloperPortalPage() {
                 </div>
               )}
 
-              {apps.map((app) => (
+              {apps.map((app: any) => (
                 <div key={app.id} className={styles.appCard}>
                   <div className={styles.appHeader}>
                     <div>
@@ -341,7 +341,7 @@ export default function DeveloperPortalPage() {
                     </Button>
                   </div>
                   <div className={styles.bundleList}>
-                    {app.bundles.map((b) => (
+                    {app.bundles.map((b: any) => (
                       <div key={b.id} className={styles.bundleRow}>
                         <span className="ui-font-semibold">v{b.version}</span>
                         <Badge variant={statusBadgeVariant(b.status)}>
@@ -383,7 +383,7 @@ export default function DeveloperPortalPage() {
                   <p>No bundles awaiting review.</p>
                 </div>
               )}
-              {pending.map((b) => (
+              {pending.map((b: any) => (
                 <div key={b.id} className={styles.reviewCard}>
                   <div>
                     <div className={styles.appName}>
@@ -450,8 +450,8 @@ export default function DeveloperPortalPage() {
             <Field label="Name">
               <input
                 value={newApp.name}
-                onChange={(e) =>
-                  setNewApp((s) => ({ ...s, name: e.target.value }))
+                onChange={(e: any) =>
+                  setNewApp((s: any) => ({ ...s, name: e.target.value }))
                 }
                 className="ui-input"
                 placeholder="e.g. Telehealth Visits"
@@ -460,12 +460,12 @@ export default function DeveloperPortalPage() {
             <Field label="Category">
               <select
                 value={newApp.category}
-                onChange={(e) =>
-                  setNewApp((s) => ({ ...s, category: e.target.value }))
+                onChange={(e: any) =>
+                  setNewApp((s: any) => ({ ...s, category: e.target.value }))
                 }
                 className="ui-select"
               >
-                {CATEGORIES.map((c) => (
+                {CATEGORIES.map((c: any) => (
                   <option key={c}>{c}</option>
                 ))}
               </select>
@@ -473,8 +473,8 @@ export default function DeveloperPortalPage() {
             <Field label="Short description">
               <textarea
                 value={newApp.description}
-                onChange={(e) =>
-                  setNewApp((s) => ({ ...s, description: e.target.value }))
+                onChange={(e: any) =>
+                  setNewApp((s: any) => ({ ...s, description: e.target.value }))
                 }
                 className="ui-textarea"
               />
@@ -510,14 +510,14 @@ export default function DeveloperPortalPage() {
             </p>
             <textarea
               value={manifestText}
-              onChange={(e) => setManifestText(e.target.value)}
+              onChange={(e: any) => setManifestText(e.target.value)}
               spellCheck={false}
               className={styles.manifestEditor}
             />
             <Field label="Changelog (optional)">
               <input
                 value={changelog}
-                onChange={(e) => setChangelog(e.target.value)}
+                onChange={(e: any) => setChangelog(e.target.value)}
                 className="ui-input"
                 placeholder="What changed in this version"
               />

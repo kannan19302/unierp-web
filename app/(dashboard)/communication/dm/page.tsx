@@ -73,7 +73,7 @@ export default function DirectMessagesPage() {
           <div className={styles.s1}>
             {row.name
               .split(" ")
-              .map((n) => n[0])
+              .map((n: any) => n[0])
               .join("")}
           </div>
           <div>
@@ -172,7 +172,7 @@ export default function DirectMessagesPage() {
               }
             >
               <option value="">Select a user...</option>
-              {members.map((m) => (
+              {members.map((m: any) => (
                 <option key={m.id} value={m.id}>
                   {m.name} ({m.presence.toLowerCase()})
                 </option>

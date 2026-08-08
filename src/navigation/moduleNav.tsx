@@ -127,7 +127,7 @@ function readNavContext(): {
 /** Converts a framework-agnostic descriptor `NavItem` (string icon name) into
  * the `SidebarItem` shape the sidebar renderer expects (icon component). */
 function toSidebarItems(items: DescriptorNavItem[]): SidebarItem[] {
-  return items.map((item) => ({
+  return items.map((item: any) => ({
     name: item.label,
     href: item.href,
     icon: item.icon ? resolveIcon(item.icon) : undefined,

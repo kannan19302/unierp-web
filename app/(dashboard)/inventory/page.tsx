@@ -104,7 +104,7 @@ export default function InventoryPage() {
       );
       whMap[whName] = (whMap[whName] || 0) + Number(sl.currentQty || 0);
     });
-    return Object.entries(whMap).map(([name, quantity]) => ({
+    return Object.entries(whMap).map(([name, quantity]: any) => ({
       name,
       quantity,
     }));
@@ -134,7 +134,7 @@ export default function InventoryPage() {
       const type = String(e.type || "Unknown");
       typeCounts[type] = (typeCounts[type] || 0) + 1;
     });
-    return Object.entries(typeCounts).map(([name, value]) => ({ name, value }));
+    return Object.entries(typeCounts).map(([name, value]: any) => ({ name, value }));
   }, [stockEntries]);
 
   const handleCreateProduct = async (e: React.FormEvent) => {
@@ -208,7 +208,7 @@ export default function InventoryPage() {
     {
       key: "reorderPoint",
       header: "Reorder Point",
-      render: (v, row) => (
+      render: (v: any, row: any) => (
         <span
           className={
             Number((row as Record<string, unknown>).currentQty || 0) <=
@@ -452,21 +452,21 @@ export default function InventoryPage() {
                 label="Product Name"
                 required
                 value={productName}
-                onChange={(e) => setProductName(e.target.value)}
+                onChange={(e: any) => setProductName(e.target.value)}
               />
               <div className="ui-grid-2 ui-gap-3">
                 <TextField
                   label="SKU"
                   required
                   value={sku}
-                  onChange={(e) => setSku(e.target.value)}
+                  onChange={(e: any) => setSku(e.target.value)}
                 />
                 <FormField label="Sell Price">
                   <Input
                     type="number"
                     step="0.01"
                     value={sellPrice}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setSellPrice(parseFloat(e.target.value) || 0)
                     }
                   />
@@ -475,7 +475,7 @@ export default function InventoryPage() {
               <TextField
                 label="Category"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e: any) => setCategory(e.target.value)}
               />
             </form>
           )}

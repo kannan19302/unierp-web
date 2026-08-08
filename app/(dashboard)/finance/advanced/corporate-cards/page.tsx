@@ -94,7 +94,7 @@ export default function CorporateCardsPage() {
               </p>
               <p className="ui-text-xs-muted">
                 Across{" "}
-                {new Set(cards.map((c) => c.departmentId).filter(Boolean)).size}{" "}
+                {new Set(cards.map((c: any) => c.departmentId).filter(Boolean)).size}{" "}
                 departments
               </p>
             </div>
@@ -108,7 +108,7 @@ export default function CorporateCardsPage() {
               >
                 $
                 {cards
-                  .reduce((acc, c) => acc + Number(c.monthlyLimit || 0), 0)
+                  .reduce((acc: any, c: any) => acc + Number(c.monthlyLimit || 0), 0)
                   .toLocaleString()}
               </p>
               <p className="ui-text-xs-muted">Card limit policy active</p>
@@ -123,7 +123,7 @@ export default function CorporateCardsPage() {
               >
                 $
                 {cards
-                  .reduce((acc, c) => acc + Number(c.currentSpend || 0), 0)
+                  .reduce((acc: any, c: any) => acc + Number(c.currentSpend || 0), 0)
                   .toLocaleString()}
               </p>
               <p className="ui-text-xs-muted">Auto-synced with bank feeds</p>

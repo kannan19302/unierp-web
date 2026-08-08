@@ -25,7 +25,7 @@ export default function JournalEntriesPage() {
 
         <ListView
           resource={journalResource}
-          onRowClick={(row) =>
+          onRowClick={(row: any) =>
             router.push(`/finance/advanced/journal-entries/${row.id}`)
           }
           onCreate={() => setShowCreate(true)}

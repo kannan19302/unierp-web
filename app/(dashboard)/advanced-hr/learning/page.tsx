@@ -81,7 +81,7 @@ export default function AdvancedHrLearningPage() {
             type="text"
             placeholder="New learning path name..."
             value={pathName}
-            onChange={(e) => setPathName(e.target.value)}
+            onChange={(e: any) => setPathName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",
@@ -108,7 +108,7 @@ export default function AdvancedHrLearningPage() {
             </p>
           </Card>
         ) : (
-          paths.map((p) => (
+          paths.map((p: any) => (
             <Card key={p.id} style={{ padding: "20px" }}>
               <div
                 style={{

@@ -86,7 +86,7 @@ export default function EInvoicingPage() {
   };
 
   const docFor = (invoiceId: string) =>
-    docs.filter((d) => d.invoiceId === invoiceId);
+    docs.filter((d: any) => d.invoiceId === invoiceId);
   const money = (v: number | string) =>
     Number(v).toLocaleString(undefined, {
       minimumFractionDigits: 2,
@@ -116,10 +116,10 @@ export default function EInvoicingPage() {
               <label className={styles.s3}>Format</label>
               <select
                 value={format}
-                onChange={(e) => setFormat(e.target.value)}
+                onChange={(e: any) => setFormat(e.target.value)}
                 className={`h-10 w-44 border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring ${styles.s4}`}
               >
-                {FORMATS.map((f) => (
+                {FORMATS.map((f: any) => (
                   <option key={f} value={f}>
                     {f === "GST_IRN" ? "India GST (IRN)" : f}
                   </option>
@@ -154,7 +154,7 @@ export default function EInvoicingPage() {
                 {
                   key: "customer",
                   header: "Customer",
-                  render: (_v, row) => {
+                  render: (_v: any, row: any) => {
                     const inv = row as unknown as Invoice;
                     return (
                       <span>
@@ -177,7 +177,7 @@ export default function EInvoicingPage() {
                 {
                   key: "totalAmount",
                   header: "Total",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span className={styles.s8}>
                       {(row as unknown as Invoice).currency}{" "}
                       {money(v as number | string)}
@@ -189,7 +189,7 @@ export default function EInvoicingPage() {
                   header: "E-Invoices",
                   render: (v: any) => (
                     <div className={styles.s9}>
-                      {docFor(v as string).map((d) => (
+                      {docFor(v as string).map((d: any) => (
                         <button
                           key={d.id}
                           onClick={() => setViewDoc(d)}
@@ -207,7 +207,7 @@ export default function EInvoicingPage() {
                 {
                   key: "id",
                   header: "Action",
-                  render: (v, row) => {
+                  render: (v: any, row: any) => {
                     const inv = row as unknown as Invoice;
                     return (
                       <div className="text-right">
@@ -250,7 +250,7 @@ export default function EInvoicingPage() {
         {/* Document viewer */}
         {viewDoc && (
           <div className={styles.s11} onClick={() => setViewDoc(null)}>
-            <div className={styles.s12} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.s12} onClick={(e: any) => e.stopPropagation()}>
               <div className={styles.s13}>
                 <div className="ui-hstack-2">
                   <ShieldCheck className={styles.s14} />

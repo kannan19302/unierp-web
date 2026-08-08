@@ -293,7 +293,7 @@ export default function YardManagementPage() {
         )}
 
         <div className="flex gap-2 border-b mb-6 flex-wrap">
-          {tabs.map((t) => (
+          {tabs.map((t: any) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -331,7 +331,7 @@ export default function YardManagementPage() {
                   value: dashboard.yardTrailers,
                   sub: `${dashboard.pendingMoves} pending moves`,
                 },
-              ].map((c) => (
+              ].map((c: any) => (
                 <div key={c.label} className="bg-white border rounded-lg p-4">
                   <div className="text-2xl font-bold">{c.value}</div>
                   <div className="text-sm text-gray-700 mt-0.5">{c.label}</div>
@@ -368,7 +368,7 @@ export default function YardManagementPage() {
                     value: dashboard.appointments.total,
                     color: "bg-gray-50 text-gray-700",
                   },
-                ].map((s) => (
+                ].map((s: any) => (
                   <div
                     key={s.label}
                     className={`rounded-lg p-3 text-center ${s.color}`}
@@ -402,8 +402,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Warehouse ID*"
                     value={doorForm.warehouseId}
-                    onChange={(e) =>
-                      setDoorForm((f) => ({
+                    onChange={(e: any) =>
+                      setDoorForm((f: any) => ({
                         ...f,
                         warehouseId: e.target.value,
                       }))
@@ -413,8 +413,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Door Number*"
                     value={doorForm.doorNumber}
-                    onChange={(e) =>
-                      setDoorForm((f) => ({
+                    onChange={(e: any) =>
+                      setDoorForm((f: any) => ({
                         ...f,
                         doorNumber: e.target.value,
                       }))
@@ -423,20 +423,20 @@ export default function YardManagementPage() {
                   />
                   <select
                     value={doorForm.doorType}
-                    onChange={(e) =>
-                      setDoorForm((f) => ({ ...f, doorType: e.target.value }))
+                    onChange={(e: any) =>
+                      setDoorForm((f: any) => ({ ...f, doorType: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   >
-                    {["INBOUND", "OUTBOUND", "DUAL"].map((t) => (
+                    {["INBOUND", "OUTBOUND", "DUAL"].map((t: any) => (
                       <option key={t}>{t}</option>
                     ))}
                   </select>
                   <input
                     placeholder="Notes"
                     value={doorForm.notes}
-                    onChange={(e) =>
-                      setDoorForm((f) => ({ ...f, notes: e.target.value }))
+                    onChange={(e: any) =>
+                      setDoorForm((f: any) => ({ ...f, notes: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
@@ -462,7 +462,7 @@ export default function YardManagementPage() {
               <div className="text-gray-500">Loading...</div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {doors.map((d) => (
+                {doors.map((d: any) => (
                   <div key={d.id} className="border rounded-lg p-4">
                     <div className="flex justify-between items-start">
                       <div>
@@ -519,8 +519,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Warehouse ID*"
                     value={apptForm.warehouseId}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         warehouseId: e.target.value,
                       }))
@@ -530,8 +530,8 @@ export default function YardManagementPage() {
                   <input
                     type="datetime-local"
                     value={apptForm.scheduledAt}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         scheduledAt: e.target.value,
                       }))
@@ -540,23 +540,23 @@ export default function YardManagementPage() {
                   />
                   <select
                     value={apptForm.appointmentType}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         appointmentType: e.target.value,
                       }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   >
-                    {["INBOUND", "OUTBOUND"].map((t) => (
+                    {["INBOUND", "OUTBOUND"].map((t: any) => (
                       <option key={t}>{t}</option>
                     ))}
                   </select>
                   <input
                     placeholder="Carrier Name"
                     value={apptForm.carrierName}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         carrierName: e.target.value,
                       }))
@@ -566,8 +566,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Driver Name"
                     value={apptForm.driverName}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         driverName: e.target.value,
                       }))
@@ -577,8 +577,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Truck Plate"
                     value={apptForm.truckPlate}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         truckPlate: e.target.value,
                       }))
@@ -588,8 +588,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Trailer #"
                     value={apptForm.trailerNumber}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         trailerNumber: e.target.value,
                       }))
@@ -599,8 +599,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Reference # (PO/SO/TO)"
                     value={apptForm.referenceNumber}
-                    onChange={(e) =>
-                      setApptForm((f) => ({
+                    onChange={(e: any) =>
+                      setApptForm((f: any) => ({
                         ...f,
                         referenceNumber: e.target.value,
                       }))
@@ -689,7 +689,7 @@ export default function YardManagementPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <div className={styles.s1}>
                         {row.status === "SCHEDULED" && (
                           <>
@@ -778,8 +778,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Warehouse ID*"
                     value={moveForm.warehouseId}
-                    onChange={(e) =>
-                      setMoveForm((f) => ({
+                    onChange={(e: any) =>
+                      setMoveForm((f: any) => ({
                         ...f,
                         warehouseId: e.target.value,
                       }))
@@ -789,8 +789,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Trailer #*"
                     value={moveForm.trailerNumber}
-                    onChange={(e) =>
-                      setMoveForm((f) => ({
+                    onChange={(e: any) =>
+                      setMoveForm((f: any) => ({
                         ...f,
                         trailerNumber: e.target.value,
                       }))
@@ -800,8 +800,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="From Location*"
                     value={moveForm.fromLocation}
-                    onChange={(e) =>
-                      setMoveForm((f) => ({
+                    onChange={(e: any) =>
+                      setMoveForm((f: any) => ({
                         ...f,
                         fromLocation: e.target.value,
                       }))
@@ -811,8 +811,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="To Location*"
                     value={moveForm.toLocation}
-                    onChange={(e) =>
-                      setMoveForm((f) => ({
+                    onChange={(e: any) =>
+                      setMoveForm((f: any) => ({
                         ...f,
                         toLocation: e.target.value,
                       }))
@@ -822,8 +822,8 @@ export default function YardManagementPage() {
                   <input
                     placeholder="Assigned To"
                     value={moveForm.assignedTo}
-                    onChange={(e) =>
-                      setMoveForm((f) => ({
+                    onChange={(e: any) =>
+                      setMoveForm((f: any) => ({
                         ...f,
                         assignedTo: e.target.value,
                       }))
@@ -852,7 +852,7 @@ export default function YardManagementPage() {
               <div className="text-gray-500">Loading...</div>
             ) : (
               <div className="space-y-3">
-                {moves.map((m) => (
+                {moves.map((m: any) => (
                   <div
                     key={m.id}
                     className="border rounded-lg p-4 flex justify-between items-center"
@@ -938,7 +938,7 @@ export default function YardManagementPage() {
                   {
                     key: "qty",
                     header: "Qty",
-                    render: (v, row) => (v ? `${v} ${row.uom ?? ""}` : "-"),
+                    render: (v: any, row: any) => (v ? `${v} ${row.uom ?? ""}` : "-"),
                   },
                   {
                     key: "arrivedAt",

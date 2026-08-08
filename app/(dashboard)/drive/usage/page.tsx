@@ -37,8 +37,8 @@ export default function UsagePage() {
   useEffect(() => {
     client
       .get<StorageUsage>("/drive/usage")
-      .then((res) => setUsage(res as any))
-      .catch((e) =>
+      .then((res: any) => setUsage(res as any))
+      .catch((e: any) =>
         toast({
           title: "Failed to load usage data",
           description: e.message,
@@ -58,7 +58,7 @@ export default function UsagePage() {
       : 0;
 
   const breakdownItems = Object.entries(usage.typeBreakdown).map(
-    ([type, size]) => ({
+    ([type, size]: any) => ({
       type,
       size: size as number,
       formatted: formatBytes(size as number),

@@ -63,7 +63,7 @@ export default function ReportDetailPage() {
 
   const resultCols: Column<any>[] =
     result?.data && result.data.length > 0
-      ? Object.keys(result.data[0]).map((k) => ({ key: k, header: k }))
+      ? Object.keys(result.data[0]).map((k: any) => ({ key: k, header: k }))
       : [];
 
   return (

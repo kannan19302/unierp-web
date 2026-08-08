@@ -70,7 +70,7 @@ const makeRmaColumns = (
   {
     key: "vendor",
     header: "Vendor",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as RmaRequest;
       return r.vendor.name;
     },
@@ -83,7 +83,7 @@ const makeRmaColumns = (
   {
     key: "reasonCode",
     header: "Reason",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as RmaRequest;
       return r.reasonCode?.name ?? "—";
     },
@@ -91,7 +91,7 @@ const makeRmaColumns = (
   {
     key: "_count",
     header: "Shipments",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as RmaRequest;
       return String(r._count?.shipments ?? 0);
     },
@@ -108,7 +108,7 @@ const makeRmaColumns = (
   {
     key: "id",
     header: "",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as RmaRequest;
       return (
         <div className={styles.s2}>
@@ -179,7 +179,7 @@ const makeShipmentColumns = (
   {
     key: "rmaRequest",
     header: "RMA #",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const s = row as unknown as ReturnShipment;
       return <span className={styles.s1}>{s.rmaRequest.rmaNumber}</span>;
     },
@@ -187,7 +187,7 @@ const makeShipmentColumns = (
   {
     key: "warehouse",
     header: "Warehouse",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const s = row as unknown as ReturnShipment;
       return s.warehouse.name;
     },
@@ -195,7 +195,7 @@ const makeShipmentColumns = (
   {
     key: "carrier",
     header: "Carrier / Tracking",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const s = row as unknown as ReturnShipment;
       return `${s.carrier ?? "—"}${s.trackingNumber ? ` / ${s.trackingNumber}` : ""}`;
     },
@@ -203,7 +203,7 @@ const makeShipmentColumns = (
   {
     key: "creditMemoRef",
     header: "Credit Memo",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const s = row as unknown as ReturnShipment;
       return s.creditMemoRef
         ? `${s.creditMemoRef} ($${Number(s.creditAmount).toFixed(2)})`
@@ -222,7 +222,7 @@ const makeShipmentColumns = (
   {
     key: "id",
     header: "",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const s = row as unknown as ReturnShipment;
       return (
         <div className={styles.s2}>
@@ -321,7 +321,7 @@ export default function RtvPage() {
     loadData();
     client
       .get<unknown>("/procurement/vendors")
-      .then((d) =>
+      .then((d: any) =>
         setVendors(
           Array.isArray(d) ? (d as Array<{ id: string; name: string }>) : [],
         ),
@@ -473,7 +473,7 @@ export default function RtvPage() {
                       type="text"
                       className="ui-input"
                       value={purchaseReturnId}
-                      onChange={(e) => setPurchaseReturnId(e.target.value)}
+                      onChange={(e: any) => setPurchaseReturnId(e.target.value)}
                       required
                       placeholder="PR-xxx"
                     />
@@ -483,11 +483,11 @@ export default function RtvPage() {
                     <select
                       className="ui-input"
                       value={vendorId}
-                      onChange={(e) => setVendorId(e.target.value)}
+                      onChange={(e: any) => setVendorId(e.target.value)}
                       required
                     >
                       <option value="">Select vendor...</option>
-                      {vendors.map((v) => (
+                      {vendors.map((v: any) => (
                         <option key={v.id} value={v.id}>
                           {v.name}
                         </option>
@@ -499,7 +499,7 @@ export default function RtvPage() {
                     <textarea
                       className={`ui-input ${styles.s9}`}
                       value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
+                      onChange={(e: any) => setNotes(e.target.value)}
                       rows={3}
                     />
                   </div>

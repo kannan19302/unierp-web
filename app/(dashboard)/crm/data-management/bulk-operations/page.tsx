@@ -52,7 +52,7 @@ export default function BulkOperationsPage() {
       entityType: form.entityType,
       targetIds: form.targetIds
         .split(",")
-        .map((s) => s.trim())
+        .map((s: any) => s.trim())
         .filter(Boolean),
       parameters: JSON.parse(form.parameters || "{}"),
     });
@@ -109,7 +109,7 @@ export default function BulkOperationsPage() {
               <select
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 value={form.operationType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, operationType: e.target.value })
                 }
               >
@@ -127,7 +127,7 @@ export default function BulkOperationsPage() {
               <select
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 value={form.entityType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, entityType: e.target.value })
                 }
               >
@@ -144,7 +144,7 @@ export default function BulkOperationsPage() {
               <input
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 value={form.targetIds}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, targetIds: e.target.value })
                 }
                 placeholder="id-1, id-2, id-3"
@@ -157,7 +157,7 @@ export default function BulkOperationsPage() {
               <input
                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                 value={form.parameters}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, parameters: e.target.value })
                 }
                 placeholder='{"newStatus":"CONTACTED"}'

@@ -29,7 +29,7 @@ function MarketingOutreachHubContent() {
   const handleChange = (key: string) => {
     if (!isTabKey(key)) return;
     setActiveTab(key);
-    setVisited((prev) => {
+    setVisited((prev: any) => {
       if (prev.has(key)) return prev;
       const next = new Set(prev);
       next.add(key);

@@ -55,7 +55,7 @@ export default function POSPromotionsPage() {
               desc: "Fixed dollar amount discount on qualifying purchases",
               type: "FIXED",
             },
-          ].map((p, i) => (
+          ].map((p: any, i: any) => (
             <div key={i} className={styles.p3}>
               <div className={styles.p4}>{p.name}</div>
               <div className="ui-text-caption">{p.desc}</div>

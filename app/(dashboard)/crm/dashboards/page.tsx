@@ -186,26 +186,26 @@ export default function DashboardsPage() {
           </Card>
           <Card className={styles.summaryCard}>
             <div className={styles.s2}>
-              {dashboards.filter((d) => d.isShared).length}
+              {dashboards.filter((d: any) => d.isShared).length}
             </div>
             <div className={styles.summaryLabel}>Shared</div>
           </Card>
           <Card className={styles.summaryCard}>
             <div className={styles.s3}>
-              {dashboards.reduce((sum, d) => sum + d.widgetCount, 0)}
+              {dashboards.reduce((sum: any, d: any) => sum + d.widgetCount, 0)}
             </div>
             <div className={styles.summaryLabel}>Total Widgets</div>
           </Card>
           <Card className={styles.summaryCard}>
             <div className={styles.s4}>
-              {dashboards.filter((d) => !d.isShared).length}
+              {dashboards.filter((d: any) => !d.isShared).length}
             </div>
             <div className={styles.summaryLabel}>Private</div>
           </Card>
         </div>
 
         <div className={styles.dashboardGrid}>
-          {dashboards.map((db) => (
+          {dashboards.map((db: any) => (
             <Card
               key={db.id}
               className={styles.dashboardCard}
@@ -248,7 +248,7 @@ export default function DashboardsPage() {
                   Created {new Date(db.createdAt).toLocaleDateString()}
                 </span>
                 <button
-                  onClick={(e) => {
+                  onClick={(e: any) => {
                     e.stopPropagation();
                     handleClone(db);
                   }}
@@ -295,7 +295,7 @@ export default function DashboardsPage() {
                 <label className={styles.s18}>Name *</label>
                 <input
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g. Sales Overview"
                   style={inputStyle}
                 />
@@ -305,7 +305,7 @@ export default function DashboardsPage() {
                 <label className={styles.s18}>Description</label>
                 <textarea
                   value={form.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, description: e.target.value })
                   }
                   placeholder="What is this dashboard for..."
@@ -319,7 +319,7 @@ export default function DashboardsPage() {
                 <input
                   type="checkbox"
                   checked={form.isShared}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, isShared: e.target.checked })
                   }
                 />

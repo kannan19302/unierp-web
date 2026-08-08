@@ -126,8 +126,8 @@ export default function RecurringInvoicesPage() {
     }
   };
 
-  const activeCount = schedules.filter((s) => s.status === "ACTIVE").length;
-  const pausedCount = schedules.filter((s) => s.status === "PAUSED").length;
+  const activeCount = schedules.filter((s: any) => s.status === "ACTIVE").length;
+  const pausedCount = schedules.filter((s: any) => s.status === "PAUSED").length;
 
   const columns: Column<RecurringSchedule>[] = [
     {
@@ -291,7 +291,7 @@ export default function RecurringInvoicesPage() {
               label="Customer Name"
               placeholder="Acme Corp"
               value={form.customerName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, customerName: e.target.value })
               }
             />
@@ -299,7 +299,7 @@ export default function RecurringInvoicesPage() {
               label="Description"
               placeholder="Monthly retainer"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
             />
@@ -307,7 +307,7 @@ export default function RecurringInvoicesPage() {
               <FormField label="Frequency" required>
                 <Select
                   value={form.frequency}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, frequency: e.target.value })
                   }
                 >
@@ -323,7 +323,7 @@ export default function RecurringInvoicesPage() {
                 type="date"
                 required
                 value={form.nextRunDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, nextRunDate: e.target.value })
                 }
               />
@@ -335,7 +335,7 @@ export default function RecurringInvoicesPage() {
               step={0.01}
               placeholder="1000.00"
               value={form.amount || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, amount: parseFloat(e.target.value) || 0 })
               }
             />

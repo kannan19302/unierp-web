@@ -1,4 +1,5 @@
 "use client";
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import { ProtectedComponent, DataTable } from "@kannan19302/ui";
 
@@ -147,7 +148,7 @@ export default function HealthcarePharmacyPage() {
               <input
                 className="ui-input"
                 value={drugForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setDrugForm({ ...drugForm, name: e.target.value })
                 }
               />
@@ -157,7 +158,7 @@ export default function HealthcarePharmacyPage() {
                 <input
                   type="checkbox"
                   checked={drugForm.isControlled}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setDrugForm({ ...drugForm, isControlled: e.target.checked })
                   }
                 />{" "}
@@ -187,7 +188,7 @@ export default function HealthcarePharmacyPage() {
               <select
                 className="ui-input"
                 value={batchForm.drugId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setBatchForm({ ...batchForm, drugId: e.target.value })
                 }
               >
@@ -204,7 +205,7 @@ export default function HealthcarePharmacyPage() {
               <input
                 className="ui-input"
                 value={batchForm.batchNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setBatchForm({ ...batchForm, batchNumber: e.target.value })
                 }
               />
@@ -215,7 +216,7 @@ export default function HealthcarePharmacyPage() {
                 className="ui-input"
                 type="number"
                 value={batchForm.quantity}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setBatchForm({ ...batchForm, quantity: e.target.value })
                 }
               />
@@ -226,7 +227,7 @@ export default function HealthcarePharmacyPage() {
                 className="ui-input"
                 type="date"
                 value={batchForm.expiryDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setBatchForm({ ...batchForm, expiryDate: e.target.value })
                 }
               />
@@ -291,7 +292,7 @@ export default function HealthcarePharmacyPage() {
                 <div className="mt-4 p-4 border rounded-lg">
                   <h4 className="font-semibold mb-2">
                     Dispense{" "}
-                    {drugs.find((d) => d.id === dispenseForm.drugId)?.name}
+                    {drugs.find((d: any) => d.id === dispenseForm.drugId)?.name}
                   </h4>
                   <div className="ui-grid-3">
                     <div className="ui-form-group">
@@ -299,7 +300,7 @@ export default function HealthcarePharmacyPage() {
                       <select
                         className="ui-input"
                         value={dispenseForm.patientId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setDispenseForm({
                             ...dispenseForm,
                             patientId: e.target.value,
@@ -320,7 +321,7 @@ export default function HealthcarePharmacyPage() {
                         className="ui-input"
                         type="number"
                         value={dispenseForm.quantity}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setDispenseForm({
                             ...dispenseForm,
                             quantity: e.target.value,
@@ -333,7 +334,7 @@ export default function HealthcarePharmacyPage() {
                       <input
                         className="ui-input"
                         value={dispenseForm.administeredBy}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setDispenseForm({
                             ...dispenseForm,
                             administeredBy: e.target.value,

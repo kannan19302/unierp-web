@@ -141,11 +141,11 @@ export default function RecordTypesPage() {
     setSubmitting(true);
     try {
       const created = await client.post<any>("/crm/record-types", form);
-      setRecordTypes((prev) => [...prev, created]);
+      setRecordTypes((prev: any) => [...prev, created]);
       setShowModal(false);
       setForm(emptyForm(activeEntity));
     } catch {
-      setRecordTypes((prev) => [
+      setRecordTypes((prev: any) => [
         ...prev,
         {
           ...form,
@@ -167,7 +167,7 @@ export default function RecordTypesPage() {
     } catch {
       /* proceed */
     }
-    setRecordTypes((prev) => prev.filter((r) => r.id !== id));
+    setRecordTypes((prev: any) => prev.filter((r: any) => r.id !== id));
     setDeleteConfirm(null);
   };
 
@@ -181,7 +181,7 @@ export default function RecordTypesPage() {
     setShowModal(true);
   };
 
-  const filtered = recordTypes.filter((r) => {
+  const filtered = recordTypes.filter((r: any) => {
     const matchesEntity = r.entity === activeEntity;
     const matchesSearch =
       !searchQuery || r.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -189,8 +189,8 @@ export default function RecordTypesPage() {
   });
 
   const entityCounts = ENTITIES.reduce(
-    (acc, e) => {
-      acc[e] = recordTypes.filter((r) => r.entity === e).length;
+    (acc: any, e: any) => {
+      acc[e] = recordTypes.filter((r: any) => r.entity === e).length;
       return acc;
     },
     {} as Record<string, number>,
@@ -236,7 +236,7 @@ export default function RecordTypesPage() {
         />
 
         <div className={styles.style2}>
-          {ENTITIES.map((e) => (
+          {ENTITIES.map((e: any) => (
             <button
               key={e}
               onClick={() => setActiveEntity(e)}
@@ -276,7 +276,7 @@ export default function RecordTypesPage() {
                 className={styles.s3}
                 placeholder="Search record types..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e: any) => setSearchQuery(e.target.value)}
               />
             </div>
           </div>
@@ -302,7 +302,7 @@ export default function RecordTypesPage() {
           </Card>
         ) : (
           <div className={styles.style8}>
-            {filtered.map((rt) => (
+            {filtered.map((rt: any) => (
               <Card key={rt.id}>
                 <div className="p-5">
                   <div className={styles.style9}>
@@ -381,8 +381,8 @@ export default function RecordTypesPage() {
                     <input
                       style={inputStyle}
                       value={form.name}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, name: e.target.value }))
+                      onChange={(e: any) =>
+                        setForm((p: any) => ({ ...p, name: e.target.value }))
                       }
                       required
                       placeholder="e.g. Enterprise Customer"
@@ -394,8 +394,8 @@ export default function RecordTypesPage() {
                       style={{ ...inputStyle }}
                       className={styles.s5}
                       value={form.description}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, description: e.target.value }))
+                      onChange={(e: any) =>
+                        setForm((p: any) => ({ ...p, description: e.target.value }))
                       }
                       placeholder="Describe the purpose of this record type..."
                     />
@@ -405,8 +405,8 @@ export default function RecordTypesPage() {
                       type="checkbox"
                       id="isDefault"
                       checked={form.isDefault}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, isDefault: e.target.checked }))
+                      onChange={(e: any) =>
+                        setForm((p: any) => ({ ...p, isDefault: e.target.checked }))
                       }
                     />
                     <label htmlFor="isDefault" className={styles.style28}>

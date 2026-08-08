@@ -35,7 +35,7 @@ export default function CostingPage() {
       <div className="p-6 space-y-4">
         <h1 className="text-2xl font-bold">Inventory Costing Methods</h1>
         <div className="flex gap-2 border-b flex-wrap">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -72,7 +72,7 @@ function DashboardTab() {
   ];
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-      {cards.map(([label, value]) => (
+      {cards.map(([label, value]: any) => (
         <div
           key={label as string}
           className="bg-white border rounded-lg p-4 shadow-sm"
@@ -100,7 +100,7 @@ function ProfilesTab() {
 
   const load = useCallback(() => {
     apiFetch<{ items: any[]; total: number }>("/profiles")
-      .then((r) => {
+      .then((r: any) => {
         setProfiles(r.items);
         setTotal(r.total);
       })
@@ -145,8 +145,8 @@ function ProfilesTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.productId}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, productId: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, productId: e.target.value }))
               }
               required
             />
@@ -156,8 +156,8 @@ function ProfilesTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.warehouseId}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, warehouseId: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, warehouseId: e.target.value }))
               }
               required
             />
@@ -167,11 +167,11 @@ function ProfilesTab() {
             <select
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.method}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, method: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, method: e.target.value }))
               }
             >
-              {["FIFO", "LIFO", "WAC", "STANDARD", "SPECIFIC"].map((m) => (
+              {["FIFO", "LIFO", "WAC", "STANDARD", "SPECIFIC"].map((m: any) => (
                 <option key={m}>{m}</option>
               ))}
             </select>
@@ -183,8 +183,8 @@ function ProfilesTab() {
               step="0.0001"
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.standardCost}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, standardCost: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, standardCost: e.target.value }))
               }
             />
           </div>
@@ -270,7 +270,7 @@ function CostLayersTab() {
           className="border rounded px-2 py-1 text-sm"
           placeholder="Profile ID"
           value={profileId}
-          onChange={(e) => setProfileId(e.target.value)}
+          onChange={(e: any) => setProfileId(e.target.value)}
         />
         <button
           onClick={load}
@@ -291,15 +291,15 @@ function CostLayersTab() {
               ["Qty *", "qty", "number"],
               ["Receipt Ref", "receiptRef", "text"],
             ] as const
-          ).map(([label, key, type]) => (
+          ).map(([label, key, type]: any) => (
             <div key={key}>
               <label className="text-xs text-gray-600">{label}</label>
               <input
                 type={type}
                 className="w-full border rounded px-2 py-1 text-sm"
                 value={form[key]}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, [key]: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, [key]: e.target.value }))
                 }
                 required={label.includes("*")}
               />
@@ -386,8 +386,8 @@ function ConsumeTab() {
           <input
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.profileId}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, profileId: e.target.value }))
+            onChange={(e: any) =>
+              setForm((f: any) => ({ ...f, profileId: e.target.value }))
             }
             required
           />
@@ -398,7 +398,7 @@ function ConsumeTab() {
             type="number"
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.qty}
-            onChange={(e) => setForm((f) => ({ ...f, qty: e.target.value }))}
+            onChange={(e: any) => setForm((f: any) => ({ ...f, qty: e.target.value }))}
             required
           />
         </div>
@@ -407,10 +407,10 @@ function ConsumeTab() {
           <select
             className="w-full border rounded px-2 py-1 text-sm"
             value={form.method}
-            onChange={(e) => setForm((f) => ({ ...f, method: e.target.value }))}
+            onChange={(e: any) => setForm((f: any) => ({ ...f, method: e.target.value }))}
           >
             <option value="">Use profile default</option>
-            {["FIFO", "LIFO", "WAC"].map((m) => (
+            {["FIFO", "LIFO", "WAC"].map((m: any) => (
               <option key={m}>{m}</option>
             ))}
           </select>
@@ -454,7 +454,7 @@ function AdjustmentsTab() {
 
   const load = useCallback(() => {
     apiFetch<{ items: any[]; total: number }>("/adjustments")
-      .then((r) => {
+      .then((r: any) => {
         setAdjustments(r.items);
         setTotal(r.total);
       })
@@ -495,8 +495,8 @@ function AdjustmentsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.profileId}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, profileId: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, profileId: e.target.value }))
               }
               required
             />
@@ -506,8 +506,8 @@ function AdjustmentsTab() {
             <select
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.adjustmentType}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, adjustmentType: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, adjustmentType: e.target.value }))
               }
             >
               {[
@@ -516,7 +516,7 @@ function AdjustmentsTab() {
                 "OVERHEAD_ABSORPTION",
                 "WRITE_DOWN",
                 "MANUAL",
-              ].map((t) => (
+              ].map((t: any) => (
                 <option key={t}>{t}</option>
               ))}
             </select>
@@ -528,8 +528,8 @@ function AdjustmentsTab() {
               step="0.01"
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.amount}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, amount: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, amount: e.target.value }))
               }
               required
             />
@@ -539,8 +539,8 @@ function AdjustmentsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.reason}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, reason: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, reason: e.target.value }))
               }
               required
             />
@@ -600,7 +600,7 @@ function ValuationTab() {
           className="border rounded px-2 py-1 text-sm"
           placeholder="Filter by Product ID"
           value={productId}
-          onChange={(e) => setProductId(e.target.value)}
+          onChange={(e: any) => setProductId(e.target.value)}
         />
         <button
           onClick={load}
@@ -636,7 +636,7 @@ function ValuationTab() {
             {
               key: "totalQty",
               header: "Avg Cost",
-              render: (v, row) =>
+              render: (v: any, row: any) =>
                 Number(v) > 0
                   ? (Number(row.totalValue) / Number(v)).toFixed(4)
                   : "—",

@@ -59,7 +59,7 @@ export default function FavoritesPage() {
           ),
         ]);
         setFavorites(favRes);
-        setInstalledSlugs(new Set(instRes.map((a) => a.appSlug)));
+        setInstalledSlugs(new Set(instRes.map((a: any) => a.appSlug)));
         setLoadError(null);
       } catch (e) {
         const message =
@@ -74,7 +74,7 @@ export default function FavoritesPage() {
   const removeFavorite = async (slug: string) => {
     try {
       await client.delete(`/admin/marketplace/favorites/${slug}`);
-      setFavorites((prev) => prev.filter((f) => f.app.slug !== slug));
+      setFavorites((prev: any) => prev.filter((f: any) => f.app.slug !== slug));
       setToast({ message: "Removed from favorites", type: "success" });
     } catch (e) {
       setToast({
@@ -88,7 +88,7 @@ export default function FavoritesPage() {
     setInstallingSlug(slug);
     try {
       await client.post(`/admin/marketplace/install/${slug}`);
-      setInstalledSlugs((prev) => new Set([...prev, slug]));
+      setInstalledSlugs((prev: any) => new Set([...prev, slug]));
       setToast({ message: "App installed!", type: "success" });
     } catch (e) {
       setToast({
@@ -163,7 +163,7 @@ export default function FavoritesPage() {
           </div>
         ) : (
           <div className="ui-grid-auto-lg">
-            {favorites.map(({ app }) => {
+            {favorites.map(({ app }: any) => {
               const isInstalled = installedSlugs.has(app.slug);
               const isBusy = installingSlug === app.slug;
               return (
@@ -203,7 +203,7 @@ export default function FavoritesPage() {
                     <p className={styles.description}>{app.description}</p>
                     <div className="ui-hstack-2">
                       <div className={styles.starRow}>
-                        {[1, 2, 3, 4, 5].map((s) => (
+                        {[1, 2, 3, 4, 5].map((s: any) => (
                           <Star
                             key={s}
                             size={10}

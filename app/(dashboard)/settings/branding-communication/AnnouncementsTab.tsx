@@ -134,7 +134,7 @@ export default function AnnouncementsTab() {
       await fetchAnnouncements();
     } catch {
       if (!editingId) {
-        setAnnouncements((prev) => [
+        setAnnouncements((prev: any) => [
           {
             id: `ann-${Date.now()}`,
             ...payload,
@@ -146,8 +146,8 @@ export default function AnnouncementsTab() {
           ...prev,
         ]);
       } else {
-        setAnnouncements((prev) =>
-          prev.map((a) =>
+        setAnnouncements((prev: any) =>
+          prev.map((a: any) =>
             a.id === editingId
               ? { ...a, ...payload, expiresAt: formExpires || null }
               : a,
@@ -163,7 +163,7 @@ export default function AnnouncementsTab() {
       await client.delete(`/admin/announcements/${id}`);
       await fetchAnnouncements();
     } catch {
-      setAnnouncements((prev) => prev.filter((a) => a.id !== id));
+      setAnnouncements((prev: any) => prev.filter((a: any) => a.id !== id));
     }
   };
 
@@ -214,7 +214,7 @@ export default function AnnouncementsTab() {
             No announcements yet. Create one to get started.
           </div>
         )}
-        {announcements.map((a) => (
+        {announcements.map((a: any) => (
           <div
             key={a.id}
             style={{
@@ -284,13 +284,13 @@ export default function AnnouncementsTab() {
             label="Title"
             placeholder="Announcement title"
             value={formTitle}
-            onChange={(e) => setFormTitle(e.target.value)}
+            onChange={(e: any) => setFormTitle(e.target.value)}
           />
           <FormField label="Message">
             <Textarea
               rows={3}
               value={formMessage}
-              onChange={(e) => setFormMessage(e.target.value)}
+              onChange={(e: any) => setFormMessage(e.target.value)}
               placeholder="Announcement details..."
             />
           </FormField>
@@ -298,7 +298,7 @@ export default function AnnouncementsTab() {
             <FormField label="Type">
               <Select
                 value={formType}
-                onChange={(e) => setFormType(e.target.value)}
+                onChange={(e: any) => setFormType(e.target.value)}
               >
                 <option value="info">Info</option>
                 <option value="warning">Warning</option>
@@ -308,7 +308,7 @@ export default function AnnouncementsTab() {
             <FormField label="Priority">
               <Select
                 value={formPriority}
-                onChange={(e) => setFormPriority(e.target.value)}
+                onChange={(e: any) => setFormPriority(e.target.value)}
               >
                 <option value="low">Low</option>
                 <option value="normal">Normal</option>
@@ -319,7 +319,7 @@ export default function AnnouncementsTab() {
               label="Expires"
               type="date"
               value={formExpires}
-              onChange={(e) => setFormExpires(e.target.value)}
+              onChange={(e: any) => setFormExpires(e.target.value)}
             />
           </div>
         </div>

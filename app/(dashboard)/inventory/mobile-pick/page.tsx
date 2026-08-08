@@ -56,7 +56,7 @@ export default function MobilePickPage() {
         ? (data as PickWave[])
         : ((data as { data?: PickWave[] })?.data ?? []);
       setWaves(
-        list.filter((w) => w.status === "PICKING" || w.status === "OPEN"),
+        list.filter((w: any) => w.status === "PICKING" || w.status === "OPEN"),
       );
     } catch {
       setError("Serving local mock fallback registry.");
@@ -104,7 +104,7 @@ export default function MobilePickPage() {
   }, [itemIndex, activeWave]);
 
   const pendingItems = activeWave
-    ? activeWave.items.filter((i) => i.status !== "PICKED")
+    ? activeWave.items.filter((i: any) => i.status !== "PICKED")
     : [];
   const currentItem = pendingItems[itemIndex];
   const pickedCount = activeWave
@@ -149,7 +149,7 @@ export default function MobilePickPage() {
     ) {
       // Treat as a serial scan when it doesn't match the product SKU directly.
       if (!scannedSerials.includes(code))
-        setScannedSerials((prev) => [...prev, code]);
+        setScannedSerials((prev: any) => [...prev, code]);
     }
     setScanValue("");
     setScanError(null);
@@ -231,7 +231,7 @@ export default function MobilePickPage() {
             {!loading && waves.length === 0 && (
               <Card className="p-5">No waves in PICKING status right now.</Card>
             )}
-            {waves.map((w) => (
+            {waves.map((w: any) => (
               <button
                 key={w.id}
                 className={styles.waveBtn}
@@ -322,14 +322,14 @@ export default function MobilePickPage() {
                   className={styles.scanInput}
                   placeholder="Scan SKU or serial…"
                   value={scanValue}
-                  onChange={(e) => setScanValue(e.target.value)}
+                  onChange={(e: any) => setScanValue(e.target.value)}
                   autoFocus
                 />
               </form>
 
               {scannedSerials.length > 0 && (
                 <div className={styles.serialChips}>
-                  {scannedSerials.map((s) => (
+                  {scannedSerials.map((s: any) => (
                     <span key={s} className={styles.serialChip}>
                       {s}
                     </span>

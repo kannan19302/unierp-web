@@ -32,12 +32,12 @@ export default function CustomerJourneyDashboard() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/crm/customer-journey/stages").then((r) => r.json()),
-      fetch("/api/crm/nps/summary").then((r) => r.json()),
-      fetch("/api/crm/churn-predictions").then((r) => r.json()),
-      fetch("/api/crm/clv").then((r) => r.json()),
+      fetch("/api/crm/customer-journey/stages").then((r: any) => r.json()),
+      fetch("/api/crm/nps/summary").then((r: any) => r.json()),
+      fetch("/api/crm/churn-predictions").then((r: any) => r.json()),
+      fetch("/api/crm/clv").then((r: any) => r.json()),
     ])
-      .then(([stages, nps, churn, clv]) => {
+      .then(([stages, nps, churn, clv]: any) => {
         setData({
           stagesCount: stages?.length || 0,
           eventsCount: 0,
@@ -180,7 +180,7 @@ export default function CustomerJourneyDashboard() {
                     type="text"
                     placeholder="Enter Customer ID..."
                     className="ui-input ui-flex-1"
-                    onKeyDown={(e) => {
+                    onKeyDown={(e: any) => {
                       if (e.key === "Enter") {
                         router.push(
                           `/crm/journey/customer-360/${(e.target as HTMLInputElement).value}`,

@@ -66,7 +66,7 @@ export default function MaintenancePage() {
       setCreating(false);
     }
   };
-  const totalCost = items.reduce((a, m) => a + Number(m.cost || 0), 0);
+  const totalCost = items.reduce((a: any, m: any) => a + Number(m.cost || 0), 0);
   const columns: Column<Maintenance>[] = [
     {
       key: "desc",
@@ -190,13 +190,13 @@ export default function MaintenancePage() {
               label="Property ID"
               required
               value={form.propertyId}
-              onChange={(e) => setForm({ ...form, propertyId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, propertyId: e.target.value })}
             />
             <TextField
               label="Description"
               required
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
             />
@@ -204,13 +204,13 @@ export default function MaintenancePage() {
               <TextField
                 label="Vendor ID"
                 value={form.vendorId}
-                onChange={(e) => setForm({ ...form, vendorId: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, vendorId: e.target.value })}
               />
               <TextField
                 label="Est. Cost ($)"
                 type="number"
                 value={String(form.cost)}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, cost: Number(e.target.value) })
                 }
               />

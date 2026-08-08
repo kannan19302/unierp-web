@@ -81,7 +81,7 @@ export function CommandPalette({
       router.push(href);
     };
 
-    const apps: PaletteItem[] = GLOBAL_SEARCH_ITEMS.map((item) => ({
+    const apps: PaletteItem[] = GLOBAL_SEARCH_ITEMS.map((item: any) => ({
       key: `app:${item.href}`,
       name: item.name,
       group: "Apps",
@@ -177,14 +177,14 @@ export function CommandPalette({
   const q = query.trim().toLowerCase();
   const filteredStatic = staticItems
     .filter(
-      (item) =>
+      (item: any) =>
         !q ||
         item.name.toLowerCase().includes(q) ||
         item.subtitle?.toLowerCase().includes(q),
     )
     .slice(0, q ? 10 : 12);
 
-  const recordItems: PaletteItem[] = entityHits.map((hit) => ({
+  const recordItems: PaletteItem[] = entityHits.map((hit: any) => ({
     key: `record:${hit.entity}:${hit.id}`,
     name: hit.title,
     group: hit.group,
@@ -202,8 +202,8 @@ export function CommandPalette({
     group: string;
     items: Array<{ item: PaletteItem; idx: number }>;
   }> = [];
-  flatItems.forEach((item, idx) => {
-    const bucket = grouped.find((g) => g.group === item.group);
+  flatItems.forEach((item: any, idx: any) => {
+    const bucket = grouped.find((g: any) => g.group === item.group);
     if (bucket) bucket.items.push({ item, idx });
     else grouped.push({ group: item.group, items: [{ item, idx }] });
   });
@@ -216,10 +216,10 @@ export function CommandPalette({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setSelectedIdx((i) => Math.min(i + 1, flatItems.length - 1));
+      setSelectedIdx((i: any) => Math.min(i + 1, flatItems.length - 1));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setSelectedIdx((i) => Math.max(i - 1, 0));
+      setSelectedIdx((i: any) => Math.max(i - 1, 0));
     } else if (e.key === "Enter") {
       e.preventDefault();
       const target = flatItems[selectedIdx];
@@ -231,7 +231,7 @@ export function CommandPalette({
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.modalCard} onClick={(e: any) => e.stopPropagation()}>
         {/* Search header input */}
         <div className={styles.searchHeader}>
           <Search
@@ -243,7 +243,7 @@ export function CommandPalette({
             type="text"
             placeholder="Search apps, pages, records, actions…"
             value={query}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setQuery(e.target.value);
               setSelectedIdx(0);
             }}
@@ -268,7 +268,7 @@ export function CommandPalette({
                 : "Type to search everything…"}
             </div>
           ) : (
-            grouped.map(({ group, items }) => (
+            grouped.map(({ group, items }: any) => (
               <div key={group}>
                 <div
                   style={{
@@ -283,7 +283,7 @@ export function CommandPalette({
                 >
                   {group}
                 </div>
-                {items.map(({ item, idx }) => {
+                {items.map(({ item, idx }: any) => {
                   const isActive = idx === selectedIdx;
                   const Icon = item.icon;
                   const btnClass = `${styles.resultBtn} ${isActive ? styles.resultBtnActive : styles.resultBtnInactive}`;

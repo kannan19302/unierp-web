@@ -104,7 +104,7 @@ export default function ContestDetailPage() {
             className="ui-input"
             placeholder="User ID"
             value={joinUserId}
-            onChange={(e) => setJoinUserId(e.target.value)}
+            onChange={(e: any) => setJoinUserId(e.target.value)}
           />
           <Button onClick={joinContest}>
             <UserPlus size={16} /> Enroll

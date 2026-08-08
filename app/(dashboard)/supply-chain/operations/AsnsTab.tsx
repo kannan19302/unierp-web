@@ -96,7 +96,7 @@ export default function AsnsTab() {
       !asnForm.asnNumber ||
       !asnForm.vendorId ||
       !asnForm.warehouseId ||
-      formItems.some((i) => !i.productId)
+      formItems.some((i: any) => !i.productId)
     )
       return;
 
@@ -109,7 +109,7 @@ export default function AsnsTab() {
         expectedArrival: asnForm.expectedArrival
           ? new Date(asnForm.expectedArrival).toISOString()
           : null,
-        lineItems: formItems.map((item) => ({
+        lineItems: formItems.map((item: any) => ({
           ...item,
           expectedQty: Number(item.expectedQty),
         })),
@@ -138,7 +138,7 @@ export default function AsnsTab() {
     if (!selectedAsn) return;
     try {
       await client.post(`/supply-chain/asn/${selectedAsn.id}/receive`, {
-        lineItems: receiveItems.map((item) => ({
+        lineItems: receiveItems.map((item: any) => ({
           ...item,
           actualQty: Number(item.actualQty),
         })),
@@ -154,7 +154,7 @@ export default function AsnsTab() {
   const openReceiveModal = (asn: ASN) => {
     setSelectedAsn(asn);
     setReceiveItems(
-      asn.lineItems.map((item) => ({
+      asn.lineItems.map((item: any) => ({
         id: item.id,
         actualQty: item.expectedQty,
         lotNumber: item.lotNumber || "",
@@ -170,7 +170,7 @@ export default function AsnsTab() {
   };
 
   const filtered = asns.filter(
-    (asn) =>
+    (asn: any) =>
       asn.asnNumber.toLowerCase().includes(search.toLowerCase()) ||
       (asn.carrierName || "").toLowerCase().includes(search.toLowerCase()),
   );
@@ -231,7 +231,7 @@ export default function AsnsTab() {
       render: (row: any) => (
         <div
           className="ui-hstack-2 ui-justify-end"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button
             variant="secondary"
@@ -272,7 +272,7 @@ export default function AsnsTab() {
               type="text"
               placeholder="Search ASNs..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.searchInput}
             />
           </div>
@@ -290,13 +290,13 @@ export default function AsnsTab() {
           />
           <KPICard
             title="Pending Receipt"
-            value={asns.filter((a) => a.status !== "RECEIVED").length}
+            value={asns.filter((a: any) => a.status !== "RECEIVED").length}
             icon={<Calendar size={18} />}
             color="var(--color-warning)"
           />
           <KPICard
             title="Fully Received"
-            value={asns.filter((a) => a.status === "RECEIVED").length}
+            value={asns.filter((a: any) => a.status === "RECEIVED").length}
             icon={<CheckCircle2 size={18} />}
             color="var(--color-success)"
           />
@@ -337,7 +337,7 @@ export default function AsnsTab() {
                 label="ASN Number"
                 required
                 value={asnForm.asnNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, asnNumber: e.target.value })
                 }
                 placeholder="ASN-2026-0001"
@@ -346,7 +346,7 @@ export default function AsnsTab() {
                 label="Vendor ID"
                 required
                 value={asnForm.vendorId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, vendorId: e.target.value })
                 }
                 placeholder="vendor-cuid-or-code"
@@ -357,7 +357,7 @@ export default function AsnsTab() {
                 label="Warehouse ID"
                 required
                 value={asnForm.warehouseId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, warehouseId: e.target.value })
                 }
                 placeholder="warehouse-cuid-or-code"
@@ -365,7 +365,7 @@ export default function AsnsTab() {
               <TextField
                 label="Purchase Order ID (Optional)"
                 value={asnForm.purchaseOrderId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, purchaseOrderId: e.target.value })
                 }
                 placeholder="po-cuid-or-code"
@@ -376,7 +376,7 @@ export default function AsnsTab() {
                 label="Ship Date"
                 type="datetime-local"
                 value={asnForm.shipDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, shipDate: e.target.value })
                 }
               />
@@ -384,7 +384,7 @@ export default function AsnsTab() {
                 label="Expected Arrival"
                 type="datetime-local"
                 value={asnForm.expectedArrival}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, expectedArrival: e.target.value })
                 }
               />
@@ -393,7 +393,7 @@ export default function AsnsTab() {
               <TextField
                 label="Carrier Name"
                 value={asnForm.carrierName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, carrierName: e.target.value })
                 }
                 placeholder="FedEx"
@@ -401,7 +401,7 @@ export default function AsnsTab() {
               <TextField
                 label="Tracking Number"
                 value={asnForm.trackingNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setAsnForm({ ...asnForm, trackingNumber: e.target.value })
                 }
                 placeholder="1Z999AA10123..."
@@ -410,7 +410,7 @@ export default function AsnsTab() {
             <TextField
               label="Notes"
               value={asnForm.notes}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setAsnForm({ ...asnForm, notes: e.target.value })
               }
               placeholder="Add shipping notes..."
@@ -418,13 +418,13 @@ export default function AsnsTab() {
 
             <div className="ui-heading-sm mt-4 mb-2">Line Items</div>
             <div className="ui-stack-2">
-              {formItems.map((item, idx) => (
+              {formItems.map((item: any, idx: any) => (
                 <div key={idx} className="ui-grid-3 ui-gap-3 ui-items-end">
                   <TextField
                     label={idx === 0 ? "Product ID" : undefined}
                     required
                     value={item.productId}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const updated = [...formItems];
                       const current = updated[idx];
                       if (current) {
@@ -439,7 +439,7 @@ export default function AsnsTab() {
                     type="number"
                     required
                     value={item.expectedQty}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       const updated = [...formItems];
                       const current = updated[idx];
                       if (current) {
@@ -452,7 +452,7 @@ export default function AsnsTab() {
                     <TextField
                       label={idx === 0 ? "Lot Number (Optional)" : undefined}
                       value={item.lotNumber || ""}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const updated = [...formItems];
                         const current = updated[idx];
                         if (current) {
@@ -466,7 +466,7 @@ export default function AsnsTab() {
                       <Button
                         variant="secondary"
                         onClick={() =>
-                          setFormItems(formItems.filter((_, i) => i !== idx))
+                          setFormItems(formItems.filter((_: any, i: any) => i !== idx))
                         }
                       >
                         Remove
@@ -516,8 +516,8 @@ export default function AsnsTab() {
               discrepancy report.
             </div>
 
-            {selectedAsn?.lineItems.map((item, idx) => {
-              const receiveItem = receiveItems.find((r) => r.id === item.id);
+            {selectedAsn?.lineItems.map((item: any, idx: any) => {
+              const receiveItem = receiveItems.find((r: any) => r.id === item.id);
               return (
                 <Card key={item.id} padding="md" className="ui-stack-3">
                   <div className="ui-flex-between">
@@ -534,9 +534,9 @@ export default function AsnsTab() {
                         label="Received Quantity"
                         type="number"
                         value={receiveItem?.actualQty ?? 0}
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           const updated = [...receiveItems];
-                          const target = updated.find((r) => r.id === item.id);
+                          const target = updated.find((r: any) => r.id === item.id);
                           if (target) target.actualQty = Number(e.target.value);
                           setReceiveItems(updated);
                         }}
@@ -547,9 +547,9 @@ export default function AsnsTab() {
                     <TextField
                       label="Lot Number"
                       value={receiveItem?.lotNumber || ""}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const updated = [...receiveItems];
-                        const target = updated.find((r) => r.id === item.id);
+                        const target = updated.find((r: any) => r.id === item.id);
                         if (target) target.lotNumber = e.target.value;
                         setReceiveItems(updated);
                       }}
@@ -558,9 +558,9 @@ export default function AsnsTab() {
                     <TextField
                       label="Discrepancy Notes / Damage"
                       value={receiveItem?.notes || ""}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const updated = [...receiveItems];
-                        const target = updated.find((r) => r.id === item.id);
+                        const target = updated.find((r: any) => r.id === item.id);
                         if (target) target.notes = e.target.value;
                         setReceiveItems(updated);
                       }}

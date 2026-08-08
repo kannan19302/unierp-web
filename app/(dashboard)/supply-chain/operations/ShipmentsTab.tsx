@@ -192,7 +192,7 @@ export default function ShipmentsTab() {
       setCarriers(carrierList);
 
       const asnList = await client.get<ASN[]>("/supply-chain/asn");
-      setAsns(asnList.filter((a) => a.status !== "RECEIVED"));
+      setAsns(asnList.filter((a: any) => a.status !== "RECEIVED"));
     } catch {
       /* empty */
     }
@@ -353,7 +353,7 @@ export default function ShipmentsTab() {
     }
   };
 
-  const filtered = shipments.filter((s) => {
+  const filtered = shipments.filter((s: any) => {
     const matchSearch =
       !search ||
       s.shipmentNumber.toLowerCase().includes(search.toLowerCase()) ||
@@ -471,7 +471,7 @@ export default function ShipmentsTab() {
                 type="text"
                 placeholder="Search by number or carrier..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e: any) => setSearch(e.target.value)}
                 className={styles.searchInput}
               />
             </div>
@@ -483,7 +483,7 @@ export default function ShipmentsTab() {
                 "DELIVERED",
                 "COMPLETE",
                 "EXCEPTION",
-              ].map((s) => (
+              ].map((s: any) => (
                 <button
                   key={s}
                   onClick={() => setStatusFilter(s)}
@@ -544,7 +544,7 @@ export default function ShipmentsTab() {
                 label="Shipment Number"
                 required
                 value={inboundForm.shipmentNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInboundForm({
                     ...inboundForm,
                     shipmentNumber: e.target.value,
@@ -556,7 +556,7 @@ export default function ShipmentsTab() {
                 label="Warehouse ID"
                 required
                 value={inboundForm.warehouseId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInboundForm({
                     ...inboundForm,
                     warehouseId: e.target.value,
@@ -569,7 +569,7 @@ export default function ShipmentsTab() {
               <FormField label="Carrier">
                 <Select
                   value={inboundForm.carrierId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setInboundForm({
                       ...inboundForm,
                       carrierId: e.target.value,
@@ -577,7 +577,7 @@ export default function ShipmentsTab() {
                   }
                 >
                   <option value="">Choose Carrier</option>
-                  {carriers.map((c) => (
+                  {carriers.map((c: any) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
@@ -587,12 +587,12 @@ export default function ShipmentsTab() {
               <FormField label="ASN Connection">
                 <Select
                   value={inboundForm.asnId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setInboundForm({ ...inboundForm, asnId: e.target.value })
                   }
                 >
                   <option value="">No ASN Connection</option>
-                  {asns.map((a) => (
+                  {asns.map((a: any) => (
                     <option key={a.id} value={a.id}>
                       {a.asnNumber}
                     </option>
@@ -604,7 +604,7 @@ export default function ShipmentsTab() {
               <TextField
                 label="Tracking Number"
                 value={inboundForm.trackingNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInboundForm({
                     ...inboundForm,
                     trackingNumber: e.target.value,
@@ -616,7 +616,7 @@ export default function ShipmentsTab() {
                 label="Expected Arrival"
                 type="datetime-local"
                 value={inboundForm.expectedArrival}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInboundForm({
                     ...inboundForm,
                     expectedArrival: e.target.value,
@@ -629,7 +629,7 @@ export default function ShipmentsTab() {
                 label="Total Pallets"
                 type="number"
                 value={inboundForm.totalPallets}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInboundForm({
                     ...inboundForm,
                     totalPallets: Number(e.target.value),
@@ -640,7 +640,7 @@ export default function ShipmentsTab() {
                 label="Total Cartons"
                 type="number"
                 value={inboundForm.totalCartons}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInboundForm({
                     ...inboundForm,
                     totalCartons: Number(e.target.value),
@@ -651,7 +651,7 @@ export default function ShipmentsTab() {
                 label="Total Weight (kg)"
                 type="number"
                 value={inboundForm.totalWeight}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setInboundForm({
                     ...inboundForm,
                     totalWeight: Number(e.target.value),
@@ -662,7 +662,7 @@ export default function ShipmentsTab() {
             <TextField
               label="Notes"
               value={inboundForm.notes}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setInboundForm({ ...inboundForm, notes: e.target.value })
               }
               placeholder="Inbound receiving instructions..."
@@ -696,7 +696,7 @@ export default function ShipmentsTab() {
                 label="Shipment Number"
                 required
                 value={outboundForm.shipmentNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     shipmentNumber: e.target.value,
@@ -708,7 +708,7 @@ export default function ShipmentsTab() {
                 label="Warehouse ID"
                 required
                 value={outboundForm.warehouseId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     warehouseId: e.target.value,
@@ -721,7 +721,7 @@ export default function ShipmentsTab() {
               <FormField label="Carrier">
                 <Select
                   value={outboundForm.carrierId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setOutboundForm({
                       ...outboundForm,
                       carrierId: e.target.value,
@@ -729,7 +729,7 @@ export default function ShipmentsTab() {
                   }
                 >
                   <option value="">Choose Carrier</option>
-                  {carriers.map((c) => (
+                  {carriers.map((c: any) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
@@ -739,7 +739,7 @@ export default function ShipmentsTab() {
               <TextField
                 label="Sales Order ID"
                 value={outboundForm.salesOrderId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     salesOrderId: e.target.value,
@@ -752,7 +752,7 @@ export default function ShipmentsTab() {
               <TextField
                 label="Tracking Number"
                 value={outboundForm.trackingNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     trackingNumber: e.target.value,
@@ -764,7 +764,7 @@ export default function ShipmentsTab() {
                 label="Estimated Delivery"
                 type="datetime-local"
                 value={outboundForm.estimatedDelivery}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     estimatedDelivery: e.target.value,
@@ -777,7 +777,7 @@ export default function ShipmentsTab() {
                 label="Total Pallets"
                 type="number"
                 value={outboundForm.totalPallets}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     totalPallets: Number(e.target.value),
@@ -788,7 +788,7 @@ export default function ShipmentsTab() {
                 label="Total Cartons"
                 type="number"
                 value={outboundForm.totalCartons}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     totalCartons: Number(e.target.value),
@@ -799,7 +799,7 @@ export default function ShipmentsTab() {
                 label="Total Weight (kg)"
                 type="number"
                 value={outboundForm.totalWeight}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     totalWeight: Number(e.target.value),
@@ -811,7 +811,7 @@ export default function ShipmentsTab() {
               <TextField
                 label="Recipient Name"
                 value={outboundForm.recipientName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     recipientName: e.target.value,
@@ -821,7 +821,7 @@ export default function ShipmentsTab() {
               <TextField
                 label="Recipient Address"
                 value={outboundForm.recipientAddr}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setOutboundForm({
                     ...outboundForm,
                     recipientAddr: e.target.value,
@@ -832,7 +832,7 @@ export default function ShipmentsTab() {
             <TextField
               label="Notes"
               value={outboundForm.notes}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setOutboundForm({ ...outboundForm, notes: e.target.value })
               }
               placeholder="Outbound delivery notes..."
@@ -955,7 +955,7 @@ export default function ShipmentsTab() {
                 </div>
               ) : (
                 <div className="ui-stack-2">
-                  {exceptions.map((ex) => (
+                  {exceptions.map((ex: any) => (
                     <Card
                       key={ex.id}
                       padding="md"
@@ -1016,7 +1016,7 @@ export default function ShipmentsTab() {
                 </div>
               ) : (
                 <div className="ui-stack-3 border-l-2 border-border pl-4 ml-2">
-                  {events.map((ev) => (
+                  {events.map((ev: any) => (
                     <div key={ev.id} className="relative py-1">
                       <div className="absolute -left-6 top-2 w-3.5 h-3.5 rounded-full bg-primary border-4 border-bg" />
                       <div className="ui-text-xs-tertiary font-mono">
@@ -1059,7 +1059,7 @@ export default function ShipmentsTab() {
             <FormField label="Event Code">
               <Select
                 value={eventForm.eventCode}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEventForm({ ...eventForm, eventCode: e.target.value })
                 }
               >
@@ -1074,7 +1074,7 @@ export default function ShipmentsTab() {
               label="Description"
               required
               value={eventForm.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setEventForm({ ...eventForm, description: e.target.value })
               }
               placeholder="Departed sorting facility"
@@ -1082,7 +1082,7 @@ export default function ShipmentsTab() {
             <TextField
               label="Location"
               value={eventForm.location}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setEventForm({ ...eventForm, location: e.target.value })
               }
               placeholder="Memphis, TN"
@@ -1115,7 +1115,7 @@ export default function ShipmentsTab() {
               label="Exception Code"
               required
               value={exceptionForm.exceptionCode}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setExceptionForm({
                   ...exceptionForm,
                   exceptionCode: e.target.value,
@@ -1127,7 +1127,7 @@ export default function ShipmentsTab() {
               label="Description"
               required
               value={exceptionForm.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setExceptionForm({
                   ...exceptionForm,
                   description: e.target.value,
@@ -1138,7 +1138,7 @@ export default function ShipmentsTab() {
             <FormField label="Severity">
               <Select
                 value={exceptionForm.severity}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setExceptionForm({
                     ...exceptionForm,
                     severity: e.target.value,
@@ -1179,7 +1179,7 @@ export default function ShipmentsTab() {
               label="Resolution Note"
               required
               value={resolutionNote}
-              onChange={(e) => setResolutionNote(e.target.value)}
+              onChange={(e: any) => setResolutionNote(e.target.value)}
               placeholder="Carrier has resumed transit."
             />
           </div>

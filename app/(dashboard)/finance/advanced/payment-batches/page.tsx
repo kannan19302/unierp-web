@@ -188,8 +188,8 @@ export default function PaymentBatchesPage() {
   };
 
   const totalDraft = batches
-    .filter((b) => b.status === "DRAFT" || b.status === "READY")
-    .reduce((sum, b) => sum + Number(b.totalAmount), 0);
+    .filter((b: any) => b.status === "DRAFT" || b.status === "READY")
+    .reduce((sum: any, b: any) => sum + Number(b.totalAmount), 0);
 
   return (
     <RouteGuard permission="finance.payables.read">
@@ -239,7 +239,7 @@ export default function PaymentBatchesPage() {
           </Card>
           <Card className="ui-stat-card">
             <div className="ui-stat-value">
-              {batches.filter((b) => b.status === "DRAFT").length}
+              {batches.filter((b: any) => b.status === "DRAFT").length}
             </div>
             <div className="ui-stat-label">Draft</div>
           </Card>
@@ -254,7 +254,7 @@ export default function PaymentBatchesPage() {
           </Card>
           <Card className="ui-stat-card">
             <div className="ui-stat-value">
-              {batches.filter((b) => b.status === "COMPLETED").length}
+              {batches.filter((b: any) => b.status === "COMPLETED").length}
             </div>
             <div className="ui-stat-label">Completed</div>
           </Card>
@@ -269,7 +269,7 @@ export default function PaymentBatchesPage() {
                 <select
                   className="ui-input"
                   value={newBatchForm.paymentMethod}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewBatchForm({
                       ...newBatchForm,
                       paymentMethod: e.target.value,
@@ -287,7 +287,7 @@ export default function PaymentBatchesPage() {
                 <select
                   className="ui-input"
                   value={newBatchForm.currency}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewBatchForm({
                       ...newBatchForm,
                       currency: e.target.value,
@@ -305,7 +305,7 @@ export default function PaymentBatchesPage() {
                   type="date"
                   className="ui-input"
                   value={newBatchForm.settlementDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewBatchForm({
                       ...newBatchForm,
                       settlementDate: e.target.value,
@@ -318,7 +318,7 @@ export default function PaymentBatchesPage() {
                 <input
                   className="ui-input"
                   value={newBatchForm.notes}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewBatchForm({ ...newBatchForm, notes: e.target.value })
                   }
                   placeholder="Optional notes"
@@ -350,7 +350,7 @@ export default function PaymentBatchesPage() {
                 </p>
               </div>
             ) : (
-              batches.map((batch) => (
+              batches.map((batch: any) => (
                 <div
                   key={batch.id}
                   className={`ui-list-row ui-list-row-clickable ${selectedBatch?.id === batch.id ? "ui-list-row-selected" : ""}`}
@@ -443,7 +443,7 @@ export default function PaymentBatchesPage() {
                       <input
                         className="ui-input"
                         value={lineForm.referenceId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setLineForm({
                             ...lineForm,
                             referenceId: e.target.value,
@@ -460,7 +460,7 @@ export default function PaymentBatchesPage() {
                         step="0.01"
                         className="ui-input"
                         value={lineForm.amount}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setLineForm({ ...lineForm, amount: e.target.value })
                         }
                       />
@@ -471,7 +471,7 @@ export default function PaymentBatchesPage() {
                         type="date"
                         className="ui-input"
                         value={lineForm.scheduledPaymentDate}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setLineForm({
                             ...lineForm,
                             scheduledPaymentDate: e.target.value,

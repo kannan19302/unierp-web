@@ -219,7 +219,7 @@ export default function ShipmentDetailPage() {
               <History size={16} className={styles.s4} /> Shipment Progress
             </h3>
             <div className={styles.s5}>
-              {STATUS_STEPS.map((step, idx) => {
+              {STATUS_STEPS.map((step: any, idx: any) => {
                 const isActive = idx <= currentStep;
                 const isCurrent = idx === currentStep;
                 return (
@@ -291,7 +291,7 @@ export default function ShipmentDetailPage() {
                   ["Tracking Number", shipment.trackingNumber || "—"],
                   ["Currency", shipment.currency || "USD"],
                   ["Created", fmtDate(shipment.createdAt)],
-                ].map(([label, value]) => (
+                ].map(([label, value]: any) => (
                   <div key={label as string} className={styles.s11}>
                     <span className="ui-text-sm-muted">{label}</span>
                     <span className={styles.s12}>{value}</span>

@@ -28,7 +28,7 @@ export default function NewLeasePage() {
         HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
       >,
     ) =>
-      setForm((f) => ({ ...f, [k]: e.target.value }));
+      setForm((f: any) => ({ ...f, [k]: e.target.value }));
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -36,7 +36,7 @@ export default function RevenueRecognitionPage() {
     setLoading(true);
     client
       .get<RevenueSchedule[]>("/advanced-finance/revenue-schedules")
-      .then((res) => setSchedules(res || []))
+      .then((res: any) => setSchedules(res || []))
       .catch(() => setSchedules([]))
       .finally(() => setLoading(false));
   };
@@ -44,11 +44,11 @@ export default function RevenueRecognitionPage() {
   useEffect(fetchSchedules, [client]);
 
   const totalDeferred = schedules.reduce(
-    (acc, s) => acc + Number(s.deferredAmount),
+    (acc: any, s: any) => acc + Number(s.deferredAmount),
     0,
   );
   const totalRecognized = schedules.reduce(
-    (acc, s) => acc + Number(s.recognizedAmount),
+    (acc: any, s: any) => acc + Number(s.recognizedAmount),
     0,
   );
 
@@ -153,7 +153,7 @@ export default function RevenueRecognitionPage() {
         <KPICard
           title="Total Contract Value"
           value={fmtCurrency(
-            schedules.reduce((a, s) => a + Number(s.totalAmount), 0),
+            schedules.reduce((a: any, s: any) => a + Number(s.totalAmount), 0),
           )}
           icon={<DollarSign size={18} />}
           color="var(--color-primary)"

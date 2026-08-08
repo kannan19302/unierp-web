@@ -55,13 +55,13 @@ export default function GlobalInventoryPage() {
     }
   };
 
-  const totalOnHand = data.reduce((s, i) => s + i.totalOnHand, 0);
+  const totalOnHand = data.reduce((s: any, i: any) => s + i.totalOnHand, 0);
   const totalWarehouses = [
-    ...new Set(data.map((i) => i.warehouseCount)),
-  ].reduce((a, b) => a + b, 0);
+    ...new Set(data.map((i: any) => i.warehouseCount)),
+  ].reduce((a: any, b: any) => a + b, 0);
 
   const filtered = data.filter(
-    (i) =>
+    (i: any) =>
       !search ||
       i.productName.toLowerCase().includes(search.toLowerCase()) ||
       i.productSku.toLowerCase().includes(search.toLowerCase()),
@@ -119,7 +119,7 @@ export default function GlobalInventoryPage() {
               type="text"
               placeholder="Search by SKU or name..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className="ui-input"
             />
           </div>

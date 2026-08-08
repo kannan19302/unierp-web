@@ -148,7 +148,7 @@ export default function GoalsPage() {
       render: (r: any) => (
         <button
           className="ui-btn-icon"
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             deleteGoal(r.id);
           }}
@@ -189,14 +189,14 @@ export default function GoalsPage() {
                 className="ui-input"
                 placeholder="Name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
               <select
                 className="ui-input"
                 value={form.goalType}
-                onChange={(e) => setForm({ ...form, goalType: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, goalType: e.target.value })}
               >
-                {GOAL_TYPES.map((t) => (
+                {GOAL_TYPES.map((t: any) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
@@ -207,7 +207,7 @@ export default function GoalsPage() {
                 type="number"
                 placeholder="Target Value"
                 value={form.targetValue}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, targetValue: Number(e.target.value) })
                 }
               />
@@ -215,13 +215,13 @@ export default function GoalsPage() {
                 className="ui-input"
                 placeholder="Period (e.g. Q3-2026)"
                 value={form.period}
-                onChange={(e) => setForm({ ...form, period: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, period: e.target.value })}
               />
               <input
                 className="ui-input"
                 type="date"
                 value={form.startDate.split("T")[0] || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
               />
@@ -229,7 +229,7 @@ export default function GoalsPage() {
                 className="ui-input"
                 type="date"
                 value={form.endDate.split("T")[0] || ""}
-                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endDate: e.target.value })}
               />
               <div
                 className="ui-flex-row"

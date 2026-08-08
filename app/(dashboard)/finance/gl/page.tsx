@@ -168,25 +168,25 @@ export default function GLPage() {
         "/finance/close/financial-periods",
       ),
     ])
-      .then(([accountsResult, journalsResult, periodsResult]) => {
+      .then(([accountsResult, journalsResult, periodsResult]: any) => {
         if (cancelled) return;
         const accounts = accountsResult.data ?? [];
         const journals = journalsResult.data ?? [];
         const periods = periodsResult?.data ?? [];
-        const openPeriodRows = periods.filter((p) => p.status === "OPEN");
-        const nextClose = openPeriodRows.map((p) => p.endDate).sort()[0];
+        const openPeriodRows = periods.filter((p: any) => p.status === "OPEN");
+        const nextClose = openPeriodRows.map((p: any) => p.endDate).sort()[0];
         setSummary({
           totalAccounts: accountsResult.total ?? accounts.length,
-          accountCategories: new Set(accounts.map((a) => a.type)).size,
+          accountCategories: new Set(accounts.map((a: any) => a.type)).size,
           journalCount: journalsResult.total ?? journals.length,
-          pendingApproval: journals.filter((j) => j.status === "SUBMITTED")
+          pendingApproval: journals.filter((j: any) => j.status === "SUBMITTED")
             .length,
           openPeriods: openPeriodRows.length,
           nextCloseDate: nextClose ?? null,
         });
         setSummaryError(null);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (cancelled) return;
         // Distinct error state — a failed fetch must never render as "0
         // accounts / 0 journals", which is indistinguishable from real data.

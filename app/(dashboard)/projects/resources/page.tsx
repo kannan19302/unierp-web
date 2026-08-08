@@ -113,7 +113,7 @@ export default function ResourcesPage() {
         </div>
         <button
           onClick={() => {
-            setNewAlloc((p) => ({ ...p, projectId: selectedProject }));
+            setNewAlloc((p: any) => ({ ...p, projectId: selectedProject }));
             setIsModalOpen(true);
           }}
           className={styles.addBtn}
@@ -126,9 +126,9 @@ export default function ResourcesPage() {
         <select
           className="ui-input"
           value={selectedProject}
-          onChange={(e) => setSelectedProject(e.target.value)}
+          onChange={(e: any) => setSelectedProject(e.target.value)}
         >
-          {projects.map((p) => (
+          {projects.map((p: any) => (
             <option key={p.id} value={p.id}>
               {p.name}
             </option>
@@ -137,7 +137,7 @@ export default function ResourcesPage() {
       </div>
       {loading && <div className="ui-text-muted">Loading...</div>}
       <div className="ui-stack-3">
-        {allocations.map((a) => (
+        {allocations.map((a: any) => (
           <div key={a.id} className={styles.card}>
             <div className="ui-flex-between">
               <div>
@@ -186,8 +186,8 @@ export default function ResourcesPage() {
                 <input
                   className="ui-input"
                   value={newAlloc.resourceId}
-                  onChange={(e) =>
-                    setNewAlloc((p) => ({ ...p, resourceId: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewAlloc((p: any) => ({ ...p, resourceId: e.target.value }))
                   }
                   required
                 />
@@ -197,8 +197,8 @@ export default function ResourcesPage() {
                 <select
                   className="ui-input"
                   value={newAlloc.resourceType}
-                  onChange={(e) =>
-                    setNewAlloc((p) => ({ ...p, resourceType: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewAlloc((p: any) => ({ ...p, resourceType: e.target.value }))
                   }
                 >
                   <option value="EMPLOYEE">Employee</option>
@@ -212,8 +212,8 @@ export default function ResourcesPage() {
                   className="ui-input"
                   type="number"
                   value={newAlloc.allocatedHours}
-                  onChange={(e) =>
-                    setNewAlloc((p) => ({
+                  onChange={(e: any) =>
+                    setNewAlloc((p: any) => ({
                       ...p,
                       allocatedHours: e.target.value,
                     }))
@@ -228,8 +228,8 @@ export default function ResourcesPage() {
                     className="ui-input"
                     type="date"
                     value={newAlloc.startDate}
-                    onChange={(e) =>
-                      setNewAlloc((p) => ({ ...p, startDate: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewAlloc((p: any) => ({ ...p, startDate: e.target.value }))
                     }
                     required
                   />
@@ -240,8 +240,8 @@ export default function ResourcesPage() {
                     className="ui-input"
                     type="date"
                     value={newAlloc.endDate}
-                    onChange={(e) =>
-                      setNewAlloc((p) => ({ ...p, endDate: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewAlloc((p: any) => ({ ...p, endDate: e.target.value }))
                     }
                     required
                   />
@@ -252,8 +252,8 @@ export default function ResourcesPage() {
                 <textarea
                   className="ui-input"
                   value={newAlloc.notes}
-                  onChange={(e) =>
-                    setNewAlloc((p) => ({ ...p, notes: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewAlloc((p: any) => ({ ...p, notes: e.target.value }))
                   }
                 />
               </div>

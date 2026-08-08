@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import { useState, useEffect } from "react";
 
 export default function MessageHistoryPage() {
@@ -27,7 +27,7 @@ export default function MessageHistoryPage() {
           <select
             className="ui-input"
             value={entityType}
-            onChange={(e) => setEntityType(e.target.value)}
+            onChange={(e: any) => setEntityType(e.target.value)}
           >
             <option value="CUSTOMER">Customer</option>
             <option value="LEAD">Lead</option>
@@ -40,7 +40,7 @@ export default function MessageHistoryPage() {
           <input
             className="ui-input"
             value={entityId}
-            onChange={(e) => setEntityId(e.target.value)}
+            onChange={(e: any) => setEntityId(e.target.value)}
             placeholder="e.g. cust-123"
           />
         </div>

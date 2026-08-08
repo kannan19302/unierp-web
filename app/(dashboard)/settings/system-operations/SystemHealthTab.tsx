@@ -81,11 +81,11 @@ export default function SystemHealthTab() {
         "/admin/operations/health",
       );
       setHealth(data);
-      setCpuHistory((prev) => [
+      setCpuHistory((prev: any) => [
         ...prev.slice(-19),
         data.metrics?.cpuUsage ?? 23,
       ]);
-      setMemHistory((prev) => [
+      setMemHistory((prev: any) => [
         ...prev.slice(-19),
         data.metrics?.memoryUsage ?? 61,
       ]);
@@ -134,7 +134,7 @@ export default function SystemHealthTab() {
     },
   ];
 
-  const allHealthy = Object.values(h.services).every((s) =>
+  const allHealthy = Object.values(h.services).every((s: any) =>
     ["connected", "running"].includes(s),
   );
 
@@ -145,7 +145,7 @@ export default function SystemHealthTab() {
           <input
             type="checkbox"
             checked={autoRefresh}
-            onChange={(e) => setAutoRefresh(e.target.checked)}
+            onChange={(e: any) => setAutoRefresh(e.target.checked)}
             className={styles.s3}
           />
           Auto-refresh (15s)
@@ -266,7 +266,7 @@ export default function SystemHealthTab() {
       <div>
         <h3 className={styles.s8}>Services</h3>
         <div className={styles.s9}>
-          {services.map((svc) => (
+          {services.map((svc: any) => (
             <Card key={svc.key}>
               <div className={styles.s10}>
                 <div className="ui-hstack-3">

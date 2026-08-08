@@ -132,11 +132,11 @@ export default function LocalizationPage() {
         "/admin/localization/overrides",
         { locale: newLocale, key: newKey, translation: newTranslation },
       );
-      setOverrides((prev) => [saved, ...prev]);
+      setOverrides((prev: any) => [saved, ...prev]);
       showToast("Override saved", "success");
     } catch {
       /* local fallback */
-      setOverrides((prev) => [
+      setOverrides((prev: any) => [
         {
           id: `lo-${Date.now()}`,
           locale: newLocale,
@@ -158,10 +158,10 @@ export default function LocalizationPage() {
   const handleDelete = async (id: string) => {
     try {
       await client.delete(`/admin/localization/overrides/${id}`);
-      setOverrides((prev) => prev.filter((o) => o.id !== id));
+      setOverrides((prev: any) => prev.filter((o: any) => o.id !== id));
       showToast("Override deleted", "success");
     } catch {
-      setOverrides((prev) => prev.filter((o) => o.id !== id));
+      setOverrides((prev: any) => prev.filter((o: any) => o.id !== id));
       showToast("Deleted locally (API unavailable)", "error");
     }
   };
@@ -196,7 +196,7 @@ export default function LocalizationPage() {
             "/admin/localization/overrides",
             item,
           );
-          setOverrides((prev) => [saved, ...prev]);
+          setOverrides((prev: any) => [saved, ...prev]);
           successCount++;
         } catch {
           /* skip individual failures */
@@ -213,7 +213,7 @@ export default function LocalizationPage() {
   };
 
   /* ── filter ── */
-  const filtered = overrides.filter((o) => {
+  const filtered = overrides.filter((o: any) => {
     const matchLocale = filterLocale === "All" || o.locale === filterLocale;
     const matchSearch =
       o.key.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -222,7 +222,7 @@ export default function LocalizationPage() {
   });
 
   /* ── completeness: unique keys across all overrides ── */
-  const totalKeys = new Set(overrides.map((o) => o.key)).size;
+  const totalKeys = new Set(overrides.map((o: any) => o.key)).size;
 
   if (loading) {
     return (
@@ -289,8 +289,8 @@ export default function LocalizationPage() {
 
       {/* Language Cards */}
       <div className={styles.p3}>
-        {languages.map((lang) => {
-          const count = overrides.filter((o) => o.locale === lang.code).length;
+        {languages.map((lang: any) => {
+          const count = overrides.filter((o: any) => o.locale === lang.code).length;
           const pct = totalKeys > 0 ? Math.round((count / totalKeys) * 100) : 0;
           return (
             <Card
@@ -347,7 +347,7 @@ export default function LocalizationPage() {
             type="text"
             placeholder="Search translation keys or values..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e: any) => setSearchQuery(e.target.value)}
             className={styles.p9}
           />
         </div>
@@ -420,10 +420,10 @@ export default function LocalizationPage() {
                 <label className="ui-text-xs-label">Locale</label>
                 <select
                   value={newLocale}
-                  onChange={(e) => setNewLocale(e.target.value)}
+                  onChange={(e: any) => setNewLocale(e.target.value)}
                   className={styles.p16}
                 >
-                  {languages.map((l) => (
+                  {languages.map((l: any) => (
                     <option key={l.code} value={l.code}>
                       {l.name} ({l.code})
                     </option>
@@ -435,7 +435,7 @@ export default function LocalizationPage() {
                 <input
                   type="text"
                   value={newKey}
-                  onChange={(e) => setNewKey(e.target.value)}
+                  onChange={(e: any) => setNewKey(e.target.value)}
                   placeholder="e.g. dashboard.welcome"
                   className={styles.p17}
                 />
@@ -444,7 +444,7 @@ export default function LocalizationPage() {
                 <label className="ui-text-xs-label">Translation Value</label>
                 <textarea
                   value={newTranslation}
-                  onChange={(e) => setNewTranslation(e.target.value)}
+                  onChange={(e: any) => setNewTranslation(e.target.value)}
                   placeholder="Translated text..."
                   rows={3}
                   className={styles.p18}

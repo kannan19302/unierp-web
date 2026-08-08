@@ -160,7 +160,7 @@ function MockVisualization({
     const bars = [65, 45, 80, 55, 35];
     return (
       <div className={styles.barChart}>
-        {bars.map((h, i) => (
+        {bars.map((h: any, i: any) => (
           <div key={i} className={styles.barColumn}>
             <div
               className={styles.barFill}
@@ -194,7 +194,7 @@ function MockVisualization({
     ];
     return (
       <div className={styles.funnel}>
-        {stages.map((s, i) => (
+        {stages.map((s: any, i: any) => (
           <div
             key={i}
             className={styles.funnelStage}
@@ -218,7 +218,7 @@ function MockVisualization({
           "Acme Deal|$45K|Proposal",
           "Beta Corp|$120K|Negotiation",
           "Gamma Inc|$30K|Qualified",
-        ].map((row, i) => {
+        ].map((row: any, i: any) => {
           const [n, v, s] = row.split("|");
           return (
             <div key={i} className={styles.tableRow}>
@@ -235,7 +235,7 @@ function MockVisualization({
     return (
       <div className={styles.leaderboard}>
         {["Sarah Chen|$320K", "James Park|$285K", "Maria Santos|$240K"].map(
-          (row, i) => {
+          (row: any, i: any) => {
             const [name, val] = row.split("|");
             return (
               <div
@@ -389,7 +389,7 @@ export default function DashboardCanvasPage() {
           {editMode && (
             <div className={styles.widgetPalette}>
               <h4 className={styles.paletteTitle}>Add Widget</h4>
-              {WIDGET_TYPES.map((wt) => (
+              {WIDGET_TYPES.map((wt: any) => (
                 <button
                   key={wt}
                   onClick={() => {
@@ -407,7 +407,7 @@ export default function DashboardCanvasPage() {
 
           {/* Widget Grid */}
           <div className={styles.widgetGrid}>
-            {dashboard.widgets.map((widget) => (
+            {dashboard.widgets.map((widget: any) => (
               <Card
                 key={widget.id}
                 className={`${styles.widgetCard} ${editMode ? styles.editMode : ""}`}
@@ -460,7 +460,7 @@ export default function DashboardCanvasPage() {
                 <label className={styles.formLabel}>Widget Type</label>
                 <select
                   value={widgetForm.widgetType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setWidgetForm({
                       ...widgetForm,
                       widgetType: e.target.value as WidgetType,
@@ -468,7 +468,7 @@ export default function DashboardCanvasPage() {
                   }
                   className={styles.formControl}
                 >
-                  {WIDGET_TYPES.map((wt) => (
+                  {WIDGET_TYPES.map((wt: any) => (
                     <option key={wt} value={wt}>
                       {wt.replace(/_/g, " ")}
                     </option>
@@ -480,7 +480,7 @@ export default function DashboardCanvasPage() {
                 <label className={styles.formLabel}>Title *</label>
                 <input
                   value={widgetForm.title}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setWidgetForm({ ...widgetForm, title: e.target.value })
                   }
                   placeholder="e.g. Revenue by Quarter"
@@ -492,7 +492,7 @@ export default function DashboardCanvasPage() {
                 <label className={styles.formLabel}>Data Source</label>
                 <select
                   value={widgetForm.dataSource}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setWidgetForm({
                       ...widgetForm,
                       dataSource: e.target.value as DataSource,
@@ -500,7 +500,7 @@ export default function DashboardCanvasPage() {
                   }
                   className={styles.formControl}
                 >
-                  {DATA_SOURCES.map((ds) => (
+                  {DATA_SOURCES.map((ds: any) => (
                     <option key={ds} value={ds}>
                       {ds}
                     </option>

@@ -183,7 +183,7 @@ export default function CrmReportsPage() {
   const handleDeleteReport = async (id: string) => {
     try {
       await client.delete(`/crm/reports/saved/${id}`);
-      setSavedReports(savedReports.filter((r) => r.id !== id));
+      setSavedReports(savedReports.filter((r: any) => r.id !== id));
     } catch {
       /* fallback */
     }
@@ -192,10 +192,10 @@ export default function CrmReportsPage() {
   const handleExportCSV = () => {
     if (!data) return;
     const rows = [["Stage", "Count", "Amount"]];
-    Object.entries(data.funnel).forEach(([stage, info]) => {
+    Object.entries(data.funnel).forEach(([stage, info]: any) => {
       rows.push([stage, String(info.count), String(info.totalAmount)]);
     });
-    const csv = rows.map((r) => r.join(",")).join("\n");
+    const csv = rows.map((r: any) => r.join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -223,7 +223,7 @@ export default function CrmReportsPage() {
   }
 
   const totalPipeline = Object.values(data.funnel).reduce(
-    (s, v) => s + v.totalAmount,
+    (s: any, v: any) => s + v.totalAmount,
     0,
   );
 
@@ -256,7 +256,7 @@ export default function CrmReportsPage() {
 
         {/* Tabs */}
         <div className={styles.tabs}>
-          {(["dashboard", "builder", "saved"] as const).map((tab) => (
+          {(["dashboard", "builder", "saved"] as const).map((tab: any) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -330,7 +330,7 @@ export default function CrmReportsPage() {
                     color: "var(--color-success)",
                     width: `${Math.max(10, (data.conversionFunnel.wonOpportunities / Math.max(1, data.conversionFunnel.totalLeads)) * 100)}%`,
                   },
-                ].map((step) => (
+                ].map((step: any) => (
                   <div key={step.label}>
                     <div className={styles.funnelLabel}>
                       <span className="ui-text-muted">{step.label}</span>
@@ -350,7 +350,7 @@ export default function CrmReportsPage() {
               {/* Pipeline Funnel */}
               <Card padding="md">
                 <h4 className={styles.sectionTitle}>Pipeline Breakdown</h4>
-                {Object.entries(data.funnel).map(([stage, info]) => (
+                {Object.entries(data.funnel).map(([stage, info]: any) => (
                   <div key={stage} className={styles.pipelineRow}>
                     <span className="text-sm">{stage.replace(/_/g, " ")}</span>
                     <span className={styles.pipelineValue}>
@@ -370,9 +370,9 @@ export default function CrmReportsPage() {
                         {
                           key: "userId",
                           header: "Rep",
-                          render: (v, row) => {
+                          render: (v: any, row: any) => {
                             const i = data.repPerformance.findIndex(
-                              (r) => r.userId === v,
+                              (r: any) => r.userId === v,
                             );
                             return `${i === 0 ? "🏆 " : ""}${String(v).substring(0, 8)}`;
                           },
@@ -457,12 +457,12 @@ export default function CrmReportsPage() {
                 <label className={styles.formLabel}>Report Type</label>
                 <select
                   value={reportForm.type}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReportForm({ ...reportForm, type: e.target.value })
                   }
                   className={styles.formControl}
                 >
-                  {REPORT_TYPES.map((t) => (
+                  {REPORT_TYPES.map((t: any) => (
                     <option key={t} value={t}>
                       {t}
                     </option>
@@ -473,12 +473,12 @@ export default function CrmReportsPage() {
                 <label className={styles.formLabel}>Chart Type</label>
                 <select
                   value={reportForm.chartType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReportForm({ ...reportForm, chartType: e.target.value })
                   }
                   className={styles.formControl}
                 >
-                  {CHART_TYPES.map((t) => (
+                  {CHART_TYPES.map((t: any) => (
                     <option key={t} value={t}>
                       {t}
                     </option>
@@ -489,7 +489,7 @@ export default function CrmReportsPage() {
                 <label className={styles.formLabel}>Report Name</label>
                 <input
                   value={reportForm.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReportForm({ ...reportForm, name: e.target.value })
                   }
                   placeholder="My Custom Report"
@@ -502,7 +502,7 @@ export default function CrmReportsPage() {
                 <input
                   type="checkbox"
                   checked={reportForm.isShared}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReportForm({ ...reportForm, isShared: e.target.checked })
                   }
                   id="shared"
@@ -605,19 +605,19 @@ export default function CrmReportsPage() {
                   required
                   placeholder="Report name"
                   value={reportForm.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReportForm({ ...reportForm, name: e.target.value })
                   }
                   className={styles.formControl}
                 />
                 <select
                   value={reportForm.type}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReportForm({ ...reportForm, type: e.target.value })
                   }
                   className={styles.formControl}
                 >
-                  {REPORT_TYPES.map((t) => (
+                  {REPORT_TYPES.map((t: any) => (
                     <option key={t} value={t}>
                       {t}
                     </option>
@@ -625,12 +625,12 @@ export default function CrmReportsPage() {
                 </select>
                 <select
                   value={reportForm.chartType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReportForm({ ...reportForm, chartType: e.target.value })
                   }
                   className={styles.formControl}
                 >
-                  {CHART_TYPES.map((t) => (
+                  {CHART_TYPES.map((t: any) => (
                     <option key={t} value={t}>
                       {t}
                     </option>

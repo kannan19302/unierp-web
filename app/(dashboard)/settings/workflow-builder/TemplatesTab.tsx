@@ -111,7 +111,7 @@ export default function TemplatesTab() {
         </div>
 
         <div className="ui-stack-3">
-          {workflows.map((wf) => (
+          {workflows.map((wf: any) => (
             <div key={wf.id} className={styles.p9}>
               <div className={styles.p10}>
                 <span className={styles.p11}>{wf.name}</span>
@@ -120,7 +120,7 @@ export default function TemplatesTab() {
               <div>
                 <span className="ui-text-xs-bold-muted">Steps Chain:</span>
                 <div className={styles.p13}>
-                  {wf.steps?.map((step) => (
+                  {wf.steps?.map((step: any) => (
                     <div key={step.id} className={styles.p14}>
                       Step {step.stepOrder}: {step.actionType} (
                       {step.assigneeRole})

@@ -14,7 +14,7 @@ export function CommandPalette() {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        setOpen((open: any) => !open);
       }
     };
 
@@ -39,7 +39,7 @@ export function CommandPalette() {
     { name: "CRM Dashboard", href: "/crm" },
     { name: "Studio", href: "/builder" },
     { name: "Settings", href: "/settings" },
-  ].filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
+  ].filter((c: any) => c.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <div
@@ -102,7 +102,7 @@ export function CommandPalette() {
               color: "var(--color-text)",
             }}
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value)}
           />
           <div
             style={{
@@ -139,7 +139,7 @@ export function CommandPalette() {
           }}
         >
           {commands.length > 0 ? (
-            commands.map((cmd, idx) => (
+            commands.map((cmd: any, idx: any) => (
               <button
                 key={idx}
                 onClick={() => {
@@ -159,11 +159,11 @@ export function CommandPalette() {
                   cursor: "pointer",
                   color: "var(--color-text)",
                 }}
-                onMouseEnter={(e) =>
+                onMouseEnter={(e: any) =>
                   (e.currentTarget.style.backgroundColor =
                     "var(--color-bg-sunken)")
                 }
-                onMouseLeave={(e) =>
+                onMouseLeave={(e: any) =>
                   (e.currentTarget.style.backgroundColor = "transparent")
                 }
               >

@@ -92,7 +92,7 @@ export default function RevenueIntelligencePage() {
           marginBottom: "1rem",
         }}
       >
-        {sections.map((s) => (
+        {sections.map((s: any) => (
           <Button
             key={s.id}
             variant={activeSection === s.id ? "primary" : "secondary"}

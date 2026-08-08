@@ -122,7 +122,7 @@ export default function CompetitorReportsPage() {
           className="ui-input"
           style={{ width: 150 }}
           value={filter.severity}
-          onChange={(e) => setFilter({ ...filter, severity: e.target.value })}
+          onChange={(e: any) => setFilter({ ...filter, severity: e.target.value })}
         >
           <option value="">All Severities</option>
           <option value="INFO">Info</option>
@@ -133,7 +133,7 @@ export default function CompetitorReportsPage() {
           className="ui-input"
           style={{ width: 180 }}
           value={filter.reportType}
-          onChange={(e) => setFilter({ ...filter, reportType: e.target.value })}
+          onChange={(e: any) => setFilter({ ...filter, reportType: e.target.value })}
         >
           <option value="">All Types</option>
           <option value="SWOT">SWOT</option>
@@ -155,7 +155,7 @@ export default function CompetitorReportsPage() {
               <input
                 className="ui-input"
                 value={form.competitorId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, competitorId: e.target.value })
                 }
               />
@@ -165,7 +165,7 @@ export default function CompetitorReportsPage() {
               <input
                 className="ui-input"
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, title: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -174,7 +174,7 @@ export default function CompetitorReportsPage() {
                 className="ui-input"
                 rows={4}
                 value={form.content}
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, content: e.target.value })}
               />
             </div>
             <div className="ui-form-group">
@@ -182,7 +182,7 @@ export default function CompetitorReportsPage() {
               <select
                 className="ui-input"
                 value={form.reportType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, reportType: e.target.value })
                 }
               >
@@ -198,7 +198,7 @@ export default function CompetitorReportsPage() {
               <select
                 className="ui-input"
                 value={form.severity}
-                onChange={(e) => setForm({ ...form, severity: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, severity: e.target.value })}
               >
                 <option value="INFO">Info</option>
                 <option value="WARNING">Warning</option>

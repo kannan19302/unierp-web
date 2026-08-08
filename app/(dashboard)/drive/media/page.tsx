@@ -75,12 +75,12 @@ export default function DriveMediaPage() {
         {[
           {
             label: "Active Rules",
-            value: rules.filter((r) => r.enabled).length.toString(),
+            value: rules.filter((r: any) => r.enabled).length.toString(),
             color: "var(--color-success)",
           },
           {
             label: "Inactive Rules",
-            value: rules.filter((r) => !r.enabled).length.toString(),
+            value: rules.filter((r: any) => !r.enabled).length.toString(),
             color: "var(--color-text-secondary)",
           },
           {
@@ -93,7 +93,7 @@ export default function DriveMediaPage() {
             value: "~65%",
             color: "var(--color-warning)",
           },
-        ].map((m, i) => (
+        ].map((m: any, i: any) => (
           <div key={i} className="ui-card p-4">
             <div className={styles.p1}>{m.label}</div>
             <div className={styles.p2} style={{ color: m.color }}>
@@ -105,7 +105,7 @@ export default function DriveMediaPage() {
 
       <div className="ui-card p-5">
         <h3 className="ui-section-header">Auto-Conversion Pipeline</h3>
-        {rules.map((rule, i) => (
+        {rules.map((rule: any, i: any) => (
           <div
             key={i}
             className={styles.rule}

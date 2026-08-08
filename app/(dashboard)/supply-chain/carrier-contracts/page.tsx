@@ -53,7 +53,7 @@ export default function CarrierContractsPage() {
       ) as Promise<any>,
       client.get("/supply-chain/carrier-contracts/dashboard") as Promise<any>,
     ])
-      .then(([list, dash]) => {
+      .then(([list, dash]: any) => {
         setContracts(list.data ?? []);
         setPageCount(list.totalPages ?? 1);
         setDashboard(dash);
@@ -217,7 +217,7 @@ export default function CarrierContractsPage() {
                 required
                 placeholder="CCT-2026-001"
                 value={form.contractNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, contractNumber: e.target.value })
                 }
               />
@@ -225,7 +225,7 @@ export default function CarrierContractsPage() {
                 label="Title"
                 required
                 value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, title: e.target.value })}
               />
             </div>
             <div className="ui-grid-2 ui-gap-3">
@@ -233,14 +233,14 @@ export default function CarrierContractsPage() {
                 label="Carrier ID"
                 required
                 value={form.carrierId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, carrierId: e.target.value })
                 }
               />
               <FormField label="Contract Type">
                 <Select
                   value={form.contractType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, contractType: e.target.value })
                   }
                 >
@@ -257,7 +257,7 @@ export default function CarrierContractsPage() {
                 label="Start Date"
                 type="date"
                 value={form.startDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
               />
@@ -265,7 +265,7 @@ export default function CarrierContractsPage() {
                 label="End Date"
                 type="date"
                 value={form.endDate}
-                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endDate: e.target.value })}
               />
             </div>
             <TextField
@@ -273,7 +273,7 @@ export default function CarrierContractsPage() {
               type="number"
               min={0}
               value={form.totalValue || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({
                   ...form,
                   totalValue: parseFloat(e.target.value) || 0,

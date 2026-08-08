@@ -169,7 +169,7 @@ function VerifyEmailContent() {
                         className="auth-input"
                         placeholder="admin@company.com"
                         value={resendEmail}
-                        onChange={(e) => setResendEmail(e.target.value)}
+                        onChange={(e: any) => setResendEmail(e.target.value)}
                         autoComplete="email"
                       />
                     </div>

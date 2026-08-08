@@ -71,11 +71,11 @@ export default function ActiveApprovalsTab() {
       <div className="ui-card p-5">
         <h2 className={styles.s5}>
           Active Approvals (
-          {approvals.filter((a) => a.status === "PENDING").length} Pending)
+          {approvals.filter((a: any) => a.status === "PENDING").length} Pending)
         </h2>
 
         <div className="ui-stack-3">
-          {approvals.map((app) => (
+          {approvals.map((app: any) => (
             <div key={app.id} className={styles.s6}>
               <div>
                 <p className={styles.s7}>

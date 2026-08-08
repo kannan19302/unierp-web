@@ -195,7 +195,7 @@ export default function BankFeedsConnectionsPage() {
             </div>
           ) : (
             <div className="ui-flex-col">
-              {connections.map((conn) => (
+              {connections.map((conn: any) => (
                 <div key={conn.id} className={styles.s9}>
                   <div className="ui-hstack-4">
                     <div className={styles.s10}>
@@ -284,7 +284,7 @@ export default function BankFeedsConnectionsPage() {
                   <select
                     className="ui-input w-full"
                     value={selectedBank}
-                    onChange={(e) => setSelectedBank(e.target.value)}
+                    onChange={(e: any) => setSelectedBank(e.target.value)}
                   >
                     <option value="Chase Bank">Chase Bank</option>
                     <option value="Wells Fargo">Wells Fargo</option>
@@ -305,7 +305,7 @@ export default function BankFeedsConnectionsPage() {
                     className="ui-input w-full"
                     placeholder="e.g. 5543"
                     value={accountNumber}
-                    onChange={(e) => setAccountNumber(e.target.value)}
+                    onChange={(e: any) => setAccountNumber(e.target.value)}
                     maxLength={4}
                     required
                   />
@@ -316,7 +316,7 @@ export default function BankFeedsConnectionsPage() {
                   <select
                     className="ui-input w-full"
                     value={accountType}
-                    onChange={(e) => setAccountType(e.target.value)}
+                    onChange={(e: any) => setAccountType(e.target.value)}
                   >
                     <option value="CHECKING">Checking Account</option>
                     <option value="SAVINGS">Savings Account</option>
@@ -331,11 +331,11 @@ export default function BankFeedsConnectionsPage() {
                   <select
                     className="ui-input w-full"
                     value={targetBankAccountId}
-                    onChange={(e) => setTargetBankAccountId(e.target.value)}
+                    onChange={(e: any) => setTargetBankAccountId(e.target.value)}
                     required
                   >
                     <option value="">-- Select Bank Account --</option>
-                    {bankAccounts.map((ba) => (
+                    {bankAccounts.map((ba: any) => (
                       <option key={ba.id} value={ba.id}>
                         {ba.bankName} - {ba.accountNumber}
                       </option>

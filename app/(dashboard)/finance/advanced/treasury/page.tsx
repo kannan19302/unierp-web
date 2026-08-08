@@ -196,7 +196,7 @@ export default function TreasuryPage() {
                       required
                       placeholder="Treasury Bond B-2"
                       value={investmentData.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setInvestmentData({
                           ...investmentData,
                           name: e.target.value,
@@ -210,7 +210,7 @@ export default function TreasuryPage() {
                       className="ui-field-line"
                       required
                       value={investmentData.assetClass}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setInvestmentData({
                           ...investmentData,
                           assetClass: e.target.value,
@@ -231,7 +231,7 @@ export default function TreasuryPage() {
                       required
                       placeholder="5.5"
                       value={investmentData.yieldRate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setInvestmentData({
                           ...investmentData,
                           yieldRate: e.target.value,
@@ -247,7 +247,7 @@ export default function TreasuryPage() {
                       required
                       placeholder="250000"
                       value={investmentData.currentValue}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setInvestmentData({
                           ...investmentData,
                           currentValue: e.target.value,
@@ -287,7 +287,7 @@ export default function TreasuryPage() {
                       className="ui-field-line"
                       required
                       value={transferData.type}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTransferData({
                           ...transferData,
                           type: e.target.value,
@@ -313,7 +313,7 @@ export default function TreasuryPage() {
                       required
                       placeholder="50000"
                       value={transferData.amount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTransferData({
                           ...transferData,
                           amount: e.target.value,
@@ -327,7 +327,7 @@ export default function TreasuryPage() {
                       className="ui-field-line"
                       required
                       value={transferData.currency}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTransferData({
                           ...transferData,
                           currency: e.target.value,
@@ -346,7 +346,7 @@ export default function TreasuryPage() {
                       className="ui-field-line"
                       required
                       value={transferData.bankAccountId}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTransferData({
                           ...transferData,
                           bankAccountId: e.target.value,
@@ -354,7 +354,7 @@ export default function TreasuryPage() {
                       }
                     >
                       <option value="">Select Account</option>
-                      {bankAccounts.map((b) => (
+                      {bankAccounts.map((b: any) => (
                         <option key={b.id} value={b.id}>
                           {b.bankName} - {b.accountNumber}
                         </option>
@@ -460,7 +460,7 @@ export default function TreasuryPage() {
                   </div>
                 ) : (
                   <div className="divide-y">
-                    {transactions.slice(0, 5).map((tx) => (
+                    {transactions.slice(0, 5).map((tx: any) => (
                       <div
                         key={tx.id}
                         className={`hover:bg-muted/30 ${styles.s7}`}

@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import { useState, useEffect } from "react";
 import { Trash2, Search as SearchIcon } from "lucide-react";
@@ -18,8 +18,8 @@ export default function SavedSearchesPage() {
 
   useEffect(() => {
     fetch("/api/search/saved")
-      .then((r) => r.json())
-      .then((data) => {
+      .then((r: any) => r.json())
+      .then((data: any) => {
         setSearches(Array.isArray(data) ? data : []);
         setLoading(false);
       })
@@ -28,7 +28,7 @@ export default function SavedSearchesPage() {
 
   const deleteSearch = async (id: string) => {
     await fetch(`/api/search/saved/${id}`, { method: "DELETE" });
-    setSearches((prev) => prev.filter((s) => s.id !== id));
+    setSearches((prev: any) => prev.filter((s: any) => s.id !== id));
   };
 
   return (

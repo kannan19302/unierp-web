@@ -199,7 +199,7 @@ export default function APAutomationPage() {
                       className="ui-field-line"
                       required
                       value={scheduleData.vendorId}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleData({
                           ...scheduleData,
                           vendorId: e.target.value,
@@ -207,7 +207,7 @@ export default function APAutomationPage() {
                       }
                     >
                       <option value="">Select Vendor</option>
-                      {vendors.map((v) => (
+                      {vendors.map((v: any) => (
                         <option key={v.id} value={v.id}>
                           {v.name}
                         </option>
@@ -222,7 +222,7 @@ export default function APAutomationPage() {
                       required
                       placeholder="1500.00"
                       value={scheduleData.amount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleData({
                           ...scheduleData,
                           amount: e.target.value,
@@ -237,7 +237,7 @@ export default function APAutomationPage() {
                       type="date"
                       required
                       value={scheduleData.dueDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setScheduleData({
                           ...scheduleData,
                           dueDate: e.target.value,
@@ -275,7 +275,7 @@ export default function APAutomationPage() {
                       className="ui-field-line"
                       required
                       value={runData.bankAccountId}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunData({
                           ...runData,
                           bankAccountId: e.target.value,
@@ -283,7 +283,7 @@ export default function APAutomationPage() {
                       }
                     >
                       <option value="">Select Account</option>
-                      {bankAccounts.map((b) => (
+                      {bankAccounts.map((b: any) => (
                         <option key={b.id} value={b.id}>
                           {b.bankName} - {b.accountNumber}
                         </option>
@@ -298,7 +298,7 @@ export default function APAutomationPage() {
                       required
                       placeholder="25000.00"
                       value={runData.totalAmount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunData({ ...runData, totalAmount: e.target.value })
                       }
                     />
@@ -310,7 +310,7 @@ export default function APAutomationPage() {
                       type="date"
                       required
                       value={runData.runDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRunData({ ...runData, runDate: e.target.value })
                       }
                     />

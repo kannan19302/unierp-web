@@ -29,7 +29,7 @@ export default function OAuthCompletePage() {
       headers,
       credentials: "include",
     })
-      .then(async (res) => {
+      .then(async (res: any) => {
         if (!res.ok) throw new Error(`refresh failed (${res.status})`);
         const data = (await res.json()) as { token?: string; user?: unknown };
         if (!data.token) throw new Error("no token");

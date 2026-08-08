@@ -106,7 +106,7 @@ export default function ReportingJobsPage() {
             type="text"
             placeholder="Job Title (e.g. Monday Morning Executive Revenue Dispatch)..."
             value={jobName}
-            onChange={(e) => setJobName(e.target.value)}
+            onChange={(e: any) => setJobName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",

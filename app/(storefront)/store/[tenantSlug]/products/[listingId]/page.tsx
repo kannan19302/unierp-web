@@ -164,7 +164,7 @@ export default function ProductDetailPage() {
             <div className={styles.s18}>
               <div className={styles.s19}>
                 <button
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  onClick={() => setQuantity((q: any) => Math.max(1, q - 1))}
                   className={styles.s20}
                   aria-label="Decrease quantity"
                 >
@@ -172,7 +172,7 @@ export default function ProductDetailPage() {
                 </button>
                 <span className={styles.s21}>{quantity}</span>
                 <button
-                  onClick={() => setQuantity((q) => q + 1)}
+                  onClick={() => setQuantity((q: any) => q + 1)}
                   className={styles.s20}
                   aria-label="Increase quantity"
                 >

@@ -59,7 +59,7 @@ export default function SimulatorTab() {
             <label className={styles.p4}>System Trigger Event</label>
             <select
               value={simTriggerType}
-              onChange={(e) => setSimTriggerType(e.target.value)}
+              onChange={(e: any) => setSimTriggerType(e.target.value)}
               className={styles.p5}
             >
               <option value="PO_CREATED">PO_CREATED</option>
@@ -73,7 +73,7 @@ export default function SimulatorTab() {
             <input
               type="text"
               value={simEntityType}
-              onChange={(e) => setSimEntityType(e.target.value)}
+              onChange={(e: any) => setSimEntityType(e.target.value)}
               className={styles.p7}
             />
           </div>
@@ -83,7 +83,7 @@ export default function SimulatorTab() {
             <input
               type="text"
               value={simEntityId}
-              onChange={(e) => setSimEntityId(e.target.value)}
+              onChange={(e: any) => setSimEntityId(e.target.value)}
               className={styles.p9}
             />
           </div>
@@ -115,7 +115,7 @@ export default function SimulatorTab() {
                 </div>
 
                 <div className={styles.p15}>
-                  {simResult.sequence?.map((step) => (
+                  {simResult.sequence?.map((step: any) => (
                     <div key={step.stepOrder} className={styles.p16}>
                       <div className={styles.p17}>
                         <span>

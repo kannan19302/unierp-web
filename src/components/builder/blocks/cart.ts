@@ -44,7 +44,7 @@ export function useCart() {
   const add = useCallback((item: CartItem) => {
     const cur = read();
     const idx = cur.findIndex(
-      (i) => i.name === item.name && i.productSlug === item.productSlug,
+      (i: any) => i.name === item.name && i.productSlug === item.productSlug,
     );
     if (idx >= 0) cur[idx]!.qty += item.qty || 1;
     else cur.push({ ...item, qty: item.qty || 1 });
@@ -66,8 +66,8 @@ export function useCart() {
   }, []);
   const clear = useCallback(() => write([]), []);
 
-  const count = items.reduce((s, i) => s + i.qty, 0);
-  const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = items.reduce((s: any, i: any) => s + i.qty, 0);
+  const subtotal = items.reduce((s: any, i: any) => s + i.price * i.qty, 0);
 
   return { items, add, setQty, remove, clear, count, subtotal };
 }

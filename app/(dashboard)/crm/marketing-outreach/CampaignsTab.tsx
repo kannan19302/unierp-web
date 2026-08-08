@@ -63,7 +63,7 @@ export default function CampaignsTab() {
   useEffect(() => {
     client
       .get<any>("/crm/segments")
-      .then((d) => setSegments(Array.isArray(d) ? d : d?.data || []))
+      .then((d: any) => setSegments(Array.isArray(d) ? d : d?.data || []))
       .catch(() => setSegments([]));
   }, [client]);
 
@@ -123,7 +123,7 @@ export default function CampaignsTab() {
     }
   };
 
-  const filtered = campaigns.filter((c) => {
+  const filtered = campaigns.filter((c: any) => {
     const q = searchQuery.toLowerCase();
     const matchesSearch =
       c.name.toLowerCase().includes(q) || c.type.toLowerCase().includes(q);
@@ -132,11 +132,11 @@ export default function CampaignsTab() {
     );
   });
 
-  const totalBudget = campaigns.reduce((a, c) => a + c.budget, 0);
-  const totalSpend = campaigns.reduce((a, c) => a + c.actualCost, 0);
+  const totalBudget = campaigns.reduce((a: any, c: any) => a + c.budget, 0);
+  const totalSpend = campaigns.reduce((a: any, c: any) => a + c.actualCost, 0);
   const avgConv = campaigns.length
     ? (
-        campaigns.reduce((a, c) => a + c.conversionRate, 0) / campaigns.length
+        campaigns.reduce((a: any, c: any) => a + c.conversionRate, 0) / campaigns.length
       ).toFixed(2)
     : "0.00";
 
@@ -219,7 +219,7 @@ export default function CampaignsTab() {
       </div>
 
       <div className={styles.style1}>
-        {kpis.map((k) => (
+        {kpis.map((k: any) => (
           <Card key={k.label} className={styles.style2}>
             <div style={{ color: k.color }} className={styles.s1}>
               {k.icon}
@@ -239,12 +239,12 @@ export default function CampaignsTab() {
             <Input
               placeholder="Search campaigns…"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
               className={styles.style8}
             />
           </div>
           <div className="ui-flex ui-gap-2">
-            {STATUSES.map((s) => (
+            {STATUSES.map((s: any) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
@@ -301,7 +301,7 @@ export default function CampaignsTab() {
                 ["Actual Cost", `$${selected.actualCost.toLocaleString()}`],
                 ["Leads", selected.leadCount],
                 ["Closed Won", selected.wonCount],
-              ].map(([l, v]) => (
+              ].map(([l, v]: any) => (
                 <div key={l as string} className={styles.style12}>
                   <div className="text-2xl">{v}</div>
                   <div className="ui-text-xs-muted">{l}</div>
@@ -337,14 +337,14 @@ export default function CampaignsTab() {
               required
               placeholder="e.g. Autumn Sourcing Drive"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
             />
           </FormField>
           <div className="ui-grid-2">
             <FormField label="Channel Type">
               <Select
                 value={form.type}
-                onChange={(e) => setForm({ ...form, type: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, type: e.target.value })}
               >
                 <option value="EMAIL">Email Blast</option>
                 <option value="SOCIAL">Social Media</option>
@@ -356,9 +356,9 @@ export default function CampaignsTab() {
             <FormField label="Status">
               <Select
                 value={form.status}
-                onChange={(e) => setForm({ ...form, status: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, status: e.target.value })}
               >
-                {STATUSES.filter((s) => s !== "ALL").map((s) => (
+                {STATUSES.filter((s: any) => s !== "ALL").map((s: any) => (
                   <option key={s} value={s}>
                     {s}
                   </option>
@@ -372,7 +372,7 @@ export default function CampaignsTab() {
                 type="number"
                 min={0}
                 value={form.budget}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, budget: Number(e.target.value) })
                 }
               />
@@ -382,7 +382,7 @@ export default function CampaignsTab() {
                 type="number"
                 min={0}
                 value={form.actualCost}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, actualCost: Number(e.target.value) })
                 }
               />
@@ -391,10 +391,10 @@ export default function CampaignsTab() {
           <FormField label="Target Segment">
             <Select
               value={form.segmentId}
-              onChange={(e) => setForm({ ...form, segmentId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, segmentId: e.target.value })}
             >
               <option value="">— All records (no segment) —</option>
-              {segments.map((s) => (
+              {segments.map((s: any) => (
                 <option key={s.id} value={s.id}>
                   {s.name} ({s.entity}
                   {typeof s.memberCount === "number"
@@ -410,7 +410,7 @@ export default function CampaignsTab() {
               rows={3}
               placeholder="Goal, target demographics, etc."
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </FormField>
         </form>

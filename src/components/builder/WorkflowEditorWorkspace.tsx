@@ -92,7 +92,7 @@ const NODE_TYPES = [
 ];
 
 function CustomNode({ data, isConnectable }: any) {
-  const nt = NODE_TYPES.find((n) => n.type === data.nodeType);
+  const nt = NODE_TYPES.find((n: any) => n.type === data.nodeType);
   const Icon = nt?.icon || BoxSelect;
   const color = nt?.color || "var(--studio-400)";
   return (
@@ -263,7 +263,7 @@ function WorkflowEditorInner({
 
   const onConnect = useCallback(
     (params: Connection) =>
-      setEdges((eds) =>
+      setEdges((eds: any) =>
         addEdge(
           { ...params, markerEnd: { type: MarkerType.ArrowClosed } },
           eds,
@@ -304,7 +304,7 @@ function WorkflowEditorInner({
         position,
         data: { label: nodeData.label, nodeType: nodeData.type, config: {} },
       };
-      setNodes((nds) => nds.concat(newNode));
+      setNodes((nds: any) => nds.concat(newNode));
     },
     [reactFlowInstance, setNodes],
   );
@@ -312,7 +312,7 @@ function WorkflowEditorInner({
   const onSelectionChange = useCallback(
     (params: any) => {
       if (params.nodes.length > 0)
-        setSelectedNode(nodes.find((n) => n.id === params.nodes[0].id) || null);
+        setSelectedNode(nodes.find((n: any) => n.id === params.nodes[0].id) || null);
       else setSelectedNode(null);
     },
     [nodes],
@@ -361,8 +361,8 @@ function WorkflowEditorInner({
 
   const updateNodeData = (key: string, value: any) => {
     if (!selectedNode) return;
-    setNodes((nds) =>
-      nds.map((n) => {
+    setNodes((nds: any) =>
+      nds.map((n: any) => {
         if (n.id === selectedNode.id) {
           const newData = { ...n.data, [key]: value };
           setSelectedNode({ ...n, data: newData });
@@ -483,7 +483,7 @@ function WorkflowEditorInner({
           <div>
             <input
               value={workflow?.name || ""}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setWorkflow({ ...(workflow || {}), name: e.target.value })
               }
               style={{
@@ -647,10 +647,10 @@ function WorkflowEditorInner({
               overflowY: "auto",
             }}
           >
-            {NODE_TYPES.map((nt) => (
+            {NODE_TYPES.map((nt: any) => (
               <div
                 key={nt.type}
-                onDragStart={(event) => onDragStart(event, nt.type, nt.label)}
+                onDragStart={(event: any) => onDragStart(event, nt.type, nt.label)}
                 draggable
                 style={{
                   display: "flex",
@@ -709,8 +709,8 @@ function WorkflowEditorInner({
           <AiCopilotSidebar
             type="workflow"
             componentId={currentId}
-            onSuggestSteps={(steps) => {
-              const newNodes = steps.map((s, idx) => ({
+            onSuggestSteps={(steps: any) => {
+              const newNodes = steps.map((s: any, idx: any) => ({
                 id: `node_ai_${Date.now()}_${idx}`,
                 type: "custom",
                 position: { x: 250, y: 150 + idx * 120 },
@@ -777,7 +777,7 @@ function WorkflowEditorInner({
                   <input
                     type="text"
                     value={selectedNode.data.label as string}
-                    onChange={(e) => updateNodeData("label", e.target.value)}
+                    onChange={(e: any) => updateNodeData("label", e.target.value)}
                     style={{
                       padding: "8px 12px",
                       borderRadius: "6px",
@@ -807,7 +807,7 @@ function WorkflowEditorInner({
                       <input
                         type="text"
                         value={(selectedNode.data.config as any)?.toEmail || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateNodeData("config", {
                             ...(selectedNode.data.config as any),
                             toEmail: e.target.value,
@@ -841,7 +841,7 @@ function WorkflowEditorInner({
                       <input
                         type="text"
                         value={(selectedNode.data.config as any)?.subject || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateNodeData("config", {
                             ...(selectedNode.data.config as any),
                             subject: e.target.value,
@@ -878,7 +878,7 @@ function WorkflowEditorInner({
                       value={
                         (selectedNode.data.config as any)?.assignRole || ""
                       }
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateNodeData("config", {
                           ...(selectedNode.data.config as any),
                           assignRole: e.target.value,
@@ -922,7 +922,7 @@ function WorkflowEditorInner({
                       <input
                         type="text"
                         value={(selectedNode.data.config as any)?.field || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateNodeData("config", {
                             ...(selectedNode.data.config as any),
                             field: e.target.value,
@@ -957,7 +957,7 @@ function WorkflowEditorInner({
                         value={
                           (selectedNode.data.config as any)?.operator || "=="
                         }
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateNodeData("config", {
                             ...(selectedNode.data.config as any),
                             operator: e.target.value,
@@ -996,7 +996,7 @@ function WorkflowEditorInner({
                       <input
                         type="text"
                         value={(selectedNode.data.config as any)?.value || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateNodeData("config", {
                             ...(selectedNode.data.config as any),
                             value: e.target.value,
@@ -1034,7 +1034,7 @@ function WorkflowEditorInner({
                       <input
                         type="text"
                         value={(selectedNode.data.config as any)?.url || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateNodeData("config", {
                             ...(selectedNode.data.config as any),
                             url: e.target.value,
@@ -1069,7 +1069,7 @@ function WorkflowEditorInner({
                         value={
                           (selectedNode.data.config as any)?.method || "POST"
                         }
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           updateNodeData("config", {
                             ...(selectedNode.data.config as any),
                             method: e.target.value,
@@ -1101,8 +1101,8 @@ function WorkflowEditorInner({
                 >
                   <button
                     onClick={() => {
-                      setNodes((nds) =>
-                        nds.filter((n) => n.id !== selectedNode.id),
+                      setNodes((nds: any) =>
+                        nds.filter((n: any) => n.id !== selectedNode.id),
                       );
                       setSelectedNode(null);
                     }}

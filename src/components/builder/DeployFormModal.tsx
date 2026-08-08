@@ -72,7 +72,7 @@ export function DeployFormModal({
         if (!isMounted || !res.ok) return;
         const pages = await res.json();
         const mods = [
-          ...new Set((pages as any[]).map((p) => p.module).filter(Boolean)),
+          ...new Set((pages as any[]).map((p: any) => p.module).filter(Boolean)),
         ];
         setExistingModules(mods);
       } catch {
@@ -195,7 +195,7 @@ export function DeployFormModal({
     >
       <div
         className="modal-card ui-card"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: any) => e.stopPropagation()}
         style={{
           width: "100%",
           maxWidth: "520px",
@@ -261,7 +261,7 @@ export function DeployFormModal({
                   className="ui-input"
                   placeholder="e.g. Vehicle Maintenance Request"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e: any) => setTitle(e.target.value)}
                   autoFocus
                 />
               </div>
@@ -273,7 +273,7 @@ export function DeployFormModal({
                   className="ui-input"
                   placeholder="e.g. hr, crm, custom"
                   value={moduleValue}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setModuleValue(
                       e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""),
                     )
@@ -281,7 +281,7 @@ export function DeployFormModal({
                   list="module-suggestions"
                 />
                 <datalist id="module-suggestions">
-                  {existingModules.map((m) => (
+                  {existingModules.map((m: any) => (
                     <option key={m} value={m} />
                   ))}
                 </datalist>
@@ -294,7 +294,7 @@ export function DeployFormModal({
                   className="ui-input"
                   placeholder="e.g. vehicle-maintenance"
                   value={slugValue}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setSlugValue(
                       e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""),
                     )
@@ -327,7 +327,7 @@ export function DeployFormModal({
                   className="ui-input"
                   placeholder="Brief description shown in the sidebar"
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(e: any) => setDescription(e.target.value)}
                 />
               </div>
 

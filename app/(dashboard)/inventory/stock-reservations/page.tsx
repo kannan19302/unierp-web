@@ -40,7 +40,7 @@ const makeColumns = (
   {
     key: "product",
     header: "Product",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as Reservation;
       return r.product?.name || r.productId;
     },
@@ -48,7 +48,7 @@ const makeColumns = (
   {
     key: "warehouse",
     header: "Warehouse",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as Reservation;
       return r.warehouse?.name || r.warehouseId;
     },
@@ -71,7 +71,7 @@ const makeColumns = (
   {
     key: "id",
     header: "",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as Reservation;
       return r.status === "ACTIVE" ? (
         <div className={styles.s1}>
@@ -265,7 +265,7 @@ export default function StockReservationsPage() {
                     type="text"
                     className="ui-input"
                     value={productId}
-                    onChange={(e) => setProductId(e.target.value)}
+                    onChange={(e: any) => setProductId(e.target.value)}
                     required
                   />
                 </div>
@@ -275,7 +275,7 @@ export default function StockReservationsPage() {
                     type="text"
                     className="ui-input"
                     value={warehouseId}
-                    onChange={(e) => setWarehouseId(e.target.value)}
+                    onChange={(e: any) => setWarehouseId(e.target.value)}
                     required
                   />
                 </div>
@@ -285,7 +285,7 @@ export default function StockReservationsPage() {
                     type="number"
                     className="ui-input"
                     value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
+                    onChange={(e: any) => setQuantity(Number(e.target.value))}
                     required
                     min={1}
                   />

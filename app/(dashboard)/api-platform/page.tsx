@@ -10,7 +10,7 @@ export default function ApiKeysPage() {
 
   useEffect(() => {
     apiGet("/admin/api-platform/keys")
-      .then((d) => setKeys(Array.isArray(d) ? d : []))
+      .then((d: any) => setKeys(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

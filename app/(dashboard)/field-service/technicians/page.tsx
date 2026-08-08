@@ -49,13 +49,13 @@ export default function TechniciansPage() {
           />
           <KPICard
             title="Active Techs"
-            value={techs.filter((t) => t.status === "Active").length}
+            value={techs.filter((t: any) => t.status === "Active").length}
             icon={<Users size={18} />}
             color="var(--color-success)"
           />
         </div>
         <div className="ui-stack-3">
-          {techs.map((t) => (
+          {techs.map((t: any) => (
             <Card key={t.id}>
               <div className={styles.s1}>
                 <div>

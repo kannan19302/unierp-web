@@ -151,7 +151,7 @@ export default function SupplierScorecardsPage() {
           <input
             className="ui-input"
             value={form.vendorId}
-            onChange={(e) => setForm({ ...form, vendorId: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, vendorId: e.target.value })}
           />
         </div>
         <div className="ui-grid-2">
@@ -161,7 +161,7 @@ export default function SupplierScorecardsPage() {
               className="ui-input"
               type="date"
               value={form.periodStart}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, periodStart: e.target.value })
               }
             />
@@ -172,7 +172,7 @@ export default function SupplierScorecardsPage() {
               className="ui-input"
               type="date"
               value={form.periodEnd}
-              onChange={(e) => setForm({ ...form, periodEnd: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, periodEnd: e.target.value })}
             />
           </div>
         </div>
@@ -181,7 +181,7 @@ export default function SupplierScorecardsPage() {
           <textarea
             className="ui-input"
             value={form.notes}
-            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
           />
         </div>
         <div

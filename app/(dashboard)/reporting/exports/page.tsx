@@ -81,7 +81,7 @@ export default function ReportingExportsPage() {
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
           <select
             value={reportType}
-            onChange={(e) => setReportType(e.target.value)}
+            onChange={(e: any) => setReportType(e.target.value)}
             style={{
               padding: "8px 12px",
               borderRadius: "6px",

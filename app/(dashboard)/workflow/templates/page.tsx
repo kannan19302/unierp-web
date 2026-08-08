@@ -33,7 +33,7 @@ export default function WorkflowTemplatesPage() {
         <div className="ui-flex" style={{ gap: "var(--space-2)" }}>
           <button
             className="ui-btn-icon"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
           >
@@ -41,7 +41,7 @@ export default function WorkflowTemplatesPage() {
           </button>
           <button
             className="ui-btn-icon"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               apiDelete(`/workflow/templates/${row.id}`).then(load);
             }}

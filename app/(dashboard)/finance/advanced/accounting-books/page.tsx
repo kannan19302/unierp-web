@@ -267,12 +267,12 @@ export default function AccountingBooksPage() {
           </div>
           <div className="ui-flex ui-gap-2">
             <Button
-              onClick={() => setShowCreateRule((s) => !s)}
+              onClick={() => setShowCreateRule((s: any) => !s)}
               variant="secondary"
             >
               <Settings size={14} className={styles.s3} /> Mapping Rules
             </Button>
-            <Button onClick={() => setShowCreate((s) => !s)}>
+            <Button onClick={() => setShowCreate((s: any) => !s)}>
               <Plus size={14} className={styles.s4} /> New Book
             </Button>
           </div>
@@ -290,7 +290,7 @@ export default function AccountingBooksPage() {
                   <label className={styles.s6}>Book Name</label>
                   <input
                     value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
+                    onChange={(e: any) => setNewName(e.target.value)}
                     placeholder="e.g. IFRS 2025"
                     className={styles.s7}
                   />
@@ -299,10 +299,10 @@ export default function AccountingBooksPage() {
                   <label className={styles.s8}>Accounting Standard</label>
                   <select
                     value={newStandard}
-                    onChange={(e) => setNewStandard(e.target.value)}
+                    onChange={(e: any) => setNewStandard(e.target.value)}
                     className={styles.s9}
                   >
-                    {STANDARDS.map((s) => (
+                    {STANDARDS.map((s: any) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
@@ -314,7 +314,7 @@ export default function AccountingBooksPage() {
                 <input
                   type="checkbox"
                   checked={newPrimary}
-                  onChange={(e) => setNewPrimary(e.target.checked)}
+                  onChange={(e: any) => setNewPrimary(e.target.checked)}
                 />
                 Set as primary book for this organization
               </label>
@@ -349,13 +349,13 @@ export default function AccountingBooksPage() {
                   <label className={styles.s14}>Source Book (From)</label>
                   <select
                     value={newRule.sourceBookId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewRule({ ...newRule, sourceBookId: e.target.value })
                     }
                     className={styles.s15}
                   >
                     <option value="">Select source book…</option>
-                    {books.map((b) => (
+                    {books.map((b: any) => (
                       <option key={b.id} value={b.id}>
                         {b.name} ({b.standard})
                       </option>
@@ -367,7 +367,7 @@ export default function AccountingBooksPage() {
                   <label className={styles.s16}>Destination Book (To)</label>
                   <select
                     value={newRule.destinationBookId}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewRule({
                         ...newRule,
                         destinationBookId: e.target.value,
@@ -376,7 +376,7 @@ export default function AccountingBooksPage() {
                     className={styles.s17}
                   >
                     <option value="">Select destination book…</option>
-                    {books.map((b) => (
+                    {books.map((b: any) => (
                       <option key={b.id} value={b.id}>
                         {b.name} ({b.standard})
                       </option>
@@ -388,7 +388,7 @@ export default function AccountingBooksPage() {
                   <label className={styles.s18}>Rule Type</label>
                   <select
                     value={newRule.ruleType}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewRule({ ...newRule, ruleType: e.target.value })
                     }
                     className={styles.s19}
@@ -409,7 +409,7 @@ export default function AccountingBooksPage() {
                       <label className={styles.s20}>Source Account</label>
                       <select
                         value={newRule.sourceAccountId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             sourceAccountId: e.target.value,
@@ -420,7 +420,7 @@ export default function AccountingBooksPage() {
                         <option value="">
                           Select source account (optional)…
                         </option>
-                        {accounts.map((a) => (
+                        {accounts.map((a: any) => (
                           <option key={a.id} value={a.id}>
                             {a.code} — {a.name}
                           </option>
@@ -432,7 +432,7 @@ export default function AccountingBooksPage() {
                       <label className={styles.s22}>Destination Account</label>
                       <select
                         value={newRule.destinationAccountId}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewRule({
                             ...newRule,
                             destinationAccountId: e.target.value,
@@ -441,7 +441,7 @@ export default function AccountingBooksPage() {
                         className={styles.s23}
                       >
                         <option value="">Select destination account…</option>
-                        {accounts.map((a) => (
+                        {accounts.map((a: any) => (
                           <option key={a.id} value={a.id}>
                             {a.code} — {a.name}
                           </option>
@@ -459,7 +459,7 @@ export default function AccountingBooksPage() {
                     type="number"
                     step="0.0001"
                     value={newRule.multiplier}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setNewRule({
                         ...newRule,
                         multiplier: parseFloat(e.target.value) || 1.0,
@@ -497,7 +497,7 @@ export default function AccountingBooksPage() {
           </Card>
         ) : (
           <div className={styles.s30}>
-            {books.map((b) => (
+            {books.map((b: any) => (
               <Card key={b.id}>
                 <div className="p-5">
                   <div className={styles.s31}>
@@ -548,11 +548,11 @@ export default function AccountingBooksPage() {
                   <label className={styles.s39}>Book A</label>
                   <select
                     value={book1Id}
-                    onChange={(e) => setBook1Id(e.target.value)}
+                    onChange={(e: any) => setBook1Id(e.target.value)}
                     className={styles.s40}
                   >
                     <option value="">Select…</option>
-                    {books.map((b) => (
+                    {books.map((b: any) => (
                       <option key={b.id} value={b.id}>
                         {b.name} ({b.standard})
                       </option>
@@ -563,11 +563,11 @@ export default function AccountingBooksPage() {
                   <label className={styles.s41}>Book B</label>
                   <select
                     value={book2Id}
-                    onChange={(e) => setBook2Id(e.target.value)}
+                    onChange={(e: any) => setBook2Id(e.target.value)}
                     className={styles.s42}
                   >
                     <option value="">Select…</option>
-                    {books.map((b) => (
+                    {books.map((b: any) => (
                       <option key={b.id} value={b.id}>
                         {b.name} ({b.standard})
                       </option>
@@ -827,7 +827,7 @@ export default function AccountingBooksPage() {
                         {
                           key: "destinationAccount",
                           header: "Destination Account",
-                          render: (v, row) => (
+                          render: (v: any, row: any) => (
                             <span className={styles.s59}>
                               {(v as any)
                                 ? `${(v as any).code} - ${(v as any).name}`

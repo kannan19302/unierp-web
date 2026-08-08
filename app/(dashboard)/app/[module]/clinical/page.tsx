@@ -112,7 +112,7 @@ export default function ClinicalToolsPage() {
 
         {/* Tabs */}
         <div className={styles.s8}>
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -276,7 +276,7 @@ function EligibilityTool() {
         <input
           style={inputStyle}
           value={mrn}
-          onChange={(e) => setMrn(e.target.value)}
+          onChange={(e: any) => setMrn(e.target.value)}
           placeholder="MRN1002"
         />
       </Field>
@@ -343,7 +343,7 @@ function ScrubberTool() {
     amount: 180,
   });
   const { loading, result, error, call } = useApi();
-  const set = (k: string, v: any) => setForm((f) => ({ ...f, [k]: v }));
+  const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
   return (
     <div className="ui-stack-4">
       <div className={styles.s17}>
@@ -351,28 +351,28 @@ function ScrubberTool() {
           <input
             style={inputStyle}
             value={form.patient_mrn}
-            onChange={(e) => set("patient_mrn", e.target.value)}
+            onChange={(e: any) => set("patient_mrn", e.target.value)}
           />
         </Field>
         <Field label="Payer">
           <input
             style={inputStyle}
             value={form.payer}
-            onChange={(e) => set("payer", e.target.value)}
+            onChange={(e: any) => set("payer", e.target.value)}
           />
         </Field>
         <Field label="ICD-10">
           <input
             style={inputStyle}
             value={form.icd10_code}
-            onChange={(e) => set("icd10_code", e.target.value)}
+            onChange={(e: any) => set("icd10_code", e.target.value)}
           />
         </Field>
         <Field label="CPT">
           <input
             style={inputStyle}
             value={form.cpt_code}
-            onChange={(e) => set("cpt_code", e.target.value)}
+            onChange={(e: any) => set("cpt_code", e.target.value)}
           />
         </Field>
         <Field label="Amount">
@@ -380,7 +380,7 @@ function ScrubberTool() {
             style={inputStyle}
             type="number"
             value={form.amount}
-            onChange={(e) => set("amount", Number(e.target.value))}
+            onChange={(e: any) => set("amount", Number(e.target.value))}
           />
         </Field>
       </div>
@@ -439,14 +439,14 @@ function InteractionsTool() {
         <input
           style={inputStyle}
           value={mrn}
-          onChange={(e) => setMrn(e.target.value)}
+          onChange={(e: any) => setMrn(e.target.value)}
         />
       </Field>
       <Field label="Additional medications (comma-separated)">
         <input
           style={inputStyle}
           value={meds}
-          onChange={(e) => setMeds(e.target.value)}
+          onChange={(e: any) => setMeds(e.target.value)}
         />
       </Field>
       <RunButton
@@ -456,7 +456,7 @@ function InteractionsTool() {
             patient_mrn: mrn || undefined,
             meds: meds
               .split(",")
-              .map((s) => s.trim())
+              .map((s: any) => s.trim())
               .filter(Boolean),
           })
         }
@@ -508,14 +508,14 @@ function CdsTool() {
         <input
           style={inputStyle}
           value={mrn}
-          onChange={(e) => setMrn(e.target.value)}
+          onChange={(e: any) => setMrn(e.target.value)}
         />
       </Field>
       <Field label="Proposed order / drug (optional)">
         <input
           style={inputStyle}
           value={drug}
-          onChange={(e) => setDrug(e.target.value)}
+          onChange={(e: any) => setDrug(e.target.value)}
         />
       </Field>
       <RunButton
@@ -611,7 +611,7 @@ function FhirTool() {
           <select
             style={inputStyle}
             value={resource}
-            onChange={(e) => setResource(e.target.value as any)}
+            onChange={(e: any) => setResource(e.target.value as any)}
           >
             <option value="Patient">Patient</option>
             <option value="Observation">Observation</option>
@@ -621,7 +621,7 @@ function FhirTool() {
           <input
             style={inputStyle}
             value={mrn}
-            onChange={(e) => setMrn(e.target.value)}
+            onChange={(e: any) => setMrn(e.target.value)}
           />
         </Field>
       </div>

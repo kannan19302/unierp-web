@@ -94,7 +94,7 @@ export default function AdvancedReportingPage() {
     }
   };
 
-  const filteredWidgets = widgets.filter((w) =>
+  const filteredWidgets = widgets.filter((w: any) =>
     w.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
@@ -165,13 +165,13 @@ export default function AdvancedReportingPage() {
                     type="text"
                     placeholder="widgets..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e: any) => setSearchQuery(e.target.value)}
                     className={styles.s11}
                   />
                 </div>
 
                 <div className={styles.s12}>
-                  {filteredWidgets.map((w) => (
+                  {filteredWidgets.map((w: any) => (
                     <div key={w.id} className={styles.s13}>
                       <h4 className={styles.s14}>{w.title}</h4>
                       <p className="ui-text-xs-muted m-0">
@@ -193,7 +193,7 @@ export default function AdvancedReportingPage() {
               <div className="ui-stack-4">
                 <h2 className={styles.s17}>Saved Views & Schedules</h2>
                 <div className="ui-stack-3">
-                  {views.map((v) => (
+                  {views.map((v: any) => (
                     <div key={v.id} className={styles.s18}>
                       <div>
                         <p className={styles.s19}>{v.name}</p>

@@ -116,7 +116,7 @@ export default function EducationEnrollmentsPage() {
               <select
                 className="ui-input"
                 value={form.studentId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, studentId: e.target.value })
                 }
               >
@@ -133,7 +133,7 @@ export default function EducationEnrollmentsPage() {
               <select
                 className="ui-input"
                 value={form.courseId}
-                onChange={(e) => setForm({ ...form, courseId: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, courseId: e.target.value })}
               >
                 <option value="">Select</option>
                 {courses.map((c: any) => (
@@ -148,7 +148,7 @@ export default function EducationEnrollmentsPage() {
               <input
                 className="ui-input"
                 value={form.academicYear}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, academicYear: e.target.value })
                 }
               />
@@ -158,7 +158,7 @@ export default function EducationEnrollmentsPage() {
               <select
                 className="ui-input"
                 value={form.semester}
-                onChange={(e) => setForm({ ...form, semester: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, semester: e.target.value })}
               >
                 <option value="FALL">Fall</option>
                 <option value="SPRING">Spring</option>
@@ -186,7 +186,7 @@ export default function EducationEnrollmentsPage() {
         <select
           className="ui-input w-56"
           value={courseFilter}
-          onChange={(e) => setCourseFilter(e.target.value)}
+          onChange={(e: any) => setCourseFilter(e.target.value)}
         >
           <option value="">All Courses</option>
           {courses.map((c: any) => (

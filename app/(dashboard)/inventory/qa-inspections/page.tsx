@@ -16,7 +16,7 @@ const inspectionColumns: ListColumn[] = [
   {
     key: "product",
     header: "Product",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const insp = row as unknown as QualityInspection;
       return (
         <div className="ui-flex-col">
@@ -31,7 +31,7 @@ const inspectionColumns: ListColumn[] = [
   {
     key: "referenceType",
     header: "Ref Slip / ID",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const insp = row as unknown as QualityInspection;
       return `${String(v).replace("_", " ")} (${insp.referenceId.slice(0, 8)})`;
     },
@@ -39,7 +39,7 @@ const inspectionColumns: ListColumn[] = [
   {
     key: "inspectedQty",
     header: "Qty Inspected",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const insp = row as unknown as QualityInspection;
       return `Passed: ${insp.acceptedQty} / Total: ${insp.inspectedQty}`;
     },
@@ -229,7 +229,7 @@ export default function QaInspectionsPage() {
     setSubmitRemarks("");
 
     const initialResults: typeof checkpointResults = {};
-    qa.checkpoints.forEach((cp) => {
+    qa.checkpoints.forEach((cp: any) => {
       initialResults[cp.id] = {
         result: "PASS",
         observedValue: "",
@@ -244,7 +244,7 @@ export default function QaInspectionsPage() {
     if (!activeInspection) return;
 
     const formattedCheckpoints = Object.entries(checkpointResults).map(
-      ([id, data]) => ({
+      ([id, data]: any) => ({
         id,
         result: data.result,
         observedValue: data.observedValue || undefined,
@@ -308,7 +308,7 @@ export default function QaInspectionsPage() {
             {
               key: "id",
               header: "",
-              render: (v, row) => {
+              render: (v: any, row: any) => {
                 const insp = row as unknown as QualityInspection;
                 return insp.status === "PENDING" ? (
                   <button
@@ -354,7 +354,7 @@ export default function QaInspectionsPage() {
                       <select
                         className="ui-input"
                         value={qaRefType}
-                        onChange={(e) => setQaRefType(e.target.value as any)}
+                        onChange={(e: any) => setQaRefType(e.target.value as any)}
                       >
                         <option value="STOCK_ENTRY">Stock Entry</option>
                         <option value="PURCHASE_RECEIPT">
@@ -370,7 +370,7 @@ export default function QaInspectionsPage() {
                         type="text"
                         className="ui-input"
                         value={qaRefId}
-                        onChange={(e) => setQaRefId(e.target.value)}
+                        onChange={(e: any) => setQaRefId(e.target.value)}
                         required
                       />
                     </div>
@@ -382,10 +382,10 @@ export default function QaInspectionsPage() {
                       <select
                         className="ui-input"
                         value={qaProduct}
-                        onChange={(e) => setQaProduct(e.target.value)}
+                        onChange={(e: any) => setQaProduct(e.target.value)}
                         required
                       >
-                        {products.map((p) => (
+                        {products.map((p: any) => (
                           <option key={p.id} value={p.id}>
                             {p.name}
                           </option>
@@ -398,7 +398,7 @@ export default function QaInspectionsPage() {
                         type="number"
                         className="ui-input"
                         value={qaInsQty}
-                        onChange={(e) => setQaInsQty(Number(e.target.value))}
+                        onChange={(e: any) => setQaInsQty(Number(e.target.value))}
                         required
                       />
                     </div>
@@ -427,14 +427,14 @@ export default function QaInspectionsPage() {
                         Add Row
                       </Button>
                     </div>
-                    {qaCheckpoints.map((cp, idx) => (
+                    {qaCheckpoints.map((cp: any, idx: any) => (
                       <div key={idx} className={styles.s8}>
                         <input
                           type="text"
                           className="flex-1"
                           placeholder="Param (e.g. Dimensions)"
                           value={cp.parameter}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...qaCheckpoints];
                             if (updated[idx]) {
                               updated[idx].parameter = e.target.value;
@@ -448,7 +448,7 @@ export default function QaInspectionsPage() {
                           className="flex-1"
                           placeholder="Criteria (e.g. +/- 0.5mm)"
                           value={cp.criteria}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...qaCheckpoints];
                             if (updated[idx]) {
                               updated[idx].criteria = e.target.value;
@@ -508,7 +508,7 @@ export default function QaInspectionsPage() {
 
                   <div className={styles.s13}>
                     <span className={styles.s14}>Checkpoint Verification</span>
-                    {activeInspection.checkpoints.map((cp) => (
+                    {activeInspection.checkpoints.map((cp: any) => (
                       <div key={cp.id} className={styles.s15}>
                         <div className="ui-flex-between">
                           <span>
@@ -517,7 +517,7 @@ export default function QaInspectionsPage() {
                           <select
                             className={`ui-input ${styles.s16}`}
                             value={checkpointResults[cp.id]?.result}
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               setCheckpointResults({
                                 ...checkpointResults,
                                 [cp.id]: {
@@ -538,7 +538,7 @@ export default function QaInspectionsPage() {
                             className={styles.s18}
                             placeholder="Observed Value"
                             value={checkpointResults[cp.id]?.observedValue}
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               setCheckpointResults({
                                 ...checkpointResults,
                                 [cp.id]: {
@@ -553,7 +553,7 @@ export default function QaInspectionsPage() {
                             className={styles.s18}
                             placeholder="Remarks/Deviation"
                             value={checkpointResults[cp.id]?.remarks}
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               setCheckpointResults({
                                 ...checkpointResults,
                                 [cp.id]: {
@@ -574,7 +574,7 @@ export default function QaInspectionsPage() {
                       <select
                         className="ui-input"
                         value={submitStatus}
-                        onChange={(e) => setSubmitStatus(e.target.value as any)}
+                        onChange={(e: any) => setSubmitStatus(e.target.value as any)}
                       >
                         <option value="PASS">PASS</option>
                         <option value="FAIL">FAIL</option>
@@ -587,7 +587,7 @@ export default function QaInspectionsPage() {
                         type="number"
                         className="ui-input"
                         value={submitAcceptedQty}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setSubmitAcceptedQty(Number(e.target.value))
                         }
                         required
@@ -599,7 +599,7 @@ export default function QaInspectionsPage() {
                         type="number"
                         className="ui-input"
                         value={submitRejectedQty}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setSubmitRejectedQty(Number(e.target.value))
                         }
                         required
@@ -615,7 +615,7 @@ export default function QaInspectionsPage() {
                       type="text"
                       className="ui-input"
                       value={submitDisposition}
-                      onChange={(e) => setSubmitDisposition(e.target.value)}
+                      onChange={(e: any) => setSubmitDisposition(e.target.value)}
                       placeholder="e.g. Scrapped, Restocked, Quarantine"
                     />
                   </div>

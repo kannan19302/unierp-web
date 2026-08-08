@@ -36,17 +36,17 @@ export default function LabResultsPage() {
   }, [client]);
 
   const filtered = drugs.filter(
-    (d) =>
+    (d: any) =>
       !search ||
       d.name.toLowerCase().includes(search.toLowerCase()) ||
       d.batchNumber.toLowerCase().includes(search.toLowerCase()),
   );
   const expiringSoon = drugs.filter(
-    (d) =>
+    (d: any) =>
       d.expiryDate &&
       new Date(d.expiryDate) < new Date(Date.now() + 90 * 86400000),
   ).length;
-  const controlled = drugs.filter((d) => d.isControlled).length;
+  const controlled = drugs.filter((d: any) => d.isControlled).length;
 
   const columns: Column<Drug>[] = [
     {
@@ -172,7 +172,7 @@ export default function LabResultsPage() {
           />
           <KPICard
             title="Total Stock"
-            value={drugs.reduce((a, d) => a + d.quantity, 0)}
+            value={drugs.reduce((a: any, d: any) => a + d.quantity, 0)}
             icon={<Package size={18} />}
             color="var(--color-info)"
           />
@@ -185,7 +185,7 @@ export default function LabResultsPage() {
               type="text"
               placeholder="Search drugs..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
               className={styles.s6}
             />
           </div>

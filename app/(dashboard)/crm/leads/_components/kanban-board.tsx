@@ -73,7 +73,7 @@ function KanbanCard({ lead }: { lead: Lead }) {
             <Link
               href={`/crm/leads/${lead.id}`}
               className={styles.leadLink}
-              onPointerDown={(e) => e.stopPropagation()}
+              onPointerDown={(e: any) => e.stopPropagation()}
             >
               {lead.firstName} {lead.lastName}
             </Link>
@@ -121,7 +121,7 @@ function KanbanColumn({ status, leads }: { status: string; leads: Lead[] }) {
           background: isOver ? "var(--color-bg-sunken)" : "transparent",
         }}
       >
-        {leads.map((lead) => (
+        {leads.map((lead: any) => (
           <KanbanCard key={lead.id} lead={lead} />
         ))}
       </div>
@@ -137,8 +137,8 @@ export function KanbanBoard({
   onStatusChange: (leadId: string, newStatus: string) => void;
 }) {
   const groupedLeads = LEAD_STATUSES.reduce(
-    (acc, status) => {
-      acc[status] = leads.filter((l) => l.status === status);
+    (acc: any, status: any) => {
+      acc[status] = leads.filter((l: any) => l.status === status);
       return acc;
     },
     {} as Record<string, Lead[]>,
@@ -150,7 +150,7 @@ export function KanbanBoard({
       const leadId = String(active.id);
       const newStatus = String(over.id);
 
-      const lead = leads.find((l) => l.id === leadId);
+      const lead = leads.find((l: any) => l.id === leadId);
       if (lead && lead.status !== newStatus) {
         onStatusChange(leadId, newStatus);
       }
@@ -160,7 +160,7 @@ export function KanbanBoard({
   return (
     <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
       <div className={styles.board}>
-        {LEAD_STATUSES.map((status) => (
+        {LEAD_STATUSES.map((status: any) => (
           <KanbanColumn
             key={status}
             status={status}

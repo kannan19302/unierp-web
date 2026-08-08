@@ -148,7 +148,7 @@ export default function CycleCountsPage() {
       await client.post("/inventory/cycle-counts", {
         warehouseId: selectedWarehouse,
         notes,
-        items: newCountItems.filter((item) => item.productId !== ""),
+        items: newCountItems.filter((item: any) => item.productId !== ""),
       });
       setIsCreateModalOpen(false);
       setNotes("");
@@ -164,7 +164,7 @@ export default function CycleCountsPage() {
     setActiveCountSession(cc);
     setWorksheetRemarks("");
     const initial: typeof worksheetCounts = {};
-    cc.items.forEach((item) => {
+    cc.items.forEach((item: any) => {
       initial[item.id] = {
         countedQty: Number(item.countedQty ?? item.expectedQty),
         remarks: "",
@@ -177,7 +177,7 @@ export default function CycleCountsPage() {
     e.preventDefault();
     if (!activeCountSession) return;
 
-    const formattedItems = Object.entries(worksheetCounts).map(([id, val]) => ({
+    const formattedItems = Object.entries(worksheetCounts).map(([id, val]: any) => ({
       id,
       countedQty: Number(val.countedQty),
       remarks: val.remarks || undefined,
@@ -270,7 +270,7 @@ export default function CycleCountsPage() {
     {
       key: "id",
       header: "Actions",
-      render: (v, row) => {
+      render: (v: any, row: any) => {
         const cc = row as unknown as CycleCount;
         return (
           <div className="text-right">
@@ -361,10 +361,10 @@ export default function CycleCountsPage() {
                     <Select
                       id="cc-warehouse"
                       value={selectedWarehouse}
-                      onChange={(e) => setSelectedWarehouse(e.target.value)}
+                      onChange={(e: any) => setSelectedWarehouse(e.target.value)}
                       required
                     >
-                      {warehouses.map((w) => (
+                      {warehouses.map((w: any) => (
                         <option key={w.id} value={w.id}>
                           {w.name}
                         </option>
@@ -376,7 +376,7 @@ export default function CycleCountsPage() {
                       id="cc-notes"
                       type="text"
                       value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
+                      onChange={(e: any) => setNotes(e.target.value)}
                       placeholder="e.g. Month-end audits"
                     />
                   </FormField>
@@ -398,12 +398,12 @@ export default function CycleCountsPage() {
                         Add Product
                       </Button>
                     </div>
-                    {newCountItems.map((item, idx) => (
+                    {newCountItems.map((item: any, idx: any) => (
                       <div key={idx} className={styles.s10}>
                         <Select
                           className={styles.s11}
                           value={item.productId}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...newCountItems];
                             if (updated[idx]) {
                               updated[idx].productId = e.target.value;
@@ -413,7 +413,7 @@ export default function CycleCountsPage() {
                           required
                         >
                           <option value="">-- Select --</option>
-                          {products.map((p) => (
+                          {products.map((p: any) => (
                             <option key={p.id} value={p.id}>
                               {p.name}
                             </option>
@@ -424,7 +424,7 @@ export default function CycleCountsPage() {
                           className={styles.s12}
                           placeholder="Book Qty"
                           value={item.expectedQty}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...newCountItems];
                             if (updated[idx]) {
                               updated[idx].expectedQty = Number(e.target.value);
@@ -485,7 +485,7 @@ export default function CycleCountsPage() {
                                                                 type="number"
                                                                 className={styles.s21}
                                                                 value={worksheetCounts[item.id]?.countedQty}
-                                                                onChange={(e) => {
+                                                                onChange={(e: any) => {
                                                                   setWorksheetCounts({
                                                                     ...worksheetCounts,
                                                                     [item.id]: {
@@ -501,7 +501,7 @@ export default function CycleCountsPage() {
                                                                 className="text-xs"
                                                                 placeholder="Verification notes..."
                                                                 value={worksheetCounts[item.id]?.remarks || ""}
-                                                                onChange={(e) => {
+                                                                onChange={(e: any) => {
                                                                   setWorksheetCounts({
                                                                     ...worksheetCounts,
                                                                     [item.id]: {
@@ -520,7 +520,7 @@ export default function CycleCountsPage() {
                       id="cc-final-remarks"
                       type="text"
                       value={worksheetRemarks}
-                      onChange={(e) => setWorksheetRemarks(e.target.value)}
+                      onChange={(e: any) => setWorksheetRemarks(e.target.value)}
                       placeholder="All counts checked by inventory manager"
                     />
                   </FormField>

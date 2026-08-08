@@ -96,7 +96,7 @@ function DashboardTab() {
             Active Run: {data.activeRun.runNumber}
           </h3>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-            {["A", "B", "C"].map((c) => (
+            {["A", "B", "C"].map((c: any) => (
               <div key={c} className="rounded-lg border p-3 text-center">
                 <Badge label={c} colorMap={ABC_COLORS} />
                 <p className="text-xl font-bold mt-1">
@@ -104,7 +104,7 @@ function DashboardTab() {
                 </p>
               </div>
             ))}
-            {["X", "Y", "Z"].map((c) => (
+            {["X", "Y", "Z"].map((c: any) => (
               <div key={c} className="rounded-lg border p-3 text-center">
                 <Badge label={c} colorMap={XYZ_COLORS} />
                 <p className="text-xl font-bold mt-1">
@@ -121,7 +121,7 @@ function DashboardTab() {
             Combined Class Breakdown
           </h3>
           <div className="flex flex-wrap gap-2">
-            {Object.entries(data.classBreakdown).map(([cls, cnt]) => (
+            {Object.entries(data.classBreakdown).map(([cls, cnt]: any) => (
               <div
                 key={cls}
                 className="rounded border px-3 py-1 flex items-center gap-2"
@@ -199,7 +199,7 @@ function RunsTab() {
       <div className="flex justify-between items-center">
         <p className="text-sm text-gray-500">{total} run(s)</p>
         <button
-          onClick={() => setShowCreate((v) => !v)}
+          onClick={() => setShowCreate((v: any) => !v)}
           className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           + New Run
@@ -215,8 +215,8 @@ function RunsTab() {
                 type="date"
                 className="w-full border rounded p-2 text-sm"
                 value={form.periodStart}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, periodStart: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, periodStart: e.target.value }))
                 }
               />
             </div>
@@ -226,8 +226,8 @@ function RunsTab() {
                 type="date"
                 className="w-full border rounded p-2 text-sm"
                 value={form.periodEnd}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, periodEnd: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, periodEnd: e.target.value }))
                 }
               />
             </div>
@@ -239,8 +239,8 @@ function RunsTab() {
             <input
               className="w-full border rounded p-2 text-sm"
               value={form.warehouseId}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, warehouseId: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, warehouseId: e.target.value }))
               }
             />
           </div>
@@ -249,8 +249,8 @@ function RunsTab() {
             <input
               className="w-full border rounded p-2 text-sm"
               value={form.notes}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, notes: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, notes: e.target.value }))
               }
             />
           </div>
@@ -282,7 +282,7 @@ function RunsTab() {
           {
             key: "periodStart",
             header: "Period",
-            render: (v, row) => (
+            render: (v: any, row: any) => (
               <span className="text-xs">
                 {String(v).slice(0, 10)} – {String(row.periodEnd).slice(0, 10)}
               </span>
@@ -313,7 +313,7 @@ function RunsTab() {
           {
             key: "classACount",
             header: "A/B/C",
-            render: (v, row) => (
+            render: (v: any, row: any) => (
               <span className="text-xs">
                 {String(v)}/{String(row.classBCount)}/{String(row.classCCount)}
               </span>
@@ -322,7 +322,7 @@ function RunsTab() {
           {
             key: "classXCount",
             header: "X/Y/Z",
-            render: (v, row) => (
+            render: (v: any, row: any) => (
               <span className="text-xs">
                 {String(v)}/{String(row.classYCount)}/{String(row.classZCount)}
               </span>
@@ -331,7 +331,7 @@ function RunsTab() {
           {
             key: "id",
             header: "Actions",
-            render: (v, row) => (
+            render: (v: any, row: any) => (
               <div className="flex gap-1">
                 {row.status === "DRAFT" && Number(row.totalProducts) > 0 && (
                   <button
@@ -405,7 +405,7 @@ function ItemsTab() {
             className="w-full border rounded p-2 text-sm"
             placeholder="Paste run ID…"
             value={runId}
-            onChange={(e) => setRunId(e.target.value)}
+            onChange={(e: any) => setRunId(e.target.value)}
           />
         </div>
         <div>
@@ -413,12 +413,12 @@ function ItemsTab() {
           <select
             className="w-full border rounded p-2 text-sm"
             value={filter.abcClass}
-            onChange={(e) =>
-              setFilter((f) => ({ ...f, abcClass: e.target.value }))
+            onChange={(e: any) =>
+              setFilter((f: any) => ({ ...f, abcClass: e.target.value }))
             }
           >
             <option value="">All</option>
-            {["A", "B", "C"].map((c) => (
+            {["A", "B", "C"].map((c: any) => (
               <option key={c} value={c}>
                 {c}
               </option>
@@ -430,12 +430,12 @@ function ItemsTab() {
           <select
             className="w-full border rounded p-2 text-sm"
             value={filter.xyzClass}
-            onChange={(e) =>
-              setFilter((f) => ({ ...f, xyzClass: e.target.value }))
+            onChange={(e: any) =>
+              setFilter((f: any) => ({ ...f, xyzClass: e.target.value }))
             }
           >
             <option value="">All</option>
-            {["X", "Y", "Z"].map((c) => (
+            {["X", "Y", "Z"].map((c: any) => (
               <option key={c} value={c}>
                 {c}
               </option>
@@ -590,7 +590,7 @@ function PoliciesTab() {
           {policies.length} policy/policies
         </p>
         <button
-          onClick={() => setShowForm((v) => !v)}
+          onClick={() => setShowForm((v: any) => !v)}
           className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           + Upsert Policy
@@ -605,11 +605,11 @@ function PoliciesTab() {
               <select
                 className="w-full border rounded p-2 text-sm"
                 value={form.combinedClass}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, combinedClass: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, combinedClass: e.target.value }))
                 }
               >
-                {classes.map((c) => (
+                {classes.map((c: any) => (
                   <option key={c} value={c}>
                     {c}
                   </option>
@@ -621,12 +621,12 @@ function PoliciesTab() {
               <select
                 className="w-full border rounded p-2 text-sm"
                 value={form.reviewFrequency}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, reviewFrequency: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, reviewFrequency: e.target.value }))
                 }
               >
                 {["DAILY", "WEEKLY", "BIWEEKLY", "MONTHLY", "QUARTERLY"].map(
-                  (v) => (
+                  (v: any) => (
                     <option key={v} value={v}>
                       {v}
                     </option>
@@ -639,11 +639,11 @@ function PoliciesTab() {
               <select
                 className="w-full border rounded p-2 text-sm"
                 value={form.reorderMethod}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, reorderMethod: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, reorderMethod: e.target.value }))
                 }
               >
-                {["CONTINUOUS", "PERIODIC", "MANUAL"].map((v) => (
+                {["CONTINUOUS", "PERIODIC", "MANUAL"].map((v: any) => (
                   <option key={v} value={v}>
                     {v}
                   </option>
@@ -659,8 +659,8 @@ function PoliciesTab() {
                 step="0.1"
                 className="w-full border rounded p-2 text-sm"
                 value={form.safetyStockMultiplier}
-                onChange={(e) =>
-                  setForm((f) => ({
+                onChange={(e: any) =>
+                  setForm((f: any) => ({
                     ...f,
                     safetyStockMultiplier: e.target.value,
                   }))
@@ -672,8 +672,8 @@ function PoliciesTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.preferredZone}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, preferredZone: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, preferredZone: e.target.value }))
                 }
               />
             </div>
@@ -798,7 +798,7 @@ function SnapshotsTab() {
             className="w-full border rounded p-2 text-sm"
             placeholder="Enter product ID to view snapshots…"
             value={productId}
-            onChange={(e) => setProductId(e.target.value)}
+            onChange={(e: any) => setProductId(e.target.value)}
           />
         </div>
         <button
@@ -808,7 +808,7 @@ function SnapshotsTab() {
           Load
         </button>
         <button
-          onClick={() => setShowForm((v) => !v)}
+          onClick={() => setShowForm((v: any) => !v)}
           className="px-3 py-2 text-sm border rounded"
         >
           + Record Snapshot
@@ -823,8 +823,8 @@ function SnapshotsTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.productId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, productId: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, productId: e.target.value }))
                 }
               />
             </div>
@@ -834,8 +834,8 @@ function SnapshotsTab() {
                 type="date"
                 className="w-full border rounded p-2 text-sm"
                 value={form.snapshotMonth}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, snapshotMonth: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, snapshotMonth: e.target.value }))
                 }
               />
             </div>
@@ -845,8 +845,8 @@ function SnapshotsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.quantitySold}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, quantitySold: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, quantitySold: e.target.value }))
                 }
               />
             </div>
@@ -856,8 +856,8 @@ function SnapshotsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.revenue}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, revenue: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, revenue: e.target.value }))
                 }
               />
             </div>
@@ -867,8 +867,8 @@ function SnapshotsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.transactionCount}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, transactionCount: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, transactionCount: e.target.value }))
                 }
               />
             </div>
@@ -878,8 +878,8 @@ function SnapshotsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.avgSellingPrice}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, avgSellingPrice: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, avgSellingPrice: e.target.value }))
                 }
               />
             </div>
@@ -977,7 +977,7 @@ export default function VelocityAbcXyzPage() {
           </p>
         </div>
         <div className="border-b flex gap-1">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}

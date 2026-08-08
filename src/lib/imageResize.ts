@@ -10,7 +10,7 @@ export function resizeImageFile(
   opts: ResizeOptions = {},
 ): Promise<string> {
   const maxDimension = opts.maxDimension ?? 256;
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve: any, reject: any) => {
     const reader = new FileReader();
     reader.onerror = () => reject(new Error("Could not read the file."));
     reader.onload = () => {

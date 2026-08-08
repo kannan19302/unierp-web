@@ -129,7 +129,7 @@ export default function CorporateCardDetailPage() {
         ),
       ]);
       const cards = cardsRes;
-      setCard(cards.find((c) => c.id === cardId) || null);
+      setCard(cards.find((c: any) => c.id === cardId) || null);
       setSpendLimits(limitsRes);
       setCategoryLimits(catLimitsRes);
       setUtilization(utilRes);
@@ -273,7 +273,7 @@ export default function CorporateCardDetailPage() {
           <ProtectedComponent permission="finance.corporate-card-limit.request-increase">
             <Button
               variant="secondary"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 openIncreaseModal(r.id, Number(r.amountCap));
               }}
@@ -283,7 +283,7 @@ export default function CorporateCardDetailPage() {
           </ProtectedComponent>
           <Button
             variant="secondary"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               loadAudit(r.id);
               setTab("audit");
@@ -294,7 +294,7 @@ export default function CorporateCardDetailPage() {
           <ProtectedComponent permission="finance.corporate-card-limit.delete">
             <Button
               variant="danger"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 deleteSpendLimit(r.id);
               }}
@@ -344,7 +344,7 @@ export default function CorporateCardDetailPage() {
         <ProtectedComponent permission="finance.corporate-card-limit.update">
           <Button
             variant="danger"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               deleteCategoryLimit(r.id);
             }}
@@ -487,7 +487,7 @@ export default function CorporateCardDetailPage() {
                 {utilization.spendLimits.length === 0 && (
                   <div className="ui-text-muted">No active spend limits.</div>
                 )}
-                {utilization.spendLimits.map((u) => (
+                {utilization.spendLimits.map((u: any) => (
                   <div key={u.id}>
                     <div className={styles.s7}>
                       <span>
@@ -511,7 +511,7 @@ export default function CorporateCardDetailPage() {
                     No active category limits.
                   </div>
                 )}
-                {utilization.categoryLimits.map((u) => (
+                {utilization.categoryLimits.map((u: any) => (
                   <div key={u.id}>
                     <div className={styles.s7}>
                       <span>
@@ -568,7 +568,7 @@ export default function CorporateCardDetailPage() {
             <FormField label="Scope Type">
               <Select
                 value={scopeType}
-                onChange={(e) => setScopeType(e.target.value)}
+                onChange={(e: any) => setScopeType(e.target.value)}
               >
                 <option value="CARD">Card</option>
                 <option value="EMPLOYEE">Employee</option>
@@ -579,14 +579,14 @@ export default function CorporateCardDetailPage() {
               <TextField
                 label="Scope ID"
                 value={scopeId}
-                onChange={(e) => setScopeId(e.target.value)}
+                onChange={(e: any) => setScopeId(e.target.value)}
                 placeholder={`${scopeType} ID`}
               />
             )}
             <FormField label="Period">
               <Select
                 value={period}
-                onChange={(e) => setPeriod(e.target.value)}
+                onChange={(e: any) => setPeriod(e.target.value)}
               >
                 <option value="WEEKLY">Weekly</option>
                 <option value="MONTHLY">Monthly</option>
@@ -597,7 +597,7 @@ export default function CorporateCardDetailPage() {
               type="number"
               required
               value={amountCap}
-              onChange={(e) => setAmountCap(e.target.value)}
+              onChange={(e: any) => setAmountCap(e.target.value)}
             />
           </div>
         </Modal>
@@ -625,7 +625,7 @@ export default function CorporateCardDetailPage() {
             <FormField label="MCC Category">
               <Select
                 value={mccCategory}
-                onChange={(e) => setMccCategory(e.target.value)}
+                onChange={(e: any) => setMccCategory(e.target.value)}
               >
                 <option value="TRAVEL">Travel</option>
                 <option value="MEALS">Meals</option>
@@ -638,7 +638,7 @@ export default function CorporateCardDetailPage() {
             <FormField label="Period">
               <Select
                 value={catPeriod}
-                onChange={(e) => setCatPeriod(e.target.value)}
+                onChange={(e: any) => setCatPeriod(e.target.value)}
               >
                 <option value="WEEKLY">Weekly</option>
                 <option value="MONTHLY">Monthly</option>
@@ -649,7 +649,7 @@ export default function CorporateCardDetailPage() {
               type="number"
               required
               value={catAmountCap}
-              onChange={(e) => setCatAmountCap(e.target.value)}
+              onChange={(e: any) => setCatAmountCap(e.target.value)}
             />
           </div>
         </Modal>
@@ -679,12 +679,12 @@ export default function CorporateCardDetailPage() {
               type="number"
               required
               value={requestedCap}
-              onChange={(e) => setRequestedCap(e.target.value)}
+              onChange={(e: any) => setRequestedCap(e.target.value)}
             />
             <TextField
               label="Reason (optional)"
               value={increaseReason}
-              onChange={(e) => setIncreaseReason(e.target.value)}
+              onChange={(e: any) => setIncreaseReason(e.target.value)}
             />
           </div>
         </Modal>

@@ -10,7 +10,7 @@ export default function FallbackPage() {
 
   useEffect(() => {
     apiGet("/admin/localization/fallback-rules")
-      .then((d) => setRules(Array.isArray(d) ? d : []))
+      .then((d: any) => setRules(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 
@@ -28,7 +28,7 @@ export default function FallbackPage() {
         <div
           className="ui-flex"
           style={{ gap: "var(--space-2)" }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button size="sm" variant="ghost">
             <Eye size={14} />

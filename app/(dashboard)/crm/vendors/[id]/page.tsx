@@ -139,7 +139,7 @@ export default function VendorDetailPage() {
                     id: "pos",
                     label: `Purchase Orders (${vendorData.pos?.length || 0})`,
                   },
-                ].map((tab) => (
+                ].map((tab: any) => (
                   <Button
                     key={tab.id}
                     variant={activeTab === tab.id ? "primary" : "outline"}

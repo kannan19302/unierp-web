@@ -62,13 +62,13 @@ export default function EcommerceReviewsPage() {
             className="ui-input"
             placeholder="Store ID..."
             value={storeId}
-            onChange={(e) => setStoreId(e.target.value)}
+            onChange={(e: any) => setStoreId(e.target.value)}
           />
           <input
             className="ui-input"
             placeholder="Listing ID..."
             value={listingId}
-            onChange={(e) => setListingId(e.target.value)}
+            onChange={(e: any) => setListingId(e.target.value)}
           />
         </div>
         {loadError && (

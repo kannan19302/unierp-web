@@ -108,7 +108,7 @@ export default function CustomDomainsPage() {
                 required
                 placeholder="e.g. erp.yourcompany.com"
                 value={newDomain}
-                onChange={(e) => setNewDomain(e.target.value)}
+                onChange={(e: any) => setNewDomain(e.target.value)}
                 className={styles.p4}
               />
               <button
@@ -130,7 +130,7 @@ export default function CustomDomainsPage() {
           </div>
         ) : (
           <div className="ui-stack-4">
-            {domains.map((d) => (
+            {domains.map((d: any) => (
               <div key={d.id} className={styles.p5}>
                 <div className="ui-flex-between">
                   <div className="ui-hstack-2">
@@ -166,7 +166,7 @@ export default function CustomDomainsPage() {
                     </p>
 
                     <div className="ui-stack-2">
-                      {d.dnsRecords.map((r, rIdx) => (
+                      {d.dnsRecords.map((r: any, rIdx: any) => (
                         <div key={rIdx} className={styles.p10}>
                           <strong>Type: {r.type}</strong>
                           <span>

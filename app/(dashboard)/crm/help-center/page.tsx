@@ -115,7 +115,7 @@ export default function HelpCenterPage() {
             className="ui-input"
             placeholder="Search articles..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value)}
           />
         </div>
         <Button onClick={() => setShowCategoryForm(true)}>
@@ -135,7 +135,7 @@ export default function HelpCenterPage() {
               <input
                 className="ui-input"
                 value={catForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCatForm({
                     ...catForm,
                     name: e.target.value,
@@ -149,7 +149,7 @@ export default function HelpCenterPage() {
               <input
                 className="ui-input"
                 value={catForm.slug}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCatForm({ ...catForm, slug: e.target.value })
                 }
               />
@@ -159,7 +159,7 @@ export default function HelpCenterPage() {
               <input
                 className="ui-input"
                 value={catForm.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCatForm({ ...catForm, description: e.target.value })
                 }
               />
@@ -186,7 +186,7 @@ export default function HelpCenterPage() {
               <input
                 className="ui-input"
                 value={artForm.title}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setArtForm({
                     ...artForm,
                     title: e.target.value,
@@ -200,7 +200,7 @@ export default function HelpCenterPage() {
               <input
                 className="ui-input"
                 value={artForm.slug}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setArtForm({ ...artForm, slug: e.target.value })
                 }
               />
@@ -211,7 +211,7 @@ export default function HelpCenterPage() {
                 className="ui-input"
                 rows={6}
                 value={artForm.content}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setArtForm({ ...artForm, content: e.target.value })
                 }
               />
@@ -221,7 +221,7 @@ export default function HelpCenterPage() {
               <select
                 className="ui-input"
                 value={artForm.status}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setArtForm({ ...artForm, status: e.target.value })
                 }
               >
@@ -249,7 +249,7 @@ export default function HelpCenterPage() {
               <h3 className="ui-card-title">
                 <FolderOpen size={16} /> Categories
               </h3>
-              {categories.map((cat) => (
+              {categories.map((cat: any) => (
                 <div
                   key={cat.id}
                   className="ui-flex ui-items-center ui-justify-between ui-py-2 ui-border-b"
@@ -281,7 +281,7 @@ export default function HelpCenterPage() {
               <h3 className="ui-card-title">
                 <BookOpen size={16} /> Articles
               </h3>
-              {articles.map((art) => (
+              {articles.map((art: any) => (
                 <div
                   key={art.id}
                   className="ui-flex ui-items-center ui-justify-between ui-py-2 ui-border-b"

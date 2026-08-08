@@ -257,7 +257,7 @@ export default function AtpCtpPage() {
                 type="text"
                 className="ui-input"
                 value={referenceId}
-                onChange={(e) => setReferenceId(e.target.value)}
+                onChange={(e: any) => setReferenceId(e.target.value)}
                 required
                 placeholder="Order or transfer ID"
               />
@@ -267,7 +267,7 @@ export default function AtpCtpPage() {
               <select
                 className="ui-input"
                 value={referenceType}
-                onChange={(e) => setReferenceType(e.target.value)}
+                onChange={(e: any) => setReferenceType(e.target.value)}
                 required
               >
                 <option value="SALES_ORDER">Sales Order</option>
@@ -281,7 +281,7 @@ export default function AtpCtpPage() {
                 type="number"
                 className="ui-input"
                 value={reserveQty}
-                onChange={(e) => setReserveQty(parseInt(e.target.value) || 1)}
+                onChange={(e: any) => setReserveQty(parseInt(e.target.value) || 1)}
                 required
                 min={1}
               />
@@ -292,7 +292,7 @@ export default function AtpCtpPage() {
                 type="date"
                 className="ui-input"
                 value={committedUntil}
-                onChange={(e) => setCommittedUntil(e.target.value)}
+                onChange={(e: any) => setCommittedUntil(e.target.value)}
               />
             </div>
           </form>

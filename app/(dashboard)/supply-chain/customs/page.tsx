@@ -157,7 +157,7 @@ export default function CustomsPage() {
       header: "Actions",
       align: "right",
       render: (row: any) => (
-        <div className="ui-flex ui-gap-1" onClick={(e) => e.stopPropagation()}>
+        <div className="ui-flex ui-gap-1" onClick={(e: any) => e.stopPropagation()}>
           <button
             className="ui-btn-icon"
             onClick={() =>
@@ -258,7 +258,7 @@ export default function CustomsPage() {
               required
               placeholder="CD-2026-001"
               value={form.documentNumber}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, documentNumber: e.target.value })
               }
             />
@@ -266,7 +266,7 @@ export default function CustomsPage() {
               <FormField label="Type">
                 <Select
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="IMPORT_DECLARATION">Import Declaration</option>
                   <option value="EXPORT_DECLARATION">Export Declaration</option>
@@ -277,7 +277,7 @@ export default function CustomsPage() {
               <FormField label="Direction">
                 <Select
                   value={form.direction}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, direction: e.target.value })
                   }
                 >
@@ -290,7 +290,7 @@ export default function CustomsPage() {
               label="Shipment Reference"
               placeholder="SHP-2026-001"
               value={form.shipmentRef}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, shipmentRef: e.target.value })
               }
             />

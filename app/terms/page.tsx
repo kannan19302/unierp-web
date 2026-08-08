@@ -86,11 +86,11 @@ export default function TermsOfServicePage() {
         <aside className={`legal-sidebar ${styles.s10}`}>
           <h4 className={styles.s11}>Sections</h4>
           <nav className={styles.s12}>
-            {SECTIONS.map((sec) => (
+            {SECTIONS.map((sec: any) => (
               <a
                 key={sec.id}
                 href={`#${sec.id}`}
-                onClick={(e) => handleSectionClick(e, sec.id)}
+                onClick={(e: any) => handleSectionClick(e, sec.id)}
                 style={{
                   color:
                     sec.id === activeSection

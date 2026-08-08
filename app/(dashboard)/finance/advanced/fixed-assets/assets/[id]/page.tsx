@@ -375,7 +375,7 @@ export default function FixedAssetDetail() {
                 type="month"
                 className={`ui-input ${styles.s14}`}
                 value={depPeriod}
-                onChange={(e) => setDepPeriod(e.target.value)}
+                onChange={(e: any) => setDepPeriod(e.target.value)}
               />
               <ProtectedComponent permission="assets.depreciation.post">
                 <Button
@@ -483,7 +483,7 @@ export default function FixedAssetDetail() {
                       required
                       className="ui-input"
                       value={transferFormData.transferDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTransferFormData({
                           ...transferFormData,
                           transferDate: e.target.value,
@@ -497,7 +497,7 @@ export default function FixedAssetDetail() {
                     <select
                       className="ui-input"
                       value={transferFormData.toLocationId}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTransferFormData({
                           ...transferFormData,
                           toLocationId: e.target.value,
@@ -505,7 +505,7 @@ export default function FixedAssetDetail() {
                       }
                     >
                       <option value="">No Location / In-Transit</option>
-                      {warehouses.map((w) => (
+                      {warehouses.map((w: any) => (
                         <option key={w.id} value={w.id}>
                           {w.name}
                         </option>
@@ -518,7 +518,7 @@ export default function FixedAssetDetail() {
                     <select
                       className="ui-input"
                       value={transferFormData.toCustodianId}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setTransferFormData({
                           ...transferFormData,
                           toCustodianId: e.target.value,
@@ -526,7 +526,7 @@ export default function FixedAssetDetail() {
                       }
                     >
                       <option value="">No Custodian / General Corporate</option>
-                      {employees.map((emp) => (
+                      {employees.map((emp: any) => (
                         <option key={emp.id} value={emp.id}>
                           {emp.firstName} {emp.lastName}
                         </option>
@@ -541,7 +541,7 @@ export default function FixedAssetDetail() {
                     className="ui-input"
                     placeholder="Department relocation, custodian swap..."
                     value={transferFormData.reason}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setTransferFormData({
                         ...transferFormData,
                         reason: e.target.value,
@@ -647,7 +647,7 @@ export default function FixedAssetDetail() {
                       required
                       className="ui-input"
                       value={maintenanceFormData.maintenanceDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMaintenanceFormData({
                           ...maintenanceFormData,
                           maintenanceDate: e.target.value,
@@ -661,7 +661,7 @@ export default function FixedAssetDetail() {
                     <select
                       className="ui-input"
                       value={maintenanceFormData.type}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMaintenanceFormData({
                           ...maintenanceFormData,
                           type: e.target.value,
@@ -681,7 +681,7 @@ export default function FixedAssetDetail() {
                       className="ui-input"
                       placeholder="Apple Store, internal tech desk..."
                       value={maintenanceFormData.performedBy}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMaintenanceFormData({
                           ...maintenanceFormData,
                           performedBy: e.target.value,
@@ -699,7 +699,7 @@ export default function FixedAssetDetail() {
                       step="0.01"
                       className="ui-input"
                       value={maintenanceFormData.cost}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMaintenanceFormData({
                           ...maintenanceFormData,
                           cost: e.target.value,
@@ -716,7 +716,7 @@ export default function FixedAssetDetail() {
                       type="date"
                       className="ui-input"
                       value={maintenanceFormData.nextMaintenanceDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMaintenanceFormData({
                           ...maintenanceFormData,
                           nextMaintenanceDate: e.target.value,
@@ -733,7 +733,7 @@ export default function FixedAssetDetail() {
                     className={`ui-input ${styles.s16}`}
                     placeholder="Provide details about actions taken during maintenance..."
                     value={maintenanceFormData.description}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setMaintenanceFormData({
                         ...maintenanceFormData,
                         description: e.target.value,

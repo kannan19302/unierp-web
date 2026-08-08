@@ -61,12 +61,12 @@ export default function AppointmentsPage() {
   };
 
   const today = appointments.filter(
-    (a) =>
+    (a: any) =>
       a.startTime &&
       new Date(a.startTime).toDateString() === new Date().toDateString(),
   ).length;
   const filtered = appointments.filter(
-    (a) => statusFilter === "ALL" || (a.status || "SCHEDULED") === statusFilter,
+    (a: any) => statusFilter === "ALL" || (a.status || "SCHEDULED") === statusFilter,
   );
 
   const columns: Column<Appointment>[] = [
@@ -181,7 +181,7 @@ export default function AppointmentsPage() {
           />
           <KPICard
             title="Completed"
-            value={appointments.filter((a) => a.status === "COMPLETED").length}
+            value={appointments.filter((a: any) => a.status === "COMPLETED").length}
             icon={<CheckCircle size={18} />}
             color="var(--color-success)"
           />
@@ -189,7 +189,7 @@ export default function AppointmentsPage() {
 
         <Card>
           <div className={styles.s1}>
-            {["ALL", "SCHEDULED", "COMPLETED", "CANCELLED"].map((s) => (
+            {["ALL", "SCHEDULED", "COMPLETED", "CANCELLED"].map((s: any) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
@@ -251,13 +251,13 @@ export default function AppointmentsPage() {
               label="Patient ID"
               required
               value={form.patientId}
-              onChange={(e) => setForm({ ...form, patientId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, patientId: e.target.value })}
             />
             <TextField
               label="Practitioner ID"
               required
               value={form.practitionerId}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, practitionerId: e.target.value })
               }
             />
@@ -266,7 +266,7 @@ export default function AppointmentsPage() {
                 label="Start Time"
                 type="datetime-local"
                 value={form.startTime}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startTime: e.target.value })
                 }
               />
@@ -274,13 +274,13 @@ export default function AppointmentsPage() {
                 label="End Time"
                 type="datetime-local"
                 value={form.endTime}
-                onChange={(e) => setForm({ ...form, endTime: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endTime: e.target.value })}
               />
             </div>
             <TextField
               label="Notes"
               value={form.notes}
-              onChange={(e) => setForm({ ...form, notes: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
             />
           </div>
         </Modal>

@@ -206,7 +206,7 @@ function renderContent(text: string) {
   if (html !== text) {
     return <span dangerouslySetInnerHTML={{ __html: html }} />;
   }
-  return text.split(/(@\w+)/g).map((p, i) =>
+  return text.split(/(@\w+)/g).map((p: any, i: any) =>
     p.startsWith("@") ? (
       <span key={i} className={styles.s5}>
         {p}
@@ -430,16 +430,16 @@ export default function ConnectPage() {
       setWs(data);
       setLoadErr(null);
       setActiveId(
-        (cur) =>
+        (cur: any) =>
           cur ?? data.channels[0]?.id ?? data.conversations[0]?.id ?? null,
       );
       // Sync starred/muted from server
       const allConvsList = [...data.channels, ...data.conversations];
       setStarredConvs(
-        new Set(allConvsList.filter((c: any) => c.starred).map((c) => c.id)),
+        new Set(allConvsList.filter((c: any) => c.starred).map((c: any) => c.id)),
       );
       setMutedConvs(
-        new Set(allConvsList.filter((c: any) => c.muted).map((c) => c.id)),
+        new Set(allConvsList.filter((c: any) => c.muted).map((c: any) => c.id)),
       );
     } catch (e) {
       setLoadErr(e instanceof Error ? e.message : "Failed to load Connect");
@@ -450,7 +450,7 @@ export default function ConnectPage() {
     try {
       const bms = await api.getBookmarks();
       setSavedMessages(bms);
-      setBookmarks(new Set(bms.map((b) => b.id)));
+      setBookmarks(new Set(bms.map((b: any) => b.id)));
     } catch (e) {
       toast.error(
         "Failed to load saved messages",
@@ -489,14 +489,14 @@ export default function ConnectPage() {
     if (!activeId) return;
     loadMessages(activeId);
     api.markRead(activeId).catch(() => {});
-    setWs((prev) =>
+    setWs((prev: any) =>
       prev
         ? {
             ...prev,
-            channels: prev.channels.map((c) =>
+            channels: prev.channels.map((c: any) =>
               c.id === activeId ? { ...c, unreadCount: 0 } : c,
             ),
-            conversations: prev.conversations.map((c) =>
+            conversations: prev.conversations.map((c: any) =>
               c.id === activeId ? { ...c, unreadCount: 0 } : c,
             ),
           }
@@ -549,10 +549,10 @@ export default function ConnectPage() {
           }
         : null;
       if (!incoming) return;
-      setMessages((prev) => {
+      setMessages((prev: any) => {
         if (currentRoomRef.current !== channelId) return prev; // not the active conversation
-        if (prev.some((m) => m.id === incoming.id)) return prev; // dedupe vs. optimistic/poll
-        return [...prev, incoming].sort((a, b) => a.ts - b.ts);
+        if (prev.some((m: any) => m.id === incoming.id)) return prev; // dedupe vs. optimistic/poll
+        return [...prev, incoming].sort((a: any, b: any) => a.ts - b.ts);
       });
       // Bump unread/last-message preview for non-active conversations via a light workspace refresh.
       if (currentRoomRef.current !== channelId) loadWorkspace();
@@ -561,7 +561,7 @@ export default function ConnectPage() {
     socket.on("typing", (payload: { userId: string; channelId: string }) => {
       if (!payload?.userId || payload.channelId !== currentRoomRef.current)
         return;
-      setTypingUsers((prev) => {
+      setTypingUsers((prev: any) => {
         const next = new Map(prev);
         next.set(payload.userId, Date.now());
         return next;
@@ -578,7 +578,7 @@ export default function ConnectPage() {
       }) => {
         const userId = payload?.userId;
         if (!userId) return;
-        setWs((prev) => {
+        setWs((prev: any) => {
           if (!prev) return prev;
           // Connection-liveness ONLINE/OFFLINE events map to ACTIVE/INACTIVE; explicit `presence`
           // field (from setPresence's broadcastPresenceUpdate) carries the real chosen status.
@@ -592,7 +592,7 @@ export default function ConnectPage() {
           if (!mapped) return prev;
           return {
             ...prev,
-            directory: prev.directory.map((d) =>
+            directory: prev.directory.map((d: any) =>
               d.id === userId ? { ...d, presence: mapped } : d,
             ),
           };
@@ -620,7 +620,7 @@ export default function ConnectPage() {
   // Typing indicator: prune entries older than 3s of inactivity, tick every second.
   useEffect(() => {
     const t = setInterval(() => {
-      setTypingUsers((prev) => {
+      setTypingUsers((prev: any) => {
         const now = Date.now();
         let changed = false;
         const next = new Map(prev);
@@ -646,12 +646,12 @@ export default function ConnectPage() {
     const presence = ws?.me.presence;
     const setPres = (p: "ACTIVE" | "AWAY") => {
       api.setPresence(p, ws?.me.statusText ?? undefined).catch(() => {});
-      setWs((prev) =>
+      setWs((prev: any) =>
         prev
           ? {
               ...prev,
               me: { ...prev.me, presence: p },
-              directory: prev.directory.map((d) =>
+              directory: prev.directory.map((d: any) =>
                 d.id === prev.me.id ? { ...d, presence: p } : d,
               ),
             }
@@ -718,7 +718,7 @@ export default function ConnectPage() {
         setForwardMsg(null);
         setArchiveConfirm(false);
         setRemoveConfirm(null);
-        setActiveMeeting((cur) => (cur ? null : cur));
+        setActiveMeeting((cur: any) => (cur ? null : cur));
       }
     };
     window.addEventListener("keydown", handler);
@@ -729,38 +729,38 @@ export default function ConnectPage() {
   const me = ws?.me ?? UNKNOWN;
   const directory = ws?.directory ?? [];
   const memberById = useCallback(
-    (id: string) => directory.find((d) => d.id === id) ?? { ...UNKNOWN, id },
+    (id: string) => directory.find((d: any) => d.id === id) ?? { ...UNKNOWN, id },
     [directory],
   );
   const allConvs = useMemo<Conversation[]>(
     () => [...(ws?.channels ?? []), ...(ws?.conversations ?? [])],
     [ws],
   );
-  const activeConv = allConvs.find((c) => c.id === activeId) ?? null;
+  const activeConv = allConvs.find((c: any) => c.id === activeId) ?? null;
   const directs = useMemo(
     () =>
       [...(ws?.conversations ?? [])].sort(
-        (a, b) => (b.lastMessage?.ts ?? 0) - (a.lastMessage?.ts ?? 0),
+        (a: any, b: any) => (b.lastMessage?.ts ?? 0) - (a.lastMessage?.ts ?? 0),
       ),
     [ws],
   );
   const onlineCount = directory.filter(
-    (d) => d.presence === "ACTIVE" || d.presence === "BRB",
+    (d: any) => d.presence === "ACTIVE" || d.presence === "BRB",
   ).length;
   const unreadOf = (c: Conversation) =>
     activeId === c.id ? 0 : (c.unreadCount ?? 0);
 
   const topLevel = messages
-    .filter((m) => !m.parentId)
+    .filter((m: any) => !m.parentId)
     .filter(
-      (m) =>
+      (m: any) =>
         !convSearch ||
         (!m.deleted &&
           m.content.toLowerCase().includes(convSearch.toLowerCase())),
     );
   const repliesOf = (parentId: string) =>
-    messages.filter((m) => m.parentId === parentId).sort((a, b) => a.ts - b.ts);
-  const pinned = messages.filter((m) => m.pinned && !m.deleted);
+    messages.filter((m: any) => m.parentId === parentId).sort((a: any, b: any) => a.ts - b.ts);
+  const pinned = messages.filter((m: any) => m.pinned && !m.deleted);
 
   // Group messages by date
   const groupedMessages = useMemo(() => {
@@ -790,7 +790,7 @@ export default function ConnectPage() {
     searchDebounceRef.current = setTimeout(async () => {
       try {
         const all = await api.search(convSearch.trim());
-        setSearchResults(all.filter((r) => r.channelId === activeId));
+        setSearchResults(all.filter((r: any) => r.channelId === activeId));
         setSearchErr(null);
       } catch (e) {
         setSearchErr(
@@ -850,15 +850,15 @@ export default function ConnectPage() {
 
   /* ── message mutations ── */
   const replaceMsg = (m: ConnectMessage) =>
-    setMessages((prev) => prev.map((x) => (x.id === m.id ? m : x)));
+    setMessages((prev: any) => prev.map((x: any) => (x.id === m.id ? m : x)));
 
   const handleSend = async () => {
     if (!activeId || (!composer.trim() && staged.length === 0)) return;
-    if (staged.some((a) => a.status === "uploading")) return; // block send while an upload is in flight
+    if (staged.some((a: any) => a.status === "uploading")) return; // block send while an upload is in flight
     const content = composer;
     const attachments: Attachment[] = staged
-      .filter((a) => a.status === "done" && a.documentId)
-      .map((a) => ({
+      .filter((a: any) => a.status === "done" && a.documentId)
+      .map((a: any) => ({
         id: a.documentId!,
         name: a.name,
         size: a.size,
@@ -895,7 +895,7 @@ export default function ConnectPage() {
           progress: 0,
           errorMessage: `Exceeds ${mb} MB limit`,
         };
-        setStaged((prev) => [...prev, errItem]);
+        setStaged((prev: any) => [...prev, errItem]);
         toast.error(
           "Attachment rejected",
           `${file.name} exceeds the ${mb} MB limit.`,
@@ -916,18 +916,18 @@ export default function ConnectPage() {
         progress: 0,
         previewUrl,
       };
-      setStaged((prev) => [...prev, item]);
-      const { promise } = uploadAttachment(channelId, file, (pct) => {
-        setStaged((prev) =>
-          prev.map((a) =>
+      setStaged((prev: any) => [...prev, item]);
+      const { promise } = uploadAttachment(channelId, file, (pct: any) => {
+        setStaged((prev: any) =>
+          prev.map((a: any) =>
             a.localId === localId ? { ...a, progress: pct } : a,
           ),
         );
       });
       promise
-        .then((res) => {
-          setStaged((prev) =>
-            prev.map((a) =>
+        .then((res: any) => {
+          setStaged((prev: any) =>
+            prev.map((a: any) =>
               a.localId === localId
                 ? {
                     ...a,
@@ -940,10 +940,10 @@ export default function ConnectPage() {
             ),
           );
         })
-        .catch((e) => {
+        .catch((e: any) => {
           const msg = e instanceof Error ? e.message : "Upload failed";
-          setStaged((prev) =>
-            prev.map((a) =>
+          setStaged((prev: any) =>
+            prev.map((a: any) =>
               a.localId === localId
                 ? { ...a, status: "error", errorMessage: msg }
                 : a,
@@ -971,8 +971,8 @@ export default function ConnectPage() {
     setEmojiFor(null);
     try {
       const r = await api.react(id, emoji);
-      setMessages((prev) =>
-        prev.map((m) => (m.id === id ? { ...m, reactions: r.reactions } : m)),
+      setMessages((prev: any) =>
+        prev.map((m: any) => (m.id === id ? { ...m, reactions: r.reactions } : m)),
       );
     } catch {
       /* ignore */
@@ -1005,7 +1005,7 @@ export default function ConnectPage() {
 
   const toggleBookmark = async (id: string) => {
     const isBookmarked = bookmarks.has(id);
-    setBookmarks((prev) => {
+    setBookmarks((prev: any) => {
       const next = new Set(prev);
       isBookmarked ? next.delete(id) : next.add(id);
       return next;
@@ -1014,7 +1014,7 @@ export default function ConnectPage() {
       await api.bookmark(id);
       await loadBookmarks();
     } catch {
-      setBookmarks((prev) => {
+      setBookmarks((prev: any) => {
         const next = new Set(prev);
         isBookmarked ? next.add(id) : next.delete(id);
         return next;
@@ -1024,14 +1024,14 @@ export default function ConnectPage() {
   const toggleMute = async (convId: string) => {
     try {
       const res = await api.toggleMute(convId);
-      setMutedConvs((prev) => {
+      setMutedConvs((prev: any) => {
         const next = new Set(prev);
         res.muted ? next.add(convId) : next.delete(convId);
         return next;
       });
       await loadWorkspace();
     } catch {
-      setMutedConvs((prev) => {
+      setMutedConvs((prev: any) => {
         const next = new Set(prev);
         next.has(convId) ? next.delete(convId) : next.add(convId);
         return next;
@@ -1041,14 +1041,14 @@ export default function ConnectPage() {
   const toggleStar = async (convId: string) => {
     try {
       const res = await api.toggleStar(convId);
-      setStarredConvs((prev) => {
+      setStarredConvs((prev: any) => {
         const next = new Set(prev);
         res.starred ? next.add(convId) : next.delete(convId);
         return next;
       });
       await loadWorkspace();
     } catch {
-      setStarredConvs((prev) => {
+      setStarredConvs((prev: any) => {
         const next = new Set(prev);
         next.has(convId) ? next.delete(convId) : next.add(convId);
         return next;
@@ -1056,7 +1056,7 @@ export default function ConnectPage() {
     }
   };
   const toggleSection = (id: string) =>
-    setCollapsedSections((prev) => {
+    setCollapsedSections((prev: any) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
@@ -1064,8 +1064,8 @@ export default function ConnectPage() {
 
   const insertMention = (m: Member) => {
     const first = m.name.split(" ")[0];
-    setComposer((prev) =>
-      prev.replace(/(^|\s)@\w*$/, (_full, lead) => `${lead}@${first} `),
+    setComposer((prev: any) =>
+      prev.replace(/(^|\s)@\w*$/, (_full: any, lead: any) => `${lead}@${first} `),
     );
     setMentionQuery(null);
   };
@@ -1108,7 +1108,7 @@ export default function ConnectPage() {
   const setMyPresence = async (presence: Presence, statusText?: string) => {
     try {
       await api.setPresence(presence, statusText ?? me.statusText ?? undefined);
-      setWs((prev) =>
+      setWs((prev: any) =>
         prev
           ? {
               ...prev,
@@ -1117,7 +1117,7 @@ export default function ConnectPage() {
                 presence,
                 statusText: statusText ?? prev.me.statusText,
               },
-              directory: prev.directory.map((d) =>
+              directory: prev.directory.map((d: any) =>
                 d.id === prev.me.id
                   ? { ...d, presence, statusText: statusText ?? d.statusText }
                   : d,
@@ -1138,7 +1138,7 @@ export default function ConnectPage() {
         conversationId: activeId,
       });
       setActiveMeeting(m);
-      setMeetingState((s) => ({
+      setMeetingState((s: any) => ({
         ...s,
         preJoin: true,
         micOn: true,
@@ -1161,10 +1161,10 @@ export default function ConnectPage() {
     }
   };
   const joinMeeting = () => {
-    setMeetingState((s) => ({ ...s, preJoin: false, elapsedSec: 0 }));
+    setMeetingState((s: any) => ({ ...s, preJoin: false, elapsedSec: 0 }));
     if (meetingTimerRef.current) clearInterval(meetingTimerRef.current);
     meetingTimerRef.current = setInterval(
-      () => setMeetingState((s) => ({ ...s, elapsedSec: s.elapsedSec + 1 })),
+      () => setMeetingState((s: any) => ({ ...s, elapsedSec: s.elapsedSec + 1 })),
       1000,
     );
   };
@@ -1182,7 +1182,7 @@ export default function ConnectPage() {
   };
   const sendMeetingChat = () => {
     if (!meetingState.meetingChatDraft.trim()) return;
-    setMeetingState((s) => ({
+    setMeetingState((s: any) => ({
       ...s,
       meetingChat: [
         ...s.meetingChat,
@@ -1193,12 +1193,12 @@ export default function ConnectPage() {
   };
   const sendMeetingReaction = (emoji: string) => {
     const r = { id: uid("r"), emoji, name: me.name, ts: Date.now() };
-    setMeetingState((s) => ({ ...s, reactions: [...s.reactions, r] }));
+    setMeetingState((s: any) => ({ ...s, reactions: [...s.reactions, r] }));
     setTimeout(
       () =>
-        setMeetingState((s) => ({
+        setMeetingState((s: any) => ({
           ...s,
-          reactions: s.reactions.filter((x) => x.id !== r.id),
+          reactions: s.reactions.filter((x: any) => x.id !== r.id),
         })),
       3000,
     );
@@ -1278,15 +1278,15 @@ export default function ConnectPage() {
   /* ── Notification level (US-B5, spec §5) ── */
   const changeNotifyLevel = async (channelId: string, level: NotifyLevel) => {
     const prevLevel =
-      allConvs.find((c) => c.id === channelId)?.notifyLevel ?? "ALL";
-    setWs((prev) =>
+      allConvs.find((c: any) => c.id === channelId)?.notifyLevel ?? "ALL";
+    setWs((prev: any) =>
       prev
         ? {
             ...prev,
-            channels: prev.channels.map((c) =>
+            channels: prev.channels.map((c: any) =>
               c.id === channelId ? { ...c, notifyLevel: level } : c,
             ),
-            conversations: prev.conversations.map((c) =>
+            conversations: prev.conversations.map((c: any) =>
               c.id === channelId ? { ...c, notifyLevel: level } : c,
             ),
           }
@@ -1295,14 +1295,14 @@ export default function ConnectPage() {
     try {
       await api.setNotifyLevel(channelId, level);
     } catch (e) {
-      setWs((prev) =>
+      setWs((prev: any) =>
         prev
           ? {
               ...prev,
-              channels: prev.channels.map((c) =>
+              channels: prev.channels.map((c: any) =>
                 c.id === channelId ? { ...c, notifyLevel: prevLevel } : c,
               ),
-              conversations: prev.conversations.map((c) =>
+              conversations: prev.conversations.map((c: any) =>
                 c.id === channelId ? { ...c, notifyLevel: prevLevel } : c,
               ),
             }
@@ -1383,7 +1383,7 @@ export default function ConnectPage() {
     if (!activeConv) return;
     try {
       await api.addChannelMember(activeConv.id, userId);
-      setManageMembers((prev) => [...(prev ?? []), { userId, role: "MEMBER" }]);
+      setManageMembers((prev: any) => [...(prev ?? []), { userId, role: "MEMBER" }]);
       setMemberSearch("");
     } catch (e) {
       toast.error(
@@ -1396,8 +1396,8 @@ export default function ConnectPage() {
     if (!activeConv) return;
     try {
       await api.removeChannelMember(activeConv.id, userId);
-      setManageMembers((prev) =>
-        (prev ?? []).filter((m) => m.userId !== userId),
+      setManageMembers((prev: any) =>
+        (prev ?? []).filter((m: any) => m.userId !== userId),
       );
       setRemoveConfirm(null);
     } catch (e) {
@@ -1449,7 +1449,7 @@ export default function ConnectPage() {
     setForwarding(true);
     try {
       const sourceConv = allConvs.find(
-        (c) => c.id === forwardMsg.conversationId,
+        (c: any) => c.id === forwardMsg.conversationId,
       );
       const originAuthor = memberById(forwardMsg.authorId).name;
       const marker = `[[forwarded:${forwardMsg.id}:${sourceConv?.kind === "CHANNEL" ? `#${sourceConv.name}` : (sourceConv?.name ?? "a conversation")}:${originAuthor}:${forwardMsg.ts}]]`;
@@ -1472,7 +1472,7 @@ export default function ConnectPage() {
   const mentionMatches =
     mentionQuery !== null
       ? directory
-          .filter((m) =>
+          .filter((m: any) =>
             m.name.toLowerCase().includes(mentionQuery.toLowerCase()),
           )
           .slice(0, 6)
@@ -1480,13 +1480,13 @@ export default function ConnectPage() {
   const switcherResults =
     switcher !== null
       ? [
-          ...allConvs.map((c) => ({ type: "conv" as const, c })),
+          ...allConvs.map((c: any) => ({ type: "conv" as const, c })),
           ...directory
-            .filter((d) => d.id !== me.id)
-            .map((d) => ({ type: "person" as const, d })),
+            .filter((d: any) => d.id !== me.id)
+            .map((d: any) => ({ type: "person" as const, d })),
         ]
           .filter(
-            (r) =>
+            (r: any) =>
               !switcher ||
               (r.type === "conv" ? r.c.name : r.d.name)
                 .toLowerCase()
@@ -1498,12 +1498,12 @@ export default function ConnectPage() {
   // Sidebar filter
   const filteredChannels = (channels: Conversation[]) =>
     sidebarSearch
-      ? channels.filter((c) =>
+      ? channels.filter((c: any) =>
           c.name.toLowerCase().includes(sidebarSearch.toLowerCase()),
         )
       : channels;
 
-  const starredList = allConvs.filter((c) => starredConvs.has(c.id));
+  const starredList = allConvs.filter((c: any) => starredConvs.has(c.id));
 
   /* ── styles ── */
   const pill = (active: boolean, muted = false): React.CSSProperties => ({
@@ -1597,15 +1597,15 @@ export default function ConnectPage() {
     );
   }
 
-  const spaceIds = new Set(ws.spaces.map((s) => s.id));
+  const spaceIds = new Set(ws.spaces.map((s: any) => s.id));
   const channelsBySpace = (spaceId: string) =>
-    filteredChannels((ws.channels ?? []).filter((c) => c.spaceId === spaceId));
+    filteredChannels((ws.channels ?? []).filter((c: any) => c.spaceId === spaceId));
   const ungroupedChannels = filteredChannels(
-    (ws.channels ?? []).filter((c) => !c.spaceId || !spaceIds.has(c.spaceId)),
+    (ws.channels ?? []).filter((c: any) => !c.spaceId || !spaceIds.has(c.spaceId)),
   );
   const headerMembers = (activeConv?.memberIds ?? []).map(memberById);
   const activeOnline = headerMembers.filter(
-    (m) => m.presence === "ACTIVE" || m.presence === "BRB",
+    (m: any) => m.presence === "ACTIVE" || m.presence === "BRB",
   ).length;
 
   return (
@@ -1625,7 +1625,7 @@ export default function ConnectPage() {
                 onClick={() => {
                   setStatusDraft(me.statusText ?? "");
                   setStatusEmoji("");
-                  setPresenceOpen((v) => !v);
+                  setPresenceOpen((v: any) => !v);
                 }}
                 className={styles.s24}
               >
@@ -1651,19 +1651,19 @@ export default function ConnectPage() {
                       <div className={styles.s29}>
                         <input
                           value={statusEmoji}
-                          onChange={(e) => setStatusEmoji(e.target.value)}
+                          onChange={(e: any) => setStatusEmoji(e.target.value)}
                           placeholder="😊"
                           className={styles.s30}
                         />
                         <input
                           value={statusDraft}
-                          onChange={(e) => setStatusDraft(e.target.value)}
+                          onChange={(e: any) => setStatusDraft(e.target.value)}
                           placeholder="What's your status?"
                           className={styles.s31}
                         />
                       </div>
                       <div className={styles.s32}>
-                        {STATUS_SUGGESTIONS.map((s) => (
+                        {STATUS_SUGGESTIONS.map((s: any) => (
                           <button
                             key={s.text}
                             onClick={() => {
@@ -1688,7 +1688,7 @@ export default function ConnectPage() {
                     </div>
                     <div className={styles.s35}>
                       <div className={styles.s36}>Presence</div>
-                      {PRESENCE_ORDER.map((p) => (
+                      {PRESENCE_ORDER.map((p: any) => (
                         <button
                           key={p}
                           onClick={() => {
@@ -1804,7 +1804,7 @@ export default function ConnectPage() {
                 <Search size={14} className={styles.s42} />
                 <input
                   value={sidebarSearch}
-                  onChange={(e) => setSidebarSearch(e.target.value)}
+                  onChange={(e: any) => setSidebarSearch(e.target.value)}
                   placeholder="Filter conversations..."
                   className={styles.s43}
                 />
@@ -1817,7 +1817,7 @@ export default function ConnectPage() {
                 <div>
                   {sectionHeader("starred", "Starred")}
                   {!collapsedSections.has("starred") &&
-                    starredList.map((c) => (
+                    starredList.map((c: any) => (
                       <button
                         key={c.id}
                         onClick={() => switchConv(c.id)}
@@ -1832,13 +1832,13 @@ export default function ConnectPage() {
               )}
 
               {/* Spaces & channels */}
-              {ws.spaces.map((sp) => (
+              {ws.spaces.map((sp: any) => (
                 <div key={sp.id}>
                   {sectionHeader(sp.id, `${sp.emoji} ${sp.name}`, () =>
                     newChannel(sp.id),
                   )}
                   {!collapsedSections.has(sp.id) &&
-                    channelsBySpace(sp.id).map((c) => (
+                    channelsBySpace(sp.id).map((c: any) => (
                       <button
                         key={c.id}
                         onClick={() => switchConv(c.id)}
@@ -1869,7 +1869,7 @@ export default function ConnectPage() {
                 <div>
                   {sectionHeader("channels", "Channels", () => newChannel())}
                   {!collapsedSections.has("channels") &&
-                    ungroupedChannels.map((c) => (
+                    ungroupedChannels.map((c: any) => (
                       <button
                         key={c.id}
                         onClick={() => switchConv(c.id)}
@@ -1909,11 +1909,11 @@ export default function ConnectPage() {
                   setPeople({ mode: "dm", selected: [], search: "" }),
                 )}
                 {!collapsedSections.has("dms") &&
-                  directs.map((c) => {
+                  directs.map((c: any) => {
                     const other =
                       c.kind === "DM"
                         ? memberById(
-                            (c.memberIds ?? []).find((i) => i !== me.id) ?? "",
+                            (c.memberIds ?? []).find((i: any) => i !== me.id) ?? "",
                           )
                         : undefined;
                     const unread = unreadOf(c);
@@ -2088,7 +2088,7 @@ export default function ConnectPage() {
                       className={styles.s68}
                     >
                       <div className={styles.s69}>
-                        {headerMembers.slice(0, 3).map((m, i) => (
+                        {headerMembers.slice(0, 3).map((m: any, i: any) => (
                           <span key={m.id} style={{ marginLeft: i ? -6 : 0 }}>
                             <Avatar member={m} size={20} />
                           </span>
@@ -2101,7 +2101,7 @@ export default function ConnectPage() {
                       <Search size={13} className={styles.s42} />
                       <input
                         value={convSearch}
-                        onChange={(e) => setConvSearch(e.target.value)}
+                        onChange={(e: any) => setConvSearch(e.target.value)}
                         placeholder="Search in chat"
                         aria-label="Search in chat"
                         className={styles.s70}
@@ -2142,7 +2142,7 @@ export default function ConnectPage() {
                               </div>
                             )}
                           {!searchLoading &&
-                            searchResults?.map((r) => (
+                            searchResults?.map((r: any) => (
                               <button
                                 key={r.messageId}
                                 onClick={() => {
@@ -2181,7 +2181,7 @@ export default function ConnectPage() {
                     <Select
                       aria-label={`Notification level for ${activeConv.kind === "CHANNEL" ? "#" : ""}${activeConv.name}`}
                       value={activeConv.notifyLevel ?? "ALL"}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         changeNotifyLevel(
                           activeConv.id,
                           e.target.value as NotifyLevel,
@@ -2190,7 +2190,7 @@ export default function ConnectPage() {
                       className={styles.s80}
                     >
                       {(["ALL", "MENTIONS", "NONE"] as NotifyLevel[]).map(
-                        (lvl) => (
+                        (lvl: any) => (
                           <option key={lvl} value={lvl}>
                             {NOTIFY_LEVEL_LABELS[lvl]}
                           </option>
@@ -2263,10 +2263,10 @@ export default function ConnectPage() {
 
                 {/* ─ Messages feed ─ */}
                 <div ref={feedRef} className={styles.s84}>
-                  {groupedMessages.map((group) => (
+                  {groupedMessages.map((group: any) => (
                     <React.Fragment key={group.date}>
                       <DateDivider ts={group.messages[0]!.ts} />
-                      {group.messages.map((m, i) => {
+                      {group.messages.map((m: any, i: any) => {
                         const prevMsg = i > 0 ? group.messages[i - 1] : null;
                         const compact =
                           prevMsg &&
@@ -2287,7 +2287,7 @@ export default function ConnectPage() {
                             onEmojiToggle={() =>
                               setEmojiFor(emojiFor === m.id ? null : m.id)
                             }
-                            onReact={(e) => react(m.id, e)}
+                            onReact={(e: any) => react(m.id, e)}
                             onOpenThread={() => setThreadParent(m.id)}
                             onEdit={() => {
                               setEditingId(m.id);
@@ -2301,14 +2301,14 @@ export default function ConnectPage() {
                             onSaveEdit={saveEdit}
                             onCancelEdit={() => setEditingId(null)}
                             onJoinMeeting={() =>
-                              api.meetings().then((ms) => {
-                                const mt = ms.find((x) => x.id === m.meetingId);
+                              api.meetings().then((ms: any) => {
+                                const mt = ms.find((x: any) => x.id === m.meetingId);
                                 if (mt) setActiveMeeting(mt);
                               })
                             }
                             isBookmarked={bookmarks.has(m.id)}
                             onToggleBookmark={() => toggleBookmark(m.id)}
-                            onProfileClick={(member) => setProfileCard(member)}
+                            onProfileClick={(member: any) => setProfileCard(member)}
                             memberById={memberById}
                             onForward={() => openForward(m)}
                             flashing={flashMessageId === m.id}
@@ -2350,7 +2350,7 @@ export default function ConnectPage() {
                   {mentionMatches.length > 0 && (
                     <div className={styles.s91}>
                       <div className={styles.s92}>Mention someone</div>
-                      {mentionMatches.map((m) => (
+                      {mentionMatches.map((m: any) => (
                         <button
                           key={m.id}
                           onClick={() => insertMention(m)}
@@ -2365,13 +2365,13 @@ export default function ConnectPage() {
                   )}
                   {staged.length > 0 && (
                     <div className={styles.s95}>
-                      {staged.map((a) => (
+                      {staged.map((a: any) => (
                         <StagedChip
                           key={a.localId}
                           a={a}
                           onRemove={() =>
-                            setStaged((p) =>
-                              p.filter((x) => x.localId !== a.localId),
+                            setStaged((p: any) =>
+                              p.filter((x: any) => x.localId !== a.localId),
                             )
                           }
                         />
@@ -2383,8 +2383,8 @@ export default function ConnectPage() {
                   <div className={styles.s96}>
                     {(() => {
                       const names = [...typingUsers.keys()]
-                        .filter((uid_) => uid_ !== me.id)
-                        .map((uid_) => memberById(uid_).name);
+                        .filter((uid_: any) => uid_ !== me.id)
+                        .map((uid_: any) => memberById(uid_).name);
                       if (names.length === 0) return null;
                       const label =
                         names.length === 1
@@ -2442,7 +2442,7 @@ export default function ConnectPage() {
                           after: "",
                           tip: "Numbered list",
                         },
-                      ].map((f) => (
+                      ].map((f: any) => (
                         <button
                           key={f.tip}
                           onClick={() => insertFormat(f.before, f.after)}
@@ -2484,7 +2484,7 @@ export default function ConnectPage() {
                         type="file"
                         multiple
                         hidden
-                        onChange={(e) => {
+                        onChange={(e: any) => {
                           onFiles(e.target.files);
                           if (fileRef.current) fileRef.current.value = "";
                         }}
@@ -2493,13 +2493,13 @@ export default function ConnectPage() {
                         {showSlashPopup && (
                           <SlashPopup
                             onClose={() => setShowSlashPopup(false)}
-                            onCommand={(cmd) => setComposer(cmd + " ")}
+                            onCommand={(cmd: any) => setComposer(cmd + " ")}
                           />
                         )}
                         <textarea
                           ref={composerRef}
                           value={composer}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             setComposer(e.target.value);
                             const mt = /(?:^|\s)@(\w*)$/.exec(e.target.value);
                             setMentionQuery(mt ? (mt[1] ?? "") : null);
@@ -2509,7 +2509,7 @@ export default function ConnectPage() {
                                 channelId: activeId,
                               });
                           }}
-                          onKeyDown={(e) => {
+                          onKeyDown={(e: any) => {
                             if (e.key === "Enter" && !e.shiftKey) {
                               e.preventDefault();
                               handleSend();
@@ -2549,7 +2549,7 @@ export default function ConnectPage() {
                         <EyeOff size={16} />
                       </button>
                       <VoiceRecorder
-                        onDone={(blob) => {
+                        onDone={(blob: any) => {
                           const f = new Blob([blob], { type: "audio/webm" });
                           const fakeFile = {
                             name: `voice-${Date.now()}.webm`,
@@ -2577,7 +2577,7 @@ export default function ConnectPage() {
                         onClick={handleSend}
                         disabled={
                           (!composer.trim() && staged.length === 0) ||
-                          staged.some((a) => a.status === "uploading")
+                          staged.some((a: any) => a.status === "uploading")
                         }
                         aria-label="Send message"
                         style={{
@@ -2604,7 +2604,7 @@ export default function ConnectPage() {
                         <input
                           type="datetime-local"
                           value={scheduleAt}
-                          onChange={(e) => setScheduleAt(e.target.value)}
+                          onChange={(e: any) => setScheduleAt(e.target.value)}
                           style={{
                             flex: 1,
                             padding: 6,
@@ -2647,8 +2647,8 @@ export default function ConnectPage() {
                     {emojiFor === "composer" && (
                       <div className={styles.s104}>
                         <EmojiPicker
-                          onPick={(e) => {
-                            setComposer((p) => p + e);
+                          onPick={(e: any) => {
+                            setComposer((p: any) => p + e);
                             setEmojiFor(null);
                           }}
                           customEmojis={customEmojis}
@@ -2681,7 +2681,7 @@ export default function ConnectPage() {
                     {savedMessages.length === 0 ? (
                       <p className={styles.s110}>No saved messages yet.</p>
                     ) : (
-                      savedMessages.map((m) => (
+                      savedMessages.map((m: any) => (
                         <div key={m.id} className={styles.s111}>
                           <div className={styles.s112}>
                             <span className={styles.s113}>
@@ -2721,7 +2721,7 @@ export default function ConnectPage() {
           {/* ─── Thread panel ─── */}
           {threadParent &&
             (() => {
-              const parent = messages.find((m) => m.id === threadParent);
+              const parent = messages.find((m: any) => m.id === threadParent);
               if (!parent) return null;
               const reps = repliesOf(parent.id);
               return (
@@ -2749,7 +2749,7 @@ export default function ConnectPage() {
                       </span>
                       <div className={styles.s9} />
                     </div>
-                    {reps.map((r) => (
+                    {reps.map((r: any) => (
                       <ThreadMsg
                         key={r.id}
                         m={r}
@@ -2760,8 +2760,8 @@ export default function ConnectPage() {
                   <div className={styles.s121}>
                     <textarea
                       value={threadComposer}
-                      onChange={(e) => setThreadComposer(e.target.value)}
-                      onKeyDown={(e) => {
+                      onChange={(e: any) => setThreadComposer(e.target.value)}
+                      onKeyDown={(e: any) => {
                         if (e.key === "Enter" && !e.shiftKey) {
                           e.preventDefault();
                           handleThreadSend();
@@ -2861,7 +2861,7 @@ export default function ConnectPage() {
                       {activeOnline} online
                     </span>
                   </div>
-                  {headerMembers.map((m) => (
+                  {headerMembers.map((m: any) => (
                     <button
                       key={m.id}
                       onClick={() => setProfileCard(m)}
@@ -2890,8 +2890,8 @@ export default function ConnectPage() {
                 {/* Shared files */}
                 {(() => {
                   const allFiles = messages
-                    .flatMap((m) =>
-                      m.attachments.map((a) => ({
+                    .flatMap((m: any) =>
+                      m.attachments.map((a: any) => ({
                         ...a,
                         ts: m.ts,
                         author: memberById(m.authorId).name,
@@ -2903,7 +2903,7 @@ export default function ConnectPage() {
                   return (
                     <div>
                       <div className={styles.s137}>Shared files</div>
-                      {allFiles.map((f) => (
+                      {allFiles.map((f: any) => (
                         <div key={f.id} className={styles.s138}>
                           <File size={16} className={styles.s139} />
                           <div className="flex-1 overflow-hidden">
@@ -2924,7 +2924,7 @@ export default function ConnectPage() {
                     <div className={styles.s137}>
                       Pinned messages ({pinned.length})
                     </div>
-                    {pinned.slice(0, 5).map((m) => (
+                    {pinned.slice(0, 5).map((m: any) => (
                       <div key={m.id} className={styles.s141}>
                         <div className={styles.s142}>
                           {memberById(m.authorId).name}
@@ -2953,7 +2953,7 @@ export default function ConnectPage() {
                 </button>
               </div>
               <div className={styles.s145}>
-                {pinned.map((m) => (
+                {pinned.map((m: any) => (
                   <div key={m.id} className={styles.s146}>
                     <div className={styles.s147}>
                       <Avatar member={memberById(m.authorId)} size={22} />
@@ -2986,7 +2986,7 @@ export default function ConnectPage() {
             const ms = meetingState;
             const participants = [
               me,
-              ...directory.filter((x) => x.id !== me.id).slice(0, 5),
+              ...directory.filter((x: any) => x.id !== me.id).slice(0, 5),
             ];
             const meetCtrl = (
               icon: React.ReactNode,
@@ -3042,7 +3042,7 @@ export default function ConnectPage() {
                           ms.micOn ? "Mute" : "Unmute",
                           ms.micOn,
                           () =>
-                            setMeetingState((s) => ({ ...s, micOn: !s.micOn })),
+                            setMeetingState((s: any) => ({ ...s, micOn: !s.micOn })),
                         )}
                         {meetCtrl(
                           ms.camOn ? (
@@ -3053,7 +3053,7 @@ export default function ConnectPage() {
                           ms.camOn ? "Stop video" : "Start video",
                           ms.camOn,
                           () =>
-                            setMeetingState((s) => ({ ...s, camOn: !s.camOn })),
+                            setMeetingState((s: any) => ({ ...s, camOn: !s.camOn })),
                         )}
                       </div>
                     </div>
@@ -3065,7 +3065,7 @@ export default function ConnectPage() {
                         connect.meet/{activeMeeting.code}
                       </code>
                       <div className={styles.s168}>
-                        {participants.slice(0, 4).map((p, i) => (
+                        {participants.slice(0, 4).map((p: any, i: any) => (
                           <span key={p.id} style={{ marginLeft: i ? -8 : 0 }}>
                             <Avatar member={p} size={28} />
                           </span>
@@ -3144,7 +3144,7 @@ export default function ConnectPage() {
                   {/* Video grid */}
                   <div className={styles.s182}>
                     {/* Floating reactions */}
-                    {ms.reactions.map((r) => (
+                    {ms.reactions.map((r: any) => (
                       <div key={r.id} className={styles.s183}>
                         <span className={styles.s184}>{r.emoji}</span>
                         <span className={styles.s185}>{r.name}</span>
@@ -3178,7 +3178,7 @@ export default function ConnectPage() {
                       {(ms.layout === "spotlight"
                         ? [participants[0]!]
                         : participants
-                      ).map((p, i) => (
+                      ).map((p: any, i: any) => (
                         <div
                           key={p.id}
                           style={{
@@ -3252,7 +3252,7 @@ export default function ConnectPage() {
                       <div className={styles.s201}>
                         <button
                           onClick={() =>
-                            setMeetingState((s) => ({
+                            setMeetingState((s: any) => ({
                               ...s,
                               showParticipants: true,
                               showChat: false,
@@ -3270,7 +3270,7 @@ export default function ConnectPage() {
                         </button>
                         <button
                           onClick={() =>
-                            setMeetingState((s) => ({
+                            setMeetingState((s: any) => ({
                               ...s,
                               showChat: true,
                               showParticipants: false,
@@ -3288,7 +3288,7 @@ export default function ConnectPage() {
                         </button>
                         <button
                           onClick={() =>
-                            setMeetingState((s) => ({
+                            setMeetingState((s: any) => ({
                               ...s,
                               showChat: false,
                               showParticipants: false,
@@ -3309,7 +3309,7 @@ export default function ConnectPage() {
                                 <Clock size={13} /> Waiting room (
                                 {ms.waitingRoom.length})
                               </div>
-                              {ms.waitingRoom.map((w) => (
+                              {ms.waitingRoom.map((w: any) => (
                                 <div key={w.id} className={styles.s206}>
                                   <Avatar member={w} size={28} />
                                   <span className={styles.s207}>{w.name}</span>
@@ -3322,7 +3322,7 @@ export default function ConnectPage() {
                           <div className={styles.s209}>
                             In this call ({participants.length})
                           </div>
-                          {participants.map((p) => (
+                          {participants.map((p: any) => (
                             <div key={p.id} className={styles.s210}>
                               <Avatar member={p} size={30} />
                               <div className="flex-1">
@@ -3358,7 +3358,7 @@ export default function ConnectPage() {
                                 </p>
                               </div>
                             )}
-                            {ms.meetingChat.map((msg, i) => (
+                            {ms.meetingChat.map((msg: any, i: any) => (
                               <div key={i}>
                                 <div className={styles.s217}>
                                   <span className={styles.s218}>
@@ -3378,13 +3378,13 @@ export default function ConnectPage() {
                           <div className={styles.s221}>
                             <input
                               value={ms.meetingChatDraft}
-                              onChange={(e) =>
-                                setMeetingState((s) => ({
+                              onChange={(e: any) =>
+                                setMeetingState((s: any) => ({
                                   ...s,
                                   meetingChatDraft: e.target.value,
                                 }))
                               }
-                              onKeyDown={(e) => {
+                              onKeyDown={(e: any) => {
                                 if (e.key === "Enter") sendMeetingChat();
                               }}
                               placeholder="Send a message to everyone"
@@ -3429,13 +3429,13 @@ export default function ConnectPage() {
                       ms.micOn ? <Mic size={20} /> : <MicOff size={20} />,
                       ms.micOn ? "Mute microphone" : "Unmute microphone",
                       ms.micOn,
-                      () => setMeetingState((s) => ({ ...s, micOn: !s.micOn })),
+                      () => setMeetingState((s: any) => ({ ...s, micOn: !s.micOn })),
                     )}
                     {meetCtrl(
                       ms.camOn ? <Video size={20} /> : <VideoOff size={20} />,
                       ms.camOn ? "Turn off camera" : "Turn on camera",
                       ms.camOn,
-                      () => setMeetingState((s) => ({ ...s, camOn: !s.camOn })),
+                      () => setMeetingState((s: any) => ({ ...s, camOn: !s.camOn })),
                     )}
                     {meetCtrl(
                       ms.screenShare ? (
@@ -3446,7 +3446,7 @@ export default function ConnectPage() {
                       ms.screenShare ? "Stop sharing" : "Share screen",
                       !ms.screenShare,
                       () =>
-                        setMeetingState((s) => ({
+                        setMeetingState((s: any) => ({
                           ...s,
                           screenShare: !s.screenShare,
                         })),
@@ -3459,7 +3459,7 @@ export default function ConnectPage() {
                       ms.handRaised ? "Lower hand" : "Raise hand",
                       !ms.handRaised,
                       () =>
-                        setMeetingState((s) => ({
+                        setMeetingState((s: any) => ({
                           ...s,
                           handRaised: !s.handRaised,
                         })),
@@ -3475,7 +3475,7 @@ export default function ConnectPage() {
                         <Smile size={20} />
                       </button>
                       <div className={`meet-reactions ${styles.s228}`}>
-                        {["👍", "❤️", "😂", "🎉", "👏", "🤔"].map((e) => (
+                        {["👍", "❤️", "😂", "🎉", "👏", "🤔"].map((e: any) => (
                           <button
                             key={e}
                             onClick={() => sendMeetingReaction(e)}
@@ -3505,7 +3505,7 @@ export default function ConnectPage() {
                               : "Start recording",
                             active: ms.recording,
                             action: () =>
-                              setMeetingState((s) => ({
+                              setMeetingState((s: any) => ({
                                 ...s,
                                 recording: !s.recording,
                               })),
@@ -3517,7 +3517,7 @@ export default function ConnectPage() {
                               : "Turn on captions",
                             active: ms.showCaptions,
                             action: () =>
-                              setMeetingState((s) => ({
+                              setMeetingState((s: any) => ({
                                 ...s,
                                 showCaptions: !s.showCaptions,
                               })),
@@ -3533,7 +3533,7 @@ export default function ConnectPage() {
                               : "Noise cancellation: Off",
                             active: ms.noiseCancel,
                             action: () =>
-                              setMeetingState((s) => ({
+                              setMeetingState((s: any) => ({
                                 ...s,
                                 noiseCancel: !s.noiseCancel,
                               })),
@@ -3550,7 +3550,7 @@ export default function ConnectPage() {
                             label: `Layout: ${ms.layout}`,
                             active: false,
                             action: () =>
-                              setMeetingState((s) => ({
+                              setMeetingState((s: any) => ({
                                 ...s,
                                 layout:
                                   s.layout === "gallery"
@@ -3572,7 +3572,7 @@ export default function ConnectPage() {
                             active: false,
                             action: () => {},
                           },
-                        ].map((opt) => (
+                        ].map((opt: any) => (
                           <button
                             key={opt.label}
                             onClick={opt.action}
@@ -3604,7 +3604,7 @@ export default function ConnectPage() {
                   <div className={styles.s233}>
                     <button
                       onClick={() =>
-                        setMeetingState((s) => ({
+                        setMeetingState((s: any) => ({
                           ...s,
                           showChat: !s.showChat,
                           showParticipants: false,
@@ -3626,7 +3626,7 @@ export default function ConnectPage() {
                     </button>
                     <button
                       onClick={() =>
-                        setMeetingState((s) => ({
+                        setMeetingState((s: any) => ({
                           ...s,
                           showParticipants: !s.showParticipants,
                           showChat: false,
@@ -3647,7 +3647,7 @@ export default function ConnectPage() {
                       onClick={() => {
                         api
                           .generateMeetingSummary(activeMeeting.id)
-                          .then((s) => setMeetingSummary(s))
+                          .then((s: any) => setMeetingSummary(s))
                           .catch(() => {});
                         setShowMeetingRecap(true);
                       }}
@@ -3673,7 +3673,7 @@ export default function ConnectPage() {
           <ConnectCalendar
             events={calendar}
             directory={ws?.directory ?? []}
-            onCreate={async (ev) => {
+            onCreate={async (ev: any) => {
               await addEvent({
                 title: ev.title,
                 date: ev.date,
@@ -3688,7 +3688,7 @@ export default function ConnectPage() {
                 recurrence: ev.recurrence,
               });
             }}
-            onDelete={async (id) => {
+            onDelete={async (id: any) => {
               try {
                 await api.deleteEvent(id);
                 setCalendar(await api.events());
@@ -3699,7 +3699,7 @@ export default function ConnectPage() {
                 );
               }
             }}
-            onJoin={(ev) => {
+            onJoin={(ev: any) => {
               if (ev.meetingCode)
                 setActiveMeeting({
                   id: ev.id,
@@ -3734,7 +3734,7 @@ export default function ConnectPage() {
                 <input
                   autoFocus
                   value={people.search}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setPeople({ ...people, search: e.target.value })
                   }
                   placeholder="Search people..."
@@ -3743,7 +3743,7 @@ export default function ConnectPage() {
               </div>
               {people.mode === "group" && people.selected.length > 0 && (
                 <div className={styles.s239}>
-                  {people.selected.map((id) => {
+                  {people.selected.map((id: any) => {
                     const m = memberById(id);
                     return (
                       <span key={id} className={styles.s240}>
@@ -3752,7 +3752,7 @@ export default function ConnectPage() {
                           onClick={() =>
                             setPeople({
                               ...people,
-                              selected: people.selected.filter((x) => x !== id),
+                              selected: people.selected.filter((x: any) => x !== id),
                             })
                           }
                           className={styles.s241}
@@ -3766,9 +3766,9 @@ export default function ConnectPage() {
               )}
               <div className={styles.s242}>
                 {directory
-                  .filter((d) => d.id !== me.id)
+                  .filter((d: any) => d.id !== me.id)
                   .filter(
-                    (d) =>
+                    (d: any) =>
                       !people.search ||
                       d.name
                         .toLowerCase()
@@ -3777,7 +3777,7 @@ export default function ConnectPage() {
                         .toLowerCase()
                         .includes(people.search.toLowerCase()),
                   )
-                  .map((d) => {
+                  .map((d: any) => {
                     const checked = people.selected.includes(d.id);
                     return (
                       <button
@@ -3788,7 +3788,7 @@ export default function ConnectPage() {
                             : setPeople({
                                 ...people,
                                 selected: checked
-                                  ? people.selected.filter((x) => x !== d.id)
+                                  ? people.selected.filter((x: any) => x !== d.id)
                                   : [...people.selected, d.id],
                               })
                         }
@@ -3821,7 +3821,7 @@ export default function ConnectPage() {
                       </button>
                     );
                   })}
-                {directory.filter((d) => d.id !== me.id).length === 0 && (
+                {directory.filter((d: any) => d.id !== me.id).length === 0 && (
                   <p className={styles.s110}>
                     No other people in this workspace yet.
                   </p>
@@ -3856,7 +3856,7 @@ export default function ConnectPage() {
                 <input
                   autoFocus
                   value={switcher}
-                  onChange={(e) => setSwitcher(e.target.value)}
+                  onChange={(e: any) => setSwitcher(e.target.value)}
                   placeholder="Search conversations, channels, people..."
                   className={styles.s247}
                 />
@@ -3873,12 +3873,12 @@ export default function ConnectPage() {
               <div className={styles.s251}>
                 {switcherResults.length > 0 && (
                   <>
-                    {switcherResults.filter((r) => r.type === "conv").length >
+                    {switcherResults.filter((r: any) => r.type === "conv").length >
                       0 && <div className={styles.s252}>Conversations</div>}
                     {switcherResults
-                      .filter((r) => r.type === "conv")
+                      .filter((r: any) => r.type === "conv")
                       .map(
-                        (r) =>
+                        (r: any) =>
                           r.type === "conv" && (
                             <button
                               key={`c-${r.c.id}`}
@@ -3908,12 +3908,12 @@ export default function ConnectPage() {
                             </button>
                           ),
                       )}
-                    {switcherResults.filter((r) => r.type === "person").length >
+                    {switcherResults.filter((r: any) => r.type === "person").length >
                       0 && <div className={styles.s252}>People</div>}
                     {switcherResults
-                      .filter((r) => r.type === "person")
+                      .filter((r: any) => r.type === "person")
                       .map(
-                        (r) =>
+                        (r: any) =>
                           r.type === "person" && (
                             <button
                               key={`p-${r.d.id}`}
@@ -3934,7 +3934,7 @@ export default function ConnectPage() {
                 {switcherMessages.length > 0 && (
                   <>
                     <div className={styles.s252}>Messages</div>
-                    {switcherMessages.map((r) => (
+                    {switcherMessages.map((r: any) => (
                       <button
                         key={`m-${r.messageId}`}
                         onClick={() => {
@@ -4041,7 +4041,7 @@ export default function ConnectPage() {
         {/* Directory Modal (US-D1) */}
         {directoryModalOpen &&
           (() => {
-            const filteredDir = directory.filter((d) => {
+            const filteredDir = directory.filter((d: any) => {
               const q = dirSearchQuery.trim().toLowerCase();
               if (!q) return true;
               return (
@@ -4067,7 +4067,7 @@ export default function ConnectPage() {
                     <Search size={14} className={styles.s237} />
                     <input
                       value={dirSearchQuery}
-                      onChange={(e) => setDirSearchQuery(e.target.value)}
+                      onChange={(e: any) => setDirSearchQuery(e.target.value)}
                       placeholder="Search by name, department, or designation/title..."
                       className={styles.s269}
                     />
@@ -4076,7 +4076,7 @@ export default function ConnectPage() {
                     {filteredDir.length === 0 ? (
                       <p className={styles.s110}>No matches found</p>
                     ) : (
-                      filteredDir.map((d) => (
+                      filteredDir.map((d: any) => (
                         <div key={d.id} className={styles.s271}>
                           <Avatar member={d} size={36} showPresence />
                           <div className="flex-1 overflow-hidden">
@@ -4127,7 +4127,7 @@ export default function ConnectPage() {
                   <X size={18} />
                 </button>
               </div>
-              {SHORTCUTS.map((s) => (
+              {SHORTCUTS.map((s: any) => (
                 <div key={s.key} className={styles.s275}>
                   <span className={styles.s276}>{s.label}</span>
                   <div className={styles.s212}>
@@ -4165,7 +4165,7 @@ export default function ConnectPage() {
                   },
                 ]}
                 value={manageTab}
-                onChange={(k) => setManageTab(k as "general" | "members")}
+                onChange={(k: any) => setManageTab(k as "general" | "members")}
               />
 
               {manageTab === "general" && activeConv && (
@@ -4175,7 +4175,7 @@ export default function ConnectPage() {
                       <Hash size={14} className="ui-text-tertiary" />
                       <Input
                         value={manageName}
-                        onChange={(e) => setManageName(e.target.value)}
+                        onChange={(e: any) => setManageName(e.target.value)}
                         onBlur={saveChannelName}
                       />
                     </div>
@@ -4183,7 +4183,7 @@ export default function ConnectPage() {
                   <FormField label="Topic" hint="Optional">
                     <Input
                       value={manageTopic}
-                      onChange={(e) => setManageTopic(e.target.value)}
+                      onChange={(e: any) => setManageTopic(e.target.value)}
                       onBlur={saveChannelTopic}
                       placeholder="What's this channel about?"
                     />
@@ -4207,17 +4207,17 @@ export default function ConnectPage() {
                     <div className="relative">
                       <Input
                         value={memberSearch}
-                        onChange={(e) => setMemberSearch(e.target.value)}
+                        onChange={(e: any) => setMemberSearch(e.target.value)}
                         placeholder="Add people…"
                         aria-label="Add people to channel"
                       />
                       {memberSearch.trim() &&
                         (() => {
                           const existingIds = new Set(
-                            manageMembers?.map((m) => m.userId) ?? [],
+                            manageMembers?.map((m: any) => m.userId) ?? [],
                           );
                           const results = directory.filter(
-                            (d) =>
+                            (d: any) =>
                               !existingIds.has(d.id) &&
                               d.name
                                 .toLowerCase()
@@ -4230,7 +4230,7 @@ export default function ConnectPage() {
                                   No matching people
                                 </div>
                               )}
-                              {results.map((d) => (
+                              {results.map((d: any) => (
                                 <button
                                   key={d.id}
                                   onClick={() => addMemberToChannel(d.id)}
@@ -4248,7 +4248,7 @@ export default function ConnectPage() {
 
                   {manageMembers === null ? (
                     <div className={styles.s236}>
-                      {[1, 2, 3].map((i) => (
+                      {[1, 2, 3].map((i: any) => (
                         <div key={i} className={styles.s284}>
                           <Skeleton
                             width={28}
@@ -4261,11 +4261,11 @@ export default function ConnectPage() {
                     </div>
                   ) : (
                     <div className="ui-flex-col">
-                      {manageMembers.map((mem) => {
+                      {manageMembers.map((mem: any) => {
                         const person = memberById(mem.userId);
                         const soleOwner =
                           mem.role === "OWNER" &&
-                          manageMembers.filter((x) => x.role === "OWNER")
+                          manageMembers.filter((x: any) => x.role === "OWNER")
                             .length <= 1;
                         return (
                           <div key={mem.userId} className={styles.s206}>
@@ -4343,13 +4343,13 @@ export default function ConnectPage() {
           <div className={styles.s236}>
             <Input
               value={browseSearch}
-              onChange={(e) => setBrowseSearch(e.target.value)}
+              onChange={(e: any) => setBrowseSearch(e.target.value)}
               placeholder="Search channels by name or topic…"
               aria-label="Search public channels"
             />
             {browseList === null && !browseErr && (
               <div className={styles.s236}>
-                {[1, 2, 3, 4].map((i) => (
+                {[1, 2, 3, 4].map((i: any) => (
                   <div key={i} className={styles.s284}>
                     <Skeleton
                       width={28}
@@ -4372,7 +4372,7 @@ export default function ConnectPage() {
             {browseList &&
               (() => {
                 const filtered = browseList.filter(
-                  (c) =>
+                  (c: any) =>
                     !browseSearch.trim() ||
                     c.name
                       .toLowerCase()
@@ -4407,7 +4407,7 @@ export default function ConnectPage() {
                 }
                 return (
                   <div className={styles.s289}>
-                    {filtered.map((c) => (
+                    {filtered.map((c: any) => (
                       <div key={c.id} className={styles.s290}>
                         <Hash size={18} className={styles.s139} />
                         <div className="flex-1 overflow-hidden">
@@ -4474,20 +4474,20 @@ export default function ConnectPage() {
               <div className={styles.s294} />
               <Input
                 value={forwardSearch}
-                onChange={(e) => setForwardSearch(e.target.value)}
+                onChange={(e: any) => setForwardSearch(e.target.value)}
                 placeholder="Search conversations or people…"
                 aria-label="Search conversations or people"
               />
               <div className={styles.s295}>
                 {allConvs
                   .filter(
-                    (c) =>
+                    (c: any) =>
                       !forwardSearch.trim() ||
                       c.name
                         .toLowerCase()
                         .includes(forwardSearch.trim().toLowerCase()),
                   )
-                  .map((c) => (
+                  .map((c: any) => (
                     <button
                       key={c.id}
                       onClick={() => setForwardTarget(c.id)}
@@ -4556,7 +4556,7 @@ export default function ConnectPage() {
               <h3 style={{ margin: "0 0 12px" }}>⏰ Set Reminder</h3>
               <input
                 value={reminderText}
-                onChange={(e) => setReminderText(e.target.value)}
+                onChange={(e: any) => setReminderText(e.target.value)}
                 placeholder="What should we remind you about?"
                 style={{
                   width: "100%",
@@ -4578,7 +4578,7 @@ export default function ConnectPage() {
                 <input
                   type="number"
                   value={reminderMinutes}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReminderMinutes(parseInt(e.target.value) || 30)
                   }
                   min={1}
@@ -4597,7 +4597,7 @@ export default function ConnectPage() {
                         ? "hours"
                         : "mins"
                   }
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setReminderMinutes(
                       e.target.value === "mins"
                         ? 30
@@ -4694,7 +4694,7 @@ function ThreadMsg({ m, author }: { m: ConnectMessage; author: Member }) {
         </div>
         {!m.deleted && m.attachments.length > 0 && (
           <div className={styles.s300}>
-            {m.attachments.map((a) => (
+            {m.attachments.map((a: any) => (
               <a
                 key={a.id}
                 href={a.url ?? "#"}
@@ -4833,8 +4833,8 @@ function MessageRow(p: RowProps) {
           <div className={styles.s310}>
             <input
               value={p.editText}
-              onChange={(e) => p.setEditText(e.target.value)}
-              onKeyDown={(e) => {
+              onChange={(e: any) => p.setEditText(e.target.value)}
+              onKeyDown={(e: any) => {
                 if (e.key === "Enter") p.onSaveEdit();
                 if (e.key === "Escape") p.onCancelEdit();
               }}
@@ -4888,12 +4888,12 @@ function MessageRow(p: RowProps) {
 
         {/* Inline image previews */}
         {!m.deleted &&
-          m.attachments.filter((a) => isImageMime(a.mime) && a.url).length >
+          m.attachments.filter((a: any) => isImageMime(a.mime) && a.url).length >
             0 && (
             <div className={styles.s318}>
               {m.attachments
-                .filter((a) => isImageMime(a.mime) && a.url)
-                .map((a) => (
+                .filter((a: any) => isImageMime(a.mime) && a.url)
+                .map((a: any) => (
                   <a
                     key={a.id}
                     href={a.url}
@@ -4909,16 +4909,16 @@ function MessageRow(p: RowProps) {
 
         {/* File attachments */}
         {!m.deleted &&
-          m.attachments.filter((a) => !isImageMime(a.mime)).length > 0 && (
+          m.attachments.filter((a: any) => !isImageMime(a.mime)).length > 0 && (
             <div className={styles.s320}>
               {m.attachments
-                .filter((a) => !isImageMime(a.mime))
-                .map((a) => (
+                .filter((a: any) => !isImageMime(a.mime))
+                .map((a: any) => (
                   <a
                     key={a.id}
                     href={a.url ?? "#"}
                     download={a.name}
-                    onClick={(e) => {
+                    onClick={(e: any) => {
                       if (!a.url) e.preventDefault();
                     }}
                     style={{ opacity: a.url ? 1 : 0.6 }}
@@ -4944,14 +4944,14 @@ function MessageRow(p: RowProps) {
         {/* Reactions & reply count */}
         {!m.deleted && (m.reactions.length > 0 || p.replyCount > 0) && (
           <div className={styles.s324}>
-            {m.reactions.map((r) => {
+            {m.reactions.map((r: any) => {
               const mine = r.userIds.includes(p.me);
               return (
                 <button
                   key={r.emoji}
                   onClick={() => p.onReact(r.emoji)}
                   title={r.userIds
-                    .map((id) => p.memberById(id).name)
+                    .map((id: any) => p.memberById(id).name)
                     .join(", ")}
                   style={{
                     borderColor: mine
@@ -4979,7 +4979,7 @@ function MessageRow(p: RowProps) {
 
         {/* Link previews (US-C2) */}
         {!m.deleted &&
-          extractUrls(m.content).map((url, idx) => (
+          extractUrls(m.content).map((url: any, idx: any) => (
             <LinkPreview key={idx} url={url} />
           ))}
 
@@ -5161,7 +5161,7 @@ function EmojiPicker({
 
   const pick = (emoji: string) => {
     try {
-      const next = [emoji, ...recent.filter((e) => e !== emoji)].slice(0, 24);
+      const next = [emoji, ...recent.filter((e: any) => e !== emoji)].slice(0, 24);
       window.sessionStorage.setItem(RECENT_EMOJI_KEY, JSON.stringify(next));
     } catch {
       /* ignore */
@@ -5177,20 +5177,20 @@ function EmojiPicker({
       ? customEmojis
       : [];
   const results = query.trim()
-    ? ALL_EMOJIS.filter((e) =>
+    ? ALL_EMOJIS.filter((e: any) =>
         e.name.toLowerCase().includes(query.trim().toLowerCase()),
       )
     : category === "custom" && customEmojis?.length
-      ? customEmojis.map((e) => ({ emoji: "", name: e.name, url: e.fileUrl }))
+      ? customEmojis.map((e: any) => ({ emoji: "", name: e.name, url: e.fileUrl }))
       : category === "recent"
         ? recent.map(
-            (emoji) =>
-              ALL_EMOJIS.find((e) => e.emoji === emoji) ?? {
+            (emoji: any) =>
+              ALL_EMOJIS.find((e: any) => e.emoji === emoji) ?? {
                 emoji,
                 name: "recently used",
               },
           )
-        : (EMOJI_CATEGORIES.find((c) => c.key === category)?.emojis ?? []);
+        : (EMOJI_CATEGORIES.find((c: any) => c.key === category)?.emojis ?? []);
 
   return (
     <div className={styles.s341}>
@@ -5200,7 +5200,7 @@ function EmojiPicker({
           <input
             autoFocus
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e: any) => setQuery(e.target.value)}
             placeholder="Search emoji…"
             aria-label="Search emoji"
             className={styles.s343}
@@ -5211,12 +5211,12 @@ function EmojiPicker({
         <div className={styles.s344}>
           {[
             { key: "recent", icon: "🕐", label: "Recently used" },
-            ...EMOJI_CATEGORIES.map((c) => ({
+            ...EMOJI_CATEGORIES.map((c: any) => ({
               key: c.key,
               icon: c.icon,
               label: c.label,
             })),
-          ].map((c) => (
+          ].map((c: any) => (
             <button
               key={c.key}
               onClick={() => setCategory(c.key)}
@@ -5255,7 +5255,7 @@ function EmojiPicker({
               : "No emoji found"}
           </span>
         )}
-        {results.map((e, i) => (
+        {results.map((e: any, i: any) => (
           <button
             key={(e as any).url ? `c-${i}` : e.emoji}
             onClick={() => pick((e as any).url || e.emoji)}
@@ -5291,7 +5291,7 @@ function Modal({
   return (
     <div onClick={onClose} className={styles.s349}>
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: any) => e.stopPropagation()}
         style={{ width: `min(${width}px, 100%)` }}
         className={styles.s350}
       >
@@ -5317,7 +5317,7 @@ function LinkPreview({ url }: { url: string }) {
     let active = true;
     api
       .getLinkPreview(url)
-      .then((res) => {
+      .then((res: any) => {
         if (active) {
           setPreview(res);
           setLoading(false);
@@ -5403,7 +5403,7 @@ function SeenReceipts({
   const initials = (nameStr: string) => {
     return nameStr
       .split(" ")
-      .map((n) => n[0])
+      .map((n: any) => n[0])
       .join("")
       .slice(0, 2)
       .toUpperCase();
@@ -5432,7 +5432,7 @@ function SeenReceipts({
       {showTooltip && seenList && seenList.length > 0 && (
         <div className={styles.s360}>
           <strong className={styles.s361}>Seen by</strong>
-          {seenList.map((s) => (
+          {seenList.map((s: any) => (
             <div key={s.userId} className={styles.s362}>
               <span className={styles.s363}>{initials(s.name)}</span>
               <span className={styles.s364}>{s.name}</span>
@@ -5450,11 +5450,11 @@ function PollCreator({ onClose }: { onClose: () => void }) {
   const [options, setOptions] = useState<string[]>(["", ""]);
   const [creating, setCreating] = useState(false);
   const toast = useToast();
-  const addOption = () => setOptions((o) => [...o, ""]);
+  const addOption = () => setOptions((o: any) => [...o, ""]);
   const removeOption = (i: number) =>
-    setOptions((o) => o.filter((_, idx) => idx !== i));
+    setOptions((o: any) => o.filter((_: any, idx: any) => idx !== i));
   const updateOption = (i: number, v: string) =>
-    setOptions((o) => o.map((x, idx) => (idx === i ? v : x)));
+    setOptions((o: any) => o.map((x: any, idx: any) => (idx === i ? v : x)));
   const submit = async () => {
     if (!question.trim() || options.filter(Boolean).length < 2) return;
     setCreating(true);
@@ -5465,7 +5465,7 @@ function PollCreator({ onClose }: { onClose: () => void }) {
       await api.createPoll(
         activeId,
         question,
-        options.filter(Boolean).map((o) => ({ label: o })),
+        options.filter(Boolean).map((o: any) => ({ label: o })),
       );
       toast.success("Poll created!");
       onClose();
@@ -5514,7 +5514,7 @@ function PollCreator({ onClose }: { onClose: () => void }) {
         </div>
         <input
           value={question}
-          onChange={(e) => setQuestion(e.target.value)}
+          onChange={(e: any) => setQuestion(e.target.value)}
           placeholder="Ask a question..."
           style={{
             width: "100%",
@@ -5524,11 +5524,11 @@ function PollCreator({ onClose }: { onClose: () => void }) {
             border: "1px solid var(--color-border)",
           }}
         />
-        {options.map((o, i) => (
+        {options.map((o: any, i: any) => (
           <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
             <input
               value={o}
-              onChange={(e) => updateOption(i, e.target.value)}
+              onChange={(e: any) => updateOption(i, e.target.value)}
               placeholder={`Option ${i + 1}`}
               style={{
                 flex: 1,
@@ -5601,7 +5601,7 @@ function PollBlock({
 }) {
   const toast = useToast();
   const totalVotes = poll.votes?.length || 0;
-  const votedOption = poll.votes?.find((v) => v.userId === "self")?.optionId;
+  const votedOption = poll.votes?.find((v: any) => v.userId === "self")?.optionId;
   const vote = async (optionId: string) => {
     try {
       await api.votePoll(poll.id, optionId);
@@ -5615,7 +5615,7 @@ function PollBlock({
       style={{ padding: "12px 0", borderTop: "1px solid var(--color-border)" }}
     >
       <div style={{ fontWeight: 600, marginBottom: 8 }}>{poll.question}</div>
-      {poll.options?.map((opt) => {
+      {poll.options?.map((opt: any) => {
         const count = opt.votes?.length || 0;
         const pct = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
         const isVoted = votedOption === opt.id;
@@ -5700,7 +5700,7 @@ function PollBlockInline({
   useEffect(() => {
     api
       .getPolls(channelId)
-      .then((p) => setPoll(p.find((x) => x.id === pollId) || null))
+      .then((p: any) => setPoll(p.find((x: any) => x.id === pollId) || null))
       .catch(() => {});
   }, [pollId, channelId]);
   if (!poll) return null;
@@ -5711,7 +5711,7 @@ function PollBlockInline({
       onRefresh={() =>
         api
           .getPolls(channelId)
-          .then((p) => setPoll(p.find((x) => x.id === pollId) || null))
+          .then((p: any) => setPoll(p.find((x: any) => x.id === pollId) || null))
       }
     />
   );
@@ -5752,7 +5752,7 @@ function SlashPopup({
         marginBottom: 4,
       }}
     >
-      {commands.map((c) => (
+      {commands.map((c: any) => (
         <button
           key={c.cmd}
           onClick={() => {
@@ -5796,7 +5796,7 @@ function RemindersPanel({ onClose }: { onClose: () => void }) {
     api
       .getReminders()
       .then(setReminders)
-      .catch((e) => {
+      .catch((e: any) => {
         toast.error(
           "Failed to load reminders",
           e instanceof Error ? e.message : undefined,
@@ -5806,7 +5806,7 @@ function RemindersPanel({ onClose }: { onClose: () => void }) {
   const del = async (id: string) => {
     try {
       await api.deleteReminder(id);
-      setReminders((r) => r.filter((x) => x.id !== id));
+      setReminders((r: any) => r.filter((x: any) => x.id !== id));
     } catch (e) {
       toast.error(
         "Failed to delete reminder",
@@ -5874,7 +5874,7 @@ function RemindersPanel({ onClose }: { onClose: () => void }) {
             No reminders
           </div>
         )}
-        {reminders.map((r) => (
+        {reminders.map((r: any) => (
           <div
             key={r.id}
             style={{
@@ -5965,7 +5965,7 @@ function EmojiManager({ onClose }: { onClose: () => void }) {
   const del = async (id: string) => {
     try {
       await api.deleteCustomEmoji(id);
-      setEmojis((e) => e.filter((x) => x.id !== id));
+      setEmojis((e: any) => e.filter((x: any) => x.id !== id));
     } catch (e) {
       toast.error(
         "Failed to delete emoji",
@@ -6039,7 +6039,7 @@ function EmojiManager({ onClose }: { onClose: () => void }) {
             gap: 8,
           }}
         >
-          {emojis.map((e) => (
+          {emojis.map((e: any) => (
             <div
               key={e.id}
               style={{
@@ -6101,7 +6101,7 @@ function MeetingRecap({
   useEffect(() => {
     api
       .getMeetingSummary(meetingId)
-      .then((s) => {
+      .then((s: any) => {
         setSummary(s);
         setLoading(false);
       })
@@ -6185,7 +6185,7 @@ function MeetingRecap({
               <>
                 <h4 style={{ margin: "12px 0 8px" }}>Key Points</h4>
                 <ul>
-                  {summary.keyPoints.map((p, i) => (
+                  {summary.keyPoints.map((p: any, i: any) => (
                     <li key={i}>{p}</li>
                   ))}
                 </ul>
@@ -6195,7 +6195,7 @@ function MeetingRecap({
               <>
                 <h4 style={{ margin: "12px 0 8px" }}>Action Items</h4>
                 <ul>
-                  {summary.actionItems.map((a, i) => (
+                  {summary.actionItems.map((a: any, i: any) => (
                     <li key={i}>✅ {a}</li>
                   ))}
                 </ul>
@@ -6289,7 +6289,7 @@ function TemplateDialog({ onClose }: { onClose: () => void }) {
         </div>
         <input
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: any) => setName(e.target.value)}
           placeholder="Channel name"
           style={{
             width: "100%",
@@ -6299,7 +6299,7 @@ function TemplateDialog({ onClose }: { onClose: () => void }) {
             marginBottom: 16,
           }}
         />
-        {templates.map((t) => (
+        {templates.map((t: any) => (
           <button
             key={t.id}
             onClick={() => setSelected(t.id)}
@@ -6427,17 +6427,17 @@ function VoiceRecorder({ onDone }: { onDone: (blob: Blob) => void }) {
       const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
       recorderRef.current = recorder;
       chunksRef.current = [];
-      recorder.ondataavailable = (e) => {
+      recorder.ondataavailable = (e: any) => {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
       recorder.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: "audio/webm" });
-        stream.getTracks().forEach((t) => t.stop());
+        stream.getTracks().forEach((t: any) => t.stop());
         onDone(blob);
       };
       recorder.start();
       setState("recording");
-      timerRef.current = setInterval(() => setDuration((d) => d + 1), 1000);
+      timerRef.current = setInterval(() => setDuration((d: any) => d + 1), 1000);
     } catch {
       setState("idle");
     }
@@ -6615,7 +6615,7 @@ function ChannelTabs({ channelId }: { channelId: string }) {
 
   return (
     <div className={styles.s365}>
-      {tabs.map((tab) => (
+      {tabs.map((tab: any) => (
         <a
           key={tab.id}
           href={tab.url || "#"}

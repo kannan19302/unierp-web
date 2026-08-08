@@ -79,7 +79,7 @@ export default function ReportsPage() {
         />
         <Card padding="lg">
           <div className={styles.grid}>
-            {reports.map((r) => (
+            {reports.map((r: any) => (
               <Link key={r.href} href={r.href} className={styles.cardLink}>
                 <div className={styles.iconWrap}>{r.icon}</div>
                 <div className={styles.cardContent}>

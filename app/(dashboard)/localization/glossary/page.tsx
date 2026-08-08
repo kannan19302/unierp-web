@@ -10,7 +10,7 @@ export default function GlossaryPage() {
 
   useEffect(() => {
     apiGet("/admin/localization/glossary")
-      .then((d) => setEntries(Array.isArray(d) ? d : []))
+      .then((d: any) => setEntries(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 
@@ -29,7 +29,7 @@ export default function GlossaryPage() {
         <div
           className="ui-flex"
           style={{ gap: "var(--space-2)" }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button size="sm" variant="ghost">
             <Eye size={14} />

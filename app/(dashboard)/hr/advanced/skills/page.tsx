@@ -129,12 +129,12 @@ export default function SkillsPage() {
           <h4
             className={styles.dyn0}
             style={{
-              color: reports.some((r) => r.gapsCount > 0)
+              color: reports.some((r: any) => r.gapsCount > 0)
                 ? "var(--color-danger-text)"
                 : "inherit",
             }}
           >
-            {reports.filter((r) => r.gapsCount > 0).length}
+            {reports.filter((r: any) => r.gapsCount > 0).length}
           </h4>
         </Card>
       </div>
@@ -148,7 +148,7 @@ export default function SkillsPage() {
                 className="ui-input"
                 placeholder="Designation (e.g. HR Director)"
                 value={reqForm.designation}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setReqForm({ ...reqForm, designation: e.target.value })
                 }
                 required
@@ -157,7 +157,7 @@ export default function SkillsPage() {
                 className="ui-input"
                 placeholder="Skill Name (e.g. Compliance)"
                 value={reqForm.skillName}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setReqForm({ ...reqForm, skillName: e.target.value })
                 }
                 required
@@ -170,7 +170,7 @@ export default function SkillsPage() {
                   min="1"
                   max="5"
                   value={reqForm.requiredLevel}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setReqForm({
                       ...reqForm,
                       requiredLevel: parseInt(e.target.value) || 3,
@@ -208,7 +208,7 @@ export default function SkillsPage() {
             {requirements.length === 0 ? (
               <div className={styles.s8}>No requirements set.</div>
             ) : (
-              requirements.map((req) => (
+              requirements.map((req: any) => (
                 <Card key={req.id} padding="sm">
                   <div className={styles.s9}>{req.designation}</div>
                   <div className={styles.s10}>
@@ -239,7 +239,7 @@ export default function SkillsPage() {
                   {
                     key: "gapsCount",
                     header: "Gap Details",
-                    render: (_, row) => {
+                    render: (_: any, row: any) => {
                       const rep = row as unknown as GapReport;
                       return rep.gapsCount === 0 ? (
                         <span className={styles.s11}>
@@ -247,7 +247,7 @@ export default function SkillsPage() {
                         </span>
                       ) : (
                         <div className={styles.s12}>
-                          {rep.gaps.map((g) => (
+                          {rep.gaps.map((g: any) => (
                             <div key={g.skillName} className={styles.s13}>
                               ⚠️ {g.skillName}: Target {g.requiredLevel} (Has{" "}
                               {g.actualLevel}, Gap: {g.gap})
@@ -260,7 +260,7 @@ export default function SkillsPage() {
                   {
                     key: "status",
                     header: "Audit Status",
-                    render: (_, row) => {
+                    render: (_: any, row: any) => {
                       const rep = row as unknown as GapReport;
                       return (
                         <span
@@ -286,7 +286,7 @@ export default function SkillsPage() {
                 ] as ListColumn[]
               }
               data={
-                reports.map((r) => ({
+                reports.map((r: any) => ({
                   ...r,
                   id: r.employeeId,
                 })) as unknown as Record<string, unknown>[]

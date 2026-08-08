@@ -64,7 +64,7 @@ export default function RisksPage() {
       const data = await client.get<Mitigation[] | { data?: Mitigation[] }>(
         `/projects/risks/${riskId}/mitigations`,
       );
-      setMitigations((prev) => ({
+      setMitigations((prev: any) => ({
         ...prev,
         [riskId]: Array.isArray(data) ? data : data?.data || [],
       }));
@@ -110,7 +110,7 @@ export default function RisksPage() {
       {loading && <div className="ui-text-muted">Loading risks...</div>}
       {error && <div className="ui-text-danger">{error}</div>}
       <div className="ui-stack-3">
-        {risks.map((risk) => (
+        {risks.map((risk: any) => (
           <div key={risk.id} className={styles.card}>
             <div
               className={styles.cardHeader}
@@ -139,7 +139,7 @@ export default function RisksPage() {
                   <h4 className={styles.sectionTitle}>Mitigation Actions</h4>
                   <button
                     onClick={() => {
-                      setNewMitigation((prev) => ({
+                      setNewMitigation((prev: any) => ({
                         ...prev,
                         riskId: risk.id,
                       }));
@@ -153,7 +153,7 @@ export default function RisksPage() {
                 {(mitigations[risk.id] || []).length === 0 && (
                   <p className={styles.empty}>No mitigation actions yet.</p>
                 )}
-                {(mitigations[risk.id] || []).map((m) => (
+                {(mitigations[risk.id] || []).map((m: any) => (
                   <div key={m.id} className={styles.mitigationItem}>
                     <div className="ui-flex-between">
                       <span className={styles.mitigationAction}>
@@ -196,8 +196,8 @@ export default function RisksPage() {
                 <input
                   className="ui-input"
                   value={newMitigation.action}
-                  onChange={(e) =>
-                    setNewMitigation((p) => ({ ...p, action: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewMitigation((p: any) => ({ ...p, action: e.target.value }))
                   }
                   required
                 />
@@ -208,8 +208,8 @@ export default function RisksPage() {
                   className="ui-input"
                   type="date"
                   value={newMitigation.dueDate}
-                  onChange={(e) =>
-                    setNewMitigation((p) => ({ ...p, dueDate: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewMitigation((p: any) => ({ ...p, dueDate: e.target.value }))
                   }
                 />
               </div>
@@ -218,8 +218,8 @@ export default function RisksPage() {
                 <textarea
                   className="ui-input"
                   value={newMitigation.notes}
-                  onChange={(e) =>
-                    setNewMitigation((p) => ({ ...p, notes: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewMitigation((p: any) => ({ ...p, notes: e.target.value }))
                   }
                 />
               </div>

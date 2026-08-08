@@ -122,7 +122,7 @@ export default function CrmSalesOrdersPage() {
   }, [fetchOrders]);
 
   // Client-side search + sort + pagination (backend does not support these params yet)
-  const filteredOrders = allOrders.filter((o) => {
+  const filteredOrders = allOrders.filter((o: any) => {
     if (!debouncedSearch) return true;
     const q = debouncedSearch.toLowerCase();
     return (
@@ -130,7 +130,7 @@ export default function CrmSalesOrdersPage() {
       o.customerName.toLowerCase().includes(q)
     );
   });
-  const sortedOrders = [...filteredOrders].sort((a, b) => {
+  const sortedOrders = [...filteredOrders].sort((a: any, b: any) => {
     let cmp = 0;
     if (sortBy === "totalAmount")
       cmp = Number(a.totalAmount) - Number(b.totalAmount);
@@ -197,14 +197,14 @@ export default function CrmSalesOrdersPage() {
   };
 
   const totalValue = sortedOrders.reduce(
-    (a, o) => a + Number(o.totalAmount),
+    (a: any, o: any) => a + Number(o.totalAmount),
     0,
   );
   const confirmedCount = sortedOrders.filter(
-    (o) => o.status === "CONFIRMED",
+    (o: any) => o.status === "CONFIRMED",
   ).length;
   const deliveredCount = sortedOrders.filter(
-    (o) => o.status === "DELIVERED",
+    (o: any) => o.status === "DELIVERED",
   ).length;
 
   const columns: Column<SalesOrder>[] = [
@@ -260,7 +260,7 @@ export default function CrmSalesOrdersPage() {
       width: "60px",
       render: (row: any) => (
         <button
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             setSelected(row);
             setDetailOpen(true);
@@ -330,13 +330,13 @@ export default function CrmSalesOrdersPage() {
                 type="text"
                 placeholder="Search orders..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e: any) => setSearch(e.target.value)}
                 className={styles.style5}
               />
             </div>
             <select
               value={`${sortBy}:${sortOrder}`}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 const parts = e.target.value.split(":");
                 if (parts[0] && parts[1]) {
                   setSortBy(parts[0]);
@@ -351,7 +351,7 @@ export default function CrmSalesOrdersPage() {
             </select>
             <div className="ui-flex ui-gap-2">
               {["ALL", "DRAFT", "CONFIRMED", "SHIPPED", "DELIVERED"].map(
-                (s) => (
+                (s: any) => (
                   <button
                     key={s}
                     onClick={() => {
@@ -390,7 +390,7 @@ export default function CrmSalesOrdersPage() {
             data={data}
             loading={loading}
             rowKey={(r: any) => r.id}
-            onRowClick={(r) => {
+            onRowClick={(r: any) => {
               setSelected(r);
               setDetailOpen(true);
             }}
@@ -412,7 +412,7 @@ export default function CrmSalesOrdersPage() {
                   size="sm"
                   variant="outline"
                   disabled={page === 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  onClick={() => setPage((p: any) => Math.max(1, p - 1))}
                 >
                   Previous
                 </Button>
@@ -420,7 +420,7 @@ export default function CrmSalesOrdersPage() {
                   size="sm"
                   variant="outline"
                   disabled={page === totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  onClick={() => setPage((p: any) => Math.min(totalPages, p + 1))}
                 >
                   Next
                 </Button>

@@ -21,7 +21,7 @@ export default function RecentPage() {
       client.get<{ data: any[] }>("/drive/files"),
       client.get<{ data: any[] }>("/drive/folders"),
     ])
-      .then(([filesRes, foldersRes]) => {
+      .then(([filesRes, foldersRes]: any) => {
         const files = (filesRes.data || []).map((f: any) => ({
           ...f,
           type: "file",
@@ -31,7 +31,7 @@ export default function RecentPage() {
           type: "folder",
         }));
         const all = [...folders, ...files].sort(
-          (a, b) =>
+          (a: any, b: any) =>
             new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
         );
         setItems(all.slice(0, 50));

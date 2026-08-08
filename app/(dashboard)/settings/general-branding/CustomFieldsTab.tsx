@@ -198,7 +198,7 @@ export default function CustomFieldsTab() {
   };
 
   const removeOption = (idx: number) => {
-    setForm({ ...form, options: form.options.filter((_, i) => i !== idx) });
+    setForm({ ...form, options: form.options.filter((_: any, i: any) => i !== idx) });
   };
 
   const needsOptions =
@@ -210,10 +210,10 @@ export default function CustomFieldsTab() {
         <div className="relative">
           <select
             value={entityType}
-            onChange={(e) => setEntityType(e.target.value as EntityType)}
+            onChange={(e: any) => setEntityType(e.target.value as EntityType)}
             className={styles.s2}
           >
-            {ENTITY_TYPES.map((t) => (
+            {ENTITY_TYPES.map((t: any) => (
               <option key={t} value={t}>
                 {t}
               </option>
@@ -307,7 +307,7 @@ export default function CustomFieldsTab() {
               {
                 key: "id",
                 header: "Actions",
-                render: (v, row) => (
+                render: (v: any, row: any) => (
                   <div className="ui-flex-end ui-gap-2">
                     <button
                       onClick={() => openEdit(row as unknown as CustomField)}
@@ -381,13 +381,13 @@ export default function CustomFieldsTab() {
             <TextField
               label="Field Name"
               value={form.fieldName}
-              onChange={(e) => setForm({ ...form, fieldName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, fieldName: e.target.value })}
               placeholder="e.g. custom_region"
             />
             <TextField
               label="Label"
               value={form.label}
-              onChange={(e) => setForm({ ...form, label: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, label: e.target.value })}
               placeholder="e.g. Region"
             />
           </div>
@@ -396,11 +396,11 @@ export default function CustomFieldsTab() {
             <FormField label="Field Type">
               <Select
                 value={form.fieldType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, fieldType: e.target.value as FieldType })
                 }
               >
-                {FIELD_TYPES.map((t) => (
+                {FIELD_TYPES.map((t: any) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
@@ -410,7 +410,7 @@ export default function CustomFieldsTab() {
             <TextField
               label="Section"
               value={form.section}
-              onChange={(e) => setForm({ ...form, section: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, section: e.target.value })}
               placeholder="e.g. Additional Info"
             />
           </div>
@@ -419,7 +419,7 @@ export default function CustomFieldsTab() {
             <Textarea
               rows={2}
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
             />
@@ -429,7 +429,7 @@ export default function CustomFieldsTab() {
             <TextField
               label="Default Value"
               value={form.defaultValue}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, defaultValue: e.target.value })
               }
             />
@@ -437,7 +437,7 @@ export default function CustomFieldsTab() {
               label="Sort Order"
               type="number"
               value={String(form.sortOrder)}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, sortOrder: Number(e.target.value) })
               }
             />
@@ -447,7 +447,7 @@ export default function CustomFieldsTab() {
             <input
               type="checkbox"
               checked={form.isRequired}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, isRequired: e.target.checked })
               }
             />
@@ -458,7 +458,7 @@ export default function CustomFieldsTab() {
             <div className={styles.s10}>
               <div className={styles.s11}>Options</div>
               <div className={styles.s12}>
-                {form.options.map((opt, idx) => (
+                {form.options.map((opt: any, idx: any) => (
                   <span key={idx} className={styles.s13}>
                     {opt}
                     <button
@@ -474,9 +474,9 @@ export default function CustomFieldsTab() {
                 <input
                   className={styles.s15}
                   value={newOption}
-                  onChange={(e) => setNewOption(e.target.value)}
+                  onChange={(e: any) => setNewOption(e.target.value)}
                   placeholder="Add option..."
-                  onKeyDown={(e) => {
+                  onKeyDown={(e: any) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
                       addOption();

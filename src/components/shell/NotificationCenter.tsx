@@ -50,7 +50,7 @@ export function NotificationCenter({ iconBtnStyle }: { iconBtnStyle: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const socketRef = useRef<Socket | null>(null);
 
-  const unreadCount = items.filter((n) => n.status === "UNREAD").length;
+  const unreadCount = items.filter((n: any) => n.status === "UNREAD").length;
 
   const load = useCallback(async () => {
     try {
@@ -103,8 +103,8 @@ export function NotificationCenter({ iconBtnStyle }: { iconBtnStyle: string }) {
 
   const markRead = async (n: AppNotification) => {
     if (n.status === "UNREAD") {
-      setItems((prev) =>
-        prev.map((x) => (x.id === n.id ? { ...x, status: "READ" } : x)),
+      setItems((prev: any) =>
+        prev.map((x: any) => (x.id === n.id ? { ...x, status: "READ" } : x)),
       );
       try {
         await client.put(`/communication/notifications/${n.id}/status`, {
@@ -121,12 +121,12 @@ export function NotificationCenter({ iconBtnStyle }: { iconBtnStyle: string }) {
   };
 
   const markAllRead = async () => {
-    const unread = items.filter((n) => n.status === "UNREAD");
-    setItems((prev) =>
-      prev.map((x) => (x.status === "UNREAD" ? { ...x, status: "READ" } : x)),
+    const unread = items.filter((n: any) => n.status === "UNREAD");
+    setItems((prev: any) =>
+      prev.map((x: any) => (x.status === "UNREAD" ? { ...x, status: "READ" } : x)),
     );
     await Promise.allSettled(
-      unread.map((n) =>
+      unread.map((n: any) =>
         client.put(`/communication/notifications/${n.id}/status`, {
           status: "READ",
         }),
@@ -144,7 +144,7 @@ export function NotificationCenter({ iconBtnStyle }: { iconBtnStyle: string }) {
             : "View notifications"
         }
         title="Notifications — system, workflow, and chat alerts land here in real time"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen((v: any) => !v)}
       >
         <Bell size={16} />
         {unreadCount > 0 && (
@@ -220,7 +220,7 @@ export function NotificationCenter({ iconBtnStyle }: { iconBtnStyle: string }) {
                 You're all caught up — no notifications.
               </div>
             ) : (
-              items.map((n) => (
+              items.map((n: any) => (
                 <button
                   key={n.id}
                   onClick={() => markRead(n)}

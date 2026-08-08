@@ -91,7 +91,7 @@ export default function LoginHistoryPage() {
           <select
             className="ui-input u-w-48"
             value={statusFilter}
-            onChange={(e) => {
+            onChange={(e: any) => {
               setStatusFilter(e.target.value);
               setPage(1);
             }}

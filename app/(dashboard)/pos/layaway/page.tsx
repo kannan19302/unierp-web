@@ -23,7 +23,7 @@ export default function POSLayawayPage() {
           { label: "Active Plans", value: "0", color: "var(--color-primary)" },
           { label: "Completed", value: "0", color: "var(--color-success)" },
           { label: "Overdue", value: "0", color: "var(--color-error)" },
-        ].map((stat, i) => (
+        ].map((stat: any, i: any) => (
           <div key={i} className={styles.p2}>
             <div style={{ color: stat.color }}>{stat.value}</div>
             <div className="ui-text-xs-muted">{stat.label}</div>
@@ -50,7 +50,7 @@ export default function POSLayawayPage() {
               title: "Complete",
               desc: "Once fully paid, the order is released to the customer.",
             },
-          ].map((s, i) => (
+          ].map((s: any, i: any) => (
             <div key={i} className={styles.p5}>
               <div className={styles.p6}>{s.step}</div>
               <div className={styles.p7}>{s.title}</div>

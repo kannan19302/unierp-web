@@ -103,7 +103,7 @@ export function AiCopilotSidebar({
 
         <textarea
           value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
+          onChange={(e: any) => setPrompt(e.target.value)}
           placeholder={
             type === "form"
               ? "e.g., Add shipping detail inputs with tracking number"

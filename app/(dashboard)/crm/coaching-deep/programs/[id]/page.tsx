@@ -165,7 +165,7 @@ export default function ProgramDetailPage() {
               className="ui-input"
               placeholder="User ID"
               value={enrollUserId}
-              onChange={(e) => setEnrollUserId(e.target.value)}
+              onChange={(e: any) => setEnrollUserId(e.target.value)}
             />
             <Button onClick={enrollUser}>Enroll</Button>
           </div>
@@ -185,7 +185,7 @@ export default function ProgramDetailPage() {
               className="ui-input"
               placeholder="User ID"
               value={progressUserId}
-              onChange={(e) => setProgressUserId(e.target.value)}
+              onChange={(e: any) => setProgressUserId(e.target.value)}
             />
             <Button onClick={checkProgress}>Check</Button>
           </div>

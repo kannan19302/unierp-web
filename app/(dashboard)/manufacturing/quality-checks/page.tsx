@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { ClipboardCheck, Plus, X, CheckCircle, XCircle } from "lucide-react";
@@ -198,7 +198,7 @@ export default function QualityChecksPage() {
       )}
       {tab === "templates" && (
         <div className="ui-stack-3">
-          {templates.map((t) => (
+          {templates.map((t: any) => (
             <div key={t.id} className={styles.templateCard}>
               <div className="ui-flex-between">
                 <div>
@@ -240,8 +240,8 @@ export default function QualityChecksPage() {
                   <input
                     className="ui-input"
                     value={newTemplate.name}
-                    onChange={(e) =>
-                      setNewTemplate((p) => ({ ...p, name: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewTemplate((p: any) => ({ ...p, name: e.target.value }))
                     }
                     required
                   />
@@ -251,8 +251,8 @@ export default function QualityChecksPage() {
                   <input
                     className="ui-input"
                     value={newTemplate.code}
-                    onChange={(e) =>
-                      setNewTemplate((p) => ({ ...p, code: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewTemplate((p: any) => ({ ...p, code: e.target.value }))
                     }
                     required
                   />
@@ -263,8 +263,8 @@ export default function QualityChecksPage() {
                 <textarea
                   className={styles.codeInput}
                   value={newTemplate.checks}
-                  onChange={(e) =>
-                    setNewTemplate((p) => ({ ...p, checks: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewTemplate((p: any) => ({ ...p, checks: e.target.value }))
                   }
                   placeholder='[{"name":"Visual inspection","type":"PASS_FAIL"}]'
                   rows={3}
@@ -296,13 +296,13 @@ export default function QualityChecksPage() {
                 <select
                   className="ui-input"
                   value={newCheck.templateId}
-                  onChange={(e) =>
-                    setNewCheck((p) => ({ ...p, templateId: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCheck((p: any) => ({ ...p, templateId: e.target.value }))
                   }
                   required
                 >
                   <option value="">Select template</option>
-                  {templates.map((t) => (
+                  {templates.map((t: any) => (
                     <option key={t.id} value={t.id}>
                       {t.name}
                     </option>
@@ -314,8 +314,8 @@ export default function QualityChecksPage() {
                 <input
                   className="ui-input"
                   value={newCheck.productId}
-                  onChange={(e) =>
-                    setNewCheck((p) => ({ ...p, productId: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCheck((p: any) => ({ ...p, productId: e.target.value }))
                   }
                   required
                 />
@@ -325,8 +325,8 @@ export default function QualityChecksPage() {
                 <input
                   className="ui-input"
                   value={newCheck.workOrderId}
-                  onChange={(e) =>
-                    setNewCheck((p) => ({ ...p, workOrderId: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCheck((p: any) => ({ ...p, workOrderId: e.target.value }))
                   }
                 />
               </div>
@@ -337,8 +337,8 @@ export default function QualityChecksPage() {
                     className="ui-input"
                     type="number"
                     value={newCheck.checkedQty}
-                    onChange={(e) =>
-                      setNewCheck((p) => ({ ...p, checkedQty: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewCheck((p: any) => ({ ...p, checkedQty: e.target.value }))
                     }
                     required
                   />
@@ -349,8 +349,8 @@ export default function QualityChecksPage() {
                     className="ui-input"
                     type="number"
                     value={newCheck.passedQty}
-                    onChange={(e) =>
-                      setNewCheck((p) => ({ ...p, passedQty: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewCheck((p: any) => ({ ...p, passedQty: e.target.value }))
                     }
                     required
                   />
@@ -361,8 +361,8 @@ export default function QualityChecksPage() {
                     className="ui-input"
                     type="number"
                     value={newCheck.failedQty}
-                    onChange={(e) =>
-                      setNewCheck((p) => ({ ...p, failedQty: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewCheck((p: any) => ({ ...p, failedQty: e.target.value }))
                     }
                     required
                   />
@@ -373,8 +373,8 @@ export default function QualityChecksPage() {
                 <textarea
                   className="ui-input"
                   value={newCheck.notes}
-                  onChange={(e) =>
-                    setNewCheck((p) => ({ ...p, notes: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewCheck((p: any) => ({ ...p, notes: e.target.value }))
                   }
                 />
               </div>

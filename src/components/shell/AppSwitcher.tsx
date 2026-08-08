@@ -53,16 +53,16 @@ export function AppSwitcher({
       {appsDropdownOpen && (
         <div className="ui-dropdown ui-dropdown-left ui-dropdown-apps">
           <p className="ui-dropdown-header">Applications</p>
-          {switcherItems.map((item) => {
+          {switcherItems.map((item: any) => {
             if (item.type === "folder") {
               const isExpanded = !!expandedFolders[item.id];
               return (
                 <React.Fragment key={`folder-${item.id}`}>
                   <button
-                    onClick={(e) => {
+                    onClick={(e: any) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setExpandedFolders((prev) => ({
+                      setExpandedFolders((prev: any) => ({
                         ...prev,
                         [item.id]: !prev[item.id],
                       }));

@@ -42,7 +42,7 @@ export function TenantHeader({ settings, menus }: TenantHeaderProps) {
 
   const navLinks =
     menus && menus.length > 0
-      ? menus.flatMap((m) => m.items || [{ title: m.title, url: m.url }])
+      ? menus.flatMap((m: any) => m.items || [{ title: m.title, url: m.url }])
       : defaultNav;
 
   return (
@@ -191,7 +191,7 @@ export function TenantHeader({ settings, menus }: TenantHeaderProps) {
         </Link>
 
         <nav className="nav-menu">
-          {navLinks.map((link, idx) => (
+          {navLinks.map((link: any, idx: any) => (
             <Link key={idx} href={link.url} className="nav-link">
               {link.title}
             </Link>
@@ -226,7 +226,7 @@ export function TenantHeader({ settings, menus }: TenantHeaderProps) {
 
       {mobileMenuOpen && (
         <div className="mobile-drawer">
-          {navLinks.map((link, idx) => (
+          {navLinks.map((link: any, idx: any) => (
             <Link
               key={idx}
               href={link.url}

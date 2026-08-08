@@ -197,7 +197,7 @@ export default function CrmPage() {
     fetchDashboard();
   }, [fetchDashboard]);
 
-  const currentPageIdx = PAGES.findIndex((p) => p.id === activePage);
+  const currentPageIdx = PAGES.findIndex((p: any) => p.id === activePage);
   const prevPage = currentPageIdx > 0 ? PAGES[currentPageIdx - 1] : null;
   const nextPage =
     currentPageIdx < PAGES.length - 1 ? PAGES[currentPageIdx + 1] : null;
@@ -245,7 +245,7 @@ export default function CrmPage() {
               }}
             >
               <div style={{ display: "flex", gap: "var(--space-2)" }}>
-                {PAGES.map((p) => (
+                {PAGES.map((p: any) => (
                   <Link
                     key={p.id}
                     href={

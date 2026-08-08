@@ -31,8 +31,8 @@ export default function CrmCpqPage() {
   useEffect(() => {
     const params = new URLSearchParams({ sortBy, sortOrder, limit: "5" });
     fetch(`/api/crm/cpq/bundles?${params}`)
-      .then((r) => r.json())
-      .then((data) => {
+      .then((r: any) => r.json())
+      .then((data: any) => {
         setBundles(data.data || data);
         setLoading(false);
       })
@@ -73,7 +73,7 @@ export default function CrmCpqPage() {
       />
 
       <div className="ui-grid-3">
-        {TABS.map((tab) => {
+        {TABS.map((tab: any) => {
           const Icon = tab.icon;
           return (
             <Card
@@ -111,11 +111,11 @@ export default function CrmCpqPage() {
             data={bundles}
             sortBy={sortBy}
             sortOrder={sortOrder}
-            onSortChange={(key, order) => {
+            onSortChange={(key: any, order: any) => {
               setSortBy(key);
               setSortOrder(order);
             }}
-            onRowClick={(row) => router.push(`/crm/cpq/bundles/${row.id}`)}
+            onRowClick={(row: any) => router.push(`/crm/cpq/bundles/${row.id}`)}
           />
         )}
       </Card>

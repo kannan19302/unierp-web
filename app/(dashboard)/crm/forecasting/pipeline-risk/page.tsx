@@ -261,7 +261,7 @@ export default function PipelineRiskAlertsPage() {
               <div className="text-2xl">{summary.totalOpen}</div>
             </div>
           </Card>
-          {Object.entries(summary.byRiskLevel).map(([level, count]) => (
+          {Object.entries(summary.byRiskLevel).map(([level, count]: any) => (
             <Card key={level}>
               <div className="p-4">
                 <div className="ui-text-xs-muted">{level}</div>

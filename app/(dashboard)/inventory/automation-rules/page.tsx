@@ -167,7 +167,7 @@ export default function AutomationRulesPage() {
                 icon: Play,
                 color: "text-purple-600",
               },
-            ].map((s) => (
+            ].map((s: any) => (
               <Card key={s.label} className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -192,7 +192,7 @@ export default function AutomationRulesPage() {
         )}
 
         <div className="flex gap-1 border-b">
-          {(["dashboard", "rules", "holds"] as const).map((t) => (
+          {(["dashboard", "rules", "holds"] as const).map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -213,7 +213,7 @@ export default function AutomationRulesPage() {
           <Card className="p-4">
             <h3 className="font-semibold mb-3">Active Holds by Type</h3>
             <div className="flex flex-wrap gap-3">
-              {Object.entries(dashboard.holdsByType).map(([type, count]) => (
+              {Object.entries(dashboard.holdsByType).map(([type, count]: any) => (
                 <div key={type} className="flex items-center gap-2">
                   <Badge variant={HOLD_TYPE_VARIANT[type] ?? "default"}>
                     {type}
@@ -350,7 +350,7 @@ export default function AutomationRulesPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (_, row) =>
+                    render: (_: any, row: any) =>
                       row.status === "ACTIVE" ? (
                         <button
                           onClick={() => releaseHold(String(row.id))}
@@ -380,7 +380,7 @@ export default function AutomationRulesPage() {
                   ["productId", "Product ID"],
                   ["activeBinCode", "Active Bin Code"],
                   ["reserveBinCode", "Reserve Bin Code"],
-                ].map(([name, label]) => (
+                ].map(([name, label]: any) => (
                   <div key={name}>
                     <label className="text-sm font-medium">{label}</label>
                     <input
@@ -460,7 +460,7 @@ export default function AutomationRulesPage() {
                       "DAMAGE",
                       "RECALL",
                       "FINANCIAL",
-                    ].map((t) => (
+                    ].map((t: any) => (
                       <option key={t} value={t}>
                         {t}
                       </option>

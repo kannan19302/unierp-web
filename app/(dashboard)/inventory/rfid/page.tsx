@@ -143,7 +143,7 @@ export default function RfidTagsPage() {
     try {
       const epcs = bulkEpcs
         .split("\n")
-        .map((s) => s.trim())
+        .map((s: any) => s.trim())
         .filter(Boolean);
       await apiPost("/inventory/rfid/bulk", { epcs });
       setModalSuccess(true);
@@ -293,7 +293,7 @@ export default function RfidTagsPage() {
         <div className="ui-hstack-2">
           <button
             title="View read events"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setSelectedTagId(t.id);
             }}
@@ -303,7 +303,7 @@ export default function RfidTagsPage() {
           </button>
           <button
             title="Update location"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setSelectedTagId(t.id);
               setNewLocation(t.lastLocation || "");
@@ -316,7 +316,7 @@ export default function RfidTagsPage() {
           {t.status !== "RETIRED" && (
             <button
               title="Retire"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleRetire(t.id);
               }}
@@ -377,7 +377,7 @@ export default function RfidTagsPage() {
         )}
 
         <div className="rfid-kpi-grid">
-          {kpiCards.map((kpi, i) => (
+          {kpiCards.map((kpi: any, i: any) => (
             <Card key={i}>
               <div className="rfid-kpi-card-inner">
                 <div
@@ -430,7 +430,7 @@ export default function RfidTagsPage() {
                       variant="secondary"
                       size="sm"
                       disabled={page <= 1}
-                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      onClick={() => setPage((p: any) => Math.max(1, p - 1))}
                     >
                       Previous
                     </Button>
@@ -438,7 +438,7 @@ export default function RfidTagsPage() {
                       variant="secondary"
                       size="sm"
                       disabled={page >= totalPages}
-                      onClick={() => setPage((p) => p + 1)}
+                      onClick={() => setPage((p: any) => p + 1)}
                     >
                       Next
                     </Button>
@@ -455,7 +455,7 @@ export default function RfidTagsPage() {
               <h3 className="ui-heading-base">Recent Read Events</h3>
             </div>
             <div className="rfid-read-events">
-              {readEvents.map((evt) => (
+              {readEvents.map((evt: any) => (
                 <div key={evt.id} className="rfid-read-event-row">
                   <div className="rfid-read-event-loc">
                     <MapPin size={14} />
@@ -494,13 +494,13 @@ export default function RfidTagsPage() {
                 required
                 placeholder="urn:epc:id:sgtin:..."
                 value={formEpc}
-                onChange={(e) => setFormEpc(e.target.value)}
+                onChange={(e: any) => setFormEpc(e.target.value)}
               />
             </FormField>
             <FormField label="Tag Type" required>
               <select
                 value={formTagType}
-                onChange={(e) => setFormTagType(e.target.value)}
+                onChange={(e: any) => setFormTagType(e.target.value)}
                 className="ui-input"
                 style={{
                   width: "100%",
@@ -521,13 +521,13 @@ export default function RfidTagsPage() {
               <Input
                 placeholder="Linked product SKU"
                 value={formProductId}
-                onChange={(e) => setFormProductId(e.target.value)}
+                onChange={(e: any) => setFormProductId(e.target.value)}
               />
             </FormField>
             <FormField label="Status" required>
               <select
                 value={formStatus}
-                onChange={(e) => setFormStatus(e.target.value)}
+                onChange={(e: any) => setFormStatus(e.target.value)}
                 className="ui-input"
                 style={{
                   width: "100%",
@@ -581,7 +581,7 @@ export default function RfidTagsPage() {
                 required
                 placeholder="Enter one EPC per line&#10;urn:epc:id:sgtin:001&#10;urn:epc:id:sgtin:002"
                 value={bulkEpcs}
-                onChange={(e) => setBulkEpcs(e.target.value)}
+                onChange={(e: any) => setBulkEpcs(e.target.value)}
                 className="ui-input"
                 style={{
                   width: "100%",
@@ -625,7 +625,7 @@ export default function RfidTagsPage() {
               required
               placeholder="e.g. Warehouse A, Aisle 3, Bin 12"
               value={newLocation}
-              onChange={(e) => setNewLocation(e.target.value)}
+              onChange={(e: any) => setNewLocation(e.target.value)}
             />
           </FormField>
           <div className="rfid-form-actions">

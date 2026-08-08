@@ -75,7 +75,7 @@ export default function PositionsPage() {
       setPositions(posRes);
       setVariances(varRes);
       setEmployees(Array.isArray(empRes) ? empRes : empRes.data || []);
-      setDepartments(deptRes.map((d) => ({ id: d.id, name: d.name })));
+      setDepartments(deptRes.map((d: any) => ({ id: d.id, name: d.name })));
       setLoadError(null);
     } catch (err) {
       const message =
@@ -135,7 +135,7 @@ export default function PositionsPage() {
 
   const getEmployeeName = (id: string | null) => {
     if (!id) return "--";
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : "System User";
   };
 
@@ -186,7 +186,7 @@ export default function PositionsPage() {
               <Users size={16} className="text-danger" />
             </div>
             <h4 className={styles.s2}>
-              {positions.filter((p) => p.status === "VACANT").length}
+              {positions.filter((p: any) => p.status === "VACANT").length}
             </h4>
           </Card>
           <Card>
@@ -197,7 +197,7 @@ export default function PositionsPage() {
             <h4 className={styles.s3}>
               $
               {positions
-                .reduce((s, p) => s + Number(p.budgetedSalary), 0)
+                .reduce((s: any, p: any) => s + Number(p.budgetedSalary), 0)
                 .toFixed(2)}
             </h4>
           </Card>
@@ -211,13 +211,13 @@ export default function PositionsPage() {
                 <select
                   className="ui-input"
                   value={form.departmentId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, departmentId: e.target.value })
                   }
                   required
                 >
                   <option value="">Select Department</option>
-                  {departments.map((d) => (
+                  {departments.map((d: any) => (
                     <option key={d.id} value={d.id}>
                       {d.name}
                     </option>
@@ -227,7 +227,7 @@ export default function PositionsPage() {
                   className="ui-input"
                   placeholder="Job Title (e.g. Senior QA)"
                   value={form.title}
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, title: e.target.value })}
                   required
                 />
               </div>
@@ -236,7 +236,7 @@ export default function PositionsPage() {
                   className="ui-input"
                   placeholder="Position Code (e.g. POS-QA-01)"
                   value={form.code}
-                  onChange={(e) => setForm({ ...form, code: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, code: e.target.value })}
                   required
                 />
                 <input
@@ -245,7 +245,7 @@ export default function PositionsPage() {
                   step="0.01"
                   placeholder="Budgeted Salary Monthly ($)"
                   value={form.budgetedSalary || ""}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       budgetedSalary: parseFloat(e.target.value) || 0,
@@ -284,7 +284,7 @@ export default function PositionsPage() {
               {variances.length === 0 ? (
                 <div className={styles.s7}>No cost figures compiled.</div>
               ) : (
-                variances.map((v) => (
+                variances.map((v: any) => (
                   <Card key={v.departmentName} padding="sm">
                     <div className={styles.s8}>{v.departmentName}</div>
                     <div className={styles.s9}>
@@ -322,7 +322,7 @@ export default function PositionsPage() {
                     {
                       key: "title",
                       header: "Code & Title",
-                      render: (v, row) => {
+                      render: (v: any, row: any) => {
                         const pos = row as unknown as Position;
                         return (
                           <div>
@@ -355,13 +355,13 @@ export default function PositionsPage() {
                     {
                       key: "id",
                       header: "Actions",
-                      render: (_v, row) => {
+                      render: (_v: any, row: any) => {
                         const pos = row as unknown as Position;
                         return (
                           <select
                             className={`ui-input ${styles.s10}`}
                             value={pos.status}
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               const nextStatus = e.target.value;
                               const nextEmp =
                                 nextStatus === "VACANT" ? null : pos.employeeId;

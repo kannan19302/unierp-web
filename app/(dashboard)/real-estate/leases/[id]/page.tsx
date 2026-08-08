@@ -43,7 +43,7 @@ export default function LeaseDetailPage() {
           "/ext/real-estate/leases",
         );
         const list = Array.isArray(d) ? d : d.data || [];
-        setLease(list.find((l) => l.id === id) || null);
+        setLease(list.find((l: any) => l.id === id) || null);
         setLoadError(null);
       } catch (err) {
         const message =
@@ -142,7 +142,7 @@ export default function LeaseDetailPage() {
               ],
               ["Rent", fmtCurrency(lease.rentAmount)],
               ["Status", lease.status || "Active"],
-            ].map(([l, v]) => (
+            ].map(([l, v]: any) => (
               <div key={l as string} className={styles.s3}>
                 <span className="ui-text-sm-muted">{l}</span>
                 <span className="ui-heading-sm">{v}</span>

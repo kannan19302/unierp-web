@@ -165,8 +165,8 @@ export default function StockEntriesPage() {
   const handleSaveStockEntry = async (e: React.FormEvent) => {
     e.preventDefault();
     const formattedItems = entryItems
-      .filter((item) => item.productId !== "")
-      .map((item) => ({
+      .filter((item: any) => item.productId !== "")
+      .map((item: any) => ({
         productId: item.productId,
         qty: Number(item.qty),
         valuationRate: Number(item.valuationRate),
@@ -208,8 +208,8 @@ export default function StockEntriesPage() {
       await client.post(`/inventory/stock-entries/${id}/submit`, {});
       loadData();
     } catch {
-      setStockEntries((prev) =>
-        prev.map((se) => (se.id === id ? { ...se, status: "SUBMITTED" } : se)),
+      setStockEntries((prev: any) =>
+        prev.map((se: any) => (se.id === id ? { ...se, status: "SUBMITTED" } : se)),
       );
     }
   };
@@ -224,8 +224,8 @@ export default function StockEntriesPage() {
       setCancelReason("");
       loadData();
     } catch {
-      setStockEntries((prev) =>
-        prev.map((se) =>
+      setStockEntries((prev: any) =>
+        prev.map((se: any) =>
           se.id === cancelTargetId
             ? {
                 ...se,
@@ -353,7 +353,7 @@ export default function StockEntriesPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.s2}>
                       {row.status === "DRAFT" && (
                         <button
@@ -410,7 +410,7 @@ export default function StockEntriesPage() {
                       <select
                         className="ui-input"
                         value={entryPurpose}
-                        onChange={(e) => setEntryPurpose(e.target.value as any)}
+                        onChange={(e: any) => setEntryPurpose(e.target.value as any)}
                       >
                         <option value="MATERIAL_RECEIPT">
                           Receipt (Goods In)
@@ -432,7 +432,7 @@ export default function StockEntriesPage() {
                         type="text"
                         className="ui-input"
                         value={entryRemarks}
-                        onChange={(e) => setEntryRemarks(e.target.value)}
+                        onChange={(e: any) => setEntryRemarks(e.target.value)}
                         placeholder="Reference PO/SO or transfer note"
                       />
                     </div>
@@ -447,12 +447,12 @@ export default function StockEntriesPage() {
                         <select
                           className="ui-input"
                           value={fromWarehouse}
-                          onChange={(e) => setFromWarehouse(e.target.value)}
+                          onChange={(e: any) => setFromWarehouse(e.target.value)}
                         >
                           <option value="">
                             -- Select Source Warehouse --
                           </option>
-                          {warehouses.map((w) => (
+                          {warehouses.map((w: any) => (
                             <option key={w.id} value={w.id}>
                               {w.name} ({w.code})
                             </option>
@@ -468,12 +468,12 @@ export default function StockEntriesPage() {
                         <select
                           className="ui-input"
                           value={toWarehouse}
-                          onChange={(e) => setToWarehouse(e.target.value)}
+                          onChange={(e: any) => setToWarehouse(e.target.value)}
                         >
                           <option value="">
                             -- Select Target Warehouse --
                           </option>
-                          {warehouses.map((w) => (
+                          {warehouses.map((w: any) => (
                             <option key={w.id} value={w.id}>
                               {w.name} ({w.code})
                             </option>
@@ -501,15 +501,15 @@ export default function StockEntriesPage() {
                     </div>
 
                     <div className="ui-stack-3">
-                      {entryItems.map((item, idx) => {
+                      {entryItems.map((item: any, idx: any) => {
                         const selectedProduct = products.find(
-                          (p) => p.id === item.productId,
+                          (p: any) => p.id === item.productId,
                         );
                         const sourceBins = allBins.filter(
-                          (b) => b.warehouseId === fromWarehouse,
+                          (b: any) => b.warehouseId === fromWarehouse,
                         );
                         const targetBins = allBins.filter(
-                          (b) => b.warehouseId === toWarehouse,
+                          (b: any) => b.warehouseId === toWarehouse,
                         );
 
                         return (
@@ -518,12 +518,12 @@ export default function StockEntriesPage() {
                               <select
                                 className={`ui-input ${styles.s15}`}
                                 value={item.productId}
-                                onChange={(e) => {
+                                onChange={(e: any) => {
                                   const updated = [...entryItems];
                                   const existing = updated[idx];
                                   if (existing) {
                                     const p = products.find(
-                                      (prod) => prod.id === e.target.value,
+                                      (prod: any) => prod.id === e.target.value,
                                     );
                                     updated[idx] = {
                                       ...existing,
@@ -536,7 +536,7 @@ export default function StockEntriesPage() {
                                 required
                               >
                                 <option value="">-- Select Product * --</option>
-                                {products.map((p) => (
+                                {products.map((p: any) => (
                                   <option key={p.id} value={p.id}>
                                     {p.name} ({p.sku})
                                   </option>
@@ -547,7 +547,7 @@ export default function StockEntriesPage() {
                                 type="number"
                                 className={`ui-input ${styles.s16}`}
                                 value={item.qty}
-                                onChange={(e) => {
+                                onChange={(e: any) => {
                                   const updated = [...entryItems];
                                   const existing = updated[idx];
                                   if (existing) {
@@ -566,7 +566,7 @@ export default function StockEntriesPage() {
                                 type="number"
                                 className={`ui-input ${styles.s17}`}
                                 value={item.valuationRate}
-                                onChange={(e) => {
+                                onChange={(e: any) => {
                                   const updated = [...entryItems];
                                   const existing = updated[idx];
                                   if (existing) {
@@ -586,7 +586,7 @@ export default function StockEntriesPage() {
                                   type="button"
                                   onClick={() => {
                                     const updated = entryItems.filter(
-                                      (_, i) => i !== idx,
+                                      (_: any, i: any) => i !== idx,
                                     );
                                     setEntryItems(updated);
                                   }}
@@ -610,7 +610,7 @@ export default function StockEntriesPage() {
                                       className="ui-input"
                                       placeholder="BAT-2026-..."
                                       value={item.batchNumber || ""}
-                                      onChange={(e) => {
+                                      onChange={(e: any) => {
                                         const updated = [...entryItems];
                                         const existing = updated[idx];
                                         if (existing) {
@@ -635,7 +635,7 @@ export default function StockEntriesPage() {
                                       className="ui-input"
                                       placeholder="SN-..."
                                       value={item.serialNo || ""}
-                                      onChange={(e) => {
+                                      onChange={(e: any) => {
                                         const updated = [...entryItems];
                                         const existing = updated[idx];
                                         if (existing) {
@@ -659,7 +659,7 @@ export default function StockEntriesPage() {
                                       <select
                                         className="ui-input"
                                         value={item.fromBinId || ""}
-                                        onChange={(e) => {
+                                        onChange={(e: any) => {
                                           const updated = [...entryItems];
                                           const existing = updated[idx];
                                           if (existing) {
@@ -674,7 +674,7 @@ export default function StockEntriesPage() {
                                         <option value="">
                                           -- Select Bin --
                                         </option>
-                                        {sourceBins.map((b) => (
+                                        {sourceBins.map((b: any) => (
                                           <option key={b.id} value={b.id}>
                                             {b.code} ({b.name})
                                           </option>
@@ -692,7 +692,7 @@ export default function StockEntriesPage() {
                                       <select
                                         className="ui-input"
                                         value={item.toBinId || ""}
-                                        onChange={(e) => {
+                                        onChange={(e: any) => {
                                           const updated = [...entryItems];
                                           const existing = updated[idx];
                                           if (existing) {
@@ -707,7 +707,7 @@ export default function StockEntriesPage() {
                                         <option value="">
                                           -- Select Bin --
                                         </option>
-                                        {targetBins.map((b) => (
+                                        {targetBins.map((b: any) => (
                                           <option key={b.id} value={b.id}>
                                             {b.code} ({b.name})
                                           </option>
@@ -759,7 +759,7 @@ export default function StockEntriesPage() {
                     required
                     className="ui-input"
                     value={cancelReason}
-                    onChange={(e) => setCancelReason(e.target.value)}
+                    onChange={(e: any) => setCancelReason(e.target.value)}
                     placeholder="e.g. Audit error / Incorrect qty recorded"
                   />
                 </div>

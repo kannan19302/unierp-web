@@ -84,7 +84,7 @@ export default function DashboardTemplatesPage() {
       render: (_: string, row: any) => (
         <button
           className="ui-btn ui-btn-sm ui-btn-ghost"
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.stopPropagation();
             handleDelete(row.id);
           }}
@@ -118,7 +118,7 @@ export default function DashboardTemplatesPage() {
               <input
                 className="ui-input"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 required
               />
             </div>
@@ -127,7 +127,7 @@ export default function DashboardTemplatesPage() {
               <input
                 className="ui-input"
                 value={form.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, description: e.target.value })
                 }
               />
@@ -137,7 +137,7 @@ export default function DashboardTemplatesPage() {
               <select
                 className="ui-input"
                 value={form.category}
-                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, category: e.target.value })}
               >
                 <option value="GENERAL">General</option>
                 <option value="SALES">Sales</option>

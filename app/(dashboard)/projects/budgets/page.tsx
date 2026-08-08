@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { DollarSign, Plus, X, Edit3 } from "lucide-react";
@@ -115,8 +115,8 @@ export default function BudgetsPage() {
     }
   };
 
-  const totalAllocated = lines.reduce((s, l) => s + l.allocated, 0);
-  const totalSpent = lines.reduce((s, l) => s + l.spent, 0);
+  const totalAllocated = lines.reduce((s: any, l: any) => s + l.allocated, 0);
+  const totalSpent = lines.reduce((s: any, l: any) => s + l.spent, 0);
 
   return (
     <div className="ui-stack-6">
@@ -131,7 +131,7 @@ export default function BudgetsPage() {
         </div>
         <button
           onClick={() => {
-            setNewLine((p) => ({ ...p, projectId: selectedProject }));
+            setNewLine((p: any) => ({ ...p, projectId: selectedProject }));
             setIsModalOpen(true);
           }}
           className={styles.addBtn}
@@ -144,9 +144,9 @@ export default function BudgetsPage() {
         <select
           className="ui-input"
           value={selectedProject}
-          onChange={(e) => setSelectedProject(e.target.value)}
+          onChange={(e: any) => setSelectedProject(e.target.value)}
         >
-          {projects.map((p) => (
+          {projects.map((p: any) => (
             <option key={p.id} value={p.id}>
               {p.name}
             </option>
@@ -222,8 +222,8 @@ export default function BudgetsPage() {
                 <select
                   className="ui-input"
                   value={newLine.category}
-                  onChange={(e) =>
-                    setNewLine((p) => ({ ...p, category: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewLine((p: any) => ({ ...p, category: e.target.value }))
                   }
                 >
                   <option value="LABOR">Labor</option>
@@ -240,8 +240,8 @@ export default function BudgetsPage() {
                   className="ui-input"
                   type="number"
                   value={newLine.allocated}
-                  onChange={(e) =>
-                    setNewLine((p) => ({ ...p, allocated: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewLine((p: any) => ({ ...p, allocated: e.target.value }))
                   }
                   required
                 />
@@ -252,8 +252,8 @@ export default function BudgetsPage() {
                   className="ui-input"
                   type="number"
                   value={newLine.committed}
-                  onChange={(e) =>
-                    setNewLine((p) => ({ ...p, committed: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewLine((p: any) => ({ ...p, committed: e.target.value }))
                   }
                 />
               </div>
@@ -262,8 +262,8 @@ export default function BudgetsPage() {
                 <input
                   className="ui-input"
                   value={newLine.fiscalYear}
-                  onChange={(e) =>
-                    setNewLine((p) => ({ ...p, fiscalYear: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewLine((p: any) => ({ ...p, fiscalYear: e.target.value }))
                   }
                   placeholder="e.g. FY2026"
                 />
@@ -273,8 +273,8 @@ export default function BudgetsPage() {
                 <textarea
                   className="ui-input"
                   value={newLine.notes}
-                  onChange={(e) =>
-                    setNewLine((p) => ({ ...p, notes: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewLine((p: any) => ({ ...p, notes: e.target.value }))
                   }
                 />
               </div>
@@ -304,8 +304,8 @@ export default function BudgetsPage() {
                   className="ui-input"
                   type="number"
                   value={editData.allocated}
-                  onChange={(e) =>
-                    setEditData((p) => ({ ...p, allocated: e.target.value }))
+                  onChange={(e: any) =>
+                    setEditData((p: any) => ({ ...p, allocated: e.target.value }))
                   }
                 />
               </div>
@@ -315,8 +315,8 @@ export default function BudgetsPage() {
                   className="ui-input"
                   type="number"
                   value={editData.committed}
-                  onChange={(e) =>
-                    setEditData((p) => ({ ...p, committed: e.target.value }))
+                  onChange={(e: any) =>
+                    setEditData((p: any) => ({ ...p, committed: e.target.value }))
                   }
                 />
               </div>
@@ -325,8 +325,8 @@ export default function BudgetsPage() {
                 <textarea
                   className="ui-input"
                   value={editData.notes}
-                  onChange={(e) =>
-                    setEditData((p) => ({ ...p, notes: e.target.value }))
+                  onChange={(e: any) =>
+                    setEditData((p: any) => ({ ...p, notes: e.target.value }))
                   }
                 />
               </div>

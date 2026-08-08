@@ -137,12 +137,12 @@ export const warehouseResource = defineResource({
     searchable: false,
     pageSize: 25,
     render: {
-      items: (row) =>
+      items: (row: any) =>
         String(
           (row._count as { inventoryItems?: number } | undefined)
             ?.inventoryItems ?? 0,
         ),
-      isActive: (row) => (row.isActive ? "Active" : "Inactive"),
+      isActive: (row: any) => (row.isActive ? "Active" : "Inactive"),
     },
   },
 });
@@ -232,11 +232,11 @@ export const stockLevelResource = defineResource({
     searchable: true,
     pageSize: 25,
     render: {
-      product: (row) => {
+      product: (row: any) => {
         const p = row.product as { name?: string; sku?: string } | undefined;
         return p ? `${p.name ?? ""} (${p.sku ?? ""})` : "";
       },
-      warehouse: (row) => {
+      warehouse: (row: any) => {
         const w = row.warehouse as { name?: string } | undefined;
         return w?.name ?? "";
       },
@@ -408,7 +408,7 @@ export const serialNumberResource = defineResource({
         "IN_REPAIR",
         "SCRAPPED",
         "RETURNED",
-      ].map((value) => ({ value, label: value.replace("_", " ") })),
+      ].map((value: any) => ({ value, label: value.replace("_", " ") })),
     },
     { name: "purchaseDate", label: "Purchase Date", type: "date" },
     { name: "warrantyExpiry", label: "Warranty Expiry", type: "date" },

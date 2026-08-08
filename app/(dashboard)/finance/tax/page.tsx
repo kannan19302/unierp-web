@@ -114,18 +114,18 @@ export default function TaxPage() {
     let cancelled = false;
     client
       .list<{ jurisdiction?: string }>("/finance/tax-rates", { pageSize: 500 })
-      .then((res) => {
+      .then((res: any) => {
         if (cancelled) return;
         const rates = res.data ?? [];
         setSummary({
           activeRates: res.total ?? rates.length,
           jurisdictionCount: new Set(
-            rates.map((r) => r.jurisdiction).filter(Boolean),
+            rates.map((r: any) => r.jurisdiction).filter(Boolean),
           ).size,
         });
         setSummaryError(null);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (cancelled) return;
         const message =
           err instanceof Error ? err.message : "Failed to load tax summary";

@@ -10,7 +10,7 @@ export default function ContextPage() {
 
   useEffect(() => {
     apiGet("/admin/localization/contexts")
-      .then((d) => setContexts(Array.isArray(d) ? d : []))
+      .then((d: any) => setContexts(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 
@@ -28,7 +28,7 @@ export default function ContextPage() {
         <div
           className="ui-flex"
           style={{ gap: "var(--space-2)" }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: any) => e.stopPropagation()}
         >
           <Button size="sm" variant="ghost">
             <Eye size={14} />

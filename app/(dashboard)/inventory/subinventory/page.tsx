@@ -220,7 +220,7 @@ export default function SubinventoryPage() {
   };
 
   const byTypeEntries = dashboard
-    ? Object.entries(dashboard.byType).sort((a, b) => b[1] - a[1])
+    ? Object.entries(dashboard.byType).sort((a: any, b: any) => b[1] - a[1])
     : [];
 
   const columns: Column<Subinventory>[] = [
@@ -266,7 +266,7 @@ export default function SubinventoryPage() {
         <div className="ui-hstack-2">
           <button
             title="Edit"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleEdit(s);
             }}
@@ -277,7 +277,7 @@ export default function SubinventoryPage() {
           {s.status === "ACTIVE" && (
             <button
               title="Deactivate"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleDeactivate(s);
               }}
@@ -351,7 +351,7 @@ export default function SubinventoryPage() {
               </div>
             </div>
           </Card>
-          {byTypeEntries.slice(0, 3).map(([type, count]) => (
+          {byTypeEntries.slice(0, 3).map(([type, count]: any) => (
             <Card key={type}>
               <div className="subinv-kpi-card-inner">
                 <div className="subinv-kpi-icon-wrapper">
@@ -399,7 +399,7 @@ export default function SubinventoryPage() {
                       variant="secondary"
                       size="sm"
                       disabled={page <= 1}
-                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      onClick={() => setPage((p: any) => Math.max(1, p - 1))}
                     >
                       Previous
                     </Button>
@@ -407,7 +407,7 @@ export default function SubinventoryPage() {
                       variant="secondary"
                       size="sm"
                       disabled={page >= totalPages}
-                      onClick={() => setPage((p) => p + 1)}
+                      onClick={() => setPage((p: any) => p + 1)}
                     >
                       Next
                     </Button>
@@ -440,7 +440,7 @@ export default function SubinventoryPage() {
               <select
                 required
                 value={formWarehouseId}
-                onChange={(e) => setFormWarehouseId(e.target.value)}
+                onChange={(e: any) => setFormWarehouseId(e.target.value)}
                 className="ui-input"
                 style={{
                   width: "100%",
@@ -451,7 +451,7 @@ export default function SubinventoryPage() {
                 }}
               >
                 <option value="">Select a warehouse</option>
-                {warehouses.map((wh) => (
+                {warehouses.map((wh: any) => (
                   <option key={wh.id} value={wh.id}>
                     {wh.name}
                   </option>
@@ -464,7 +464,7 @@ export default function SubinventoryPage() {
                   required
                   placeholder="e.g. WH01-RECV"
                   value={formCode}
-                  onChange={(e) => setFormCode(e.target.value)}
+                  onChange={(e: any) => setFormCode(e.target.value)}
                 />
               </FormField>
               <FormField label="Name" required>
@@ -472,14 +472,14 @@ export default function SubinventoryPage() {
                   required
                   placeholder="e.g. Receiving Zone"
                   value={formName}
-                  onChange={(e) => setFormName(e.target.value)}
+                  onChange={(e: any) => setFormName(e.target.value)}
                 />
               </FormField>
             </div>
             <FormField label="Type" required>
               <select
                 value={formType}
-                onChange={(e) => setFormType(e.target.value)}
+                onChange={(e: any) => setFormType(e.target.value)}
                 className="ui-input"
                 style={{
                   width: "100%",
@@ -500,7 +500,7 @@ export default function SubinventoryPage() {
               <Input
                 placeholder="Purpose of this subinventory zone"
                 value={formDescription}
-                onChange={(e) => setFormDescription(e.target.value)}
+                onChange={(e: any) => setFormDescription(e.target.value)}
               />
             </FormField>
             <div className="subinv-form-actions">
@@ -540,7 +540,7 @@ export default function SubinventoryPage() {
               <select
                 required
                 value={fromSubinventoryId}
-                onChange={(e) => setFromSubinventoryId(e.target.value)}
+                onChange={(e: any) => setFromSubinventoryId(e.target.value)}
                 className="ui-input"
                 style={{
                   width: "100%",
@@ -552,8 +552,8 @@ export default function SubinventoryPage() {
               >
                 <option value="">Select source</option>
                 {subinventories
-                  .filter((s) => s.status === "ACTIVE")
-                  .map((s) => (
+                  .filter((s: any) => s.status === "ACTIVE")
+                  .map((s: any) => (
                     <option key={s.id} value={s.id}>
                       {s.name} ({s.code})
                     </option>
@@ -564,7 +564,7 @@ export default function SubinventoryPage() {
               <select
                 required
                 value={toSubinventoryId}
-                onChange={(e) => setToSubinventoryId(e.target.value)}
+                onChange={(e: any) => setToSubinventoryId(e.target.value)}
                 className="ui-input"
                 style={{
                   width: "100%",
@@ -576,8 +576,8 @@ export default function SubinventoryPage() {
               >
                 <option value="">Select destination</option>
                 {subinventories
-                  .filter((s) => s.status === "ACTIVE")
-                  .map((s) => (
+                  .filter((s: any) => s.status === "ACTIVE")
+                  .map((s: any) => (
                     <option key={s.id} value={s.id}>
                       {s.name} ({s.code})
                     </option>
@@ -590,7 +590,7 @@ export default function SubinventoryPage() {
                   required
                   placeholder="Product SKU or ID"
                   value={transferProductId}
-                  onChange={(e) => setTransferProductId(e.target.value)}
+                  onChange={(e: any) => setTransferProductId(e.target.value)}
                 />
               </FormField>
               <FormField label="Quantity" required>
@@ -600,7 +600,7 @@ export default function SubinventoryPage() {
                   min="1"
                   placeholder="1"
                   value={transferQuantity}
-                  onChange={(e) => setTransferQuantity(e.target.value)}
+                  onChange={(e: any) => setTransferQuantity(e.target.value)}
                 />
               </FormField>
             </div>

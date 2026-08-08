@@ -81,7 +81,7 @@ export default function CrossDockPage() {
     {
       key: "putawayTaskId",
       header: "Actions",
-      render: (_, row) => {
+      render: (_: any, row: any) => {
         const o = row as unknown as Opportunity;
         return (
           <div className="text-right">

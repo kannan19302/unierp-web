@@ -112,7 +112,7 @@ export default function FeedbackPage() {
   };
 
   const getEmpName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -154,11 +154,11 @@ export default function FeedbackPage() {
                   <select
                     className="ui-input"
                     value={employeeId}
-                    onChange={(e) => setEmployeeId(e.target.value)}
+                    onChange={(e: any) => setEmployeeId(e.target.value)}
                     required
                   >
                     <option value="">Select Employee</option>
-                    {employees.map((e) => (
+                    {employees.map((e: any) => (
                       <option key={e.id} value={e.id}>
                         {e.firstName} {e.lastName}
                       </option>
@@ -170,7 +170,7 @@ export default function FeedbackPage() {
                   <select
                     className="ui-input"
                     value={relationship}
-                    onChange={(e) => setRelationship(e.target.value)}
+                    onChange={(e: any) => setRelationship(e.target.value)}
                   >
                     <option value="PEER">Peer / Colleague</option>
                     <option value="MANAGER">Direct Manager</option>
@@ -184,7 +184,7 @@ export default function FeedbackPage() {
                     type="text"
                     className="ui-input"
                     value={period}
-                    onChange={(e) => setPeriod(e.target.value)}
+                    onChange={(e: any) => setPeriod(e.target.value)}
                     required
                   />
                 </div>
@@ -196,7 +196,7 @@ export default function FeedbackPage() {
                   <select
                     className="ui-input"
                     value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
+                    onChange={(e: any) => setQuestion(e.target.value)}
                   >
                     <option value="How well does this employee communicate?">
                       How well does this employee communicate?
@@ -214,7 +214,7 @@ export default function FeedbackPage() {
                   <select
                     className="ui-input"
                     value={rating}
-                    onChange={(e) => setRating(e.target.value)}
+                    onChange={(e: any) => setRating(e.target.value)}
                   >
                     <option value="5">5 - Outstanding</option>
                     <option value="4">4 - High Performing</option>
@@ -229,7 +229,7 @@ export default function FeedbackPage() {
                 className="ui-input"
                 placeholder="Provide constructive review remarks..."
                 value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                onChange={(e: any) => setComment(e.target.value)}
                 rows={3}
                 required
               />
@@ -266,7 +266,7 @@ export default function FeedbackPage() {
                 </div>
               </Card>
             ) : (
-              feedbacks.map((f) => (
+              feedbacks.map((f: any) => (
                 <Card key={f.id} padding="md">
                   <div className={styles.feedbackHeader}>
                     <div>
@@ -283,7 +283,7 @@ export default function FeedbackPage() {
                   </div>
 
                   <div className={styles.responses}>
-                    {f.responses.map((r) => (
+                    {f.responses.map((r: any) => (
                       <div key={r.id} className={styles.response}>
                         <div className={styles.responseHeader}>
                           <span>Q: {r.question}</span>

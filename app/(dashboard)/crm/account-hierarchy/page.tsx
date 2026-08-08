@@ -98,7 +98,7 @@ export default function AccountHierarchyPage() {
           <input
             placeholder="Customer ID"
             value={customerId}
-            onChange={(e) => setCustomerId(e.target.value)}
+            onChange={(e: any) => setCustomerId(e.target.value)}
             className={styles.p21}
           />
           <Button
@@ -137,7 +137,7 @@ export default function AccountHierarchyPage() {
               <div className="ui-text-muted">No child accounts.</div>
             ) : (
               <ul className={styles.p25}>
-                {hierarchy.subsidiaries.map((s) => (
+                {hierarchy.subsidiaries.map((s: any) => (
                   <li key={s.id}>
                     {s.name} <Badge variant="default">{s.type}</Badge>
                   </li>
@@ -149,7 +149,7 @@ export default function AccountHierarchyPage() {
             <input
               placeholder="Set parent customer ID (blank to clear)"
               value={parentIdInput}
-              onChange={(e) => setParentIdInput(e.target.value)}
+              onChange={(e: any) => setParentIdInput(e.target.value)}
               className={styles.p27}
             />
             <Button
@@ -191,7 +191,7 @@ export default function AccountHierarchyPage() {
               </div>
             </div>
             <div className={styles.p212}>By Account</div>
-            {rollup.byAccount.map((a) => (
+            {rollup.byAccount.map((a: any) => (
               <div key={a.customerId} className={styles.p213}>
                 <span>{a.name}</span>
                 <span>

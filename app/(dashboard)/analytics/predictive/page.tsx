@@ -89,7 +89,7 @@ export default function AnalyticsPredictivePage() {
             type="text"
             placeholder="Model Title (e.g. Q4 Revenue Growth Predictor)..."
             value={modelName}
-            onChange={(e) => setModelName(e.target.value)}
+            onChange={(e: any) => setModelName(e.target.value)}
             style={{
               flex: 1,
               padding: "8px 12px",

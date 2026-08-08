@@ -24,8 +24,8 @@ export default function ConnectionsPage() {
 
   useEffect(() => {
     fetch("/api/ext-gateway/connections")
-      .then((r) => r.json())
-      .then((d) => setItems(d.items || []))
+      .then((r: any) => r.json())
+      .then((d: any) => setItems(d.items || []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -70,7 +70,7 @@ export default function ConnectionsPage() {
       render: (r: any) => (
         <div className="flex gap-2">
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"
@@ -78,7 +78,7 @@ export default function ConnectionsPage() {
             <Plug size={16} />
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"
@@ -86,7 +86,7 @@ export default function ConnectionsPage() {
             <Eye size={16} />
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"

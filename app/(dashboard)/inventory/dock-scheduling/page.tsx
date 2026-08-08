@@ -144,7 +144,7 @@ export default function DockSchedulingPage() {
     {
       key: "id",
       header: "Actions",
-      render: (_, row) => {
+      render: (_: any, row: any) => {
         const a = row as unknown as DockAppointment;
         return (
           <div className={styles.s1}>
@@ -230,10 +230,10 @@ export default function DockSchedulingPage() {
                     <select
                       className="ui-input"
                       value={warehouseId}
-                      onChange={(e) => setWarehouseId(e.target.value)}
+                      onChange={(e: any) => setWarehouseId(e.target.value)}
                       required
                     >
-                      {warehouses.map((w) => (
+                      {warehouses.map((w: any) => (
                         <option key={w.id} value={w.id}>
                           {w.name}
                         </option>
@@ -246,7 +246,7 @@ export default function DockSchedulingPage() {
                       type="text"
                       className="ui-input"
                       value={dockDoor}
-                      onChange={(e) => setDockDoor(e.target.value)}
+                      onChange={(e: any) => setDockDoor(e.target.value)}
                       required
                     />
                   </div>
@@ -255,7 +255,7 @@ export default function DockSchedulingPage() {
                     <select
                       className="ui-input"
                       value={type}
-                      onChange={(e) => setType(e.target.value as typeof type)}
+                      onChange={(e: any) => setType(e.target.value as typeof type)}
                     >
                       <option value="INBOUND">Inbound</option>
                       <option value="OUTBOUND">Outbound</option>
@@ -267,7 +267,7 @@ export default function DockSchedulingPage() {
                       type="text"
                       className="ui-input"
                       value={carrierName}
-                      onChange={(e) => setCarrierName(e.target.value)}
+                      onChange={(e: any) => setCarrierName(e.target.value)}
                       required
                     />
                   </div>
@@ -277,7 +277,7 @@ export default function DockSchedulingPage() {
                       type="datetime-local"
                       className="ui-input"
                       value={scheduledAt}
-                      onChange={(e) => setScheduledAt(e.target.value)}
+                      onChange={(e: any) => setScheduledAt(e.target.value)}
                       required
                     />
                   </div>

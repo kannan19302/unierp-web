@@ -34,7 +34,7 @@ export default function DbSchemaPage() {
     void fetchSchema();
   }, [client]);
 
-  const filteredTables = tables.filter((t) =>
+  const filteredTables = tables.filter((t: any) =>
     t.tableName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
@@ -70,7 +70,7 @@ export default function DbSchemaPage() {
               type="text"
               placeholder="Search tables by model name..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e: any) => setSearchTerm(e.target.value)}
               className={styles.s4}
             />
           </div>

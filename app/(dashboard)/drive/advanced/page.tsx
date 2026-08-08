@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -171,7 +171,7 @@ export default function DocumentsAdvancedPage() {
         documents?: Array<Record<string, unknown>>;
       }>(`/drive/search?q=${encodeURIComponent(searchQuery)}`);
       if (data && Array.isArray(data.documents)) {
-        const mapped: DocSearchResult[] = data.documents.map((doc) => ({
+        const mapped: DocSearchResult[] = data.documents.map((doc: any) => ({
           id: String(doc.id),
           name: String(doc.name),
           matchedText: `Match found in document: ${String(doc.name)}`,
@@ -308,8 +308,8 @@ export default function DocumentsAdvancedPage() {
                 type="text"
                 placeholder="Search inside documents (OCR-powered)..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                onChange={(e: any) => setSearchQuery(e.target.value)}
+                onKeyDown={(e: any) => e.key === "Enter" && handleSearch()}
                 className={styles.p2}
               />
               <button
@@ -326,7 +326,7 @@ export default function DocumentsAdvancedPage() {
                 <span className="ui-text-xs-muted">
                   {searchResults.length} results found
                 </span>
-                {searchResults.map((r) => (
+                {searchResults.map((r: any) => (
                   <div key={r.id} className={styles.p4}>
                     <div className="ui-flex-between">
                       <div className="ui-hstack-2">
@@ -343,7 +343,7 @@ export default function DocumentsAdvancedPage() {
                     <p className={styles.p7}>&ldquo;{r.matchedText}&rdquo;</p>
                     <div className={styles.p8}>
                       <span className={styles.p9}>{r.classification}</span>
-                      {r.tags.map((tag) => (
+                      {r.tags.map((tag: any) => (
                         <span key={tag} className={styles.p10}>
                           #{tag}
                         </span>
@@ -370,9 +370,9 @@ export default function DocumentsAdvancedPage() {
             <div className={styles.p13}>
               {(
                 ["PENDING_REVIEW", "APPROVED", "REJECTED", "PUBLISHED"] as const
-              ).map((status) => {
+              ).map((status: any) => {
                 const count = approvals.filter(
-                  (a) => a.status === status,
+                  (a: any) => a.status === status,
                 ).length;
                 return (
                   <div key={status} className={styles.p14}>
@@ -432,7 +432,7 @@ export default function DocumentsAdvancedPage() {
               <button className={styles.p31}>Create Policy</button>
             </div>
             <div className={styles.p32}>
-              {retentionPolicies.map((p) => (
+              {retentionPolicies.map((p: any) => (
                 <div key={p.id} className={styles.p33}>
                   <div className="ui-flex-between ui-items-start">
                     <div>
@@ -521,7 +521,7 @@ export default function DocumentsAdvancedPage() {
                   count: 118,
                   color: "hsl(190, 70%, 45%)",
                 },
-              ].map((cat) => (
+              ].map((cat: any) => (
                 <div key={cat.label} className={styles.p37}>
                   <div className={styles.p38} style={{ background: cat.color }}>
                     <Tag size={18} />
@@ -573,14 +573,14 @@ export default function DocumentsAdvancedPage() {
                     confidence: 94,
                     autoTagged: ["offer", "recruitment", "compensation"],
                   },
-                ].map((doc, i) => (
+                ].map((doc: any, i: any) => (
                   <div key={i} className={styles.p40}>
                     <div className="ui-hstack-3">
                       <FileText size={16} className="ui-text-primary" />
                       <div>
                         <div className="ui-heading-sm">{doc.name}</div>
                         <div className={styles.p41}>
-                          {doc.autoTagged.map((t) => (
+                          {doc.autoTagged.map((t: any) => (
                             <span key={t} className={styles.p42}>
                               #{t}
                             </span>

@@ -28,7 +28,7 @@ export default function VmiPage() {
       <div className="ui-page-shell">
         <h1 className="text-2xl font-bold">Vendor-Managed Inventory (VMI)</h1>
         <div className="flex gap-2 border-b">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -65,7 +65,7 @@ function DashboardTab() {
   ];
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {cards.map(([label, value]) => (
+      {cards.map(([label, value]: any) => (
         <div
           key={label as string}
           className="bg-white border rounded-lg p-4 shadow-sm"
@@ -95,7 +95,7 @@ function AgreementsTab() {
 
   const load = useCallback(() => {
     apiFetch<{ items: any[]; total: number }>("/agreements")
-      .then((r) => {
+      .then((r: any) => {
         setAgreements(r.items);
         setTotal(r.total);
       })
@@ -157,7 +157,7 @@ function AgreementsTab() {
               "maxQty",
               "targetQty",
             ] as const
-          ).map((key) => (
+          ).map((key: any) => (
             <div key={key}>
               <label className="text-xs text-gray-600 capitalize">{key}</label>
               <input
@@ -168,8 +168,8 @@ function AgreementsTab() {
                 }
                 className="w-full border rounded px-2 py-1 text-sm"
                 value={form[key]}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, [key]: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, [key]: e.target.value }))
                 }
                 required
               />
@@ -180,8 +180,8 @@ function AgreementsTab() {
             <input
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.notes}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, notes: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, notes: e.target.value }))
               }
             />
           </div>
@@ -211,7 +211,7 @@ function AgreementsTab() {
               {
                 key: "minQty",
                 header: "Min/Max/Target",
-                render: (v, row) => `${v} / ${row.maxQty} / ${row.targetQty}`,
+                render: (v: any, row: any) => `${v} / ${row.maxQty} / ${row.targetQty}`,
               },
               {
                 key: "status",
@@ -225,7 +225,7 @@ function AgreementsTab() {
               {
                 key: "id",
                 header: "Actions",
-                render: (v, row) => (
+                render: (v: any, row: any) => (
                   <div className={styles.s1}>
                     {row.status === "DRAFT" && (
                       <button
@@ -313,7 +313,7 @@ function SnapshotsTab() {
           className="border rounded px-2 py-1 text-sm"
           placeholder="Agreement ID"
           value={agreementId}
-          onChange={(e) => setAgreementId(e.target.value)}
+          onChange={(e: any) => setAgreementId(e.target.value)}
         />
         <button
           onClick={load}
@@ -334,8 +334,8 @@ function SnapshotsTab() {
               type="number"
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.onHandQty}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, onHandQty: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, onHandQty: e.target.value }))
               }
               required
             />
@@ -346,8 +346,8 @@ function SnapshotsTab() {
               type="number"
               className="w-full border rounded px-2 py-1 text-sm"
               value={form.onOrderQty}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, onOrderQty: e.target.value }))
+              onChange={(e: any) =>
+                setForm((f: any) => ({ ...f, onOrderQty: e.target.value }))
               }
             />
           </div>
@@ -391,7 +391,7 @@ function OrdersTab() {
 
   const load = useCallback(() => {
     apiFetch<{ items: any[]; total: number }>("/orders")
-      .then((r) => {
+      .then((r: any) => {
         setOrders(r.items);
         setTotal(r.total);
       })
@@ -449,8 +449,8 @@ function OrdersTab() {
                     <select
                       className="border rounded px-1 py-0.5 text-xs"
                       value={statusInputs[String(v)] ?? ""}
-                      onChange={(e) =>
-                        setStatusInputs((s) => ({
+                      onChange={(e: any) =>
+                        setStatusInputs((s: any) => ({
                           ...s,
                           [String(v)]: e.target.value,
                         }))
@@ -458,7 +458,7 @@ function OrdersTab() {
                     >
                       <option value="">-- select --</option>
                       {["CONFIRMED", "SHIPPED", "RECEIVED", "CANCELLED"].map(
-                        (s) => (
+                        (s: any) => (
                           <option key={s}>{s}</option>
                         ),
                       )}

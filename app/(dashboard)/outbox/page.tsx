@@ -28,11 +28,11 @@ export default function OutboxPage() {
   useEffect(() => {
     Promise.all([
       fetch("/api/outbox/dlq")
-        .then((r) => r.json())
-        .then((d) => setDlqItems(d.items || []))
+        .then((r: any) => r.json())
+        .then((d: any) => setDlqItems(d.items || []))
         .catch(() => {}),
       fetch("/api/outbox/dlq/stats")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setStats)
         .catch(() => {}),
     ]).finally(() => setLoading(false));
@@ -65,7 +65,7 @@ export default function OutboxPage() {
       render: (r: any) => (
         <div className="flex gap-2">
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"
@@ -73,7 +73,7 @@ export default function OutboxPage() {
             <RotateCcw size={16} />
           </button>
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
             className="ui-btn-icon"

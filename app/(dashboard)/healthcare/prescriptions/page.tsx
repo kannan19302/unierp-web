@@ -138,7 +138,7 @@ export default function PrescriptionsPage() {
           title="This Month"
           value={
             prescriptions.filter(
-              (p) =>
+              (p: any) =>
                 p.createdAt &&
                 new Date(p.createdAt) > new Date(Date.now() - 30 * 86400000),
             ).length
@@ -184,13 +184,13 @@ export default function PrescriptionsPage() {
             label="Patient ID"
             required
             value={form.patientId}
-            onChange={(e) => setForm({ ...form, patientId: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, patientId: e.target.value })}
           />
           <TextField
             label="Practitioner ID"
             required
             value={form.practitionerId}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({ ...form, practitionerId: e.target.value })
             }
           />
@@ -198,7 +198,7 @@ export default function PrescriptionsPage() {
             label="Prescription Details"
             required
             value={form.details}
-            onChange={(e) => setForm({ ...form, details: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, details: e.target.value })}
             placeholder="Amoxicillin 500mg, 3x daily for 7 days..."
           />
         </div>

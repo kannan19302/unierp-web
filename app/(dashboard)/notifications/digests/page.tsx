@@ -24,8 +24,8 @@ export default function NotificationDigestsPage() {
 
   useEffect(() => {
     fetch("/api/notifications/digests")
-      .then((r) => r.json())
-      .then((data) => {
+      .then((r: any) => r.json())
+      .then((data: any) => {
         setDigests(Array.isArray(data) ? data : []);
         setLoading(false);
       })
@@ -39,8 +39,8 @@ export default function NotificationDigestsPage() {
       body: JSON.stringify(form),
     });
     const created = await res.json();
-    setDigests((prev) => {
-      const filtered = prev.filter((d) => d.frequency !== created.frequency);
+    setDigests((prev: any) => {
+      const filtered = prev.filter((d: any) => d.frequency !== created.frequency);
       return [...filtered, created];
     });
     setShowForm(false);
@@ -48,7 +48,7 @@ export default function NotificationDigestsPage() {
 
   const deleteDigest = async (id: string) => {
     await fetch(`/api/notifications/digests/${id}`, { method: "DELETE" });
-    setDigests((prev) => prev.filter((d) => d.id !== id));
+    setDigests((prev: any) => prev.filter((d: any) => d.id !== id));
   };
 
   return (
@@ -70,7 +70,7 @@ export default function NotificationDigestsPage() {
               <select
                 className="ui-input"
                 value={form.frequency}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, frequency: e.target.value })
                 }
               >
@@ -85,7 +85,7 @@ export default function NotificationDigestsPage() {
               <select
                 className="ui-input"
                 value={form.channel}
-                onChange={(e) => setForm({ ...form, channel: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, channel: e.target.value })}
               >
                 <option value="EMAIL">Email</option>
                 <option value="IN_APP">In-App</option>
@@ -96,7 +96,7 @@ export default function NotificationDigestsPage() {
                 <input
                   type="checkbox"
                   checked={form.isEnabled}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, isEnabled: e.target.checked })
                   }
                 />
@@ -113,7 +113,7 @@ export default function NotificationDigestsPage() {
       {!loading && digests.length === 0 && (
         <div className="text-gray-500">No digests configured.</div>
       )}
-      {digests.map((d) => (
+      {digests.map((d: any) => (
         <div
           key={d.id}
           className="flex items-center justify-between border border-gray-200 rounded-lg p-3 mb-2"

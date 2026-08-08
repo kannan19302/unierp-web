@@ -128,7 +128,7 @@ export default function CurrencyRevaluationPage() {
               <input
                 type="date"
                 value={asOfDate}
-                onChange={(e) => setAsOfDate(e.target.value)}
+                onChange={(e: any) => setAsOfDate(e.target.value)}
                 className={styles.s3}
               />
             </div>
@@ -136,10 +136,10 @@ export default function CurrencyRevaluationPage() {
               <label className="ui-heading-sm">Base Currency</label>
               <select
                 value={baseCurrency}
-                onChange={(e) => setBaseCurrency(e.target.value)}
+                onChange={(e: any) => setBaseCurrency(e.target.value)}
                 className={`h-10 w-44 border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring ${styles.s4}`}
               >
-                {["USD", "EUR", "GBP", "INR", "JPY", "AUD", "CAD"].map((c) => (
+                {["USD", "EUR", "GBP", "INR", "JPY", "AUD", "CAD"].map((c: any) => (
                   <option key={c} value={c}>
                     {c}
                   </option>
@@ -213,7 +213,7 @@ export default function CurrencyRevaluationPage() {
                 </p>
               </div>
             )}
-            {history.map((r) => {
+            {history.map((r: any) => {
               const isOpen = expanded === r.id;
               const net = Number(r.netAdjustment);
               return (
@@ -272,7 +272,7 @@ export default function CurrencyRevaluationPage() {
                             {
                               key: "foreignAmount",
                               header: "Outstanding",
-                              render: (v, row) =>
+                              render: (v: any, row: any) =>
                                 `${String(row.currency)} ${money(Number(v))}`,
                             },
                             {

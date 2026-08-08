@@ -43,7 +43,7 @@ export default function OAuthClientsTab() {
         </button>
       </div>
 
-      {oauthClients.map((c) => (
+      {oauthClients.map((c: any) => (
         <div
           key={c.id}
           style={{ opacity: c.status === "REVOKED" ? 0.6 : 1 }}
@@ -91,7 +91,7 @@ export default function OAuthClientsTab() {
           <div>
             <div className={styles.s9}>Scopes</div>
             <div className={styles.s10}>
-              {c.scopes.map((s) => (
+              {c.scopes.map((s: any) => (
                 <span key={s} className={styles.s11}>
                   {s}
                 </span>
@@ -136,7 +136,7 @@ export default function OAuthClientsTab() {
               value: "-----BEGIN CERT-----...",
               placeholder: "Paste X.509 cert...",
             },
-          ].map((field, i) => (
+          ].map((field: any, i: any) => (
             <div key={i}>
               <label className={styles.s15}>{field.label}</label>
               <input

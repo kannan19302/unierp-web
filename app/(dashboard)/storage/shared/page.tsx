@@ -9,7 +9,7 @@ export default function SharedFilesPage() {
 
   useEffect(() => {
     apiGet("/storage/share")
-      .then((d) => setLinks(Array.isArray(d) ? d : []))
+      .then((d: any) => setLinks(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

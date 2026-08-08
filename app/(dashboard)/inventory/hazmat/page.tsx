@@ -206,15 +206,15 @@ function Classifications() {
               { key: "unNumber", label: "UN Number" },
               { key: "properShippingName", label: "Proper Shipping Name" },
               { key: "flashPoint", label: "Flash Point (°C)" },
-            ].map(({ key, label }) => (
+            ].map(({ key, label }: any) => (
               <div key={key}>
                 <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
                   {label}
                 </label>
                 <input
                   value={form[key] ?? ""}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                   className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -226,13 +226,13 @@ function Classifications() {
               </label>
               <select
                 value={form.hazardClass ?? ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, hazardClass: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, hazardClass: e.target.value }))
                 }
                 className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
               >
                 <option value="">Select…</option>
-                {HAZARD_CLASSES.map((h) => (
+                {HAZARD_CLASSES.map((h: any) => (
                   <option key={h} value={h}>
                     {classLabel(h)}
                   </option>
@@ -245,13 +245,13 @@ function Classifications() {
               </label>
               <select
                 value={form.regulation ?? ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, regulation: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, regulation: e.target.value }))
                 }
                 className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
               >
                 <option value="">Select…</option>
-                {REGULATIONS.map((r) => (
+                {REGULATIONS.map((r: any) => (
                   <option key={r} value={r}>
                     {r}
                   </option>
@@ -264,8 +264,8 @@ function Classifications() {
               </label>
               <select
                 value={form.packingGroup ?? ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, packingGroup: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, packingGroup: e.target.value }))
                 }
                 className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
               >
@@ -281,8 +281,8 @@ function Classifications() {
               </label>
               <input
                 value={form.notes ?? ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, notes: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, notes: e.target.value }))
                 }
                 className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
               />
@@ -450,11 +450,11 @@ function Manifests() {
         <h2 className="text-lg font-semibold flex-1">Hazmat Manifests</h2>
         <select
           value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
+          onChange={(e: any) => setFilterStatus(e.target.value)}
           className="border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
         >
           <option value="">All Statuses</option>
-          {MANIFEST_STATUSES.map((s) => (
+          {MANIFEST_STATUSES.map((s: any) => (
             <option key={s} value={s}>
               {s}
             </option>
@@ -483,15 +483,15 @@ function Manifests() {
               { key: "carrierName", label: "Carrier Name" },
               { key: "shipmentRef", label: "Shipment Ref" },
               { key: "emergencyContact", label: "Emergency Contact" },
-            ].map(({ key, label }) => (
+            ].map(({ key, label }: any) => (
               <div key={key}>
                 <label className="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1">
                   {label}
                 </label>
                 <input
                   value={form[key] ?? ""}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                   className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -503,13 +503,13 @@ function Manifests() {
               </label>
               <select
                 value={form.regulation ?? ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, regulation: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, regulation: e.target.value }))
                 }
                 className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
               >
                 <option value="">Select…</option>
-                {REGULATIONS.map((r) => (
+                {REGULATIONS.map((r: any) => (
                   <option key={r} value={r}>
                     {r}
                   </option>
@@ -684,7 +684,7 @@ function Incidents() {
               { key: "severity", label: "Severity (LOW/MEDIUM/HIGH/CRITICAL)" },
               { key: "description", label: "Description" },
               { key: "immediateAction", label: "Immediate Action Taken" },
-            ].map(({ key, label, type }) => (
+            ].map(({ key, label, type }: any) => (
               <div
                 key={key}
                 className={
@@ -699,8 +699,8 @@ function Incidents() {
                 <input
                   type={type ?? "text"}
                   value={form[key] ?? ""}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                   className="w-full border rounded px-2 py-1.5 text-sm dark:bg-gray-700 dark:border-gray-600"
                 />
@@ -750,7 +750,7 @@ function ComplianceReport() {
 
   if (loading) return <p className="text-sm text-gray-500">Loading…</p>;
 
-  const compliant = rows.filter((r) => r.compliant).length;
+  const compliant = rows.filter((r: any) => r.compliant).length;
   const nonCompliant = rows.length - compliant;
 
   const columns: ListColumn[] = [
@@ -852,7 +852,7 @@ export default function HazmatPage() {
         </div>
 
         <div className="border-b flex gap-0 overflow-x-auto">
-          {TABS.map(({ id, label }) => (
+          {TABS.map(({ id, label }: any) => (
             <button
               key={id}
               onClick={() => setTab(id)}

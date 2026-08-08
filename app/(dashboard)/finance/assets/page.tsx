@@ -86,14 +86,14 @@ export default function AssetsPage() {
         activeLeases: 0,
       })),
     ])
-      .then(([assets, leaseSummary]) => {
+      .then(([assets, leaseSummary]: any) => {
         if (cancelled) return;
-        const activeAssets = assets.filter((a) => a.status === "ACTIVE");
+        const activeAssets = assets.filter((a: any) => a.status === "ACTIVE");
         const totalValue = assets.reduce(
-          (s, a) => s + Number(a.currentValue || 0),
+          (s: any, a: any) => s + Number(a.currentValue || 0),
           0,
         );
-        const monthlyDepreciation = activeAssets.reduce((s, a) => {
+        const monthlyDepreciation = activeAssets.reduce((s: any, a: any) => {
           const value = Number(a.currentValue || 0);
           const life = Number(a.usefulLifeYears || 0);
           return s + (life > 0 ? value / life / 12 : 0);
@@ -106,7 +106,7 @@ export default function AssetsPage() {
         });
         setSummaryError(null);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (cancelled) return;
         const message =
           err instanceof Error ? err.message : "Failed to load assets summary";

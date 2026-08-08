@@ -152,7 +152,7 @@ export default function FixedAssetsDashboard() {
     setError(null);
 
     // Filter active assets
-    const activeAssets = assets.filter((a) => a.status === "ACTIVE");
+    const activeAssets = assets.filter((a: any) => a.status === "ACTIVE");
     if (activeAssets.length === 0) {
       setError("No active assets available for depreciation.");
       setDepRunning(false);
@@ -192,15 +192,15 @@ export default function FixedAssetsDashboard() {
 
   // Calculate metrics
   const totalAssetCost = assets.reduce(
-    (sum, a) => sum + Number(a.purchaseValue),
+    (sum: any, a: any) => sum + Number(a.purchaseValue),
     0,
   );
   const totalBookValue = assets.reduce(
-    (sum, a) => sum + Number(a.currentValue),
+    (sum: any, a: any) => sum + Number(a.currentValue),
     0,
   );
   const totalAccumulatedDep = totalAssetCost - totalBookValue;
-  const activeCount = assets.filter((a) => a.status === "ACTIVE").length;
+  const activeCount = assets.filter((a: any) => a.status === "ACTIVE").length;
 
   if (loading) {
     return (
@@ -396,7 +396,7 @@ export default function FixedAssetsDashboard() {
                   type="month"
                   className="ui-input"
                   value={depPeriod}
-                  onChange={(e) => setDepPeriod(e.target.value)}
+                  onChange={(e: any) => setDepPeriod(e.target.value)}
                 />
               </div>
 
@@ -421,7 +421,7 @@ export default function FixedAssetsDashboard() {
           <h3 className={styles.s21}>Asset Categories</h3>
           <Card>
             <div className={styles.s22}>
-              {categories.map((cat) => (
+              {categories.map((cat: any) => (
                 <div key={cat.id} className={styles.s23}>
                   <div>
                     <p className="ui-heading-sm">{cat.name}</p>
@@ -461,7 +461,7 @@ export default function FixedAssetsDashboard() {
                 className="ui-input"
                 placeholder="IT Equipment, Plant & Machinery"
                 value={categoryFormData.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCategoryFormData({
                     ...categoryFormData,
                     name: e.target.value,
@@ -476,7 +476,7 @@ export default function FixedAssetsDashboard() {
                 className={`ui-input ${styles.s31}`}
                 placeholder="Provide details about category boundaries..."
                 value={categoryFormData.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCategoryFormData({
                     ...categoryFormData,
                     description: e.target.value,
@@ -491,7 +491,7 @@ export default function FixedAssetsDashboard() {
                 <select
                   className="ui-input"
                   value={categoryFormData.depreciationMethod}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setCategoryFormData({
                       ...categoryFormData,
                       depreciationMethod: e.target.value,
@@ -513,7 +513,7 @@ export default function FixedAssetsDashboard() {
                   className="ui-input"
                   placeholder="36"
                   value={categoryFormData.expectedLifeMonths}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setCategoryFormData({
                       ...categoryFormData,
                       expectedLifeMonths: e.target.value,
@@ -533,7 +533,7 @@ export default function FixedAssetsDashboard() {
                 className="ui-input"
                 placeholder="20"
                 value={categoryFormData.depreciationRate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCategoryFormData({
                     ...categoryFormData,
                     depreciationRate: e.target.value,
@@ -551,7 +551,7 @@ export default function FixedAssetsDashboard() {
               <select
                 className="ui-input"
                 value={categoryFormData.assetAccountId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCategoryFormData({
                     ...categoryFormData,
                     assetAccountId: e.target.value,
@@ -559,7 +559,7 @@ export default function FixedAssetsDashboard() {
                 }
               >
                 <option value="">Select Asset Account</option>
-                {accounts.map((acc) => (
+                {accounts.map((acc: any) => (
                   <option key={acc.id} value={acc.id}>
                     {acc.code} - {acc.name}
                   </option>
@@ -575,7 +575,7 @@ export default function FixedAssetsDashboard() {
                 <select
                   className="ui-input"
                   value={categoryFormData.depreciationAccountId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setCategoryFormData({
                       ...categoryFormData,
                       depreciationAccountId: e.target.value,
@@ -583,7 +583,7 @@ export default function FixedAssetsDashboard() {
                   }
                 >
                   <option value="">Select Account</option>
-                  {accounts.map((acc) => (
+                  {accounts.map((acc: any) => (
                     <option key={acc.id} value={acc.id}>
                       {acc.code} - {acc.name}
                     </option>
@@ -598,7 +598,7 @@ export default function FixedAssetsDashboard() {
                 <select
                   className="ui-input"
                   value={categoryFormData.expenseAccountId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setCategoryFormData({
                       ...categoryFormData,
                       expenseAccountId: e.target.value,
@@ -606,7 +606,7 @@ export default function FixedAssetsDashboard() {
                   }
                 >
                   <option value="">Select Account</option>
-                  {accounts.map((acc) => (
+                  {accounts.map((acc: any) => (
                     <option key={acc.id} value={acc.id}>
                       {acc.code} - {acc.name}
                     </option>

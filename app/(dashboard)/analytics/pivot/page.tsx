@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
 import { Layers, RefreshCw } from "lucide-react";
@@ -106,10 +106,10 @@ export default function AnalyticsPivotPage() {
               <label className={styles.s4}>Select Base Data Report</label>
               <select
                 value={selectedReportId}
-                onChange={(e) => setSelectedReportId(e.target.value)}
+                onChange={(e: any) => setSelectedReportId(e.target.value)}
                 className={styles.s5}
               >
-                {reports.map((r) => (
+                {reports.map((r: any) => (
                   <option key={r.id} value={r.id}>
                     {r.name} ({r.type})
                   </option>
@@ -121,9 +121,9 @@ export default function AnalyticsPivotPage() {
               <select
                 multiple
                 value={rowFields}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRowFields(
-                    Array.from(e.target.selectedOptions).map((o) => o.value),
+                    Array.from(e.target.selectedOptions).map((o: any) => o.value),
                   )
                 }
                 className={styles.s5}
@@ -138,9 +138,9 @@ export default function AnalyticsPivotPage() {
               <select
                 multiple
                 value={colFields}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setColFields(
-                    Array.from(e.target.selectedOptions).map((o) => o.value),
+                    Array.from(e.target.selectedOptions).map((o: any) => o.value),
                   )
                 }
                 className={styles.s5}
@@ -153,7 +153,7 @@ export default function AnalyticsPivotPage() {
               <label className={styles.s4}>Aggregations</label>
               <select
                 value={aggregations[0]}
-                onChange={(e) => setAggregations([e.target.value])}
+                onChange={(e: any) => setAggregations([e.target.value])}
                 className={styles.s5}
               >
                 <option value="SUM(totalAmount)">Sum of Total Amount</option>

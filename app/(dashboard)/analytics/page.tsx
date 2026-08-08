@@ -204,7 +204,7 @@ export default function AnalyticsPage() {
           <div className={styles.s5}>
             <div className={styles.s6}>
               <h2 className="ui-heading-lg">
-                {dashboards.find((d) => d.id === selectedDashboard)?.name ||
+                {dashboards.find((d: any) => d.id === selectedDashboard)?.name ||
                   "Executive Sales Summary"}
               </h2>
               <div className="ui-flex ui-gap-2">
@@ -248,7 +248,7 @@ export default function AnalyticsPage() {
               Quick Export
             </h3>
             <div className="ui-stack-2">
-              {["invoices", "products", "employees"].map((ds) => (
+              {["invoices", "products", "employees"].map((ds: any) => (
                 <button
                   key={ds}
                   onClick={() => exportDataset(ds)}
@@ -288,7 +288,7 @@ export default function AnalyticsPage() {
             onClose={() => setDrilldown(null)}
             title={`${drilldown.kpi.name} — Source Records`}
             columns={
-              drilldown.data?.columns.map((c) => ({ key: c, label: c })) || []
+              drilldown.data?.columns.map((c: any) => ({ key: c, label: c })) || []
             }
             rows={drilldown.data?.rows || []}
           />

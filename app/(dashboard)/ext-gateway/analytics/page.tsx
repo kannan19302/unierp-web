@@ -9,7 +9,7 @@ export default function ExtAnalyticsPage() {
 
   useEffect(() => {
     fetch("/api/ext-gateway/analytics")
-      .then((r) => r.json())
+      .then((r: any) => r.json())
       .then(setData)
       .catch(() => {})
       .finally(() => setLoading(false));

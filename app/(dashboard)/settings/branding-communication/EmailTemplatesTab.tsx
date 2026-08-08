@@ -65,8 +65,8 @@ export default function EmailTemplatesTab() {
       return;
     try {
       await client.delete(`/admin/platform/email-templates/${id}`);
-      setTemplates((previous) =>
-        previous.filter((template) => template.id !== id),
+      setTemplates((previous: any) =>
+        previous.filter((template: any) => template.id !== id),
       );
       showFeedback(true, "Template deleted successfully");
     } catch (e) {
@@ -132,7 +132,7 @@ export default function EmailTemplatesTab() {
         </div>
       ) : (
         <div className={styles.p1}>
-          {templates.map((t) => (
+          {templates.map((t: any) => (
             <div key={t.id} className={styles.s2}>
               <div>
                 <div className={styles.p2}>
@@ -212,7 +212,7 @@ export default function EmailTemplatesTab() {
                 <label className="ui-label">Template Name</label>
                 <input
                   value={editingTemplate.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEditingTemplate({
                       ...editingTemplate,
                       name: e.target.value,
@@ -227,7 +227,7 @@ export default function EmailTemplatesTab() {
                 <label className="ui-label">Category</label>
                 <select
                   value={editingTemplate.category}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEditingTemplate({
                       ...editingTemplate,
                       category: e.target.value,
@@ -247,7 +247,7 @@ export default function EmailTemplatesTab() {
               <label className="ui-label">Subject Line</label>
               <input
                 value={editingTemplate.subject}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEditingTemplate({
                     ...editingTemplate,
                     subject: e.target.value,
@@ -263,7 +263,7 @@ export default function EmailTemplatesTab() {
               <label className="ui-label">Email Body (HTML/Text)</label>
               <textarea
                 value={editingTemplate.body}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEditingTemplate({
                     ...editingTemplate,
                     body: e.target.value,
@@ -288,7 +288,7 @@ export default function EmailTemplatesTab() {
                   "{{login.url}}",
                   "{{ticket.id}}",
                   "{{approval.link}}",
-                ].map((v) => (
+                ].map((v: any) => (
                   <code
                     key={v}
                     onClick={() =>
@@ -310,7 +310,7 @@ export default function EmailTemplatesTab() {
                 type="checkbox"
                 id="tpl-active"
                 checked={editingTemplate.isActive}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEditingTemplate({
                     ...editingTemplate,
                     isActive: e.target.checked,

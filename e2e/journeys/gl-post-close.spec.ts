@@ -9,7 +9,7 @@ import { test, loginAsAdmin } from "../fixtures/auth.fixture";
  * @critical-path true
  */
 test.describe("GL Post & Close", () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }: any) => {
     await loginAsAdmin(page);
   });
 
@@ -17,7 +17,7 @@ test.describe("GL Post & Close", () => {
     page,
     glJournalPage,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(90_000);
 
     const ref = `GL-${Date.now()}`;
@@ -109,7 +109,7 @@ test.describe("GL Post & Close", () => {
   test("general ledger renders posted entries", async ({
     page,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(90_000);
 
     // Navigate to the general ledger report
@@ -125,7 +125,7 @@ test.describe("GL Post & Close", () => {
   test("drill-down from GL to source journal entry", async ({
     page,
     dashboardPage,
-  }) => {
+  }: any) => {
     test.setTimeout(90_000);
 
     // Navigate to journal entries list

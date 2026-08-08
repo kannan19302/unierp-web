@@ -199,7 +199,7 @@ export default function PayrollPage() {
   };
 
   const getEmpName = (id: string) => {
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -256,13 +256,13 @@ export default function PayrollPage() {
               <select
                 className="ui-input"
                 value={salaryForm.employeeId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSalaryForm({ ...salaryForm, employeeId: e.target.value })
                 }
                 required
               >
                 <option value="">Select Employee</option>
-                {employees.map((e) => (
+                {employees.map((e: any) => (
                   <option key={e.id} value={e.id}>
                     {e.firstName} {e.lastName}
                   </option>
@@ -273,7 +273,7 @@ export default function PayrollPage() {
                 className="ui-input"
                 placeholder="Base Salary Monthly (e.g. 6000)"
                 value={salaryForm.baseSalary}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setSalaryForm({ ...salaryForm, baseSalary: e.target.value })
                 }
                 required
@@ -306,7 +306,7 @@ export default function PayrollPage() {
                     type="date"
                     className="ui-input"
                     value={payrollForm.periodStart}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPayrollForm({
                         ...payrollForm,
                         periodStart: e.target.value,
@@ -321,7 +321,7 @@ export default function PayrollPage() {
                     type="date"
                     className="ui-input"
                     value={payrollForm.periodEnd}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setPayrollForm({
                         ...payrollForm,
                         periodEnd: e.target.value,
@@ -361,7 +361,7 @@ export default function PayrollPage() {
                     className="ui-input"
                     placeholder="US"
                     value={taxForm.country}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setTaxForm({ ...taxForm, country: e.target.value })
                     }
                     required
@@ -375,7 +375,7 @@ export default function PayrollPage() {
                     className="ui-input"
                     placeholder="CA"
                     value={taxForm.state}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setTaxForm({ ...taxForm, state: e.target.value })
                     }
                   />
@@ -389,7 +389,7 @@ export default function PayrollPage() {
                     className="ui-input"
                     placeholder="0"
                     value={taxForm.incomeBracketMin}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setTaxForm({
                         ...taxForm,
                         incomeBracketMin: e.target.value,
@@ -405,7 +405,7 @@ export default function PayrollPage() {
                     className="ui-input"
                     placeholder="No Max"
                     value={taxForm.incomeBracketMax}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setTaxForm({
                         ...taxForm,
                         incomeBracketMax: e.target.value,
@@ -421,7 +421,7 @@ export default function PayrollPage() {
                     className="ui-input"
                     placeholder="15"
                     value={taxForm.taxRate}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setTaxForm({ ...taxForm, taxRate: e.target.value })
                     }
                     required
@@ -436,7 +436,7 @@ export default function PayrollPage() {
                     className="ui-input"
                     placeholder="0"
                     value={taxForm.allowanceAmount}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setTaxForm({
                         ...taxForm,
                         allowanceAmount: e.target.value,
@@ -478,7 +478,7 @@ export default function PayrollPage() {
                   </div>
                 </Card>
               ) : (
-                payrollRuns.map((run) => (
+                payrollRuns.map((run: any) => (
                   <Card key={run.id} padding="md">
                     <div className={styles.s8}>
                       <div>
@@ -518,7 +518,7 @@ export default function PayrollPage() {
                           Payslips Summary (Calculated Deductions)
                         </h5>
                         <div className="ui-stack-2">
-                          {run.slips.map((slip) => (
+                          {run.slips.map((slip: any) => (
                             <div key={slip.id} className={styles.s17}>
                               <span className="font-semibold">
                                 {getEmpName(slip.employeeId)}
@@ -592,7 +592,7 @@ export default function PayrollPage() {
                       {
                         key: "country",
                         header: "Region",
-                        render: (v, row) => {
+                        render: (v: any, row: any) => {
                           const tax = row as unknown as TaxTable;
                           return (
                             <div>
@@ -609,7 +609,7 @@ export default function PayrollPage() {
                       {
                         key: "incomeBracketMin",
                         header: "Range",
-                        render: (v, row) => {
+                        render: (v: any, row: any) => {
                           const tax = row as unknown as TaxTable;
                           return `$${Number(tax.incomeBracketMin).toLocaleString()} - ${tax.incomeBracketMax ? `$${Number(tax.incomeBracketMax).toLocaleString()}` : "∞"}`;
                         },

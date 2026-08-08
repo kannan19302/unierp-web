@@ -93,7 +93,7 @@ export default function EcommerceTaxPage() {
               className="ui-input"
               placeholder="Store ID"
               value={storeId}
-              onChange={(e) => setStoreId(e.target.value)}
+              onChange={(e: any) => setStoreId(e.target.value)}
             />
             <button
               className="ui-btn"
@@ -110,7 +110,7 @@ export default function EcommerceTaxPage() {
         {loadError && (
           <div className="ui-alert ui-alert-danger">{loadError}</div>
         )}
-        {classes.map((c) => (
+        {classes.map((c: any) => (
           <div key={c.id} className="ui-card p-4">
             <div className="flex justify-between items-center mb-3">
               <h3>
@@ -159,14 +159,14 @@ export default function EcommerceTaxPage() {
             className="ui-modal-overlay"
             onClick={() => setShowClassModal(false)}
           >
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Add Tax Class</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={classForm.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setClassForm({ ...classForm, name: e.target.value })
                   }
                 />
@@ -190,14 +190,14 @@ export default function EcommerceTaxPage() {
             className="ui-modal-overlay"
             onClick={() => setShowRateModal(false)}
           >
-            <div className="ui-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ui-modal" onClick={(e: any) => e.stopPropagation()}>
               <h2>Add Tax Rate</h2>
               <div className="ui-form-group">
                 <label>Name</label>
                 <input
                   className="ui-input"
                   value={rateForm.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRateForm({ ...rateForm, name: e.target.value })
                   }
                 />
@@ -209,7 +209,7 @@ export default function EcommerceTaxPage() {
                   step="0.01"
                   className="ui-input"
                   value={rateForm.rate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setRateForm({ ...rateForm, rate: Number(e.target.value) })
                   }
                 />

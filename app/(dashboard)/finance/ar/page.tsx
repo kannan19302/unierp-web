@@ -161,7 +161,7 @@ function CreditNotesPanel() {
           onSuccess={() => {
             setShowCreate(false);
             success("Credit note created");
-            setRefreshKey((k) => k + 1);
+            setRefreshKey((k: any) => k + 1);
           }}
           onCancel={() => setShowCreate(false)}
         />
@@ -194,12 +194,12 @@ export default function ARPage() {
           arAgingChart: Array<{ bucket: string; amount: number }>;
         };
       }>("/finance/dashboard")
-      .then((res) => {
+      .then((res: any) => {
         if (cancelled || !res) return;
         const trend = res.charts?.cashFlowTrend ?? [];
         const overdueAmount = (res.charts?.arAgingChart ?? [])
-          .filter((b) => b.bucket !== "Current")
-          .reduce((sum, b) => sum + (b.amount || 0), 0);
+          .filter((b: any) => b.bucket !== "Current")
+          .reduce((sum: any, b: any) => sum + (b.amount || 0), 0);
         setSummary({
           outstandingAr: res.kpis.outstandingAr ?? 0,
           totalInvoices: res.kpis.totalInvoices ?? 0,
@@ -210,7 +210,7 @@ export default function ARPage() {
         });
         setSummaryError(null);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (cancelled) return;
         // Distinct error state — a failed fetch must never render as "$0
         // Outstanding AR", indistinguishable from a genuinely clean book.

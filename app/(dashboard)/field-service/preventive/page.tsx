@@ -168,14 +168,14 @@ export default function PreventiveMaintenancePage() {
               label="Plan Name"
               required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
             />
             <TextField
               label="Interval (Days)"
               type="number"
               required
               value={String(form.intervalDays)}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, intervalDays: Number(e.target.value) })
               }
             />

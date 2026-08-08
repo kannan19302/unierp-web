@@ -194,7 +194,7 @@ export default function NcrCarPage() {
           <input
             className="ui-input"
             value={ncrForm.vendorId}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setNcrForm({ ...ncrForm, vendorId: e.target.value })
             }
           />
@@ -204,7 +204,7 @@ export default function NcrCarPage() {
           <textarea
             className="ui-input"
             value={ncrForm.description}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setNcrForm({ ...ncrForm, description: e.target.value })
             }
           />
@@ -215,7 +215,7 @@ export default function NcrCarPage() {
             <select
               className="ui-input"
               value={ncrForm.defectType}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setNcrForm({ ...ncrForm, defectType: e.target.value })
               }
             >
@@ -230,7 +230,7 @@ export default function NcrCarPage() {
             <select
               className="ui-input"
               value={ncrForm.severity}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setNcrForm({ ...ncrForm, severity: e.target.value })
               }
             >
@@ -245,7 +245,7 @@ export default function NcrCarPage() {
               className="ui-input"
               type="number"
               value={ncrForm.defectQty}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setNcrForm({ ...ncrForm, defectQty: Number(e.target.value) })
               }
             />
@@ -276,7 +276,7 @@ export default function NcrCarPage() {
           <textarea
             className="ui-input"
             value={carForm.rootCause}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setCarForm({ ...carForm, rootCause: e.target.value })
             }
           />
@@ -286,7 +286,7 @@ export default function NcrCarPage() {
           <textarea
             className="ui-input"
             value={carForm.correctiveAction}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setCarForm({ ...carForm, correctiveAction: e.target.value })
             }
           />
@@ -297,7 +297,7 @@ export default function NcrCarPage() {
             className="ui-input"
             type="date"
             value={carForm.dueDate}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setCarForm({ ...carForm, dueDate: e.target.value })
             }
           />

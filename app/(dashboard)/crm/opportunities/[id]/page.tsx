@@ -160,7 +160,7 @@ export default function OpportunityDetailPage() {
       ["Probability", opp.probability],
       ["Expected Close Date", opp.expectedCloseDate],
     ]
-      .map((e) => e.join(","))
+      .map((e: any) => e.join(","))
       .join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -259,8 +259,8 @@ export default function OpportunityDetailPage() {
           <Card padding="md">
             <div className={styles.pipelineProgress}>
               <div className={styles.pipelineLine} />
-              {STAGE_ORDER.filter((s) => s !== "CLOSED_LOST").map(
-                (step, idx) => {
+              {STAGE_ORDER.filter((s: any) => s !== "CLOSED_LOST").map(
+                (step: any, idx: any) => {
                   const active =
                     idx <= currentStageIdx && opp.stage !== "CLOSED_LOST";
                   return (
@@ -306,7 +306,7 @@ export default function OpportunityDetailPage() {
                     id: "items",
                     label: `Line Items (${opp.lineItems?.length || 0})`,
                   },
-                ].map((tab) => (
+                ].map((tab: any) => (
                   <Button
                     key={tab.id}
                     variant={activeTab === tab.id ? "primary" : "outline"}
@@ -485,8 +485,8 @@ export default function OpportunityDetailPage() {
               <label className="ui-text-xs-label">Select Product</label>
               <select
                 value={itemForm.productId}
-                onChange={(e) => {
-                  const p = products.find((prod) => prod.id === e.target.value);
+                onChange={(e: any) => {
+                  const p = products.find((prod: any) => prod.id === e.target.value);
                   setItemForm({
                     ...itemForm,
                     productId: e.target.value,
@@ -497,7 +497,7 @@ export default function OpportunityDetailPage() {
                 className={styles.s4}
               >
                 <option value="">-- Custom Item --</option>
-                {products.map((p) => (
+                {products.map((p: any) => (
                   <option key={p.id} value={p.id}>
                     {p.name} ({p.sku}) - ${Number(p.sellPrice).toLocaleString()}
                   </option>
@@ -510,7 +510,7 @@ export default function OpportunityDetailPage() {
               <input
                 type="text"
                 value={itemForm.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setItemForm({ ...itemForm, description: e.target.value })
                 }
                 required
@@ -525,7 +525,7 @@ export default function OpportunityDetailPage() {
                   type="number"
                   min="1"
                   value={itemForm.quantity}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setItemForm({
                       ...itemForm,
                       quantity: Number(e.target.value),
@@ -542,7 +542,7 @@ export default function OpportunityDetailPage() {
                   type="number"
                   min="0"
                   value={itemForm.unitPrice}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setItemForm({
                       ...itemForm,
                       unitPrice: Number(e.target.value),
@@ -560,7 +560,7 @@ export default function OpportunityDetailPage() {
                   min="0"
                   max="100"
                   value={itemForm.discount}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setItemForm({
                       ...itemForm,
                       discount: Number(e.target.value),

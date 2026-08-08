@@ -107,7 +107,7 @@ export default function SaasPortalFeedbackPage() {
             type="text"
             placeholder="Feature Title..."
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e: any) => setTitle(e.target.value)}
             style={{
               padding: "8px 12px",
               borderRadius: "6px",
@@ -117,7 +117,7 @@ export default function SaasPortalFeedbackPage() {
           <textarea
             placeholder="Detailed description of your feature idea..."
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e: any) => setDescription(e.target.value)}
             style={{
               padding: "8px 12px",
               borderRadius: "6px",
@@ -149,7 +149,7 @@ export default function SaasPortalFeedbackPage() {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "16px" }}
           >
-            {requests.map((r) => (
+            {requests.map((r: any) => (
               <div
                 key={r.id}
                 style={{

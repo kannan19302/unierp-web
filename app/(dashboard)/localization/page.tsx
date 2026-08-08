@@ -10,7 +10,7 @@ export default function LocalizationPage() {
 
   useEffect(() => {
     apiGet("/admin/localization/locales")
-      .then((d) => setLocales(Array.isArray(d) ? d : []))
+      .then((d: any) => setLocales(Array.isArray(d) ? d : []))
       .finally(() => setLoading(false));
   }, []);
 

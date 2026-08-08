@@ -182,7 +182,7 @@ export default function SupplyChainAnalyticsPage() {
         <DashboardChart
           title="Carrier On-Time Performance"
           subtitle="On-time delivery rate by carrier"
-          data={carrierPerf.map((c) => ({
+          data={carrierPerf.map((c: any) => ({
             name: c.carrierName,
             rate: c.onTimeRate,
             delivered: c.delivered,

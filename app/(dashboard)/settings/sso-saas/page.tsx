@@ -111,7 +111,7 @@ export default function SaasPortalSsoPage() {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "16px" }}
           >
-            {ssoConfigs.map((cfg) => (
+            {ssoConfigs.map((cfg: any) => (
               <div
                 key={cfg.id}
                 style={{

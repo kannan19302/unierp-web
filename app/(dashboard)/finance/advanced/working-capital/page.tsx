@@ -228,11 +228,11 @@ export default function WorkingCapitalPage() {
   };
 
   const totalDiscounted = discountOffers.reduce(
-    (s, o) => s + o.discountAmount,
+    (s: any, o: any) => s + o.discountAmount,
     0,
   );
-  const totalScfFunded = scfPrograms.reduce((s, p) => s + p.fundedAmount, 0);
-  const totalFactored = facilities.reduce((s, f) => s + f.advanceAmount, 0);
+  const totalScfFunded = scfPrograms.reduce((s: any, p: any) => s + p.fundedAmount, 0);
+  const totalFactored = facilities.reduce((s: any, f: any) => s + f.advanceAmount, 0);
 
   return (
     <RouteGuard permission="finance.workingcapital.read">
@@ -339,7 +339,7 @@ export default function WorkingCapitalPage() {
                     <input
                       className="ui-input"
                       value={offerForm.supplierName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setOfferForm({
                           ...offerForm,
                           supplierName: e.target.value,
@@ -353,7 +353,7 @@ export default function WorkingCapitalPage() {
                       className="ui-input"
                       type="number"
                       value={offerForm.invoiceAmount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setOfferForm({
                           ...offerForm,
                           invoiceAmount: e.target.value,
@@ -368,7 +368,7 @@ export default function WorkingCapitalPage() {
                       type="number"
                       step="0.1"
                       value={offerForm.discountRate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setOfferForm({
                           ...offerForm,
                           discountRate: e.target.value,
@@ -438,7 +438,7 @@ export default function WorkingCapitalPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <div className="flex gap-1">
                             {row.status === "PENDING" && (
                               <>
@@ -499,7 +499,7 @@ export default function WorkingCapitalPage() {
                     <input
                       className="ui-input"
                       value={programForm.programName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setProgramForm({
                           ...programForm,
                           programName: e.target.value,
@@ -513,7 +513,7 @@ export default function WorkingCapitalPage() {
                       className="ui-input"
                       type="number"
                       value={programForm.availableLimit}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setProgramForm({
                           ...programForm,
                           availableLimit: e.target.value,
@@ -528,7 +528,7 @@ export default function WorkingCapitalPage() {
                       type="number"
                       step="0.01"
                       value={programForm.interestRate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setProgramForm({
                           ...programForm,
                           interestRate: e.target.value,
@@ -626,7 +626,7 @@ export default function WorkingCapitalPage() {
                     <input
                       className="ui-input"
                       value={facilityForm.facilityName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setFacilityForm({
                           ...facilityForm,
                           facilityName: e.target.value,
@@ -640,7 +640,7 @@ export default function WorkingCapitalPage() {
                       className="ui-input"
                       type="number"
                       value={facilityForm.invoiceAmount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setFacilityForm({
                           ...facilityForm,
                           invoiceAmount: e.target.value,
@@ -655,7 +655,7 @@ export default function WorkingCapitalPage() {
                       type="number"
                       step="1"
                       value={facilityForm.advanceRate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setFacilityForm({
                           ...facilityForm,
                           advanceRate: e.target.value,
@@ -669,7 +669,7 @@ export default function WorkingCapitalPage() {
                       className="ui-input"
                       type="date"
                       value={facilityForm.maturityDate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setFacilityForm({
                           ...facilityForm,
                           maturityDate: e.target.value,

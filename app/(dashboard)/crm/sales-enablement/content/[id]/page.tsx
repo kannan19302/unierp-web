@@ -41,7 +41,7 @@ export default function ContentDetailPage() {
       apiGet<ContentItem>(`/crm/content/items/${id}`),
       apiGet<ContentAnalytics>(`/crm/content/items/${id}/analytics`),
     ])
-      .then(([itemData, analyticsData]) => {
+      .then(([itemData, analyticsData]: any) => {
         setItem(itemData as ContentItem);
         setAnalytics(analyticsData as ContentAnalytics);
         apiSend(`/crm/content/items/${id}/view`, "POST").catch(() => {});
@@ -93,7 +93,7 @@ export default function ContentDetailPage() {
 
           {item.tags && item.tags.length > 0 && (
             <div className="flex flex-wrap gap-1">
-              {item.tags.map((tag) => (
+              {item.tags.map((tag: any) => (
                 <Badge key={tag} variant="default">
                   {tag}
                 </Badge>

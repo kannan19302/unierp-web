@@ -24,7 +24,7 @@ export default function PeopleCompetenciesPage() {
 
       <div className="flex gap-2 border-b pb-2">
         {["ALL", "TECHNICAL", "LEADERSHIP", "SOFT_SKILLS", "DOMAIN"].map(
-          (cat) => (
+          (cat: any) => (
             <button
               key={cat}
               onClick={() => setCategory(cat)}

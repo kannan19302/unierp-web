@@ -126,11 +126,11 @@ export default function SupplierQuotationsPage() {
         quotationNumber,
         validUntil,
         notes,
-        lineItems: items.map((item) => ({
+        lineItems: items.map((item: any) => ({
           productId: item.productId || undefined,
           description:
             item.description ||
-            products.find((p) => p.id === item.productId)?.name ||
+            products.find((p: any) => p.id === item.productId)?.name ||
             "Custom quote line",
           quantity: item.quantity,
           unitPrice: item.unitPrice,
@@ -142,11 +142,11 @@ export default function SupplierQuotationsPage() {
       loadData();
     } catch {
       const sub = items.reduce(
-        (sum, item) => sum + item.quantity * item.unitPrice,
+        (sum: any, item: any) => sum + item.quantity * item.unitPrice,
         0,
       );
       const tax = items.reduce(
-        (sum, item) =>
+        (sum: any, item: any) =>
           sum + item.quantity * item.unitPrice * (item.taxRate / 100),
         0,
       );
@@ -160,12 +160,12 @@ export default function SupplierQuotationsPage() {
         totalAmount: sub + tax,
         currency: "USD",
         vendorName:
-          vendors.find((v) => v.id === selectedVendor)?.name ||
+          vendors.find((v: any) => v.id === selectedVendor)?.name ||
           "Unknown supplier",
-        rfqNumber: rfqs.find((r) => r.id === selectedRfq)?.rfqNumber,
+        rfqNumber: rfqs.find((r: any) => r.id === selectedRfq)?.rfqNumber,
         notes: notes || undefined,
       };
-      setQuotes((prev) => [newMock, ...prev]);
+      setQuotes((prev: any) => [newMock, ...prev]);
       setIsModalOpen(false);
       resetForm();
     } finally {
@@ -182,8 +182,8 @@ export default function SupplierQuotationsPage() {
       );
       loadData();
     } catch {
-      setQuotes((prev) =>
-        prev.map((q) => (q.id === id ? { ...q, status: "CONVERTED" } : q)),
+      setQuotes((prev: any) =>
+        prev.map((q: any) => (q.id === id ? { ...q, status: "CONVERTED" } : q)),
       );
     }
   };
@@ -209,7 +209,7 @@ export default function SupplierQuotationsPage() {
     {
       key: "quotationNumber",
       header: "Quotation Code",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const q = row as unknown as SupplierQuotation;
         return <span className="font-bold">{q.quotationNumber}</span>;
       },
@@ -217,7 +217,7 @@ export default function SupplierQuotationsPage() {
     {
       key: "vendorName",
       header: "Supplier",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const q = row as unknown as SupplierQuotation;
         return <span>{q.vendorName}</span>;
       },
@@ -225,7 +225,7 @@ export default function SupplierQuotationsPage() {
     {
       key: "rfqNumber",
       header: "RFQ Link",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const q = row as unknown as SupplierQuotation;
         return (
           <span className={styles.p1}>{q.rfqNumber || "Direct Quote"}</span>
@@ -235,7 +235,7 @@ export default function SupplierQuotationsPage() {
     {
       key: "totalAmount",
       header: "Amount Quote",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const q = row as unknown as SupplierQuotation;
         return (
           <span className={styles.p2}>
@@ -247,7 +247,7 @@ export default function SupplierQuotationsPage() {
     {
       key: "validUntil",
       header: "Valid Until",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const q = row as unknown as SupplierQuotation;
         return (
           <span className="ui-text-muted">
@@ -259,7 +259,7 @@ export default function SupplierQuotationsPage() {
     {
       key: "status",
       header: "Status",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const q = row as unknown as SupplierQuotation;
         return (
           <Badge
@@ -279,12 +279,12 @@ export default function SupplierQuotationsPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const q = row as unknown as SupplierQuotation;
         if (q.status !== "APPROVED") return null;
         return (
           <button
-            onClick={(e) => handleConvertPO(q.id, e)}
+            onClick={(e: any) => handleConvertPO(q.id, e)}
             className={["ui-btn ui-btn-primary", styles.p3].join(" ")}
           >
             <CheckCircle size={12} /> Convert to PO
@@ -358,10 +358,10 @@ export default function SupplierQuotationsPage() {
                       <select
                         className={["ui-input", styles.p9].join(" ")}
                         value={selectedRfq}
-                        onChange={(e) => setSelectedRfq(e.target.value)}
+                        onChange={(e: any) => setSelectedRfq(e.target.value)}
                       >
                         <option value="">-- Direct Quotation --</option>
-                        {rfqs.map((r) => (
+                        {rfqs.map((r: any) => (
                           <option key={r.id} value={r.id}>
                             {r.rfqNumber}
                           </option>
@@ -375,11 +375,11 @@ export default function SupplierQuotationsPage() {
                       <select
                         className={["ui-input", styles.p10].join(" ")}
                         value={selectedVendor}
-                        onChange={(e) => setSelectedVendor(e.target.value)}
+                        onChange={(e: any) => setSelectedVendor(e.target.value)}
                         required
                       >
                         <option value="">-- Select Supplier --</option>
-                        {vendors.map((v) => (
+                        {vendors.map((v: any) => (
                           <option key={v.id} value={v.id}>
                             {v.name}
                           </option>
@@ -397,7 +397,7 @@ export default function SupplierQuotationsPage() {
                         type="text"
                         className="ui-input"
                         value={quotationNumber}
-                        onChange={(e) => setQuotationNumber(e.target.value)}
+                        onChange={(e: any) => setQuotationNumber(e.target.value)}
                         placeholder="e.g. SQ-OSC-001"
                         required
                       />
@@ -410,7 +410,7 @@ export default function SupplierQuotationsPage() {
                         type="date"
                         className="ui-input"
                         value={validUntil}
-                        onChange={(e) => setValidUntil(e.target.value)}
+                        onChange={(e: any) => setValidUntil(e.target.value)}
                         required
                       />
                     </div>
@@ -424,7 +424,7 @@ export default function SupplierQuotationsPage() {
                       type="text"
                       className="ui-input"
                       value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
+                      onChange={(e: any) => setNotes(e.target.value)}
                       placeholder="Reference discount terms or freight policy"
                     />
                   </div>
@@ -455,12 +455,12 @@ export default function SupplierQuotationsPage() {
                       </button>
                     </div>
 
-                    {items.map((item, idx) => (
+                    {items.map((item: any, idx: any) => (
                       <div key={idx} className={styles.p14}>
                         <select
                           className={["ui-input", styles.p15].join(" ")}
                           value={item.productId}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].productId = e.target.value;
@@ -469,7 +469,7 @@ export default function SupplierQuotationsPage() {
                           }}
                         >
                           <option value="">-- Catalog Item --</option>
-                          {products.map((p) => (
+                          {products.map((p: any) => (
                             <option key={p.id} value={p.id}>
                               {p.name} ({p.sku})
                             </option>
@@ -480,7 +480,7 @@ export default function SupplierQuotationsPage() {
                           className="ui-input flex-1"
                           placeholder="Spec..."
                           value={item.description}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].description = e.target.value;
@@ -492,7 +492,7 @@ export default function SupplierQuotationsPage() {
                           type="number"
                           className={["ui-input", styles.p16].join(" ")}
                           value={item.quantity}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].quantity =
@@ -507,7 +507,7 @@ export default function SupplierQuotationsPage() {
                           type="number"
                           className={["ui-input", styles.p17].join(" ")}
                           value={item.unitPrice}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].unitPrice =
@@ -522,7 +522,7 @@ export default function SupplierQuotationsPage() {
                           <button
                             type="button"
                             onClick={() =>
-                              setItems(items.filter((_, i) => i !== idx))
+                              setItems(items.filter((_: any, i: any) => i !== idx))
                             }
                             className={styles.p18}
                           >

@@ -224,7 +224,7 @@ export default function SalesOrdersHub() {
       shippingAddress: street
         ? { street, city, state, zip, country }
         : undefined,
-      lineItems: lineItems.map((item) => ({
+      lineItems: lineItems.map((item: any) => ({
         productId: item.productId || undefined,
         description: item.description,
         quantity: item.quantity,
@@ -259,11 +259,11 @@ export default function SalesOrdersHub() {
       loadData();
     } catch {
       alert("Mock Mode: Credit Hold approved!");
-      setOrders((prev) =>
-        prev.map((o) => (o.id === orderId ? { ...o, status: "CONFIRMED" } : o)),
+      setOrders((prev: any) =>
+        prev.map((o: any) => (o.id === orderId ? { ...o, status: "CONFIRMED" } : o)),
       );
       if (selectedOrder) {
-        setSelectedOrder((prev) =>
+        setSelectedOrder((prev: any) =>
           prev ? { ...prev, status: "CONFIRMED" } : null,
         );
       }
@@ -345,7 +345,7 @@ export default function SalesOrdersHub() {
   };
 
   const handleProductSelect = (index: number, prodId: string) => {
-    const prod = products.find((p) => p.id === prodId);
+    const prod = products.find((p: any) => p.id === prodId);
     if (!prod) return;
     const newLines = [...lineItems];
     const item = newLines[index];
@@ -380,11 +380,11 @@ export default function SalesOrdersHub() {
 
   const removeLineItem = (index: number) => {
     if (lineItems.length === 1) return;
-    setLineItems(lineItems.filter((_, i) => i !== index));
+    setLineItems(lineItems.filter((_: any, i: any) => i !== index));
   };
 
   // Filter lists
-  const filteredOrders = orders.filter((o) => {
+  const filteredOrders = orders.filter((o: any) => {
     const matchesSearch =
       o.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
       o.customerName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -433,7 +433,7 @@ export default function SalesOrdersHub() {
                 type="text"
                 placeholder="Search order ID, Customer..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e: any) => setSearchQuery(e.target.value)}
                 className={["ui-input", styles.p5].join(" ")}
               />
             </div>
@@ -441,7 +441,7 @@ export default function SalesOrdersHub() {
             <div className="ui-flex ui-gap-2">
               <div className={styles.p6}>
                 {(["ALL", "B2B", "B2C", "D2C", "ONLINE"] as const).map(
-                  (channel) => (
+                  (channel: any) => (
                     <button
                       key={channel}
                       onClick={() => setActiveChannel(channel)}
@@ -469,7 +469,7 @@ export default function SalesOrdersHub() {
 
               <select
                 value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
+                onChange={(e: any) => setStatusFilter(e.target.value)}
                 className="ui-input text-xs"
               >
                 <option value="ALL">All Statuses</option>
@@ -551,7 +551,7 @@ export default function SalesOrdersHub() {
             }
             data={filteredOrders as unknown as Record<string, unknown>[]}
             loading={loading}
-            onRowClick={(row) =>
+            onRowClick={(row: any) =>
               loadOrderDetails(row as unknown as (typeof filteredOrders)[0])
             }
             emptyTitle="No sales orders found"
@@ -764,7 +764,7 @@ export default function SalesOrdersHub() {
                           type="text"
                           placeholder="SO-2026-00x"
                           value={orderNumber}
-                          onChange={(e) => setOrderNumber(e.target.value)}
+                          onChange={(e: any) => setOrderNumber(e.target.value)}
                           required
                           className="ui-input"
                         />
@@ -775,7 +775,7 @@ export default function SalesOrdersHub() {
                         </label>
                         <select
                           value={salesChannel}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setSalesChannel(
                               e.target.value as "B2B" | "B2C" | "D2C",
                             )
@@ -796,12 +796,12 @@ export default function SalesOrdersHub() {
                         </label>
                         <select
                           value={customerId}
-                          onChange={(e) => setCustomerId(e.target.value)}
+                          onChange={(e: any) => setCustomerId(e.target.value)}
                           required
                           className="ui-input"
                         >
                           <option value="">Select Customer</option>
-                          {customers.map((c) => (
+                          {customers.map((c: any) => (
                             <option key={c.id} value={c.id}>
                               {c.name}
                             </option>
@@ -815,7 +815,7 @@ export default function SalesOrdersHub() {
                         <input
                           type="date"
                           value={deliveryDate}
-                          onChange={(e) => setDeliveryDate(e.target.value)}
+                          onChange={(e: any) => setDeliveryDate(e.target.value)}
                           className="ui-input"
                         />
                       </div>
@@ -829,7 +829,7 @@ export default function SalesOrdersHub() {
                           </label>
                           <select
                             value={paymentMethod}
-                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            onChange={(e: any) => setPaymentMethod(e.target.value)}
                             className="ui-input"
                           >
                             <option value="CREDIT_CARD">Credit Card</option>
@@ -843,7 +843,7 @@ export default function SalesOrdersHub() {
                           </label>
                           <select
                             value={paymentStatus}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setPaymentStatus(
                                 e.target.value as "UNPAID" | "PAID",
                               )
@@ -868,7 +868,7 @@ export default function SalesOrdersHub() {
                         type="text"
                         placeholder="Street Address"
                         value={street}
-                        onChange={(e) => setStreet(e.target.value)}
+                        onChange={(e: any) => setStreet(e.target.value)}
                         className="ui-input"
                       />
                       <div className={styles.p38}>
@@ -876,21 +876,21 @@ export default function SalesOrdersHub() {
                           type="text"
                           placeholder="City"
                           value={city}
-                          onChange={(e) => setCity(e.target.value)}
+                          onChange={(e: any) => setCity(e.target.value)}
                           className="ui-input"
                         />
                         <input
                           type="text"
                           placeholder="State"
                           value={state}
-                          onChange={(e) => setState(e.target.value)}
+                          onChange={(e: any) => setState(e.target.value)}
                           className="ui-input"
                         />
                         <input
                           type="text"
                           placeholder="Zip Code"
                           value={zip}
-                          onChange={(e) => setZip(e.target.value)}
+                          onChange={(e: any) => setZip(e.target.value)}
                           className="ui-input"
                         />
                       </div>
@@ -900,17 +900,17 @@ export default function SalesOrdersHub() {
                     <div className={styles.p39}>
                       <span className={styles.p40}>ORDER LINE ITEMS</span>
 
-                      {lineItems.map((line, idx) => (
+                      {lineItems.map((line: any, idx: any) => (
                         <div key={idx} className={styles.p41}>
                           <select
                             value={line.productId || ""}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleProductSelect(idx, e.target.value)
                             }
                             className="ui-input text-xs"
                           >
                             <option value="">Catalog Item (optional)</option>
-                            {products.map((p) => (
+                            {products.map((p: any) => (
                               <option key={p.id} value={p.id}>
                                 {p.name}
                               </option>
@@ -921,7 +921,7 @@ export default function SalesOrdersHub() {
                             type="text"
                             placeholder="Description..."
                             value={line.description}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "description",
@@ -936,7 +936,7 @@ export default function SalesOrdersHub() {
                             type="number"
                             placeholder="Qty"
                             value={line.quantity}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "quantity",
@@ -951,7 +951,7 @@ export default function SalesOrdersHub() {
                             type="number"
                             placeholder="Price"
                             value={line.unitPrice}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "unitPrice",
@@ -966,7 +966,7 @@ export default function SalesOrdersHub() {
                             type="number"
                             placeholder="Tax %"
                             value={line.taxRate}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "taxRate",
@@ -1053,7 +1053,7 @@ export default function SalesOrdersHub() {
                       <input
                         type="number"
                         value={paymentAmount}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setPaymentAmount(Number(e.target.value))
                         }
                         required
@@ -1064,7 +1064,7 @@ export default function SalesOrdersHub() {
                       <label className="ui-text-xs-label">Payment Method</label>
                       <select
                         value={logPayMethod}
-                        onChange={(e) => setLogPayMethod(e.target.value)}
+                        onChange={(e: any) => setLogPayMethod(e.target.value)}
                         className="ui-input"
                       >
                         <option value="CREDIT_CARD">Credit Card</option>
@@ -1126,7 +1126,7 @@ export default function SalesOrdersHub() {
                         <input
                           type="text"
                           value={deliveryNumber}
-                          onChange={(e) => setDeliveryNumber(e.target.value)}
+                          onChange={(e: any) => setDeliveryNumber(e.target.value)}
                           required
                           className="ui-input"
                         />
@@ -1139,7 +1139,7 @@ export default function SalesOrdersHub() {
                           type="text"
                           placeholder="e.g. DHL, FedEx"
                           value={carrierName}
-                          onChange={(e) => setCarrierName(e.target.value)}
+                          onChange={(e: any) => setCarrierName(e.target.value)}
                           className="ui-input"
                         />
                       </div>
@@ -1153,7 +1153,7 @@ export default function SalesOrdersHub() {
                         type="text"
                         placeholder="e.g. 1Z999AA10123"
                         value={trackingNumber}
-                        onChange={(e) => setTrackingNumber(e.target.value)}
+                        onChange={(e: any) => setTrackingNumber(e.target.value)}
                         className="ui-input"
                       />
                     </div>
@@ -1163,7 +1163,7 @@ export default function SalesOrdersHub() {
                       <textarea
                         placeholder="Special instructions for the driver or gate details..."
                         value={deliveryNotes}
-                        onChange={(e) => setDeliveryNotes(e.target.value)}
+                        onChange={(e: any) => setDeliveryNotes(e.target.value)}
                         className="ui-input"
                         rows={3}
                       />

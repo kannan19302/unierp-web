@@ -299,7 +299,7 @@ function FolderTile({
   onClick: () => void;
   activeApps: AppDefinition[];
 }) {
-  const appsInFolder = activeApps.filter((a) => folder.appIds.includes(a.id));
+  const appsInFolder = activeApps.filter((a: any) => folder.appIds.includes(a.id));
   const previewApps = appsInFolder.slice(0, 4);
 
   if (appsInFolder.length === 0) return null;
@@ -315,7 +315,7 @@ function FolderTile({
           className={styles.folderTile}
         >
           {previewApps.length > 0
-            ? previewApps.map((app) => (
+            ? previewApps.map((app: any) => (
                 <div
                   key={app.id}
                   style={{ background: `${app.color}22` }}
@@ -324,7 +324,7 @@ function FolderTile({
                   <app.icon size={11} style={{ color: app.color }} />
                 </div>
               ))
-            : Array.from({ length: 4 }).map((_, i) => (
+            : Array.from({ length: 4 }).map((_: any, i: any) => (
                 <div
                   key={i}
                   style={{ background: `${folder.color}15` }}
@@ -402,10 +402,10 @@ export default function AppsHubPage() {
           const list = marketplace;
           const dynamic: AppDefinition[] = list
             .filter(
-              (a) =>
+              (a: any) =>
                 a.source === "MARKETPLACE" && typeof a.appSlug === "string",
             )
-            .map((a) => ({
+            .map((a: any) => ({
               id: `mkt:${String(a.appSlug)}`,
               name: String(a.appName || a.appSlug),
               description:
@@ -436,13 +436,13 @@ export default function AppsHubPage() {
   ]);
   const activeApps = [
     ...applications.filter(
-      (app) =>
+      (app: any) =>
         (KERNEL_APP_IDS.has(app.id) || installedApps.has(app.id)) &&
         app.category !== "Industry",
     ),
     ...marketplaceApps,
   ];
-  const sortedActiveApps = [...activeApps].sort((a, b) => {
+  const sortedActiveApps = [...activeApps].sort((a: any, b: any) => {
     const aIdx = priorityAppSlugs.indexOf(a.id);
     const bIdx = priorityAppSlugs.indexOf(b.id);
     if (aIdx !== -1 || bIdx !== -1) {
@@ -453,49 +453,49 @@ export default function AppsHubPage() {
     return a.name.localeCompare(b.name);
   });
 
-  const openFolderObj = SUBFOLDERS.find((f) => f.id === openFolder);
+  const openFolderObj = SUBFOLDERS.find((f: any) => f.id === openFolder);
   const appsInOpenFolder = openFolderObj
-    ? sortedActiveApps.filter((a) => openFolderObj.appIds.includes(a.id))
+    ? sortedActiveApps.filter((a: any) => openFolderObj.appIds.includes(a.id))
     : [];
 
   const searchResults = searchQuery.trim()
     ? sortedActiveApps
         .filter(
-          (app) =>
+          (app: any) =>
             app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             app.description.toLowerCase().includes(searchQuery.toLowerCase()),
         )
-        .map((app) => {
-          const folder = SUBFOLDERS.find((f) => f.appIds.includes(app.id));
+        .map((app: any) => {
+          const folder = SUBFOLDERS.find((f: any) => f.appIds.includes(app.id));
           return { app, folderName: folder?.name ?? null };
         })
     : [];
 
-  const folderAppIds = SUBFOLDERS.flatMap((f) => f.appIds);
+  const folderAppIds = SUBFOLDERS.flatMap((f: any) => f.appIds);
   const rootApps = sortedActiveApps.filter(
-    (app) => !folderAppIds.includes(app.id),
+    (app: any) => !folderAppIds.includes(app.id),
   );
   const visibleSubfolders = SUBFOLDERS.filter(
-    (f) => sortedActiveApps.filter((a) => f.appIds.includes(a.id)).length > 0,
+    (f: any) => sortedActiveApps.filter((a: any) => f.appIds.includes(a.id)).length > 0,
   );
-  const sortedSubfolders = [...visibleSubfolders].sort((a, b) =>
+  const sortedSubfolders = [...visibleSubfolders].sort((a: any, b: any) =>
     a.name.localeCompare(b.name),
   );
 
   const gridItems = [
-    ...sortedSubfolders.map((folder) => ({
+    ...sortedSubfolders.map((folder: any) => ({
       type: "folder" as const,
       id: folder.id,
       name: folder.name,
       data: folder,
     })),
-    ...rootApps.map((app) => ({
+    ...rootApps.map((app: any) => ({
       type: "app" as const,
       id: app.id,
       name: app.name,
       data: app,
     })),
-  ].sort((a, b) => {
+  ].sort((a: any, b: any) => {
     const aIdx = a.type === "app" ? priorityAppSlugs.indexOf(a.id) : -1;
     const bIdx = b.type === "app" ? priorityAppSlugs.indexOf(b.id) : -1;
     if (aIdx !== -1 || bIdx !== -1) {
@@ -547,7 +547,7 @@ export default function AppsHubPage() {
                   : "Search all apps..."
               }
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
             />
             {searchQuery && (
               <button
@@ -572,7 +572,7 @@ export default function AppsHubPage() {
                 </div>
               ) : (
                 <div className="ui-flex ui-flex-wrap ui-gap-4">
-                  {searchResults.map(({ app, folderName }) => (
+                  {searchResults.map(({ app, folderName }: any) => (
                     <div
                       key={app.id}
                       className="ui-flex-col ui-items-center ui-gap-1"
@@ -590,13 +590,13 @@ export default function AppsHubPage() {
             </div>
           ) : openFolder ? (
             <div className="ui-flex ui-flex-wrap ui-gap-4">
-              {appsInOpenFolder.map((app) => (
+              {appsInOpenFolder.map((app: any) => (
                 <SingleAppTile key={app.id} app={app} />
               ))}
             </div>
           ) : (
             <div className="ui-flex ui-flex-wrap ui-gap-4">
-              {gridItems.map((item) => {
+              {gridItems.map((item: any) => {
                 if (item.type === "folder") {
                   return (
                     <FolderTile
@@ -643,7 +643,7 @@ export default function AppsHubPage() {
             className={`${styles.modalOverlay} modal-overlay`}
           >
             <div
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: any) => e.stopPropagation()}
               className={`${styles.modalCard} modal-card`}
             >
               <div
@@ -661,9 +661,9 @@ export default function AppsHubPage() {
                       className={styles.modalHeaderIconGrid}
                     >
                       {applications
-                        .filter((a) => openFolderObj.appIds.includes(a.id))
+                        .filter((a: any) => openFolderObj.appIds.includes(a.id))
                         .slice(0, 4)
-                        .map((app) => (
+                        .map((app: any) => (
                           <div
                             key={app.id}
                             style={{ background: `${app.color}28` }}
@@ -690,7 +690,7 @@ export default function AppsHubPage() {
               </div>
               <div className={styles.modalBody}>
                 <div className="ui-flex ui-flex-wrap ui-gap-5">
-                  {appsInOpenFolder.map((app) => (
+                  {appsInOpenFolder.map((app: any) => (
                     <SingleAppTile key={app.id} app={app} />
                   ))}
                 </div>

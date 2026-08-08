@@ -21,8 +21,8 @@ export default function CategoriesPage() {
   useEffect(() => {
     client
       .get<Category[]>("/documents/categories")
-      .then((res) => setCategories((res as any) || []))
-      .catch((e) =>
+      .then((res: any) => setCategories((res as any) || []))
+      .catch((e: any) =>
         toast({
           title: "Failed to load categories",
           description: e.message,

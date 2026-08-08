@@ -21,7 +21,7 @@ const columns: ListColumn[] = [
   {
     key: "currentBinCode",
     header: "Current Bin",
-    render: (v, row) => {
+    render: (v: any, row: any) => {
       const r = row as unknown as Recommendation;
       return (
         <span className="font-mono">
@@ -137,9 +137,9 @@ export default function SlottingPage() {
             <Select
               id="slotting-warehouse"
               value={warehouseId}
-              onChange={(e) => setWarehouseId(e.target.value)}
+              onChange={(e: any) => setWarehouseId(e.target.value)}
             >
-              {warehouses.map((w) => (
+              {warehouses.map((w: any) => (
                 <option key={w.id} value={w.id}>
                   {w.name}
                 </option>

@@ -43,7 +43,7 @@ export default function DynamicRoutingTab() {
             fallback: "CFO",
             active: true,
           },
-        ].map((rule, i) => (
+        ].map((rule: any, i: any) => (
           <div
             key={i}
             style={{ opacity: rule.active ? 1 : 0.6 }}

@@ -194,7 +194,7 @@ export default function LeadScoringPage() {
                   { factor: "Company identified", points: 10 },
                   { factor: "Website available", points: 10 },
                   { factor: "Industry specified", points: 10 },
-                ].map((f) => (
+                ].map((f: any) => (
                   <div key={f.factor} className={styles.factorRow}>
                     <span className="text-sm">{f.factor}</span>
                     <span className={styles.factorPoints}>+{f.points}</span>

@@ -36,14 +36,14 @@ function resolveMeta(collection: any) {
     : [];
   const titleField =
     settings.titleField ||
-    fields.find((f) => /name|title|author/i.test(f.name))?.name ||
+    fields.find((f: any) => /name|title|author/i.test(f.name))?.name ||
     "title";
   const imageField =
     settings.imageField ||
-    fields.find((f) => f.type === "Image" || f.type === "Gallery")?.name;
-  const priceField = fields.find((f) => f.type === "Price")?.name;
+    fields.find((f: any) => f.type === "Image" || f.type === "Gallery")?.name;
+  const priceField = fields.find((f: any) => f.type === "Price")?.name;
   const subField = fields.find(
-    (f) =>
+    (f: any) =>
       /role|company|category|client|excerpt|summary|shortDescription|quote/i.test(
         f.name,
       ) && f.name !== titleField,
@@ -97,7 +97,7 @@ export function CollectionBlock(props: CollectionBlockProps) {
             headers: { Authorization: `Bearer ${token}` },
           });
           const cols = listRes.ok ? await listRes.json() : [];
-          const col = (cols as any[]).find((c) => c.slug === collectionSlug);
+          const col = (cols as any[]).find((c: any) => c.slug === collectionSlug);
           if (!col) throw new Error("Collection not found");
           const itemsRes = await fetch(
             `/api/v1/builder/web-collections/${col.id}/items?status=PUBLISHED&pageSize=100`,
@@ -135,7 +135,7 @@ export function CollectionBlock(props: CollectionBlockProps) {
   }, [collectionSlug, props.items, props.tenantSlug]);
 
   const meta = resolveMeta(collection);
-  let shown = featuredOnly ? items.filter((i) => i.featured) : items;
+  let shown = featuredOnly ? items.filter((i: any) => i.featured) : items;
   shown = shown.slice(0, limit);
 
   return (
@@ -212,7 +212,7 @@ export function CollectionBlock(props: CollectionBlockProps) {
               gap: 28,
             }}
           >
-            {shown.map((item) => {
+            {shown.map((item: any) => {
               const data = item.data || {};
               const img = meta.imageField
                 ? firstImage(data[meta.imageField])

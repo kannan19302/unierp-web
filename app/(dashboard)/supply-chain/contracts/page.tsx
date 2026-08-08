@@ -199,7 +199,7 @@ export default function ContractsPage() {
       header: "Actions",
       align: "right",
       render: (row: any) => (
-        <div className="ui-flex ui-gap-1" onClick={(e) => e.stopPropagation()}>
+        <div className="ui-flex ui-gap-1" onClick={(e: any) => e.stopPropagation()}>
           <button
             className="ui-btn-icon"
             onClick={() =>
@@ -265,13 +265,13 @@ export default function ContractsPage() {
                 type="text"
                 placeholder="Search vendor..."
                 value={vendorSearch}
-                onChange={(e) => setVendorSearch(e.target.value)}
+                onChange={(e: any) => setVendorSearch(e.target.value)}
                 className="ui-input"
               />
             </div>
             <Select
               value={statusFilter}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
@@ -334,7 +334,7 @@ export default function ContractsPage() {
                 required
                 placeholder="CT-2026-001"
                 value={form.contractNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, contractNumber: e.target.value })
                 }
               />
@@ -343,14 +343,14 @@ export default function ContractsPage() {
                 required
                 placeholder="Acme Corp"
                 value={form.vendor}
-                onChange={(e) => setForm({ ...form, vendor: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, vendor: e.target.value })}
               />
             </div>
             <div className="ui-grid-2 ui-gap-3">
               <FormField label="Type">
                 <Select
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="SERVICE">Service</option>
                   <option value="MATERIAL">Material</option>
@@ -364,7 +364,7 @@ export default function ContractsPage() {
                 min={0}
                 step={0.01}
                 value={form.value || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, value: parseFloat(e.target.value) || 0 })
                 }
               />
@@ -374,7 +374,7 @@ export default function ContractsPage() {
                 label="Start Date"
                 type="date"
                 value={form.startDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
               />
@@ -382,7 +382,7 @@ export default function ContractsPage() {
                 label="End Date"
                 type="date"
                 value={form.endDate}
-                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endDate: e.target.value })}
               />
             </div>
           </form>
@@ -414,7 +414,7 @@ export default function ContractsPage() {
                 label="Contract #"
                 required
                 value={form.contractNumber}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, contractNumber: e.target.value })
                 }
               />
@@ -422,14 +422,14 @@ export default function ContractsPage() {
                 label="Vendor"
                 required
                 value={form.vendor}
-                onChange={(e) => setForm({ ...form, vendor: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, vendor: e.target.value })}
               />
             </div>
             <div className="ui-grid-2 ui-gap-3">
               <FormField label="Type">
                 <Select
                   value={form.type}
-                  onChange={(e) => setForm({ ...form, type: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, type: e.target.value })}
                 >
                   <option value="SERVICE">Service</option>
                   <option value="MATERIAL">Material</option>
@@ -443,7 +443,7 @@ export default function ContractsPage() {
                 min={0}
                 step={0.01}
                 value={form.value || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, value: parseFloat(e.target.value) || 0 })
                 }
               />
@@ -453,7 +453,7 @@ export default function ContractsPage() {
                 label="Start Date"
                 type="date"
                 value={form.startDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
               />
@@ -461,7 +461,7 @@ export default function ContractsPage() {
                 label="End Date"
                 type="date"
                 value={form.endDate}
-                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endDate: e.target.value })}
               />
             </div>
           </form>

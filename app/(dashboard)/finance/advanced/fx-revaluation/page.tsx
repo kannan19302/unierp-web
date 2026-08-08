@@ -197,19 +197,19 @@ export default function FxRevaluationPage() {
             },
             {
               label: "Posted Adjustments",
-              value: runs.filter((r) => r.status === "POSTED").length,
+              value: runs.filter((r: any) => r.status === "POSTED").length,
               icon: <ShieldCheck size={20} />,
               color: "var(--chart-2)",
               bg: "rgba(34,197,94,0.08)",
             },
             {
               label: "Draft Calculations",
-              value: runs.filter((r) => r.status === "DRAFT").length,
+              value: runs.filter((r: any) => r.status === "DRAFT").length,
               icon: <Calculator size={20} />,
               color: "var(--chart-3)",
               bg: "rgba(245,158,11,0.08)",
             },
-          ].map((kpi) => (
+          ].map((kpi: any) => (
             <Card key={kpi.label} className="ui-card p-5">
               <div className="ui-flex-between">
                 <div>
@@ -331,7 +331,7 @@ export default function FxRevaluationPage() {
                     type="date"
                     className="ui-input w-full"
                     value={runDate}
-                    onChange={(e) => setRunDate(e.target.value)}
+                    onChange={(e: any) => setRunDate(e.target.value)}
                     required
                   />
                 </div>
@@ -343,7 +343,7 @@ export default function FxRevaluationPage() {
                   <select
                     className="ui-input w-full"
                     value={targetCurrency}
-                    onChange={(e) => setTargetCurrency(e.target.value)}
+                    onChange={(e: any) => setTargetCurrency(e.target.value)}
                     required
                   >
                     <option value="EUR">EUR — Euro</option>
@@ -362,7 +362,7 @@ export default function FxRevaluationPage() {
                     type="text"
                     className="ui-input w-full"
                     value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                    onChange={(e: any) => setNotes(e.target.value)}
                     placeholder="e.g. June 2026 month-end revaluation check"
                   />
                 </div>
@@ -421,7 +421,7 @@ export default function FxRevaluationPage() {
                       {
                         key: "account",
                         header: "GL Account",
-                        render: (v, row) => (
+                        render: (v: any, row: any) => (
                           <span>
                             <span className={styles.s13}>
                               {(v as any)?.code || "1200-AR"}

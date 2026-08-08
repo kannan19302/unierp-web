@@ -75,7 +75,7 @@ export default function TrendsPage() {
             <select
               className="ui-input w-48"
               value={groupBy}
-              onChange={(e) => setGroupBy(e.target.value)}
+              onChange={(e: any) => setGroupBy(e.target.value)}
             >
               <option value="DAY">Day</option>
               <option value="WEEK">Week</option>

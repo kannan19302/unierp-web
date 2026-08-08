@@ -122,7 +122,7 @@ export default function TrainingPage() {
             </div>
           ) : (
             <div className="ui-stack-3">
-              {data.map((item) => (
+              {data.map((item: any) => (
                 <div
                   key={item.id}
                   className="ui-flex ui-gap-3 ui-items-start p-3 ui-bg-subtle rounded-lg"
@@ -137,7 +137,7 @@ export default function TrainingPage() {
                     <p className="text-sm mt-1">{item.text}</p>
                     {item.entities?.length > 0 && (
                       <div className="ui-hstack-2 mt-1">
-                        {item.entities.map((e, i) => (
+                        {item.entities.map((e: any, i: any) => (
                           <span
                             key={i}
                             className="ui-badge-info text-xs px-2 py-0.5 rounded"
@@ -187,7 +187,7 @@ export default function TrainingPage() {
                 className="ui-input"
                 placeholder="Intent"
                 value={newItem.intent}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, intent: e.target.value })
                 }
               />
@@ -196,7 +196,7 @@ export default function TrainingPage() {
                 placeholder="Example text"
                 rows={3}
                 value={newItem.text}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, text: e.target.value })
                 }
               />
@@ -204,7 +204,7 @@ export default function TrainingPage() {
                 className="ui-input"
                 placeholder="Language"
                 value={newItem.language}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewItem({ ...newItem, language: e.target.value })
                 }
               />
@@ -234,7 +234,7 @@ export default function TrainingPage() {
                 className="ui-input"
                 placeholder="Intent"
                 value={editItem.intent}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEditItem({ ...editItem, intent: e.target.value })
                 }
               />
@@ -243,7 +243,7 @@ export default function TrainingPage() {
                 placeholder="Example text"
                 rows={3}
                 value={editItem.text}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setEditItem({ ...editItem, text: e.target.value })
                 }
               />

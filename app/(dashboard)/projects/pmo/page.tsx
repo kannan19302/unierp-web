@@ -202,7 +202,7 @@ export default function PmoPage() {
             <Plus size={14} /> New Scorecard
           </Button>
           <div className="ui-grid-auto">
-            {scorecards.map((sc) => (
+            {scorecards.map((sc: any) => (
               <Card key={sc.id} className="ui-stack-2">
                 <div className="ui-flex-between">
                   <h4 className="ui-text-label">
@@ -220,7 +220,7 @@ export default function PmoPage() {
                   </p>
                 )}
                 <div className="ui-stack-2">
-                  {(sc.dimensions || []).map((d) => (
+                  {(sc.dimensions || []).map((d: any) => (
                     <div key={d.id} className="ui-flex-between">
                       <span className="ui-text-micro">{d.dimension}</span>
                       <span
@@ -246,7 +246,7 @@ export default function PmoPage() {
             <Plus size={14} /> Assess Gate
           </Button>
           <div className="ui-grid-auto">
-            {gates.map((g) => (
+            {gates.map((g: any) => (
               <Card key={g.id} className="ui-stack-2">
                 <div className="ui-flex-between">
                   <h4 className="ui-text-label">
@@ -266,7 +266,7 @@ export default function PmoPage() {
                 )}
                 {(g.gateChecklists || []).length > 0 && (
                   <p className="ui-text-micro">
-                    {g.gateChecklists?.filter((c) => c.isCompleted).length}/
+                    {g.gateChecklists?.filter((c: any) => c.isCompleted).length}/
                     {g.gateChecklists?.length} items complete
                   </p>
                 )}

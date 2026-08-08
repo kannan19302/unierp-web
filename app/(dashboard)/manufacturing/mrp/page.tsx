@@ -99,9 +99,9 @@ export default function MRPPage() {
       setRuns(runsData);
       const flattened: MRPPlannedItem[] = [];
       const seenIds = new Set<string>();
-      runsData.forEach((run) => {
+      runsData.forEach((run: any) => {
         if (run.plannedItems) {
-          run.plannedItems.forEach((item) => {
+          run.plannedItems.forEach((item: any) => {
             if (!seenIds.has(item.id)) {
               seenIds.add(item.id);
               flattened.push(item);
@@ -148,18 +148,18 @@ export default function MRPPage() {
 
   // Calculations
   const pendingCount = plannedItems.filter(
-    (i) => i.status === "PENDING",
+    (i: any) => i.status === "PENDING",
   ).length;
   const woCount = plannedItems.filter(
-    (i) => i.status === "PENDING" && i.actionType === "CREATE_WORK_ORDER",
+    (i: any) => i.status === "PENDING" && i.actionType === "CREATE_WORK_ORDER",
   ).length;
   const poCount = plannedItems.filter(
-    (i) => i.status === "PENDING" && i.actionType === "CREATE_PURCHASE_ORDER",
+    (i: any) => i.status === "PENDING" && i.actionType === "CREATE_PURCHASE_ORDER",
   ).length;
 
   // Helper to determine if a Work Order spans a specific date
   const getWOsOnDate = (wsId: string, dateStr: string): WorkOrder[] => {
-    return workOrders.filter((wo) => {
+    return workOrders.filter((wo: any) => {
       if (!wo.workstation || wo.workstation.id !== wsId) return false;
       if (!wo.startDate) return false;
       const start = wo.startDate.slice(0, 10);
@@ -229,7 +229,7 @@ export default function MRPPage() {
               {/* Header Dates Row */}
               <div className={styles.p16}>
                 <div className={styles.p17}>Workstation</div>
-                {schedulerDays.map((day) => {
+                {schedulerDays.map((day: any) => {
                   const dateObj = new Date(day);
                   return (
                     <div key={day} className={styles.p18}>
@@ -245,15 +245,15 @@ export default function MRPPage() {
               </div>
 
               {/* Workstation Rows */}
-              {workstations.map((ws) => (
+              {workstations.map((ws: any) => (
                 <div key={ws.id} className={styles.p20}>
                   <div className={styles.p21}>{ws.name}</div>
-                  {schedulerDays.map((day) => {
+                  {schedulerDays.map((day: any) => {
                     const activeWOs = getWOsOnDate(ws.id, day);
                     const isConflict = activeWOs.length > 1;
                     return (
                       <div key={day} className={styles.p22}>
-                        {activeWOs.map((wo) => (
+                        {activeWOs.map((wo: any) => (
                           <span
                             key={wo.id}
                             title={`${wo.workOrderNumber}: ${wo.bom.name} (${Number(wo.quantity)} units)`}
@@ -307,7 +307,7 @@ export default function MRPPage() {
                 <div className="text-right">ACTION RECOMMENDATION</div>
               </div>
 
-              {plannedItems.map((item) => (
+              {plannedItems.map((item: any) => (
                 <div
                   key={item.id}
                   style={{ opacity: item.status === "PROCESSED" ? 0.6 : 1 }}
@@ -401,7 +401,7 @@ export default function MRPPage() {
         <div className={styles.p28}>
           <h3 className={styles.p29}>Calculation History Traces</h3>
           <div className="ui-stack-2">
-            {runs.map((run) => (
+            {runs.map((run: any) => (
               <div key={run.id} className={styles.p30}>
                 <span className="text-sm">
                   <strong>Run ID:</strong> {run.id} | <strong>Date:</strong>{" "}

@@ -200,7 +200,7 @@ export default function CommissionPlansPage() {
           {p.tiers.length === 0 ? (
             <span className="ui-text-muted">None yet</span>
           ) : (
-            p.tiers.map((t) => (
+            p.tiers.map((t: any) => (
               <Badge key={t.id} variant="default">
                 {Number(t.minAttainmentPct)}–
                 {t.maxAttainmentPct ? Number(t.maxAttainmentPct) : "∞"}% →{" "}
@@ -355,7 +355,7 @@ export default function CommissionPlansPage() {
       />
 
       <div className={styles.p21}>
-        {(["plans", "payouts"] as const).map((t) => (
+        {(["plans", "payouts"] as const).map((t: any) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -429,7 +429,7 @@ export default function CommissionPlansPage() {
               <input
                 placeholder="Plan name"
                 value={planForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPlanForm({ ...planForm, name: e.target.value })
                 }
                 className="p-2"
@@ -437,7 +437,7 @@ export default function CommissionPlansPage() {
               <textarea
                 placeholder="Description (optional)"
                 value={planForm.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setPlanForm({ ...planForm, description: e.target.value })
                 }
                 className="p-2"
@@ -447,7 +447,7 @@ export default function CommissionPlansPage() {
                 <input
                   type="date"
                   value={planForm.effectiveStart}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setPlanForm({ ...planForm, effectiveStart: e.target.value })
                   }
                   className={styles.p24}
@@ -483,7 +483,7 @@ export default function CommissionPlansPage() {
                 <input
                   type="number"
                   value={tierForm.minAttainmentPct}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setTierForm({
                       ...tierForm,
                       minAttainmentPct: Number(e.target.value),
@@ -497,7 +497,7 @@ export default function CommissionPlansPage() {
                 <input
                   type="number"
                   value={tierForm.maxAttainmentPct}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setTierForm({
                       ...tierForm,
                       maxAttainmentPct: e.target.value,
@@ -511,7 +511,7 @@ export default function CommissionPlansPage() {
                 <input
                   type="number"
                   value={tierForm.commissionRate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setTierForm({
                       ...tierForm,
                       commissionRate: Number(e.target.value),
@@ -543,13 +543,13 @@ export default function CommissionPlansPage() {
               </div>
               <select
                 value={calcForm.planId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCalcForm({ ...calcForm, planId: e.target.value })
                 }
                 className="p-2"
               >
                 <option value="">Select a plan…</option>
-                {plans.map((p) => (
+                {plans.map((p: any) => (
                   <option key={p.id} value={p.id}>
                     {p.name}
                   </option>
@@ -558,7 +558,7 @@ export default function CommissionPlansPage() {
               <input
                 placeholder="Period (e.g. 2026-Q3)"
                 value={calcForm.period}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setCalcForm({ ...calcForm, period: e.target.value })
                 }
                 className="p-2"

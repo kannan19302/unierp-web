@@ -168,7 +168,7 @@ export default function APMatchRulesPage() {
                 <input
                   className="ui-input"
                   value={form.vendorId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, vendorId: e.target.value })
                   }
                   placeholder="vendor-id or blank for global"
@@ -183,7 +183,7 @@ export default function APMatchRulesPage() {
                   step="0.5"
                   className="ui-input"
                   value={form.quantityTolerancePercent}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       quantityTolerancePercent: e.target.value,
@@ -200,7 +200,7 @@ export default function APMatchRulesPage() {
                   step="0.5"
                   className="ui-input"
                   value={form.priceTolerancePercent}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, priceTolerancePercent: e.target.value })
                   }
                 />
@@ -211,7 +211,7 @@ export default function APMatchRulesPage() {
                   type="date"
                   className="ui-input"
                   value={form.effectiveDate}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, effectiveDate: e.target.value })
                   }
                 />
@@ -291,7 +291,7 @@ export default function APMatchRulesPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <div className="ui-td-actions">
                         <button
                           className="ui-action-btn"

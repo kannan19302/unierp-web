@@ -73,7 +73,7 @@ export default function AiIntelligencePage() {
         description="AI-powered sales intelligence and predictive analytics"
       />
       <div className="ui-grid-4" style={{ gap: "1rem" }}>
-        {features.map((f) => (
+        {features.map((f: any) => (
           <Link key={f.name} href={f.href} style={{ textDecoration: "none" }}>
             <Card hover>
               <div

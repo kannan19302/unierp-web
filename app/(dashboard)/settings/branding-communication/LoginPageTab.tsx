@@ -51,7 +51,7 @@ export default function LoginPageTab() {
             <label className="ui-label">Company / Portal Name</label>
             <input
               value={config.companyName}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setConfig({ ...config, companyName: e.target.value })
               }
               required
@@ -63,7 +63,7 @@ export default function LoginPageTab() {
             <label className="ui-label">Logo Image URL</label>
             <input
               value={config.logoUrl}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setConfig({ ...config, logoUrl: e.target.value })
               }
               placeholder="https://example.com/logo.png"
@@ -75,7 +75,7 @@ export default function LoginPageTab() {
             <label className="ui-label">Welcome Message</label>
             <input
               value={config.welcomeMessage}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setConfig({ ...config, welcomeMessage: e.target.value })
               }
               className="ui-field-box"
@@ -88,14 +88,14 @@ export default function LoginPageTab() {
               <input
                 type="color"
                 value={config.primaryColor}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConfig({ ...config, primaryColor: e.target.value })
                 }
                 className={styles.s2}
               />
               <input
                 value={config.primaryColor}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setConfig({ ...config, primaryColor: e.target.value })
                 }
                 className={styles.s3}

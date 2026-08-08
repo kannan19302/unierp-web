@@ -112,7 +112,7 @@ export default function DemandForecastingPage() {
       </div>
 
       <div className="flex gap-2 border-b border-gray-200 dark:border-gray-700">
-        {tabs.map((t) => (
+        {tabs.map((t: any) => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
@@ -165,7 +165,7 @@ export default function DemandForecastingPage() {
                 value: dashboard.belowRopCount,
                 color: "orange",
               },
-            ].map((m) => (
+            ].map((m: any) => (
               <div
                 key={m.label}
                 className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4"
@@ -197,7 +197,7 @@ export default function DemandForecastingPage() {
                     ? `${(dashboard.avgMape * 100).toFixed(1)}%`
                     : "N/A",
               },
-            ].map((m) => (
+            ].map((m: any) => (
               <div
                 key={m.label}
                 className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4"
@@ -217,7 +217,7 @@ export default function DemandForecastingPage() {
                 ⚠ Reorder Alerts ({reorderAlerts.length})
               </h3>
               <div className="space-y-2">
-                {reorderAlerts.map((a, i) => (
+                {reorderAlerts.map((a: any, i: any) => (
                   <div
                     key={i}
                     className="flex justify-between text-sm text-yellow-700 dark:text-yellow-400"
@@ -422,7 +422,7 @@ export default function DemandForecastingPage() {
                 {
                   key: "suggestedQty",
                   header: "Suggested Qty",
-                  render: (v, row) =>
+                  render: (v: any, row: any) =>
                     `${Number(v).toFixed(2)} ${row.uom ?? ""}`,
                 },
                 { key: "triggerType", header: "Trigger" },

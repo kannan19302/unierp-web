@@ -13,7 +13,7 @@ interface OfflineTransaction {
 }
 
 function openDB(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve: any, reject: any) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
     request.onupgradeneeded = () => {
       const db = request.result;
@@ -34,7 +34,7 @@ export async function saveOfflineTransaction(
   const db = await openDB();
   const tx = db.transaction(STORE_NAME, "readwrite");
   tx.objectStore(STORE_NAME).put({ ...txn, synced: false, syncAttempts: 0 });
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve: any, reject: any) => {
     tx.oncomplete = () => resolve();
     tx.onerror = () => reject(tx.error);
   });
@@ -45,7 +45,7 @@ export async function getPendingTransactions(): Promise<OfflineTransaction[]> {
   const tx = db.transaction(STORE_NAME, "readonly");
   const index = tx.objectStore(STORE_NAME).index("synced");
   const request = index.getAll(IDBKeyRange.only(false));
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve: any, reject: any) => {
     request.onsuccess = () => resolve(request.result as OfflineTransaction[]);
     request.onerror = () => reject(request.error);
   });

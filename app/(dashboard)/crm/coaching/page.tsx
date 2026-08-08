@@ -198,7 +198,7 @@ export default function CoachingPage() {
       />
 
       <div className={styles.tabs}>
-        {(["dashboard", "rubrics", "library"] as const).map((t) => (
+        {(["dashboard", "rubrics", "library"] as const).map((t: any) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -309,7 +309,7 @@ export default function CoachingPage() {
               <input
                 placeholder="Rubric name"
                 value={rubricForm.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRubricForm({ ...rubricForm, name: e.target.value })
                 }
                 className="p-2"
@@ -317,7 +317,7 @@ export default function CoachingPage() {
               <textarea
                 placeholder="Description (optional)"
                 value={rubricForm.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setRubricForm({ ...rubricForm, description: e.target.value })
                 }
                 className="p-2"

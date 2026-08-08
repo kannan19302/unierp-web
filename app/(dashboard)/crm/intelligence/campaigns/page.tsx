@@ -122,10 +122,10 @@ export default function CampaignIntelligencePage() {
           <span className="ui-text-xs-bold-muted">SELECT CAMPAIGN</span>
           <select
             value={selectedCampaign}
-            onChange={(e) => setSelectedCampaign(e.target.value)}
+            onChange={(e: any) => setSelectedCampaign(e.target.value)}
             className={styles.select}
           >
-            {campaigns.map((c) => (
+            {campaigns.map((c: any) => (
               <option key={c.id} value={c.id}>
                 {c.name}
               </option>

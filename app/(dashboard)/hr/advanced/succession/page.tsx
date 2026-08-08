@@ -89,7 +89,7 @@ export default function SuccessionPage() {
 
   const getEmpName = (id: string | null) => {
     if (!id) return "None";
-    const emp = employees.find((e) => e.id === id);
+    const emp = employees.find((e: any) => e.id === id);
     return emp ? `${emp.firstName} ${emp.lastName}` : id;
   };
 
@@ -121,7 +121,7 @@ export default function SuccessionPage() {
               className="ui-input"
               placeholder="Corporate Role Position (e.g. Chief Executive Officer)"
               value={form.position}
-              onChange={(e) => setForm({ ...form, position: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, position: e.target.value })}
               required
             />
             <div className="ui-grid-2 ui-gap-3">
@@ -132,12 +132,12 @@ export default function SuccessionPage() {
                 <select
                   className="ui-input"
                   value={form.currentHolderId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, currentHolderId: e.target.value })
                   }
                 >
                   <option value="">Select Employee</option>
-                  {employees.map((e) => (
+                  {employees.map((e: any) => (
                     <option key={e.id} value={e.id}>
                       {e.firstName} {e.lastName}
                     </option>
@@ -149,12 +149,12 @@ export default function SuccessionPage() {
                 <select
                   className="ui-input"
                   value={form.successorId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, successorId: e.target.value })
                   }
                 >
                   <option value="">Select Successor</option>
-                  {employees.map((e) => (
+                  {employees.map((e: any) => (
                     <option key={e.id} value={e.id}>
                       {e.firstName} {e.lastName}
                     </option>
@@ -169,7 +169,7 @@ export default function SuccessionPage() {
                 <select
                   className="ui-input"
                   value={form.riskLevel}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, riskLevel: e.target.value })
                   }
                 >
@@ -183,7 +183,7 @@ export default function SuccessionPage() {
                 <select
                   className="ui-input"
                   value={form.readinessLevel}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, readinessLevel: e.target.value })
                   }
                 >
@@ -199,7 +199,7 @@ export default function SuccessionPage() {
               className="ui-input"
               placeholder="Candidate training and mentoring development pathway details..."
               value={form.developmentPlan}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, developmentPlan: e.target.value })
               }
               rows={3}

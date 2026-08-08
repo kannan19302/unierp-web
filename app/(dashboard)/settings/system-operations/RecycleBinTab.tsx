@@ -231,7 +231,7 @@ export default function RecycleBinTab() {
         {entityTypes.length === 0 && (
           <span className={styles.s11}>No deleted records</span>
         )}
-        {entityTypes.map((type) => (
+        {entityTypes.map((type: any) => (
           <div key={type} className={styles.s12}>
             <span
               className={styles.s13}
@@ -246,7 +246,7 @@ export default function RecycleBinTab() {
       <div className="mb-4">
         <select
           value={entityFilter}
-          onChange={(e) => setEntityFilter(e.target.value)}
+          onChange={(e: any) => setEntityFilter(e.target.value)}
           className={styles.s15}
         >
           <option value="">All Entity Types</option>
@@ -257,7 +257,7 @@ export default function RecycleBinTab() {
             "Invoice",
             "Order",
             "Vendor",
-          ].map((t) => (
+          ].map((t: any) => (
             <option key={t} value={t}>
               {t}
             </option>
@@ -303,7 +303,7 @@ export default function RecycleBinTab() {
               {
                 key: "id",
                 header: "Actions",
-                render: (v, row) => (
+                render: (v: any, row: any) => (
                   <div className="ui-flex ui-gap-2">
                     <button
                       onClick={() => restore(String(v))}

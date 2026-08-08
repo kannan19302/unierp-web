@@ -303,8 +303,8 @@ function useRevealObserver() {
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      (entries: any) => {
+        entries.forEach((entry: any) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
           }
@@ -314,7 +314,7 @@ function useRevealObserver() {
     );
 
     const elements = document.querySelectorAll(".landing-reveal");
-    elements.forEach((el) => observerRef.current?.observe(el));
+    elements.forEach((el: any) => observerRef.current?.observe(el));
 
     return () => observerRef.current?.disconnect();
   }, []);
@@ -1098,8 +1098,8 @@ export default function LandingPage() {
 
   const toggleEmployeeStatus = (index: number) => {
     const statuses = ["Present", "Away", "On Leave"];
-    setEmployees((prev) =>
-      prev.map((emp, i) => {
+    setEmployees((prev: any) =>
+      prev.map((emp: any, i: any) => {
         if (i === index) {
           const nextIdx = (statuses.indexOf(emp.status) + 1) % statuses.length;
           const nextStatus = statuses[nextIdx] || "Present";
@@ -1112,7 +1112,7 @@ export default function LandingPage() {
 
   const simulateDealWon = () => {
     if (crmDeals.proposal.length === 0) {
-      setCrmDeals((prev) => ({
+      setCrmDeals((prev: any) => ({
         ...prev,
         proposal: [{ company: "Pied Piper", value: 15000 }],
       }));
@@ -1121,7 +1121,7 @@ export default function LandingPage() {
       return;
     }
     const targetDeal = crmDeals.proposal[0]!;
-    setCrmDeals((prev) => ({
+    setCrmDeals((prev: any) => ({
       ...prev,
       proposal: [],
       won: [...prev.won, targetDeal],
@@ -1134,8 +1134,8 @@ export default function LandingPage() {
 
   const triggerInventoryReorder = () => {
     let reorderedCount = 0;
-    setInventoryItems((prev) =>
-      prev.map((item) => {
+    setInventoryItems((prev: any) =>
+      prev.map((item: any) => {
         if (item.status === "Low Stock" || item.status === "Out of Stock") {
           reorderedCount++;
           return {
@@ -1201,12 +1201,12 @@ export default function LandingPage() {
           </Link>
 
           <ul className="landing-nav-links">
-            {NAV_LINKS.map((link) => (
+            {NAV_LINKS.map((link: any) => (
               <li key={link.label}>
                 <a
                   href={link.href}
                   className="landing-nav-link"
-                  onClick={(e) => handleAnchorClick(e, link.href)}
+                  onClick={(e: any) => handleAnchorClick(e, link.href)}
                 >
                   {link.label}
                 </a>
@@ -1252,11 +1252,11 @@ export default function LandingPage() {
         >
           <X size={24} />
         </button>
-        {NAV_LINKS.map((link) => (
+        {NAV_LINKS.map((link: any) => (
           <a
             key={link.label}
             href={link.href}
-            onClick={(e) => handleAnchorClick(e, link.href)}
+            onClick={(e: any) => handleAnchorClick(e, link.href)}
           >
             {link.label}
           </a>
@@ -1318,7 +1318,7 @@ export default function LandingPage() {
           <a
             href="#playground"
             className="landing-btn-outline"
-            onClick={(e) => handleAnchorClick(e, "#playground")}
+            onClick={(e: any) => handleAnchorClick(e, "#playground")}
           >
             Try Live Demo
           </a>
@@ -1380,7 +1380,7 @@ export default function LandingPage() {
                   label: "Field Service",
                   color: "var(--color-danger)",
                 },
-              ].map((ind) => (
+              ].map((ind: any) => (
                 <button
                   key={ind.id}
                   onClick={() => setPlaygroundIndustry(ind.id)}
@@ -1408,7 +1408,7 @@ export default function LandingPage() {
               {/* Interactive Sidebar */}
               <div className="landing-preview-sidebar">
                 <div className="landing-preview-sidebar-title">Modules</div>
-                {PLAYGROUND_TABS.map((tab) => {
+                {PLAYGROUND_TABS.map((tab: any) => {
                   const Icon = tab.icon;
                   return (
                     <button
@@ -1437,7 +1437,7 @@ export default function LandingPage() {
                       <span className="playground-badge">Real-Time</span>
                     </div>
                     <div className="landing-preview-cards">
-                      {getDashboardCards().map((card) => (
+                      {getDashboardCards().map((card: any) => (
                         <div key={card.label} className="landing-preview-card">
                           <div className="landing-preview-card-label">
                             {card.label}
@@ -1471,7 +1471,7 @@ export default function LandingPage() {
                         )}
                       </div>
                       <div className="landing-preview-bars">
-                        {getDashboardChartData().map((bar, i) => (
+                        {getDashboardChartData().map((bar: any, i: any) => (
                           <div
                             key={i}
                             className="landing-preview-bar-wrapper"
@@ -1533,7 +1533,7 @@ export default function LandingPage() {
                         <span className="value">
                           $
                           {getFinanceInvoices()
-                            .reduce((sum, item) => sum + item.amount, 0)
+                            .reduce((sum: any, item: any) => sum + item.amount, 0)
                             .toLocaleString()}
                           .00
                         </span>
@@ -1543,7 +1543,7 @@ export default function LandingPage() {
                         <span className="value">
                           $
                           {getFinanceInvoices()
-                            .reduce((sum, item) => sum + item.amount, 0)
+                            .reduce((sum: any, item: any) => sum + item.amount, 0)
                             .toLocaleString()}
                           .00
                         </span>
@@ -1572,7 +1572,7 @@ export default function LandingPage() {
                       </p>
                     </div>
                     <div className="playground-grid-2">
-                      {getEmployees().map((emp, index) => (
+                      {getEmployees().map((emp: any, index: any) => (
                         <div
                           key={emp.name}
                           className="playground-employee-card"
@@ -1585,7 +1585,7 @@ export default function LandingPage() {
                               .replace("Dr. ", "")
                               .replace("Prof. ", "")
                               .split(" ")
-                              .map((n) => n[0])
+                              .map((n: any) => n[0])
                               .join("")}
                           </div>
                           <div className="details">
@@ -1641,7 +1641,7 @@ export default function LandingPage() {
                             : "Leads"}{" "}
                           ({getCrmDeals().leads.length})
                         </div>
-                        {getCrmDeals().leads.map((deal) => (
+                        {getCrmDeals().leads.map((deal: any) => (
                           <div key={deal.company} className="kanban-card">
                             <h5>{deal.company}</h5>
                             <span className="value">
@@ -1658,7 +1658,7 @@ export default function LandingPage() {
                             : "Contacted"}{" "}
                           ({getCrmDeals().contacted.length})
                         </div>
-                        {getCrmDeals().contacted.map((deal) => (
+                        {getCrmDeals().contacted.map((deal: any) => (
                           <div key={deal.company} className="kanban-card">
                             <h5>{deal.company}</h5>
                             <span className="value">
@@ -1675,7 +1675,7 @@ export default function LandingPage() {
                             : "Proposal"}{" "}
                           ({getCrmDeals().proposal.length})
                         </div>
-                        {getCrmDeals().proposal.map((deal) => (
+                        {getCrmDeals().proposal.map((deal: any) => (
                           <div
                             key={deal.company}
                             className="kanban-card highlight"
@@ -1695,7 +1695,7 @@ export default function LandingPage() {
                             : "Won"}{" "}
                           ({getCrmDeals().won.length})
                         </div>
-                        {getCrmDeals().won.map((deal) => (
+                        {getCrmDeals().won.map((deal: any) => (
                           <div key={deal.company} className="kanban-card won">
                             <h5>{deal.company}</h5>
                             <span className="value">
@@ -1769,7 +1769,7 @@ export default function LandingPage() {
                       <div className="playground-builder-canvas">
                         <h4>Visual Form Canvas</h4>
                         <div className="canvas-elements">
-                          {builderFields.map((field, i) => (
+                          {builderFields.map((field: any, i: any) => (
                             <div key={i} className="canvas-field">
                               <label>{field.name}</label>
                               <input
@@ -1803,7 +1803,7 @@ export default function LandingPage() {
                             "2. Auto-Check Budget Thresholds",
                             "3. Routing to VP for Approval (> $10k)",
                             "4. Generate ERP Purchase Order",
-                          ].map((step, idx) => (
+                          ].map((step: any, idx: any) => (
                             <div
                               key={idx}
                               className={`flow-step-node${activeWorkflowStep === idx ? " active" : ""}${activeWorkflowStep !== null && idx < activeWorkflowStep ? " completed" : ""}`}
@@ -1830,7 +1830,7 @@ export default function LandingPage() {
         </div>
         <div className={styles.s9}>
           <div className="landing-logos-track">
-            {[...LOGO_NAMES, ...LOGO_NAMES].map((name, i) => (
+            {[...LOGO_NAMES, ...LOGO_NAMES].map((name: any, i: any) => (
               <span key={i} className="landing-logo-item">
                 {name}
               </span>
@@ -1854,7 +1854,7 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="landing-features-grid">
-            {FEATURES.map((feat, i) => {
+            {FEATURES.map((feat: any, i: any) => {
               const Icon = feat.icon;
               return (
                 <div
@@ -1896,7 +1896,7 @@ export default function LandingPage() {
           </div>
 
           <div className="landing-industry-tabs landing-reveal">
-            {INDUSTRIES.map((ind, i) => {
+            {INDUSTRIES.map((ind: any, i: any) => {
               const Icon = ind.icon;
               return (
                 <button
@@ -1917,7 +1917,7 @@ export default function LandingPage() {
                 <h3>{industry.title}</h3>
                 <p>{industry.desc}</p>
                 <ul className="landing-industry-features">
-                  {industry.features.map((feat) => (
+                  {industry.features.map((feat: any) => (
                     <li key={feat}>
                       <span className="landing-industry-check">
                         <Check size={13} />
@@ -1932,7 +1932,7 @@ export default function LandingPage() {
                   {industry.label} Administration Dashboard
                 </div>
                 <div className="landing-industry-mockup-row">
-                  {industry.metrics.map((m) => (
+                  {industry.metrics.map((m: any) => (
                     <div key={m.label} className="landing-industry-mockup-card">
                       <h4>{m.label}</h4>
                       <div className="value">{m.value}</div>
@@ -1940,7 +1940,7 @@ export default function LandingPage() {
                   ))}
                 </div>
                 <div className="simulated-chart-container">
-                  {[45, 60, 35, 80, 55, 70, 90, 50, 75, 65].map((h, i) => (
+                  {[45, 60, 35, 80, 55, 70, 90, 50, 75, 65].map((h: any, i: any) => (
                     <div
                       key={i}
                       className="simulated-chart-bar"
@@ -1969,7 +1969,7 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="landing-steps">
-            {STEPS.map((step, i) => (
+            {STEPS.map((step: any, i: any) => (
               <div
                 key={step.num}
                 className={`landing-step landing-reveal landing-reveal-delay-${i + 1}`}
@@ -1987,7 +1987,7 @@ export default function LandingPage() {
       <section className="landing-section landing-section-alt">
         <div className="landing-container">
           <div className="landing-stats-grid">
-            {STATS.map((stat, i) => (
+            {STATS.map((stat: any, i: any) => (
               <div
                 key={stat.label}
                 className={`landing-stat-card landing-reveal landing-reveal-delay-${i + 1}`}
@@ -2014,13 +2014,13 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="landing-testimonials-grid">
-            {TESTIMONIALS.map((t, i) => (
+            {TESTIMONIALS.map((t: any, i: any) => (
               <div
                 key={t.name}
                 className={`landing-testimonial landing-reveal landing-reveal-delay-${i + 1}`}
               >
                 <div className="landing-testimonial-stars">
-                  {[...Array(5)].map((_, j) => (
+                  {[...Array(5)].map((_: any, j: any) => (
                     <Star key={j} size={16} fill="var(--chart-3)" />
                   ))}
                 </div>
@@ -2086,7 +2086,7 @@ export default function LandingPage() {
                 min="1"
                 max="100"
                 value={teamSize}
-                onChange={(e) => setTeamSize(Number(e.target.value))}
+                onChange={(e: any) => setTeamSize(Number(e.target.value))}
                 className="team-size-slider"
               />
             </div>
@@ -2269,16 +2269,16 @@ export default function LandingPage() {
               growth.
             </p>
           </div>
-          {Object.entries(FOOTER_LINKS).map(([category, links]) => (
+          {Object.entries(FOOTER_LINKS).map(([category, links]: any) => (
             <div key={category} className="landing-footer-col">
               <h4>{category}</h4>
               <ul>
-                {links.map((link) => (
+                {links.map((link: any) => (
                   <li key={link.label}>
                     {link.href.startsWith("#") ? (
                       <a
                         href={link.href}
-                        onClick={(e) => handleAnchorClick(e, link.href)}
+                        onClick={(e: any) => handleAnchorClick(e, link.href)}
                       >
                         {link.label}
                       </a>

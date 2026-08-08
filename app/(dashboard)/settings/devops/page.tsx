@@ -259,7 +259,7 @@ export default function DevopsPage() {
 
       {/* Metrics Grid */}
       <div className={styles.p7}>
-        {statCards.map((stat) => (
+        {statCards.map((stat: any) => (
           <Card
             key={stat.label}
             padding="lg"
@@ -291,7 +291,7 @@ export default function DevopsPage() {
               max: metrics.memory.heapTotal,
             },
             { label: "External", value: metrics.memory.external, max: 128 },
-          ].map((bar) => (
+          ].map((bar: any) => (
             <div key={bar.label}>
               <div className={styles.p13}>
                 <span className="ui-text-xs-muted">{bar.label}</span>
@@ -323,7 +323,7 @@ export default function DevopsPage() {
           <div className={styles.p16}>No recent errors recorded.</div>
         ) : (
           <div className="ui-stack-2">
-            {errors.map((err) => (
+            {errors.map((err: any) => (
               <div key={err.id} className={styles.s4}>
                 <div>
                   <span className={styles.p17}>{err.entityType}</span>
@@ -348,7 +348,7 @@ export default function DevopsPage() {
       {/* Integration Links */}
       <h3 className={styles.p21}>Observability Integrations</h3>
       <div className={styles.p22}>
-        {integrations.map((intg) => (
+        {integrations.map((intg: any) => (
           <Card
             key={intg.name}
             padding="lg"

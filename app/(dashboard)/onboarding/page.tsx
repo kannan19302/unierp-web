@@ -61,7 +61,7 @@ export default function OnboardingPage() {
     setSaving(true);
     try {
       // Simulate saving to backend
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve: any) => setTimeout(resolve, 500));
       if (step < 6) {
         setStep(step + 1);
       } else {
@@ -94,7 +94,7 @@ export default function OnboardingPage() {
               <label>Timezone</label>
               <select
                 value={workspace.timezone}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setWorkspace({ ...workspace, timezone: e.target.value })
                 }
               >
@@ -107,7 +107,7 @@ export default function OnboardingPage() {
               <label>Currency</label>
               <select
                 value={workspace.currency}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setWorkspace({ ...workspace, currency: e.target.value })
                 }
               >
@@ -126,16 +126,16 @@ export default function OnboardingPage() {
               Invite colleagues to join your workspace (Up to 5 on the free
               tier).
             </p>
-            {team.map((member, i) => (
+            {team.map((member: any, i: any) => (
               <div key={i} className={styles.teamMember}>
                 <input
                   type="email"
                   placeholder="name@company.com"
                   value={member.email}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     const value = e.target.value;
                     setTeam(
-                      team.map((m, idx) =>
+                      team.map((m: any, idx: any) =>
                         idx === i ? { ...m, email: value } : m,
                       ),
                     );
@@ -159,7 +159,7 @@ export default function OnboardingPage() {
             <h2>Module Selection</h2>
             <p>Select the modules you want to enable for your workspace.</p>
             <div className={styles.moduleGrid}>
-              {MODULES.map((mod) => (
+              {MODULES.map((mod: any) => (
                 <div
                   key={mod.id}
                   className={`${styles.moduleCard} ${modules.has(mod.id) ? styles.selected : ""}`}

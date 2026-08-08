@@ -56,7 +56,7 @@ export default function EscalationLogsTab() {
   };
 
   const slaPendingApprovals = approvals.filter(
-    (app) => app.status === "PENDING" && app.step?.slaLimitHours,
+    (app: any) => app.status === "PENDING" && app.step?.slaLimitHours,
   );
 
   return (
@@ -86,7 +86,7 @@ export default function EscalationLogsTab() {
           </div>
         ) : (
           <div className="ui-stack-3">
-            {slaPendingApprovals.map((app) => (
+            {slaPendingApprovals.map((app: any) => (
               <div key={app.id} className={styles.s6}>
                 <div>
                   <h4 className={styles.s7}>

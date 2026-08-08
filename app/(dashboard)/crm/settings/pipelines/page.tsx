@@ -89,7 +89,7 @@ function SortableRow({
         style={inputStyle}
         placeholder="Stage name"
         value={stage.name}
-        onChange={(e) => onChange({ ...stage, name: e.target.value })}
+        onChange={(e: any) => onChange({ ...stage, name: e.target.value })}
       />
       <input
         style={inputStyle}
@@ -98,7 +98,7 @@ function SortableRow({
         max={100}
         placeholder="Prob %"
         value={stage.probability}
-        onChange={(e) =>
+        onChange={(e: any) =>
           onChange({ ...stage, probability: Number(e.target.value) })
         }
       />
@@ -106,7 +106,7 @@ function SortableRow({
         <input
           type="checkbox"
           checked={stage.isWon}
-          onChange={(e) =>
+          onChange={(e: any) =>
             onChange({
               ...stage,
               isWon: e.target.checked,
@@ -120,7 +120,7 @@ function SortableRow({
         <input
           type="checkbox"
           checked={stage.isLost}
-          onChange={(e) =>
+          onChange={(e: any) =>
             onChange({
               ...stage,
               isLost: e.target.checked,
@@ -191,16 +191,16 @@ export default function PipelinesPage() {
   const onDragEnd = (e: DragEndEvent) => {
     const { active, over } = e;
     if (!over || active.id === over.id) return;
-    const oldIdx = stages.findIndex((s) => s.id === active.id);
-    const newIdx = stages.findIndex((s) => s.id === over.id);
+    const oldIdx = stages.findIndex((s: any) => s.id === active.id);
+    const newIdx = stages.findIndex((s: any) => s.id === over.id);
     setStages(arrayMove(stages, oldIdx, newIdx));
   };
 
-  const addStage = () => setStages((prev) => [...prev, emptyStage() as Stage]);
+  const addStage = () => setStages((prev: any) => [...prev, emptyStage() as Stage]);
   const updateStage = (s: Stage) =>
-    setStages((prev) => prev.map((x) => (x.id === s.id ? s : x)));
+    setStages((prev: any) => prev.map((x: any) => (x.id === s.id ? s : x)));
   const removeStage = (id: string) =>
-    setStages((prev) => prev.filter((s) => s.id !== id));
+    setStages((prev: any) => prev.filter((s: any) => s.id !== id));
 
   const saveStages = async () => {
     if (!selectedId) return;
@@ -208,7 +208,7 @@ export default function PipelinesPage() {
     try {
       // Persist reorder + upsert each stage. GUESSED SHAPE.
       await apiSend(`/crm/pipelines/${selectedId}/stages/reorder`, "POST", {
-        stages: stages.map((s, i) => ({
+        stages: stages.map((s: any, i: any) => ({
           id: s.id.startsWith("new-") ? undefined : s.id,
           name: s.name,
           probability: s.probability,
@@ -286,7 +286,7 @@ export default function PipelinesPage() {
           {pipelines.length === 0 && (
             <div className={styles.style6}>No pipelines yet.</div>
           )}
-          {pipelines.map((p) => (
+          {pipelines.map((p: any) => (
             <button
               key={p.id}
               onClick={() => setSelectedId(p.id)}
@@ -344,10 +344,10 @@ export default function PipelinesPage() {
                 onDragEnd={onDragEnd}
               >
                 <SortableContext
-                  items={stages.map((s) => s.id)}
+                  items={stages.map((s: any) => s.id)}
                   strategy={verticalListSortingStrategy}
                 >
-                  {stages.map((s) => (
+                  {stages.map((s: any) => (
                     <SortableRow
                       key={s.id}
                       stage={s}
@@ -371,7 +371,7 @@ export default function PipelinesPage() {
                 style={inputStyle}
                 required
                 value={newName}
-                onChange={(e) => setNewName(e.target.value)}
+                onChange={(e: any) => setNewName(e.target.value)}
               />
             </div>
             <div className="ui-flex-end ui-gap-2">

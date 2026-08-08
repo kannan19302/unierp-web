@@ -105,9 +105,9 @@ export function RecurringJournalsTab() {
     fetchTemplates();
   }, []);
 
-  const totalDebit = lines.reduce((sum, l) => sum + (Number(l.debit) || 0), 0);
+  const totalDebit = lines.reduce((sum: any, l: any) => sum + (Number(l.debit) || 0), 0);
   const totalCredit = lines.reduce(
-    (sum, l) => sum + (Number(l.credit) || 0),
+    (sum: any, l: any) => sum + (Number(l.credit) || 0),
     0,
   );
   const isBalanced = Math.abs(totalDebit - totalCredit) < 0.01;
@@ -155,8 +155,8 @@ export function RecurringJournalsTab() {
     field: keyof JournalLine,
     value: any,
   ) => {
-    setLines((prev) =>
-      prev.map((item, idx) =>
+    setLines((prev: any) =>
+      prev.map((item: any, idx: any) =>
         idx === index ? { ...item, [field]: value } : item,
       ),
     );
@@ -197,7 +197,7 @@ export function RecurringJournalsTab() {
             Next Scheduled Execution
           </p>
           <p className="text-2xl font-bold text-amber-500">
-            {templates.find((t) => t.nextRunDate)?.nextRunDate || "2026-08-01"}
+            {templates.find((t: any) => t.nextRunDate)?.nextRunDate || "2026-08-01"}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
             Auto-post enabled
@@ -210,7 +210,7 @@ export function RecurringJournalsTab() {
           <p className="text-2xl font-bold text-emerald-500">
             $
             {templates
-              .reduce((acc, t) => acc + t.totalAmount, 0)
+              .reduce((acc: any, t: any) => acc + t.totalAmount, 0)
               .toLocaleString()}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -282,7 +282,7 @@ export function RecurringJournalsTab() {
                   className="ui-input w-full"
                   placeholder="e.g. Monthly Prepaid Rent Amortization"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e: any) => setName(e.target.value)}
                 />
               </div>
               <div>
@@ -292,7 +292,7 @@ export function RecurringJournalsTab() {
                 <select
                   className="ui-input w-full"
                   value={frequency}
-                  onChange={(e) => setFrequency(e.target.value)}
+                  onChange={(e: any) => setFrequency(e.target.value)}
                 >
                   <option value="DAILY">Daily</option>
                   <option value="WEEKLY">Weekly</option>
@@ -307,14 +307,14 @@ export function RecurringJournalsTab() {
               Split Line Journal Entries
             </h4>
             <div className="space-y-2 mb-4">
-              {lines.map((line, idx) => (
+              {lines.map((line: any, idx: any) => (
                 <div key={idx} className="grid grid-cols-5 gap-2 text-xs">
                   <input
                     type="text"
                     className="ui-input"
                     placeholder="Account Code"
                     value={line.accountCode}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateLineField(idx, "accountCode", e.target.value)
                     }
                   />
@@ -323,7 +323,7 @@ export function RecurringJournalsTab() {
                     className="ui-input col-span-2"
                     placeholder="Account Name"
                     value={line.accountName}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateLineField(idx, "accountName", e.target.value)
                     }
                   />
@@ -332,7 +332,7 @@ export function RecurringJournalsTab() {
                     className="ui-input"
                     placeholder="Debit"
                     value={line.debit}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateLineField(idx, "debit", Number(e.target.value))
                     }
                   />
@@ -341,7 +341,7 @@ export function RecurringJournalsTab() {
                     className="ui-input"
                     placeholder="Credit"
                     value={line.credit}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       updateLineField(idx, "credit", Number(e.target.value))
                     }
                   />

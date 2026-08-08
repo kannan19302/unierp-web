@@ -269,7 +269,7 @@ export default function GamificationPage() {
       />
 
       <div className={styles.tabs}>
-        {(["leaderboard", "streaks", "badges"] as const).map((t) => (
+        {(["leaderboard", "streaks", "badges"] as const).map((t: any) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -285,7 +285,7 @@ export default function GamificationPage() {
           <div className={styles.toolbar}>
             <select
               value={period}
-              onChange={(e) => setPeriod(e.target.value)}
+              onChange={(e: any) => setPeriod(e.target.value)}
               className="p-2"
             >
               <option value="ALL_TIME">All Time</option>
@@ -428,25 +428,25 @@ export default function GamificationPage() {
               <input
                 placeholder="Badge name"
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 className="p-2"
               />
               <textarea
                 placeholder="Description (optional)"
                 value={form.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, description: e.target.value })
                 }
                 className="p-2"
               />
               <select
                 value={form.criteriaType}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, criteriaType: e.target.value })
                 }
                 className="p-2"
               >
-                {CRITERIA_TYPES.map((c) => (
+                {CRITERIA_TYPES.map((c: any) => (
                   <option key={c} value={c}>
                     {c.replace(/_/g, " ")}
                   </option>
@@ -456,14 +456,14 @@ export default function GamificationPage() {
                 type="number"
                 placeholder="Threshold value"
                 value={form.criteriaValue}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, criteriaValue: Number(e.target.value) })
                 }
                 className="p-2"
               />
               <select
                 value={form.periodScope}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, periodScope: e.target.value })
                 }
                 className="p-2"

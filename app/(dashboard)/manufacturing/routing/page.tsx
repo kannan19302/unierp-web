@@ -100,7 +100,7 @@ export default function RoutingPage() {
           <Plus size={18} /> New Route
         </button>
       </div>
-      {routes.map((r) => (
+      {routes.map((r: any) => (
         <div key={r.id} className={styles.card}>
           <div
             className={styles.cardHeader}
@@ -124,7 +124,7 @@ export default function RoutingPage() {
               </div>
             </div>
             <button
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleDelete(r.id);
               }}
@@ -135,7 +135,7 @@ export default function RoutingPage() {
           </div>
           {expanded === r.id && (
             <div className={styles.opsSection}>
-              {r.operations.map((op, i) => (
+              {r.operations.map((op: any, i: any) => (
                 <div key={op.id} className={styles.opItem}>
                   <div className={styles.opSeq}>{op.sequence}</div>
                   {i < r.operations.length - 1 && (
@@ -178,8 +178,8 @@ export default function RoutingPage() {
                   <input
                     className="ui-input"
                     value={newRoute.name}
-                    onChange={(e) =>
-                      setNewRoute((p) => ({ ...p, name: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewRoute((p: any) => ({ ...p, name: e.target.value }))
                     }
                     required
                   />
@@ -189,8 +189,8 @@ export default function RoutingPage() {
                   <input
                     className="ui-input"
                     value={newRoute.code}
-                    onChange={(e) =>
-                      setNewRoute((p) => ({ ...p, code: e.target.value }))
+                    onChange={(e: any) =>
+                      setNewRoute((p: any) => ({ ...p, code: e.target.value }))
                     }
                     required
                   />
@@ -201,8 +201,8 @@ export default function RoutingPage() {
                 <textarea
                   className="ui-input"
                   value={newRoute.description}
-                  onChange={(e) =>
-                    setNewRoute((p) => ({ ...p, description: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewRoute((p: any) => ({ ...p, description: e.target.value }))
                   }
                 />
               </div>
@@ -211,8 +211,8 @@ export default function RoutingPage() {
                 <textarea
                   className={styles.codeInput}
                   value={newRoute.operations}
-                  onChange={(e) =>
-                    setNewRoute((p) => ({ ...p, operations: e.target.value }))
+                  onChange={(e: any) =>
+                    setNewRoute((p: any) => ({ ...p, operations: e.target.value }))
                   }
                   placeholder='[{"sequence":1,"name":"Cut","workstationCode":"WS-CNC","durationMinutes":30,"setupMinutes":5}]'
                   rows={5}

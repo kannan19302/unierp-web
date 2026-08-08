@@ -162,7 +162,7 @@ export default function CustomerPortalAdminPage() {
               className={`ui-input ${styles.searchInput}`}
               placeholder="Search customers by name or email…"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e: any) => setSearch(e.target.value)}
             />
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function CustomerPortalAdminPage() {
 
         {!loadingCustomers && customers.length > 0 && !selected && (
           <ul className="ui-list-simple">
-            {customers.map((c) => (
+            {customers.map((c: any) => (
               <li key={c.id}>
                 <button
                   className="ui-list-item-button"
@@ -218,7 +218,7 @@ export default function CustomerPortalAdminPage() {
                 className="ui-input"
                 placeholder="portal-user@company.com"
                 value={inviteEmail}
-                onChange={(e) => setInviteEmail(e.target.value)}
+                onChange={(e: any) => setInviteEmail(e.target.value)}
               />
               <Button
                 onClick={handleInvite}
@@ -254,7 +254,7 @@ export default function CustomerPortalAdminPage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <ProtectedComponent permission="crm.customer-portal.manage">
                         {row.status === "DISABLED" ? (
                           <Button

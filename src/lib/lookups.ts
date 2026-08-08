@@ -209,7 +209,7 @@ export const COUNTRIES: Array<{ code: string; name: string }> = [
   { code: "YE", name: "Yemen" },
   { code: "ZM", name: "Zambia" },
   { code: "ZW", name: "Zimbabwe" },
-].sort((a, b) => a.name.localeCompare(b.name));
+].sort((a: any, b: any) => a.name.localeCompare(b.name));
 
 /** ISO 4217 currency codes in active use, with symbol where commonly rendered. */
 export const CURRENCIES: Array<{ code: string; name: string; symbol: string }> =
@@ -299,7 +299,7 @@ export const CURRENCIES: Array<{ code: string; name: string; symbol: string }> =
     { code: "XOF", name: "West African CFA Franc", symbol: "CFA" },
     { code: "XAF", name: "Central African CFA Franc", symbol: "FCFA" },
     { code: "XCD", name: "East Caribbean Dollar", symbol: "$" },
-  ].sort((a, b) => a.name.localeCompare(b.name));
+  ].sort((a: any, b: any) => a.name.localeCompare(b.name));
 
 /** Full IANA time zone list from the runtime, with a curated fallback for older browsers. */
 export function getTimezones(): string[] {

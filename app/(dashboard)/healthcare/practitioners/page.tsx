@@ -54,7 +54,7 @@ export default function PractitionersPage() {
     }
   };
 
-  const specialties = [...new Set(practitioners.map((p) => p.specialty))];
+  const specialties = [...new Set(practitioners.map((p: any) => p.specialty))];
 
   const columns: Column<Practitioner>[] = [
     {
@@ -165,20 +165,20 @@ export default function PractitionersPage() {
             label="Employee ID"
             required
             value={form.employeeId}
-            onChange={(e) => setForm({ ...form, employeeId: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, employeeId: e.target.value })}
           />
           <TextField
             label="Specialty"
             required
             value={form.specialty}
-            onChange={(e) => setForm({ ...form, specialty: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, specialty: e.target.value })}
             placeholder="Cardiology, Pediatrics..."
           />
           <TextField
             label="License Number"
             required
             value={form.licenseNumber}
-            onChange={(e) =>
+            onChange={(e: any) =>
               setForm({ ...form, licenseNumber: e.target.value })
             }
           />

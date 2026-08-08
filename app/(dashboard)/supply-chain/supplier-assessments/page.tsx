@@ -72,7 +72,7 @@ export default function SupplierAssessmentsPage() {
         "/supply-chain/supplier-assessments",
         form,
       );
-      setAssessments((prev) => [created, ...prev]);
+      setAssessments((prev: any) => [created, ...prev]);
       setCreateOpen(false);
       setForm({
         vendor: "",
@@ -88,7 +88,7 @@ export default function SupplierAssessmentsPage() {
     }
   };
 
-  const filtered = assessments.filter((a) => {
+  const filtered = assessments.filter((a: any) => {
     const matchVendor =
       !vendorFilter ||
       a.vendor.toLowerCase().includes(vendorFilter.toLowerCase());
@@ -96,7 +96,7 @@ export default function SupplierAssessmentsPage() {
     return matchVendor && matchStatus;
   });
 
-  const vendors = [...new Set(assessments.map((a) => a.vendor))];
+  const vendors = [...new Set(assessments.map((a: any) => a.vendor))];
 
   const columns: Column<Assessment>[] = [
     { key: "vendor", header: "Vendor", sortable: true },
@@ -174,13 +174,13 @@ export default function SupplierAssessmentsPage() {
                 type="text"
                 placeholder="Filter by vendor..."
                 value={vendorFilter}
-                onChange={(e) => setVendorFilter(e.target.value)}
+                onChange={(e: any) => setVendorFilter(e.target.value)}
                 className="ui-input"
               />
             </div>
             <Select
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
+              onChange={(e: any) => setStatusFilter(e.target.value)}
             >
               <option value="ALL">All Statuses</option>
               <option value="DRAFT">Draft</option>
@@ -196,7 +196,7 @@ export default function SupplierAssessmentsPage() {
             columns={columns}
             data={filtered}
             rowKey={(r: any) => r.id}
-            onRowClick={(row) =>
+            onRowClick={(row: any) =>
               setExpandedId(expandedId === row.id ? null : row.id)
             }
             emptyTitle="No assessments"
@@ -207,7 +207,7 @@ export default function SupplierAssessmentsPage() {
 
         {expandedId &&
           (() => {
-            const a = assessments.find((x) => x.id === expandedId);
+            const a = assessments.find((x: any) => x.id === expandedId);
             if (!a) return null;
             return (
               <Card key={a.id}>
@@ -223,7 +223,7 @@ export default function SupplierAssessmentsPage() {
                       >
                         Findings
                       </div>
-                      {a.findings.map((f, i) => (
+                      {a.findings.map((f: any, i: any) => (
                         <div
                           key={i}
                           className="ui-flex ui-gap-2"
@@ -303,13 +303,13 @@ export default function SupplierAssessmentsPage() {
               required
               placeholder="Acme Corp"
               value={form.vendor}
-              onChange={(e) => setForm({ ...form, vendor: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, vendor: e.target.value })}
             />
             <div className="ui-grid-2 ui-gap-3">
               <FormField label="Assessment Type">
                 <Select
                   value={form.assessmentType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, assessmentType: e.target.value })
                   }
                 >
@@ -325,7 +325,7 @@ export default function SupplierAssessmentsPage() {
                 min={0}
                 max={100}
                 value={form.score || ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, score: parseInt(e.target.value) || 0 })
                 }
               />
@@ -335,7 +335,7 @@ export default function SupplierAssessmentsPage() {
               required
               placeholder="John Doe"
               value={form.assessor}
-              onChange={(e) => setForm({ ...form, assessor: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, assessor: e.target.value })}
             />
           </form>
         </Modal>

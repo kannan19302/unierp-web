@@ -441,7 +441,7 @@ export default function LandedCostPage() {
         )}
 
         <div className="flex gap-2 border-b mb-6">
-          {tabs.map((t) => (
+          {tabs.map((t: any) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -509,38 +509,38 @@ export default function LandedCostPage() {
                   <input
                     placeholder="Description"
                     value={form.description}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, description: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, description: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
                   <input
                     placeholder="Invoice Ref"
                     value={form.invoiceRef}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, invoiceRef: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, invoiceRef: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
                   <select
                     value={form.allocationMethod}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         allocationMethod: e.target.value,
                       }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   >
-                    {METHODS.map((m) => (
+                    {METHODS.map((m: any) => (
                       <option key={m}>{m}</option>
                     ))}
                   </select>
                   <input
                     placeholder="Currency (USD)"
                     value={form.currency}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, currency: e.target.value }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, currency: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
@@ -594,23 +594,23 @@ export default function LandedCostPage() {
                 <div className="grid grid-cols-3 gap-3">
                   <select
                     value={chargeForm.chargeType}
-                    onChange={(e) =>
-                      setChargeForm((f) => ({
+                    onChange={(e: any) =>
+                      setChargeForm((f: any) => ({
                         ...f,
                         chargeType: e.target.value,
                       }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   >
-                    {CHARGE_TYPES.map((c) => (
+                    {CHARGE_TYPES.map((c: any) => (
                       <option key={c}>{c}</option>
                     ))}
                   </select>
                   <input
                     placeholder="Description"
                     value={chargeForm.description}
-                    onChange={(e) =>
-                      setChargeForm((f) => ({
+                    onChange={(e: any) =>
+                      setChargeForm((f: any) => ({
                         ...f,
                         description: e.target.value,
                       }))
@@ -621,16 +621,16 @@ export default function LandedCostPage() {
                     type="number"
                     placeholder="Amount"
                     value={chargeForm.amount}
-                    onChange={(e) =>
-                      setChargeForm((f) => ({ ...f, amount: e.target.value }))
+                    onChange={(e: any) =>
+                      setChargeForm((f: any) => ({ ...f, amount: e.target.value }))
                     }
                     className="border rounded px-3 py-2 text-sm"
                   />
                   <input
                     placeholder="Account Code"
                     value={chargeForm.accountCode}
-                    onChange={(e) =>
-                      setChargeForm((f) => ({
+                    onChange={(e: any) =>
+                      setChargeForm((f: any) => ({
                         ...f,
                         accountCode: e.target.value,
                       }))
@@ -640,8 +640,8 @@ export default function LandedCostPage() {
                   <input
                     placeholder="Currency"
                     value={chargeForm.currency}
-                    onChange={(e) =>
-                      setChargeForm((f) => ({
+                    onChange={(e: any) =>
+                      setChargeForm((f: any) => ({
                         ...f,
                         currency: e.target.value,
                       }))

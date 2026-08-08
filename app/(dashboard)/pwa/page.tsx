@@ -38,19 +38,19 @@ export default function PwaPage() {
   useEffect(() => {
     Promise.all([
       fetch("/api/admin/pwa/manifest")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setManifest)
         .catch(() => {}),
       fetch("/api/admin/pwa/service-worker")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setSw)
         .catch(() => {}),
       fetch("/api/admin/pwa/cache-rules")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setCacheRules)
         .catch(() => {}),
       fetch("/api/admin/pwa/push-subscriptions")
-        .then((r) => r.json())
+        .then((r: any) => r.json())
         .then(setPushSubs)
         .catch(() => {}),
     ]).finally(() => setLoading(false));

@@ -40,7 +40,7 @@ export default function CommunicationDashboard() {
         const channels = ws.channels || [];
         const dms = ws.conversations || [];
         const unreads = [...channels, ...dms].reduce(
-          (acc, c) => acc + (c.unreadCount || 0),
+          (acc: any, c: any) => acc + (c.unreadCount || 0),
           0,
         );
         setStats({
@@ -185,7 +185,7 @@ export default function CommunicationDashboard() {
                     label: "You received a direct message from Mike Johnson",
                     time: "2 hours ago",
                   },
-                ].map((act, i) => (
+                ].map((act: any, i: any) => (
                   <div key={i} className={styles.s1}>
                     <span className={styles.s2}>{act.label}</span>
                     <span className={styles.s3}>{act.time}</span>
@@ -200,7 +200,7 @@ export default function CommunicationDashboard() {
           <div className="p-5">
             <h3 className="ui-heading-base mb-4">Quick Access</h3>
             <div className={styles.s4}>
-              {quickLinks.map((link) => (
+              {quickLinks.map((link: any) => (
                 <Link key={link.href} href={link.href} className={styles.s5}>
                   <div className={`${styles.s6} ${styles.qlHover}`}>
                     <div

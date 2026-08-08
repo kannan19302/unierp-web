@@ -192,8 +192,8 @@ export default function EcommerceConfigPage() {
                       <input
                         type="checkbox"
                         checked={config.isEnabled}
-                        onChange={(e) =>
-                          setConfig((c) => ({
+                        onChange={(e: any) =>
+                          setConfig((c: any) => ({
                             ...c,
                             isEnabled: e.target.checked,
                           }))
@@ -212,8 +212,8 @@ export default function EcommerceConfigPage() {
                     label="Store Name"
                     required
                     value={config.storeName}
-                    onChange={(e) =>
-                      setConfig((c) => ({ ...c, storeName: e.target.value }))
+                    onChange={(e: any) =>
+                      setConfig((c: any) => ({ ...c, storeName: e.target.value }))
                     }
                     error={errors.storeName}
                     placeholder="Acme Online Store"
@@ -222,8 +222,8 @@ export default function EcommerceConfigPage() {
                     label="Store Slug"
                     required
                     value={config.storeSlug}
-                    onChange={(e) =>
-                      setConfig((c) => ({
+                    onChange={(e: any) =>
+                      setConfig((c: any) => ({
                         ...c,
                         storeSlug: e.target.value.toLowerCase(),
                       }))
@@ -235,8 +235,8 @@ export default function EcommerceConfigPage() {
                   <FormField label="Currency">
                     <Select
                       value={config.currency}
-                      onChange={(e) =>
-                        setConfig((c) => ({ ...c, currency: e.target.value }))
+                      onChange={(e: any) =>
+                        setConfig((c: any) => ({ ...c, currency: e.target.value }))
                       }
                     >
                       <option value="USD">USD — US Dollar</option>
@@ -251,24 +251,24 @@ export default function EcommerceConfigPage() {
                     label="Contact Email"
                     type="email"
                     value={config.contactEmail || ""}
-                    onChange={(e) =>
-                      setConfig((c) => ({ ...c, contactEmail: e.target.value }))
+                    onChange={(e: any) =>
+                      setConfig((c: any) => ({ ...c, contactEmail: e.target.value }))
                     }
                     placeholder="store@example.com"
                   />
                   <TextField
                     label="Logo URL"
                     value={config.logoUrl || ""}
-                    onChange={(e) =>
-                      setConfig((c) => ({ ...c, logoUrl: e.target.value }))
+                    onChange={(e: any) =>
+                      setConfig((c: any) => ({ ...c, logoUrl: e.target.value }))
                     }
                     placeholder="https://..."
                   />
                   <TextField
                     label="Primary Brand Color"
                     value={config.primaryColor || ""}
-                    onChange={(e) =>
-                      setConfig((c) => ({ ...c, primaryColor: e.target.value }))
+                    onChange={(e: any) =>
+                      setConfig((c: any) => ({ ...c, primaryColor: e.target.value }))
                     }
                     hint="e.g. #2563eb"
                     placeholder="var(--color-primary-hover)"

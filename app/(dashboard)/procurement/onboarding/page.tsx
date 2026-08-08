@@ -104,7 +104,7 @@ export default function OnboardingPage() {
         <TextField
           placeholder="Search..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e: any) => setSearch(e.target.value)}
           style={{ marginBottom: "1rem" }}
         />
         <DataTable
@@ -142,22 +142,22 @@ export default function OnboardingPage() {
             label="Vendor ID"
             required
             value={form.vendorId}
-            onChange={(e) => setForm({ ...form, vendorId: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, vendorId: e.target.value })}
           />
           <TextField
             label="Vendor Name"
             value={form.vendorName}
-            onChange={(e) => setForm({ ...form, vendorName: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, vendorName: e.target.value })}
           />
           <TextField
             label="Tax ID"
             value={form.taxId}
-            onChange={(e) => setForm({ ...form, taxId: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, taxId: e.target.value })}
           />
           <TextField
             label="Notes"
             value={form.notes}
-            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, notes: e.target.value })}
           />
         </form>
       </Modal>

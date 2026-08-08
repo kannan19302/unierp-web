@@ -200,7 +200,7 @@ export default function SlaPoliciesPage() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className={styles.style2}>
                       <ProtectedComponent permission="crm.sla-policies.update">
                         <button
@@ -245,7 +245,7 @@ export default function SlaPoliciesPage() {
                 style={inputStyle}
                 required
                 value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               />
             </div>
             <div className="ui-grid-2 ui-gap-3">
@@ -260,12 +260,12 @@ export default function SlaPoliciesPage() {
                 <select
                   style={inputStyle}
                   value={form.priority}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, priority: e.target.value as Priority })
                   }
                 >
                   {(["LOW", "MEDIUM", "HIGH", "URGENT"] as Priority[]).map(
-                    (p) => (
+                    (p: any) => (
                       <option key={p} value={p}>
                         {p}
                       </option>
@@ -282,7 +282,7 @@ export default function SlaPoliciesPage() {
                   type="number"
                   min={1}
                   value={form.firstResponseMins}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       firstResponseMins: Number(e.target.value),
@@ -297,7 +297,7 @@ export default function SlaPoliciesPage() {
                   type="number"
                   min={1}
                   value={form.resolutionMins}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, resolutionMins: Number(e.target.value) })
                   }
                 />
@@ -307,7 +307,7 @@ export default function SlaPoliciesPage() {
               <input
                 type="checkbox"
                 checked={form.active}
-                onChange={(e) => setForm({ ...form, active: e.target.checked })}
+                onChange={(e: any) => setForm({ ...form, active: e.target.checked })}
               />{" "}
               Active
             </label>

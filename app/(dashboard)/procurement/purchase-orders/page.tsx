@@ -124,11 +124,11 @@ export default function PurchaseOrdersPage() {
         poNumber,
         expectedDate: expectedDate || undefined,
         notes,
-        lineItems: items.map((item) => ({
+        lineItems: items.map((item: any) => ({
           productId: item.productId || undefined,
           description:
             item.description ||
-            products.find((p) => p.id === item.productId)?.name ||
+            products.find((p: any) => p.id === item.productId)?.name ||
             "Custom item",
           quantity: item.quantity,
           unitPrice: item.unitPrice,
@@ -141,11 +141,11 @@ export default function PurchaseOrdersPage() {
     } catch {
       // Mock local update
       const sub = items.reduce(
-        (sum, item) => sum + item.quantity * item.unitPrice,
+        (sum: any, item: any) => sum + item.quantity * item.unitPrice,
         0,
       );
       const tax = items.reduce(
-        (sum, item) =>
+        (sum: any, item: any) =>
           sum + item.quantity * item.unitPrice * (item.taxRate / 100),
         0,
       );
@@ -160,11 +160,11 @@ export default function PurchaseOrdersPage() {
         totalAmount: sub + tax,
         currency: "USD",
         vendorName:
-          vendors.find((v) => v.id === selectedVendor)?.name ||
+          vendors.find((v: any) => v.id === selectedVendor)?.name ||
           "Unknown Vendor",
         notes: notes || undefined,
       };
-      setPos((prev) => [newMock, ...prev]);
+      setPos((prev: any) => [newMock, ...prev]);
       setIsModalOpen(false);
       resetForm();
     } finally {
@@ -179,8 +179,8 @@ export default function PurchaseOrdersPage() {
       });
       loadData();
     } catch {
-      setPos((prev) =>
-        prev.map((po) => (po.id === id ? { ...po, status: "APPROVED" } : po)),
+      setPos((prev: any) =>
+        prev.map((po: any) => (po.id === id ? { ...po, status: "APPROVED" } : po)),
       );
     }
   };
@@ -205,7 +205,7 @@ export default function PurchaseOrdersPage() {
     {
       key: "poNumber",
       header: "Order ID",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const po = row as unknown as PurchaseOrder;
         return <span className="font-bold">{po.poNumber}</span>;
       },
@@ -217,7 +217,7 @@ export default function PurchaseOrdersPage() {
     {
       key: "orderDate",
       header: "Order Date",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const po = row as unknown as PurchaseOrder;
         return (
           <span className="ui-text-muted">
@@ -229,7 +229,7 @@ export default function PurchaseOrdersPage() {
     {
       key: "totalAmount",
       header: "Total Value",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const po = row as unknown as PurchaseOrder;
         return (
           <span className={styles.p1}>
@@ -241,7 +241,7 @@ export default function PurchaseOrdersPage() {
     {
       key: "status",
       header: "Status",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const po = row as unknown as PurchaseOrder;
         return (
           <Badge
@@ -259,12 +259,12 @@ export default function PurchaseOrdersPage() {
     {
       key: "actions",
       header: "Actions",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const po = row as unknown as PurchaseOrder;
         if (po.status !== "DRAFT") return null;
         return (
           <button
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               handleApprovePO(po.id);
             }}
@@ -342,7 +342,7 @@ export default function PurchaseOrdersPage() {
                         type="text"
                         className="ui-input"
                         value={poNumber}
-                        onChange={(e) => setPoNumber(e.target.value)}
+                        onChange={(e: any) => setPoNumber(e.target.value)}
                         placeholder="e.g. PO-2026-003"
                         required
                       />
@@ -354,11 +354,11 @@ export default function PurchaseOrdersPage() {
                       <select
                         className={["ui-input", styles.p8].join(" ")}
                         value={selectedVendor}
-                        onChange={(e) => setSelectedVendor(e.target.value)}
+                        onChange={(e: any) => setSelectedVendor(e.target.value)}
                         required
                       >
                         <option value="">-- Select Supplier --</option>
-                        {vendors.map((v) => (
+                        {vendors.map((v: any) => (
                           <option key={v.id} value={v.id}>
                             {v.name}
                           </option>
@@ -376,7 +376,7 @@ export default function PurchaseOrdersPage() {
                         type="date"
                         className="ui-input"
                         value={expectedDate}
-                        onChange={(e) => setExpectedDate(e.target.value)}
+                        onChange={(e: any) => setExpectedDate(e.target.value)}
                       />
                     </div>
                     <div className="ui-form-group ui-stack-1">
@@ -387,7 +387,7 @@ export default function PurchaseOrdersPage() {
                         type="text"
                         className="ui-input"
                         value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
+                        onChange={(e: any) => setNotes(e.target.value)}
                         placeholder="e.g. Reference supplier contract or quotation"
                       />
                     </div>
@@ -419,12 +419,12 @@ export default function PurchaseOrdersPage() {
                       </button>
                     </div>
 
-                    {items.map((item, idx) => (
+                    {items.map((item: any, idx: any) => (
                       <div key={idx} className={styles.p12}>
                         <select
                           className={["ui-input", styles.p13].join(" ")}
                           value={item.productId}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].productId = e.target.value;
@@ -433,7 +433,7 @@ export default function PurchaseOrdersPage() {
                           }}
                         >
                           <option value="">-- Catalog Item --</option>
-                          {products.map((p) => (
+                          {products.map((p: any) => (
                             <option key={p.id} value={p.id}>
                               {p.name} ({p.sku})
                             </option>
@@ -444,7 +444,7 @@ export default function PurchaseOrdersPage() {
                           className="ui-input flex-1"
                           placeholder="Spec..."
                           value={item.description}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].description = e.target.value;
@@ -456,7 +456,7 @@ export default function PurchaseOrdersPage() {
                           type="number"
                           className={["ui-input", styles.p14].join(" ")}
                           value={item.quantity}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].quantity =
@@ -471,7 +471,7 @@ export default function PurchaseOrdersPage() {
                           type="number"
                           className={["ui-input", styles.p15].join(" ")}
                           value={item.unitPrice}
-                          onChange={(e) => {
+                          onChange={(e: any) => {
                             const updated = [...items];
                             if (updated[idx]) {
                               updated[idx].unitPrice =
@@ -486,7 +486,7 @@ export default function PurchaseOrdersPage() {
                           <button
                             type="button"
                             onClick={() =>
-                              setItems(items.filter((_, i) => i !== idx))
+                              setItems(items.filter((_: any, i: any) => i !== idx))
                             }
                             className={styles.p16}
                           >

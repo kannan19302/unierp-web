@@ -97,9 +97,9 @@ export default function SurveysTab() {
 
     const parsedQuestions = form.questionText
       .split("\n")
-      .map((q) => q.trim())
-      .filter((q) => q.length > 0)
-      .map((q, idx) => ({
+      .map((q: any) => q.trim())
+      .filter((q: any) => q.length > 0)
+      .map((q: any, idx: any) => ({
         question: q,
         category: "ENGAGEMENT",
         sortOrder: idx + 1,
@@ -176,11 +176,11 @@ export default function SurveysTab() {
             <select
               className="ui-input"
               value={submitEmpId}
-              onChange={(e) => setSubmitEmpId(e.target.value)}
+              onChange={(e: any) => setSubmitEmpId(e.target.value)}
               required
             >
               <option value="">Select Employee (Mock Submitter)</option>
-              {employees.map((e) => (
+              {employees.map((e: any) => (
                 <option key={e.id} value={e.id}>
                   {e.firstName} {e.lastName}
                 </option>
@@ -193,7 +193,7 @@ export default function SurveysTab() {
                 <select
                   className="ui-input"
                   value={submitRating}
-                  onChange={(e) => setSubmitRating(e.target.value)}
+                  onChange={(e: any) => setSubmitRating(e.target.value)}
                 >
                   <option value="5">5 - Excellent</option>
                   <option value="4">4 - Very Good</option>
@@ -208,7 +208,7 @@ export default function SurveysTab() {
               className="ui-input"
               placeholder="Feedback explanation comments (optional)..."
               value={submitComment}
-              onChange={(e) => setSubmitComment(e.target.value)}
+              onChange={(e: any) => setSubmitComment(e.target.value)}
               rows={2}
             />
 
@@ -242,7 +242,7 @@ export default function SurveysTab() {
               </div>
             </Card>
           ) : (
-            surveys.map((s) => (
+            surveys.map((s: any) => (
               <Card key={s.id} padding="md">
                 <div className={styles.s4}>
                   <div>
@@ -261,11 +261,11 @@ export default function SurveysTab() {
                 </p>
 
                 <div className={styles.s7}>
-                  {s.questions.map((q) => {
+                  {s.questions.map((q: any) => {
                     const avgRating =
                       q.responses.length > 0
                         ? Math.round(
-                            (q.responses.reduce((sum, r) => sum + r.rating, 0) /
+                            (q.responses.reduce((sum: any, r: any) => sum + r.rating, 0) /
                               q.responses.length) *
                               10,
                           ) / 10
@@ -325,7 +325,7 @@ export default function SurveysTab() {
             <Input
               placeholder="e.g. Q2 Corporate Health & Pulse Survey"
               value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, title: e.target.value })}
               required
             />
           </FormField>
@@ -333,7 +333,7 @@ export default function SurveysTab() {
             <Textarea
               placeholder="Description overview summary..."
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
               rows={2}
@@ -345,7 +345,7 @@ export default function SurveysTab() {
               <Input
                 type="date"
                 value={form.startDate}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, startDate: e.target.value })
                 }
                 required
@@ -355,7 +355,7 @@ export default function SurveysTab() {
               <Input
                 type="date"
                 value={form.endDate}
-                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, endDate: e.target.value })}
                 required
               />
             </FormField>
@@ -364,7 +364,7 @@ export default function SurveysTab() {
           <FormField label="Survey Questions (one per line)" required>
             <Textarea
               value={form.questionText}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, questionText: e.target.value })
               }
               rows={4}

@@ -174,7 +174,7 @@ export default function QuotationsPage() {
       quotationNumber,
       validUntil: new Date(validUntil).toISOString(),
       notes,
-      lineItems: lineItems.map((item) => ({
+      lineItems: lineItems.map((item: any) => ({
         productId: item.productId || undefined,
         description: item.description,
         quantity: item.quantity,
@@ -210,11 +210,11 @@ export default function QuotationsPage() {
     } catch {
       // Mock conversion
       alert("Mock Mode: Quotation converted successfully!");
-      setQuotes((prev) =>
-        prev.map((q) => (q.id === quoteId ? { ...q, status: "CONVERTED" } : q)),
+      setQuotes((prev: any) =>
+        prev.map((q: any) => (q.id === quoteId ? { ...q, status: "CONVERTED" } : q)),
       );
       if (selectedQuote) {
-        setSelectedQuote((prev) =>
+        setSelectedQuote((prev: any) =>
           prev ? { ...prev, status: "CONVERTED" } : null,
         );
       }
@@ -231,7 +231,7 @@ export default function QuotationsPage() {
   };
 
   const handleProductSelect = (index: number, prodId: string) => {
-    const prod = products.find((p) => p.id === prodId);
+    const prod = products.find((p: any) => p.id === prodId);
     if (!prod) return;
     const newLines = [...lineItems];
     const item = newLines[index];
@@ -266,11 +266,11 @@ export default function QuotationsPage() {
 
   const removeLineItem = (index: number) => {
     if (lineItems.length === 1) return;
-    setLineItems(lineItems.filter((_, i) => i !== index));
+    setLineItems(lineItems.filter((_: any, i: any) => i !== index));
   };
 
   // Filters & Search
-  const filteredQuotes = quotes.filter((q) => {
+  const filteredQuotes = quotes.filter((q: any) => {
     const matchesSearch =
       q.quotationNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
       q.customerName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -317,14 +317,14 @@ export default function QuotationsPage() {
                 type="text"
                 placeholder="Search quotes, clients..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e: any) => setSearchQuery(e.target.value)}
                 className={["ui-input", styles.p5].join(" ")}
               />
             </div>
 
             <div className="ui-flex ui-gap-1">
               {["ALL", "DRAFT", "SENT", "ACCEPTED", "CONVERTED"].map(
-                (status) => (
+                (status: any) => (
                   <button
                     key={status}
                     onClick={() => setStatusFilter(status)}
@@ -408,7 +408,7 @@ export default function QuotationsPage() {
             }
             data={filteredQuotes as unknown as Record<string, unknown>[]}
             loading={loading}
-            onRowClick={(row) =>
+            onRowClick={(row: any) =>
               loadQuotationDetails(row as unknown as (typeof filteredQuotes)[0])
             }
             emptyTitle="No quotations found"
@@ -575,7 +575,7 @@ export default function QuotationsPage() {
                           type="text"
                           placeholder="QT-2026-00x"
                           value={quotationNumber}
-                          onChange={(e) => setQuotationNumber(e.target.value)}
+                          onChange={(e: any) => setQuotationNumber(e.target.value)}
                           required
                           className="ui-input"
                         />
@@ -586,12 +586,12 @@ export default function QuotationsPage() {
                         </label>
                         <select
                           value={customerId}
-                          onChange={(e) => setCustomerId(e.target.value)}
+                          onChange={(e: any) => setCustomerId(e.target.value)}
                           required
                           className="ui-input"
                         >
                           <option value="">Select Account</option>
-                          {customers.map((c) => (
+                          {customers.map((c: any) => (
                             <option key={c.id} value={c.id}>
                               {c.name}
                             </option>
@@ -608,7 +608,7 @@ export default function QuotationsPage() {
                         <input
                           type="date"
                           value={validUntil}
-                          onChange={(e) => setValidUntil(e.target.value)}
+                          onChange={(e: any) => setValidUntil(e.target.value)}
                           required
                           className="ui-input"
                         />
@@ -619,17 +619,17 @@ export default function QuotationsPage() {
                     <div className={styles.p36}>
                       <span className={styles.p37}>PROPOSAL ITEMS</span>
 
-                      {lineItems.map((line, idx) => (
+                      {lineItems.map((line: any, idx: any) => (
                         <div key={idx} className={styles.p38}>
                           <select
                             value={line.productId || ""}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               handleProductSelect(idx, e.target.value)
                             }
                             className="ui-input text-xs"
                           >
                             <option value="">Catalog Item (optional)</option>
-                            {products.map((p) => (
+                            {products.map((p: any) => (
                               <option key={p.id} value={p.id}>
                                 {p.name}
                               </option>
@@ -640,7 +640,7 @@ export default function QuotationsPage() {
                             type="text"
                             placeholder="Description..."
                             value={line.description}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "description",
@@ -655,7 +655,7 @@ export default function QuotationsPage() {
                             type="number"
                             placeholder="Qty"
                             value={line.quantity}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "quantity",
@@ -670,7 +670,7 @@ export default function QuotationsPage() {
                             type="number"
                             placeholder="Price"
                             value={line.unitPrice}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "unitPrice",
@@ -685,7 +685,7 @@ export default function QuotationsPage() {
                             type="number"
                             placeholder="Tax %"
                             value={line.taxRate}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               updateLineField(
                                 idx,
                                 "taxRate",
@@ -724,7 +724,7 @@ export default function QuotationsPage() {
                       <textarea
                         placeholder="Add terms, shipping details, or internal explanations..."
                         value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
+                        onChange={(e: any) => setNotes(e.target.value)}
                         className={["ui-input", styles.p41].join(" ")}
                         rows={3}
                       />

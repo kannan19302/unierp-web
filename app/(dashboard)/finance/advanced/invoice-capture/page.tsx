@@ -209,8 +209,8 @@ export default function InvoiceCapturePage() {
         { method: "PATCH", body: JSON.stringify({ [field]: value }) },
       );
       setSelectedCapture(updated);
-      setCaptures((prev) =>
-        prev.map((c) => (c.id === updated.id ? { ...c, ...updated } : c)),
+      setCaptures((prev: any) =>
+        prev.map((c: any) => (c.id === updated.id ? { ...c, ...updated } : c)),
       );
     } catch {
       setError("Failed to update field");
@@ -228,13 +228,13 @@ export default function InvoiceCapturePage() {
         `/advanced-finance/payables/invoices/capture/${selectedCapture.id}/lines/${lineId}`,
         { method: "PATCH", body: JSON.stringify(updates) },
       );
-      setLines((prev) => prev.map((l) => (l.id === lineId ? updatedLine : l)));
+      setLines((prev: any) => prev.map((l: any) => (l.id === lineId ? updatedLine : l)));
       const freshHeader = await client.get<APInvoiceCapture>(
         `/advanced-finance/payables/invoices/capture/${selectedCapture.id}`,
       );
       setSelectedCapture(freshHeader);
-      setCaptures((prev) =>
-        prev.map((c) =>
+      setCaptures((prev: any) =>
+        prev.map((c: any) =>
           c.id === freshHeader.id ? { ...c, ...freshHeader } : c,
         ),
       );
@@ -251,13 +251,13 @@ export default function InvoiceCapturePage() {
         `/advanced-finance/payables/invoices/capture/${selectedCapture.id}/lines`,
         { description: "New Line Item", quantity: 1, unitPrice: 0 },
       );
-      setLines((prev) => [...prev, newLine]);
+      setLines((prev: any) => [...prev, newLine]);
       const freshHeader = await client.get<APInvoiceCapture>(
         `/advanced-finance/payables/invoices/capture/${selectedCapture.id}`,
       );
       setSelectedCapture(freshHeader);
-      setCaptures((prev) =>
-        prev.map((c) =>
+      setCaptures((prev: any) =>
+        prev.map((c: any) =>
           c.id === freshHeader.id ? { ...c, ...freshHeader } : c,
         ),
       );
@@ -273,13 +273,13 @@ export default function InvoiceCapturePage() {
       await client.delete(
         `/advanced-finance/payables/invoices/capture/${selectedCapture.id}/lines/${lineId}`,
       );
-      setLines((prev) => prev.filter((l) => l.id !== lineId));
+      setLines((prev: any) => prev.filter((l: any) => l.id !== lineId));
       const freshHeader = await client.get<APInvoiceCapture>(
         `/advanced-finance/payables/invoices/capture/${selectedCapture.id}`,
       );
       setSelectedCapture(freshHeader);
-      setCaptures((prev) =>
-        prev.map((c) =>
+      setCaptures((prev: any) =>
+        prev.map((c: any) =>
           c.id === freshHeader.id ? { ...c, ...freshHeader } : c,
         ),
       );
@@ -378,15 +378,15 @@ export default function InvoiceCapturePage() {
   // Stats computation
   const totalCount = captures.length;
   const reviewRequiredCount = captures.filter(
-    (c) => c.status === "REVIEW_REQUIRED",
+    (c: any) => c.status === "REVIEW_REQUIRED",
   ).length;
   const processedCount = captures.filter(
-    (c) => c.status === "PROCESSED",
+    (c: any) => c.status === "PROCESSED",
   ).length;
   const avgConfidence =
     captures.length > 0
       ? (
-          (captures.reduce((s, c) => s + Number(c.confidenceScore), 0) /
+          (captures.reduce((s: any, c: any) => s + Number(c.confidenceScore), 0) /
             captures.length) *
           100
         ).toFixed(0)
@@ -497,7 +497,7 @@ export default function InvoiceCapturePage() {
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
-              {SIMULATED_INVOICES.map((item, idx) => (
+              {SIMULATED_INVOICES.map((item: any, idx: any) => (
                 <div
                   key={idx}
                   onClick={() => handleSimulateOCR(item.name, item.text)}
@@ -538,14 +538,14 @@ export default function InvoiceCapturePage() {
               <input
                 type="text"
                 value={manualFileName}
-                onChange={(e) => setManualFileName(e.target.value)}
+                onChange={(e: any) => setManualFileName(e.target.value)}
                 placeholder="Filename (e.g. invoice.pdf)"
                 className="ui-input text-xs w-full p-2 border rounded border-gray-300"
               />
               <textarea
                 rows={4}
                 value={manualText}
-                onChange={(e) => setManualText(e.target.value)}
+                onChange={(e: any) => setManualText(e.target.value)}
                 placeholder="Paste raw OCR invoice text block here..."
                 className="ui-input text-xs w-full flex-grow p-2 border rounded border-gray-300 resize-none font-mono"
               />
@@ -589,7 +589,7 @@ export default function InvoiceCapturePage() {
                   {
                     key: "vendorName",
                     header: "Vendor / Invoice #",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <div>
                         <span className="block text-gray-800 font-medium">
                           {String(v || "Unknown Vendor")}
@@ -603,7 +603,7 @@ export default function InvoiceCapturePage() {
                   {
                     key: "totalAmount",
                     header: "Total Amount",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <span className="font-semibold text-gray-900">
                         {v
                           ? `$${Number(v).toLocaleString(undefined, { minimumFractionDigits: 2 })}`
@@ -662,11 +662,11 @@ export default function InvoiceCapturePage() {
                   {
                     key: "id",
                     header: "Actions",
-                    render: (v, row) => (
+                    render: (v: any, row: any) => (
                       <div className="flex items-center justify-end gap-2">
                         <Button
                           variant="outline"
-                          onClick={(e) => {
+                          onClick={(e: any) => {
                             e.stopPropagation();
                             selectCapture(row as any);
                           }}
@@ -677,7 +677,7 @@ export default function InvoiceCapturePage() {
                         {row.status !== "PROCESSED" && (
                           <Button
                             variant="outline"
-                            onClick={(e) => handleDeleteCapture(String(v), e)}
+                            onClick={(e: any) => handleDeleteCapture(String(v), e)}
                             className="p-1 text-gray-400 hover:text-red-600 hover:bg-gray-100 border-none"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -758,7 +758,7 @@ export default function InvoiceCapturePage() {
                         <input
                           type="text"
                           value={selectedCapture.vendorName || ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleUpdateHeader("vendorName", e.target.value)
                           }
                           className="w-full p-2 border border-gray-200 rounded focus:border-indigo-500 outline-none"
@@ -772,7 +772,7 @@ export default function InvoiceCapturePage() {
                         <input
                           type="text"
                           value={selectedCapture.invoiceNumber || ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleUpdateHeader("invoiceNumber", e.target.value)
                           }
                           className="w-full p-2 border border-gray-200 rounded focus:border-indigo-500 outline-none"
@@ -790,7 +790,7 @@ export default function InvoiceCapturePage() {
                               ? selectedCapture.invoiceDate.split("T")[0]
                               : ""
                           }
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleUpdateHeader("invoiceDate", e.target.value)
                           }
                           className="w-full p-2 border border-gray-200 rounded focus:border-indigo-500 outline-none text-xs"
@@ -808,7 +808,7 @@ export default function InvoiceCapturePage() {
                               ? selectedCapture.dueDate.split("T")[0]
                               : ""
                           }
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleUpdateHeader("dueDate", e.target.value)
                           }
                           className="w-full p-2 border border-gray-200 rounded focus:border-indigo-500 outline-none text-xs"
@@ -823,7 +823,7 @@ export default function InvoiceCapturePage() {
                           type="number"
                           step="0.01"
                           value={selectedCapture.totalAmount || 0}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleUpdateHeader(
                               "totalAmount",
                               parseFloat(e.target.value) || 0,
@@ -839,7 +839,7 @@ export default function InvoiceCapturePage() {
                         </label>
                         <select
                           value={selectedCapture.matchingPurchaseOrderId || ""}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             handleUpdateHeader(
                               "matchingPurchaseOrderId",
                               e.target.value,
@@ -848,7 +848,7 @@ export default function InvoiceCapturePage() {
                           className="w-full p-2 border border-gray-200 rounded focus:border-indigo-500 outline-none text-xs bg-white"
                         >
                           <option value="">-- Select PO Match --</option>
-                          {purchaseOrders.map((po) => (
+                          {purchaseOrders.map((po: any) => (
                             <option key={po.id} value={po.id}>
                               {po.orderNumber} ({po.vendorName} - $
                               {Number(po.totalAmount).toFixed(2)})
@@ -865,7 +865,7 @@ export default function InvoiceCapturePage() {
                       <textarea
                         rows={2}
                         value={selectedCapture.notes || ""}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           handleUpdateHeader("notes", e.target.value)
                         }
                         placeholder="Add compliance audit logs, approval comments, or exception notes..."
@@ -893,7 +893,7 @@ export default function InvoiceCapturePage() {
                     </div>
 
                     <div className="space-y-4">
-                      {lines.map((line, idx) => (
+                      {lines.map((line: any, idx: any) => (
                         <div
                           key={line.id}
                           className="p-3 border border-gray-150 rounded-lg bg-gray-50/50 space-y-2"
@@ -902,7 +902,7 @@ export default function InvoiceCapturePage() {
                             <input
                               type="text"
                               value={line.description}
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 handleUpdateLine(line.id, {
                                   description: e.target.value,
                                 })
@@ -929,7 +929,7 @@ export default function InvoiceCapturePage() {
                               <input
                                 type="number"
                                 value={line.quantity}
-                                onChange={(e) =>
+                                onChange={(e: any) =>
                                   handleUpdateLine(line.id, {
                                     quantity: parseFloat(e.target.value) || 0,
                                   })
@@ -948,7 +948,7 @@ export default function InvoiceCapturePage() {
                                 type="number"
                                 step="0.01"
                                 value={line.unitPrice}
-                                onChange={(e) =>
+                                onChange={(e: any) =>
                                   handleUpdateLine(line.id, {
                                     unitPrice: parseFloat(e.target.value) || 0,
                                   })
@@ -981,7 +981,7 @@ export default function InvoiceCapturePage() {
                             </label>
                             <select
                               value={line.suggestedAccountId || ""}
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 handleUpdateLine(line.id, {
                                   suggestedAccountId: e.target.value,
                                 })
@@ -990,7 +990,7 @@ export default function InvoiceCapturePage() {
                               className="w-full p-1.5 border border-gray-200 rounded text-xs bg-white"
                             >
                               <option value="">-- Choose Account --</option>
-                              {accounts.map((acc) => (
+                              {accounts.map((acc: any) => (
                                 <option key={acc.id} value={acc.id}>
                                   [{acc.code}] {acc.name} ({acc.type})
                                 </option>

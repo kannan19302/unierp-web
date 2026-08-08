@@ -209,7 +209,7 @@ export function TaxJurisdictionLookupTab() {
               type="text"
               className="ui-input w-full"
               value={state}
-              onChange={(e) => setState(e.target.value.toUpperCase())}
+              onChange={(e: any) => setState(e.target.value.toUpperCase())}
             />
           </div>
           <div>
@@ -220,7 +220,7 @@ export function TaxJurisdictionLookupTab() {
               type="text"
               className="ui-input w-full"
               value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
+              onChange={(e: any) => setPostalCode(e.target.value)}
             />
           </div>
           <div>
@@ -230,7 +230,7 @@ export function TaxJurisdictionLookupTab() {
             <select
               className="ui-input w-full"
               value={taxCategory}
-              onChange={(e) => setTaxCategory(e.target.value)}
+              onChange={(e: any) => setTaxCategory(e.target.value)}
             >
               <option value="PHYSICAL_GOODS">
                 Physical Goods (100% Taxable)
@@ -252,7 +252,7 @@ export function TaxJurisdictionLookupTab() {
                 type="number"
                 className="ui-input w-full"
                 value={taxableAmount}
-                onChange={(e) => setTaxableAmount(Number(e.target.value))}
+                onChange={(e: any) => setTaxableAmount(Number(e.target.value))}
               />
               <Button onClick={handleLookup} disabled={loading}>
                 <Search className="w-4 h-4" />
@@ -366,7 +366,7 @@ export function TaxJurisdictionLookupTab() {
                   type="text"
                   className="ui-input w-full"
                   value={overrideState}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setOverrideState(e.target.value.toUpperCase())
                   }
                 />
@@ -379,7 +379,7 @@ export function TaxJurisdictionLookupTab() {
                   type="number"
                   className="ui-input w-full"
                   value={overrideThreshold}
-                  onChange={(e) => setOverrideThreshold(e.target.value)}
+                  onChange={(e: any) => setOverrideThreshold(e.target.value)}
                 />
               </div>
             </div>

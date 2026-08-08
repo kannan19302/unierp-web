@@ -31,7 +31,7 @@ export default function HrPage() {
         />
         <ListView
           resource={employeeResource}
-          onRowClick={(row) => router.push(`/hr/employees/${row.id}`)}
+          onRowClick={(row: any) => router.push(`/hr/employees/${row.id}`)}
           onCreate={() => setShowCreate(true)}
         />
         <Modal

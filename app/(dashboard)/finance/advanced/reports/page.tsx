@@ -196,7 +196,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "name",
                   header: "Account",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span>
                       {String(v)}{" "}
                       <span className={styles.s5}>({String(row.code)})</span>
@@ -228,7 +228,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "name",
                   header: "Account",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span>
                       {String(v)}{" "}
                       <span className={styles.s5}>({String(row.code)})</span>
@@ -322,7 +322,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "name",
                   header: "Account",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span>
                       {String(v)}{" "}
                       <span className={styles.s5}>({String(row.code)})</span>
@@ -357,7 +357,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "name",
                   header: "Account",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span>
                       {String(v)}{" "}
                       <span className={styles.s5}>({String(row.code)})</span>
@@ -392,7 +392,7 @@ export default function AdvancedReportsPage() {
                 {
                   key: "name",
                   header: "Account",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <span>
                       {String(v)}{" "}
                       <span className={styles.s5}>({String(row.code)})</span>
@@ -641,7 +641,7 @@ export default function AdvancedReportsPage() {
 
         {/* Summary Cards */}
         <div className={styles.s12}>
-          {Object.entries(d.bucketTotals).map(([bucket, data]) => (
+          {Object.entries(d.bucketTotals).map(([bucket, data]: any) => (
             <div
               key={bucket}
               className={`rounded-lg p-4 border ${bucketColors[bucket] || "bg-gray-50 border-gray-200"}`}
@@ -661,7 +661,7 @@ export default function AdvancedReportsPage() {
         </div>
 
         {/* Bucket Details */}
-        {Object.entries(d.buckets).map(([bucket, items]) => {
+        {Object.entries(d.buckets).map(([bucket, items]: any) => {
           if (items.length === 0) return null;
           return (
             <div key={bucket}>
@@ -797,7 +797,7 @@ export default function AdvancedReportsPage() {
                 ReportType,
                 (typeof reportMeta)[ReportType],
               ][]
-            ).map(([key, meta]) => (
+            ).map(([key, meta]: any) => (
               <button
                 key={key}
                 onClick={() => {
@@ -835,14 +835,14 @@ export default function AdvancedReportsPage() {
                           type="date"
                           className={styles.s27}
                           value={startDate}
-                          onChange={(e) => setStartDate(e.target.value)}
+                          onChange={(e: any) => setStartDate(e.target.value)}
                         />
                         <span className="ui-text-muted">—</span>
                         <input
                           type="date"
                           className={styles.s27}
                           value={endDate}
-                          onChange={(e) => setEndDate(e.target.value)}
+                          onChange={(e: any) => setEndDate(e.target.value)}
                         />
                       </div>
                     </>
@@ -856,7 +856,7 @@ export default function AdvancedReportsPage() {
                         type="date"
                         className={styles.s27}
                         value={asOfDate}
-                        onChange={(e) => setAsOfDate(e.target.value)}
+                        onChange={(e: any) => setAsOfDate(e.target.value)}
                       />
                     </div>
                   )}
@@ -867,7 +867,7 @@ export default function AdvancedReportsPage() {
                         <select
                           className={styles.s27}
                           value={agingType}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setAgingType(e.target.value as "AR" | "AP")
                           }
                         >
@@ -882,7 +882,7 @@ export default function AdvancedReportsPage() {
                           type="date"
                           className={styles.s27}
                           value={asOfDate}
-                          onChange={(e) => setAsOfDate(e.target.value)}
+                          onChange={(e: any) => setAsOfDate(e.target.value)}
                         />
                       </div>
                     </>
@@ -894,10 +894,10 @@ export default function AdvancedReportsPage() {
                       <select
                         className={styles.s29}
                         value={bookId}
-                        onChange={(e) => setBookId(e.target.value)}
+                        onChange={(e: any) => setBookId(e.target.value)}
                       >
                         <option value="">Primary Book (Default)</option>
-                        {books.map((b) => (
+                        {books.map((b: any) => (
                           <option key={b.id} value={b.id}>
                             {b.name} ({b.standard})
                           </option>

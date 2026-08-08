@@ -147,8 +147,8 @@ export default function AdminAlertsTab() {
   const markRead = async (id: string) => {
     try {
       await client.post(`${API}/${id}/read`);
-      setAlerts((prev) =>
-        prev.map((a) => (a.id === id ? { ...a, read: true } : a)),
+      setAlerts((prev: any) =>
+        prev.map((a: any) => (a.id === id ? { ...a, read: true } : a)),
       );
     } catch {
       showToast("Failed to mark read", "error");
@@ -158,7 +158,7 @@ export default function AdminAlertsTab() {
   const dismiss = async (id: string) => {
     try {
       await client.post(`${API}/${id}/dismiss`);
-      setAlerts((prev) => prev.filter((a) => a.id !== id));
+      setAlerts((prev: any) => prev.filter((a: any) => a.id !== id));
       showToast("Alert dismissed");
     } catch {
       showToast("Failed to dismiss", "error");
@@ -168,7 +168,7 @@ export default function AdminAlertsTab() {
   const markAllRead = async () => {
     try {
       await client.post(`${API}/mark-all-read`);
-      setAlerts((prev) => prev.map((a) => ({ ...a, read: true })));
+      setAlerts((prev: any) => prev.map((a: any) => ({ ...a, read: true })));
       showToast("All alerts marked as read");
     } catch {
       showToast("Failed", "error");
@@ -324,12 +324,12 @@ export default function AdminAlertsTab() {
                 <label className={styles.s6}>Metric</label>
                 <select
                   value={form.metric}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, metric: e.target.value as any }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, metric: e.target.value as any }))
                   }
                   style={inputStyle}
                 >
-                  {METRICS.map((m) => (
+                  {METRICS.map((m: any) => (
                     <option key={m} value={m}>
                       {m.replace(/_/g, " ")}
                     </option>
@@ -341,15 +341,15 @@ export default function AdminAlertsTab() {
                   <label className={styles.s7}>Operator</label>
                   <select
                     value={form.operator}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         operator: e.target.value as any,
                       }))
                     }
                     style={inputStyle}
                   >
-                    {OPERATORS.map((o) => (
+                    {OPERATORS.map((o: any) => (
                       <option key={o.value} value={o.value}>
                         {o.label}
                       </option>
@@ -361,8 +361,8 @@ export default function AdminAlertsTab() {
                   <input
                     type="number"
                     value={form.value}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, value: Number(e.target.value) }))
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({ ...f, value: Number(e.target.value) }))
                     }
                     style={inputStyle}
                   />
@@ -373,15 +373,15 @@ export default function AdminAlertsTab() {
                   <label className={styles.s9}>Severity</label>
                   <select
                     value={form.severity}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         severity: e.target.value as any,
                       }))
                     }
                     style={inputStyle}
                   >
-                    {(["INFO", "WARNING", "CRITICAL"] as const).map((s) => (
+                    {(["INFO", "WARNING", "CRITICAL"] as const).map((s: any) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
@@ -393,8 +393,8 @@ export default function AdminAlertsTab() {
                   <input
                     type="number"
                     value={form.cooldownMinutes}
-                    onChange={(e) =>
-                      setForm((f) => ({
+                    onChange={(e: any) =>
+                      setForm((f: any) => ({
                         ...f,
                         cooldownMinutes: Number(e.target.value),
                       }))
@@ -407,8 +407,8 @@ export default function AdminAlertsTab() {
                 <input
                   type="checkbox"
                   checked={form.active}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, active: e.target.checked }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, active: e.target.checked }))
                   }
                 />
                 Active
@@ -454,11 +454,11 @@ export default function AdminAlertsTab() {
           <div className="ui-flex-between mb-4">
             <select
               value={alertFilter}
-              onChange={(e) => setAlertFilter(e.target.value)}
+              onChange={(e: any) => setAlertFilter(e.target.value)}
               className={styles.s15}
             >
               <option value="">All Types</option>
-              {ALERT_TYPES.map((t) => (
+              {ALERT_TYPES.map((t: any) => (
                 <option key={t} value={t}>
                   {t.replace("_", " ")}
                 </option>
@@ -475,7 +475,7 @@ export default function AdminAlertsTab() {
             {!alertsLoading && alerts.length === 0 && (
               <p className={styles.s17}>No alerts</p>
             )}
-            {alerts.map((alert) => {
+            {alerts.map((alert: any) => {
               const cfg = SEVERITY_CFG[alert.severity];
               const Icon = cfg.icon;
               const expanded = expandedId === alert.id;
@@ -539,7 +539,7 @@ export default function AdminAlertsTab() {
                       <div className="ui-flex ui-gap-2">
                         {!alert.read && (
                           <button
-                            onClick={(e) => {
+                            onClick={(e: any) => {
                               e.stopPropagation();
                               markRead(alert.id);
                             }}
@@ -549,7 +549,7 @@ export default function AdminAlertsTab() {
                           </button>
                         )}
                         <button
-                          onClick={(e) => {
+                          onClick={(e: any) => {
                             e.stopPropagation();
                             dismiss(alert.id);
                           }}
@@ -598,7 +598,7 @@ export default function AdminAlertsTab() {
                   key: "operator",
                   header: "Operator",
                   render: (v: any) =>
-                    OPERATORS.find((o) => o.value === v)?.label || String(v),
+                    OPERATORS.find((o: any) => o.value === v)?.label || String(v),
                 },
                 {
                   key: "value",
@@ -626,7 +626,7 @@ export default function AdminAlertsTab() {
                 {
                   key: "active",
                   header: "Active",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <button
                       onClick={() => toggleActive(row as unknown as Threshold)}
                       className={styles.s29}
@@ -657,7 +657,7 @@ export default function AdminAlertsTab() {
                 {
                   key: "id",
                   header: "Actions",
-                  render: (v, row) => (
+                  render: (v: any, row: any) => (
                     <div className="ui-flex ui-gap-2">
                       <button
                         onClick={() => openEdit(row as unknown as Threshold)}

@@ -139,7 +139,7 @@ export default function BOMsPage() {
     try {
       await client.post("/manufacturing/boms", {
         ...newBOM,
-        items: newBOM.items.map((item) => ({
+        items: newBOM.items.map((item: any) => ({
           productId: item.productId,
           quantity: parseFloat(item.quantity),
         })),
@@ -211,7 +211,7 @@ export default function BOMsPage() {
             <span className={styles.p5}>Sub-Assembly</span>
           )}
         </div>
-        {node.children && node.children.map((child) => renderTreeNode(child))}
+        {node.children && node.children.map((child: any) => renderTreeNode(child))}
       </div>
     );
   };
@@ -243,7 +243,7 @@ export default function BOMsPage() {
           <div className="ui-stack-4">
             <h3 className="ui-heading-lg">Formulations & Standard Recipes</h3>
             <div className="ui-stack-4">
-              {boms.map((bom) => (
+              {boms.map((bom: any) => (
                 <div key={bom.id} className={styles.p10}>
                   <div className="ui-flex-between ui-items-start">
                     <div>
@@ -273,9 +273,9 @@ export default function BOMsPage() {
                   <div className={styles.p15}>
                     <p className={styles.p16}>RECIPE ITEMS</p>
                     {bom.items &&
-                      bom.items.slice(0, 3).map((item, idx) => {
+                      bom.items.slice(0, 3).map((item: any, idx: any) => {
                         const p = products.find(
-                          (pr) => pr.id === item.productId,
+                          (pr: any) => pr.id === item.productId,
                         );
                         return (
                           <div key={idx} className={styles.p17}>
@@ -318,7 +318,7 @@ export default function BOMsPage() {
               Engineering Change Orders (ECO)
             </h3>
             <div className="ui-stack-3">
-              {ecos.map((eco) => (
+              {ecos.map((eco: any) => (
                 <div key={eco.id} className={styles.p24}>
                   <div className="ui-flex-between">
                     <span className={styles.p25}>
@@ -437,7 +437,7 @@ export default function BOMsPage() {
                 required
                 placeholder="Explain why this formula needs updating..."
                 value={newECO.changeDescription}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewECO({ ...newECO, changeDescription: e.target.value })
                 }
                 className={styles.p44}
@@ -474,7 +474,7 @@ export default function BOMsPage() {
                   type="text"
                   placeholder="e.g. Laptop assembly"
                   value={newBOM.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewBOM({ ...newBOM, name: e.target.value })
                   }
                   className={styles.p49}
@@ -487,7 +487,7 @@ export default function BOMsPage() {
                   type="text"
                   placeholder="e.g. BOM-LAP-001"
                   value={newBOM.code}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewBOM({ ...newBOM, code: e.target.value })
                   }
                   className={styles.p50}
@@ -500,13 +500,13 @@ export default function BOMsPage() {
               <select
                 required
                 value={newBOM.productId}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewBOM({ ...newBOM, productId: e.target.value })
                 }
                 className={styles.p51}
               >
                 <option value="">Select Target Product...</option>
-                {products.map((p) => (
+                {products.map((p: any) => (
                   <option key={p.id} value={p.id}>
                     {p.name} ({p.sku})
                   </option>
@@ -537,12 +537,12 @@ export default function BOMsPage() {
               </div>
 
               <div className={styles.p53}>
-                {newBOM.items.map((item, idx) => (
+                {newBOM.items.map((item: any, idx: any) => (
                   <div key={idx} className={styles.p54}>
                     <select
                       required
                       value={item.productId}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const updated = [...newBOM.items];
                         updated[idx]!.productId = e.target.value;
                         setNewBOM({ ...newBOM, items: updated });
@@ -550,7 +550,7 @@ export default function BOMsPage() {
                       className={styles.p55}
                     >
                       <option value="">Select product...</option>
-                      {products.map((p) => (
+                      {products.map((p: any) => (
                         <option key={p.id} value={p.id}>
                           {p.name}
                         </option>
@@ -563,7 +563,7 @@ export default function BOMsPage() {
                       min="0.001"
                       step="any"
                       value={item.quantity}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         const updated = [...newBOM.items];
                         updated[idx]!.quantity = e.target.value;
                         setNewBOM({ ...newBOM, items: updated });
@@ -575,7 +575,7 @@ export default function BOMsPage() {
                       type="button"
                       onClick={() => {
                         const updated = newBOM.items.filter(
-                          (_, i) => i !== idx,
+                          (_: any, i: any) => i !== idx,
                         );
                         setNewBOM({ ...newBOM, items: updated });
                       }}

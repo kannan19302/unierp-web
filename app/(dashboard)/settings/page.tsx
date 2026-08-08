@@ -448,7 +448,7 @@ export default function AdminDashboardPage() {
               <div>
                 <h3 className={styles.s9}>Settings</h3>
                 <div className={styles.s10}>
-                  {quickLinks.map((link) => (
+                  {quickLinks.map((link: any) => (
                     <Link
                       href={link.href}
                       key={link.title}
@@ -568,7 +568,7 @@ export default function AdminDashboardPage() {
                     centerLabel="Total"
                   />
                   <div className={styles.s29}>
-                    {userSegments.map((seg) => (
+                    {userSegments.map((seg: any) => (
                       <div
                         key={seg.label}
                         className="ui-flex ui-items-center ui-gap-1"

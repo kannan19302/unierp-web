@@ -32,7 +32,7 @@ export const getMappingByPath = (path: string) => {
   const registry = getPageRegistry();
   // Check exact overrides
   const override = registry.find(
-    (m) => m.isOverride && m.overridePath === path,
+    (m: any) => m.isOverride && m.overridePath === path,
   );
   if (override) return override;
 
@@ -41,7 +41,7 @@ export const getMappingByPath = (path: string) => {
     const moduleStr = match[1];
     const slugStr = match[2];
     return registry.find(
-      (m) =>
+      (m: any) =>
         !m.isOverride &&
         m.module?.toLowerCase() === moduleStr?.toLowerCase() &&
         m.slug === slugStr,
@@ -52,12 +52,12 @@ export const getMappingByPath = (path: string) => {
 };
 
 export const getMappingsByFormId = (formId: string) => {
-  return getPageRegistry().filter((m) => m.formId === formId);
+  return getPageRegistry().filter((m: any) => m.formId === formId);
 };
 
 export const removePageMapping = (mappingId: string) => {
   const registry = getPageRegistry();
-  const newRegistry = registry.filter((m) => m.id !== mappingId);
+  const newRegistry = registry.filter((m: any) => m.id !== mappingId);
   localStorage.setItem("unerp_page_registry", JSON.stringify(newRegistry));
   if (typeof window !== "undefined") {
     window.dispatchEvent(new Event("unerp_page_registry_updated"));

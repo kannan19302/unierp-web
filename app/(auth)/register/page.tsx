@@ -412,8 +412,8 @@ export default function RegisterPage() {
   };
 
   const togglePickerApp = (slug: string) => {
-    setSelectedPickerApps((prev) => {
-      const next = new Set(prev);
+    setSelectedPickerApps((prev: any) => {
+      const next = new Set<string>(prev);
       if (next.has(slug)) next.delete(slug);
       else next.add(slug);
       return next;
@@ -574,8 +574,8 @@ export default function RegisterPage() {
                 error?: string;
               }>(`/auth/provisioning/${tempTenantId}/status`);
 
-              setSeedingLogs((prev) =>
-                prev.map((log, idx) => {
+              setSeedingLogs((prev: any) =>
+                prev.map((log: any, idx: any) => {
                   let expectedPct = 15;
                   if (idx === 1) expectedPct = 30;
                   if (idx === 2) expectedPct = 50;
@@ -626,8 +626,8 @@ export default function RegisterPage() {
       // 2. Stop polling and complete all logs (the demo-data log, if present,
       // reflects the real seed call below instead of this bulk pass).
       clearInterval(pollInterval);
-      setSeedingLogs((prev) =>
-        prev.map((log) =>
+      setSeedingLogs((prev: any) =>
+        prev.map((log: any) =>
           log.id === DEMO_DATA_LOG_ID ? log : { ...log, status: "done" },
         ),
       );
@@ -651,22 +651,22 @@ export default function RegisterPage() {
       // 3b. Seed sample data if requested — reflects the real outcome of
       // POST /auth/onboarding/seed-demo, not a simulated delay.
       if (loadSampleData) {
-        setSeedingLogs((prev) =>
-          prev.map((log) =>
+        setSeedingLogs((prev: any) =>
+          prev.map((log: any) =>
             log.id === DEMO_DATA_LOG_ID ? { ...log, status: "loading" } : log,
           ),
         );
         try {
           await apiPost("/auth/onboarding/seed-demo", {});
-          setSeedingLogs((prev) =>
-            prev.map((log) =>
+          setSeedingLogs((prev: any) =>
+            prev.map((log: any) =>
               log.id === DEMO_DATA_LOG_ID ? { ...log, status: "done" } : log,
             ),
           );
         } catch {
           // Non-fatal — sample data can still be loaded later from the SaaS portal.
-          setSeedingLogs((prev) =>
-            prev.map((log) =>
+          setSeedingLogs((prev: any) =>
+            prev.map((log: any) =>
               log.id === DEMO_DATA_LOG_ID
                 ? {
                     ...log,
@@ -748,7 +748,7 @@ export default function RegisterPage() {
         };
         const priority = industryPrio[indKey] || ["finance", "crm", "hr"];
         setSelectedPickerApps(
-          new Set(priority.filter((s) => allSlugs.includes(s))),
+          new Set(priority.filter((s: any) => allSlugs.includes(s))),
         );
       } catch {
         // Non-fatal: show success state without picker
@@ -801,7 +801,7 @@ export default function RegisterPage() {
 
           {/* Step Indicator — Connected Circles */}
           <div className={styles.stepIndicator}>
-            {STEP_LABELS.map((label, idx) => {
+            {STEP_LABELS.map((label: any, idx: any) => {
               const stepNum = idx + 1;
               const isActive = step === stepNum;
               const isComplete = step > stepNum;
@@ -856,7 +856,7 @@ export default function RegisterPage() {
                       className="auth-input"
                       placeholder="Acme Corporation"
                       value={organizationName}
-                      onChange={(e) => setOrganizationName(e.target.value)}
+                      onChange={(e: any) => setOrganizationName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -868,10 +868,10 @@ export default function RegisterPage() {
                   <select
                     className={`auth-select ${styles.selectField}`}
                     value={industry}
-                    onChange={(e) => setIndustry(e.target.value)}
+                    onChange={(e: any) => setIndustry(e.target.value)}
                   >
                     <option value="">— Select Industry —</option>
-                    {INDUSTRIES.map((i) => (
+                    {INDUSTRIES.map((i: any) => (
                       <option key={i.value} value={i.value}>
                         {i.label}
                       </option>
@@ -884,7 +884,7 @@ export default function RegisterPage() {
                     type="checkbox"
                     id="load-sample-data"
                     checked={loadSampleData}
-                    onChange={(e) => setLoadSampleData(e.target.checked)}
+                    onChange={(e: any) => setLoadSampleData(e.target.checked)}
                     className={styles.termsCheckbox}
                   />
                   <label
@@ -900,10 +900,10 @@ export default function RegisterPage() {
                     <label className="auth-label">Country</label>
                     <select
                       value={country}
-                      onChange={(e) => handleCountryChange(e.target.value)}
+                      onChange={(e: any) => handleCountryChange(e.target.value)}
                       className={`auth-select ${styles.selectWithIcon}`}
                     >
-                      {COUNTRIES.map((c) => (
+                      {COUNTRIES.map((c: any) => (
                         <option key={c.code} value={c.code}>
                           {c.name}
                         </option>
@@ -917,10 +917,10 @@ export default function RegisterPage() {
                       <Coins size={16} className="auth-input-icon" />
                       <select
                         value={currency}
-                        onChange={(e) => setCurrency(e.target.value)}
+                        onChange={(e: any) => setCurrency(e.target.value)}
                         className={styles.selectWithIcon}
                       >
-                        {CURRENCIES.map((c) => (
+                        {CURRENCIES.map((c: any) => (
                           <option key={c.code} value={c.code}>
                             {c.code} ({c.symbol}) — {c.name}
                           </option>
@@ -937,10 +937,10 @@ export default function RegisterPage() {
                       <Globe size={16} className="auth-input-icon" />
                       <select
                         value={timezone}
-                        onChange={(e) => setTimezone(e.target.value)}
+                        onChange={(e: any) => setTimezone(e.target.value)}
                         className={styles.selectWithIcon}
                       >
-                        {timezones.map((tz) => (
+                        {timezones.map((tz: any) => (
                           <option key={tz} value={tz}>
                             {tz.replace(/_/g, " ")}
                           </option>
@@ -953,10 +953,10 @@ export default function RegisterPage() {
                     <label className="auth-label">Primary Language</label>
                     <select
                       value={language}
-                      onChange={(e) => setLanguage(e.target.value)}
+                      onChange={(e: any) => setLanguage(e.target.value)}
                       className={`auth-select ${styles.selectWithIcon}`}
                     >
-                      {LANGUAGES.map((l) => (
+                      {LANGUAGES.map((l: any) => (
                         <option key={l.code} value={l.code}>
                           {l.name}
                         </option>
@@ -970,11 +970,11 @@ export default function RegisterPage() {
                     <label className="auth-label">Business Type</label>
                     <select
                       value={businessType}
-                      onChange={(e) => setBusinessType(e.target.value)}
+                      onChange={(e: any) => setBusinessType(e.target.value)}
                       className={`auth-select ${styles.selectWithIcon}`}
                     >
                       <option value="">— Select Type —</option>
-                      {BUSINESS_TYPES.map((t) => (
+                      {BUSINESS_TYPES.map((t: any) => (
                         <option key={t.value} value={t.value}>
                           {t.label}
                         </option>
@@ -989,7 +989,7 @@ export default function RegisterPage() {
                       min="1"
                       className="auth-input"
                       value={estimatedUsers}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setEstimatedUsers(
                           Math.max(1, parseInt(e.target.value) || 1),
                         )
@@ -1038,7 +1038,7 @@ export default function RegisterPage() {
                     <div
                       className={`${styles.logoDropZone} ${logoDragging ? styles.logoDropZoneActive : ""}`}
                       onClick={() => logoFileInputRef.current?.click()}
-                      onDragOver={(e) => {
+                      onDragOver={(e: any) => {
                         e.preventDefault();
                         setLogoDragging(true);
                       }}
@@ -1097,7 +1097,7 @@ export default function RegisterPage() {
                         className="auth-input"
                         placeholder="Jane"
                         value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        onChange={(e: any) => setFirstName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -1112,7 +1112,7 @@ export default function RegisterPage() {
                         className="auth-input"
                         placeholder="Doe"
                         value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        onChange={(e: any) => setLastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -1128,7 +1128,7 @@ export default function RegisterPage() {
                       className={`auth-input ${styles.inputWithTrailing}`}
                       placeholder="admin@company.com"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e: any) => setEmail(e.target.value)}
                       autoComplete="email"
                     />
                     {emailChecking && (
@@ -1170,7 +1170,7 @@ export default function RegisterPage() {
                       className={`auth-input ${styles.inputWithTrailing}`}
                       placeholder="••••••••"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e: any) => setPassword(e.target.value)}
                       autoComplete="new-password"
                     />
                     <button
@@ -1185,7 +1185,7 @@ export default function RegisterPage() {
                   {/* Password Requirements Checklist */}
                   {password && (
                     <div className={styles.pwdChecklist}>
-                      {passwordChecks.map((check, i) => (
+                      {passwordChecks.map((check: any, i: any) => (
                         <div
                           key={i}
                           className={`${styles.pwdCheckItem} ${check.met ? styles.pwdCheckMet : ""}`}
@@ -1200,7 +1200,7 @@ export default function RegisterPage() {
                       ))}
                       <div className={styles.pwdStrengthRow}>
                         <div className={styles.pwdStrengthBar}>
-                          {[1, 2, 3, 4, 5].map((level) => (
+                          {[1, 2, 3, 4, 5].map((level: any) => (
                             <div
                               key={level}
                               style={{
@@ -1239,7 +1239,7 @@ export default function RegisterPage() {
                       }}
                       placeholder="••••••••"
                       value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onChange={(e: any) => setConfirmPassword(e.target.value)}
                       autoComplete="new-password"
                     />
                     <button
@@ -1267,7 +1267,7 @@ export default function RegisterPage() {
                     type="checkbox"
                     id="agree-terms"
                     checked={agreedToTerms}
-                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    onChange={(e: any) => setAgreedToTerms(e.target.checked)}
                     className={styles.termsCheckbox}
                   />
                   <label htmlFor="agree-terms" className={styles.termsLabel}>
@@ -1335,7 +1335,7 @@ export default function RegisterPage() {
 
                 {/* Seeding Log Console */}
                 <div className={styles.seedingConsole}>
-                  {seedingLogs.map((log) => (
+                  {seedingLogs.map((log: any) => (
                     <div
                       key={log.id}
                       style={{
@@ -1390,7 +1390,7 @@ export default function RegisterPage() {
                       pre-selected · Toggle others as needed
                     </p>
                     <div className={styles.pickerGrid}>
-                      {pickerApps.map((app) => {
+                      {pickerApps.map((app: any) => {
                         const isSelected = selectedPickerApps.has(app.slug);
                         return (
                           <button

@@ -123,7 +123,7 @@ export default function PortalSettingsPage() {
                     <input
                       className="ui-input"
                       value={custom.headerTitle}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCustom({ ...custom, headerTitle: e.target.value })
                       }
                     />
@@ -133,7 +133,7 @@ export default function PortalSettingsPage() {
                     <input
                       className="ui-input"
                       value={custom.welcomeMessage}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCustom({ ...custom, welcomeMessage: e.target.value })
                       }
                     />
@@ -144,7 +144,7 @@ export default function PortalSettingsPage() {
                       className="ui-input"
                       type="color"
                       value={custom.primaryColor}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCustom({ ...custom, primaryColor: e.target.value })
                       }
                     />
@@ -155,7 +155,7 @@ export default function PortalSettingsPage() {
                       className="ui-input"
                       type="color"
                       value={custom.secondaryColor}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCustom({ ...custom, secondaryColor: e.target.value })
                       }
                     />
@@ -165,7 +165,7 @@ export default function PortalSettingsPage() {
                     <input
                       className="ui-input"
                       value={custom.logoUrl || ""}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCustom({ ...custom, logoUrl: e.target.value })
                       }
                     />
@@ -180,7 +180,7 @@ export default function PortalSettingsPage() {
                           "showBilling",
                           "showDocuments",
                         ] as const
-                      ).map((f) => (
+                      ).map((f: any) => (
                         <label
                           key={f}
                           className="ui-flex ui-items-center ui-gap-1 ui-text-sm"
@@ -188,7 +188,7 @@ export default function PortalSettingsPage() {
                           <input
                             type="checkbox"
                             checked={custom[f] as boolean}
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               setCustom({ ...custom, [f]: e.target.checked })
                             }
                           />
@@ -203,7 +203,7 @@ export default function PortalSettingsPage() {
                       className="ui-input"
                       rows={3}
                       value={custom.customCss || ""}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setCustom({ ...custom, customCss: e.target.value })
                       }
                     />

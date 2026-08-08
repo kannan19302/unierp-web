@@ -24,19 +24,19 @@ export default function ClvPage() {
 
   useEffect(() => {
     fetch("/api/crm/clv")
-      .then((r) => r.json())
-      .then((data) => setEntries(Array.isArray(data) ? data : []))
+      .then((r: any) => r.json())
+      .then((data: any) => setEntries(Array.isArray(data) ? data : []))
       .catch(() => setEntries([]))
       .finally(() => setLoading(false));
   }, []);
 
   const totalClv = entries.reduce(
-    (sum, e) => sum + Number(e.clvAmount || 0),
+    (sum: any, e: any) => sum + Number(e.clvAmount || 0),
     0,
   );
   const avgClv = entries.length > 0 ? totalClv / entries.length : 0;
   const totalRevenue = entries.reduce(
-    (sum, e) => sum + Number(e.totalRevenue || 0),
+    (sum: any, e: any) => sum + Number(e.totalRevenue || 0),
     0,
   );
 

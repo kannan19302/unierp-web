@@ -115,14 +115,14 @@ export default function TerritoryAssignmentRulesPage() {
       return {
         countries: countries
           .split(",")
-          .map((s) => s.trim())
+          .map((s: any) => s.trim())
           .filter(Boolean),
       };
     if (ruleType === "INDUSTRY")
       return {
         industries: industries
           .split(",")
-          .map((s) => s.trim())
+          .map((s: any) => s.trim())
           .filter(Boolean),
       };
     if (ruleType === "COMPANY_SIZE")
@@ -331,7 +331,7 @@ export default function TerritoryAssignmentRulesPage() {
               No assignment decisions recorded yet.
             </div>
           )}
-          {log.slice(0, 20).map((entry) => (
+          {log.slice(0, 20).map((entry: any) => (
             <div key={entry.id} className={styles.style5}>
               <span>
                 {entry.entityType} {entry.entityId} — {entry.reason}
@@ -362,7 +362,7 @@ export default function TerritoryAssignmentRulesPage() {
                 <input
                   required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e: any) => setName(e.target.value)}
                   className="ui-input"
                   style={inputStyle}
                   placeholder="e.g. EU Enterprise Routing"
@@ -373,7 +373,7 @@ export default function TerritoryAssignmentRulesPage() {
                   <label style={labelStyle}>Rule Type</label>
                   <select
                     value={ruleType}
-                    onChange={(e) =>
+                    onChange={(e: any) =>
                       setRuleType(e.target.value as TerritoryRule["ruleType"])
                     }
                     className="ui-input"
@@ -390,12 +390,12 @@ export default function TerritoryAssignmentRulesPage() {
                   <select
                     required
                     value={territoryId}
-                    onChange={(e) => setTerritoryId(e.target.value)}
+                    onChange={(e: any) => setTerritoryId(e.target.value)}
                     className="ui-input"
                     style={inputStyle}
                   >
                     <option value="">Select…</option>
-                    {territories.map((t) => (
+                    {territories.map((t: any) => (
                       <option key={t.id} value={t.id}>
                         {t.name}
                       </option>
@@ -408,7 +408,7 @@ export default function TerritoryAssignmentRulesPage() {
                 <input
                   type="number"
                   value={priority}
-                  onChange={(e) => setPriority(Number(e.target.value))}
+                  onChange={(e: any) => setPriority(Number(e.target.value))}
                   className="ui-input"
                   style={inputStyle}
                 />
@@ -420,7 +420,7 @@ export default function TerritoryAssignmentRulesPage() {
                   </label>
                   <input
                     value={countries}
-                    onChange={(e) => setCountries(e.target.value)}
+                    onChange={(e: any) => setCountries(e.target.value)}
                     className="ui-input"
                     style={inputStyle}
                   />
@@ -431,7 +431,7 @@ export default function TerritoryAssignmentRulesPage() {
                   <label style={labelStyle}>Industries (comma-separated)</label>
                   <input
                     value={industries}
-                    onChange={(e) => setIndustries(e.target.value)}
+                    onChange={(e: any) => setIndustries(e.target.value)}
                     className="ui-input"
                     style={inputStyle}
                   />
@@ -444,7 +444,7 @@ export default function TerritoryAssignmentRulesPage() {
                     <input
                       type="number"
                       value={minEmployees}
-                      onChange={(e) => setMinEmployees(e.target.value)}
+                      onChange={(e: any) => setMinEmployees(e.target.value)}
                       className="ui-input"
                       style={inputStyle}
                     />
@@ -454,7 +454,7 @@ export default function TerritoryAssignmentRulesPage() {
                     <input
                       type="number"
                       value={maxEmployees}
-                      onChange={(e) => setMaxEmployees(e.target.value)}
+                      onChange={(e: any) => setMaxEmployees(e.target.value)}
                       className="ui-input"
                       style={inputStyle}
                     />

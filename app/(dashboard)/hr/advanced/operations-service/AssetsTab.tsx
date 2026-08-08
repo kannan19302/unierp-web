@@ -123,11 +123,11 @@ export default function AssetsTab() {
           <FormField label="Employee" required>
             <Select
               value={form.employeeId}
-              onChange={(e) => setForm({ ...form, employeeId: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, employeeId: e.target.value })}
               required
             >
               <option value="">Select Employee</option>
-              {employees.map((e) => (
+              {employees.map((e: any) => (
                 <option key={e.id} value={e.id}>
                   {e.firstName} {e.lastName}
                 </option>
@@ -137,7 +137,7 @@ export default function AssetsTab() {
           <FormField label="Asset Type">
             <Select
               value={form.assetType}
-              onChange={(e) => setForm({ ...form, assetType: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, assetType: e.target.value })}
             >
               <option value="LAPTOP">Laptop</option>
               <option value="PHONE">Phone</option>
@@ -150,7 +150,7 @@ export default function AssetsTab() {
             <Input
               placeholder="Asset Name"
               value={form.assetName}
-              onChange={(e) => setForm({ ...form, assetName: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, assetName: e.target.value })}
               required
             />
           </FormField>
@@ -158,7 +158,7 @@ export default function AssetsTab() {
             <Input
               placeholder="Serial Number (optional)"
               value={form.serialNumber}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, serialNumber: e.target.value })
               }
             />

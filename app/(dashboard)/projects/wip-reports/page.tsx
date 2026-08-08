@@ -54,21 +54,21 @@ export default function WipReportsPage() {
   }, [fetchData]);
 
   // Aggregate metrics
-  const totalContractValue = rows.reduce((s, r) => s + r.contractValue, 0);
-  const totalCostIncurred = rows.reduce((s, r) => s + r.totalCost, 0);
+  const totalContractValue = rows.reduce((s: any, r: any) => s + r.contractValue, 0);
+  const totalCostIncurred = rows.reduce((s: any, r: any) => s + r.totalCost, 0);
   const totalRecognizedRevenue = rows.reduce(
-    (s, r) => s + r.recognizedRevenue,
+    (s: any, r: any) => s + r.recognizedRevenue,
     0,
   );
-  const totalBilled = rows.reduce((s, r) => s + r.billedAmount, 0);
+  const totalBilled = rows.reduce((s: any, r: any) => s + r.billedAmount, 0);
 
   const totalWipAssets = rows
-    .filter((r) => r.overUnderBilling > 0)
-    .reduce((s, r) => s + r.overUnderBilling, 0);
+    .filter((r: any) => r.overUnderBilling > 0)
+    .reduce((s: any, r: any) => s + r.overUnderBilling, 0);
 
   const totalWipLiabilities = rows
-    .filter((r) => r.overUnderBilling < 0)
-    .reduce((s, r) => s + Math.abs(r.overUnderBilling), 0);
+    .filter((r: any) => r.overUnderBilling < 0)
+    .reduce((s: any, r: any) => s + Math.abs(r.overUnderBilling), 0);
 
   const columns: Column<ProjectWipRow>[] = [
     {

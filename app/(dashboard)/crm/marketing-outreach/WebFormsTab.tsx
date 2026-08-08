@@ -118,19 +118,19 @@ export default function WebFormsTab() {
   };
 
   const addField = () =>
-    setFields((prev) => [
+    setFields((prev: any) => [
       ...prev,
       { name: "", label: "", type: "TEXT", required: false },
     ]);
   const removeField = (i: number) =>
-    setFields((prev) => prev.filter((_, idx) => idx !== i));
+    setFields((prev: any) => prev.filter((_: any, idx: any) => idx !== i));
   const updateField = (
     i: number,
     key: keyof FormField,
     value: string | boolean,
   ) => {
-    setFields((prev) =>
-      prev.map((f, idx) => (idx === i ? { ...f, [key]: value } : f)),
+    setFields((prev: any) =>
+      prev.map((f: any, idx: any) => (idx === i ? { ...f, [key]: value } : f)),
     );
   };
 
@@ -155,7 +155,7 @@ export default function WebFormsTab() {
     padding: "0 var(--space-3)",
   };
 
-  const previewForm = forms.find((f) => f.id === previewFormId);
+  const previewForm = forms.find((f: any) => f.id === previewFormId);
 
   return (
     <div className="ui-stack-6">
@@ -192,7 +192,7 @@ export default function WebFormsTab() {
         </Card>
       ) : (
         <div className={styles.style1}>
-          {forms.map((f) => (
+          {forms.map((f: any) => (
             <Card key={f.id}>
               <div className="p-5">
                 <div className={styles.style2}>
@@ -254,8 +254,8 @@ export default function WebFormsTab() {
             <h3 className="ui-heading-base">Preview: {previewForm.name}</h3>
           </div>
           <div className={styles.style9}>
-            <form onSubmit={(e) => e.preventDefault()} className="ui-stack-4">
-              {previewForm.fields.map((f, i) => (
+            <form onSubmit={(e: any) => e.preventDefault()} className="ui-stack-4">
+              {previewForm.fields.map((f: any, i: any) => (
                 <div key={i}>
                   <label style={labelStyle}>
                     {f.label}{" "}
@@ -326,7 +326,7 @@ export default function WebFormsTab() {
               required
               placeholder="e.g. Contact Us"
               value={formName}
-              onChange={(e) => setFormName(e.target.value)}
+              onChange={(e: any) => setFormName(e.target.value)}
             />
           </FormField>
 
@@ -345,14 +345,14 @@ export default function WebFormsTab() {
               </button>
             </div>
             <div className="ui-stack-3">
-              {fields.map((f, i) => (
+              {fields.map((f: any, i: any) => (
                 <div key={i} className={styles.style14}>
                   <input
                     type="text"
                     required
                     placeholder="field_name"
                     value={f.name}
-                    onChange={(e) => updateField(i, "name", e.target.value)}
+                    onChange={(e: any) => updateField(i, "name", e.target.value)}
                     className={`ui-input ${styles.s3}`}
                     style={{ ...inputStyle }}
                   />
@@ -361,13 +361,13 @@ export default function WebFormsTab() {
                     required
                     placeholder="Label"
                     value={f.label}
-                    onChange={(e) => updateField(i, "label", e.target.value)}
+                    onChange={(e: any) => updateField(i, "label", e.target.value)}
                     className={`ui-input ${styles.s3}`}
                     style={{ ...inputStyle }}
                   />
                   <select
                     value={f.type}
-                    onChange={(e) => updateField(i, "type", e.target.value)}
+                    onChange={(e: any) => updateField(i, "type", e.target.value)}
                     className={`ui-input ${styles.s3}`}
                     style={{ ...inputStyle }}
                   >
@@ -382,7 +382,7 @@ export default function WebFormsTab() {
                     <input
                       type="checkbox"
                       checked={f.required}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         updateField(i, "required", e.target.checked)
                       }
                     />
@@ -410,7 +410,7 @@ export default function WebFormsTab() {
                 <Input
                   placeholder="/thank-you"
                   value={redirectUrl}
-                  onChange={(e) => setRedirectUrl(e.target.value)}
+                  onChange={(e: any) => setRedirectUrl(e.target.value)}
                 />
               </FormField>
               <FormField label="Notify Email">
@@ -418,21 +418,21 @@ export default function WebFormsTab() {
                   type="email"
                   placeholder="sales@company.com"
                   value={notifyEmail}
-                  onChange={(e) => setNotifyEmail(e.target.value)}
+                  onChange={(e: any) => setNotifyEmail(e.target.value)}
                 />
               </FormField>
               <FormField label="Assign To (User ID)">
                 <Input
                   placeholder="User ID"
                   value={assignToId}
-                  onChange={(e) => setAssignToId(e.target.value)}
+                  onChange={(e: any) => setAssignToId(e.target.value)}
                 />
               </FormField>
               <FormField label="Campaign ID">
                 <Input
                   placeholder="Campaign ID"
                   value={campaignId}
-                  onChange={(e) => setCampaignId(e.target.value)}
+                  onChange={(e: any) => setCampaignId(e.target.value)}
                 />
               </FormField>
             </div>

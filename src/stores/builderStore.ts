@@ -70,7 +70,7 @@ interface BuilderState {
 
 const MAX_HISTORY = 20;
 
-export const useBuilderStore = create<BuilderState>((set, get) => ({
+export const useBuilderStore = create<BuilderState>((set: any, get: any) => ({
   fields: [],
   selectedFieldId: null,
   previewMode: false,
@@ -86,7 +86,7 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     set({ history: newHistory, historyIndex: newHistory.length - 1 });
   },
 
-  setFields: (fields) => {
+  setFields: (fields: any) => {
     set({
       fields,
       history: [JSON.parse(JSON.stringify(fields))],
@@ -94,8 +94,8 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     });
   },
 
-  addField: (field, index) =>
-    set((state) => {
+  addField: (field: any, index: any) =>
+    set((state: any) => {
       const newFields = [...state.fields];
       if (index !== undefined) {
         newFields.splice(index, 0, field);
@@ -106,18 +106,18 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
       return { fields: newFields, selectedFieldId: field.id };
     }),
 
-  updateField: (id, updates) =>
-    set((state) => {
-      const newFields = state.fields.map((f) =>
+  updateField: (id: any, updates: any) =>
+    set((state: any) => {
+      const newFields = state.fields.map((f: any) =>
         f.id === id ? { ...f, ...updates } : f,
       );
       get().pushHistory(newFields);
       return { fields: newFields };
     }),
 
-  removeField: (id) =>
-    set((state) => {
-      const newFields = state.fields.filter((f) => f.id !== id);
+  removeField: (id: any) =>
+    set((state: any) => {
+      const newFields = state.fields.filter((f: any) => f.id !== id);
       get().pushHistory(newFields);
       return {
         fields: newFields,
@@ -126,16 +126,16 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
       };
     }),
 
-  moveField: (fromIndex, toIndex) =>
-    set((state) => {
+  moveField: (fromIndex: any, toIndex: any) =>
+    set((state: any) => {
       const newFields = arrayMove(state.fields, fromIndex, toIndex);
       get().pushHistory(newFields);
       return { fields: newFields };
     }),
 
-  duplicateField: (id) =>
-    set((state) => {
-      const source = state.fields.find((f) => f.id === id);
+  duplicateField: (id: any) =>
+    set((state: any) => {
+      const source = state.fields.find((f: any) => f.id === id);
       if (!source) return state;
       const dup: FormField = {
         ...source,
@@ -143,19 +143,19 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
         name: source.name + "_copy",
         label: source.label + " (Copy)",
       };
-      const idx = state.fields.findIndex((f) => f.id === id);
+      const idx = state.fields.findIndex((f: any) => f.id === id);
       const newFields = [...state.fields];
       newFields.splice(idx + 1, 0, dup);
       get().pushHistory(newFields);
       return { fields: newFields, selectedFieldId: dup.id };
     }),
 
-  setSelectedFieldId: (id) => set({ selectedFieldId: id }),
+  setSelectedFieldId: (id: any) => set({ selectedFieldId: id }),
 
-  setPreviewMode: (mode) => set({ previewMode: mode }),
+  setPreviewMode: (mode: any) => set({ previewMode: mode }),
 
-  updateFormSettings: (settings) =>
-    set((state) => ({
+  updateFormSettings: (settings: any) =>
+    set((state: any) => ({
       formSettings: { ...state.formSettings, ...settings },
     })),
 

@@ -196,7 +196,7 @@ export default function ShipmentTrackingPage() {
       <div className="ui-page-shell">
         <PageHeader title="Shipment Tracking" />
         <div className="flex gap-2 flex-wrap">
-          {tabs.map((t) => (
+          {tabs.map((t: any) => (
             <Button
               key={t.key}
               variant={tab === t.key ? "primary" : "secondary"}
@@ -228,7 +228,7 @@ export default function ShipmentTrackingPage() {
                   <Package size={14} />
                   Inbound Shipments
                 </div>
-                {dashboard.inboundByStatus.map((s) => (
+                {dashboard.inboundByStatus.map((s: any) => (
                   <div
                     key={s.status}
                     className="flex justify-between text-sm py-1"
@@ -245,7 +245,7 @@ export default function ShipmentTrackingPage() {
                   <Truck size={14} />
                   Outbound Shipments
                 </div>
-                {dashboard.outboundByStatus.map((s) => (
+                {dashboard.outboundByStatus.map((s: any) => (
                   <div
                     key={s.status}
                     className="flex justify-between text-sm py-1"
@@ -260,7 +260,7 @@ export default function ShipmentTrackingPage() {
             </div>
             <Card className="p-4">
               <div className="font-semibold mb-2">Recent Tracking Events</div>
-              {dashboard.recentTracking.map((e) => (
+              {dashboard.recentTracking.map((e: any) => (
                 <div key={e.id} className="text-sm py-1 border-b flex gap-3">
                   <span className="font-mono text-gray-400">
                     {new Date(e.occurredAt).toLocaleString()}
@@ -276,7 +276,7 @@ export default function ShipmentTrackingPage() {
                 <select
                   className="border rounded px-2 py-1 text-sm"
                   value={direction}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setDirection(e.target.value as "INBOUND" | "OUTBOUND")
                   }
                 >
@@ -287,13 +287,13 @@ export default function ShipmentTrackingPage() {
                   className="border rounded px-2 py-1 text-sm w-48"
                   placeholder="Shipment ID"
                   value={actionId}
-                  onChange={(e) => setActionId(e.target.value)}
+                  onChange={(e: any) => setActionId(e.target.value)}
                 />
                 <input
                   className="border rounded px-2 py-1 text-sm w-36"
                   placeholder="New Status"
                   value={actionStatus}
-                  onChange={(e) => setActionStatus(e.target.value)}
+                  onChange={(e: any) => setActionStatus(e.target.value)}
                 />
                 <Button variant="primary" onClick={updateStatus}>
                   <CheckCircle size={14} className="mr-1" />
@@ -376,7 +376,7 @@ export default function ShipmentTrackingPage() {
                 ["Carrier Name", "carrierName"],
                 ["Tracking Number", "trackingNumber"],
               ] as const
-            ).map(([label, key]) => (
+            ).map(([label, key]: any) => (
               <div key={key}>
                 <label className="block text-xs text-gray-500 mb-1">
                   {label}
@@ -384,8 +384,8 @@ export default function ShipmentTrackingPage() {
                 <input
                   className="border rounded px-2 py-1 w-full text-sm"
                   value={inboundForm[key as keyof typeof inboundForm]}
-                  onChange={(e) =>
-                    setInboundForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setInboundForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                 />
               </div>
@@ -410,7 +410,7 @@ export default function ShipmentTrackingPage() {
                 ["Recipient Name", "recipientName"],
                 ["Recipient Address", "recipientAddr"],
               ] as const
-            ).map(([label, key]) => (
+            ).map(([label, key]: any) => (
               <div key={key}>
                 <label className="block text-xs text-gray-500 mb-1">
                   {label}
@@ -418,8 +418,8 @@ export default function ShipmentTrackingPage() {
                 <input
                   className="border rounded px-2 py-1 w-full text-sm"
                   value={outboundForm[key as keyof typeof outboundForm]}
-                  onChange={(e) =>
-                    setOutboundForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setOutboundForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                 />
               </div>

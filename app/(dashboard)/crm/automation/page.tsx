@@ -82,7 +82,7 @@ export default function CrmAutomationPage() {
           paddingBottom: "var(--space-2)",
         }}
       >
-        {AUTOMATION_TABS.map((tab) => (
+        {AUTOMATION_TABS.map((tab: any) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}

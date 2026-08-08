@@ -97,9 +97,9 @@ export default function FeeManagementPage() {
     }
   };
 
-  const totalFees = structures.reduce((a, s) => a + Number(s.amount || 0), 0);
+  const totalFees = structures.reduce((a: any, s: any) => a + Number(s.amount || 0), 0);
   const totalCollected = studentFees.reduce(
-    (a, f) => a + Number(f.paidAmount || 0),
+    (a: any, f: any) => a + Number(f.paidAmount || 0),
     0,
   );
 
@@ -313,13 +313,13 @@ export default function FeeManagementPage() {
               label="Fee Name"
               required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
               placeholder="Tuition Fee - Fall 2026"
             />
             <TextField
               label="Description"
               value={form.description}
-              onChange={(e) =>
+              onChange={(e: any) =>
                 setForm({ ...form, description: e.target.value })
               }
             />
@@ -328,7 +328,7 @@ export default function FeeManagementPage() {
                 label="Amount ($)"
                 type="number"
                 value={String(form.amount)}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setForm({ ...form, amount: Number(e.target.value) })
                 }
               />
@@ -336,7 +336,7 @@ export default function FeeManagementPage() {
                 label="Due Date"
                 type="date"
                 value={form.dueDate}
-                onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, dueDate: e.target.value })}
               />
             </div>
           </div>

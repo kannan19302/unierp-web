@@ -249,7 +249,7 @@ export default function ProcurementApprovalsPage() {
     try {
       const roles = policyApproverRoles
         .split(",")
-        .map((r) => r.trim())
+        .map((r: any) => r.trim())
         .filter(Boolean);
       await client.post(`${apiPrefix}/approvals/policy`, {
         requiresApproval: policyRequiresApproval,
@@ -749,7 +749,7 @@ export default function ProcurementApprovalsPage() {
                 <Filter size={16} />
                 <select
                   value={historyType}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     setHistoryType(e.target.value);
                     setHistoryPage(1);
                   }}
@@ -794,7 +794,7 @@ export default function ProcurementApprovalsPage() {
                   size="sm"
                   variant="ghost"
                   disabled={historyPage <= 1}
-                  onClick={() => setHistoryPage((p) => p - 1)}
+                  onClick={() => setHistoryPage((p: any) => p - 1)}
                 >
                   Previous
                 </Button>
@@ -803,7 +803,7 @@ export default function ProcurementApprovalsPage() {
                   size="sm"
                   variant="ghost"
                   disabled={historyPage * 20 >= historyTotal}
-                  onClick={() => setHistoryPage((p) => p + 1)}
+                  onClick={() => setHistoryPage((p: any) => p + 1)}
                 >
                   Next
                 </Button>
@@ -826,7 +826,7 @@ export default function ProcurementApprovalsPage() {
                       <label className={styles.p13}>Requires Approval</label>
                       <select
                         value={policyRequiresApproval ? "true" : "false"}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setPolicyRequiresApproval(e.target.value === "true")
                         }
                         style={{
@@ -848,7 +848,7 @@ export default function ProcurementApprovalsPage() {
                       </label>
                       <input
                         value={policyApproverRoles}
-                        onChange={(e) => setPolicyApproverRoles(e.target.value)}
+                        onChange={(e: any) => setPolicyApproverRoles(e.target.value)}
                         placeholder="e.g. procurement_manager, finance_manager"
                         style={{
                           padding: "var(--space-2)",
@@ -869,7 +869,7 @@ export default function ProcurementApprovalsPage() {
                         <input
                           type="number"
                           value={policyMinAmount}
-                          onChange={(e) => setPolicyMinAmount(e.target.value)}
+                          onChange={(e: any) => setPolicyMinAmount(e.target.value)}
                           placeholder="0"
                           style={{
                             padding: "var(--space-2)",
@@ -888,7 +888,7 @@ export default function ProcurementApprovalsPage() {
                         <input
                           type="number"
                           value={policyMaxAmount}
-                          onChange={(e) => setPolicyMaxAmount(e.target.value)}
+                          onChange={(e: any) => setPolicyMaxAmount(e.target.value)}
                           placeholder="100000"
                           style={{
                             padding: "var(--space-2)",
@@ -985,7 +985,7 @@ export default function ProcurementApprovalsPage() {
           </p>
           <textarea
             value={rejectReason}
-            onChange={(e) => setRejectReason(e.target.value)}
+            onChange={(e: any) => setRejectReason(e.target.value)}
             placeholder="Enter rejection reason..."
             rows={3}
             style={{
@@ -1029,7 +1029,7 @@ export default function ProcurementApprovalsPage() {
             <label className={styles.p13}>Delegate To (User ID)</label>
             <input
               value={delegateUserId}
-              onChange={(e) => setDelegateUserId(e.target.value)}
+              onChange={(e: any) => setDelegateUserId(e.target.value)}
               placeholder="Enter user ID"
               style={{
                 padding: "var(--space-2)",
@@ -1046,7 +1046,7 @@ export default function ProcurementApprovalsPage() {
               <input
                 type="date"
                 value={delegateFrom}
-                onChange={(e) => setDelegateFrom(e.target.value)}
+                onChange={(e: any) => setDelegateFrom(e.target.value)}
                 style={{
                   padding: "var(--space-2)",
                   borderRadius: "var(--radius-md)",
@@ -1061,7 +1061,7 @@ export default function ProcurementApprovalsPage() {
               <input
                 type="date"
                 value={delegateTo}
-                onChange={(e) => setDelegateTo(e.target.value)}
+                onChange={(e: any) => setDelegateTo(e.target.value)}
                 style={{
                   padding: "var(--space-2)",
                   borderRadius: "var(--radius-md)",

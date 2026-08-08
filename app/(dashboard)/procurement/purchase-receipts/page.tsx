@@ -77,7 +77,7 @@ export default function PurchaseReceiptsPage() {
       );
       setPos(
         poRes.filter(
-          (p) => p.status === "APPROVED" || p.status === "PARTIALLY_RECEIVED",
+          (p: any) => p.status === "APPROVED" || p.status === "PARTIALLY_RECEIVED",
         ),
       );
       const whs = Array.isArray(whRes) ? whRes : whRes.data || [];
@@ -156,10 +156,10 @@ export default function PurchaseReceiptsPage() {
         ),
       );
     } catch {
-      const poObj = pos.find((p) => p.id === poId);
+      const poObj = pos.find((p: any) => p.id === poId);
       if (poObj && poObj.lineItems) {
         setItems(
-          poObj.lineItems.map((li) => ({
+          poObj.lineItems.map((li: any) => ({
             productId: li.productId,
             description: li.description,
             receivedQty: li.quantity - li.receivedQty,
@@ -180,7 +180,7 @@ export default function PurchaseReceiptsPage() {
         receiptNumber,
         warehouseId: selectedWarehouse || undefined,
         notes,
-        lineItems: items.map((item) => ({
+        lineItems: items.map((item: any) => ({
           productId: item.productId || undefined,
           description: item.description,
           receivedQty: item.receivedQty,
@@ -192,7 +192,7 @@ export default function PurchaseReceiptsPage() {
       resetForm();
       loadData();
     } catch {
-      const poObj = pos.find((p) => p.id === selectedPo);
+      const poObj = pos.find((p: any) => p.id === selectedPo);
       const newMock: PurchaseReceipt = {
         id: `r-mock-${Date.now()}`,
         receiptNumber,
@@ -202,7 +202,7 @@ export default function PurchaseReceiptsPage() {
           ? { poNumber: poObj.poNumber, vendorName: poObj.vendorName }
           : null,
       };
-      setReceipts((prev) => [newMock, ...prev]);
+      setReceipts((prev: any) => [newMock, ...prev]);
       setIsModalOpen(false);
       resetForm();
     } finally {
@@ -221,7 +221,7 @@ export default function PurchaseReceiptsPage() {
     {
       key: "receiptNumber",
       header: "GRN Voucher",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const r = row as unknown as PurchaseReceipt;
         return <span className="font-bold">{r.receiptNumber}</span>;
       },
@@ -229,7 +229,7 @@ export default function PurchaseReceiptsPage() {
     {
       key: "purchaseOrder",
       header: "Purchase Order",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const r = row as unknown as PurchaseReceipt;
         return (
           <span className="font-mono">
@@ -241,7 +241,7 @@ export default function PurchaseReceiptsPage() {
     {
       key: "vendorName",
       header: "Supplier",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const r = row as unknown as PurchaseReceipt;
         return <span>{r.purchaseOrder?.vendorName || "N/A"}</span>;
       },
@@ -249,7 +249,7 @@ export default function PurchaseReceiptsPage() {
     {
       key: "receivedDate",
       header: "Received Date",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const r = row as unknown as PurchaseReceipt;
         return (
           <span className="ui-text-muted">
@@ -261,7 +261,7 @@ export default function PurchaseReceiptsPage() {
     {
       key: "notes",
       header: "Notes",
-      render: (_v, row) => {
+      render: (_v: any, row: any) => {
         const r = row as unknown as PurchaseReceipt;
         return <span className="ui-text-muted">{r.notes || "No remarks"}</span>;
       },
@@ -332,11 +332,11 @@ export default function PurchaseReceiptsPage() {
                       <select
                         className={["ui-input", styles.p6].join(" ")}
                         value={selectedPo}
-                        onChange={(e) => handlePoChange(e.target.value)}
+                        onChange={(e: any) => handlePoChange(e.target.value)}
                         required
                       >
                         <option value="">-- Choose Approved PO --</option>
-                        {pos.map((po) => (
+                        {pos.map((po: any) => (
                           <option key={po.id} value={po.id}>
                             {po.poNumber} ({po.vendorName})
                           </option>
@@ -351,7 +351,7 @@ export default function PurchaseReceiptsPage() {
                         type="text"
                         className="ui-input"
                         value={receiptNumber}
-                        onChange={(e) => setReceiptNumber(e.target.value)}
+                        onChange={(e: any) => setReceiptNumber(e.target.value)}
                         placeholder="e.g. GRN-2026-104"
                         required
                       />
@@ -366,10 +366,10 @@ export default function PurchaseReceiptsPage() {
                       <select
                         className={["ui-input", styles.p7].join(" ")}
                         value={selectedWarehouse}
-                        onChange={(e) => setSelectedWarehouse(e.target.value)}
+                        onChange={(e: any) => setSelectedWarehouse(e.target.value)}
                         required
                       >
-                        {warehouses.map((w) => (
+                        {warehouses.map((w: any) => (
                           <option key={w.id} value={w.id}>
                             {w.name}
                           </option>
@@ -384,7 +384,7 @@ export default function PurchaseReceiptsPage() {
                         type="text"
                         className="ui-input"
                         value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
+                        onChange={(e: any) => setNotes(e.target.value)}
                         placeholder="Reference carrier or invoice"
                       />
                     </div>
@@ -396,7 +396,7 @@ export default function PurchaseReceiptsPage() {
                       <span className={styles.p9}>
                         Quality Inspection & Item Receipt Counts
                       </span>
-                      {items.map((item, idx) => (
+                      {items.map((item: any, idx: any) => (
                         <div key={idx} className={styles.p10}>
                           <span className="ui-heading-sm">
                             {item.description}
@@ -408,7 +408,7 @@ export default function PurchaseReceiptsPage() {
                                 type="number"
                                 className="ui-input"
                                 value={item.receivedQty}
-                                onChange={(e) => {
+                                onChange={(e: any) => {
                                   const updated = [...items];
                                   if (updated[idx]) {
                                     updated[idx].receivedQty =
@@ -425,7 +425,7 @@ export default function PurchaseReceiptsPage() {
                                 type="number"
                                 className="ui-input"
                                 value={item.acceptedQty}
-                                onChange={(e) => {
+                                onChange={(e: any) => {
                                   const updated = [...items];
                                   if (updated[idx]) {
                                     updated[idx].acceptedQty =
@@ -442,7 +442,7 @@ export default function PurchaseReceiptsPage() {
                                 type="number"
                                 className="ui-input"
                                 value={item.rejectedQty}
-                                onChange={(e) => {
+                                onChange={(e: any) => {
                                   const updated = [...items];
                                   if (updated[idx]) {
                                     updated[idx].rejectedQty =

@@ -266,9 +266,9 @@ export default function ApAutomationV2Page() {
   };
 
   const filteredResults = selectedBatchId
-    ? results.filter((r) => r.batchId === selectedBatchId)
+    ? results.filter((r: any) => r.batchId === selectedBatchId)
     : results;
-  const totalSavings = optimizations.reduce((s, o) => s + o.savings, 0);
+  const totalSavings = optimizations.reduce((s: any, o: any) => s + o.savings, 0);
 
   return (
     <RouteGuard permission="finance.ap.read">
@@ -321,8 +321,8 @@ export default function ApAutomationV2Page() {
               Active Rules
             </h3>
             <p className="text-2xl font-bold mt-1">
-              {matchRules.filter((r) => r.active).length +
-                approvalRules.filter((r) => r.active).length}
+              {matchRules.filter((r: any) => r.active).length +
+                approvalRules.filter((r: any) => r.active).length}
             </p>
           </Card>
           <Card className="ui-card p-4">
@@ -379,10 +379,10 @@ export default function ApAutomationV2Page() {
                   <select
                     className="ui-input max-w-[200px]"
                     value={selectedBatchId}
-                    onChange={(e) => setSelectedBatchId(e.target.value)}
+                    onChange={(e: any) => setSelectedBatchId(e.target.value)}
                   >
                     <option value="">All Batches</option>
-                    {batches.map((b) => (
+                    {batches.map((b: any) => (
                       <option key={b.id} value={b.id}>
                         {b.batchName}
                       </option>
@@ -400,7 +400,7 @@ export default function ApAutomationV2Page() {
                     <input
                       className="ui-input"
                       value={batchForm.batchName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setBatchForm({
                           ...batchForm,
                           batchName: e.target.value,
@@ -415,7 +415,7 @@ export default function ApAutomationV2Page() {
                       type="number"
                       min="1"
                       value={batchForm.invoiceCount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setBatchForm({
                           ...batchForm,
                           invoiceCount: e.target.value,
@@ -429,7 +429,7 @@ export default function ApAutomationV2Page() {
                       className="ui-input"
                       type="number"
                       value={batchForm.totalAmount}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setBatchForm({
                           ...batchForm,
                           totalAmount: e.target.value,
@@ -497,7 +497,7 @@ export default function ApAutomationV2Page() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           row.status === "DRAFT" && (
                             <button
                               onClick={() => handleProcessBatch(String(v))}
@@ -569,7 +569,7 @@ export default function ApAutomationV2Page() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v, row) =>
+                        render: (v: any, row: any) =>
                           !row.validated && (
                             <div className="flex gap-1">
                               <button
@@ -619,7 +619,7 @@ export default function ApAutomationV2Page() {
                     <input
                       className="ui-input"
                       value={matchRuleForm.ruleName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMatchRuleForm({
                           ...matchRuleForm,
                           ruleName: e.target.value,
@@ -632,7 +632,7 @@ export default function ApAutomationV2Page() {
                     <select
                       className="ui-input"
                       value={matchRuleForm.matchType}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMatchRuleForm({
                           ...matchRuleForm,
                           matchType: e.target.value,
@@ -653,7 +653,7 @@ export default function ApAutomationV2Page() {
                       type="number"
                       step="0.1"
                       value={matchRuleForm.tolerance}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMatchRuleForm({
                           ...matchRuleForm,
                           tolerance: e.target.value,
@@ -668,7 +668,7 @@ export default function ApAutomationV2Page() {
                       type="number"
                       min="1"
                       value={matchRuleForm.priority}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setMatchRuleForm({
                           ...matchRuleForm,
                           priority: e.target.value,
@@ -769,7 +769,7 @@ export default function ApAutomationV2Page() {
                     <input
                       className="ui-input"
                       value={approvalRuleForm.ruleName}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setApprovalRuleForm({
                           ...approvalRuleForm,
                           ruleName: e.target.value,
@@ -782,7 +782,7 @@ export default function ApAutomationV2Page() {
                     <select
                       className="ui-input"
                       value={approvalRuleForm.condition}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setApprovalRuleForm({
                           ...approvalRuleForm,
                           condition: e.target.value,
@@ -799,7 +799,7 @@ export default function ApAutomationV2Page() {
                     <input
                       className="ui-input"
                       value={approvalRuleForm.approver}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setApprovalRuleForm({
                           ...approvalRuleForm,
                           approver: e.target.value,
@@ -813,7 +813,7 @@ export default function ApAutomationV2Page() {
                       className="ui-input"
                       type="number"
                       value={approvalRuleForm.threshold}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setApprovalRuleForm({
                           ...approvalRuleForm,
                           threshold: e.target.value,

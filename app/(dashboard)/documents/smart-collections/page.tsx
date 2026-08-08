@@ -32,7 +32,7 @@ export default function SmartCollectionsPage() {
         <div className="ui-flex" style={{ gap: "var(--space-2)" }}>
           <button
             className="ui-btn-icon"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
             }}
           >
@@ -40,7 +40,7 @@ export default function SmartCollectionsPage() {
           </button>
           <button
             className="ui-btn-icon"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               apiDelete(`/documents/smart-collections/${row.id}`).then(load);
             }}

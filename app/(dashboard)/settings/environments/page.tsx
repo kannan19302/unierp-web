@@ -93,7 +93,7 @@ export default function EnvironmentManagerPage() {
           </div>
         ) : (
           <div className="ui-stack-4">
-            {environments.map((env, idx) => (
+            {environments.map((env: any, idx: any) => (
               <div key={idx} className={styles.p4}>
                 <div>
                   <div className="ui-hstack-2">

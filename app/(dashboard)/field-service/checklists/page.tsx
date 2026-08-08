@@ -139,13 +139,13 @@ export default function ChecklistsPage() {
               label="Checklist Name"
               required
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, name: e.target.value })}
             />
             <TextField
               label="Checklist Items (one per line)"
               required
               value={form.itemsRaw}
-              onChange={(e) => setForm({ ...form, itemsRaw: e.target.value })}
+              onChange={(e: any) => setForm({ ...form, itemsRaw: e.target.value })}
               placeholder="Check power connection&#10;Verify pressure readings&#10;Clean filter intake"
             />
           </div>

@@ -167,7 +167,7 @@ export default function EdiTransactionsPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
               setPayloadContent(row.payload);
               setPayloadOpen(true);
@@ -179,7 +179,7 @@ export default function EdiTransactionsPage() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.stopPropagation();
                 handleUpdateStatus(row.id, "PROCESSED");
               }}
@@ -236,7 +236,7 @@ export default function EdiTransactionsPage() {
                 color: "var(--chart-1)",
                 loading: false,
               },
-              ...EDI_TYPES.map((type) => ({
+              ...EDI_TYPES.map((type: any) => ({
                 label: `Type ${type}`,
                 value: dashboard.byType[type] || 0,
                 icon: <FileText size={16} />,
@@ -244,7 +244,7 @@ export default function EdiTransactionsPage() {
                 loading: false,
               })),
               ...Object.entries(dashboard.byStatus).map(
-                ([status, count], idx) => ({
+                ([status, count]: any, idx: any) => ({
                   label: `${status}`,
                   value: count,
                   icon: <CheckCircle size={16} />,
@@ -300,7 +300,7 @@ export default function EdiTransactionsPage() {
               <FormField label="Transaction ID" required>
                 <Input
                   value={form.transactionId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, transactionId: e.target.value })
                   }
                   placeholder="EDI-2026-001"
@@ -310,11 +310,11 @@ export default function EdiTransactionsPage() {
                 <select
                   className="ui-input"
                   value={form.ediType}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, ediType: e.target.value })
                   }
                 >
-                  {EDI_TYPES.map((t) => (
+                  {EDI_TYPES.map((t: any) => (
                     <option key={t} value={t}>
                       {t}
                     </option>
@@ -327,14 +327,14 @@ export default function EdiTransactionsPage() {
                 <select
                   className="ui-input"
                   value={form.direction}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({
                       ...form,
                       direction: e.target.value as "INBOUND" | "OUTBOUND",
                     })
                   }
                 >
-                  {DIRECTIONS.map((d) => (
+                  {DIRECTIONS.map((d: any) => (
                     <option key={d} value={d}>
                       {d}
                     </option>
@@ -345,7 +345,7 @@ export default function EdiTransactionsPage() {
                 <select
                   className="ui-input"
                   value={form.status}
-                  onChange={(e) => setForm({ ...form, status: e.target.value })}
+                  onChange={(e: any) => setForm({ ...form, status: e.target.value })}
                 >
                   <option value="RECEIVED">RECEIVED</option>
                   <option value="PENDING">PENDING</option>
@@ -357,7 +357,7 @@ export default function EdiTransactionsPage() {
               <FormField label="Sender ID" required>
                 <Input
                   value={form.senderId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, senderId: e.target.value })
                   }
                   placeholder="QUALCOMM"
@@ -366,7 +366,7 @@ export default function EdiTransactionsPage() {
               <FormField label="Receiver ID" required>
                 <Input
                   value={form.receiverId}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setForm({ ...form, receiverId: e.target.value })
                   }
                   placeholder="ACME"
@@ -378,7 +378,7 @@ export default function EdiTransactionsPage() {
                 className="ui-input"
                 rows={6}
                 value={form.payload}
-                onChange={(e) => setForm({ ...form, payload: e.target.value })}
+                onChange={(e: any) => setForm({ ...form, payload: e.target.value })}
                 placeholder="ISA*00*...*GS*...*ST*846*..."
               />
             </FormField>

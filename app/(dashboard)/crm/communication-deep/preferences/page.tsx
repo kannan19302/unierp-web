@@ -41,7 +41,7 @@ export default function PreferencesPage() {
           <select
             className="ui-input"
             value={entityType}
-            onChange={(e) => setEntityType(e.target.value)}
+            onChange={(e: any) => setEntityType(e.target.value)}
           >
             <option value="CUSTOMER">Customer</option>
             <option value="LEAD">Lead</option>
@@ -53,7 +53,7 @@ export default function PreferencesPage() {
           <input
             className="ui-input"
             value={entityId}
-            onChange={(e) => setEntityId(e.target.value)}
+            onChange={(e: any) => setEntityId(e.target.value)}
             placeholder="e.g. cust-123"
           />
         </div>
@@ -73,7 +73,7 @@ export default function PreferencesPage() {
             <input
               type="checkbox"
               checked={prefs.email}
-              onChange={(e) => toggle("email", e.target.checked)}
+              onChange={(e: any) => toggle("email", e.target.checked)}
               className="w-5 h-5"
             />
           </div>
@@ -87,7 +87,7 @@ export default function PreferencesPage() {
             <input
               type="checkbox"
               checked={prefs.sms}
-              onChange={(e) => toggle("sms", e.target.checked)}
+              onChange={(e: any) => toggle("sms", e.target.checked)}
               className="w-5 h-5"
             />
           </div>
@@ -101,7 +101,7 @@ export default function PreferencesPage() {
             <input
               type="checkbox"
               checked={prefs.whatsapp}
-              onChange={(e) => toggle("whatsapp", e.target.checked)}
+              onChange={(e: any) => toggle("whatsapp", e.target.checked)}
               className="w-5 h-5"
             />
           </div>
@@ -115,7 +115,7 @@ export default function PreferencesPage() {
             <input
               type="checkbox"
               checked={prefs.push}
-              onChange={(e) => toggle("push", e.target.checked)}
+              onChange={(e: any) => toggle("push", e.target.checked)}
               className="w-5 h-5"
             />
           </div>
@@ -129,7 +129,7 @@ export default function PreferencesPage() {
             <input
               type="checkbox"
               checked={prefs.marketing}
-              onChange={(e) => toggle("marketing", e.target.checked)}
+              onChange={(e: any) => toggle("marketing", e.target.checked)}
               className="w-5 h-5"
             />
           </div>

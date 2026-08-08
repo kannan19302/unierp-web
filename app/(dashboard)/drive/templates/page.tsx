@@ -1,5 +1,5 @@
-import { DataTable } from "@kannan19302/ui";
 "use client";
+import { DataTable } from "@kannan19302/ui";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -106,7 +106,7 @@ export default function DriveTemplatesPage() {
   }, [client]);
 
   const filtered = documents.filter(
-    (d) =>
+    (d: any) =>
       d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       d.templateName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       d.entityId.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -141,7 +141,7 @@ export default function DriveTemplatesPage() {
               type="text"
               placeholder="Search documents, templates, entity IDs..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e: any) => setSearchQuery(e.target.value)}
               className={styles.p5}
             />
           </div>

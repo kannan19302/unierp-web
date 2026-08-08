@@ -226,7 +226,7 @@ export default function ConsignmentPage() {
                       type="text"
                       className="ui-input"
                       value={supplierName}
-                      onChange={(e) => setSupplierName(e.target.value)}
+                      onChange={(e: any) => setSupplierName(e.target.value)}
                       required
                     />
                   </div>
@@ -236,7 +236,7 @@ export default function ConsignmentPage() {
                       type="text"
                       className="ui-input"
                       value={productId}
-                      onChange={(e) => setProductId(e.target.value)}
+                      onChange={(e: any) => setProductId(e.target.value)}
                       required
                     />
                   </div>
@@ -246,7 +246,7 @@ export default function ConsignmentPage() {
                       type="text"
                       className="ui-input"
                       value={warehouseId}
-                      onChange={(e) => setWarehouseId(e.target.value)}
+                      onChange={(e: any) => setWarehouseId(e.target.value)}
                       required
                     />
                   </div>
@@ -256,7 +256,7 @@ export default function ConsignmentPage() {
                       type="number"
                       className="ui-input"
                       value={unitCost}
-                      onChange={(e) => setUnitCost(Number(e.target.value))}
+                      onChange={(e: any) => setUnitCost(Number(e.target.value))}
                       required
                       min={0}
                     />

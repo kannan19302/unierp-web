@@ -156,7 +156,7 @@ export default function TaxEnginePage() {
                       required
                       placeholder="Standard GST"
                       value={ruleData.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRuleData({ ...ruleData, name: e.target.value })
                       }
                     />
@@ -169,7 +169,7 @@ export default function TaxEnginePage() {
                       required
                       placeholder="18"
                       value={ruleData.rate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRuleData({ ...ruleData, rate: e.target.value })
                       }
                     />
@@ -180,7 +180,7 @@ export default function TaxEnginePage() {
                       className="ui-field-line"
                       required
                       value={ruleData.type}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setRuleData({ ...ruleData, type: e.target.value })
                       }
                     >
@@ -220,7 +220,7 @@ export default function TaxEnginePage() {
                       required
                       placeholder="TDS on Contracts (Section 194C)"
                       value={withholdingData.name}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setWithholdingData({
                           ...withholdingData,
                           name: e.target.value,
@@ -236,7 +236,7 @@ export default function TaxEnginePage() {
                       required
                       placeholder="2"
                       value={withholdingData.rate}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setWithholdingData({
                           ...withholdingData,
                           rate: e.target.value,
@@ -252,7 +252,7 @@ export default function TaxEnginePage() {
                       required
                       placeholder="1000"
                       value={withholdingData.threshold}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setWithholdingData({
                           ...withholdingData,
                           threshold: e.target.value,
@@ -311,7 +311,7 @@ export default function TaxEnginePage() {
                   {
                     key: "components",
                     header: "Components",
-                    render: (_v, row) => (
+                    render: (_v: any, row: any) => (
                       <span className="ui-text-muted">
                         {(row as unknown as TaxRule).components?.length || 0}{" "}
                         rates

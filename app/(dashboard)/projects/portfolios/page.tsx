@@ -115,7 +115,7 @@ export default function PortfoliosPage() {
       {/* Grid of Portfolios */}
       {!loading && portfolios.length > 0 && (
         <div className={styles.p4}>
-          {portfolios.map((portfolio) => (
+          {portfolios.map((portfolio: any) => (
             <div
               key={portfolio.id}
               className={["ui-card", styles.p5].filter(Boolean).join(" ")}
@@ -171,7 +171,7 @@ export default function PortfoliosPage() {
                 <h4 className={styles.p18}>Associated Projects</h4>
                 {portfolio.projects.length > 0 ? (
                   <div className="ui-stack-2">
-                    {portfolio.projects.map((proj) => (
+                    {portfolio.projects.map((proj: any) => (
                       <div key={proj.id} className={styles.p19}>
                         <div>
                           <span className={styles.p20}>{proj.name}</span>
@@ -228,7 +228,7 @@ export default function PortfoliosPage() {
                 required
                 type="text"
                 value={newPortfolio.name}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewPortfolio({ ...newPortfolio, name: e.target.value })
                 }
                 className={styles.p27}
@@ -239,7 +239,7 @@ export default function PortfoliosPage() {
               <label className="ui-text-xs-label">Description</label>
               <textarea
                 value={newPortfolio.description}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setNewPortfolio({
                     ...newPortfolio,
                     description: e.target.value,
@@ -254,7 +254,7 @@ export default function PortfoliosPage() {
                 <label className="ui-text-xs-label">Strategic Alignment</label>
                 <select
                   value={newPortfolio.strategicAlignment}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPortfolio({
                       ...newPortfolio,
                       strategicAlignment: e.target.value,
@@ -273,7 +273,7 @@ export default function PortfoliosPage() {
                   type="number"
                   placeholder="e.g. 500000"
                   value={newPortfolio.budget}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setNewPortfolio({ ...newPortfolio, budget: e.target.value })
                   }
                   className={styles.p30}

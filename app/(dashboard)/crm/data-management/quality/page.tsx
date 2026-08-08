@@ -34,7 +34,7 @@ export default function DataQualityPage() {
 
   useEffect(() => {
     apiGet<QualityDashboard>("/crm/data/quality/dashboard")
-      .then((d) => setDash(d as QualityDashboard))
+      .then((d: any) => setDash(d as QualityDashboard))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
@@ -119,7 +119,7 @@ export default function DataQualityPage() {
             <select
               className="px-3 py-2 border border-gray-300 rounded-md text-sm"
               value={entityType}
-              onChange={(e) => setEntityType(e.target.value)}
+              onChange={(e: any) => setEntityType(e.target.value)}
             >
               <option value="CUSTOMER">Customer</option>
               <option value="LEAD">Lead</option>
@@ -134,7 +134,7 @@ export default function DataQualityPage() {
             <Input
               placeholder="Enter entity ID"
               value={entityId}
-              onChange={(e) => setEntityId(e.target.value)}
+              onChange={(e: any) => setEntityId(e.target.value)}
             />
           </div>
           <Button
@@ -181,7 +181,7 @@ export default function DataQualityPage() {
               <div>
                 <div className="font-semibold mb-1">Issues:</div>
                 <ul className="list-disc list-inside text-sm text-red-600">
-                  {score.issues.map((iss, i) => (
+                  {score.issues.map((iss: any, i: any) => (
                     <li key={i}>
                       {iss.field}: {iss.issue} ({iss.severity})
                     </li>

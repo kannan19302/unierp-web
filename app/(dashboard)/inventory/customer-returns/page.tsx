@@ -148,7 +148,7 @@ function RmasTab() {
   const create = async () => {
     setErr("");
     try {
-      const lines = form.lines.map((l) => ({
+      const lines = form.lines.map((l: any) => ({
         productId: l.productId,
         quantityRequested: parseFloat(l.quantityRequested),
         ...(l.unitCost ? { unitCost: parseFloat(l.unitCost) } : {}),
@@ -194,7 +194,7 @@ function RmasTab() {
           <select
             className="border rounded p-1 text-sm"
             value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
+            onChange={(e: any) => setFilterStatus(e.target.value)}
           >
             <option value="">All statuses</option>
             {[
@@ -204,7 +204,7 @@ function RmasTab() {
               "RECEIVED",
               "INSPECTED",
               "CLOSED",
-            ].map((s) => (
+            ].map((s: any) => (
               <option key={s} value={s}>
                 {s}
               </option>
@@ -212,7 +212,7 @@ function RmasTab() {
           </select>
         </div>
         <button
-          onClick={() => setShowCreate((v) => !v)}
+          onClick={() => setShowCreate((v: any) => !v)}
           className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           + New RMA
@@ -228,8 +228,8 @@ function RmasTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.customerId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, customerId: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, customerId: e.target.value }))
                 }
               />
             </div>
@@ -238,8 +238,8 @@ function RmasTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.salesOrderId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, salesOrderId: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, salesOrderId: e.target.value }))
                 }
               />
             </div>
@@ -248,25 +248,25 @@ function RmasTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.returnReason}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, returnReason: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, returnReason: e.target.value }))
                 }
               />
             </div>
           </div>
           <div>
             <p className="text-xs font-semibold mb-2">Lines</p>
-            {form.lines.map((l, i) => (
+            {form.lines.map((l: any, i: any) => (
               <div key={i} className="grid grid-cols-4 gap-2 mb-2">
                 <input
                   className="border rounded p-1 text-sm"
                   placeholder="Product ID"
                   value={l.productId}
-                  onChange={(e) => {
-                    const lines = form.lines.map((x, j) =>
+                  onChange={(e: any) => {
+                    const lines = form.lines.map((x: any, j: any) =>
                       j === i ? { ...x, productId: e.target.value } : x,
                     );
-                    setForm((f) => ({ ...f, lines }));
+                    setForm((f: any) => ({ ...f, lines }));
                   }}
                 />
                 <input
@@ -274,11 +274,11 @@ function RmasTab() {
                   className="border rounded p-1 text-sm"
                   placeholder="Qty"
                   value={l.quantityRequested}
-                  onChange={(e) => {
-                    const lines = form.lines.map((x, j) =>
+                  onChange={(e: any) => {
+                    const lines = form.lines.map((x: any, j: any) =>
                       j === i ? { ...x, quantityRequested: e.target.value } : x,
                     );
-                    setForm((f) => ({ ...f, lines }));
+                    setForm((f: any) => ({ ...f, lines }));
                   }}
                 />
                 <input
@@ -286,29 +286,29 @@ function RmasTab() {
                   className="border rounded p-1 text-sm"
                   placeholder="Unit Cost"
                   value={l.unitCost}
-                  onChange={(e) => {
-                    const lines = form.lines.map((x, j) =>
+                  onChange={(e: any) => {
+                    const lines = form.lines.map((x: any, j: any) =>
                       j === i ? { ...x, unitCost: e.target.value } : x,
                     );
-                    setForm((f) => ({ ...f, lines }));
+                    setForm((f: any) => ({ ...f, lines }));
                   }}
                 />
                 <input
                   className="border rounded p-1 text-sm"
                   placeholder="Lot #"
                   value={l.lotNumber}
-                  onChange={(e) => {
-                    const lines = form.lines.map((x, j) =>
+                  onChange={(e: any) => {
+                    const lines = form.lines.map((x: any, j: any) =>
                       j === i ? { ...x, lotNumber: e.target.value } : x,
                     );
-                    setForm((f) => ({ ...f, lines }));
+                    setForm((f: any) => ({ ...f, lines }));
                   }}
                 />
               </div>
             ))}
             <button
               onClick={() =>
-                setForm((f) => ({
+                setForm((f: any) => ({
                   ...f,
                   lines: [
                     ...f.lines,
@@ -385,7 +385,7 @@ function RmasTab() {
             {
               key: "id",
               header: "Actions",
-              render: (v, row) => (
+              render: (v: any, row: any) => (
                 <div className="flex flex-wrap gap-1">
                   {row.status === "REQUESTED" && (
                     <>
@@ -484,7 +484,7 @@ function InspectionTab() {
             className="w-full border rounded p-2 text-sm"
             placeholder="Paste RMA ID…"
             value={rmaId}
-            onChange={(e) => setRmaId(e.target.value)}
+            onChange={(e: any) => setRmaId(e.target.value)}
           />
         </div>
         <button
@@ -543,12 +543,12 @@ function InspectionTab() {
                     <select
                       className="border rounded p-1 text-xs"
                       defaultValue=""
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         if (e.target.value) inspect(String(v), e.target.value);
                       }}
                     >
                       <option value="">Set…</option>
-                      {dispositions.map((d) => (
+                      {dispositions.map((d: any) => (
                         <option key={d} value={d}>
                           {d}
                         </option>
@@ -634,7 +634,7 @@ function CreditsTab() {
       <div className="flex justify-between items-center">
         <p className="text-sm text-gray-500">{total} credit(s)</p>
         <button
-          onClick={() => setShowCreate((v) => !v)}
+          onClick={() => setShowCreate((v: any) => !v)}
           className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           + Issue Credit
@@ -650,8 +650,8 @@ function CreditsTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.rmaId}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, rmaId: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, rmaId: e.target.value }))
                 }
               />
             </div>
@@ -661,8 +661,8 @@ function CreditsTab() {
                 type="number"
                 className="w-full border rounded p-2 text-sm"
                 value={form.creditAmount}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, creditAmount: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, creditAmount: e.target.value }))
                 }
               />
             </div>
@@ -671,8 +671,8 @@ function CreditsTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.currency}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, currency: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, currency: e.target.value }))
                 }
               />
             </div>
@@ -681,8 +681,8 @@ function CreditsTab() {
               <input
                 className="w-full border rounded p-2 text-sm"
                 value={form.notes}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, notes: e.target.value }))
+                onChange={(e: any) =>
+                  setForm((f: any) => ({ ...f, notes: e.target.value }))
                 }
               />
             </div>
@@ -747,7 +747,7 @@ function CreditsTab() {
             {
               key: "id",
               header: "Actions",
-              render: (v, row) =>
+              render: (v: any, row: any) =>
                 row.status === "ISSUED" ? (
                   <button
                     onClick={() => voidCredit(String(v))}
@@ -825,7 +825,7 @@ function RestocksTab() {
           {restocks.length} restock record(s)
         </p>
         <button
-          onClick={() => setShowForm((v) => !v)}
+          onClick={() => setShowForm((v: any) => !v)}
           className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           + Record Restock
@@ -845,14 +845,14 @@ function RestocksTab() {
                 "quantityRestocked",
                 "notes",
               ] as const
-            ).map((key) => (
+            ).map((key: any) => (
               <div key={key}>
                 <label className="block text-xs mb-1">{key}</label>
                 <input
                   className="w-full border rounded p-2 text-sm"
                   value={form[key]}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, [key]: e.target.value }))
+                  onChange={(e: any) =>
+                    setForm((f: any) => ({ ...f, [key]: e.target.value }))
                   }
                 />
               </div>
@@ -936,7 +936,7 @@ export default function CustomerReturnsPage() {
           </p>
         </div>
         <div className="border-b flex gap-1">
-          {TABS.map((t) => (
+          {TABS.map((t: any) => (
             <button
               key={t}
               onClick={() => setTab(t)}
