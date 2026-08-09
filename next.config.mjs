@@ -12,12 +12,16 @@ const nextConfig = {
   // which doesn't fire reliably on Docker Desktop bind mounts (Windows).
   // Polling is already set via WATCHPACK_POLLING=1000 in the Docker env,
   // but this explicit config ensures it works even if that env var is absent.
-  webpack: (config, { isServer }) => {
-    config.watchOptions = {
-      ...(config.watchOptions || {}),
-      poll: 1000,
-      aggregateTimeout: 300,
-    };
+  webpack: (config, { dev }) => {
+    if (dev && process.env.WATCHPACK_POLLING) {
+      config.watchOptions = {
+        ...(config.watchOptions || {}),
+        poll: typeof process.env.WATCHPACK_POLLING === 'string'
+          ? parseInt(process.env.WATCHPACK_POLLING, 10) || 1000
+          : 1000,
+        aggregateTimeout: 300,
+      };
+    }
     return config;
   },
   reactStrictMode: true,
