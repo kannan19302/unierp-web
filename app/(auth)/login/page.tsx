@@ -82,30 +82,9 @@ export default function LoginPage() {
     Array<{ id: string; name: string; slug: string; logoUrl?: string | null }>
   >([]);
 
-  // Auto-resolve organization slug from email domain locally as a fallback,
-  // but primary resolution happens on the backend now.
-  useEffect(() => {
-    if (email && email.includes("@")) {
-      const domain = email.split("@")[1];
-      if (domain && domain.includes(".")) {
-        const potentialSlug = domain.split(".")[0];
-        const publicProviders = [
-          "gmail",
-          "yahoo",
-          "hotmail",
-          "outlook",
-          "icloud",
-        ];
-        if (
-          potentialSlug &&
-          !publicProviders.includes(potentialSlug.toLowerCase()) &&
-          !tenantSlug
-        ) {
-          setTenantSlug(potentialSlug.toLowerCase());
-        }
-      }
-    }
-  }, [email, tenantSlug]);
+  // Auto-resolve organization slug from email domain locally as a fallback
+  // was removed because primary resolution happens on the backend now,
+  // and it breaks users belonging to a shared/system tenant but having different email domains.
 
   useEffect(() => {
     if (!captchaRequired || !captchaSiteKey) return;

@@ -42,7 +42,7 @@ export default defineConfig({
   webServer: process.env.CI
     ? [
         {
-          command: "node ../../apps/api/dist/main.js",
+          command: "node ../unierp-api/dist/main.js",
           port: 3001,
           timeout: 60_000,
           reuseExistingServer: true,
