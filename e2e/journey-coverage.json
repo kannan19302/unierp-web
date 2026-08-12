@@ -1,0 +1,52 @@
+{
+  "_comment": "J19: maps each journey named in unierp-workspace/docs/ai/APP_FLOW.md to the real, existing e2e/journeys/*.spec.ts file(s) that test it. A journey with an empty specs array is documented but NOT YET TESTED - a real, named gap, not silently implied covered. crossCuttingSpecs allowlists specs that test an APP_FLOW.md section 11 behavioural rule (tenant isolation, RBAC boundary, offboarding) rather than one of the 7 named journeys - real, valuable tests that are not 'a journey' in this doc's own taxonomy, so they are not force-mapped to one.",
+  "A": {
+    "title": "Onboarding a new organisation (Dev, IT Admin)",
+    "specs": [],
+    "gap": "No E2E test exists for tenant sign-up / initial org setup."
+  },
+  "B": {
+    "title": "Daily sign-in",
+    "specs": ["daily-sign-in.spec.ts"],
+    "note": "Covers the plain email/password success and 401 (no-account-disclosure) outcomes only. The documented MFA, OAuth/SSO, account-lockout, and forgot-password branches are NOT covered - a real, named partial gap (see D140), not implied fully covered."
+  },
+  "C": {
+    "title": "The universal record lifecycle",
+    "specs": [
+      "order-to-cash.spec.ts",
+      "procure-to-pay.spec.ts",
+      "manufacturing.spec.ts",
+      "supply-chain.spec.ts",
+      "projects.spec.ts",
+      "communication.spec.ts",
+      "gl-post-close.spec.ts"
+    ],
+    "note": "Each of these is a concrete, module-specific instance of the C1-C4 pattern (list/detail/create-edit/state-machine) rather than a generic test of the pattern itself. Real coverage, not a gap, but worth naming explicitly rather than leaving the mapping implicit."
+  },
+  "D": {
+    "title": "Approval workflow",
+    "specs": [],
+    "gap": "No E2E test exercises a generic approval chain (submit, approve, reject, escalate) end to end."
+  },
+  "E": {
+    "title": "Frontline mobile (Sam)",
+    "specs": [],
+    "outOfScope": true,
+    "reason": "This is a WEB e2e suite (Playwright against the Next.js web client) - a mobile journey cannot be tested here at all. Needs its own coverage in unierp-mobile."
+  },
+  "F": {
+    "title": "AI Copilot",
+    "specs": [],
+    "gap": "No E2E test exercises the AI copilot journey."
+  },
+  "G": {
+    "title": "Extending without forking (Ravi, partner)",
+    "specs": ["builder.spec.ts"],
+    "note": "\"create and verify a custom entity\" via the builder is a real, direct match for this journey."
+  },
+  "crossCuttingSpecs": {
+    "tenant-isolation.spec.ts": "Tests APP_FLOW.md § 11 'Tenant-safe by construction' directly, not a named journey.",
+    "plane-2-boundary.spec.ts": "Tests the RBAC/plane-2 admin boundary, a security control not a user journey.",
+    "user-lifecycle.spec.ts": "Tests offboarding/session-revocation, a lifecycle/security guarantee, not one of the 7 named journeys."
+  }
+}
