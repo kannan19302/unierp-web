@@ -16,7 +16,6 @@ import "@kannan19302/ui/styles";
 // star re-export. That is what the subpath exports added in § 7.2 are for.
 import { ThemeProvider } from "@kannan19302/ui/theme";
 import { ToastProvider } from "@kannan19302/ui/notifications";
-import { CommandPalette } from "@/components/CommandPalette";
 import { QueryProvider } from "@/lib/query-provider";
 import { AppFrameworkProvider } from "@/lib/framework-provider";
 
@@ -53,7 +52,6 @@ export default function RootLayout({
           <QueryProvider>
             <AppFrameworkProvider>
               <ToastProvider>
-                <CommandPalette />
                 {children}
               </ToastProvider>
             </AppFrameworkProvider>
