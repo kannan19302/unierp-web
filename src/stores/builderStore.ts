@@ -36,6 +36,32 @@ export interface FormField {
   dataFilter?: string;
 }
 
+/** G10 — one step of a multi-step form. Mirrors unierp-developer's builderStore.ts. */
+export interface FormPage {
+  id: string;
+  title: string;
+  order: number;
+  fieldIds: string[];
+}
+
+export type ConditionOperator =
+  | "equals"
+  | "notEquals"
+  | "contains"
+  | "greaterThan"
+  | "lessThan"
+  | "isEmpty";
+export type ConditionAction = "show" | "hide" | "enable" | "disable" | "require";
+
+/** G10 — conditional visibility/requirement, evaluated against a live field value. */
+export interface FormCondition {
+  fieldId: string;
+  operator: ConditionOperator;
+  value?: string;
+  action: ConditionAction;
+  targetFieldId: string;
+}
+
 interface BuilderState {
   fields: FormField[];
   selectedFieldId: string | null;

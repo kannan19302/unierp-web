@@ -72,6 +72,15 @@ function CustomAppPageContent() {
   const formFields: any[] = Array.isArray(parsedLayout)
     ? parsedLayout
     : parsedLayout?.fields || [];
+  // G10 — multi-step pages and conditional logic, only present on layouts
+  // published from the Form Builder after G10 (older/legacy layouts, or the
+  // array-shaped ones, simply have neither and render exactly as before).
+  const formPages: any[] = Array.isArray(parsedLayout?.pages)
+    ? parsedLayout.pages
+    : [];
+  const formConditions: any[] = Array.isArray(parsedLayout?.conditions)
+    ? parsedLayout.conditions
+    : [];
   const listColumns = formFields
     .filter(
       (f: any) =>
@@ -235,6 +244,8 @@ function CustomAppPageContent() {
         </div>
         <DynamicFormRenderer
           schema={formFields}
+          pages={formPages}
+          conditions={formConditions}
           onSubmit={handleSubmit}
           initialData={editingRecord ? (editingRecord.data ?? {}) : {}}
           submitLabel={editingRecord ? "Update Record" : "Create Record"}
@@ -767,6 +778,8 @@ function RuntimeFormWidget({ widget }: { widget: any }) {
         ) : (
           <DynamicFormRenderer
             schema={formSchema.fields || []}
+            pages={formSchema.pages || []}
+            conditions={formSchema.conditions || []}
             onSubmit={handleSubmit}
             initialData={{}}
             submitLabel="Submit Response"

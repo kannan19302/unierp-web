@@ -1,10 +1,76 @@
 "use client";
 import { DataTable } from "@kannan19302/ui";
 
-import React, { useState, useEffect } from "react";
-import { DollarSign } from "lucide-react";
+import React, { useState, useEffect, useMemo } from "react";
+import { DollarSign, ChevronLeft, ChevronRight, Check } from "lucide-react";
 
-import { FormField } from "@/stores/builderStore";
+import {
+  FormField,
+  FormPage,
+  FormCondition,
+  ConditionOperator,
+} from "@/stores/builderStore";
+
+/** G10 — evaluate one condition's operator against a field's current value. */
+export function evaluateOperator(
+  operator: ConditionOperator,
+  actual: unknown,
+  expected: string | undefined,
+): boolean {
+  const actualStr = actual === undefined || actual === null ? "" : String(actual);
+  switch (operator) {
+    case "isEmpty":
+      return actualStr.trim() === "";
+    case "equals":
+      return actualStr === (expected ?? "");
+    case "notEquals":
+      return actualStr !== (expected ?? "");
+    case "contains":
+      return actualStr.toLowerCase().includes((expected ?? "").toLowerCase());
+    case "greaterThan":
+      return Number(actualStr) > Number(expected ?? 0);
+    case "lessThan":
+      return Number(actualStr) < Number(expected ?? 0);
+    default:
+      return false;
+  }
+}
+
+interface FieldConditionState {
+  visible: boolean;
+  enabled: boolean;
+  required: boolean;
+}
+
+/**
+ * G10 — resolve every field's effective visible/enabled/required state from
+ * its own declaration plus any conditions targeting it. A later condition in
+ * declaration order wins over an earlier one for the same (target, aspect)
+ * pair, so authoring order is the tie-break — the same rule the builder's
+ * own condition list implies by being a reorderable list.
+ */
+export function resolveConditionStates(
+  fields: FormField[],
+  conditions: FormCondition[],
+  formData: Record<string, unknown>,
+): Record<string, FieldConditionState> {
+  const states: Record<string, FieldConditionState> = {};
+  for (const f of fields) {
+    states[f.name] = { visible: true, enabled: true, required: !!f.required };
+  }
+  for (const c of conditions) {
+    const state = states[c.targetFieldId];
+    if (!state) continue;
+    const matched = evaluateOperator(c.operator, formData[c.fieldId], c.value);
+    if (!matched) continue;
+    if (c.action === "show") state.visible = true;
+    if (c.action === "hide") state.visible = false;
+    if (c.action === "enable") state.enabled = true;
+    if (c.action === "disable") state.enabled = false;
+    if (c.action === "require") state.required = true;
+  }
+  return states;
+}
 
 function AsyncLinkSelect({
   slug,
@@ -91,6 +157,10 @@ function AsyncLinkSelect({
 interface DynamicFormRendererProps {
   formId?: string;
   schema?: FormField[]; // Pass schema directly if not using localStorage
+  /** G10 — ordered steps. Omit or pass [] to render as a single page (unchanged behaviour). */
+  pages?: FormPage[];
+  /** G10 — conditional show/hide/enable/disable/require, evaluated live against `formData`. */
+  conditions?: FormCondition[];
   onSubmit: (data: Record<string, any>) => void;
   initialData?: Record<string, any>;
   isSubmitting?: boolean;
@@ -100,12 +170,20 @@ interface DynamicFormRendererProps {
 export function DynamicFormRenderer({
   formId,
   schema,
+  pages = [],
+  conditions = [],
   onSubmit,
   initialData = {},
   isSubmitting = false,
   submitLabel = "Submit",
 }: DynamicFormRendererProps) {
   const [fields, setFields] = useState<FormField[]>([]);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const sortedPages = useMemo(
+    () => [...pages].sort((a, b) => a.order - b.order),
+    [pages],
+  );
+  const isPaginated = sortedPages.length > 0;
   const [formData, setFormData] = useState<Record<string, any>>(() => {
     // Pre-populate default values if no initialData is given
     const initial = { ...initialData };
@@ -203,6 +281,83 @@ export function DynamicFormRenderer({
     }
   };
 
+  // G10 — recomputed on every keystroke/selection so a hidden field disappears
+  // (and a shown-again field reappears) reactively, not just at submit time.
+  const conditionStates = useMemo(
+    () => resolveConditionStates(fields, conditions, formData),
+    [fields, conditions, formData],
+  );
+
+  const currentPage = isPaginated ? sortedPages[currentPageIndex] : null;
+  const visibleFields = fields.filter(
+    (f) => conditionStates[f.name]?.visible !== false,
+  );
+  // Fields on the active step, in the SAME relative order as the master
+  // field list — the page only selects a subset, it never reorders.
+  const pageFields = currentPage
+    ? visibleFields.filter((f) => currentPage.fieldIds.includes(f.name))
+    : visibleFields;
+
+  const validateFields = (toValidate: FormField[]): boolean => {
+    const newErrors: Record<string, string> = {};
+    let ok = true;
+    toValidate.forEach((f: any) => {
+      const state = conditionStates[f.name];
+      if (state && !state.visible) return; // hidden fields are never validated
+      const value = formData[f.name];
+      const isRequired = state ? state.required : !!f.required;
+
+      if (
+        isRequired &&
+        !value &&
+        value !== 0 &&
+        f.type !== "Section Break" &&
+        f.type !== "Column Break" &&
+        f.type !== "HTML" &&
+        f.type !== "Button"
+      ) {
+        newErrors[f.name] = "This field is required";
+        ok = false;
+        return;
+      }
+
+      if (value && typeof value === "string") {
+        if (f.minLength && value.length < f.minLength) {
+          newErrors[f.name] = `Must be at least ${f.minLength} characters`;
+          ok = false;
+        }
+        if (f.maxLength && value.length > f.maxLength) {
+          newErrors[f.name] = `Cannot exceed ${f.maxLength} characters`;
+          ok = false;
+        }
+        if (f.regexPattern) {
+          try {
+            const regex = new RegExp(f.regexPattern);
+            if (!regex.test(value)) {
+              newErrors[f.name] = "Invalid format";
+              ok = false;
+            }
+          } catch {
+            // invalid regex pattern configured by user
+          }
+        }
+      }
+    });
+    setErrors((prev) => ({ ...prev, ...newErrors }));
+    return ok;
+  };
+
+  const handleNextPage = () => {
+    if (!currentPage) return;
+    const stepFields = fields.filter((f) => currentPage.fieldIds.includes(f.name));
+    if (!validateFields(stepFields)) return;
+    setCurrentPageIndex((i) => Math.min(i + 1, sortedPages.length - 1));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPageIndex((i) => Math.max(i - 1, 0));
+  };
+
   // Evaluate Formulas
   useEffect(() => {
     if (fields.length === 0) return;
@@ -255,56 +410,10 @@ export function DynamicFormRenderer({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Validation
-    const newErrors: Record<string, string> = {};
-    let isValid = true;
-
-    fields.forEach((f: any) => {
-      const value = formData[f.name];
-
-      if (
-        f.required &&
-        !value &&
-        value !== 0 &&
-        f.type !== "Section Break" &&
-        f.type !== "Column Break" &&
-        f.type !== "HTML" &&
-        f.type !== "Button"
-      ) {
-        newErrors[f.name] = "This field is required";
-        isValid = false;
-        return;
-      }
-
-      if (value && typeof value === "string") {
-        if (f.minLength && value.length < f.minLength) {
-          newErrors[f.name] = `Must be at least ${f.minLength} characters`;
-          isValid = false;
-        }
-        if (f.maxLength && value.length > f.maxLength) {
-          newErrors[f.name] = `Cannot exceed ${f.maxLength} characters`;
-          isValid = false;
-        }
-        if (f.regexPattern) {
-          try {
-            const regex = new RegExp(f.regexPattern);
-            if (!regex.test(value)) {
-              newErrors[f.name] = "Invalid format";
-              isValid = false;
-            }
-          } catch {
-            // invalid regex pattern configured by user
-          }
-        }
-      }
-    });
-
-    if (!isValid) {
-      setErrors(newErrors);
-      return;
-    }
-
+    // Re-validates every field (not just the active step) — a formula or a
+    // condition can change what's required after an earlier step was left,
+    // so the last check has to be against the whole form, not just page N.
+    if (!validateFields(fields)) return;
     onSubmit(formData);
   };
 
@@ -714,7 +823,7 @@ export function DynamicFormRenderer({
   let currentSection: SectionNode = { columns: [{ fields: [] }] };
   sections.push(currentSection);
 
-  fields.forEach((f: any) => {
+  pageFields.forEach((f: any) => {
     if (f.type === "Section Break") {
       currentSection = { breakField: f, columns: [{ fields: [] }] };
       sections.push(currentSection);
@@ -740,6 +849,64 @@ export function DynamicFormRenderer({
         boxShadow: "var(--shadow-sm)",
       }}
     >
+      {isPaginated && (
+        <div
+          role="progressbar"
+          aria-valuenow={currentPageIndex + 1}
+          aria-valuemin={1}
+          aria-valuemax={sortedPages.length}
+          style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
+        >
+          {sortedPages.map((p, i) => (
+            <React.Fragment key={p.id}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "var(--space-2)",
+                  color:
+                    i === currentPageIndex
+                      ? "var(--color-primary)"
+                      : i < currentPageIndex
+                        ? "var(--color-success)"
+                        : "var(--color-text-tertiary)",
+                  fontWeight: i === currentPageIndex ? 600 : 400,
+                  fontSize: "var(--text-sm)",
+                }}
+              >
+                <span
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "var(--text-xs)",
+                    border: "2px solid currentColor",
+                  }}
+                >
+                  {i < currentPageIndex ? <Check size={12} /> : i + 1}
+                </span>
+                {p.title}
+              </div>
+              {i < sortedPages.length - 1 && (
+                <div
+                  style={{
+                    flex: 1,
+                    height: "2px",
+                    background:
+                      i < currentPageIndex
+                        ? "var(--color-success)"
+                        : "var(--color-border)",
+                  }}
+                />
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+      )}
+
       {sections.map((section: any, sIdx: any) => {
         const colWeights = section.columns.map((c: any, i: any) => {
           if (i === 0) return section.breakField?.weight || 1;
@@ -862,7 +1029,8 @@ export function DynamicFormRenderer({
                                 }}
                               >
                                 {fNode.field.label}{" "}
-                                {fNode.field.required && (
+                                {(conditionStates[fNode.field.name]?.required ??
+                                  fNode.field.required) && (
                                   <span
                                     style={{ color: "var(--color-danger)" }}
                                   >
@@ -872,7 +1040,12 @@ export function DynamicFormRenderer({
                               </label>
                             )}
                             <div style={{ flex: isCheck ? "none" : 1 }}>
-                              {renderFieldInput(fNode.field)}
+                              {renderFieldInput({
+                                ...fNode.field,
+                                readOnly:
+                                  fNode.field.readOnly ||
+                                  conditionStates[fNode.field.name]?.enabled === false,
+                              })}
                             </div>
                             {errors[fNode.field.name] && (
                               <p
@@ -911,32 +1084,50 @@ export function DynamicFormRenderer({
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           marginTop: "var(--space-4)",
           paddingTop: "var(--space-4)",
           borderTop: "1px solid var(--color-border)",
         }}
       >
-        <button
-          type="submit"
-          className="ui-btn ui-btn-primary"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <span
-              className="animate-spin"
-              style={{
-                width: "14px",
-                height: "14px",
-                border: "2px solid rgba(255,255,255,0.3)",
-                borderTopColor: "white",
-                borderRadius: "50%",
-                display: "inline-block",
-              }}
-            />
-          ) : null}
-          <span>{submitLabel}</span>
-        </button>
+        {isPaginated && currentPageIndex > 0 ? (
+          <button
+            type="button"
+            className="ui-btn ui-btn-secondary"
+            onClick={handlePrevPage}
+          >
+            <ChevronLeft size={14} /> <span>Back</span>
+          </button>
+        ) : (
+          <span />
+        )}
+
+        {isPaginated && currentPageIndex < sortedPages.length - 1 ? (
+          <button type="button" className="ui-btn ui-btn-primary" onClick={handleNextPage}>
+            <span>Next</span> <ChevronRight size={14} />
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="ui-btn ui-btn-primary"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <span
+                className="animate-spin"
+                style={{
+                  width: "14px",
+                  height: "14px",
+                  border: "2px solid rgba(255,255,255,0.3)",
+                  borderTopColor: "white",
+                  borderRadius: "50%",
+                  display: "inline-block",
+                }}
+              />
+            ) : null}
+            <span>{submitLabel}</span>
+          </button>
+        )}
       </div>
     </form>
   );
