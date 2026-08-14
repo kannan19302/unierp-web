@@ -109,7 +109,8 @@ test.describe("Tenant Isolation", () => {
     await dashboardPage.expectNoErrorBoundaries();
   });
 
-  test("unauthenticated user cannot access tenant data", async ({ page }: any) => {
+  test("unauthenticated user cannot access tenant data", async ({ page, context }: any) => {
+    await context.clearCookies();
     // Clear any stored session by navigating to a protected route without login
     await page.goto("/sales/orders");
     await page.waitForLoadState("domcontentloaded");
