@@ -390,17 +390,18 @@ export default function RegisterPage() {
     try {
       const token = pendingLoginRef.current?.token;
       if (!token) return;
-      const tokenHeader = { Authorization: `Bearer ${token}` };
-      // Uninstall non-kernel apps the user deselected
+      // Install selected non-kernel apps, uninstall deselected ones
       for (const app of pickerApps) {
         if (app.isKernel) continue;
         const isSelected = selectedPickerApps.has(app.slug);
         try {
-          if (!isSelected) {
+          if (isSelected) {
+            await apiPost(`/admin/marketplace/install/${app.slug}`, {});
+          } else {
             await apiDelete(`/admin/marketplace/uninstall/${app.slug}`);
           }
         } catch {
-          // Best-effort — skip if already uninstalled
+          // Best-effort — skip if already installed/uninstalled
         }
       }
       setPickerDone(true);

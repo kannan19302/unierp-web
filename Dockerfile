@@ -24,6 +24,16 @@ COPY src ./src
 COPY app ./app
 COPY public ./public
 
+# ── dev ─────────────────────────────────────────────────────────────────────
+FROM builder AS dev
+ENV NODE_ENV=development
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_OPTIONS=--max-old-space-size=8192
+EXPOSE 3000
+CMD ["npx", "next", "dev", "-p", "3000", "-H", "0.0.0.0"]
+
+# ── build ───────────────────────────────────────────────────────────────────
+FROM dev AS prod-builder
 # Server-side only. The browser must call the web origin so next.config's
 # rewrite can send /api/v1/auth/* to the IdP and everything else to the API —
 # setting NEXT_PUBLIC_API_URL to a bare origin makes the browser bypass its own
@@ -56,11 +66,11 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/next.config.mjs ./next.config.mjs
+COPY --from=prod-builder /app/node_modules ./node_modules
+COPY --from=prod-builder /app/.next ./.next
+COPY --from=prod-builder /app/public ./public
+COPY --from=prod-builder /app/package.json ./package.json
+COPY --from=prod-builder /app/next.config.mjs ./next.config.mjs
 
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \

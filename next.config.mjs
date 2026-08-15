@@ -13,13 +13,14 @@ const nextConfig = {
   // Polling is already set via WATCHPACK_POLLING=1000 in the Docker env,
   // but this explicit config ensures it works even if that env var is absent.
   webpack: (config, { dev }) => {
-    if (dev && process.env.WATCHPACK_POLLING) {
+    if (dev) {
+      // Always poll in dev — inotify is unreliable on Docker Desktop bind
+      // mounts over WSL2's 9P bridge. Poll every 1 s; 300 ms debounce.
       config.watchOptions = {
         ...(config.watchOptions || {}),
-        poll: typeof process.env.WATCHPACK_POLLING === 'string'
-          ? parseInt(process.env.WATCHPACK_POLLING, 10) || 1000
-          : 1000,
+        poll: 1000,
         aggregateTimeout: 300,
+        ignored: /node_modules/,
       };
     }
     return config;
