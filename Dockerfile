@@ -29,8 +29,8 @@ FROM builder AS dev
 ENV NODE_ENV=development
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_OPTIONS=--max-old-space-size=8192
-EXPOSE 3000
-CMD ["npx", "next", "dev", "-p", "3000", "-H", "0.0.0.0"]
+EXPOSE 4003
+CMD ["npx", "next", "dev", "-p", "4003", "-H", "0.0.0.0"]
 
 # ── build ───────────────────────────────────────────────────────────────────
 FROM dev AS prod-builder
@@ -72,7 +72,7 @@ COPY --from=prod-builder /app/public ./public
 COPY --from=prod-builder /app/package.json ./package.json
 COPY --from=prod-builder /app/next.config.mjs ./next.config.mjs
 
-EXPOSE 3000
+EXPOSE 4003
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
-  CMD node -e "fetch('http://localhost:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
-CMD ["npx", "next", "start", "-p", "3000"]
+  CMD node -e "fetch('http://localhost:4003/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+CMD ["npx", "next", "start", "-p", "4003"]

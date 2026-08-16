@@ -1,0 +1,29 @@
+services:
+  tenant-apps:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: tenant-apps
+    ports:
+      - "4003:4003"
+    environment:
+      - NODE_ENV=development
+      - PORT=4003
+      - NEXTAUTH_SECRET=tenant-apps-super-secret-key-2026
+      - NEXTAUTH_URL=http://localhost:4003
+      - API_URL=http://localhost:3001
+      - IDP_URL=http://localhost:3005
+      - NEXT_PUBLIC_PLATFORM_PORTAL=http://localhost:4000
+    volumes:
+      - ./app:/app/app
+      - ./src:/app/src
+      - ./public:/app/public
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4003/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s

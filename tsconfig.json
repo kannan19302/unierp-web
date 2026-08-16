@@ -1,64 +1,31 @@
 {
-  "extends": "@kannan19302/config/typescript/nextjs.json",
   "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@kannan19302/ui": [
-        "../unierp-design-system/src/index.ts"
-      ],
-      "@kannan19302/ui/*": [
-        "../unierp-design-system/src/*"
-      ],
-      "@kannan19302/framework": [
-        "../unierp-framework/src/index.ts"
-      ],
-      "@kannan19302/framework/*": [
-        "../unierp-framework/src/*"
-      ],
-      "@kannan19302/shared/*": [
-        "../unierp-shared/src/*"
-      ],
-      "@kannan19302/shared": [
-        "../unierp-shared/src/index.ts"
-      ],
-      "@kannan19302/sdk": [
-        "../unierp-sdk/src/index.ts"
-      ],
-      "@kannan19302/contracts": [
-        "../unierp-contracts/src/index.ts"
-      ],
-      "@kannan19302/contracts/*": [
-        "../unierp-contracts/src/*"
-      ],
-      "@kannan19302/auth": [
-        "../unierp-auth/src/index.ts"
-      ],
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/lib/*": [
-        "./src/lib/*"
-      ],
-      "@/hooks/*": [
-        "./src/hooks/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/hooks/*": ["./src/hooks/*"]
     },
-    "noEmit": true,
-    "jsx": "preserve",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".next"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".next"]
 }
