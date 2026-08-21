@@ -28,10 +28,10 @@ importers:
         version: 1.0.3
       '@kannan19302/shared':
         specifier: ^1.0.5
-        version: 1.0.5
+        version: link:../shared
       '@kannan19302/ui':
         specifier: ^1.0.15
-        version: 1.0.15(@types/react@19.2.18)(next@15.5.23(@playwright/test@1.62.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react-is@16.13.1)(react@19.2.8)(redux@5.0.1)
+        version: link:../design-system
       '@tanstack/react-query':
         specifier: ^5.101.1
         version: 5.101.4(react@19.2.8)

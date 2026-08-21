@@ -14,8 +14,8 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import { DynamicFormRenderer } from "@/components/builder/DynamicFormRenderer";
-import { useToast } from "@/components/builder/ToastProvider";
+import { DynamicFormRenderer } from "@/components/form-runtime/DynamicFormRenderer";
+import { useToast } from "@/components/form-runtime/ToastProvider";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import { DataTable } from "@kannan19302/ui";
 type ViewMode = "list" | "form";

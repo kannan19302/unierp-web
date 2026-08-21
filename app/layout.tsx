@@ -3,6 +3,11 @@ import { Inter } from "next/font/google";
 
 export const dynamic = "force-dynamic";
 import "@kannan19302/ui/styles";
+// The CSS-MODULE bundle — a different file from "…/styles" above, which is only
+// tokens + layers. /apps renders <AppWizardGrid>, whose styling moved into
+// shell/wizard-grid.module.css; without this it renders unstyled. Same pairing
+// provider-admin-os already uses.
+import "@kannan19302/ui/styles.css";
 // Imported from their subpaths, not the root barrel.
 //
 // The root barrel re-exports these modules with `export *`, and a star
@@ -18,6 +23,7 @@ import { ThemeProvider } from "@kannan19302/ui/theme";
 import { ToastProvider } from "@kannan19302/ui/notifications";
 import { QueryProvider } from "@/lib/query-provider";
 import { AppFrameworkProvider } from "@/lib/framework-provider";
+import { AuthShell } from "@/components/AuthShell";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,13 +55,15 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider defaultSetting="light">
-          <QueryProvider>
-            <AppFrameworkProvider>
-              <ToastProvider>
-                {children}
-              </ToastProvider>
-            </AppFrameworkProvider>
-          </QueryProvider>
+          <AuthShell>
+            <QueryProvider>
+              <AppFrameworkProvider>
+                <ToastProvider>
+                  {children}
+                </ToastProvider>
+              </AppFrameworkProvider>
+            </QueryProvider>
+          </AuthShell>
         </ThemeProvider>
       </body>
     </html>

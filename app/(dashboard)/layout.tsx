@@ -54,45 +54,64 @@ import { CommandPalette } from "@/components/shell/CommandPalette";
 import { AICopilot } from "@/components/shell/AICopilot";
 import { useApiClient } from "@kannan19302/framework";
 
-const GLOBAL_SEARCH_ITEMS = [
-  { name: "Dashboard", href: "/dashboard", icon: Home, type: "App" },
+/**
+ * `slug` is the real GATED_MODULES / app-slug-map.ts identifier this item is
+ * gated by — NOT derived from `href`, which used to be the assumption and
+ * silently broke for "App Store" (href /apps/store, first segment "apps",
+ * which is not a real slug at all; the real one is "app-store") and would
+ * have broken it again the day anyone else added an item whose route nesting
+ * didn't happen to match its slug. `slug: null` marks chrome/utility items
+ * (Settings) that are not a gated module and are always visible.
+ */
+const GLOBAL_SEARCH_ITEMS: Array<{
+  name: string;
+  href: string;
+  icon: typeof Home;
+  type: string;
+  slug: string | null;
+}> = [
+  { name: "Dashboard", href: "/dashboard", icon: Home, type: "App", slug: null },
   {
     name: "Finance & Accounting",
     href: "/finance",
     icon: CreditCard,
     type: "App",
+    slug: "finance",
   },
-  { name: "Human Resources", href: "/hr", icon: Users, type: "App" },
-  { name: "CRM & Sales", href: "/crm", icon: BarChart3, type: "App" },
-  { name: "Inventory & Stock", href: "/inventory", icon: Package, type: "App" },
+  { name: "Human Resources", href: "/hr", icon: Users, type: "App", slug: "hr" },
+  { name: "CRM & Sales", href: "/crm", icon: BarChart3, type: "App", slug: "crm" },
+  { name: "Inventory & Stock", href: "/inventory", icon: Package, type: "App", slug: "inventory" },
   {
     name: "Procurement",
     href: "/procurement",
     icon: ShoppingCart,
     type: "App",
+    slug: "procurement",
   },
-  { name: "Sales & Orders", href: "/sales", icon: ClipboardList, type: "App" },
-  { name: "Supply Chain", href: "/supply-chain", icon: Truck, type: "App" },
+  { name: "Sales & Orders", href: "/sales", icon: ClipboardList, type: "App", slug: "sales" },
+  { name: "Supply Chain", href: "/supply-chain", icon: Truck, type: "App", slug: "supply-chain" },
   {
     name: "Project Management",
     href: "/projects",
     icon: Briefcase,
     type: "App",
+    slug: "projects",
   },
-  { name: "Manufacturing", href: "/manufacturing", icon: Hammer, type: "App" },
+  { name: "Manufacturing", href: "/manufacturing", icon: Hammer, type: "App", slug: "manufacturing" },
   {
     name: "Business Intelligence",
     href: "/analytics",
     icon: PieChart,
     type: "App",
+    slug: "analytics",
   },
-  { name: "Drive", href: "/drive", icon: FolderOpen, type: "App" },
-  { name: "Connect", href: "/connect", icon: MessageSquare, type: "App" },
-  { name: "POS & Retail", href: "/pos", icon: Store, type: "App" },
-  { name: "E-Commerce", href: "/ecommerce", icon: Globe, type: "App" },
-  { name: "App Store", href: "/apps/store", icon: Store, type: "App" },
-  { name: "Settings", href: "/settings", icon: Settings, type: "App" },
-  { name: "Studio", href: "/builder", icon: Cpu, type: "App" },
+  { name: "Drive", href: "/drive", icon: FolderOpen, type: "App", slug: "drive" },
+  { name: "Connect", href: "/connect", icon: MessageSquare, type: "App", slug: "communication" },
+  { name: "POS & Retail", href: "/pos", icon: Store, type: "App", slug: "pos" },
+  { name: "E-Commerce", href: "/ecommerce", icon: Globe, type: "App", slug: "ecommerce" },
+  { name: "App Store", href: "/apps/store", icon: Store, type: "App", slug: "app-store" },
+  { name: "Settings", href: "/settings", icon: Settings, type: "App", slug: null },
+  { name: "Studio", href: "/builder", icon: Cpu, type: "App", slug: "builder" },
 ];
 
 export default function DashboardLayout({
@@ -563,6 +582,23 @@ export default function DashboardLayout({
   const activeApps = allApplications.filter(
     (app: any) => KERNEL_APP_IDS.has(app.id) || installedApps.includes(app.id),
   );
+
+  // GLOBAL_SEARCH_ITEMS was never entitlement-filtered — every module, whether
+  // installed for this tenant or not, always showed up in the command
+  // palette search. Its href's first segment is the module slug (e.g.
+  // "/finance" -> "finance"), the same slug the sidebar's activeApps filter
+  // above already checks against KERNEL_APP_IDS / installedApps, so the same
+  // rule applies here rather than a second, separately-derived one.
+  const visibleSearchItems = useMemo(
+    () =>
+      GLOBAL_SEARCH_ITEMS.filter(
+        (item) =>
+          item.slug === null ||
+          KERNEL_APP_IDS.has(item.slug) ||
+          installedApps.includes(item.slug),
+      ),
+    [installedApps],
+  );
   const folderAppIds = switcherFolders.flatMap((f: any) => f.appIds);
   const rootApps = activeApps.filter((app: any) => !folderAppIds.includes(app.id));
   const visibleFolders = switcherFolders.filter(
@@ -647,7 +683,7 @@ export default function DashboardLayout({
             tenantDropdownRef={tenantDropdownRef}
             userDropdownRef={userDropdownRef}
             searchDropdownRef={searchDropdownRef}
-            GLOBAL_SEARCH_ITEMS={GLOBAL_SEARCH_ITEMS}
+            GLOBAL_SEARCH_ITEMS={visibleSearchItems}
           />
 
           {/* Content View Workspace */}
@@ -760,7 +796,7 @@ export default function DashboardLayout({
         <CommandPalette
           isOpen={cmdPaletteOpen}
           onClose={() => setCmdPaletteOpen(false)}
-          GLOBAL_SEARCH_ITEMS={GLOBAL_SEARCH_ITEMS}
+          GLOBAL_SEARCH_ITEMS={visibleSearchItems}
           onLogout={handleLogout}
         />
 

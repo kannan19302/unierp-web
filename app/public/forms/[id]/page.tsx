@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import { useParams } from "next/navigation";
-import { DynamicFormRenderer } from "@/components/builder/DynamicFormRenderer";
+import { DynamicFormRenderer } from "@/components/form-runtime/DynamicFormRenderer";
 
 export default function PublicFormPage() {
   const params = useParams();
