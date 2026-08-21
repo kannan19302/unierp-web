@@ -14,7 +14,8 @@
     "test:e2e": "playwright test",
     "test:e2e:journeys": "playwright test --project=journeys",
     "test:e2e:all": "playwright test --project=all-e2e",
-    "clean": "rimraf .next"
+    "clean": "rimraf .next",
+    "check:tokens": "node node_modules/@kannan19302/ui/scripts/check-tokens.mjs ."
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

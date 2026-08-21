@@ -87,3 +87,52 @@
   opacity: 1;
   transform: scale(1.1);
 }
+
+/* ── Impersonation banner ──
+   Was rendered TWICE, verbatim, one after the other — an impersonating user saw
+   two identical red bars. The first copy's button also omitted `border: none`,
+   so it drew a default browser border; that was the copy removed.
+
+   Colours are tokens now. The old inline pair (white on `#ef4444`) is 3.8:1,
+   which fails WCAG AA for body text. This uses the status-pill pairing the
+   brief mandates in §7 — --color-danger-text on --color-danger-light — which
+   design-system/scripts/check-contrast.mjs verifies at 4.5:1 in every theme.
+
+   NOTE ON CLASS NAMES: underscores, never hyphens — bundle-css-modules.mjs
+   namespaces with a trailing \b and a hyphen is a word boundary. */
+
+.impersonation_banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-text);
+  border: 1px solid var(--color-danger);
+  font-size: var(--text-sm);
+}
+
+.impersonation_label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.impersonation_end {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  border: 1px solid var(--color-danger);
+  background-color: transparent;
+  color: var(--color-danger-text);
+  cursor: pointer;
+}
+
+.impersonation_end:hover {
+  background-color: var(--color-danger);
+  color: var(--color-text-inverse);
+}
