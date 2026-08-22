@@ -1,7 +1,7 @@
 .style0 {
   display: flex;
   justify-content: center;
-  padding: 80px 0;
+  padding: var(--space-20) 0;
 }
 
 .style1 {
@@ -75,7 +75,7 @@
   width: 560px;
   max-height: 80vh;
   overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 var(--space-5) 60px rgba(0, 0, 0, 0.3);
 }
 
 .style12 {
@@ -149,14 +149,14 @@
 
 .style23 {
   display: grid;
-  grid-template-columns: 1fr 1fr 60px 32px;
+  grid-template-columns: 1fr 1fr 60px var(--space-8);
   gap: var(--space-2);
   margin-bottom: var(--space-2);
   align-items: center;
 }
 
 .style24 {
-  width: 40px;
+  width: var(--space-10);
   height: 36px;
   border: none;
   cursor: pointer;

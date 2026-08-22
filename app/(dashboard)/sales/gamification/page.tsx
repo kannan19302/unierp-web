@@ -47,7 +47,7 @@ export default function SalesGamificationPage() {
   const leaderboards = leaderboardData?.leaderboards || [];
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Sales Gamification & Leaderboards"
         description="Real-time sales competitions, quota attainment, achievement badges, and deal streak tracking."
@@ -57,11 +57,11 @@ export default function SalesGamificationPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "16px",
-          margin: "24px 0",
+          gap: "var(--space-4)",
+          margin: "var(--space-6) 0",
         }}
       >
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
@@ -77,7 +77,7 @@ export default function SalesGamificationPage() {
             <Trophy size={20} color="var(--chart-3)" />
           </div>
           <div
-            style={{ fontSize: "24px", fontWeight: "bold", marginTop: "8px" }}
+            style={{ fontSize: "var(--space-6)", fontWeight: "bold", marginTop: "var(--space-2)" }}
           >
             {leaderboards[0]?.name || "N/A"}
           </div>
@@ -85,7 +85,7 @@ export default function SalesGamificationPage() {
             ${(leaderboards[0]?.score || 0).toLocaleString()} booked
           </span>
         </Card>
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
@@ -101,7 +101,7 @@ export default function SalesGamificationPage() {
             <Flame size={20} color="var(--chart-4)" />
           </div>
           <div
-            style={{ fontSize: "24px", fontWeight: "bold", marginTop: "8px" }}
+            style={{ fontSize: "var(--space-6)", fontWeight: "bold", marginTop: "var(--space-2)" }}
           >
             {leaderboardData?.streakData?.streakCount || 0} Deals
           </div>
@@ -111,7 +111,7 @@ export default function SalesGamificationPage() {
             Rep: {leaderboardData?.streakData?.currentTopStreakRep}
           </span>
         </Card>
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
@@ -127,15 +127,15 @@ export default function SalesGamificationPage() {
             <Target size={20} color="var(--color-primary)" />
           </div>
           <div
-            style={{ fontSize: "20px", fontWeight: "bold", marginTop: "8px" }}
+            style={{ fontSize: "var(--space-5)", fontWeight: "bold", marginTop: "var(--space-2)" }}
           >
             {leaderboardData?.period || "Q3-2026"}
           </div>
         </Card>
       </div>
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Rep Rankings & Leaderboard
         </h3>
         <>{(() => {

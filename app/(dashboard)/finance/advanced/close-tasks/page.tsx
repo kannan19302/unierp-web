@@ -655,7 +655,7 @@ export default function CloseTasksPage() {
                   </label>
                   <input
                     type="number"
-                    className="ui-input max-w-[80px]"
+                    className="ui-input max-w-[var(--space-20)]"
                     value={threshold}
                     onChange={(e: any) => setThreshold(e.target.value)}
                     min="1"

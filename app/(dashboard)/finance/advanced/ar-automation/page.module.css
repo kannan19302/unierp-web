@@ -53,8 +53,8 @@
 
 .s11 {
   color: var(--color-warning);
-  height: 20px;
-  width: 20px;
+  height: var(--space-5);
+  width: var(--space-5);
 }
 
 .s12 {
@@ -109,8 +109,8 @@
 
 .s21 {
   color: var(--color-danger);
-  height: 20px;
-  width: 20px;
+  height: var(--space-5);
+  width: var(--space-5);
 }
 
 .s22 {

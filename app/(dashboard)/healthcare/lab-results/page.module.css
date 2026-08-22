@@ -3,9 +3,9 @@
   border-radius: var(--radius-md);
   display: flex;
   flex-shrink: 0;
-  height: 32px;
+  height: var(--space-8);
   justify-content: center;
-  width: 32px;
+  width: var(--space-8);
 }
 .s2 {
   font-size: 11px;

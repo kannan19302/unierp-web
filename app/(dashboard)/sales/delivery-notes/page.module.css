@@ -23,7 +23,7 @@
 }
 .p4 {
   position: absolute;
-  left: 12px;
+  left: var(--space-3);
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-text-secondary);

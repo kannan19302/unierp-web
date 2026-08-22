@@ -1504,7 +1504,7 @@ export default function RegisterPage() {
           50% { transform: scale(1.05); opacity: 0.8; }
         }
         @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
+          from { opacity: 0; transform: translateY(var(--space-5)); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes spin {

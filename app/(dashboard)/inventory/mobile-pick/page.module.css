@@ -15,7 +15,7 @@
   display: flex;
   font-size: var(--text-base);
   justify-content: space-between;
-  min-height: 64px;
+  min-height: var(--space-16);
   padding: var(--space-4);
   text-align: left;
   width: 100%;
@@ -77,12 +77,12 @@
 .qtyValue {
   font-size: var(--text-2xl);
   font-weight: var(--weight-bold);
-  min-width: 64px;
+  min-width: var(--space-16);
   text-align: center;
 }
 .bigBtn {
   font-size: var(--text-lg);
-  min-height: 64px;
+  min-height: var(--space-16);
 }
 .actionRow {
   display: flex;

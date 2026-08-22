@@ -74,13 +74,13 @@ export default function AdvancedHrCompensationPage() {
     );
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Pay Equity Compensation Band Designer & Salary Range Manager"
         description="Define fair compensation ranges by job level, ensure pay equity, and benchmark salaries against market data."
       />
-      <Card style={{ padding: "20px", margin: "24px 0" }}>
-        <div style={{ display: "flex", gap: "12px" }}>
+      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
+        <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <input
             type="text"
             placeholder="Band name (e.g. IC4 — Senior Engineer)"
@@ -88,7 +88,7 @@ export default function AdvancedHrCompensationPage() {
             onChange={(e: any) => setBandName(e.target.value)}
             style={{
               flex: 1,
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -97,7 +97,7 @@ export default function AdvancedHrCompensationPage() {
             value={jobLevel}
             onChange={(e: any) => setJobLevel(e.target.value)}
             style={{
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -120,8 +120,8 @@ export default function AdvancedHrCompensationPage() {
           <Button onClick={handleCreate}>Create Band</Button>
         </div>
       </Card>
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Compensation Salary Bands
         </h3>
         {bands.length === 0 ? (
@@ -129,7 +129,7 @@ export default function AdvancedHrCompensationPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No compensation bands defined.

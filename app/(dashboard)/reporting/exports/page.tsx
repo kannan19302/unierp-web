@@ -68,22 +68,22 @@ export default function ReportingExportsPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="High-Volume Multi-Format Report Export Hub"
         description="Generate on-demand exports in PDF, Excel XLSX, CSV, and XML formats with secure download URLs."
       />
 
-      <Card style={{ padding: "20px", margin: "24px 0" }}>
-        <h3 style={{ fontSize: "16px", fontWeight: 600, marginBottom: "12px" }}>
+      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
+        <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-3)" }}>
           Request Instant On-Demand Export
         </h3>
-        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
           <select
             value={reportType}
             onChange={(e: any) => setReportType(e.target.value)}
             style={{
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -109,8 +109,8 @@ export default function ReportingExportsPage() {
         </div>
       </Card>
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Export Download History
         </h3>
         {exportsList.length === 0 ? (
@@ -118,7 +118,7 @@ export default function ReportingExportsPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No report exports generated.

@@ -86,7 +86,7 @@ export function FieldRenderer({
       return (
         <input
           type="checkbox"
-          style={{ width: "16px", height: "16px" }}
+          style={{ width: "var(--space-4)", height: "var(--space-4)" }}
           disabled={previewMode && field.readOnly}
           defaultChecked={
             field.defaultValue === "true" || field.defaultValue === "1"
@@ -186,7 +186,7 @@ export function FieldRenderer({
               size={14}
               style={{
                 position: "absolute",
-                left: "8px",
+                left: "var(--space-2)",
                 top: "50%",
                 transform: "translateY(-50%)",
                 color: "var(--color-text-tertiary)",

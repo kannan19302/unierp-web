@@ -69,12 +69,12 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
     );
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Workforce Intelligence & People Analytics Command Center"
         description="Track headcount trends, attrition rates, tenure distribution, and employee engagement scores."
       />
-      <div style={{ display: "flex", gap: "16px", margin: "24px 0" }}>
+      <div style={{ display: "flex", gap: "var(--space-4)", margin: "var(--space-6) 0" }}>
         {[
           {
             label: "Total Headcount",
@@ -105,17 +105,17 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
             key={i}
             style={{
               flex: 1,
-              padding: "20px",
+              padding: "var(--space-5)",
               display: "flex",
               alignItems: "center",
-              gap: "16px",
+              gap: "var(--space-4)",
             }}
           >
             <div
               style={{
                 background: `${kpi.color}18`,
-                borderRadius: "12px",
-                padding: "12px",
+                borderRadius: "var(--space-3)",
+                padding: "var(--space-3)",
                 color: kpi.color,
               }}
             >
@@ -131,7 +131,7 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
               >
                 {kpi.label}
               </p>
-              <h3 style={{ fontSize: "24px", fontWeight: 700, margin: 0 }}>
+              <h3 style={{ fontSize: "var(--space-6)", fontWeight: 700, margin: 0 }}>
                 {kpi.value}
               </h3>
             </div>
@@ -142,13 +142,13 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
         style={{
           display: "flex",
           justifyContent: "flex-end",
-          marginBottom: "16px",
+          marginBottom: "var(--space-4)",
         }}
       >
         <Button onClick={handleGenerateSnapshot}>Generate Snapshot</Button>
       </div>
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Historical Snapshots
         </h3>
         {snapshots.length === 0 ? (
@@ -156,7 +156,7 @@ export default function AdvancedHrWorkforceAnalyticsPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No snapshots. Click Generate to capture current state.

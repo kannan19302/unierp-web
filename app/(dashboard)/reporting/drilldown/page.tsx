@@ -72,7 +72,7 @@ export default function ReportingDrilldownPage() {
     );
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Multi-Dimensional Data Drilldown & Pivot Explorer"
         description="Navigate hierarchical business dimensions, pivot revenue metrics, and drill into regional/product segmentation."
@@ -80,10 +80,10 @@ export default function ReportingDrilldownPage() {
 
       <Card
         style={{
-          padding: "20px",
-          margin: "24px 0",
+          padding: "var(--space-5)",
+          margin: "var(--space-6) 0",
           display: "flex",
-          gap: "16px",
+          gap: "var(--space-4)",
           alignItems: "flex-end",
         }}
       >
@@ -103,7 +103,7 @@ export default function ReportingDrilldownPage() {
             onChange={(e: any) => setDimension(e.target.value)}
             style={{
               width: "100%",
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -120,9 +120,9 @@ export default function ReportingDrilldownPage() {
       </Card>
 
       {drillResults && (
-        <Card style={{ padding: "24px" }}>
+        <Card style={{ padding: "var(--space-6)" }}>
           <h3
-            style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}
+            style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}
           >
             Drilldown Results — {drillResults.dimension} /{" "}
             {drillResults.metricKey}
@@ -138,8 +138,8 @@ export default function ReportingDrilldownPage() {
         </Card>
       )}
 
-      <Card style={{ padding: "24px", marginTop: "20px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)", marginTop: "var(--space-5)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Available Drilldown Dimension Paths
         </h3>
         {paths.map((p: any) => (
@@ -148,8 +148,8 @@ export default function ReportingDrilldownPage() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "12px",
-              padding: "12px",
+              gap: "var(--space-3)",
+              padding: "var(--space-3)",
               borderBottom: "1px solid #f1f5f9",
             }}
           >

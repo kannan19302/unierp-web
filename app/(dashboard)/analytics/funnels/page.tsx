@@ -63,7 +63,7 @@ export default function AnalyticsFunnelsPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Conversion Funnels & Dropoff Analytics"
         description="Track step-by-step user acquisition funnels, compute dropoff metrics, and optimize conversions."
@@ -71,22 +71,22 @@ export default function AnalyticsFunnelsPage() {
 
       <Card
         style={{
-          padding: "20px",
-          margin: "24px 0",
+          padding: "var(--space-5)",
+          margin: "var(--space-6) 0",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
         <div>
-          <h3 style={{ fontSize: "16px", fontWeight: 600 }}>
+          <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600 }}>
             Compute Live Funnel Conversions
           </h3>
           <p
             style={{
               fontSize: "13px",
               color: "var(--color-text-secondary)",
-              margin: "4px 0 0 0",
+              margin: "var(--space-1) 0 0 0",
             }}
           >
             Analyze conversion steps across user onboarding journeys.
@@ -95,8 +95,8 @@ export default function AnalyticsFunnelsPage() {
         <Button onClick={handleCompute}>Calculate Funnel Dropoff</Button>
       </Card>
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Funnel Audits
         </h3>
         {conversions.length === 0 ? (
@@ -104,7 +104,7 @@ export default function AnalyticsFunnelsPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No conversion funnel calculations recorded.

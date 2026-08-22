@@ -50,7 +50,7 @@ export default function SalesDocumentsPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Proposal & Contract Document Engine"
         description="Dynamic document generation, proposal templates, and e-signature tracking."
@@ -60,13 +60,13 @@ export default function SalesDocumentsPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 2fr",
-          gap: "24px",
-          margin: "24px 0",
+          gap: "var(--space-6)",
+          margin: "var(--space-6) 0",
         }}
       >
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <h3
-            style={{ fontSize: "16px", fontWeight: 600, marginBottom: "16px" }}
+            style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-4)" }}
           >
             Document Templates
           </h3>
@@ -84,7 +84,7 @@ export default function SalesDocumentsPage() {
                 <div
                   key={tmpl.id}
                   style={{
-                    padding: "12px",
+                    padding: "var(--space-3)",
                     border: "1px solid #e2e8f0",
                     borderRadius: "6px",
                   }}
@@ -94,7 +94,7 @@ export default function SalesDocumentsPage() {
                   </div>
                   <div
                     style={{
-                      fontSize: "12px",
+                      fontSize: "var(--space-3)",
                       color: "var(--color-text-secondary)",
                     }}
                   >
@@ -106,9 +106,9 @@ export default function SalesDocumentsPage() {
           )}
         </Card>
 
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <h3
-            style={{ fontSize: "16px", fontWeight: 600, marginBottom: "16px" }}
+            style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-4)" }}
           >
             Generated Proposals & Contracts
           </h3>
@@ -118,7 +118,7 @@ export default function SalesDocumentsPage() {
                 fontSize: "14px",
                 color: "var(--color-text-secondary)",
                 textAlign: "center",
-                padding: "32px 0",
+                padding: "var(--space-8) 0",
               }}
             >
               No generated documents yet.

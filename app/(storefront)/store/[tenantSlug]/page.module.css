@@ -51,18 +51,18 @@
 }
 .s10 {
   border-radius: var(--radius-md);
-  height: 32px;
+  height: var(--space-8);
   object-fit: cover;
-  width: 32px;
+  width: var(--space-8);
 }
 .s11 {
   align-items: center;
   border-radius: var(--radius-md);
   color: var(--color-bg-elevated);
   display: flex;
-  height: 32px;
+  height: var(--space-8);
   justify-content: center;
-  width: 32px;
+  width: var(--space-8);
 }
 .s12 {
   font-size: var(--text-lg);

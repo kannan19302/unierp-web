@@ -176,7 +176,7 @@ export default function ApprovalsPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    padding: "8px 12px",
+    padding: "var(--space-2) var(--space-3)",
     borderRadius: "6px",
     border: "1px solid var(--border-primary)",
     backgroundColor: "var(--bg-primary)",

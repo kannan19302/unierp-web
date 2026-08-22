@@ -197,7 +197,7 @@ export default function RecordTypesPage() {
   );
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    padding: "8px 12px",
+    padding: "var(--space-2) var(--space-3)",
     borderRadius: "6px",
     border: "1px solid var(--border-primary)",
     backgroundColor: "var(--bg-primary)",
@@ -209,7 +209,7 @@ export default function RecordTypesPage() {
     fontSize: "13px",
     fontWeight: 500,
     color: "var(--text-secondary)",
-    marginBottom: "4px",
+    marginBottom: "var(--space-1)",
   };
 
   if (loading) {

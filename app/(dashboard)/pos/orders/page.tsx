@@ -176,12 +176,43 @@ export default function POSOrdersPage() {
           </div>
         ) : (
           <div className={styles.p17}>
-            <>{(() => {
-                                    const columns = [
-                            { key: "col_0", header: h, render: (o: any) => (<>{o.orderNumber}</>) },
-                          ];
-                                    return <DataTable columns={columns} data={orders} rowKey={(o: any) => o.id} />;
-                                  })()}</>
+            {(() => {
+              const columns = [
+                { key: "orderNumber", header: "Order #", render: (o: any) => <strong>{o.orderNumber}</strong> },
+                { key: "customerName", header: "Customer", render: (o: any) => <>{o.customerName || "Walk-in"}</> },
+                { key: "type", header: "Type", render: (o: any) => <span className="ui-badge ui-badge-info">{o.type}</span> },
+                {
+                  key: "status",
+                  header: "Status",
+                  render: (o: any) => (
+                    <span
+                      className="ui-badge"
+                      style={{
+                        background: `${statusColor(o.status)}15`,
+                        color: statusColor(o.status),
+                      }}
+                    >
+                      {o.status}
+                    </span>
+                  ),
+                },
+                { key: "grandTotal", header: "Total", render: (o: any) => <>${Number(o.grandTotal || 0).toFixed(2)}</> },
+                { key: "createdAt", header: "Date", render: (o: any) => <>{new Date(o.createdAt).toLocaleString()}</> },
+                {
+                  key: "actions",
+                  header: "Actions",
+                  render: (o: any) => (
+                    <button
+                      onClick={() => loadOrderDetail(o.id)}
+                      className="ui-btn ui-btn-sm ui-btn-outline"
+                    >
+                      <Eye size={14} className="mr-1" /> View
+                    </button>
+                  ),
+                },
+              ];
+              return <DataTable columns={columns} data={orders} rowKey={(o: any) => o.id} />;
+            })()}
             <div className={styles.p28}>
               <button
                 disabled={page <= 1}

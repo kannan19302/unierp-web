@@ -149,10 +149,10 @@ export default function SupplyChainControlHub() {
     <RouteGuard permission="supply-chain:read">
       <div
         style={{
-          padding: "24px",
+          padding: "var(--space-6)",
           display: "flex",
           flexDirection: "column",
-          gap: "24px",
+          gap: "var(--space-6)",
         }}
       >
         <PageHeader
@@ -169,7 +169,7 @@ export default function SupplyChainControlHub() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "16px",
+            gap: "var(--space-4)",
           }}
         >
           <KPICard
@@ -198,14 +198,14 @@ export default function SupplyChainControlHub() {
           />
         </div>
 
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
-              gap: "12px",
-              marginBottom: "20px",
+              gap: "var(--space-3)",
+              marginBottom: "var(--space-5)",
               borderBottom: "1px solid #E5E7EB",
-              paddingBottom: "12px",
+              paddingBottom: "var(--space-3)",
             }}
           >
             <Button
@@ -251,8 +251,8 @@ export default function SupplyChainControlHub() {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "16px",
-              paddingTop: "12px",
+              gap: "var(--space-4)",
+              paddingTop: "var(--space-3)",
             }}
           >
             <FormField label="LC Reference Number">
@@ -298,8 +298,8 @@ export default function SupplyChainControlHub() {
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                gap: "12px",
-                marginTop: "16px",
+                gap: "var(--space-3)",
+                marginTop: "var(--space-4)",
               }}
             >
               <Button

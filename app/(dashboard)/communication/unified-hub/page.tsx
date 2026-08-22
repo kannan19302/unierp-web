@@ -136,10 +136,10 @@ export default function CommunicationUnifiedHub() {
     <RouteGuard permission="communication:read">
       <div
         style={{
-          padding: "24px",
+          padding: "var(--space-6)",
           display: "flex",
           flexDirection: "column",
-          gap: "24px",
+          gap: "var(--space-6)",
         }}
       >
         <PageHeader
@@ -157,7 +157,7 @@ export default function CommunicationUnifiedHub() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-            gap: "16px",
+            gap: "var(--space-4)",
           }}
         >
           <KPICard
@@ -186,9 +186,9 @@ export default function CommunicationUnifiedHub() {
           />
         </div>
 
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <h3
-            style={{ marginBottom: "16px", fontSize: "18px", fontWeight: 600 }}
+            style={{ marginBottom: "var(--space-4)", fontSize: "18px", fontWeight: 600 }}
           >
             Enterprise Shared Inboxes & Mail Hub
           </h3>
@@ -209,8 +209,8 @@ export default function CommunicationUnifiedHub() {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "16px",
-              paddingTop: "12px",
+              gap: "var(--space-4)",
+              paddingTop: "var(--space-3)",
             }}
           >
             <FormField label="Inbox Display Name">
@@ -246,8 +246,8 @@ export default function CommunicationUnifiedHub() {
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                gap: "12px",
-                marginTop: "16px",
+                gap: "var(--space-3)",
+                marginTop: "var(--space-4)",
               }}
             >
               <Button

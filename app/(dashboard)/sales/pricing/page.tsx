@@ -72,7 +72,7 @@ export default function AdvancedPricingPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Advanced Pricing & Volume Discount Matrix"
         description="Multi-currency price lists, automated volume tier discounting, and margin floor protection rules."
@@ -82,18 +82,18 @@ export default function AdvancedPricingPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: "24px",
-          margin: "24px 0",
+          gap: "var(--space-6)",
+          margin: "var(--space-6) 0",
         }}
       >
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <h3
-            style={{ fontSize: "16px", fontWeight: 600, marginBottom: "16px" }}
+            style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-4)" }}
           >
             Volume Discount Simulator
           </h3>
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+            style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}
           >
             <div>
               <label
@@ -113,10 +113,10 @@ export default function AdvancedPricingPage() {
                 }
                 style={{
                   width: "100%",
-                  padding: "8px 12px",
+                  padding: "var(--space-2) var(--space-3)",
                   borderRadius: "6px",
                   border: "1px solid #cbd5e1",
-                  marginTop: "4px",
+                  marginTop: "var(--space-1)",
                 }}
               />
             </div>
@@ -141,14 +141,14 @@ export default function AdvancedPricingPage() {
                 }
                 style={{
                   width: "100%",
-                  padding: "8px 12px",
+                  padding: "var(--space-2) var(--space-3)",
                   borderRadius: "6px",
                   border: "1px solid #cbd5e1",
-                  marginTop: "4px",
+                  marginTop: "var(--space-1)",
                 }}
               />
             </div>
-            <Button onClick={handleCalculate} style={{ marginTop: "8px" }}>
+            <Button onClick={handleCalculate} style={{ marginTop: "var(--space-2)" }}>
               Calculate Price
             </Button>
           </div>
@@ -156,10 +156,10 @@ export default function AdvancedPricingPage() {
           {calcResult && (
             <div
               style={{
-                marginTop: "20px",
-                padding: "16px",
+                marginTop: "var(--space-5)",
+                padding: "var(--space-4)",
                 backgroundColor: "var(--color-bg-sunken)",
-                borderRadius: "8px",
+                borderRadius: "var(--space-2)",
                 border: "1px solid #e2e8f0",
               }}
             >
@@ -178,7 +178,7 @@ export default function AdvancedPricingPage() {
                 style={{
                   fontSize: "18px",
                   fontWeight: "bold",
-                  marginTop: "4px",
+                  marginTop: "var(--space-1)",
                 }}
               >
                 Unit Price: ${calcResult.unitPrice.toFixed(2)}
@@ -197,9 +197,9 @@ export default function AdvancedPricingPage() {
           )}
         </Card>
 
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <h3
-            style={{ fontSize: "16px", fontWeight: 600, marginBottom: "16px" }}
+            style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-4)" }}
           >
             Multi-Currency Exchange Matrix
           </h3>

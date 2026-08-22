@@ -107,7 +107,7 @@ function VerifyEmailContent() {
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  padding: "24px 8px",
+                  padding: "var(--space-6) var(--space-2)",
                 }}
               >
                 <Spinner size="md" />
@@ -116,12 +116,12 @@ function VerifyEmailContent() {
             )}
 
             {status === "success" && (
-              <div style={{ textAlign: "center", padding: "16px 8px" }}>
+              <div style={{ textAlign: "center", padding: "var(--space-4) var(--space-2)" }}>
                 <CheckCircle2
                   size={40}
                   style={{ color: "var(--color-success)" }}
                 />
-                <h3 style={{ margin: "12px 0 4px" }}>Email verified!</h3>
+                <h3 style={{ margin: "var(--space-3) 0 var(--space-1)" }}>Email verified!</h3>
                 <p
                   style={{ marginBottom: 20, color: "var(--color-text-muted)" }}
                 >

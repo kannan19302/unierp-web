@@ -1,6 +1,6 @@
 .s1 {
-  height: 20px;
-  width: 20px;
+  height: var(--space-5);
+  width: var(--space-5);
 }
 .s2 {
   border-bottom: 1px solid var(--color-border);
@@ -134,8 +134,8 @@
 }
 .s28 {
   color: var(--color-text-secondary);
-  height: 16px;
-  width: 16px;
+  height: var(--space-4);
+  width: var(--space-4);
 }
 .s29 {
   background: var(--color-bg);

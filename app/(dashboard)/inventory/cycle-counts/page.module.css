@@ -110,5 +110,5 @@
 .s21 {
   margin: 0 auto;
   text-align: center;
-  width: 80px;
+  width: var(--space-20);
 }

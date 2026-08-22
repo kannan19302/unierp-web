@@ -573,7 +573,7 @@ export default function POSAdvancedPage() {
                         : "var(--color-border)",
                     }}
                   >
-                    <div style={{ left: opt.enabled ? "20px" : "2px" }} />
+                    <div style={{ left: opt.enabled ? "var(--space-5)" : "2px" }} />
                   </div>
                 </div>
               ))}

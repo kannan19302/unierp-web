@@ -112,7 +112,7 @@ export default function PipelineAnomaliesPage() {
                   marginBottom: "0.5rem",
                   background: "var(--color-bg-sunken)",
                   borderRadius: 6,
-                  borderLeft: `4px solid ${a.severity === "high" ? "var(--chart-4)" : a.severity === "medium" ? "var(--chart-3)" : "var(--color-primary)"}`,
+                  borderLeft: `var(--space-1) solid ${a.severity === "high" ? "var(--chart-4)" : a.severity === "medium" ? "var(--chart-3)" : "var(--color-primary)"}`,
                 }}
               >
                 <div

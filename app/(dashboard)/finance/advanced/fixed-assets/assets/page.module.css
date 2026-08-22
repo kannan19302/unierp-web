@@ -6,8 +6,8 @@
 }
 .s2 {
   color: var(--color-primary);
-  height: 32px;
-  width: 32px;
+  height: var(--space-8);
+  width: var(--space-8);
 }
 .s3 {
   display: flex;
@@ -16,11 +16,11 @@
   padding: var(--space-6);
 }
 .s4 {
-  width: 16px;
+  width: var(--space-4);
 }
 .s5 {
   margin-right: var(--space-2);
-  width: 16px;
+  width: var(--space-4);
 }
 .s6 {
   display: flex;
@@ -39,7 +39,7 @@
   color: var(--color-text-secondary);
   left: var(--space-3);
   position: absolute;
-  width: 16px;
+  width: var(--space-4);
 }
 .s9 {
   padding-left: var(--space-10);
@@ -64,6 +64,6 @@
   padding-inline: var(--space-3);
 }
 .s14 {
-  height: 12px;
-  width: 12px;
+  height: var(--space-3);
+  width: var(--space-3);
 }

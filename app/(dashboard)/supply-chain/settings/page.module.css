@@ -18,9 +18,9 @@
   background: var(--color-bg-muted);
   border-radius: var(--radius-md);
   display: flex;
-  height: 40px;
+  height: var(--space-10);
   justify-content: center;
-  width: 40px;
+  width: var(--space-10);
 }
 .cardContent {
   flex: 1;

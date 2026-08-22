@@ -399,19 +399,33 @@ export default function ForecastingPage() {
           <h3 className={`${styles.sectionTitle} ${styles.titleWithIcon}`}>
             <Award size={18} /> Rep Leaderboard
           </h3>
-          <>{(() => {
-                          const columns = [
-                    { key: "col_0", header: "{col.label}<SortIcon field={col.key} />" , render: (rep: any) => (<>{idx === 0 && (
-                                        <Award size={14} className="ui-text-warning" />
-                                      )}{rep.name}</>) },
-                    { key: "col_1", header: "Col 1" , render: (rep: any) => (<>{rep.dealsWon}</>) },
-                    { key: "col_2", header: "Col 2" , render: (rep: any) => (<>{fmtCurrency(rep.revenue)}</>) },
-                    { key: "col_3", header: "Col 3" , render: (rep: any) => (<>{fmtCurrency(rep.avgDealSize)}</>) },
-                    { key: "col_4", header: "Col 4" , render: (rep: any) => (<><Clock size={12} className="ui-text-muted" />{" "}{rep.avgCycleTimeDays}d
-                                    </>) },
-                  ];
-                          return <DataTable columns={columns} data={sortedReps} rowKey={(rep: any) => rep.id} />;
-                      })()}</>
+          {(() => {
+            const columns = [
+              {
+                key: "name",
+                header: "Rep Name",
+                render: (rep: any, idx: number) => (
+                  <span className="flex items-center gap-1.5">
+                    {idx === 0 && <Award size={14} className="ui-text-warning" />}
+                    {rep.name}
+                  </span>
+                ),
+              },
+              { key: "dealsWon", header: "Deals Won", render: (rep: any) => <>{rep.dealsWon}</> },
+              { key: "revenue", header: "Revenue", render: (rep: any) => <>{fmtCurrency(rep.revenue)}</> },
+              { key: "avgDealSize", header: "Avg Deal Size", render: (rep: any) => <>{fmtCurrency(rep.avgDealSize)}</> },
+              {
+                key: "avgCycleTime",
+                header: "Avg Cycle Time",
+                render: (rep: any) => (
+                  <span className="flex items-center gap-1">
+                    <Clock size={12} className="ui-text-muted" /> {rep.avgCycleTimeDays}d
+                  </span>
+                ),
+              },
+            ];
+            return <DataTable columns={columns} data={sortedReps} rowKey={(rep: any) => rep.id} />;
+          })()}
         </div>
       </Card>
 

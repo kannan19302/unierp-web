@@ -48,11 +48,11 @@
   width: 100%;
 }
 .s11 {
-  width: 40px;
+  width: var(--space-10);
 }
 .s12 {
   text-align: right;
-  width: 80px;
+  width: var(--space-20);
 }
 .s13 {
   color: var(--color-text-tertiary);

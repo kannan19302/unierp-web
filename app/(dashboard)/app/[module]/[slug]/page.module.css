@@ -46,7 +46,7 @@
   cursor: pointer;
   display: flex;
   position: absolute;
-  right: 8px;
+  right: var(--space-2);
   top: 50%;
   transform: translateY(-50%);
 }
@@ -116,7 +116,7 @@
   padding: var(--space-3);
 }
 .s24 {
-  min-width: 32px;
+  min-width: var(--space-8);
 }
 .s25 {
   font-size: var(--text-xl);
@@ -419,7 +419,7 @@
   white-space: nowrap;
 }
 .s76 {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px var(--space-1) rgba(0, 0, 0, 0.05);
   cursor: pointer;
   width: 100%;
 }
@@ -458,7 +458,7 @@
 }
 .s84 {
   color: var(--color-text-tertiary);
-  left: 12px;
+  left: var(--space-3);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

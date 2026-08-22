@@ -34,7 +34,7 @@
 }
 .s7 {
   border-top: 1px solid var(--color-border-light);
-  min-height: 40px;
+  min-height: var(--space-10);
   padding: var(--space-1);
 }
 .s8 {

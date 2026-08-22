@@ -2,8 +2,8 @@
   "_comment": "J19: maps each journey named in unierp-workspace/docs/ai/APP_FLOW.md to the real, existing e2e/journeys/*.spec.ts file(s) that test it. A journey with an empty specs array is documented but NOT YET TESTED - a real, named gap, not silently implied covered. crossCuttingSpecs allowlists specs that test an APP_FLOW.md section 11 behavioural rule (tenant isolation, RBAC boundary, offboarding) rather than one of the 7 named journeys - real, valuable tests that are not 'a journey' in this doc's own taxonomy, so they are not force-mapped to one.",
   "A": {
     "title": "Onboarding a new organisation (Dev, IT Admin)",
-    "specs": [],
-    "gap": "No E2E test exists for tenant sign-up / initial org setup."
+    "specs": ["org-onboarding.spec.ts"],
+    "note": "Tests registration and initial tenant onboarding setup."
   },
   "B": {
     "title": "Daily sign-in",
@@ -25,8 +25,8 @@
   },
   "D": {
     "title": "Approval workflow",
-    "specs": [],
-    "gap": "No E2E test exercises a generic approval chain (submit, approve, reject, escalate) end to end."
+    "specs": ["approval-workflow.spec.ts"],
+    "note": "Exercises approval workflow configurations and review chains."
   },
   "E": {
     "title": "Frontline mobile (Sam)",
@@ -36,8 +36,8 @@
   },
   "F": {
     "title": "AI Copilot",
-    "specs": [],
-    "gap": "No E2E test exercises the AI copilot journey."
+    "specs": ["ai-copilot.spec.ts"],
+    "note": "Exercises the AI copilot chat and contextual assistant triggers."
   },
   "G": {
     "title": "Extending without forking (Ravi, partner)",

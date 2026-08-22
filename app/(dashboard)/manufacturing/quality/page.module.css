@@ -187,7 +187,7 @@
 }
 .p28 {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 60px 60px 40px;
+  grid-template-columns: 1.5fr 1fr 60px 60px var(--space-10);
   gap: var(--space-1-5);
   align-items: center;
 }

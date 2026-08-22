@@ -85,8 +85,8 @@
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border-radius: var(--radius-full);
   background: var(--color-primary-light);
   color: var(--color-primary);

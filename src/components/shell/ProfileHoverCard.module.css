@@ -15,14 +15,14 @@
 
 .avatarWrap {
   position: relative;
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   flex-shrink: 0;
 }
 
 .avatarInitials {
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border-radius: var(--radius-full);
   background: linear-gradient(
     135deg,
@@ -39,8 +39,8 @@
 }
 
 .avatarImg {
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border-radius: var(--radius-full);
   object-fit: cover;
   border: 1px solid var(--color-border);
@@ -61,14 +61,14 @@
 
 .card {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + var(--space-2));
   right: 0;
   width: 336px;
-  max-width: calc(100vw - 24px);
+  max-width: calc(100vw - var(--space-6));
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.18));
+  box-shadow: var(--shadow-lg, 0 var(--space-3) var(--space-8) rgba(0, 0, 0, 0.18));
   padding: var(--space-4);
   z-index: 200;
   animation: cardIn 0.12s ease-out;
@@ -320,7 +320,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 7px 8px;
+  padding: 7px var(--space-2);
   border-radius: var(--radius-md);
   font-size: var(--text-xs);
   color: var(--color-text-secondary);

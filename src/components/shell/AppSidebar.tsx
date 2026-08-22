@@ -191,16 +191,6 @@ export function AppSidebar({
           </button>
         </div>
 
-        {/* Workspace Switcher */}
-        {!collapsed && (
-          <div className="px-3 py-2 border-b border-[var(--color-border)]">
-            <select className="w-full bg-[var(--color-bg-sunken)] border border-[var(--color-border)] text-sm rounded-md px-2 py-1.5 focus:outline-none focus:border-[var(--color-primary)]">
-              <option>Acme Corp (Primary)</option>
-              <option>Globex Inc</option>
-            </select>
-          </div>
-        )}
-
         {/* Navigation Items */}
         <nav aria-label="Module navigation" className={styles.nav}>
           <Suspense fallback={<div className="flex-1" />}>

@@ -48,12 +48,12 @@
     var(--color-primary)
   );
   border-radius: var(--radius-xl);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 var(--space-2) var(--space-5) rgba(99, 102, 241, 0.3);
   color: var(--color-text-inverse);
   display: flex;
-  height: 48px;
+  height: var(--space-12);
   justify-content: center;
-  width: 48px;
+  width: var(--space-12);
 }
 .s8 {
   color: var(--color-text);
@@ -161,7 +161,7 @@
   display: flex;
   padding: 0;
   position: absolute;
-  right: 12px;
+  right: var(--space-3);
   top: 50%;
   transform: translateY(-50%);
 }
@@ -177,8 +177,8 @@
 .s25 {
   accent-color: var(--color-primary);
   cursor: pointer;
-  height: 16px;
-  width: 16px;
+  height: var(--space-4);
+  width: var(--space-4);
 }
 .s26 {
   color: var(--color-text-secondary);
@@ -221,7 +221,7 @@
 .s30 {
   align-items: center;
   animation: fadeInUp 0.2s ease-out;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(var(--space-1));
   background: rgba(0, 0, 0, 0.5);
   bottom: 0;
   display: flex;
@@ -349,9 +349,9 @@
   border-radius: var(--radius-full);
   color: var(--color-primary);
   display: flex;
-  height: 64px;
+  height: var(--space-16);
   justify-content: center;
-  width: 64px;
+  width: var(--space-16);
 }
 .pushTitle {
   font-size: var(--text-lg);

@@ -2,8 +2,8 @@
   height: 100%;
 }
 .s2 {
-  height: 16px;
-  width: 16px;
+  height: var(--space-4);
+  width: var(--space-4);
 }
 .s3 {
   display: flex;
@@ -45,5 +45,5 @@
 }
 .s13 {
   flex-shrink: 0;
-  height: 40px;
+  height: var(--space-10);
 }

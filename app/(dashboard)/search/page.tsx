@@ -3,7 +3,6 @@
 import { useState, useCallback } from "react";
 import { Search, Save, Clock, TrendingUp } from "lucide-react";
 import { DataTable } from "@kannan19302/ui";
-import type { Column, DataTable } from "@kannan19302/ui";
 
 interface SearchResult {
   entity: string;
@@ -102,7 +101,7 @@ export default function SearchPage() {
                                   View
                                 </a></>) },
               ];
-                      return <DataTable columns={columns} data={results} rowKey={(r: any) => `${r.entity}-${r.id}-${i}`} />;
+                      return <DataTable columns={columns} data={results} rowKey={(r: any) => `${r.entity}-${r.id}`} />;
                   })()}</>
       )}
     </div>

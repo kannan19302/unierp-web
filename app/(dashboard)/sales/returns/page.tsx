@@ -453,32 +453,42 @@ export default function SalesReturnsPage() {
                       </div>
                     ) : (
                       <div className={styles.p41}>
-                        <>{(() => {
-                                                                  const columns = [
-                                                            { key: "col_0", header: "Description" , render: (item: any) => (<>{item.description}</>) },
-                                                            { key: "col_1", header: "Qty" , render: (item: any) => (<><input
-                                                                                                type="number"
-                                                                                                min={0}
-                                                                                                value={item.quantity}
-                                                                                                onChange={(e: any) => {
-                                                                                                  const updated = [...lineItems];
-                                                                                                  updated[index]!.quantity = Number(
-                                                                                                    e.target.value,
-                                                                                                  );
-                                                                                                  setLineItems(updated);
-                                                                                                }}
-                                                                                                className={styles.p49}
-                                                                                              /></>) },
-                                                            { key: "col_2", header: "Unit Price" , render: (item: any) => (<>${item.unitPrice.toLocaleString()}</>) },
-                                                            { key: "col_3", header: "Tax (%)" , render: (item: any) => (<>{item.taxRate}%
-                                                                                            </>) },
-                                                            { key: "col_4", header: "Total" , render: (item: any) => (<>$
-                                                                                              {total.toLocaleString(undefined, {
-                                                                                                minimumFractionDigits: 2,
-                                                                                              })}</>) },
-                                                          ];
-                                                                  return <DataTable columns={columns} data={lineItems} rowKey={(item: any, index: number) => String(index)} />;
-                                                              })()}</>
+                        {(() => {
+                          const columns = [
+                            { key: "description", header: "Description", render: (item: any) => <>{item.description}</> },
+                            {
+                              key: "qty",
+                              header: "Qty",
+                              render: (item: any, index?: number) => (
+                                <input
+                                  type="number"
+                                  min={0}
+                                  value={item.quantity}
+                                  onChange={(e: any) => {
+                                    const updated = [...lineItems];
+                                    const idx = index ?? 0;
+                                    if (updated[idx]) {
+                                      updated[idx]!.quantity = Number(e.target.value);
+                                      setLineItems(updated);
+                                    }
+                                  }}
+                                  className={styles.p49}
+                                />
+                              ),
+                            },
+                            { key: "unitPrice", header: "Unit Price", render: (item: any) => <>${Number(item.unitPrice || 0).toLocaleString()}</> },
+                            { key: "taxRate", header: "Tax (%)", render: (item: any) => <>{item.taxRate}%</> },
+                            {
+                              key: "total",
+                              header: "Total",
+                              render: (item: any) => {
+                                const total = (Number(item.quantity) || 0) * (Number(item.unitPrice) || 0) * (1 + (Number(item.taxRate) || 0) / 100);
+                                return <>${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</>;
+                              },
+                            },
+                          ];
+                          return <DataTable columns={columns} data={lineItems} rowKey={(item: any, index: number) => String(index)} />;
+                        })()}
                       </div>
                     )}
                   </div>

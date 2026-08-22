@@ -21,10 +21,10 @@
   border-radius: 50%;
   color: var(--color-success);
   display: flex;
-  height: 64px;
+  height: var(--space-16);
   justify-content: center;
   margin: 0 auto var(--space-4);
-  width: 64px;
+  width: var(--space-16);
 }
 .s4 {
   color: var(--color-text);

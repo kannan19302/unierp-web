@@ -1,7 +1,7 @@
 .style0 {
   display: flex;
   justify-content: center;
-  padding: 80px 0;
+  padding: var(--space-20) 0;
 }
 
 .style1 {
@@ -155,7 +155,7 @@
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   width: 480px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 var(--space-5) 60px rgba(0, 0, 0, 0.3);
 }
 
 .style23 {
@@ -215,7 +215,7 @@
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   width: 420px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 var(--space-5) 60px rgba(0, 0, 0, 0.3);
 }
 
 .style32 {
@@ -226,8 +226,8 @@
 }
 
 .style33 {
-  width: 40px;
-  height: 40px;
+  width: var(--space-10);
+  height: var(--space-10);
   border-radius: 10px;
   background-color: rgba(239, 68, 68, 0.1);
   display: flex;
@@ -275,7 +275,7 @@
   margin: 0 0 var(--space-4);
 }
 .s5 {
-  min-height: 80px;
+  min-height: var(--space-20);
   resize: vertical;
 }
 .s6 {

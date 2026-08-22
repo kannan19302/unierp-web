@@ -72,7 +72,7 @@
   flex: 2;
 }
 .p12 {
-  width: 80px;
+  width: var(--space-20);
 }
 .p13 {
   border: none;

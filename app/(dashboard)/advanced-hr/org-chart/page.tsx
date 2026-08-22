@@ -51,7 +51,7 @@ export default function AdvancedHrOrgChartPage() {
     );
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Live Organizational Chart & Reporting Hierarchy Visualizer"
         description="Browse the real-time org chart tree, view span-of-control, and audit headcount by department."
@@ -61,13 +61,13 @@ export default function AdvancedHrOrgChartPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "2fr 1fr",
-          gap: "20px",
-          marginTop: "24px",
+          gap: "var(--space-5)",
+          marginTop: "var(--space-6)",
         }}
       >
-        <Card style={{ padding: "24px" }}>
+        <Card style={{ padding: "var(--space-6)" }}>
           <h3
-            style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}
+            style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}
           >
             Org Chart Nodes
           </h3>
@@ -76,7 +76,7 @@ export default function AdvancedHrOrgChartPage() {
               style={{
                 color: "var(--color-text-secondary)",
                 textAlign: "center",
-                padding: "32px 0",
+                padding: "var(--space-8) 0",
               }}
             >
               No org chart nodes defined.
@@ -89,14 +89,14 @@ export default function AdvancedHrOrgChartPage() {
                             { key: "col_2", header: "Level" , render: (n: any) => (<><Badge variant="info">L{n.reportingLevel}</Badge></>) },
                             { key: "col_3", header: "Headcount" , render: (n: any) => (<>{n.headcount}</>) },
                           ];
-                                  return <DataTable columns={columns} data={nodes} rowKey={(n: any) => n.id ?? i} />;
+                                  return <DataTable columns={columns} data={nodes} rowKey={(n: any) => n.id ?? Math.random().toString()} />;
                               })()}</>
           )}
         </Card>
 
-        <Card style={{ padding: "24px" }}>
+        <Card style={{ padding: "var(--space-6)" }}>
           <h3
-            style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}
+            style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}
           >
             Headcount by Department
           </h3>
@@ -105,7 +105,7 @@ export default function AdvancedHrOrgChartPage() {
               style={{
                 color: "var(--color-text-secondary)",
                 textAlign: "center",
-                padding: "20px 0",
+                padding: "var(--space-5) 0",
               }}
             >
               No data.
@@ -123,7 +123,7 @@ export default function AdvancedHrOrgChartPage() {
                 }}
               >
                 <div
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                  style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
                 >
                   <Building2 size={14} color="var(--chart-5)" />
                   <span style={{ fontWeight: 600 }}>{d.department}</span>

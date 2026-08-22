@@ -353,25 +353,37 @@ export default function HealthcarePharmacyPage() {
               )}
             </>
           )}
-          {activeTab === "batches" && (
-            <>{(() => {
-                                    const columns = [
-                            { key: "col_0", header: "Drug", render: (b: any) => (<>{d.name}</>) },
-                            { key: "col_1", header: "Batch #", render: (b: any) => (<>{b.batchNumber}</>) },
-                            { key: "col_2", header: "Qty", render: (b: any) => (<>{b.quantity}</>) },
-                            { key: "col_3", header: "Remaining", render: (b: any) => (<>{b.remainingQty}</>) },
-                            { key: "col_4", header: "Expiry", render: (b: any) => (<>{b.expiryDate
-                                                    ? new Date(b.expiryDate).toLocaleDateString()
-                                                    : "-"}</>) },
-                            { key: "col_5", header: "Status", render: (b: any) => (<><span
-                                                    className={`ui-badge ${b.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-danger"}`}
-                                                  >
-                                                    {b.status}
-                                                  </span></>) },
-                          ];
-                                    return <DataTable columns={columns} data={(d.batches || [])} rowKey={(b: any) => b.id} />;
-                                  })()}</>
-          )}
+          {activeTab === "batches" &&
+            (() => {
+              const allBatches = drugs.flatMap((d: any) =>
+                (d.batches || []).map((b: any) => ({ ...b, drugName: d.name }))
+              );
+              const columns = [
+                { key: "drug", header: "Drug", render: (b: any) => <>{b.drugName}</> },
+                { key: "batchNumber", header: "Batch #", render: (b: any) => <>{b.batchNumber}</> },
+                { key: "quantity", header: "Qty", render: (b: any) => <>{b.quantity}</> },
+                { key: "remainingQty", header: "Remaining", render: (b: any) => <>{b.remainingQty}</> },
+                {
+                  key: "expiryDate",
+                  header: "Expiry",
+                  render: (b: any) => (
+                    <>{b.expiryDate ? new Date(b.expiryDate).toLocaleDateString() : "-"}</>
+                  ),
+                },
+                {
+                  key: "status",
+                  header: "Status",
+                  render: (b: any) => (
+                    <span
+                      className={`ui-badge ${b.status === "ACTIVE" ? "ui-badge-success" : "ui-badge-danger"}`}
+                    >
+                      {b.status}
+                    </span>
+                  ),
+                },
+              ];
+              return <DataTable columns={columns} data={allBatches} rowKey={(b: any) => b.id} />;
+            })()}
           {activeTab === "controlled" && (
             <>{(() => {
                                   const columns = [

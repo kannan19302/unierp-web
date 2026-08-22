@@ -343,7 +343,7 @@ export default function FinanceDashboardPage() {
       href: "/finance/assets",
       icon: Layers,
       desc: "Asset Registry & Depreciation",
-      color: "#14b8a6",
+      color: "var(--color-info)",
     },
     {
       title: "Financial Reports",

@@ -6,8 +6,8 @@
 }
 .s2 {
   color: var(--color-primary);
-  height: 32px;
-  width: 32px;
+  height: var(--space-8);
+  width: var(--space-8);
 }
 .s3 {
   padding: var(--space-8);
@@ -25,7 +25,7 @@
   padding: var(--space-6);
 }
 .s6 {
-  width: 16px;
+  width: var(--space-4);
 }
 .s7 {
   color: var(--color-text);

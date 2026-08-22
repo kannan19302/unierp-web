@@ -186,8 +186,8 @@
   margin-top: var(--spacing-2);
 }
 .s22 {
-  height: 12px;
-  width: 12px;
+  height: var(--space-3);
+  width: var(--space-3);
 }
 .s23 {
   color: var(--color-primary);
@@ -195,12 +195,12 @@
   width: 14px;
 }
 .s24 {
-  height: 48px;
+  height: var(--space-12);
   margin-bottom: var(--spacing-3);
   opacity: 0.4;
-  width: 48px;
+  width: var(--space-12);
 }
 .s25 {
-  height: 20px;
-  width: 20px;
+  height: var(--space-5);
+  width: var(--space-5);
 }

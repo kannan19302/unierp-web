@@ -78,17 +78,17 @@ export default function AnalyticsCustomDashboardsPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Custom Analytics Dashboards & Widget Builder"
         description="Design drag-and-drop executive BI dashboards, configure live SQL queries, and pin cross-module KPIs."
       />
 
-      <Card style={{ padding: "20px", margin: "24px 0" }}>
-        <h3 style={{ fontSize: "16px", fontWeight: 600, marginBottom: "12px" }}>
+      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
+        <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-3)" }}>
           Create New Custom Dashboard
         </h3>
-        <div style={{ display: "flex", gap: "12px" }}>
+        <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <input
             type="text"
             placeholder="Dashboard Title (e.g. Executive Quarterly KPI)..."
@@ -96,7 +96,7 @@ export default function AnalyticsCustomDashboardsPage() {
             onChange={(e: any) => setName(e.target.value)}
             style={{
               flex: 1,
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -109,13 +109,13 @@ export default function AnalyticsCustomDashboardsPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "20px",
+          gap: "var(--space-5)",
         }}
       >
         {dashboards.length === 0 ? (
           <Card
             style={{
-              padding: "32px",
+              padding: "var(--space-8)",
               gridColumn: "1 / -1",
               textAlign: "center",
             }}
@@ -126,17 +126,17 @@ export default function AnalyticsCustomDashboardsPage() {
           </Card>
         ) : (
           dashboards.map((dash: any) => (
-            <Card key={dash.id} style={{ padding: "20px" }}>
+            <Card key={dash.id} style={{ padding: "var(--space-5)" }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
-                  marginBottom: "8px",
+                  marginBottom: "var(--space-2)",
                 }}
               >
                 <LayoutDashboard size={20} color="var(--color-primary)" />
-                <h4 style={{ fontSize: "16px", fontWeight: 600 }}>
+                <h4 style={{ fontSize: "var(--space-4)", fontWeight: 600 }}>
                   {dash.name}
                 </h4>
               </div>
@@ -144,7 +144,7 @@ export default function AnalyticsCustomDashboardsPage() {
                 style={{
                   fontSize: "13px",
                   color: "var(--color-text-secondary)",
-                  margin: "0 0 16px 0",
+                  margin: "0 0 var(--space-4) 0",
                 }}
               >
                 Created on {new Date(dash.createdAt).toLocaleDateString()}

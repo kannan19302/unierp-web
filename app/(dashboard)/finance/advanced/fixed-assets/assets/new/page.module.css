@@ -6,8 +6,8 @@
 }
 .s2 {
   color: var(--color-primary);
-  height: 32px;
-  width: 32px;
+  height: var(--space-8);
+  width: var(--space-8);
 }
 .s3 {
   display: flex;
@@ -16,7 +16,7 @@
   padding: var(--space-6);
 }
 .s4 {
-  width: 16px;
+  width: var(--space-4);
 }
 .s5 {
   align-items: center;
@@ -51,5 +51,5 @@
 }
 .s11 {
   margin-right: var(--space-2);
-  width: 16px;
+  width: var(--space-4);
 }

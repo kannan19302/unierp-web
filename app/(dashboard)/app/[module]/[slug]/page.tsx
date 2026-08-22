@@ -343,7 +343,7 @@ function CustomAppPageContent() {
                     <span
                       onClick={() => handleSort(col.name)}
                       className={styles.s17}
-                      style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                      style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "var(--space-1)" }}
                     >
                       {col.label}
                       <ArrowUpDown
@@ -582,7 +582,7 @@ function CustomLayoutRuntimeRenderer({
                     <div
                       key={i}
                       style={{
-                        borderLeft: `4px solid ${item.color || "var(--color-primary)"}`,
+                        borderLeft: `var(--space-1) solid ${item.color || "var(--color-primary)"}`,
                       }}
                       className={styles.s33}
                     >
@@ -623,7 +623,7 @@ function CustomLayoutRuntimeRenderer({
                 key={w.id}
                 style={{
                   gridColumn: `span ${w.gridSpan || 12}`,
-                  borderLeft: `4px solid ${borderLeftColor}`,
+                  borderLeft: `var(--space-1) solid ${borderLeftColor}`,
                   background: bg,
                   color: color,
                 }}
@@ -1013,7 +1013,7 @@ function RuntimeKpiWidget({
             <div
               key={i}
               style={{
-                borderLeft: `4px solid ${item.color || "var(--color-primary)"}`,
+                borderLeft: `var(--space-1) solid ${item.color || "var(--color-primary)"}`,
               }}
               className={styles.s54}
             >
@@ -1049,7 +1049,7 @@ function RuntimeChartWidget({
     { label: "Thu", value: 90, color: "var(--chart-5)" },
     { label: "Fri", value: 65, color: "var(--chart-8)" },
     { label: "Sat", value: 30, color: "var(--color-primary)" },
-    { label: "Sun", value: 45, color: "#14b8a6" },
+    { label: "Sun", value: 45, color: "var(--color-info)" },
   ];
 
   const maxVal = Math.max(...fallbackData.map((d: any) => d.value));

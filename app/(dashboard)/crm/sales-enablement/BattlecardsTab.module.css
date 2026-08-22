@@ -243,8 +243,8 @@
   margin: 0;
 }
 .s3 {
-  height: 48px;
+  height: var(--space-12);
   margin-bottom: var(--spacing-3);
   opacity: 0.4;
-  width: 48px;
+  width: var(--space-12);
 }

@@ -80,7 +80,7 @@ export default function CustomerSuccessPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Customer Success & Retention Hub"
         description="Monitor account health, retention goals, NRR metrics, and risk alerts."
@@ -93,11 +93,11 @@ export default function CustomerSuccessPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "16px",
-          margin: "24px 0",
+          gap: "var(--space-4)",
+          margin: "var(--space-6) 0",
         }}
       >
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
@@ -113,12 +113,12 @@ export default function CustomerSuccessPage() {
             <Users size={20} color="var(--color-primary)" />
           </div>
           <div
-            style={{ fontSize: "28px", fontWeight: "bold", marginTop: "8px" }}
+            style={{ fontSize: "28px", fontWeight: "bold", marginTop: "var(--space-2)" }}
           >
             {metrics?.activePlans ?? 0}
           </div>
         </Card>
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
@@ -138,13 +138,13 @@ export default function CustomerSuccessPage() {
               fontSize: "28px",
               fontWeight: "bold",
               color: "var(--chart-4)",
-              marginTop: "8px",
+              marginTop: "var(--space-2)",
             }}
           >
             {metrics?.atRiskPlans ?? 0}
           </div>
         </Card>
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
@@ -164,13 +164,13 @@ export default function CustomerSuccessPage() {
               fontSize: "28px",
               fontWeight: "bold",
               color: "var(--chart-9)",
-              marginTop: "8px",
+              marginTop: "var(--space-2)",
             }}
           >
             {metrics?.avgHealthScore ?? 100}%
           </div>
         </Card>
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <div
             style={{
               display: "flex",
@@ -186,15 +186,15 @@ export default function CustomerSuccessPage() {
             <TrendingUp size={20} color="var(--chart-5)" />
           </div>
           <div
-            style={{ fontSize: "28px", fontWeight: "bold", marginTop: "8px" }}
+            style={{ fontSize: "28px", fontWeight: "bold", marginTop: "var(--space-2)" }}
           >
             ${(metrics?.totalArr ?? 0).toLocaleString()}
           </div>
         </Card>
       </div>
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Customer Success Plans
         </h3>
         {plans.length === 0 ? (
@@ -202,7 +202,7 @@ export default function CustomerSuccessPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No active customer success plans. Click "+ New CS Plan" to create
@@ -258,17 +258,17 @@ export default function CustomerSuccessPage() {
           <div
             style={{
               backgroundColor: "var(--color-text-inverse)",
-              borderRadius: "8px",
-              padding: "24px",
+              borderRadius: "var(--space-2)",
+              padding: "var(--space-6)",
               width: "480px",
               maxWidth: "90vw",
             }}
           >
-            <h3 style={{ margin: "0 0 16px 0" }}>
+            <h3 style={{ margin: "0 0 var(--space-4) 0" }}>
               Create Customer Success Plan
             </h3>
             <div
-              style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+              style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}
             >
               <div>
                 <label
@@ -289,10 +289,10 @@ export default function CustomerSuccessPage() {
                   }
                   style={{
                     width: "100%",
-                    padding: "8px 12px",
+                    padding: "var(--space-2) var(--space-3)",
                     borderRadius: "6px",
                     border: "1px solid #cbd5e1",
-                    marginTop: "4px",
+                    marginTop: "var(--space-1)",
                   }}
                 />
               </div>
@@ -315,10 +315,10 @@ export default function CustomerSuccessPage() {
                   }
                   style={{
                     width: "100%",
-                    padding: "8px 12px",
+                    padding: "var(--space-2) var(--space-3)",
                     borderRadius: "6px",
                     border: "1px solid #cbd5e1",
-                    marginTop: "4px",
+                    marginTop: "var(--space-1)",
                   }}
                 />
               </div>
@@ -341,10 +341,10 @@ export default function CustomerSuccessPage() {
                   }
                   style={{
                     width: "100%",
-                    padding: "8px 12px",
+                    padding: "var(--space-2) var(--space-3)",
                     borderRadius: "6px",
                     border: "1px solid #cbd5e1",
-                    marginTop: "4px",
+                    marginTop: "var(--space-1)",
                   }}
                 />
               </div>
@@ -353,8 +353,8 @@ export default function CustomerSuccessPage() {
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                gap: "8px",
-                marginTop: "20px",
+                gap: "var(--space-2)",
+                marginTop: "var(--space-5)",
               }}
             >
               <Button variant="secondary" onClick={() => setShowModal(false)}>

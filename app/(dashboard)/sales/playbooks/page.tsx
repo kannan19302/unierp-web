@@ -41,7 +41,7 @@ export default function SalesPlaybooksPage() {
   }, [activeStage]);
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Guided Sales Playbooks"
         description="Standardized sales execution steps, battlecards, and objection handling per deal stage."
@@ -50,10 +50,10 @@ export default function SalesPlaybooksPage() {
       <div
         style={{
           display: "flex",
-          gap: "8px",
-          margin: "20px 0",
+          gap: "var(--space-2)",
+          margin: "var(--space-5) 0",
           borderBottom: "1px solid #e2e8f0",
-          paddingBottom: "8px",
+          paddingBottom: "var(--space-2)",
         }}
       >
         {stages.map((stg: any) => (
@@ -61,7 +61,7 @@ export default function SalesPlaybooksPage() {
             key={stg}
             onClick={() => setActiveStage(stg)}
             style={{
-              padding: "8px 16px",
+              padding: "var(--space-2) var(--space-4)",
               borderRadius: "6px",
               border: "none",
               backgroundColor:
@@ -92,13 +92,13 @@ export default function SalesPlaybooksPage() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-            gap: "20px",
+            gap: "var(--space-5)",
           }}
         >
           {playbooks.length === 0 ? (
             <Card
               style={{
-                padding: "32px",
+                padding: "var(--space-8)",
                 textAlign: "center",
                 gridColumn: "1 / -1",
                 color: "var(--color-text-secondary)",
@@ -108,13 +108,13 @@ export default function SalesPlaybooksPage() {
             </Card>
           ) : (
             playbooks.map((pb: any) => (
-              <Card key={pb.id} style={{ padding: "20px" }}>
+              <Card key={pb.id} style={{ padding: "var(--space-5)" }}>
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    marginBottom: "12px",
+                    marginBottom: "var(--space-3)",
                   }}
                 >
                   <h3 style={{ margin: 0, fontSize: "18px", fontWeight: 600 }}>
@@ -126,27 +126,27 @@ export default function SalesPlaybooksPage() {
                   style={{
                     fontSize: "14px",
                     color: "var(--color-text-secondary)",
-                    marginBottom: "16px",
+                    marginBottom: "var(--space-4)",
                   }}
                 >
                   {pb.description || "Guided playbook"}
                 </p>
                 <div
-                  style={{ borderTop: "1px solid #f1f5f9", paddingTop: "12px" }}
+                  style={{ borderTop: "1px solid #f1f5f9", paddingTop: "var(--space-3)" }}
                 >
                   <h4
                     style={{
                       fontSize: "14px",
                       fontWeight: 600,
                       color: "var(--color-border-strong)",
-                      marginBottom: "8px",
+                      marginBottom: "var(--space-2)",
                     }}
                   >
                     Required Steps:
                   </h4>
                   <ul
                     style={{
-                      paddingLeft: "20px",
+                      paddingLeft: "var(--space-5)",
                       margin: 0,
                       fontSize: "13px",
                       color: "var(--color-text-secondary)",

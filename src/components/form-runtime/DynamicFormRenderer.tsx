@@ -495,7 +495,7 @@ export function DynamicFormRenderer({
         return (
           <input
             type="checkbox"
-            style={{ width: "16px", height: "16px" }}
+            style={{ width: "var(--space-4)", height: "var(--space-4)" }}
             disabled={f.readOnly}
             checked={!!value}
             onChange={(e: any) => handleChange(f.name, e.target.checked)}
@@ -575,8 +575,8 @@ export function DynamicFormRenderer({
             <span
               style={{
                 position: "absolute",
-                bottom: "8px",
-                left: "8px",
+                bottom: "var(--space-2)",
+                left: "var(--space-2)",
                 color: "var(--color-text-tertiary)",
                 fontSize: "10px",
               }}
@@ -761,7 +761,7 @@ export function DynamicFormRenderer({
                 size={14}
                 style={{
                   position: "absolute",
-                  left: "8px",
+                  left: "var(--space-2)",
                   top: "50%",
                   transform: "translateY(-50%)",
                   color: "var(--color-text-tertiary)",

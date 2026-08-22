@@ -11,8 +11,8 @@
   padding: var(--space-3);
 }
 .s4 {
-  height: 24px;
-  width: 24px;
+  height: var(--space-6);
+  width: var(--space-6);
 }
 .s5 {
   overflow: auto;

@@ -132,7 +132,7 @@ export default function TimetablePage() {
           <div className={styles.s2}>
             <div
               style={{
-                gridTemplateColumns: `80px repeat(${WEEKDAYS.length}, 1fr)`,
+                gridTemplateColumns: `var(--space-20) repeat(${WEEKDAYS.length}, 1fr)`,
               }}
               className={styles.s3}
             >

@@ -653,9 +653,11 @@ export default function VisualQueryBuilderPage() {
                 {viewMode === "table" ? (
                   <div className="builder-table-wrapper">
                     <>{(() => {
-                                              const columns = [
-                                        { key: "col_0", header: "{c}" , render: (row: any) => (<>{String(row[c] ?? "")}</>) },
-                                      ];
+                      const columns = results.columns.map((c: string, idx: number) => ({
+                        key: `col_${idx}`,
+                        header: c,
+                        render: (row: any) => <>{String(row[c] ?? "")}</>
+                      }));
                                               return <DataTable columns={columns} data={results.rows} rowKey={(row: any, i: number) => String(i)} />;
                                           })()}</>
                   </div>

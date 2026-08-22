@@ -212,27 +212,47 @@ export default function CustomModulePage() {
 
           {/* Data Table */}
           <div className="builder-table-wrapper">
-            <>{(() => {
-                                const columns = [
-                        { key: "col_0", header: ( <input type="checkbox" /> ), render: (record: any) => (<><input type="checkbox" /></>) },
-                        { key: "col_1", header: f.label, render: (record: any) => (<>{new Date(record.createdAt).toLocaleDateString()}</>) },
-                        { key: "col_2", header: "Created", render: (record: any) => (<><div className={styles.s15}>
-                                                <button
-                                                  className={`ui-btn ui-btn-secondary ${styles.s16}`}
-                                                >
-                                                  <Edit3 size={13} />
-                                                </button>
-                                                <button
-                                                  className={`ui-btn ui-btn-secondary ${styles.s17}`}
-                                                  onClick={() => handleDelete(record.id)}
-                                                >
-                                                  <Trash2 size={13} />
-                                                </button>
-                                              </div></>) },
-                        { key: "col_3", header: "Actions", render: (record: any) => (<></>) },
-                      ];
-                                return <DataTable columns={columns} data={filteredRecords} rowKey={(record: any) => record.id} />;
-                              })()}</>
+            {(() => {
+              const columns = [
+                {
+                  key: "select",
+                  header: <input type="checkbox" />,
+                  render: () => <input type="checkbox" />,
+                },
+                ...fields.map((f: any) => ({
+                  key: f.name,
+                  header: f.label || f.name,
+                  render: (record: any) => (
+                    <>{String(record.data?.[f.name] ?? record[f.name] ?? "—")}</>
+                  ),
+                })),
+                {
+                  key: "createdAt",
+                  header: "Created",
+                  render: (record: any) => (
+                    <>{record.createdAt ? new Date(record.createdAt).toLocaleDateString() : "—"}</>
+                  ),
+                },
+                {
+                  key: "actions",
+                  header: "Actions",
+                  render: (record: any) => (
+                    <div className={styles.s15}>
+                      <button className={`ui-btn ui-btn-secondary ${styles.s16}`}>
+                        <Edit3 size={13} />
+                      </button>
+                      <button
+                        className={`ui-btn ui-btn-secondary ${styles.s17}`}
+                        onClick={() => handleDelete(record.id)}
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                  ),
+                },
+              ];
+              return <DataTable columns={columns} data={filteredRecords} rowKey={(record: any) => record.id} />;
+            })()}
           </div>
         </div>
       </div>

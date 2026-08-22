@@ -17,7 +17,7 @@ export default function POSDesignerPage() {
   const [terminals, setTerminals] = useState<POSTerminal[]>([]);
   const [selectedTerminal, setSelectedTerminal] = useState<string>("");
   const [receiptTemplate, setReceiptTemplate] = useState(
-    "/* Custom styles */\n.receipt { font-family: monospace; font-size: 12px; }\n.header { text-align: center; font-weight: bold; }\n.item { display: flex; justify-content: space-between; }",
+    "/* Custom styles */\n.receipt { font-family: monospace; font-size: var(--space-3); }\n.header { text-align: center; font-weight: bold; }\n.item { display: flex; justify-content: space-between; }",
   );
   const [layoutFormat, setLayoutFormat] = useState("THERMAL_80MM");
   const [isSaving, setIsSaving] = useState(false);

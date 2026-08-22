@@ -4,17 +4,17 @@
 .widget {
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl, 12px);
+  border-radius: var(--radius-xl, var(--space-3));
   padding: 1.25rem 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow:
-    0 4px 12px -2px rgba(0, 0, 0, 0.03),
+    0 var(--space-1) var(--space-3) -2px rgba(0, 0, 0, 0.03),
     0 1px 3px 0 rgba(0, 0, 0, 0.02);
   transition: all 0.2s ease-in-out;
 }
 .widget:hover {
   box-shadow:
-    0 8px 24px -4px rgba(0, 0, 0, 0.05),
+    0 var(--space-2) var(--space-6) -4px rgba(0, 0, 0, 0.05),
     0 2px 6px 0 rgba(0, 0, 0, 0.02);
 }
 .header {
@@ -53,7 +53,7 @@
     box-shadow: 0 0 0 0px rgba(245, 158, 11, 0.2);
   }
   50% {
-    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.05);
+    box-shadow: 0 0 0 var(--space-1) rgba(245, 158, 11, 0.05);
   }
 }
 .syncIndicator {
@@ -126,7 +126,7 @@
   align-items: center;
   gap: 0.625rem;
   padding: 0.75rem 0.875rem;
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-md, var(--space-2));
   font-size: 0.75rem;
   font-weight: 500;
   text-decoration: none;
@@ -168,7 +168,7 @@
   display: flex;
   gap: 0.75rem;
   padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-md, var(--space-2));
   border: 1px solid var(--color-border-light);
   background: none;
   cursor: pointer;
@@ -214,7 +214,7 @@
   border: 1px solid rgba(14, 165, 233, 0.2);
   background: rgba(14, 165, 233, 0.05);
   padding: var(--space-4, 1rem);
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-md, var(--space-2));
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -267,7 +267,7 @@
   }
   100% {
     background: rgba(16, 185, 129, 0.03);
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    box-shadow: 0 0 0 var(--space-2) rgba(16, 185, 129, 0);
   }
 }
 .checkPop {
@@ -295,7 +295,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem 0.875rem;
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-md, var(--space-2));
   background: rgba(16, 185, 129, 0.08);
   border: 1px solid rgba(16, 185, 129, 0.2);
   color: var(--color-success);

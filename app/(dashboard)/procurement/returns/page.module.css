@@ -188,7 +188,7 @@
 .p30 {
   text-align: right;
   padding: var(--space-2);
-  width: 80px;
+  width: var(--space-20);
 }
 .p31 {
   text-align: right;

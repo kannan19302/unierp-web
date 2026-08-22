@@ -182,7 +182,7 @@
   margin-bottom: var(--space-1);
 }
 .p31 {
-  height: 8px;
+  height: var(--space-2);
   background: var(--color-bg-sunken);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -198,7 +198,7 @@
   margin-bottom: var(--space-1);
 }
 .p34 {
-  height: 8px;
+  height: var(--space-2);
   background: var(--color-bg-sunken);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -214,7 +214,7 @@
   margin-bottom: var(--space-1);
 }
 .p37 {
-  height: 8px;
+  height: var(--space-2);
   background: var(--color-bg-sunken);
   border-radius: var(--radius-sm);
   overflow: hidden;

@@ -589,7 +589,7 @@ function DrivePageContent() {
         <div
           className={`toast-item toast-${toast.type} ${styles.s2}`}
           style={{
-            borderLeft: `4px solid var(--color-${toast.type === "error" ? "danger" : toast.type})`,
+            borderLeft: `var(--space-1) solid var(--color-${toast.type === "error" ? "danger" : toast.type})`,
           }}
         >
           {toast.type === "success" && (
@@ -810,7 +810,7 @@ function DrivePageContent() {
                                                       <span className={styles.p39}>Standard</span>
                                                     )}</>) },
                             { key: "col_2", header: "Last Modified" , render: (doc: any) => (<>{new Date(doc.updatedAt).toLocaleString()}</>) },
-                            { key: "col_3", header: "File Size" , render: (doc: any) => (<>{size}</>) },
+                            { key: "col_3", header: "File Size" , render: (doc: any) => (<>{doc.versions?.[0]?.fileSize ? `${(doc.versions[0].fileSize / 1024).toFixed(1)} KB` : doc.fileSize ? `${(doc.fileSize / 1024).toFixed(1)} KB` : "—"}</>) },
                           ];
                                   return <DataTable columns={columns} data={documents} rowKey={(doc: any) => doc.id} />;
                               })()}

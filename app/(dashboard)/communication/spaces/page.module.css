@@ -5,9 +5,9 @@
   color: var(--color-primary);
   display: flex;
   flex-shrink: 0;
-  height: 32px;
+  height: var(--space-8);
   justify-content: center;
-  width: 32px;
+  width: var(--space-8);
 }
 .s2 {
   margin-left: var(--space-1-5);

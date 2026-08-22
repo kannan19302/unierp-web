@@ -337,8 +337,8 @@
   gap: var(--space-3);
 }
 .p56 {
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border-radius: var(--radius-full);
   background: rgba(40, 167, 69, 0.1);
   display: flex;
@@ -428,7 +428,7 @@
   font-size: 9px;
   color: var(--color-primary);
   background: var(--color-primary-light);
-  padding: 1px 4px;
+  padding: 1px var(--space-1);
   border-radius: var(--radius-sm);
 }
 .p72 {

@@ -52,7 +52,7 @@
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(var(--space-10));
   }
   to {
     opacity: 1;
@@ -130,7 +130,7 @@
 
 .landing-reveal {
   opacity: 0;
-  transform: translateY(32px);
+  transform: translateY(var(--space-8));
   transition:
     opacity 0.7s var(--ease-out),
     transform 0.7s var(--ease-out);
@@ -189,8 +189,8 @@
   border-radius: var(--radius-xl);
   border: 1px solid rgba(0, 0, 0, 0.05);
   background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(var(--space-5)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--space-5)) saturate(160%);
   transition: all var(--duration-normal) var(--ease-default);
 }
 
@@ -199,7 +199,7 @@
   border-color: rgba(0, 0, 0, 0.08);
   box-shadow:
     var(--shadow-md),
-    0 4px 20px rgba(0, 0, 0, 0.03);
+    0 var(--space-1) var(--space-5) rgba(0, 0, 0, 0.03);
 }
 
 [data-theme="dark"] .landing-nav {
@@ -210,7 +210,7 @@
 [data-theme="dark"] .landing-nav.scrolled {
   background: rgba(26, 27, 46, 0.92);
   border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 var(--space-1) var(--space-5) rgba(0, 0, 0, 0.3);
 }
 
 .landing-theme-toggle-btn {
@@ -341,8 +341,8 @@
 .landing-btn-primary:hover {
   transform: translateY(-1px);
   box-shadow:
-    0 4px 12px rgba(99, 102, 241, 0.35),
-    0 2px 4px rgba(99, 102, 241, 0.2);
+    0 var(--space-1) var(--space-3) rgba(99, 102, 241, 0.35),
+    0 2px var(--space-1) rgba(99, 102, 241, 0.2);
   filter: brightness(1.08);
 }
 .landing-btn-primary:active {
@@ -519,8 +519,8 @@
 }
 
 .landing-preview-dot {
-  width: 12px;
-  height: 12px;
+  width: var(--space-3);
+  height: var(--space-3);
   border-radius: 50%;
 }
 
@@ -909,8 +909,8 @@
 }
 
 .playground-employee-card .avatar {
-  width: 40px;
-  height: 40px;
+  width: var(--space-10);
+  height: var(--space-10);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -1152,8 +1152,8 @@
 }
 
 .flow-step-node .node-indicator {
-  width: 8px;
-  height: 8px;
+  width: var(--space-2);
+  height: var(--space-2);
   border-radius: 50%;
   background: var(--color-border-strong);
 }
@@ -1161,12 +1161,12 @@
 .flow-step-node.active {
   border-color: var(--color-primary);
   background: var(--color-primary-light);
-  transform: translateX(4px);
+  transform: translateX(var(--space-1));
 }
 
 .flow-step-node.active .node-indicator {
   background: var(--color-primary);
-  box-shadow: 0 0 8px var(--color-primary);
+  box-shadow: 0 0 var(--space-2) var(--color-primary);
 }
 
 .flow-step-node.completed {
@@ -1304,8 +1304,8 @@
 }
 
 .landing-feature-icon {
-  width: 48px;
-  height: 48px;
+  width: var(--space-12);
+  height: var(--space-12);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
@@ -1364,7 +1364,7 @@
   background: var(--color-primary);
   color: var(--color-text-inverse);
   border-color: var(--color-primary);
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 2px var(--space-2) rgba(99, 102, 241, 0.25);
 }
 
 .landing-industry-panel {
@@ -1467,9 +1467,9 @@
 .landing-steps::before {
   content: "";
   position: absolute;
-  top: 40px;
-  left: calc(16.67% + 20px);
-  right: calc(16.67% + 20px);
+  top: var(--space-10);
+  left: calc(16.67% + var(--space-5));
+  right: calc(16.67% + var(--space-5));
   height: 2px;
   background: linear-gradient(
     90deg,
@@ -1498,7 +1498,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: var(--space-5);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 var(--space-1) 14px rgba(99, 102, 241, 0.3);
 }
 
 .landing-step h3 {
@@ -1596,8 +1596,8 @@
 }
 
 .landing-testimonial-avatar {
-  width: 40px;
-  height: 40px;
+  width: var(--space-10);
+  height: var(--space-10);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -1768,13 +1768,13 @@
 
 .landing-cta-banner .landing-btn-primary {
   background: var(--color-bg-elevated);
-  color: #312e81;
+  color: var(--color-primary);
   font-size: var(--text-base);
   padding: var(--space-3) var(--space-8);
   position: relative;
 }
 .landing-cta-banner .landing-btn-primary:hover {
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 var(--space-1) var(--space-5) rgba(255, 255, 255, 0.3);
 }
 
 /* ── Footer ── */
@@ -2122,13 +2122,13 @@
 
 .auth-card {
   background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(var(--space-6));
+  -webkit-backdrop-filter: blur(var(--space-6));
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-xl);
-  padding: 28px 32px;
+  padding: 28px var(--space-8);
   box-shadow:
-    0 20px 40px -15px rgba(0, 0, 0, 0.05),
+    0 var(--space-5) var(--space-10) -15px rgba(0, 0, 0, 0.05),
     0 0 0 1px rgba(0, 0, 0, 0.01);
   transition:
     transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -2139,13 +2139,13 @@
   background: rgba(26, 27, 46, 0.65);
   border-color: rgba(255, 255, 255, 0.06);
   box-shadow:
-    0 20px 40px -15px rgba(0, 0, 0, 0.3),
+    0 var(--space-5) var(--space-10) -15px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.01);
 }
 
 .auth-card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 24px 48px -10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 var(--space-6) var(--space-12) -10px rgba(0, 0, 0, 0.08);
 }
 
 .auth-field-group {
@@ -2168,7 +2168,7 @@
 
 .auth-input-icon {
   position: absolute;
-  left: 12px;
+  left: var(--space-3);
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-text-tertiary);
@@ -2176,7 +2176,7 @@
 
 .auth-input {
   width: 100%;
-  padding: 8px 12px 8px 2.25rem !important;
+  padding: var(--space-2) var(--space-3) var(--space-2) 2.25rem !important;
   font-size: 13px;
   color: var(--color-text) !important;
   background: rgba(0, 0, 0, 0.015);
@@ -2220,7 +2220,7 @@
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right var(--space-3) center;
   background-size: 14px;
   transition: all var(--duration-fast);
 }

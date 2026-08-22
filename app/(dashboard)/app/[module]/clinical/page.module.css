@@ -96,7 +96,7 @@
 }
 .s15 {
   align-items: center;
-  border-left: 4px solid var(--color-danger);
+  border-left: var(--space-1) solid var(--color-danger);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   color: var(--color-danger-text, var(--color-text));
@@ -175,7 +175,7 @@
 .s29 {
   background: var(--color-bg-sunken);
   border-radius: var(--radius-sm);
-  height: 8px;
+  height: var(--space-2);
   overflow: hidden;
 }
 .s30 {

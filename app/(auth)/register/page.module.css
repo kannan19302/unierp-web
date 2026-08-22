@@ -59,12 +59,12 @@
     var(--color-primary)
   );
   border-radius: var(--radius-xl);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 var(--space-2) var(--space-5) rgba(99, 102, 241, 0.3);
   color: var(--color-text-inverse);
   display: flex;
-  height: 48px;
+  height: var(--space-12);
   justify-content: center;
-  width: 48px;
+  width: var(--space-12);
 }
 .brandName {
   color: var(--color-text);
@@ -122,15 +122,15 @@
   display: flex;
   font-size: 11px;
   font-weight: 700;
-  height: 32px;
+  height: var(--space-8);
   justify-content: center;
   transition: all 0.3s ease;
-  width: 32px;
+  width: var(--space-8);
 }
 .stepCircleActive {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 var(--space-1) rgba(99, 102, 241, 0.15);
   color: var(--color-text-inverse);
 }
 .stepCircleComplete {
@@ -143,7 +143,7 @@
   flex-shrink: 0;
   height: 2px;
   transition: background 0.3s ease;
-  width: 48px;
+  width: var(--space-12);
 }
 .stepLineComplete {
   background: var(--color-success);
@@ -217,9 +217,9 @@
   border-radius: var(--radius-xl);
   color: var(--color-primary);
   display: flex;
-  height: 48px;
+  height: var(--space-12);
   justify-content: center;
-  width: 48px;
+  width: var(--space-12);
 }
 .logoDropText {
   color: var(--color-text-secondary);
@@ -251,11 +251,11 @@
     linear-gradient(-45deg, var(--color-border-muted) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--color-border-muted) 75%),
     linear-gradient(-45deg, transparent 75%, var(--color-border-muted) 75%);
-  background-size: 16px 16px;
+  background-size: var(--space-4) var(--space-4);
   background-position:
     0 0,
-    0 8px,
-    8px -8px,
+    0 var(--space-2),
+    var(--space-2) -8px,
     -8px 0px;
   display: flex;
   align-items: center;
@@ -343,7 +343,7 @@
   align-items: center;
   display: flex;
   position: absolute;
-  right: 12px;
+  right: var(--space-3);
   top: 50%;
   transform: translateY(-50%);
 }
@@ -356,7 +356,7 @@
   display: flex;
   padding: 0;
   position: absolute;
-  right: 12px;
+  right: var(--space-3);
   top: 50%;
   transform: translateY(-50%);
 }
@@ -400,8 +400,8 @@
   background: var(--color-border);
   border-radius: 50%;
   flex-shrink: 0;
-  height: 8px;
-  width: 8px;
+  height: var(--space-2);
+  width: var(--space-2);
   transition: all 0.2s ease;
 }
 .pwdStrengthRow {
@@ -419,7 +419,7 @@
   flex-grow: 1;
   background: var(--color-border-light);
   border-radius: var(--radius-full);
-  height: 4px;
+  height: var(--space-1);
   overflow: hidden;
 }
 .pwdStrengthSegment {
@@ -443,9 +443,9 @@
 .termsCheckbox {
   accent-color: var(--color-primary);
   cursor: pointer;
-  height: 16px;
+  height: var(--space-4);
   margin-top: var(--space-half);
-  width: 16px;
+  width: var(--space-4);
 }
 .termsLabel {
   color: var(--color-text-secondary);
@@ -572,9 +572,9 @@
   border: 3px solid var(--color-success);
   color: var(--color-success);
   display: flex;
-  height: 80px;
+  height: var(--space-20);
   justify-content: center;
-  width: 80px;
+  width: var(--space-20);
 }
 .successTitle {
   color: var(--color-text);
@@ -653,14 +653,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  min-height: 80px;
+  min-height: var(--space-20);
   padding: var(--space-2);
   position: relative;
   transition: all 0.15s ease;
 }
 .pickerCard:hover:not(.pickerCardKernel) {
   border-color: var(--color-primary);
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 2px var(--space-2) rgba(99, 102, 241, 0.1);
 }
 .pickerCardSelected {
   border-color: var(--color-primary);
@@ -686,7 +686,7 @@
   background: var(--color-bg-sunken);
   border-radius: var(--radius-full);
   color: var(--color-text-tertiary);
-  font-size: 8px;
+  font-size: var(--space-2);
   font-weight: 700;
   letter-spacing: 0.05em;
   padding: 1px 6px;

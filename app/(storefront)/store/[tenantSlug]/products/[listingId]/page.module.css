@@ -107,7 +107,7 @@
 }
 .s21 {
   font-size: var(--text-sm);
-  min-width: 32px;
+  min-width: var(--space-8);
   padding: 0 var(--space-3);
   text-align: center;
 }

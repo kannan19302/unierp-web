@@ -74,17 +74,17 @@ export default function ReportingTemplatesPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Pixel-Perfect Enterprise Report Template Designer"
         description="Build custom HTML/PDF financial report templates, add multi-section SQL queries, and configure corporate styling."
       />
 
-      <Card style={{ padding: "20px", margin: "24px 0" }}>
-        <h3 style={{ fontSize: "16px", fontWeight: 600, marginBottom: "12px" }}>
+      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
+        <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-3)" }}>
           Create New Report Template
         </h3>
-        <div style={{ display: "flex", gap: "12px" }}>
+        <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <input
             type="text"
             placeholder="Report Template Title (e.g. Executive Balance Sheet & P&L)..."
@@ -92,7 +92,7 @@ export default function ReportingTemplatesPage() {
             onChange={(e: any) => setTitle(e.target.value)}
             style={{
               flex: 1,
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -105,13 +105,13 @@ export default function ReportingTemplatesPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "20px",
+          gap: "var(--space-5)",
         }}
       >
         {templates.length === 0 ? (
           <Card
             style={{
-              padding: "32px",
+              padding: "var(--space-8)",
               gridColumn: "1 / -1",
               textAlign: "center",
             }}
@@ -122,17 +122,17 @@ export default function ReportingTemplatesPage() {
           </Card>
         ) : (
           templates.map((t: any) => (
-            <Card key={t.id} style={{ padding: "20px" }}>
+            <Card key={t.id} style={{ padding: "var(--space-5)" }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  marginBottom: "8px",
+                  marginBottom: "var(--space-2)",
                 }}
               >
                 <div
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                  style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
                 >
                   <FileText size={18} color="var(--color-primary)" />
                   <h4 style={{ fontSize: "15px", fontWeight: 600 }}>
@@ -143,9 +143,9 @@ export default function ReportingTemplatesPage() {
               </div>
               <p
                 style={{
-                  fontSize: "12px",
+                  fontSize: "var(--space-3)",
                   color: "var(--color-text-secondary)",
-                  margin: "8px 0 16px 0",
+                  margin: "var(--space-2) 0 var(--space-4) 0",
                 }}
               >
                 Created on {new Date(t.createdAt).toLocaleDateString()}

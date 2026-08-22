@@ -189,8 +189,8 @@
 
 .notificationBadge {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: var(--space-2);
+  right: var(--space-2);
   width: 6px;
   height: 6px;
   border-radius: var(--radius-full);
@@ -199,7 +199,7 @@
 
 .divider {
   width: 1px;
-  height: 20px;
+  height: var(--space-5);
   background: var(--color-border);
   margin: 0 var(--space-1);
 }
@@ -226,8 +226,8 @@
 }
 
 .userAvatar {
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border-radius: var(--radius-full);
   background: linear-gradient(
     135deg,

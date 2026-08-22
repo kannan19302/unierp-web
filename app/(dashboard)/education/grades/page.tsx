@@ -128,43 +128,77 @@ export default function GradeBookPage() {
 
       <Card>
         <div className={styles.s3}>
-          <>{(() => {
-                          const columns = [
-                    { key: "col_0", header: "Student" , render: (student: any) => (<><div className="font-medium">{student.name}</div><div className="ui-text-xs-tertiary">{student.roll}</div></>) },
-                    { key: "col_1", header: "{a}" , render: (student: any) => (<><input
-                                            type="number"
-                                            min="0"
-                                            max="100"
-                                            value={getGrade(student.id, assessment) || ""}
-                                            onChange={(e: any) =>
-                                              setGradeValue(
-                                                student.id,
-                                                assessment,
-                                                Number(e.target.value),
-                                              )
-                                            }
-                                            placeholder="—"
-                                            className={styles.s11}
-                                          /></>) },
-                    { key: "col_2", header: "Avg" , render: (student: any) => (<>{avg > 0 ? `${avg}%` : "—"}</>) },
-                    { key: "col_3", header: "Grade" , render: (student: any) => (<><Badge
-                                          variant={
-                                            letter === "A"
-                                              ? "success"
-                                              : letter === "B"
-                                                ? "info"
-                                                : letter === "C"
-                                                  ? "warning"
-                                                  : letter === "F"
-                                                    ? "danger"
-                                                    : "default"
-                                          }
-                                        >
-                                          {letter}
-                                        </Badge></>) },
-                  ];
-                          return <DataTable columns={columns} data={STUDENTS_MOCK} rowKey={(student: any) => student.id} />;
-                      })()}</>
+          {(() => {
+            const columns = [
+              {
+                key: "student",
+                header: "Student",
+                render: (student: any) => (
+                  <>
+                    <div className="font-medium">{student.name}</div>
+                    <div className="ui-text-xs-tertiary">{student.roll}</div>
+                  </>
+                ),
+              },
+              ...assessments.map((a: string) => ({
+                key: `assessment_${a}`,
+                header: a,
+                render: (student: any) => (
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={getGrade(student.id, a) || ""}
+                    onChange={(e: any) =>
+                      setGradeValue(student.id, a, Number(e.target.value))
+                    }
+                    placeholder="—"
+                    className={styles.s11}
+                  />
+                ),
+              })),
+              {
+                key: "avg",
+                header: "Avg",
+                render: (student: any) => {
+                  const avg = getAverage(student.id);
+                  return <>{avg > 0 ? `${avg}%` : "—"}</>;
+                },
+              },
+              {
+                key: "grade",
+                header: "Grade",
+                render: (student: any) => {
+                  const avg = getAverage(student.id);
+                  const letter = getLetterGrade(avg);
+                  return (
+                    <Badge
+                      variant={
+                        letter === "A"
+                          ? "success"
+                          : letter === "B"
+                            ? "info"
+                            : letter === "C"
+                              ? "warning"
+                              : letter === "F"
+                                ? "danger"
+                                : "default"
+                      }
+                    >
+                      {letter}
+                    </Badge>
+                  );
+                },
+              },
+            ];
+            return (
+              <DataTable
+                columns={columns}
+                data={STUDENTS_MOCK}
+                rowKey={(student: any) => student.id}
+              />
+            );
+          })()}
         </div>
       </Card>
     </div>

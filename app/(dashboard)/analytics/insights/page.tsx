@@ -160,7 +160,7 @@ export default function SmartInsightsPage() {
               return (
                 <div
                   key={ins.id}
-                  style={{ borderLeft: `4px solid ${s.color}` }}
+                  style={{ borderLeft: `var(--space-1) solid ${s.color}` }}
                   className={styles.s12}
                 >
                   <span style={{ color: s.color }} className={styles.s13}>

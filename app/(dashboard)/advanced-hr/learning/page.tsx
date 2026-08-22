@@ -70,13 +70,13 @@ export default function AdvancedHrLearningPage() {
     );
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Corporate Learning & Development Path Manager"
         description="Build structured learning paths, track employee enrollment, and manage completion progress."
       />
-      <Card style={{ padding: "20px", margin: "24px 0" }}>
-        <div style={{ display: "flex", gap: "12px" }}>
+      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
+        <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <input
             type="text"
             placeholder="New learning path name..."
@@ -84,7 +84,7 @@ export default function AdvancedHrLearningPage() {
             onChange={(e: any) => setPathName(e.target.value)}
             style={{
               flex: 1,
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -96,12 +96,12 @@ export default function AdvancedHrLearningPage() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "20px",
+          gap: "var(--space-5)",
         }}
       >
         {paths.length === 0 ? (
           <Card
-            style={{ padding: "32px", gridColumn: "1/-1", textAlign: "center" }}
+            style={{ padding: "var(--space-8)", gridColumn: "1/-1", textAlign: "center" }}
           >
             <p style={{ color: "var(--color-text-secondary)" }}>
               No learning paths available.
@@ -109,13 +109,13 @@ export default function AdvancedHrLearningPage() {
           </Card>
         ) : (
           paths.map((p: any) => (
-            <Card key={p.id} style={{ padding: "20px" }}>
+            <Card key={p.id} style={{ padding: "var(--space-5)" }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "8px",
-                  marginBottom: "8px",
+                  gap: "var(--space-2)",
+                  marginBottom: "var(--space-2)",
                 }}
               >
                 <BookOpen size={18} color="var(--chart-5)" />
@@ -124,12 +124,12 @@ export default function AdvancedHrLearningPage() {
                 </h4>
               </div>
               <div
-                style={{ display: "flex", gap: "8px", marginBottom: "12px" }}
+                style={{ display: "flex", gap: "var(--space-2)", marginBottom: "var(--space-3)" }}
               >
                 <Badge variant="info">{p.category}</Badge>
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "var(--space-3)",
                     color: "var(--color-text-secondary)",
                   }}
                 >

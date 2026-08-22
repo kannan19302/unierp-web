@@ -240,7 +240,7 @@ export default function CustomFieldsPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    padding: "8px 12px",
+    padding: "var(--space-2) var(--space-3)",
     borderRadius: "6px",
     border: "1px solid var(--border-primary)",
     backgroundColor: "var(--bg-primary)",
@@ -252,10 +252,10 @@ export default function CustomFieldsPage() {
     fontSize: "13px",
     fontWeight: 500,
     color: "var(--text-secondary)",
-    marginBottom: "4px",
+    marginBottom: "var(--space-1)",
   };
   const cellStyle: React.CSSProperties = {
-    padding: "12px 16px",
+    padding: "var(--space-3) var(--space-4)",
     fontSize: "14px",
     color: "var(--text-primary)",
     borderBottom: "1px solid var(--border-primary)",
@@ -264,7 +264,7 @@ export default function CustomFieldsPage() {
     ...cellStyle,
     fontWeight: 600,
     color: "var(--text-secondary)",
-    fontSize: "12px",
+    fontSize: "var(--space-3)",
     textTransform: "uppercase" as const,
     letterSpacing: "0.05em",
   };

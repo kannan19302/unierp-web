@@ -640,7 +640,7 @@
   background: var(--color-bg);
   color: var(--color-text);
   margin-top: var(--space-1);
-  height: 80px;
+  height: var(--space-20);
   resize: none;
 }
 .p105 {

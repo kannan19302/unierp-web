@@ -228,10 +228,10 @@ export default function AppShellPage() {
                     const cardStyle: React.CSSProperties = {
                       display: "flex",
                       alignItems: "center",
-                      gap: 10,
+                      gap: "var(--space-2)",
                       border: "1px solid var(--color-border)",
-                      borderRadius: 12,
-                      padding: "14px 16px",
+                      borderRadius: "var(--radius-md)",
+                      padding: "var(--space-3) var(--space-4)",
                       background: "var(--color-bg-elevated)",
                       textDecoration: "none",
                       color: "var(--color-text)",
@@ -319,7 +319,7 @@ export default function AppShellPage() {
           </div>
         )}
 
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } } @keyframes fadeInUp { from { opacity:0; transform: translateY(8px);} to {opacity:1; transform:none;} }`}</style>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } } @keyframes fadeInUp { from { opacity:0; transform: translateY(var(--space-2));} to {opacity:1; transform:none;} }`}</style>
       </div>
     </RouteGuard>
   );
@@ -330,7 +330,7 @@ function tabBtn(active: boolean): React.CSSProperties {
     display: "flex",
     alignItems: "center",
     gap: 6,
-    padding: "8px 14px",
+    padding: "var(--space-2) 14px",
     borderRadius: 8,
     border: "1px solid var(--color-border)",
     background: active ? "var(--color-primary)" : "var(--color-bg-elevated)",

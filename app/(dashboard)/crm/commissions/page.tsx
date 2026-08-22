@@ -308,7 +308,7 @@ export default function CommissionsPage() {
       key: "actions",
       header: "Actions",
       align: "center",
-      width: "80px",
+      width: "var(--space-20)",
       render: (r: any) => (
         <button
           onClick={(e: any) => {

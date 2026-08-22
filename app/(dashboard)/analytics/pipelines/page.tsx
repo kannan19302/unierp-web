@@ -93,17 +93,17 @@ export default function AnalyticsPipelinesPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Enterprise ETL Data Pipelines & Warehouse Ingestion"
         description="Schedule automated data extraction, SQL transformations, and analytical data warehouse sync."
       />
 
-      <Card style={{ padding: "20px", margin: "24px 0" }}>
-        <h3 style={{ fontSize: "16px", fontWeight: 600, marginBottom: "12px" }}>
+      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
+        <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-3)" }}>
           Create New Data Pipeline
         </h3>
-        <div style={{ display: "flex", gap: "12px" }}>
+        <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <input
             type="text"
             placeholder="Pipeline Name (e.g. Postgres to ClickHouse Sales ETL)..."
@@ -111,7 +111,7 @@ export default function AnalyticsPipelinesPage() {
             onChange={(e: any) => setPipelineName(e.target.value)}
             style={{
               flex: 1,
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -120,8 +120,8 @@ export default function AnalyticsPipelinesPage() {
         </div>
       </Card>
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Active ETL Pipelines
         </h3>
         {pipelines.length === 0 ? (
@@ -129,7 +129,7 @@ export default function AnalyticsPipelinesPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No active ETL data pipelines.

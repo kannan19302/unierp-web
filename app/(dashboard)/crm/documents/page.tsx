@@ -220,7 +220,7 @@ export default function DocumentsPage() {
       key: "actions",
       header: "Actions",
       align: "center",
-      width: "80px",
+      width: "var(--space-20)",
       render: (d: any) => (
         <button
           onClick={(e: any) => {

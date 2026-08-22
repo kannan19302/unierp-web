@@ -288,7 +288,7 @@
   border-radius: var(--radius-md);
 }
 .p49 {
-  width: 40px;
+  width: var(--space-10);
   height: 22px;
   border-radius: 11px;
   cursor: pointer;

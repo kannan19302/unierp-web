@@ -107,7 +107,7 @@
 
 .s18 {
   width: 100%;
-  min-height: 80px;
+  min-height: var(--space-20);
   padding: var(--space-2);
 }
 

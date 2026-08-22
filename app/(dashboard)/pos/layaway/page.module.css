@@ -24,8 +24,8 @@
   padding: var(--space-3);
 }
 .p6 {
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border-radius: 50%;
   background: var(--color-primary);
   color: var(--color-bg-elevated);

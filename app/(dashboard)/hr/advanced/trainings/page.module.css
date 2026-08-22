@@ -129,12 +129,12 @@
 }
 
 .s19 {
-  width: 20px;
-  height: 20px;
+  width: var(--space-5);
+  height: var(--space-5);
   border-radius: 50%;
   background: var(--color-bg-sunken);
   color: var(--color-text-secondary);
-  font-size: 8px;
+  font-size: var(--space-2);
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -170,8 +170,8 @@
 }
 
 .dyn1 {
-  width: 20px;
-  height: 20px;
+  width: var(--space-5);
+  height: var(--space-5);
   border-radius: 50%;
   font-size: 9px;
   font-weight: bold;

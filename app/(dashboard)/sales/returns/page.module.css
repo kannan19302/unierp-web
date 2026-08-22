@@ -95,7 +95,7 @@
 }
 .p17 {
   position: absolute;
-  left: 12px;
+  left: var(--space-3);
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-text-secondary);
@@ -288,7 +288,7 @@
 .p47 {
   text-align: right;
   padding: var(--space-2);
-  width: 80px;
+  width: var(--space-20);
 }
 .p48 {
   text-align: right;

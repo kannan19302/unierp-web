@@ -53,14 +53,14 @@ export default function AnalyticsAnomaliesPage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="AI Automated Metric Anomaly Detection"
         description="Continuous statistical anomaly detection, unexpected traffic spikes, and financial divergence alerts."
       />
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Detected Metric Anomalies
         </h3>
         {anomalies.length === 0 ? (
@@ -68,7 +68,7 @@ export default function AnalyticsAnomaliesPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No active metric anomalies detected.

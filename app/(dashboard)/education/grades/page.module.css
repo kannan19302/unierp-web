@@ -33,7 +33,7 @@
 .s7 {
   color: var(--color-text-secondary);
   font-weight: var(--weight-semibold);
-  min-width: 80px;
+  min-width: var(--space-20);
   padding: var(--space-3);
   text-align: center;
 }

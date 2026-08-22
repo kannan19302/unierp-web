@@ -13,5 +13,5 @@
 .s3 {
   color: var(--color-text-secondary);
   font-size: var(--text-xs);
-  min-width: 32px;
+  min-width: var(--space-8);
 }

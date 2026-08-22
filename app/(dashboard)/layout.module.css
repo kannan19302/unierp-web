@@ -40,8 +40,8 @@
   border: 1px solid var(--color-warning-border, rgba(245, 158, 11, 0.25));
   color: var(--color-warning-text);
   padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-md, 8px);
-  font-size: var(--text-xs, 12px);
+  border-radius: var(--radius-md, var(--space-2));
+  font-size: var(--text-xs, var(--space-3));
   font-weight: 500;
   margin-bottom: var(--space-4);
   box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
@@ -93,7 +93,7 @@
    two identical red bars. The first copy's button also omitted `border: none`,
    so it drew a default browser border; that was the copy removed.
 
-   Colours are tokens now. The old inline pair (white on `#ef4444`) is 3.8:1,
+   Colours are tokens now. The old inline pair (white on `var(--color-danger)`) is 3.8:1,
    which fails WCAG AA for body text. This uses the status-pill pairing the
    brief mandates in §7 — --color-danger-text on --color-danger-light — which
    design-system/scripts/check-contrast.mjs verifies at 4.5:1 in every theme.

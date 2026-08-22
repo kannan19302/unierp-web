@@ -48,7 +48,7 @@ export default function AnalyticsRealtimePage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Real-Time Analytics & Sub-Second Event Streaming"
         description="Monitor concurrent active user sessions, live API throughput, and sub-second system latency."
@@ -58,11 +58,11 @@ export default function AnalyticsRealtimePage() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "16px",
-          margin: "24px 0",
+          gap: "var(--space-4)",
+          margin: "var(--space-6) 0",
         }}
       >
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <span
             style={{ fontSize: "13px", color: "var(--color-text-secondary)" }}
           >
@@ -70,16 +70,16 @@ export default function AnalyticsRealtimePage() {
           </span>
           <div
             style={{
-              fontSize: "32px",
+              fontSize: "var(--space-8)",
               fontWeight: "bold",
               color: "var(--chart-9)",
-              marginTop: "4px",
+              marginTop: "var(--space-1)",
             }}
           >
             {liveMetrics?.activeUsersNow || 418}
           </div>
         </Card>
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <span
             style={{ fontSize: "13px", color: "var(--color-text-secondary)" }}
           >
@@ -87,16 +87,16 @@ export default function AnalyticsRealtimePage() {
           </span>
           <div
             style={{
-              fontSize: "32px",
+              fontSize: "var(--space-8)",
               fontWeight: "bold",
               color: "var(--color-primary)",
-              marginTop: "4px",
+              marginTop: "var(--space-1)",
             }}
           >
             {liveMetrics?.requestsPerSecond || 124.5}
           </div>
         </Card>
-        <Card style={{ padding: "20px" }}>
+        <Card style={{ padding: "var(--space-5)" }}>
           <span
             style={{ fontSize: "13px", color: "var(--color-text-secondary)" }}
           >
@@ -104,10 +104,10 @@ export default function AnalyticsRealtimePage() {
           </span>
           <div
             style={{
-              fontSize: "32px",
+              fontSize: "var(--space-8)",
               fontWeight: "bold",
               color: "var(--chart-5)",
-              marginTop: "4px",
+              marginTop: "var(--space-1)",
             }}
           >
             {liveMetrics?.p99LatencyMs || 42}ms
@@ -115,8 +115,8 @@ export default function AnalyticsRealtimePage() {
         </Card>
       </div>
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Live User Sessions Stream
         </h3>
         {!liveMetrics?.activeSessions ||
@@ -125,7 +125,7 @@ export default function AnalyticsRealtimePage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No active user sessions.

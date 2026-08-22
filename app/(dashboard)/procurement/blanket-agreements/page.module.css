@@ -158,7 +158,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(var(--space-1));
 }
 .p29 {
   background: var(--color-bg-elevated);
@@ -284,7 +284,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(var(--space-1));
 }
 .p54 {
   background: var(--color-bg-elevated);

@@ -51,7 +51,7 @@ export default function AdvancedHrExitInterviewPage() {
     );
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="Exit Interview Intelligence & Attrition Root Cause Analyzer"
         description="Conduct structured exit interviews, track satisfaction scores, rehire eligibility, and surface attrition patterns."
@@ -62,8 +62,8 @@ export default function AdvancedHrExitInterviewPage() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "16px",
-            margin: "24px 0",
+            gap: "var(--space-4)",
+            margin: "var(--space-6) 0",
           }}
         >
           {[
@@ -89,17 +89,17 @@ export default function AdvancedHrExitInterviewPage() {
             <Card
               key={i}
               style={{
-                padding: "20px",
+                padding: "var(--space-5)",
                 display: "flex",
                 alignItems: "center",
-                gap: "16px",
+                gap: "var(--space-4)",
               }}
             >
               <div
                 style={{
                   background: `${kpi.color}18`,
-                  borderRadius: "12px",
-                  padding: "12px",
+                  borderRadius: "var(--space-3)",
+                  padding: "var(--space-3)",
                   color: kpi.color,
                 }}
               >
@@ -115,7 +115,7 @@ export default function AdvancedHrExitInterviewPage() {
                 >
                   {kpi.label}
                 </p>
-                <h3 style={{ fontSize: "24px", fontWeight: 700, margin: 0 }}>
+                <h3 style={{ fontSize: "var(--space-6)", fontWeight: 700, margin: 0 }}>
                   {kpi.value}
                 </h3>
               </div>
@@ -124,8 +124,8 @@ export default function AdvancedHrExitInterviewPage() {
         </div>
       )}
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Exit Interview Records
         </h3>
         {interviews.length === 0 ? (
@@ -133,7 +133,7 @@ export default function AdvancedHrExitInterviewPage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No exit interviews recorded.
@@ -148,7 +148,7 @@ export default function AdvancedHrExitInterviewPage() {
                                             {e.wouldRehire ? "Yes" : "No"}
                                           </Badge></>) },
                       ];
-                              return <DataTable columns={columns} data={interviews} rowKey={(e: any) => e.id ?? i} />;
+                              return <DataTable columns={columns} data={interviews} rowKey={(e: any) => e.id ?? Math.random().toString()} />;
                           })()}</>
         )}
       </Card>

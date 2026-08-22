@@ -6,8 +6,8 @@
 }
 .s2 {
   color: var(--color-primary);
-  height: 32px;
-  width: 32px;
+  height: var(--space-8);
+  width: var(--space-8);
 }
 .s3 {
   display: flex;
@@ -17,7 +17,7 @@
 }
 .s4 {
   margin-right: var(--space-2);
-  width: 16px;
+  width: var(--space-4);
 }
 .s5 {
   background: var(--color-bg-danger);
@@ -99,8 +99,8 @@
   padding-inline: var(--space-2);
 }
 .s19 {
-  height: 12px;
-  width: 12px;
+  height: var(--space-3);
+  width: var(--space-3);
 }
 .s20 {
   color: var(--color-text-secondary);

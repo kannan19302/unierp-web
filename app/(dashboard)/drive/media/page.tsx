@@ -131,7 +131,7 @@ export default function DriveMediaPage() {
             >
               <div
                 className={styles.toggleHandle}
-                style={{ left: rule.enabled ? "20px" : "2px" }}
+                style={{ left: rule.enabled ? "var(--space-5)" : "2px" }}
               />
             </div>
           </div>

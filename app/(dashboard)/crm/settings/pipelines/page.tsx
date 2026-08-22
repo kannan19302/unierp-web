@@ -66,7 +66,7 @@ function SortableRow({
     transition,
     opacity: isDragging ? 0.5 : 1,
     display: "grid",
-    gridTemplateColumns: "24px 2fr 1fr auto auto auto",
+    gridTemplateColumns: "var(--space-6) 2fr 1fr auto auto auto",
     gap: "var(--space-2)",
     alignItems: "center",
     padding: "var(--space-2)",

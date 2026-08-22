@@ -25,8 +25,8 @@
 }
 
 .s6 {
-  height: 24px;
-  width: 24px;
+  height: var(--space-6);
+  width: var(--space-6);
 }
 
 .s7 {
@@ -78,8 +78,8 @@
 }
 
 .s16 {
-  height: 24px;
-  width: 24px;
+  height: var(--space-6);
+  width: var(--space-6);
 }
 
 .s17 {

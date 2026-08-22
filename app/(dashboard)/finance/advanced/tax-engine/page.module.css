@@ -16,8 +16,8 @@
   padding: var(--space-3);
 }
 .s5 {
-  height: 24px;
-  width: 24px;
+  height: var(--space-6);
+  width: var(--space-6);
 }
 .s6 {
   flex: 1;

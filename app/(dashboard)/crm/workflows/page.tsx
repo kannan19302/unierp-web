@@ -214,7 +214,7 @@ export default function WorkflowsPage() {
   }
 
   const inputStyle: React.CSSProperties = {
-    padding: "8px 12px",
+    padding: "var(--space-2) var(--space-3)",
     borderRadius: 6,
     border: "1px solid var(--color-border)",
     fontSize: "var(--font-size-sm)",

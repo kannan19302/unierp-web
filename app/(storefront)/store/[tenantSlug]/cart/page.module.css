@@ -86,13 +86,13 @@
 }
 .s18 {
   font-size: var(--text-sm);
-  min-width: 24px;
+  min-width: var(--space-6);
   padding: 0 var(--space-2);
   text-align: center;
 }
 .s19 {
   font-weight: var(--weight-semibold);
-  min-width: 80px;
+  min-width: var(--space-20);
   text-align: right;
 }
 .s20 {

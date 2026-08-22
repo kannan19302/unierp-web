@@ -95,17 +95,17 @@ export default function ReportingCompliancePage() {
   }
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
+    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
       <PageHeader
         title="SOX / GDPR Compliance & Executive Report Sign-Off Desk"
         description="Formal digital sign-off workflow, cryptographic audit signatures, and regulatory compliance validation."
       />
 
-      <Card style={{ padding: "20px", margin: "24px 0" }}>
-        <h3 style={{ fontSize: "16px", fontWeight: 600, marginBottom: "12px" }}>
+      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
+        <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-3)" }}>
           Initiate Regulatory Compliance Audit
         </h3>
-        <div style={{ display: "flex", gap: "12px" }}>
+        <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <input
             type="text"
             placeholder="Compliance Report Title (e.g. FY2026 SOX Section 404 Audit)..."
@@ -113,7 +113,7 @@ export default function ReportingCompliancePage() {
             onChange={(e: any) => setReportName(e.target.value)}
             style={{
               flex: 1,
-              padding: "8px 12px",
+              padding: "var(--space-2) var(--space-3)",
               borderRadius: "6px",
               border: "1px solid #cbd5e1",
             }}
@@ -122,8 +122,8 @@ export default function ReportingCompliancePage() {
         </div>
       </Card>
 
-      <Card style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px" }}>
+      <Card style={{ padding: "var(--space-6)" }}>
+        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
           Compliance Audits & Sign-Offs
         </h3>
         {audits.length === 0 ? (
@@ -131,7 +131,7 @@ export default function ReportingCompliancePage() {
             style={{
               color: "var(--color-text-secondary)",
               textAlign: "center",
-              padding: "32px 0",
+              padding: "var(--space-8) 0",
             }}
           >
             No pending compliance report sign-offs.
@@ -160,7 +160,7 @@ export default function ReportingCompliancePage() {
                                                 fontSize: "13px",
                                                 display: "flex",
                                                 alignItems: "center",
-                                                gap: "4px",
+                                                gap: "var(--space-1)",
                                               }}
                                             >
                                               <CheckCircle2 size={14} /> Signed by Auditor

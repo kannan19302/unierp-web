@@ -5,7 +5,7 @@
 }
 
 .s1 {
-  border-left: 4px solid var(--color-danger);
+  border-left: var(--space-1) solid var(--color-danger);
 }
 
 .s2 {
@@ -15,7 +15,7 @@
 }
 
 .s3 {
-  border-left: 4px solid var(--color-warning);
+  border-left: var(--space-1) solid var(--color-warning);
 }
 
 .s4 {
@@ -25,7 +25,7 @@
 }
 
 .s5 {
-  border-left: 4px solid var(--color-success);
+  border-left: var(--space-1) solid var(--color-success);
 }
 
 .s6 {

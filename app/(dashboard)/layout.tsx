@@ -145,7 +145,7 @@ export default function DashboardLayout({
           svgInner = `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="${color}" stroke-width="2" fill="none"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" stroke="${color}" stroke-width="2" fill="none"/>`;
           break;
         case "procurement":
-          color = "#0d9488";
+          color = "var(--chart-6)";
           svgInner = `<circle cx="8" cy="21" r="1" fill="${color}"/><circle cx="19" cy="21" r="1" fill="${color}"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" stroke="${color}" stroke-width="2" fill="none"/>`;
           break;
         case "sales":
@@ -169,11 +169,11 @@ export default function DashboardLayout({
           svgInner = `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="${color}" stroke-width="2" fill="none"/>`;
           break;
         case "pos":
-          color = "#7c3aed";
+          color = "var(--chart-7)";
           svgInner = `<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="${color}" stroke-width="2" fill="none"/><polyline points="9 22 9 12 15 12 15 22" stroke="${color}" stroke-width="2" fill="none"/>`;
           break;
         case "builder":
-          color = "#db2777";
+          color = "var(--chart-2)";
           svgInner = `<rect x="4" y="4" width="14" height="14" rx="2" ry="2" stroke="${color}" stroke-width="2" fill="none"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" stroke="${color}" stroke-width="2" stroke-linecap="round"/>`;
           break;
         default:
@@ -694,7 +694,7 @@ export default function DashboardLayout({
               padding: pathname.startsWith("/builder")
                 ? "0"
                 : isAppsSection
-                  ? "var(--space-2) 20px"
+                  ? "var(--space-2) var(--space-5)"
                   : "var(--space-2) var(--space-6)",
             }}
             className={styles.s4}

@@ -153,7 +153,7 @@ export default function ClinicalToolsPage() {
           </div>
         </div>
 
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } } @keyframes fadeInUp { from { opacity:0; transform: translateY(8px);} to {opacity:1; transform:none;} }`}</style>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } } @keyframes fadeInUp { from { opacity:0; transform: translateY(var(--space-2));} to {opacity:1; transform:none;} }`}</style>
       </div>
     </RouteGuard>
   );
@@ -409,7 +409,7 @@ function ScrubberTool() {
           {result.edits.map((e: any, i: number) => (
             <div
               key={i}
-              style={{ borderLeft: `4px solid ${severityColor(e.severity)}` }}
+              style={{ borderLeft: `var(--space-1) solid ${severityColor(e.severity)}` }}
               className={styles.s19}
             >
               <span
@@ -477,7 +477,7 @@ function InteractionsTool() {
             result.interactions.map((h: any, i: number) => (
               <div
                 key={i}
-                style={{ borderLeft: `4px solid ${severityColor(h.severity)}` }}
+                style={{ borderLeft: `var(--space-1) solid ${severityColor(h.severity)}` }}
                 className={styles.s19}
               >
                 <span
@@ -540,7 +540,7 @@ function CdsTool() {
             result.alerts.map((a: any, i: number) => (
               <div
                 key={i}
-                style={{ borderLeft: `4px solid ${severityColor(a.severity)}` }}
+                style={{ borderLeft: `var(--space-1) solid ${severityColor(a.severity)}` }}
                 className={styles.s19}
               >
                 <span

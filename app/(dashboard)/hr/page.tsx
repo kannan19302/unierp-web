@@ -16,8 +16,8 @@ export default function HrPage() {
       <div className="ui-card">
         <PageHeader
           title={
-            <div className="flex items-center gap-2 text-[#ec4899]">
-              <div className="p-2 bg-[#fdf2f8] rounded-lg">
+            <div className="flex items-center gap-2 text-[var(--chart-3)]">
+              <div className="p-2 bg-[var(--color-surface)] rounded-lg">
                 <Users size={20} />
               </div>
               <span className="text-[var(--color-text)]">Human Resources</span>

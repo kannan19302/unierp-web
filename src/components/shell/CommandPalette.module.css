@@ -16,7 +16,7 @@
   max-height: 420px;
   background: var(--color-bg-elevated);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl, 0 20px 60px rgba(0, 0, 0, 0.3));
+  box-shadow: var(--shadow-xl, 0 var(--space-5) 60px rgba(0, 0, 0, 0.3));
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -116,7 +116,7 @@
 }
 
 .footerKbd {
-  padding: 1px 4px;
+  padding: 1px var(--space-1);
   border: 1px solid var(--color-border);
   border-radius: 3px;
   font-family: var(--font-mono);

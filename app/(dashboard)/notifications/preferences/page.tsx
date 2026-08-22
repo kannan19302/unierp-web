@@ -103,20 +103,25 @@ export default function NotificationPreferencesPage() {
         </button>
       </div>
       {loading && <div className="text-gray-500">Loading...</div>}
-      {!loading && (
-        <>{(() => {
-                      const columns = [
-                { key: "col_0", header: "Category" , render: (cat: any) => (<>{cat}</>) },
-                { key: "col_1", header: "{ch === \"inApp\" ? \"In-App\" : ch}" , render: (cat: any) => (<><input
-                                    type="checkbox"
-                                    className="toggle"
-                                    checked={getPref(cat, ch)}
-                                    onChange={() => togglePref(cat, ch)}
-                                  /></>) },
-              ];
-                      return <DataTable columns={columns} data={CATEGORIES} rowKey={(cat: any) => cat} />;
-                  })()}</>
-      )}
+      {!loading &&
+        (() => {
+          const columns = [
+            { key: "category", header: "Category", render: (cat: any) => <strong>{cat}</strong> },
+            ...CHANNELS.map((ch: string) => ({
+              key: ch,
+              header: ch === "inApp" ? "In-App" : ch.charAt(0).toUpperCase() + ch.slice(1),
+              render: (cat: any) => (
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  checked={getPref(cat, ch)}
+                  onChange={() => togglePref(cat, ch)}
+                />
+              ),
+            })),
+          ];
+          return <DataTable columns={columns} data={CATEGORIES} rowKey={(cat: any) => cat} />;
+        })()}
     </div>
   );
 }

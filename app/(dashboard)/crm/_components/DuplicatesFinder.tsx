@@ -184,29 +184,39 @@ function MergeReviewModal({
         </select>
       </div>
       <div className="builder-table-wrapper">
-        <>{(() => {
-                      const columns = [
-                { key: "col_0", header: "Field" , render: (f: any) => (<>{f}</>) },
-                { key: "col_1", header: "{(r.firstName as string) || (r.name as string) || r.id}" , render: (f: any) => (<><label className={styles.choice}>
-                                      <input
-                                        type="radio"
-                                        name={`field-${f}`}
-                                        checked={selected === r.id}
-                                        onChange={() =>
-                                          setFieldChoices((prev: any) => ({ ...prev, [f]: r.id }))
-                                        }
-                                      />
-                                      <span className={styles.breakWord}>
-                                        {value == null ? (
-                                          <em className="ui-text-tertiary">—</em>
-                                        ) : (
-                                          String(value)
-                                        )}
-                                      </span>
-                                    </label></>) },
-              ];
-                      return <DataTable columns={columns} data={fields} rowKey={(f: any) => f} />;
-                  })()}</>
+        {(() => {
+          const columns = [
+            { key: "field", header: "Field", render: (f: any) => <strong>{f}</strong> },
+            ...records.map((r: any, idx: number) => ({
+              key: `record_${r.id || idx}`,
+              header: (r.firstName as string) || (r.name as string) || (r.email as string) || r.id,
+              render: (f: any) => {
+                const selected = fieldChoices[f] ?? winnerId;
+                const value = r[f];
+                return (
+                  <label className={styles.choice}>
+                    <input
+                      type="radio"
+                      name={`field-${f}`}
+                      checked={selected === r.id}
+                      onChange={() =>
+                        setFieldChoices((prev: any) => ({ ...prev, [f]: r.id }))
+                      }
+                    />
+                    <span className={styles.breakWord}>
+                      {value == null ? (
+                        <em className="ui-text-tertiary">—</em>
+                      ) : (
+                        String(value)
+                      )}
+                    </span>
+                  </label>
+                );
+              },
+            })),
+          ];
+          return <DataTable columns={columns} data={fields} rowKey={(f: any) => f} />;
+        })()}
       </div>
       <div className={styles.footer}>
         <Button variant="outline" onClick={onClose}>
