@@ -95,10 +95,9 @@ function AsyncLinkSelect({
     async function fetchLinks() {
       setLoading(true);
       try {
-        const token = localStorage.getItem("token") || "";
-        // 1. Fetch schema by slug to get schemaId
+        // Use cookie-based auth (httpOnly auth_token) instead of localStorage
         const schemaRes = await fetch(`/api/v1/builder/schema-registries`, {
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
         });
         if (!schemaRes.ok) throw new Error();
         const schemas = await schemaRes.json();
@@ -212,9 +211,7 @@ export function DynamicFormRenderer({
             ? f.dataSource
             : `/api/v1/${f.dataSource}`,
           {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+            credentials: "include",
           },
         )
           .then((res: any) => res.json())

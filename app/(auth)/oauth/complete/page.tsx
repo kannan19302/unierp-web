@@ -1,15 +1,22 @@
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@kannan19302/ui";
-import { getCsrfToken } from "../../../../src/lib/api";
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 
 /**
- * Landing pad after the OAuth callback. The API has already set the httpOnly
- * auth + refresh cookies; this page rotates the refresh cookie into a
- * client-side session (localStorage token + user) and enters the workspace.
+ * Landing pad after the legacy OAuth callback.
+ *
+ * With the unified OIDC flow (W6), the primary sign-in path is
+ * /auth/callback which handles the PKCE code exchange via the shared
+ * OidcClient. This page exists only for backward compatibility with
+ * the social-login OAuth callback (`oauth.controller.ts`), which sets
+ * httpOnly session cookies directly — no localStorage is needed.
+ *
+ * Previously this page wrote the token to localStorage, which is the
+ * exact XSS exposure the shared auth-client was designed to prevent.
+ * The httpOnly cookie set by the OAuth callback is already enough for
+ * the API to authenticate requests.
  */
 export default function OAuthCompletePage() {
   const router = useRouter();
@@ -20,21 +27,12 @@ export default function OAuthCompletePage() {
     if (fired.current) return;
     fired.current = true;
 
-    const headers = new Headers();
-    const csrf = getCsrfToken();
-    if (csrf) headers.set("x-csrf-token", csrf);
-
-    fetch(`${API_BASE}/auth/refresh`, {
-      method: "POST",
-      headers,
-      credentials: "include",
-    })
-      .then(async (res: any) => {
-        if (!res.ok) throw new Error(`refresh failed (${res.status})`);
-        const data = (await res.json()) as { token?: string; user?: unknown };
-        if (!data.token) throw new Error("no token");
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+    // The OAuth callback has already set the httpOnly auth_token and
+    // refresh_token cookies. Verify the session is valid by calling /me,
+    // then redirect to the workspace. No token is written to localStorage.
+    fetch("/api/v1/auth/me", { credentials: "include" })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`session check failed (${res.status})`);
         router.replace("/apps");
       })
       .catch(() => {

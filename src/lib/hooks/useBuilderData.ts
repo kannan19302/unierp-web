@@ -7,9 +7,9 @@ export function useBuilderData<T>(endpoint: string, initialData: T[] = []) {
   const fetchIt = useCallback(async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      // Cookie-based auth (httpOnly auth_token) — no localStorage.
       const res = await fetch(`/api/v1/builder/${endpoint}`, {
-        headers: { Authorization: `Bearer ${token || ""}` },
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -35,13 +35,10 @@ export function useBuilderData<T>(endpoint: string, initialData: T[] = []) {
 
   const createItem = async (payload: any) => {
     try {
-      const token = localStorage.getItem("token");
       const res = await fetch(`/api/v1/builder/${endpoint}`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token || ""}`,
-          "Content-Type": "application/json",
-        },
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (res.ok) {
@@ -57,13 +54,10 @@ export function useBuilderData<T>(endpoint: string, initialData: T[] = []) {
 
   const updateItem = async (id: string | number, payload: any) => {
     try {
-      const token = localStorage.getItem("token");
       const res = await fetch(`/api/v1/builder/${endpoint}/${id}`, {
         method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${token || ""}`,
-          "Content-Type": "application/json",
-        },
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (res.ok) {
@@ -79,10 +73,9 @@ export function useBuilderData<T>(endpoint: string, initialData: T[] = []) {
 
   const deleteItem = async (id: string | number) => {
     try {
-      const token = localStorage.getItem("token");
       const res = await fetch(`/api/v1/builder/${endpoint}/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token || ""}` },
+        credentials: "include",
       });
       if (res.ok) {
         await fetchIt();
@@ -95,12 +88,5 @@ export function useBuilderData<T>(endpoint: string, initialData: T[] = []) {
     }
   };
 
-  return {
-    data,
-    loading,
-    refetch: fetchIt,
-    createItem,
-    updateItem,
-    deleteItem,
-  };
+  return { data, loading, refresh: fetchIt, createItem, updateItem, deleteItem };
 }

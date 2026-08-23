@@ -32,17 +32,7 @@ export function PermissionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [permissions, setPermissions] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const stored = localStorage.getItem("user");
-      if (!stored) return [];
-      const parsed = JSON.parse(stored) as { permissions?: string[] };
-      return Array.isArray(parsed.permissions) ? parsed.permissions : [];
-    } catch {
-      return [];
-    }
-  });
+  const [permissions, setPermissions] = useState<string[]>([]);
 
   useEffect(() => {
     let mounted = true;

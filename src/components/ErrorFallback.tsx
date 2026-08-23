@@ -54,21 +54,23 @@ export function ErrorFallback({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Determine user context and prefill details if logged in
+  // Try to prefill user context from the /auth/me endpoint (cookie-based).
+  // This may fail if the session is expired or the error broke the page
+  // before auth loaded — that's fine, the fields are optional.
   useEffect(() => {
-    try {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const parsed = JSON.parse(storedUser);
-        if (parsed.email) setEmail(parsed.email);
-        if (parsed.firstName || parsed.lastName) {
-          setName(`${parsed.firstName || ""} ${parsed.lastName || ""}`.trim());
+    fetch("/api/v1/auth/me", { credentials: "include" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!data) return;
+        if (data.email) setEmail(data.email);
+        if (data.firstName || data.lastName) {
+          setName(`${data.firstName || ""} ${data.lastName || ""}`.trim());
         }
-        if (parsed.tenantId) setTenantId(parsed.tenantId);
-      }
-    } catch {
-      // Ignore errors reading local storage
-    }
+        if (data.tenantId) setTenantId(data.tenantId);
+      })
+      .catch(() => {
+        // Session unavailable — leave fields empty
+      });
   }, []);
 
   const handleReload = () => {
@@ -80,19 +82,17 @@ export function ErrorFallback({
   };
 
   const handleGoToDashboard = () => {
-    const hasToken =
-      typeof window !== "undefined" && localStorage.getItem("token");
-    if (hasToken) {
-      router.push("/apps");
-    } else {
-      router.push("/");
-    }
+    // The auth guard (RequireSession) will redirect to OIDC login if
+    // the user is not authenticated — no need to check localStorage.
+    router.push("/apps");
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    router.push("/login");
+    const idpOrigin = process.env.NEXT_PUBLIC_IDP_ORIGIN || "http://localhost:3005";
+    const postLogoutUri = typeof window !== "undefined" ? window.location.origin : "/";
+    window.location.assign(
+      `${idpOrigin}/oidc/end_session?post_logout_redirect_uri=${encodeURIComponent(postLogoutUri)}`,
+    );
   };
 
   const handleSubmitReport = async (e: React.FormEvent) => {

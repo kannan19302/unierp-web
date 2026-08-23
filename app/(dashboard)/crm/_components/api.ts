@@ -1,18 +1,22 @@
 "use client";
 
+/**
+ * CRM API helpers.
+ *
+ * Previously read the auth token from `localStorage.getItem("token")`.
+ * That is an XSS exposure: any injected script could exfiltrate the
+ * session. With the unified OIDC flow, the `auth_token` httpOnly cookie
+ * is automatically included with `credentials: "include"` — no need to
+ * read a token from JavaScript-accessible storage.
+ */
+
 const BASE = "/api/v1";
 
-function authHeaders(): HeadersInit {
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : "";
-  return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token || ""}`,
-  };
-}
-
 export async function apiGet<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, { headers: authHeaders() });
+  const res = await fetch(`${BASE}${path}`, {
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
   if (!res.ok) throw new Error(`GET ${path} failed`);
   const json = await res.json();
   return (json?.data ?? json) as T;
@@ -25,7 +29,8 @@ export async function apiSend<T>(
 ): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     method,
-    headers: authHeaders(),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
   if (!res.ok) throw new Error(`${method} ${path} failed`);

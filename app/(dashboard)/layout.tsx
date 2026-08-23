@@ -222,7 +222,15 @@ export default function DashboardLayout({
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsImpersonating(!!localStorage.getItem("unierp_token_original"));
+      // Impersonation state is signalled by an httpOnly cookie set
+      // when the super-admin starts impersonating. We detect it via
+      // a lightweight check rather than reading localStorage.
+      fetch("/api/v1/auth/me", { credentials: "include" })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data?.isImpersonating) setIsImpersonating(true);
+        })
+        .catch(() => {});
     }
   }, []);
 
@@ -717,12 +725,15 @@ export default function DashboardLayout({
                   </div>
                   <button
                     onClick={() => {
-                      const originalToken = localStorage.getItem("unierp_token_original");
-                      if (originalToken) {
-                        localStorage.setItem("unierp_token", originalToken);
-                        localStorage.removeItem("unierp_token_original");
+                      // End impersonation server-side — the API swaps
+                      // the session cookie back to the original admin
+                      // session. No tokens in localStorage.
+                      fetch("/api/v1/auth/end-impersonation", {
+                        method: "POST",
+                        credentials: "include",
+                      }).finally(() => {
                         window.location.href = "/settings/super-admin/tenants";
-                      }
+                      });
                     }}
                     className={styles.impersonation_end}
                   >

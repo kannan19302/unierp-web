@@ -22,9 +22,16 @@ export function getCsrfToken(): string | null {
   return match ? decodeURIComponent(match[1] ?? "") : null;
 }
 
+/**
+ * Auth token accessor — DEPRECATED.
+ *
+ * With the unified OIDC flow, the httpOnly auth_token cookie handles
+ * authentication automatically via `credentials: "include"`. This function
+ * returns null so that the Authorization header is never set from
+ * client-side storage, eliminating the XSS vector.
+ */
 function getAuthToken(): string | null {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("token");
+  return null;
 }
 
 export interface ApiError {
@@ -73,10 +80,9 @@ async function trySilentRefresh(): Promise<boolean> {
     })
       .then(async (res: any) => {
         if (!res.ok) return false;
-        const data = (await res.json()) as { token?: string; user?: unknown };
-        if (data.token) localStorage.setItem("token", data.token);
-        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
-        return Boolean(data.token);
+        // The refresh endpoint sets new httpOnly cookies directly —
+        // no need to write tokens to localStorage.
+        return true;
       })
       .catch(() => false)
       .finally(() => {
