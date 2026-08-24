@@ -1,0 +1,77 @@
+.importerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--token-space-4);
+  font-family: var(--token-font-sans);
+}
+
+.dropzone {
+  border: 2px dashed var(--token-color-border-subtle);
+  border-radius: var(--token-radius-lg);
+  padding: var(--token-space-8);
+  text-align: center;
+  background: var(--token-color-surface-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropzone:hover {
+  border-color: var(--token-color-primary);
+  background: var(--token-color-surface-primary);
+}
+
+.dropzoneTitle {
+  font-size: var(--token-text-sm);
+  font-weight: 600;
+  color: var(--token-color-text-primary);
+  margin-bottom: var(--token-space-1);
+}
+
+.dropzoneHint {
+  font-size: var(--token-text-xs);
+  color: var(--token-color-text-secondary);
+}
+
+.mappingTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--token-text-xs);
+  margin-top: var(--token-space-3);
+}
+
+.mappingTable th, .mappingTable td {
+  padding: var(--token-space-2) var(--token-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--token-color-border-subtle);
+}
+
+.mappingTable th {
+  font-weight: 600;
+  color: var(--token-color-text-secondary);
+  background: var(--token-color-surface-secondary);
+}
+
+.validationCard {
+  border-radius: var(--token-radius-md);
+  padding: var(--token-space-4);
+  margin-top: var(--token-space-3);
+}
+
+.validationSuccess {
+  background: var(--token-color-surface-secondary);
+  border: 1px solid var(--token-color-success);
+}
+
+.validationError {
+  background: var(--token-color-surface-secondary);
+  border: 1px solid var(--token-color-error);
+}
+
+.errorList {
+  max-height: 120px;
+  overflow-y: auto;
+  font-size: var(--token-text-xs);
+  color: var(--token-color-error);
+  margin: var(--token-space-2) 0 0 0;
+  padding-left: var(--token-space-4);
+}

@@ -107,7 +107,7 @@ function AsyncLinkSelect({
         // 2. Fetch custom records for that schemaId
         const recordsRes = await fetch(
           `/api/v1/builder/custom-records/${schema.id}`,
-          { headers: { Authorization: `Bearer ${token}` } },
+          { credentials: "include" },
         );
         if (!recordsRes.ok) throw new Error();
         const records = await recordsRes.json();

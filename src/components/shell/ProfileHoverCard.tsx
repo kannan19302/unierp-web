@@ -146,7 +146,10 @@ export function ProfileHoverCard({
   };
   const scheduleClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpen(false), 180);
+    // Give pointer users enough time to cross the small gap between the
+    // avatar and the popover. The previous 180 ms window made security
+    // actions such as Sign out disappear before the click could land.
+    closeTimer.current = setTimeout(() => setOpen(false), 500);
   };
 
   useEffect(() => {
@@ -201,9 +204,14 @@ export function ProfileHoverCard({
         type="button"
         className={styles.trigger}
         aria-label={isSelf ? "Open your profile card" : "Open profile card"}
-        onMouseEnter={openCard}
-        onMouseLeave={scheduleClose}
-        onClick={() => (open ? setOpen(false) : openCard())}
+        aria-expanded={open}
+        // The signed-in user's card is an account menu containing security
+        // actions, so it must be click-stable. Hover behaviour remains useful
+        // for inspecting other people without turning the account menu into a
+        // moving target.
+        onMouseEnter={isSelf ? undefined : openCard}
+        onMouseLeave={isSelf ? undefined : scheduleClose}
+        onClick={() => (isSelf ? setOpen((value) => !value) : openCard())}
       >
         <span className={styles.avatarWrap}>
           {fallbackAvatarUrl ? (
@@ -222,16 +230,32 @@ export function ProfileHoverCard({
       {open && (
         <div
           className={styles.card}
-          onMouseEnter={openCard}
-          onMouseLeave={scheduleClose}
+          onMouseEnter={isSelf ? undefined : openCard}
+          onMouseLeave={isSelf ? undefined : scheduleClose}
         >
           {loading && !data && (
             <div className={styles.loadingState}>Loading profile…</div>
           )}
           {!loading && !data && (
-            <div className={styles.loadingState}>
-              Couldn't load this profile.
-            </div>
+            <>
+              <div className={styles.loadingState}>
+                Couldn't load this profile.
+              </div>
+              {isSelf && onSignOut && (
+                <div className={styles.footer}>
+                  <button
+                    type="button"
+                    className={`${styles.footerBtn} ${styles.footerBtnDanger}`}
+                    onClick={() => {
+                      setOpen(false);
+                      onSignOut();
+                    }}
+                  >
+                    <LogOut size={14} /> Sign out
+                  </button>
+                </div>
+              )}
+            </>
           )}
           {data && (
             <>
@@ -449,10 +473,10 @@ export function ProfileHoverCard({
                     className={styles.footerBtn}
                     onClick={() => {
                       setOpen(false);
-                      router.push("/settings");
+                      window.location.assign("http://localhost:3005/oidc/account");
                     }}
                   >
-                    <Settings size={14} /> Settings
+                    <Settings size={14} /> Account Center
                   </button>
                   <button
                     type="button"

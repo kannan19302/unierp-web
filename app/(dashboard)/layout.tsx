@@ -11,7 +11,7 @@ import styles from "./layout.module.css";
 export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { DemoBanner, Spinner, useTheme } from "@kannan19302/ui";
+import { DemoBanner, Spinner, TrialCountdown, useTheme } from "@kannan19302/ui";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -53,6 +53,7 @@ import { AppHeader } from "@/components/shell/AppHeader";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 import { AICopilot } from "@/components/shell/AICopilot";
 import { useApiClient } from "@kannan19302/framework";
+import { createOidcClient } from "@/lib/oidc-config";
 
 /**
  * `slug` is the real GATED_MODULES / app-slug-map.ts identifier this item is
@@ -343,16 +344,6 @@ export default function DashboardLayout({
   const [subscription, setSubscription] = useState<any>(null);
   const [showTrialBanner, setShowTrialBanner] = useState(true);
 
-  const trialDaysLeft = useMemo(() => {
-    if (!subscription?.trialEndsAt) return 0;
-    return Math.max(
-      0,
-      Math.ceil(
-        (new Date(subscription.trialEndsAt).getTime() - Date.now()) /
-          (1000 * 60 * 60 * 24),
-      ),
-    );
-  }, [subscription]);
   // Real memberships from the API — every tenant this account can sign in to.
   const [tenants, setTenants] = useState<
     Array<{ id: string; name: string; slug: string }>
@@ -525,15 +516,24 @@ export default function DashboardLayout({
   }, [router, pathname, client]);
 
   const handleLogout = async () => {
+    // Clear this platform's refresh-token cookie first. Do NOT call the
+    // legacy /auth/logout endpoint here: it clears the shared `auth_token`
+    // cookie before /oidc/end_session can read its `sid`, which prevents the
+    // IdP from revoking grants belonging to the other UniERP platforms.
     try {
-      await client.post("/auth/logout");
-    } catch (e) {
-      // Non-blocking: the user is leaving the app either way, so we still
-      // navigate to /login below. Logged so a server-side session-revoke
-      // failure isn't invisible to developers.
-      console.warn("Server-side logout call failed", e);
+      await fetch("/api/session", {
+        method: "DELETE",
+        credentials: "include",
+        signal: AbortSignal.timeout(5_000),
+      });
+    } finally {
+      // Navigate before publishing an unauthenticated React state. Calling
+      // useSession().signOut() here allowed <RequireSession> to race in and
+      // replace the end-session navigation with a fresh authorize request.
+      window.location.replace(
+        createOidcClient().buildLogoutUrl("http://localhost:4000/"),
+      );
     }
-    router.push("/login");
   };
 
   const handleTenantSwitch = async (t: { name: string; slug: string }) => {
@@ -751,10 +751,16 @@ export default function DashboardLayout({
                 <div className={`${styles.trialBanner} ui-animate-in`}>
                   <div className={styles.trialInfo}>
                     <Clock size={16} className={styles.trialIcon} />
-                    <span>
-                      Your <strong>Free Trial</strong> is active. You have{" "}
-                      <strong>{trialDaysLeft} days left</strong>.
-                    </span>
+                    <strong>
+                      <TrialCountdown
+                        endsAt={subscription.trialEndsAt}
+                        onExpired={() =>
+                          setSubscription((current: any) =>
+                            current ? { ...current, status: "EXPIRED" } : current,
+                          )
+                        }
+                      />
+                    </strong>
                   </div>
                   <div className={styles.trialActions}>
                     <Link

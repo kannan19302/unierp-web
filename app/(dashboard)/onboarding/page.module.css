@@ -3,167 +3,279 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: var(--color-background);
-  padding: 2rem;
+  background-color: var(--token-color-surface-secondary);
+  padding: var(--token-space-8);
+  font-family: var(--token-font-sans);
 }
 
 .onboardingCard {
   width: 100%;
-  max-width: 600px;
-  background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  max-width: 800px;
+  background-color: var(--token-color-surface-primary);
+  border: 1px solid var(--token-color-border-subtle);
+  border-radius: var(--token-radius-xl);
+  box-shadow: var(--token-shadow-xl);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
 .progressHeader {
-  padding: 2rem;
-  border-bottom: 1px solid var(--color-border);
+  padding: var(--token-space-6) var(--token-space-8);
+  border-bottom: 1px solid var(--token-color-border-subtle);
+  background-color: var(--token-color-surface-primary);
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--token-space-4);
+}
+
+.brandTitle {
+  font-size: var(--token-text-lg);
+  font-weight: 700;
+  color: var(--token-color-text-primary);
+}
+
+.stepIndicator {
+  font-size: var(--token-text-xs);
   font-weight: 600;
-  font-size: 1.125rem;
-  color: var(--color-text);
+  color: var(--token-color-primary);
+  background: var(--token-color-surface-secondary);
+  padding: var(--token-space-1) var(--token-space-3);
+  border-radius: var(--token-radius-full);
 }
 
 .progressBar {
   width: 100%;
   height: 6px;
-  background-color: var(--color-border);
-  border-radius: var(--radius-sm);
-  margin-top: 1rem;
+  background-color: var(--token-color-border-subtle);
+  border-radius: var(--token-radius-full);
   overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
-  background-color: var(--color-primary);
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, var(--token-color-primary), var(--token-color-accent, var(--token-color-primary)));
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .contentArea {
-  padding: 2rem;
-  min-height: 300px;
+  padding: var(--token-space-8);
+  min-height: 380px;
 }
 
-.stepContent h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--color-text);
+.stepTitle {
+  font-size: var(--token-text-xl);
+  font-weight: 700;
+  color: var(--token-color-text-primary);
+  margin: 0 0 var(--token-space-2) 0;
 }
 
-.stepContent p {
-  color: var(--color-text-secondary);
-  margin-bottom: 2rem;
+.stepSubtitle {
+  font-size: var(--token-text-sm);
+  color: var(--token-color-text-secondary);
+  margin: 0 0 var(--token-space-6) 0;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--token-space-4);
+}
+
+.fullWidth {
+  grid-column: span 2;
 }
 
 .fieldGroup {
-  margin-bottom: 1.5rem;
-}
-
-.fieldGroup label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: var(--color-text);
-}
-
-.fieldGroup select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background-color: var(--color-surface);
-  color: var(--color-text);
-}
-
-.teamMember {
-  margin-bottom: 1rem;
-}
-
-.teamMember input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-}
-
-.moduleGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.moduleCard {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-}
-
-.moduleCard:hover {
-  border-color: var(--color-primary);
-}
-
-.moduleCard.selected {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary-light);
-}
-
-.moduleIcon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  display: inline-block;
-}
-
-.importOptions {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: var(--token-space-2);
 }
 
-.importBtn {
-  flex: 1;
-  padding: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
+.fieldLabel {
+  font-size: var(--token-text-xs);
+  font-weight: 600;
+  color: var(--token-color-text-primary);
+}
+
+.inputField, .selectField {
+  width: 100%;
+  padding: var(--token-space-3);
+  border: 1px solid var(--token-color-border-subtle);
+  border-radius: var(--token-radius-md);
+  background-color: var(--token-color-surface-primary);
+  color: var(--token-color-text-primary);
+  font-size: var(--token-text-sm);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.inputField:focus, .selectField:focus {
+  border-color: var(--token-color-primary);
+  box-shadow: 0 0 0 2px var(--token-color-border-subtle);
+}
+
+.blueprintGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--token-space-4);
+}
+
+.blueprintCard {
+  border: 1px solid var(--token-color-border-subtle);
+  border-radius: var(--token-radius-lg);
+  padding: var(--token-space-4);
   cursor: pointer;
+  background: var(--token-color-surface-primary);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--token-space-2);
 }
 
-.importBtn:hover {
-  border-color: var(--color-primary);
-  background-color: var(--color-primary-light);
+.blueprintCard:hover {
+  border-color: var(--token-color-primary);
+  transform: translateY(-2px);
+}
+
+.blueprintCardSelected {
+  border-color: var(--token-color-primary);
+  background-color: var(--token-color-surface-secondary);
+  box-shadow: 0 0 0 2px var(--token-color-primary);
+}
+
+.blueprintIcon {
+  font-size: 1.5rem;
+}
+
+.blueprintName {
+  font-size: var(--token-text-sm);
+  font-weight: 700;
+  color: var(--token-color-text-primary);
+}
+
+.blueprintDesc {
+  font-size: var(--token-text-xs);
+  color: var(--token-color-text-secondary);
+  line-height: 1.4;
+}
+
+.teamRow {
+  display: flex;
+  gap: var(--token-space-3);
+  margin-bottom: var(--token-space-3);
+}
+
+.addMemberBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--token-space-2);
+  padding: var(--token-space-2) var(--token-space-4);
+  background: none;
+  border: 1px dashed var(--token-color-border-subtle);
+  border-radius: var(--token-radius-md);
+  color: var(--token-color-primary);
+  font-size: var(--token-text-xs);
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: var(--token-space-2);
+}
+
+.addMemberBtn:hover {
+  border-color: var(--token-color-primary);
+}
+
+.dataOptionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--token-space-6);
+}
+
+.dataOptionCard {
+  border: 1px solid var(--token-color-border-subtle);
+  border-radius: var(--token-radius-lg);
+  padding: var(--token-space-6);
+  background: var(--token-color-surface-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--token-space-3);
+}
+
+.dataOptionTitle {
+  font-size: var(--token-text-md);
+  font-weight: 700;
+  color: var(--token-color-text-primary);
+}
+
+.dataOptionText {
+  font-size: var(--token-text-xs);
+  color: var(--token-color-text-secondary);
+  line-height: 1.5;
 }
 
 .footerActions {
-  padding: 2rem;
-  border-top: 1px solid var(--color-border);
+  padding: var(--token-space-6) var(--token-space-8);
+  border-top: 1px solid var(--token-color-border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--token-color-surface-primary);
 }
 
 .backBtn {
-  padding: 0.75rem 1.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  padding: var(--token-space-3) var(--token-space-6);
+  border: 1px solid var(--token-color-border-subtle);
+  border-radius: var(--token-radius-md);
   background: transparent;
+  color: var(--token-color-text-primary);
+  font-size: var(--token-text-sm);
+  font-weight: 500;
   cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.backBtn:hover {
+  background: var(--token-color-surface-secondary);
 }
 
 .continueBtn {
-  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--token-space-2);
+  padding: var(--token-space-3) var(--token-space-6);
   border: none;
-  border-radius: var(--radius-md);
-  background: var(--color-primary);
-  color: white;
+  border-radius: var(--token-radius-md);
+  background: var(--token-color-primary);
+  color: var(--token-color-text-inverse, #ffffff);
+  font-size: var(--token-text-sm);
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
+  transition: opacity 0.15s ease;
+}
+
+.continueBtn:hover {
+  opacity: 0.9;
 }
 
 .continueBtn:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
+}
+
+.exitBtn {
+  background: none;
+  border: none;
+  color: var(--token-color-text-tertiary);
+  font-size: var(--token-text-xs);
+  cursor: pointer;
+}
+
+.exitBtn:hover {
+  color: var(--token-color-text-primary);
+  text-decoration: underline;
 }

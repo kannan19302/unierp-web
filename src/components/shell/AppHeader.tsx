@@ -5,53 +5,15 @@ import { useRouter } from "next/navigation";
 import {
   ChevronDown,
   Search,
-  Sun,
-  Moon,
-  Monitor,
-  Palette,
-  Check,
-  LogOut,
-  User as UserIcon,
-  Settings,
   Menu,
   Building2,
-  LayoutGrid,
 } from "lucide-react";
-import { useTheme, type ThemeSetting, type DensityName } from "@kannan19302/ui";
+import { BrandMark, ThemeQuickToggle } from "@kannan19302/ui";
 import { AppSwitcher } from "./AppSwitcher";
 import { NotificationCenter } from "./NotificationCenter";
 import { ProfileHoverCard } from "./ProfileHoverCard";
+import { HeaderOnboardingHUD } from "./HeaderOnboardingHUD";
 import styles from "./AppHeader.module.css";
-
-/** Human labels + one-line explanations for every design-system theme. */
-const THEME_INFO: Record<string, { label: string; hint: string }> = {
-  system: {
-    label: "System",
-    hint: "Follow your operating system light/dark preference",
-  },
-  light: { label: "Light", hint: "Default bright theme" },
-  dark: { label: "Dark", hint: "Low-light theme for dim environments" },
-  enterprise: {
-    label: "Enterprise",
-    hint: "Conservative corporate look with denser chrome",
-  },
-  modern: { label: "Modern", hint: "Soft contemporary neutrals" },
-  minimal: { label: "Minimal", hint: "Stripped-back, whitespace-first look" },
-  classic: { label: "Classic", hint: "Traditional ERP styling" },
-  "high-contrast": {
-    label: "High contrast",
-    hint: "Maximum-contrast accessibility theme",
-  },
-};
-
-/** Human labels for density — applies on top of whichever color theme is active. */
-const DENSITY_INFO: Record<DensityName, { label: string; hint: string }> = {
-  comfortable: { label: "Comfortable", hint: "Default spacing and text size" },
-  compact: {
-    label: "Compact",
-    hint: "Tighter spacing to fit more data on screen",
-  },
-};
 
 export interface TenantOption {
   id?: string;
@@ -103,121 +65,7 @@ interface AppHeaderProps {
 }
 
 function ThemeMenu({ iconBtnStyle }: { iconBtnStyle: string }) {
-  const {
-    setting,
-    resolvedTheme,
-    setTheme,
-    themes,
-    density,
-    setDensity,
-    densities,
-  } = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const onMouseDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node))
-        setOpen(false);
-    };
-    document.addEventListener("mousedown", onMouseDown);
-    return () => document.removeEventListener("mousedown", onMouseDown);
-  }, []);
-
-  const options: ThemeSetting[] = ["system", ...themes];
-
-  return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen((v: any) => !v)}
-        className={iconBtnStyle}
-        aria-label="Choose color theme"
-        title="Theme — switch between the design-system color themes"
-      >
-        {setting === "system" ? (
-          <Monitor size={16} />
-        ) : resolvedTheme === "dark" ? (
-          <Moon size={16} />
-        ) : (
-          <Sun size={16} />
-        )}
-      </button>
-      {open && (
-        <div
-          className="ui-dropdown ui-dropdown-right"
-          style={{ minWidth: 230 }}
-        >
-          <p
-            className="ui-dropdown-header"
-            style={{ display: "flex", alignItems: "center", gap: 6 }}
-          >
-            <Palette size={12} /> Theme
-          </p>
-          {options.map((t: any) => {
-            const info = THEME_INFO[t] ?? { label: t, hint: "" };
-            const active = setting === t;
-            return (
-              <button
-                key={t}
-                onClick={() => {
-                  setTheme(t);
-                }}
-                className={`ui-dropdown-item ${active ? "active" : ""}`}
-                title={info.hint}
-              >
-                <span
-                  style={{ width: 14, display: "inline-flex", flexShrink: 0 }}
-                >
-                  {active && <Check size={13} />}
-                </span>
-                <span
-                  className="ui-flex-col"
-                  style={{ alignItems: "flex-start" }}
-                >
-                  <span>{info.label}</span>
-                  <span className="ui-text-micro">{info.hint}</span>
-                </span>
-              </button>
-            );
-          })}
-          <p
-            className="ui-dropdown-header"
-            style={{ display: "flex", alignItems: "center", gap: 6 }}
-          >
-            <LayoutGrid size={12} /> Density
-          </p>
-          {densities.map((d: any) => {
-            const info = DENSITY_INFO[d];
-            if (!info) return null;
-            const active = density === d;
-            return (
-              <button
-                key={d}
-                onClick={() => {
-                  setDensity(d);
-                }}
-                className={`ui-dropdown-item ${active ? "active" : ""}`}
-                title={info.hint}
-              >
-                <span
-                  style={{ width: 14, display: "inline-flex", flexShrink: 0 }}
-                >
-                  {active && <Check size={13} />}
-                </span>
-                <span
-                  className="ui-flex-col"
-                  style={{ alignItems: "flex-start" }}
-                >
-                  <span>{info.label}</span>
-                  <span className="ui-text-micro">{info.hint}</span>
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
+  return <ThemeQuickToggle className={iconBtnStyle} />;
 }
 
 export function AppHeader({
@@ -277,6 +125,9 @@ export function AppHeader({
           >
             <Menu size={18} />
           </button>
+          <a href="http://localhost:4000" aria-label="Open Platform Wizard">
+            <BrandMark compact size="sm" />
+          </a>
           {!isAppsLanding && (
             <AppSwitcher
               appsDropdownOpen={appsDropdownOpen}
@@ -449,7 +300,11 @@ export function AppHeader({
           </div>
         )}
 
-        {/* Theme Menu — all design-system themes, not just light/dark */}
+        {/* Onboarding Progress HUD */}
+        <HeaderOnboardingHUD />
+
+        {/* Header intentionally offers light/dark only. Advanced themes and
+            density live in the avatar Account Center. */}
         <ThemeMenu iconBtnStyle={iconBtnStyle} />
 
         {/* Realtime Notification Center */}
