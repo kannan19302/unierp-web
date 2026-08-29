@@ -1,6 +1,6 @@
 # unierp-web — L4, the Tenant Admin Portal and Application Layer.
 #
-# Built from THIS repository alone; `@unerp/*` comes from the registry.
+# Built from THIS repository alone; `@kannan19302/*` comes from the registry.
 #
 #   docker build -t unierp-web .
 
