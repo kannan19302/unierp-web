@@ -102,6 +102,7 @@ export default function OnboardingPage() {
       />
       <Card>
         <TextField
+          label="Search Onboarding Workflows"
           placeholder="Search..."
           value={search}
           onChange={(e: any) => setSearch(e.target.value)}

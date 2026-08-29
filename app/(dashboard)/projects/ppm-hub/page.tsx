@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, DashboardChart } from "@kannan19302/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, Input, FormField, Select, KPICard, DashboardChart } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   FolderKanban,
@@ -207,7 +207,7 @@ export default function PpmEnterpriseHub() {
             }}
           >
             <FormField label="Portfolio Name">
-              <TextField
+              <Input
                 value={form.name}
                 onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g. NextGen Core ERP Modernization"
@@ -215,7 +215,7 @@ export default function PpmEnterpriseHub() {
               />
             </FormField>
             <FormField label="Strategic Initiative Goal">
-              <TextField
+              <Input
                 value={form.strategicGoal}
                 onChange={(e: any) =>
                   setForm({ ...form, strategicGoal: e.target.value })
@@ -225,7 +225,7 @@ export default function PpmEnterpriseHub() {
               />
             </FormField>
             <FormField label="Portfolio Budget">
-              <TextField
+              <Input
                 type="number"
                 value={form.budget}
                 onChange={(e: any) =>

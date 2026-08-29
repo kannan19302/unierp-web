@@ -126,6 +126,7 @@ export default function WavePlanningPage() {
       />
       <Card>
         <TextField
+          label="Search Wave Plans"
           placeholder="Search wave plans..."
           value={search}
           onChange={(e: any) => setSearch(e.target.value)}

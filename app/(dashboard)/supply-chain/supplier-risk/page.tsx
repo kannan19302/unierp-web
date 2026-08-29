@@ -140,6 +140,7 @@ export default function SupplierRiskPage() {
       )}
       <Card>
         <TextField
+          label="Search Suppliers"
           placeholder="Search suppliers..."
           value={search}
           onChange={(e: any) => setSearch(e.target.value)}

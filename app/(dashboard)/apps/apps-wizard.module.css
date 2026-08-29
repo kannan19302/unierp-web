@@ -1,0 +1,219 @@
+/* ─────────────────────────────────────────────────────────────
+   UniERP Tenant-Apps — Application Wizard Landing Page Styles
+   Design Language 2.0 (Meridian Instrument) Token Compliant
+   ───────────────────────────────────────────────────────────── */
+
+.pageContainer {
+  padding: var(--space-6) var(--space-8);
+  max-width: var(--container-max-width, 90rem);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-height: 100%;
+}
+
+@media (max-width: 48rem) {
+  .pageContainer {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+}
+
+/* Header & Banner Section */
+.heroSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--space-1);
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--platform-apps, var(--chart-9)) 50%,
+    var(--color-accent, var(--chart-8)) 100%
+  );
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.tenantBadgeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.heroTitle {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold, 700);
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.heroDescription {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 42rem;
+  line-height: 1.5;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* Stats / KPI Row */
+.statsRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Controls Bar (Search + Categories) */
+.controlsBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 16rem;
+  max-width: 25rem;
+  position: relative;
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-7);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background: var(--color-bg-subtle, var(--color-surface-elevated));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.searchInput:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-subtle, rgba(99, 102, 241, 0.15));
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+.categoriesWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  overflow-x: auto;
+}
+
+/* Marketplace Discovery Banner */
+.marketplaceBanner {
+  margin-top: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-surface-elevated);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.marketplaceInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.marketplaceIconWell {
+  width: var(--space-10, 2.5rem);
+  height: var(--space-10, 2.5rem);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-subtle, rgba(99, 102, 241, 0.1));
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.marketplaceText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.marketplaceTitle {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.marketplaceDesc {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
+}

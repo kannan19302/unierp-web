@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, useToast } from "@kannan19302/ui";
+import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, Input, FormField, Select, KPICard, useToast } from "@kannan19302/ui";
 import {
   Receipt,
   Plus,
@@ -543,7 +543,7 @@ export default function ExpenseManagementPage() {
                   <div className="ui-stack-2">
                     <FormField label="Scan receipt text (simulated OCR)">
                       <div className="ui-flex ui-gap-2">
-                        <TextField
+                        <Input
                           placeholder="Paste receipt text here..."
                           value={ocrText}
                           onChange={(e: any) => setOcrText(e.target.value)}

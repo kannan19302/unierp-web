@@ -68,7 +68,7 @@
 }
 
 .errorList {
-  max-height: 120px;
+  max-height: 7.5rem;
   overflow-y: auto;
   font-size: var(--token-text-xs);
   color: var(--token-color-error);

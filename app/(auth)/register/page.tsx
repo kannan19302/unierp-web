@@ -15,7 +15,7 @@ export default function RegisterPage() {
   }, []);
 
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "#090d16", color: "#94a3b8", fontFamily: "system-ui, sans-serif" }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "var(--color-bg-base)", color: "var(--color-text-secondary)", fontFamily: "system-ui, sans-serif" }}>
       <p>Redirecting to organization registration…</p>
     </div>
   );

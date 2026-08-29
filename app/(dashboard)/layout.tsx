@@ -11,7 +11,9 @@ import styles from "./layout.module.css";
 export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { DemoBanner, Spinner, TrialCountdown, useTheme } from "@kannan19302/ui";
+import { Spinner, TrialCountdown } from "@kannan19302/ui/components";
+import { DemoBanner } from "@kannan19302/ui/notifications";
+import { useTheme } from "@kannan19302/ui/theme";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {

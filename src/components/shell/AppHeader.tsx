@@ -8,7 +8,7 @@ import {
   Menu,
   Building2,
 } from "lucide-react";
-import { BrandMark, ThemeQuickToggle } from "@kannan19302/ui";
+import { BrandMark, ThemeQuickToggle } from "@kannan19302/ui/components";
 import { AppSwitcher } from "./AppSwitcher";
 import { NotificationCenter } from "./NotificationCenter";
 import { ProfileHoverCard } from "./ProfileHoverCard";

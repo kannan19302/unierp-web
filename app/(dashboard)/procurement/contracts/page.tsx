@@ -100,6 +100,7 @@ export default function ProcurementContractsPage() {
       />
       <Card>
         <TextField
+          label="Search Contracts"
           placeholder="Search contracts..."
           value={search}
           onChange={(e: any) => setSearch(e.target.value)}

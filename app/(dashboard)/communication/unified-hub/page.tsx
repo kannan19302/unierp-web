@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard } from "@kannan19302/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, Input, FormField, Select, KPICard } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   Mail,
@@ -214,7 +214,7 @@ export default function CommunicationUnifiedHub() {
             }}
           >
             <FormField label="Inbox Display Name">
-              <TextField
+              <Input
                 value={form.name}
                 onChange={(e: any) => setForm({ ...form, name: e.target.value })}
                 placeholder="e.g. VIP Customer Desk"
@@ -222,7 +222,7 @@ export default function CommunicationUnifiedHub() {
               />
             </FormField>
             <FormField label="Email Address">
-              <TextField
+              <Input
                 type="email"
                 value={form.emailAddress}
                 onChange={(e: any) =>

@@ -157,6 +157,7 @@ export default function RmaPage() {
         <div className="ui-flex ui-gap-2" style={{ marginBottom: "1rem" }}>
           <div className="ui-flex-1">
             <TextField
+              label="Search RMAs"
               placeholder="Search RMAs..."
               value={search}
               onChange={(e: any) => setSearch(e.target.value)}

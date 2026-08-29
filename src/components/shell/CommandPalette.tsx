@@ -11,7 +11,7 @@ import {
   Database,
   type LucideIcon,
 } from "lucide-react";
-import { useTheme, type ThemeSetting } from "@kannan19302/ui";
+import { useTheme } from "@kannan19302/ui/theme";
 import { useApiClient } from "@kannan19302/framework";
 import { allApplications, getAppSpecificNavigation } from "@/navigation";
 import styles from "./CommandPalette.module.css";

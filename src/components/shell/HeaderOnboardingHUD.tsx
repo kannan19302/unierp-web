@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ProgressHUD, type ProgressHUDItem } from "@kannan19302/ui";
+import { ProgressHUD, type ProgressHUDItem } from "@kannan19302/ui/components";
 
 export function HeaderOnboardingHUD() {
   const router = useRouter();

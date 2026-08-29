@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, TextField, FormField, Select, KPICard, DashboardChart, ViewSwitcher, type ViewMode } from "@kannan19302/ui";
+import { PageHeader, Card, Button, Spinner, Badge, StatusBadge, DataTable, type Column, Modal, Input, FormField, Select, KPICard, DashboardChart, ViewSwitcher, type ViewMode } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   Truck,
@@ -256,7 +256,7 @@ export default function SupplyChainControlHub() {
             }}
           >
             <FormField label="LC Reference Number">
-              <TextField
+              <Input
                 value={form.lcNumber}
                 onChange={(e: any) => setForm({ ...form, lcNumber: e.target.value })}
                 placeholder="e.g. LC-2026-9901"
@@ -264,7 +264,7 @@ export default function SupplyChainControlHub() {
               />
             </FormField>
             <FormField label="Issuing Bank">
-              <TextField
+              <Input
                 value={form.issuingBank}
                 onChange={(e: any) =>
                   setForm({ ...form, issuingBank: e.target.value })
@@ -285,7 +285,7 @@ export default function SupplyChainControlHub() {
               </Select>
             </FormField>
             <FormField label="Amount">
-              <TextField
+              <Input
                 type="number"
                 value={form.amount}
                 onChange={(e: any) =>

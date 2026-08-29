@@ -160,6 +160,7 @@ export default function SourcingPage() {
       />
       <Card>
         <TextField
+          label="Search Sourcing Projects"
           placeholder="Search projects..."
           value={search}
           onChange={(e: any) => setSearch(e.target.value)}

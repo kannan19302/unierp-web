@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   evaluateOperator,
   resolveConditionStates,
-} from "../DynamicFormRenderer";
+} from "../condition-evaluator";
 import type { FormField, FormCondition } from "@/stores/builderStore";
 
 /**

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { PermissionContext } from "@kannan19302/ui";
+import { PermissionContext } from "@kannan19302/ui/components";
 import { apiGet } from "@/lib/api";
 
 interface MeResponse {

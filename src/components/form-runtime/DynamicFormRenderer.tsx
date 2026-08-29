@@ -1,9 +1,8 @@
 "use client";
-import { DataTable } from "@kannan19302/ui";
 
 import React, { useState, useEffect, useMemo } from "react";
+import { DataTable } from "@kannan19302/ui/data-grid";
 import { DollarSign, ChevronLeft, ChevronRight, Check } from "lucide-react";
-
 import {
   FormField,
   FormPage,
