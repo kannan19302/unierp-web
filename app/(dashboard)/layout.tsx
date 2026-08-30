@@ -534,11 +534,11 @@ export default function DashboardLayout({
         signal: AbortSignal.timeout(5_000),
       });
     } finally {
-      // Navigate before publishing an unauthenticated React state. Calling
-      // useSession().signOut() here allowed <RequireSession> to race in and
-      // replace the end-session navigation with a fresh authorize request.
+      // Direct RP-initiated logout to the OIDC login card
+      const oidcIssuer =
+        process.env.NEXT_PUBLIC_OIDC_ISSUER || "http://localhost:3005";
       window.location.replace(
-        createOidcClient().buildLogoutUrl("http://localhost:4000/"),
+        createOidcClient().buildLogoutUrl(`${oidcIssuer}/oidc/login`),
       );
     }
   };

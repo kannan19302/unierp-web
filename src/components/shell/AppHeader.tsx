@@ -166,7 +166,7 @@ export function AppHeader({
                 Workspace Atlas
               </a>
               <span className={styles.breadcrumbSeparator}>›</span>
-              <span className={styles.breadcrumbCurrent}>Tenant Applications</span>
+              <span className={styles.breadcrumbCurrent}>Apps</span>
             </nav>
           ) : (
             <>

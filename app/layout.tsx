@@ -24,6 +24,7 @@ import { ToastProvider } from "@kannan19302/ui/notifications";
 import { QueryProvider } from "@/lib/query-provider";
 import { AppFrameworkProvider } from "@/lib/framework-provider";
 import { AuthShell } from "@/components/AuthShell";
+import { PermissionProvider } from "@/components/PermissionProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,9 +59,11 @@ export default function RootLayout({
           <AuthShell>
             <QueryProvider>
               <AppFrameworkProvider>
-                <ToastProvider>
-                  {children}
-                </ToastProvider>
+                <PermissionProvider>
+                  <ToastProvider>
+                    {children}
+                  </ToastProvider>
+                </PermissionProvider>
               </AppFrameworkProvider>
             </QueryProvider>
           </AuthShell>

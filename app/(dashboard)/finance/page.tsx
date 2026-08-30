@@ -237,11 +237,10 @@ export default function FinanceDashboardPage() {
       const message =
         err instanceof Error ? err.message : "Failed to load dashboard data";
       setDataError(message);
-      notifyError("Failed to load Finance dashboard", message);
     } finally {
       setLoading(false);
     }
-  }, [client, notifyError]);
+  }, [client]);
 
   const fetchCompliance = useCallback(async () => {
     try {

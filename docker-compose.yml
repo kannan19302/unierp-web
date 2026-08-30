@@ -13,6 +13,8 @@ services:
       - NEXTAUTH_URL=http://localhost:4003
       - API_URL=http://localhost:3001
       - IDP_URL=http://localhost:3005
+      - OIDC_ISSUER=http://idp:3005
+      - NEXT_PUBLIC_OIDC_ISSUER=http://localhost:3005
       - NEXT_PUBLIC_PLATFORM_PORTAL=http://localhost:4000
     volumes:
       - ./app:/app/app

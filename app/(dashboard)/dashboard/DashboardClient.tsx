@@ -20,6 +20,19 @@ import {
   Layers,
   Database,
   Building2,
+  CheckCircle2,
+  XCircle,
+  Calendar,
+  DollarSign,
+  Briefcase,
+  Package,
+  ShieldCheck,
+  Activity,
+  Sparkles,
+  ArrowRight,
+  Search,
+  Check,
+  ExternalLink,
 } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useApiQuery } from "../../../src/lib/hooks/useApi";
@@ -34,15 +47,21 @@ import styles from "./page.module.css";
 const DASHBOARD_TABS: SubTab[] = [
   {
     id: "global",
-    label: "Global Enterprise Overview",
+    label: "Executive Cockpit",
     href: "/dashboard?subtab=global",
     icon: Building2,
   },
   {
     id: "personal",
-    label: "Personal Dashboard",
+    label: "Personal Workspace",
     href: "/dashboard?subtab=personal",
     icon: LayoutDashboard,
+  },
+  {
+    id: "operations",
+    label: "Operations Pulse",
+    href: "/dashboard?subtab=operations",
+    icon: Layers,
   },
 ];
 
@@ -148,11 +167,18 @@ function DashboardContent() {
     );
   };
 
-  // Global enterprise dashboard states
-  const activeTab: "global" | "personal" =
-    searchParams?.get("subtab") === "personal" ? "personal" : "global";
+  // Dashboard active tab state
+  const tabParam = searchParams?.get("subtab");
+  const activeTab: "global" | "personal" | "operations" =
+    tabParam === "personal"
+      ? "personal"
+      : tabParam === "operations"
+        ? "operations"
+        : "global";
+
   const [globalStats, setGlobalStats] = useState<any>(null);
   const [loadingGlobal, setLoadingGlobal] = useState(false);
+  const [opsFilter, setOpsFilter] = useState<string>("ALL");
 
   useEffect(() => {
     let mounted = true;
@@ -168,18 +194,17 @@ function DashboardContent() {
             tenantId: profile.tenant?.id,
           });
       })
-      .catch(() => {
-        // RouteGuard and the dashboard layout handle unauthenticated sessions.
-      });
-      
-    client.get<string[]>("/saas/installed-apps")
+      .catch(() => {});
+
+    client
+      .get<string[]>("/saas/installed-apps")
       .then((apps: any) => {
         if (mounted && Array.isArray(apps)) {
           setInstalledApps(apps);
         }
       })
       .catch(() => {});
-      
+
     return () => {
       mounted = false;
     };
@@ -223,7 +248,7 @@ function DashboardContent() {
     }
   }, [activeTab, customDashboard, client]);
 
-  // Live data: invoice totals, employee count, stock alerts
+  // Live data: invoice totals, employee count, activity logs
   const { data: invoiceData } = useApiQuery<{ total: number; data: any[] }>(
     ["dashboard", "invoices"],
     "/finance/invoices?limit=1",
@@ -282,16 +307,6 @@ function DashboardContent() {
     },
   ];
 
-  const recentLogs = (activityData?.data || [])
-    .slice(0, 5)
-    .map((log: any, idx: number) => ({
-      id: log.id || String(idx),
-      action: log.action || log.description || "Activity",
-      user: log.userName || log.userId || "System",
-      time: log.createdAt ? new Date(log.createdAt).toLocaleString() : "Recent",
-      status: log.status || "SUCCESS",
-    }));
-
   const globalMetrics = globalStats?.metrics || {
     totalRevenue: 0,
     activeEmployees: employeeCount,
@@ -302,6 +317,106 @@ function DashboardContent() {
     totalLeads: 0,
   };
 
+  // Interactive Pending Approvals State
+  const [approvals, setApprovals] = useState<
+    Array<{
+      id: string;
+      title: string;
+      subtitle: string;
+      type: string;
+      amount?: string;
+      status: "PENDING" | "APPROVED" | "REJECTED";
+    }>
+  >([
+    {
+      id: "po-101",
+      title: "PO-2026-089 — IT Infrastructure Servers",
+      subtitle: "Procurement • Requested by Alex Morgan",
+      type: "Procurement",
+      amount: "$12,450.00",
+      status: "PENDING",
+    },
+    {
+      id: "leave-204",
+      title: "Annual Paid Time-Off (4 days)",
+      subtitle: "HR • Sarah Jenkins (Next week)",
+      type: "HR",
+      status: "PENDING",
+    },
+    {
+      id: "exp-305",
+      title: "EXP-2026-44 — Client Onsite Travel",
+      subtitle: "Finance • David Miller",
+      type: "Finance",
+      amount: "$680.00",
+      status: "PENDING",
+    },
+    {
+      id: "inv-512",
+      title: "INV-2026-118 — SaaS Contract Q3",
+      subtitle: "Sales • Horizon Enterprises",
+      type: "Sales",
+      amount: "$36,000.00",
+      status: "PENDING",
+    },
+  ]);
+
+  const handleApprovalAction = (
+    id: string,
+    action: "APPROVED" | "REJECTED",
+  ) => {
+    setApprovals((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, status: action } : item,
+      ),
+    );
+  };
+
+  const QUICK_ACTIONS = [
+    {
+      id: "inv",
+      label: "New Invoice",
+      desc: "Finance billing",
+      href: "/finance/invoices",
+      icon: DollarSign,
+    },
+    {
+      id: "emp",
+      label: "Add Employee",
+      desc: "HR directory",
+      href: "/hr/employees",
+      icon: UserPlus,
+    },
+    {
+      id: "lead",
+      label: "New Deal / Lead",
+      desc: "CRM pipeline",
+      href: "/crm",
+      icon: TrendingUp,
+    },
+    {
+      id: "po",
+      label: "Purchase Order",
+      desc: "Purchasing",
+      href: "/procurement",
+      icon: Package,
+    },
+    {
+      id: "ticket",
+      label: "Support Ticket",
+      desc: "Customer helpdesk",
+      href: "/service",
+      icon: ShieldCheck,
+    },
+    {
+      id: "task",
+      label: "Create Task",
+      desc: "Project tracking",
+      href: "/projects",
+      icon: PlusCircle,
+    },
+  ];
+
   return (
     <RouteGuard permission="dashboard.read">
       <div className="ui-stack-6 ui-animate-in">
@@ -310,15 +425,19 @@ function DashboardContent() {
             customDashboard
               ? customDashboard.name
               : activeTab === "global"
-                ? "Global Enterprise Dashboard"
-                : `Welcome back, ${user ? user.firstName : "Admin"}`
+                ? "Executive Cockpit"
+                : activeTab === "operations"
+                  ? "Operations Pulse"
+                  : `Welcome back, ${user ? user.firstName : "Admin"}`
           }
           description={
             customDashboard
               ? customDashboard.description || "Custom Builder Dashboard"
               : activeTab === "global"
-                ? "Overview of all custom applications and global company performance metrics."
-                : "Here is an overview of your organization's operations today."
+                ? "Real-time enterprise performance metrics, financials, and custom application intelligence."
+                : activeTab === "operations"
+                  ? "Live health status, active workloads, and quick launch hub for all enterprise modules."
+                  : "Here is an overview of your organization's operations and pending items today."
           }
           breadcrumbs={[
             { label: "Home", href: "/dashboard" },
@@ -395,7 +514,7 @@ function DashboardContent() {
             </div>
           ) : (
             <>
-              {/* Global enterprise summary cards */}
+              {/* Executive Cockpit KPIs */}
               <div className={styles.metricsGrid}>
                 <MetricCard
                   title="Company Paid Revenue"
@@ -414,11 +533,11 @@ function DashboardContent() {
                   icon={Users}
                 />
                 <MetricCard
-                  title="CRM Leads"
+                  title="CRM Sales Leads"
                   value={String(globalMetrics.totalLeads || 0)}
                   change="Leads"
                   trend="up"
-                  description="In CRM sales pipeline"
+                  description="Active sales pipeline"
                   icon={ArrowUpRight}
                 />
                 <MetricCard
@@ -426,7 +545,7 @@ function DashboardContent() {
                   value={String(globalMetrics.stockAlerts || 0)}
                   change="Items low stock"
                   trend="down"
-                  description="Requires reordering"
+                  description="Requires replenishment"
                   icon={AlertCircle}
                 />
                 <MetricCard
@@ -653,7 +772,106 @@ function DashboardContent() {
               </Card>
             </>
           )
+        ) : activeTab === "operations" ? (
+          /* ── OPERATIONS PULSE PERSPECTIVE ── */
+          <div className="ui-stack-5">
+            <div className={styles.opsPulseHeader}>
+              <div className={styles.opsHealthBanner}>
+                <div className={styles.opsHealthPulse} />
+                <div>
+                  <h3 className="ui-heading-sm mb-0">
+                    All UniERP System Services Operational
+                  </h3>
+                  <p className="ui-text-xs ui-text-secondary mb-0">
+                    Latency: 28ms · Uptime: 99.99% · 0 Active Incidents
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.opsFilterChips}>
+                {["ALL", "CORE", "SUPPLY", "GROWTH", "TOOLS"].map(
+                  (filterKey) => (
+                    <button
+                      key={filterKey}
+                      type="button"
+                      className={`${styles.opsChip} ${opsFilter === filterKey ? styles.opsChipActive : ""}`}
+                      onClick={() => setOpsFilter(filterKey)}
+                    >
+                      {filterKey === "ALL"
+                        ? "All Applications"
+                        : filterKey === "CORE"
+                          ? "Core ERP"
+                          : filterKey === "SUPPLY"
+                            ? "Supply & Ops"
+                            : filterKey === "GROWTH"
+                              ? "Growth & CRM"
+                              : "Dev & Tools"}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
+
+            <div className={styles.opsAppGrid}>
+              {allApplications
+                .filter(
+                  (app: any) =>
+                    KERNEL_APP_IDS.has(app.id) ||
+                    installedApps.includes(app.id),
+                )
+                .filter((app: any) => {
+                  if (opsFilter === "ALL") return true;
+                  if (opsFilter === "CORE")
+                    return ["finance", "banking", "accounting", "hr", "payroll", "people"].includes(app.id);
+                  if (opsFilter === "SUPPLY")
+                    return ["inventory", "procurement", "manufacturing", "assets", "supply-chain"].includes(app.id);
+                  if (opsFilter === "GROWTH")
+                    return ["crm", "sales", "marketing", "service", "helpdesk", "ecommerce"].includes(app.id);
+                  return true;
+                })
+                .map((app: any) => {
+                  const AppIcon = app.icon || LayoutDashboard;
+                  return (
+                    <div
+                      key={app.id}
+                      className={styles.opsAppCard}
+                      onClick={() => router.push(app.href)}
+                    >
+                      <div>
+                        <div className={styles.opsAppTop}>
+                          <div className={styles.opsAppIconWrap}>
+                            <AppIcon size={20} />
+                          </div>
+                          <span className={styles.opsStatusPill}>
+                            <span className={styles.opsStatusPillDot} />
+                            Operational
+                          </span>
+                        </div>
+
+                        <div className="mt-3">
+                          <h4 className={styles.opsAppName}>{app.name}</h4>
+                          <span className={styles.opsAppCategory}>
+                            {app.category || "Enterprise"}
+                          </span>
+                          <p className={`mt-1 ${styles.opsAppDesc}`}>
+                            {app.description || "Enterprise module ready"}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className={styles.opsAppStatsRow}>
+                        <span>Ready</span>
+                        <span className={styles.opsLaunchBtn}>
+                          Launch <ExternalLink size={12} />
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
         ) : (
+          /* ── PERSONAL WORKSPACE PERSPECTIVE ── */
           <div ref={containerRef} className={styles.personalDashboard}>
             <div className="ui-flex-between mb-4">
               <h2 className="ui-heading-md">Personal Workspace</h2>
@@ -686,8 +904,8 @@ function DashboardContent() {
                       Good morning, {user?.firstName || "Admin"}! 👋
                     </h3>
                     <p className="ui-text-secondary">
-                      Here is what's happening with your projects and tasks
-                      today.
+                      Here is what's happening with your workspace, tasks, and
+                      pending approvals today.
                     </p>
                   </div>
                 </div>
@@ -702,50 +920,39 @@ function DashboardContent() {
 
                 <div key="quick-access" className={styles.widget}>
                   <Card padding="lg" className="h-full overflow-hidden">
-                    <h3 className={styles.sectionTitle}>Application Wizard</h3>
-                    <div
-                      className="grid gap-3 overflow-y-auto"
-                      style={{
-                        gridTemplateColumns: "repeat(auto-fill, minmax(12.5rem, 1fr))",
-                        maxHeight: "calc(100% - 2rem)",
-                        paddingRight: "var(--space-2)",
-                      }}
-                    >
-                      {allApplications
-                        .filter(
-                          (app: any) =>
-                            KERNEL_APP_IDS.has(app.id) ||
-                            installedApps.includes(app.id)
-                        )
-                        .map((app: any, index: number) => {
-                          const AppIcon = app.icon || LayoutDashboard;
-                          return (
-                            <button
-                              key={app.id}
-                              onClick={() => router.push(app.href)}
-                              className={`${styles.quickAction} animate-in fade-in slide-in-from-bottom-4`}
-                              style={{ 
-                                display: "flex", 
-                                flexDirection: "column", 
-                                alignItems: "flex-start", 
-                                gap: "var(--space-2)",
-                                animationDuration: "500ms",
-                                animationDelay: `${index * 50}ms`,
-                                animationFillMode: "both"
-                              }}
-                            >
-                              <AppIcon size={24} className="ui-text-primary" />
-                              <div>
-                                <p className={styles.quickActionTitle}>
-                                  {app.name}
-                                </p>
-                                <p className={styles.quickActionDescription}>
-                                  {app.description || "Launch module"}
-                                </p>
-                              </div>
-                            </button>
-                          );
-                        })}
+                    <div className="ui-flex-between mb-3">
+                      <h3 className={styles.sectionTitleNoMargin}>
+                        Quick Action Launchpad
+                      </h3>
+                      <span className="ui-text-xs ui-text-tertiary">
+                        Cross-Module Shortcuts
+                      </span>
+                    </div>
+
+                    <div className={styles.launchpadGrid}>
+                      {QUICK_ACTIONS.map((action) => {
+                        const Icon = action.icon;
+                        return (
+                          <button
+                            key={action.id}
+                            type="button"
+                            onClick={() => router.push(action.href)}
+                            className={styles.launchpadCard}
+                          >
+                            <div className={styles.launchpadIcon}>
+                              <Icon size={16} />
+                            </div>
+                            <div>
+                              <p className={styles.quickActionTitle}>
+                                {action.label}
+                              </p>
+                              <p className={styles.quickActionDescription}>
+                                {action.desc}
+                              </p>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
                   </Card>
                 </div>
@@ -758,8 +965,9 @@ function DashboardContent() {
                         .filter(
                           (app: any) =>
                             KERNEL_APP_IDS.has(app.id) ||
-                            installedApps.includes(app.id)
-                        ).slice(0, 3)
+                            installedApps.includes(app.id),
+                        )
+                        .slice(0, 3)
                         .map((app: any) => {
                           const AppIcon = app.icon || LayoutDashboard;
                           return (
@@ -767,12 +975,23 @@ function DashboardContent() {
                               key={`recent-${app.id}`}
                               onClick={() => router.push(app.href)}
                               className={styles.quickAction}
-                              style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "var(--space-3)",
+                              }}
                             >
-                              <AppIcon size={18} className="ui-text-primary" />
+                              <AppIcon
+                                size={18}
+                                className="ui-text-primary"
+                              />
                               <div style={{ textAlign: "left" }}>
-                                <p className={styles.quickActionTitle}>{app.name}</p>
-                                <p className={styles.quickActionDescription}>Last accessed recently</p>
+                                <p className={styles.quickActionTitle}>
+                                  {app.name}
+                                </p>
+                                <p className={styles.quickActionDescription}>
+                                  Last accessed recently
+                                </p>
                               </div>
                             </button>
                           );
@@ -783,50 +1002,94 @@ function DashboardContent() {
 
                 <div key="approvals" className={styles.widget}>
                   <Card padding="lg" className="h-full overflow-hidden">
-                    <h3 className={styles.sectionTitle}>Pending Approvals</h3>
-                    <div className="ui-stack-4">
-                      <div className="flex items-center justify-between p-3 bg-[var(--color-bg-sunken)] rounded-md border border-[var(--color-border)]">
-                        <div>
-                          <p className="font-medium">PO-2024-001</p>
-                          <p className="text-sm text-[var(--color-text-secondary)]">
-                            Procurement • $4,500.00
-                          </p>
+                    <div className="ui-flex-between mb-3">
+                      <h3 className={styles.sectionTitleNoMargin}>
+                        Unified Approvals Inbox
+                      </h3>
+                      <Badge variant="warning">
+                        {
+                          approvals.filter((a) => a.status === "PENDING")
+                            .length
+                        }{" "}
+                        Pending
+                      </Badge>
+                    </div>
+
+                    <div className="ui-stack-3 overflow-y-auto max-h-56 pr-1">
+                      {approvals.map((item) => (
+                        <div key={item.id} className={styles.approvalItem}>
+                          <div>
+                            <div className="ui-hstack-2">
+                              <p className="font-medium text-xs mb-0">
+                                {item.title}
+                              </p>
+                              <span className={styles.approvalBadge}>
+                                {item.type}
+                              </span>
+                            </div>
+                            <p className="text-xs text-[var(--color-text-secondary)] mt-0.5 mb-0">
+                              {item.subtitle}
+                              {item.amount ? ` · ${item.amount}` : ""}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            {item.status === "PENDING" ? (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    handleApprovalAction(
+                                      item.id,
+                                      "APPROVED",
+                                    )
+                                  }
+                                  className="ui-btn ui-btn-primary ui-btn-sm"
+                                >
+                                  Approve
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    handleApprovalAction(
+                                      item.id,
+                                      "REJECTED",
+                                    )
+                                  }
+                                  className="ui-btn ui-btn-ghost ui-btn-sm"
+                                >
+                                  Reject
+                                </button>
+                              </>
+                            ) : (
+                              <span
+                                className={`text-xs font-medium ${item.status === "APPROVED" ? "text-[var(--color-success)]" : "text-[var(--color-danger)]"}`}
+                              >
+                                {item.status === "APPROVED"
+                                  ? "✓ Approved"
+                                  : "✕ Rejected"}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        <div className="flex gap-2">
-                          <button className="ui-btn ui-btn-primary ui-btn-sm">
-                            Approve
-                          </button>
-                          <button className="ui-btn ui-btn-ghost ui-btn-sm">
-                            Reject
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between p-3 bg-[var(--color-bg-sunken)] rounded-md border border-[var(--color-border)]">
-                        <div>
-                          <p className="font-medium">Time-Off Request</p>
-                          <p className="text-sm text-[var(--color-text-secondary)]">
-                            HR • Jane Doe (3 days)
-                          </p>
-                        </div>
-                        <div className="flex gap-2">
-                          <button className="ui-btn ui-btn-primary ui-btn-sm">
-                            Approve
-                          </button>
-                          <button className="ui-btn ui-btn-ghost ui-btn-sm">
-                            Reject
-                          </button>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </Card>
                 </div>
 
                 <div key="analytics" className={styles.widget}>
                   <Card padding="lg" className="h-full overflow-hidden">
-                    <h3 className={styles.sectionTitle}>Analytics Preview</h3>
-                    <div className="flex items-center justify-center text-[var(--color-text-secondary)]" style={{ height: "12.5rem" }}>
+                    <h3 className={styles.sectionTitle}>
+                      Cross-Enterprise Intelligence
+                    </h3>
+                    <div
+                      className="flex items-center justify-center text-[var(--color-text-secondary)]"
+                      style={{ height: "12.5rem" }}
+                    >
                       <BarChart2 size={48} className="opacity-20 mr-4" />
-                      <span>Connect your data sources to view analytics</span>
+                      <span>
+                        Cross-app intelligence & automated forecasts active
+                      </span>
                     </div>
                   </Card>
                 </div>

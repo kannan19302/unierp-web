@@ -18,6 +18,8 @@ import {
   Volume2,
   Download,
   X,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 import styles from "./ProfileHoverCard.module.css";
 
@@ -79,6 +81,15 @@ const PRESENCE_COLORS: Record<string, string> = {
   INACTIVE: "var(--color-text-tertiary)",
 };
 
+const PRESENCE_PRESETS = [
+  { code: "ACTIVE", label: "Available", color: "var(--chart-9)", emoji: "🟢" },
+  { code: "FOCUSING", label: "Busy (Focusing)", color: "var(--chart-9)", emoji: "🔴" },
+  { code: "DND", label: "Do not disturb", color: "var(--chart-4)", emoji: "⛔" },
+  { code: "BRB", label: "Be right back", color: "var(--chart-3)", emoji: "🟡" },
+  { code: "AWAY", label: "Appear away", color: "var(--chart-3)", emoji: "🟡" },
+  { code: "INACTIVE", label: "Appear offline", color: "var(--color-text-tertiary)", emoji: "⚪" },
+];
+
 function currentTimeInZone(tz: string | null): string | null {
   if (!tz) return null;
   try {
@@ -134,9 +145,43 @@ export function ProfileHoverCard({
   const [data, setData] = useState<ProfileCardData | null>(null);
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [statusPickerOpen, setStatusPickerOpen] = useState(false);
+  const [customStatusInput, setCustomStatusInput] = useState("");
+  const [statusUpdating, setStatusUpdating] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleUpdatePresence = async (
+    statusCode: string,
+    text?: string,
+    emoji?: string,
+  ) => {
+    if (!data) return;
+    setStatusUpdating(true);
+    const newPresence = {
+      status: statusCode,
+      visibility: data.presence?.visibility || "EVERYONE",
+      statusText:
+        text !== undefined ? text : data.presence?.statusText || null,
+      statusEmoji:
+        emoji !== undefined ? emoji : data.presence?.statusEmoji || null,
+      clearAt: null,
+    };
+    setData({ ...data, presence: newPresence });
+    try {
+      await client.put("/communication/presence", {
+        presence: statusCode,
+        statusText: newPresence.statusText,
+        statusEmoji: newPresence.statusEmoji,
+      });
+      setStatusPickerOpen(false);
+    } catch {
+      // Gracefully handled
+    } finally {
+      setStatusUpdating(false);
+    }
+  };
 
   const createFallbackData = useCallback((): ProfileCardData => {
     return {
@@ -395,14 +440,40 @@ export function ProfileHoverCard({
                     </div>
                   )}
                   <div className={styles.presenceRow}>
-                    <span
-                      className={styles.presenceLabel}
-                      style={{ color: presenceColor }}
-                    >
-                      {data.presence
-                        ? PRESENCE_LABELS[data.presence.status]
-                        : "Status unknown"}
-                    </span>
+                    {isSelf ? (
+                      <button
+                        type="button"
+                        className={styles.presenceTriggerBtn}
+                        onClick={() => setStatusPickerOpen((prev) => !prev)}
+                        title="Click to select status (Available, Busy, DND, Away, etc.)"
+                        aria-expanded={statusPickerOpen}
+                      >
+                        <span
+                          className={styles.presenceDotSmall}
+                          style={{
+                            background: presenceColor || "var(--chart-9)",
+                          }}
+                        />
+                        <span
+                          className={styles.presenceLabel}
+                          style={{ color: presenceColor }}
+                        >
+                          {data.presence
+                            ? PRESENCE_LABELS[data.presence.status]
+                            : "Online"}
+                        </span>
+                        <ChevronDown size={11} style={{ opacity: 0.7 }} />
+                      </button>
+                    ) : (
+                      <span
+                        className={styles.presenceLabel}
+                        style={{ color: presenceColor }}
+                      >
+                        {data.presence
+                          ? PRESENCE_LABELS[data.presence.status]
+                          : "Status unknown"}
+                      </span>
+                    )}
                     {data.presence?.statusText && (
                       <span className={styles.statusText}>
                         {data.presence.statusEmoji
@@ -412,6 +483,70 @@ export function ProfileHoverCard({
                       </span>
                     )}
                   </div>
+
+                  {/* Teams-Style Presence Status Dropdown */}
+                  {isSelf && statusPickerOpen && (
+                    <div className={styles.presenceDropdown}>
+                      {PRESENCE_PRESETS.map((preset) => {
+                        const isActive = data.presence?.status === preset.code;
+                        return (
+                          <button
+                            key={preset.code}
+                            type="button"
+                            className={`${styles.presenceOption} ${isActive ? styles.presenceOptionActive : ""}`}
+                            onClick={() =>
+                              handleUpdatePresence(
+                                preset.code,
+                                preset.code === "ACTIVE" ? "" : undefined,
+                                preset.emoji,
+                              )
+                            }
+                          >
+                            <span className={styles.presenceOptionLeft}>
+                              <span
+                                className={styles.presenceDotSmall}
+                                style={{ background: preset.color }}
+                              />
+                              <span>{preset.label}</span>
+                            </span>
+                            {isActive && <Check size={13} />}
+                          </button>
+                        );
+                      })}
+
+                      {/* Custom status message input */}
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          if (customStatusInput.trim()) {
+                            handleUpdatePresence(
+                              data.presence?.status || "ACTIVE",
+                              customStatusInput.trim(),
+                              "💬",
+                            );
+                            setCustomStatusInput("");
+                          }
+                        }}
+                        className={styles.statusCustomRow}
+                      >
+                        <input
+                          type="text"
+                          placeholder="Set status message..."
+                          value={customStatusInput}
+                          onChange={(e) => setCustomStatusInput(e.target.value)}
+                          className={styles.statusInput}
+                          maxLength={60}
+                        />
+                        <button
+                          type="submit"
+                          className={styles.statusSetBtn}
+                          disabled={statusUpdating}
+                        >
+                          Set
+                        </button>
+                      </form>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -537,7 +672,12 @@ export function ProfileHoverCard({
                     className={styles.footerBtn}
                     onClick={() => {
                       setOpen(false);
-                      window.location.assign("http://localhost:3005/oidc/account");
+                      const returnUri = encodeURIComponent(
+                        window.location.origin + "/apps",
+                      );
+                      window.location.assign(
+                        `http://localhost:3005/oidc/account?return_to=${returnUri}`,
+                      );
                     }}
                   >
                     <Settings size={14} /> Account Center

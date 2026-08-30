@@ -13,17 +13,21 @@ import { cookies } from "next/headers";
  */
 
 const REFRESH_COOKIE = "session_rt";
-const ISSUER = process.env.OIDC_ISSUER || "http://localhost:3005";
+const ISSUER = process.env.OIDC_ISSUER || process.env.IDP_URL || "http://localhost:3005";
 const CLIENT_ID = "unierp-tenant-apps";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  const body = (await req.json()) as { refreshToken?: string };
-  if (!body.refreshToken) {
+  try {
+    const body = (await req.json()) as { refreshToken?: string };
+    if (!body?.refreshToken) {
+      return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+    }
+    const res = NextResponse.json({ ok: true });
+    setRefreshCookie(res, body.refreshToken);
+    return res;
+  } catch {
     return NextResponse.json({ error: "invalid_request" }, { status: 400 });
   }
-  const res = NextResponse.json({ ok: true });
-  setRefreshCookie(res, body.refreshToken);
-  return res;
 }
 
 export async function GET(): Promise<NextResponse> {
@@ -33,31 +37,49 @@ export async function GET(): Promise<NextResponse> {
     return NextResponse.json({ error: "no_session" }, { status: 401 });
   }
 
-  const tokenRes = await fetch(new URL("/oidc/token", ISSUER), {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      grant_type: "refresh_token",
-      refresh_token: refreshToken,
-      client_id: CLIENT_ID,
-    }),
-  });
-  const body = await tokenRes.json();
+  try {
+    const tokenRes = await fetch(new URL("/oidc/token", ISSUER), {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        grant_type: "refresh_token",
+        refresh_token: refreshToken,
+        client_id: CLIENT_ID,
+      }),
+    });
 
-  if (body.error) {
-    const res = NextResponse.json({ error: body.error }, { status: 401 });
-    clearRefreshCookie(res);
+    if (!tokenRes.ok) {
+      const res = NextResponse.json({ error: "session_expired" }, { status: 401 });
+      clearRefreshCookie(res);
+      return res;
+    }
+
+    const contentType = tokenRes.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      const res = NextResponse.json({ error: "invalid_idp_response" }, { status: 502 });
+      return res;
+    }
+
+    const body = await tokenRes.json();
+
+    if (body.error) {
+      const res = NextResponse.json({ error: body.error }, { status: 401 });
+      clearRefreshCookie(res);
+      return res;
+    }
+
+    const res = NextResponse.json({
+      accessToken: body.access_token,
+      idToken: body.id_token,
+      expiresAt: Date.now() + (body.expires_in || 3600) * 1000,
+      scope: body.scope,
+    });
+    if (body.refresh_token) setRefreshCookie(res, body.refresh_token);
+    return res;
+  } catch {
+    const res = NextResponse.json({ error: "idp_unavailable" }, { status: 503 });
     return res;
   }
-
-  const res = NextResponse.json({
-    accessToken: body.access_token,
-    idToken: body.id_token,
-    expiresAt: Date.now() + body.expires_in * 1000,
-    scope: body.scope,
-  });
-  if (body.refresh_token) setRefreshCookie(res, body.refresh_token);
-  return res;
 }
 
 export async function DELETE(): Promise<NextResponse> {
