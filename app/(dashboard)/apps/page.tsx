@@ -1,457 +1,431 @@
 "use client";
 
-import React, { useEffect, useMemo, useState, useCallback } from "react";
-import { AppWizardGrid, type WizardTile } from "@kannan19302/ui/shell";
-import {
-  KPIStrip,
-  type KPICardItem,
-  SegmentedControl,
-  type SegmentedControlOption,
-  Badge,
-  Button,
-} from "@kannan19302/ui/components";
-import { useApiClient } from "@kannan19302/framework";
-import { allApplications, KERNEL_APP_IDS } from "@/navigation";
+import React, { useMemo, useState, useRef, useEffect } from "react";
 import {
   Search,
   X,
-  ShoppingBag,
+  SlidersHorizontal,
+  Home,
+  CreditCard,
+  Users,
+  Contact,
+  Box,
+  ShoppingCart,
+  ClipboardList,
+  Columns3,
+  Sun,
+  Network,
+  Wrench,
+  Store,
+  Shield,
+  Folder,
+  MessageCircle,
+  PieChart,
   Sparkles,
-  Layers,
-  CheckCircle2,
+  Activity,
+  GraduationCap,
   Building2,
-  ExternalLink,
-  Zap,
+  LogOut,
 } from "lucide-react";
 import Link from "next/link";
 import styles from "./apps-wizard.module.css";
 
-type AppCategory =
-  | "all"
-  | "core"
-  | "operations"
-  | "productivity"
-  | "verticals"
-  | "admin"
-  | "favorites";
-
-interface AppMetadata {
-  description: string;
-  category: "core" | "operations" | "productivity" | "verticals" | "admin";
-  accent: string;
-  accentDark?: string;
-  badge?: string;
+export interface AppIconConfig {
+  id: string;
+  name: string;
+  displayName: string;
+  category: "core" | "operations" | "productivity" | "verticals";
+  icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
+  href: string;
 }
 
-const APP_METADATA_MAP: Record<string, AppMetadata> = {
-  finance: {
-    description: "General Ledger, AP/AR, Invoicing, Tax & Multi-currency Accounting",
+export const APPS_CATALOG: AppIconConfig[] = [
+  // Row 1 (Core ERP - 7 apps)
+  {
+    id: "dashboard",
+    name: "Dashboard",
+    displayName: "Dashboard",
     category: "core",
-    accent: "var(--chart-9, #059669)",
-    accentDark: "#34d399",
+    icon: Home,
+    href: "/dashboard",
   },
-  hr: {
-    description: "Employee Directory, Payroll, Attendance, Leaves & Onboarding",
+  {
+    id: "finance",
+    name: "Finance",
+    displayName: "Finance",
     category: "core",
-    accent: "var(--chart-3, #4f46e5)",
-    accentDark: "#818cf8",
+    icon: CreditCard,
+    href: "/finance",
   },
-  crm: {
-    description: "Customer Accounts, Pipeline, Deals, Contact Leads & Sales Funnels",
+  {
+    id: "hr",
+    name: "HR",
+    displayName: "HR",
     category: "core",
-    accent: "var(--color-primary, #6366f1)",
-    accentDark: "#a5b4fc",
+    icon: Users,
+    href: "/hr",
   },
-  inventory: {
-    description: "Multi-warehouse, Stock Management, SKU Tracking & Barcodes",
+  {
+    id: "crm",
+    name: "CRM",
+    displayName: "CRM",
     category: "core",
-    accent: "var(--color-warning-hover, #d97706)",
-    accentDark: "#fbbf24",
+    icon: Contact,
+    href: "/crm",
   },
-  procurement: {
-    description: "Purchase Orders, RFQ Tenders, Vendor Scorecards & Ingestion",
-    category: "operations",
-    accent: "var(--chart-6, #0284c7)",
-    accentDark: "#38bdf8",
+  {
+    id: "inventory",
+    name: "Inventory",
+    displayName: "Inventory",
+    category: "core",
+    icon: Box,
+    href: "/inventory",
   },
-  sales: {
-    description: "Sales Orders, Quotations, Delivery Challans & POS Invoicing",
-    category: "operations",
-    accent: "var(--platform-apps, #047857)",
-    accentDark: "#34d399",
+  {
+    id: "procurement",
+    name: "Procurement",
+    displayName: "Procurement",
+    category: "core",
+    icon: ShoppingCart,
+    href: "/procurement",
   },
-  "supply-chain": {
-    description: "Logistics, Carrier Tracking, Fleet Routes & Supply Visibility",
-    category: "operations",
-    accent: "var(--chart-7, #ea580c)",
-    accentDark: "#fb923c",
+  {
+    id: "sales",
+    name: "Sales",
+    displayName: "Sales",
+    category: "core",
+    icon: ClipboardList,
+    href: "/sales",
   },
-  manufacturing: {
-    description: "Work Orders, BOM Assemblies, Shop Floor Routing & MRP",
-    category: "operations",
-    accent: "var(--chart-8, #7c3aed)",
-    accentDark: "#a78bfa",
-  },
-  analytics: {
-    description: "Business Intelligence, KPI Dashboards, SQL Visualizer & Reports",
-    category: "productivity",
-    accent: "var(--chart-5, #ec4899)",
-    accentDark: "#f472b6",
-  },
-  ai: {
-    description: "Autonomous ERP Agent, Predictive Copilot & Automated Workflows",
-    category: "productivity",
-    accent: "var(--color-primary, #6366f1)",
-    accentDark: "#c084fc",
-    badge: "AI Powered",
-  },
-  drive: {
-    description: "Secure Cloud Storage, Document Vault, Audit Logs & Sharing",
-    category: "productivity",
-    accent: "var(--color-info, #0ea5e9)",
-    accentDark: "#38bdf8",
-  },
-  communication: {
-    description: "Real-time Chat, Team Channels, Direct Messages & Video",
-    category: "productivity",
-    accent: "var(--color-success, #10b981)",
-    accentDark: "#34d399",
-  },
-  pos: {
-    description: "Point of Sale, Retail Registers, Barcode Scanners & Daily Cash",
-    category: "operations",
-    accent: "var(--chart-9, #059669)",
-    accentDark: "#34d399",
-  },
-  ecommerce: {
-    description: "Online Storefront, Product Catalog, Cart Checkout & Gateways",
-    category: "operations",
-    accent: "var(--chart-10, #2563eb)",
-    accentDark: "#60a5fa",
-  },
-  education: {
-    description: "Student Information, Course Curriculums, Grading & Attendance",
-    category: "verticals",
-    accent: "var(--color-info, #6366f1)",
-    accentDark: "#a5b4fc",
-  },
-  "real-estate": {
-    description: "Property Units, Tenant Leases, Rent Invoicing & Maintenance",
-    category: "verticals",
-    accent: "var(--color-warning, #f97316)",
-    accentDark: "#fb923c",
-  },
-  "field-service": {
-    description: "Technician Dispatch, Service Jobs, Equipment & SLA Tracking",
-    category: "verticals",
-    accent: "var(--chart-6, #06b6d4)",
-    accentDark: "#22d3ee",
-  },
-  "saas-portal": {
-    description: "Tenant Subscription Plans, Seat Licenses, Quotas & Invoices",
-    category: "admin",
-    accent: "var(--color-primary, #4f46e5)",
-    accentDark: "#818cf8",
-  },
-  "app-store": {
-    description: "Discover, Install & Configure Certified UniERP Extensions",
-    category: "admin",
-    accent: "var(--color-primary, #7c3aed)",
-    accentDark: "#a78bfa",
-    badge: "Marketplace",
-  },
-  builder: {
-    description: "No-Code UI Builder, BPMN Engine & Custom Entity Modeler",
-    category: "admin",
-    accent: "var(--color-accent, #9333ea)",
-    accentDark: "#c084fc",
-  },
-};
 
-const CATEGORY_OPTIONS: SegmentedControlOption<AppCategory>[] = [
-  { value: "all", label: "All Apps" },
-  { value: "core", label: "Core ERP" },
-  { value: "operations", label: "Operations" },
-  { value: "productivity", label: "Productivity" },
-  { value: "verticals", label: "Industry" },
-  { value: "admin", label: "Platform & Dev" },
-  { value: "favorites", label: "Favorites" },
+  // Row 2 (Core ERP & Operations - 7 apps)
+  {
+    id: "projects",
+    name: "Projects",
+    displayName: "Projects",
+    category: "core",
+    icon: Columns3,
+    href: "/projects",
+  },
+  {
+    id: "manufacturing",
+    name: "Manufacturing",
+    displayName: "Manufacturing",
+    category: "core",
+    icon: Sun,
+    href: "/manufacturing",
+  },
+  {
+    id: "supply-chain",
+    name: "Supply Chain",
+    displayName: "Supply Chain",
+    category: "operations",
+    icon: Network,
+    href: "/supply-chain",
+  },
+  {
+    id: "field-service",
+    name: "Field Service",
+    displayName: "Field Service",
+    category: "operations",
+    icon: Wrench,
+    href: "/field-service",
+  },
+  {
+    id: "pos",
+    name: "POS",
+    displayName: "POS",
+    category: "operations",
+    icon: Store,
+    href: "/pos",
+  },
+  {
+    id: "blockchain",
+    name: "Blockchain",
+    displayName: "Blockchain",
+    category: "operations",
+    icon: Shield,
+    href: "/blockchain",
+  },
+  {
+    id: "drive",
+    name: "Drive",
+    displayName: "Drive",
+    category: "productivity",
+    icon: Folder,
+    href: "/drive",
+  },
+
+  // Row 3 (Productivity & Verticals - 6 apps)
+  {
+    id: "communication",
+    name: "Connect",
+    displayName: "Connect",
+    category: "productivity",
+    icon: MessageCircle,
+    href: "/connect",
+  },
+  {
+    id: "analytics",
+    name: "Analytics",
+    displayName: "Analytics",
+    category: "productivity",
+    icon: PieChart,
+    href: "/analytics",
+  },
+  {
+    id: "ai",
+    name: "AI Copilot",
+    displayName: "AI Copilot",
+    category: "productivity",
+    icon: Sparkles,
+    href: "/ai",
+  },
+  {
+    id: "healthcare",
+    name: "Healthcare",
+    displayName: "Healthcare",
+    category: "verticals",
+    icon: Activity,
+    href: "/healthcare",
+  },
+  {
+    id: "education",
+    name: "Education",
+    displayName: "Education",
+    category: "verticals",
+    icon: GraduationCap,
+    href: "/education",
+  },
+  {
+    id: "real-estate",
+    name: "Real Estate",
+    displayName: "Real Estate",
+    category: "verticals",
+    icon: Building2,
+    href: "/real-estate",
+  },
 ];
 
-const FAVORITES_STORAGE_KEY = "unierp.favorite_apps";
+type CategoryFilter = "all" | "core" | "operations" | "productivity" | "verticals";
 
-/**
- * The canonical tenant Application Wizard Landing Page (`/apps`).
- * Designed per UniERP DL 2.0 governance with strict subpath exports,
- * icon-based interactive grid, instant search, categories, favorites,
- * and workspace KPIs.
- */
+const CATEGORIES: Array<{ id: CategoryFilter; label: string; count: number; indicatorClass?: string }> = [
+  { id: "all", label: "All", count: 20 },
+  { id: "core", label: "Core ERP", count: 9, indicatorClass: styles.indicatorCore },
+  { id: "operations", label: "Operations", count: 4, indicatorClass: styles.indicatorOperations },
+  { id: "productivity", label: "Productivity", count: 4, indicatorClass: styles.indicatorProductivity },
+  { id: "verticals", label: "Industry", count: 3, indicatorClass: styles.indicatorVerticals },
+];
+
 export default function ApplicationWizardPage() {
-  const client = useApiClient();
-  const [installedApps, setInstalledApps] = useState<string[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [attempt, setAttempt] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<AppCategory>("all");
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [category, setCategory] = useState<CategoryFilter>("all");
 
-  // Load user favorites from localStorage
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcut '/' or 'Cmd/Ctrl+K' to focus search
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(FAVORITES_STORAGE_KEY);
-      if (stored) {
-        setFavorites(new Set(JSON.parse(stored)));
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        (e.key === "/" || (e.ctrlKey && e.key === "k") || (e.metaKey && e.key === "k")) &&
+        document.activeElement?.tagName !== "INPUT" &&
+        document.activeElement?.tagName !== "TEXTAREA"
+      ) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
       }
-    } catch {
-      // Ignore localStorage errors
-    }
-  }, []);
-
-  const toggleFavorite = useCallback((appId: string, fav: boolean) => {
-    setFavorites((prev) => {
-      const next = new Set(prev);
-      if (fav) {
-        next.add(appId);
-      } else {
-        next.delete(appId);
-      }
-      try {
-        localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(Array.from(next)));
-      } catch {
-        // Fallback silently
-      }
-      return next;
-    });
-  }, []);
-
-  // Fetch installed applications for the active tenant
-  useEffect(() => {
-    let cancelled = false;
-    setError(null);
-    client
-      .get<string[]>("/saas/installed-apps")
-      .then((list) => {
-        if (!cancelled) setInstalledApps(Array.isArray(list) ? list : []);
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(err instanceof Error ? err.message : "Could not load your applications");
-        }
-      });
-    return () => {
-      cancelled = true;
     };
-  }, [client, attempt]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
-  // Filter and map all entitled applications to WizardTiles
-  const tiles = useMemo<WizardTile[]>(() => {
-    if (!installedApps) return [];
+  const filteredApps = useMemo(() => {
+    return APPS_CATALOG.filter((app) => {
+      // Category filter
+      if (category !== "all" && app.category !== category) {
+        return false;
+      }
 
-    return allApplications
-      .filter((app) => KERNEL_APP_IDS.has(app.id) || installedApps.includes(app.id))
-      .filter((app) => {
-        const meta = APP_METADATA_MAP[app.id];
-        const isFav = favorites.has(app.id);
+      // Search query filter
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const nameMatch = app.name.toLowerCase().includes(q);
+        const displayMatch = app.displayName.toLowerCase().includes(q);
+        const idMatch = app.id.toLowerCase().includes(q);
+        if (!nameMatch && !displayMatch && !idMatch) return false;
+      }
 
-        // Category filter
-        if (activeCategory === "favorites" && !isFav) return false;
-        if (activeCategory !== "all" && activeCategory !== "favorites") {
-          if (!meta || meta.category !== activeCategory) return false;
-        }
-
-        // Search query filter
-        if (searchQuery.trim()) {
-          const q = searchQuery.toLowerCase().trim();
-          const nameMatch = app.name.toLowerCase().includes(q);
-          const descMatch = meta?.description.toLowerCase().includes(q);
-          const idMatch = app.id.toLowerCase().includes(q);
-          if (!nameMatch && !descMatch && !idMatch) return false;
-        }
-
-        return true;
-      })
-      .map((app) => {
-        const Icon = app.icon;
-        const meta = APP_METADATA_MAP[app.id];
-        const isFav = favorites.has(app.id);
-
-        return {
-          key: app.id,
-          name: app.name,
-          description: meta?.description || "Enterprise module application",
-          href: app.href,
-          icon: Icon ? <Icon size={20} /> : undefined,
-          accent: meta?.accent,
-          accentDark: meta?.accentDark,
-          favorite: isFav,
-          onFavoriteChange: (fav) => toggleFavorite(app.id, fav),
-          badge: meta?.badge ? (
-            <Badge variant="primary" size="sm">
-              {meta.badge}
-            </Badge>
-          ) : undefined,
-        };
-      });
-  }, [installedApps, activeCategory, searchQuery, favorites, toggleFavorite]);
-
-  // Compute KPI Statistics
-  const totalInstalled = installedApps ? installedApps.length + KERNEL_APP_IDS.size : 0;
-  const coreCount = useMemo(() => {
-    if (!installedApps) return 0;
-    return allApplications.filter(
-      (a) =>
-        (KERNEL_APP_IDS.has(a.id) || installedApps.includes(a.id)) &&
-        APP_METADATA_MAP[a.id]?.category === "core",
-    ).length;
-  }, [installedApps]);
-
-  const kpiItems: KPICardItem[] = useMemo(
-    () => [
-      {
-        id: "total_apps",
-        label: "Installed Applications",
-        value: installedApps === null ? "—" : totalInstalled,
-        subtext: "Entitled to active tenant",
-        icon: <Layers size={18} />,
-      },
-      {
-        id: "core_erp",
-        label: "Core ERP Modules",
-        value: installedApps === null ? "—" : coreCount,
-        subtext: "Finance, HR, CRM & Stock",
-        icon: <Building2 size={18} />,
-      },
-      {
-        id: "favorites_count",
-        label: "Pinned Favorites",
-        value: favorites.size,
-        subtext: "Quick-launch shortcuts",
-        icon: <Sparkles size={18} />,
-      },
-      {
-        id: "platform_status",
-        label: "Platform Engine",
-        value: "Operational",
-        trend: "up",
-        subtext: "All services 100% healthy",
-        icon: <CheckCircle2 size={18} />,
-      },
-    ],
-    [installedApps, totalInstalled, coreCount, favorites.size],
-  );
+      return true;
+    });
+  }, [category, searchQuery]);
 
   return (
-    <div className={styles.pageContainer}>
-      {/* Hero Header Section */}
-      <section className={styles.heroSection}>
-        <div className={styles.heroContent}>
-          <div className={styles.tenantBadgeRow}>
-            <Badge variant="info" size="sm">
-              Tenant Application Suite
-            </Badge>
-            <Badge variant="default" size="sm">
-              Meridian v2.0
-            </Badge>
+    <div className={styles.launcherBackdrop}>
+      <main className={styles.launcherCard}>
+        {/* Top Hero Grid: Left Hero & Right Module Index Card */}
+        <section className={styles.heroSection}>
+          <div className={styles.heroLeft}>
+            <h1 className={styles.launcherTitle}>Select an app to continue</h1>
+            <p className={styles.launcherSubtitle}>
+              Choose an operational workspace application to launch.
+            </p>
+
+            {/* Compact Search Bar with '/' Shortcut */}
+            <div className={styles.searchWrap}>
+              <Search size={14} className={styles.searchIcon} aria-hidden="true" />
+              <input
+                ref={searchInputRef}
+                type="text"
+                className={styles.searchInput}
+                placeholder="Search apps — Finance, CRM, Payroll..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search applications"
+              />
+              {searchQuery ? (
+                <button
+                  type="button"
+                  className={styles.clearBtn}
+                  onClick={() => {
+                    setSearchQuery("");
+                    searchInputRef.current?.focus();
+                  }}
+                  aria-label="Clear search"
+                >
+                  <X size={11} />
+                </button>
+              ) : (
+                <kbd className={styles.searchKbdShortcut} title="Press '/' to focus search">
+                  /
+                </kbd>
+              )}
+            </div>
           </div>
-          <h1 className={styles.heroTitle}>Applications Workspace</h1>
-          <p className={styles.heroDescription}>
-            Launch, configure, and manage all enterprise applications, business workflows,
-            and operational modules installed for your organization.
-          </p>
+
+          {/* Right Module Index Card Widget */}
+          <aside className={styles.moduleIndexCard} aria-label="Module Index">
+            <div className={styles.moduleIndexHeader}>
+              <span className={styles.moduleIndexLabel}>MODULE INDEX</span>
+            </div>
+
+            <div className={styles.moduleIndexList}>
+              <button
+                type="button"
+                className={`${styles.moduleIndexRow} ${category === "core" ? styles.moduleIndexRowActive : ""}`}
+                onClick={() => setCategory(category === "core" ? "all" : "core")}
+                title="Filter by Core ERP"
+              >
+                <span className={`${styles.moduleIndicator} ${styles.indicatorCore}`} />
+                <span className={styles.moduleCategoryName}>Core ERP</span>
+                <span className={styles.moduleCount}>9</span>
+              </button>
+
+              <button
+                type="button"
+                className={`${styles.moduleIndexRow} ${category === "operations" ? styles.moduleIndexRowActive : ""}`}
+                onClick={() => setCategory(category === "operations" ? "all" : "operations")}
+                title="Filter by Operations"
+              >
+                <span className={`${styles.moduleIndicator} ${styles.indicatorOperations}`} />
+                <span className={styles.moduleCategoryName}>Operations</span>
+                <span className={styles.moduleCount}>4</span>
+              </button>
+
+              <button
+                type="button"
+                className={`${styles.moduleIndexRow} ${category === "productivity" ? styles.moduleIndexRowActive : ""}`}
+                onClick={() => setCategory(category === "productivity" ? "all" : "productivity")}
+                title="Filter by Productivity"
+              >
+                <span className={`${styles.moduleIndicator} ${styles.indicatorProductivity}`} />
+                <span className={styles.moduleCategoryName}>Productivity</span>
+                <span className={styles.moduleCount}>4</span>
+              </button>
+
+              <button
+                type="button"
+                className={`${styles.moduleIndexRow} ${category === "verticals" ? styles.moduleIndexRowActive : ""}`}
+                onClick={() => setCategory(category === "verticals" ? "all" : "verticals")}
+                title="Filter by Industry"
+              >
+                <span className={`${styles.moduleIndicator} ${styles.indicatorVerticals}`} />
+                <span className={styles.moduleCategoryName}>Industry</span>
+                <span className={styles.moduleCount}>3</span>
+              </button>
+            </div>
+          </aside>
+        </section>
+
+        {/* Category Tabs Filter Bar */}
+        <div className={styles.tabsBar} role="tablist" aria-label="Application categories">
+          {CATEGORIES.map((c) => (
+            <button
+              key={c.id}
+              role="tab"
+              aria-selected={category === c.id}
+              className={`${styles.tabBtn} ${category === c.id ? styles.tabBtnActive : ""}`}
+              onClick={() => setCategory(c.id)}
+            >
+              <span className={styles.tabLabel}>{c.label}</span>
+              <span className={styles.tabCount}>{c.count}</span>
+            </button>
+          ))}
         </div>
 
-        <div className={styles.heroActions}>
-          <Link href="/apps/store">
-            <Button variant="primary" size="md">
-              <ShoppingBag size={16} /> Marketplace
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* KPI Overview Strip */}
-      <div className={styles.statsRow}>
-        <KPIStrip items={kpiItems} />
-      </div>
-
-      {/* Interactive Controls Bar: Instant Search & Domain Filter */}
-      <div className={styles.controlsBar}>
-        <div className={styles.searchBox}>
-          <Search size={15} className={styles.searchIcon} aria-hidden="true" />
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="Search applications (e.g. Finance, CRM, Orders)..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            aria-label="Search installed applications"
-          />
-          {searchQuery && (
+        {/* App Icons Grid (7 columns per row) */}
+        {filteredApps.length === 0 ? (
+          <div className={styles.emptyState}>
+            <SlidersHorizontal size={20} className={styles.emptyIcon} />
+            <p className={styles.emptyText}>No applications matching &ldquo;{searchQuery}&rdquo;</p>
             <button
               type="button"
-              className={styles.clearSearchBtn}
-              onClick={() => setSearchQuery("")}
-              aria-label="Clear search"
+              className={styles.resetBtn}
+              onClick={() => {
+                setSearchQuery("");
+                setCategory("all");
+              }}
             >
-              <X size={14} />
+              Reset filters
             </button>
-          )}
-        </div>
-
-        <div className={styles.categoriesWrapper}>
-          <SegmentedControl
-            options={CATEGORY_OPTIONS}
-            value={activeCategory}
-            onChange={(cat) => setActiveCategory(cat)}
-            size="sm"
-            aria-label="Filter applications by category"
-          />
-        </div>
-      </div>
-
-      {/* Canonical App Wizard Grid */}
-      <AppWizardGrid
-        tiles={tiles}
-        loading={installedApps === null && !error}
-        loadingVariant="skeleton"
-        error={error}
-        onRetry={() => setAttempt((n) => n + 1)}
-        emptyTitle={
-          activeCategory === "favorites"
-            ? "No favorite applications yet"
-            : searchQuery
-              ? `No applications matching "${searchQuery}"`
-              : "No applications installed"
-        }
-        emptyDescription={
-          activeCategory === "favorites"
-            ? "Click the star icon on any application tile to add it to your quick-access favorites."
-            : searchQuery
-              ? "Try searching for a different keyword or select another category."
-              : "Explore the UniERP Marketplace to discover and install applications for your organization."
-        }
-      />
-
-      {/* Marketplace Promotion Banner */}
-      <div className={styles.marketplaceBanner}>
-        <div className={styles.marketplaceInfo}>
-          <div className={styles.marketplaceIconWell}>
-            <Zap size={22} />
           </div>
-          <div className={styles.marketplaceText}>
-            <h2 className={styles.marketplaceTitle}>Looking for specialized vertical capabilities?</h2>
-            <p className={styles.marketplaceDesc}>
-              Discover certified extensions for Healthcare, Education, Real Estate, and AI-driven automation.
-            </p>
-          </div>
-        </div>
+        ) : (
+          <div className={styles.appGrid} role="list">
+            {filteredApps.map((app) => {
+              const Icon = app.icon;
 
-        <Link href="/apps/store">
-          <Button variant="secondary" size="sm">
-            Discover Extensions <ExternalLink size={13} style={{ marginLeft: 4 }} />
-          </Button>
-        </Link>
-      </div>
+              return (
+                <Link
+                  key={app.id}
+                  href={app.href}
+                  className={styles.appTile}
+                  role="listitem"
+                  data-app={app.id}
+                  title={`Launch ${app.name}`}
+                >
+                  <div className={styles.iconSquircle}>
+                    <Icon size={20} className={styles.iconGlyph} strokeWidth={2} />
+                  </div>
+
+                  <span className={styles.appName}>{app.displayName}</span>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Footer with clean space from bottom border */}
+        <footer className={styles.launcherFooter}>
+          <div className={styles.footerLeft}>
+            <span>UniERP Workspace Atlas • Enterprise Edition</span>
+          </div>
+          <div className={styles.footerRight}>
+            <Link href="/auth/logout" className={styles.footerLink}>
+              <LogOut size={11} />
+              <span>Logout</span>
+            </Link>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 }

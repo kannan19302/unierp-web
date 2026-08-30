@@ -566,10 +566,12 @@ export const formatSegment = (segment: string): string => {
     .join(" ");
 };
 
+import { Activity, ShieldCheck } from "lucide-react";
+
 /**
- * Every top-level application known to the shell. `installed: false` apps are
- * industry modules that only appear in the switcher once installed for a tenant.
- * IDs must match the canonical app slug taxonomy (app-slug-map.ts / KERNEL_SLUGS).
+ * Every top-level operational business application known to the shell.
+ * Migrated modules (Marketplace -> :4007, Studio/Ecommerce -> :4005, SaaS Portal -> :4006)
+ * live in their dedicated repositories and are not listed here.
  */
 export const allApplications: AppDefinition[] = [
   {
@@ -678,71 +680,66 @@ export const allApplications: AppDefinition[] = [
     installed: true,
   },
   {
-    id: "ecommerce",
-    name: "E-Commerce",
-    href: "/ecommerce",
-    icon: StorefrontIcon,
+    id: "healthcare",
+    name: "Healthcare",
+    href: "/healthcare",
+    icon: Activity,
     installed: true,
   },
   {
     id: "education",
-    name: "Education Module",
+    name: "Education",
     href: "/education",
     icon: GraduationCap,
-    installed: false,
+    installed: true,
   },
   {
     id: "real-estate",
-    name: "Real Estate Module",
+    name: "Real Estate",
     href: "/real-estate",
     icon: Building2,
-    installed: false,
+    installed: true,
   },
   {
     id: "field-service",
-    name: "Field Service Module",
+    name: "Field Service",
     href: "/field-service",
     icon: Wrench,
-    installed: false,
-  },
-  {
-    id: "saas-portal",
-    name: "SaaS Portal",
-    href: "/saas/portal",
-    icon: Cloud,
     installed: true,
   },
   {
-    id: "app-store",
-    name: "App Store",
-    href: "/apps/store",
-    icon: ShoppingBag,
-    installed: true,
-  },
-  {
-    id: "builder",
-    name: "Studio",
-    href: "/builder",
-    icon: Cpu,
+    id: "blockchain",
+    name: "Blockchain Ledger",
+    href: "/blockchain",
+    icon: ShieldCheck,
     installed: true,
   },
 ];
 
-export const switcherFolders: SwitcherFolder[] = [
-  {
-    id: "developer",
-    name: "Developer",
-    color: "var(--color-border-strong)",
-    appIds: ["app-store", "builder"],
-  },
-];
+export const switcherFolders: SwitcherFolder[] = [];
 
 /**
- * Kernel apps are always present (never uninstallable); every other app shows
- * only when it's installed for the tenant. Mirrors KERNEL_SLUGS in
- * apps/api/src/common/module-tiers.ts — only `saas-portal` and `app-store` are
- * permanently available so users always have an admin surface to re-install
- * everything else. This is the single frontend source of truth; the API's
- * module-tiers.ts is the backend source. Both must stay in sync.
+ * Kernel app identifiers that are permanently accessible without conditional gating.
  */
-export const KERNEL_APP_IDS = new Set(["saas-portal", "app-store"]);
+export const KERNEL_APP_IDS = new Set([
+  "dashboard",
+  "finance",
+  "hr",
+  "crm",
+  "inventory",
+  "procurement",
+  "sales",
+  "supply-chain",
+  "projects",
+  "manufacturing",
+  "analytics",
+  "ai",
+  "drive",
+  "communication",
+  "pos",
+  "healthcare",
+  "education",
+  "real-estate",
+  "field-service",
+  "blockchain",
+]);

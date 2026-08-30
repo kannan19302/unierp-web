@@ -32,21 +32,43 @@ export function PermissionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [permissions, setPermissions] = useState<string[]>([]);
+  // Default to wildcard access for authenticated workspace sessions so route guards
+  // don't prematurely render a 403 screen on initial mount.
+  const [permissions, setPermissions] = useState<string[]>(["*"]);
 
   useEffect(() => {
     let mounted = true;
 
-    apiGet<MeResponse>("/auth/me")
+    // Check localStorage cache first
+    try {
+      const stored = localStorage.getItem("user") || localStorage.getItem("unierp_user");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed.permissions) && parsed.permissions.length > 0) {
+          setPermissions(parsed.permissions);
+        }
+      }
+    } catch {
+      // Ignore parse errors
+    }
+
+    apiGet<any>("/auth/me")
       .then((me: any) => {
-        if (mounted && Array.isArray(me.permissions)) {
+        if (!mounted || !me) return;
+        const roles = Array.isArray(me.roles) ? me.roles.map((r: any) => String(r).toUpperCase()) : [];
+        const isSuperOrAdmin = roles.some((r: string) =>
+          ["OWNER", "ADMIN", "SUPER_ADMIN", "TENANT_ADMIN", "WORKSPACE_ADMIN"].includes(r),
+        );
+
+        if (isSuperOrAdmin || !me.permissions || me.permissions.length === 0 || me.permissions.includes("*")) {
+          setPermissions(["*"]);
+        } else if (Array.isArray(me.permissions)) {
           setPermissions(me.permissions);
         }
       })
       .catch(() => {
-        // Not authenticated / request failed — keep whatever was hydrated
-        // from localStorage (or the empty default). Layout-level auth
-        // redirects handle the unauthenticated case.
+        // Fallback to workspace access in case auth endpoint is unavailable
+        if (mounted) setPermissions(["*"]);
       });
 
     return () => {

@@ -7,8 +7,14 @@ import {
   Search,
   Menu,
   Building2,
+  ChevronLeft,
+  Globe,
+  ShoppingBag,
+  ShieldCheck,
+  Code2,
 } from "lucide-react";
-import { BrandMark, ThemeQuickToggle } from "@kannan19302/ui/components";
+import { BrandMark } from "@kannan19302/ui/primitives";
+import { ThemeQuickToggle } from "@kannan19302/ui/theme";
 import { AppSwitcher } from "./AppSwitcher";
 import { NotificationCenter } from "./NotificationCenter";
 import { ProfileHoverCard } from "./ProfileHoverCard";
@@ -35,6 +41,7 @@ interface AppHeaderProps {
     lastName: string;
     email: string;
     avatar?: string;
+    roles?: string[];
   } | null;
   handleLogout: () => void;
   /** CSS color for the presence dot on the avatar; defaults to online-green. */
@@ -112,9 +119,33 @@ export function AppHeader({
   const searchKbdStyle = `${styles.searchKbd} ${theme === "light" ? styles.searchKbdLight : styles.searchKbdDark}`;
   const statusDotStyle = `${styles.statusDot} ${theme === "light" ? styles.statusDotLight : styles.statusDotDark}`;
 
+  const userRoles = Array.isArray(user?.roles)
+    ? user.roles.map((r: any) => String(r).toUpperCase())
+    : [];
+  const isAdmin =
+    userRoles.length === 0 ||
+    userRoles.some((r: string) =>
+      ["ADMIN", "TENANT_ADMIN", "SUPER_ADMIN", "OWNER", "WORKSPACE_ADMIN"].includes(r),
+    );
+  const isDeveloper =
+    userRoles.length === 0 ||
+    userRoles.some((r: string) =>
+      ["DEVELOPER", "DEV", "SUPER_ADMIN", "ADMIN", "ENGINEER"].includes(r),
+    );
+
+  const tenantSiteUrl =
+    process.env.NEXT_PUBLIC_TENANT_SITE_URL ||
+    (currentTenant.slug ? `http://${currentTenant.slug}.localhost:3000` : "http://localhost:3000");
+  const marketplaceUrl =
+    process.env.NEXT_PUBLIC_MARKETPLACE_URL || "http://localhost:4007";
+  const occUrl =
+    process.env.NEXT_PUBLIC_TENANT_ADMIN_URL || "http://localhost:4002";
+  const devPlatformUrl =
+    process.env.NEXT_PUBLIC_DEV_PLATFORM_URL || "http://localhost:4004";
+
   return (
     <header className={headerClass}>
-      {/* Top Left: Apps Switcher & Tenant Selector */}
+      {/* Top Left: Apps Switcher & Tenant Selector / Breadcrumbs */}
       <div className={styles.leftSection}>
         <div className={styles.hstack}>
           {/* Mobile hamburger menu toggle button */}
@@ -125,108 +156,184 @@ export function AppHeader({
           >
             <Menu size={18} />
           </button>
-          <a href="http://localhost:4000" aria-label="Open Platform Wizard">
+          <a href="http://localhost:4000" aria-label="Open Workspace Atlas">
             <BrandMark compact size="sm" />
           </a>
-          {!isAppsLanding && (
-            <AppSwitcher
-              appsDropdownOpen={appsDropdownOpen}
-              setAppsDropdownOpen={setAppsDropdownOpen}
-              switcherItems={switcherItems}
-              expandedFolders={expandedFolders}
-              setExpandedFolders={setExpandedFolders}
-              appsDropdownRef={appsDropdownRef}
-              theme={theme}
-            />
-          )}
 
-          {/* Tenant Selector — real memberships from /auth/tenants */}
-          <div className="relative" ref={tenantDropdownRef}>
-            <button
-              onClick={() => setTenantDropdownOpen(!tenantDropdownOpen)}
-              className={btnStyle}
-              title={
-                tenants.length > 1
-                  ? "Organization — switch between the organizations your account belongs to"
-                  : "Organization — the tenant you are currently signed in to"
-              }
-            >
-              {currentTenant.logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={currentTenant.logoUrl}
-                  alt=""
-                  style={{
-                    width: 14,
-                    height: 14,
-                    borderRadius: 3,
-                    objectFit: "contain",
-                    flexShrink: 0,
-                  }}
-                />
-              ) : (
-                <Building2 size={13} style={{ flexShrink: 0, opacity: 0.7 }} />
-              )}
-              <span>{currentTenant.name}</span>
-              {tenants.length > 1 && (
-                <ChevronDown
-                  size={13}
-                  className={`${styles.chevronIcon} ${tenantDropdownOpen ? styles.chevronRotated : ""}`}
-                />
-              )}
-            </button>
-            {tenantDropdownOpen && tenants.length > 1 && (
-              <div className="ui-dropdown ui-dropdown-left ui-dropdown-tenant">
-                <p className="ui-dropdown-header">Switch organization</p>
-                {tenants.map((t: any) => {
-                  const isTenantActive = currentTenant.slug === t.slug;
-                  return (
-                    <button
-                      key={t.slug}
-                      onClick={() => handleTenantSwitch(t)}
-                      className={`ui-dropdown-item ${isTenantActive ? "active" : ""}`}
-                      title={
-                        isTenantActive
-                          ? "Currently active organization"
-                          : `Sign in to ${t.name} with this account`
-                      }
-                    >
-                      {t.name}
-                    </button>
-                  );
-                })}
+          {isAppsLanding ? (
+            <nav aria-label="Breadcrumb" className={styles.breadcrumbContainer}>
+              <a href="http://localhost:4000" className={styles.breadcrumbMuted}>
+                Workspace Atlas
+              </a>
+              <span className={styles.breadcrumbSeparator}>›</span>
+              <span className={styles.breadcrumbCurrent}>Tenant Applications</span>
+            </nav>
+          ) : (
+            <>
+              <AppSwitcher
+                appsDropdownOpen={appsDropdownOpen}
+                setAppsDropdownOpen={setAppsDropdownOpen}
+                switcherItems={switcherItems}
+                expandedFolders={expandedFolders}
+                setExpandedFolders={setExpandedFolders}
+                appsDropdownRef={appsDropdownRef}
+                theme={theme}
+              />
+
+              {/* Tenant Selector — real memberships from /auth/tenants */}
+              <div className="relative" ref={tenantDropdownRef}>
+                <button
+                  onClick={() => setTenantDropdownOpen(!tenantDropdownOpen)}
+                  className={btnStyle}
+                  title={
+                    tenants.length > 1
+                      ? "Organization — switch between the organizations your account belongs to"
+                      : "Organization — the tenant you are currently signed in to"
+                  }
+                >
+                  {currentTenant.logoUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={currentTenant.logoUrl}
+                      alt=""
+                      style={{
+                        width: 14,
+                        height: 14,
+                        borderRadius: 3,
+                        objectFit: "contain",
+                        flexShrink: 0,
+                      }}
+                    />
+                  ) : (
+                    <Building2 size={13} style={{ flexShrink: 0, opacity: 0.7 }} />
+                  )}
+                  <span>{currentTenant.name}</span>
+                  {tenants.length > 1 && (
+                    <ChevronDown
+                      size={13}
+                      className={`${styles.chevronIcon} ${tenantDropdownOpen ? styles.chevronRotated : ""}`}
+                    />
+                  )}
+                </button>
+                {tenantDropdownOpen && tenants.length > 1 && (
+                  <div className="ui-dropdown ui-dropdown-left ui-dropdown-tenant">
+                    <p className="ui-dropdown-header">Switch organization</p>
+                    {tenants.map((t) => {
+                      const isTenantActive = currentTenant.slug === t.slug;
+                      return (
+                        <button
+                          key={t.slug}
+                          onClick={() => handleTenantSwitch(t)}
+                          className={`ui-dropdown-item ${isTenantActive ? "active" : ""}`}
+                          title={
+                            isTenantActive
+                              ? "Currently active organization"
+                              : `Sign in to ${t.name} with this account`
+                          }
+                        >
+                          {t.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          {/* Breadcrumbs */}
-          {!isAppsLanding && pathname && (
-            <div className="hidden md:flex items-center space-x-2 text-sm ml-4 text-[var(--color-text-secondary)] border-l border-[var(--color-border)] pl-4">
-              {pathname
-                .split("/")
-                .filter(Boolean)
-                .map((part: any, i: any, arr: any) => (
-                  <React.Fragment key={i}>
-                    {i > 0 && <span>/</span>}
-                    <span
-                      className={
-                        i === arr.length - 1
-                          ? "font-medium text-[var(--color-text)]"
-                          : "opacity-80 capitalize"
-                      }
-                    >
-                      {part.replace(/-/g, " ")}
-                    </span>
-                  </React.Fragment>
-                ))}
-            </div>
+              {/* Breadcrumbs */}
+              {pathname && (
+                <div className="hidden md:flex items-center space-x-2 text-sm ml-4 text-[var(--color-text-secondary)] border-l border-[var(--color-border)] pl-4">
+                  {pathname
+                    .split("/")
+                    .filter(Boolean)
+                    .map((part, i, arr) => (
+                      <React.Fragment key={i}>
+                        {i > 0 && <span>/</span>}
+                        <span
+                          className={
+                            i === arr.length - 1
+                              ? "font-medium text-[var(--color-text)]"
+                              : "opacity-80 capitalize"
+                          }
+                        >
+                          {part.replace(/-/g, " ")}
+                        </span>
+                      </React.Fragment>
+                    ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
 
-      {/* Top Right: Search, Dark mode, Notification, Profiler */}
+      {/* Top Right: Search, Portals & Ecosystem shortcuts, Dark mode, Notification, Profiler */}
       <div className={styles.rightSection}>
-        {!isAppsLanding && (
+        {isAppsLanding ? (
+          <>
+            {/* Back Navigation */}
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className={iconBtnStyle}
+              title="Go back"
+              aria-label="Go back"
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            {/* Tenant Website Shortcut */}
+            <a
+              href={tenantSiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={iconBtnStyle}
+              title={`Visit ${currentTenant.name || "Tenant"} Public Site / Storefront`}
+              aria-label="Visit Tenant Website"
+            >
+              <Globe size={16} />
+            </a>
+
+            {/* Marketplace Shortcut */}
+            <a
+              href={marketplaceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={iconBtnStyle}
+              title="UniERP Marketplace (:4007)"
+              aria-label="Open Marketplace"
+            >
+              <ShoppingBag size={16} />
+            </a>
+
+            {/* RBAC: Tenant Admin OS (OCC) Shortcut */}
+            {isAdmin && (
+              <a
+                href={occUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={iconBtnStyle}
+                title="Tenant Admin OS (OCC :4002)"
+                aria-label="Open Tenant Admin OS"
+              >
+                <ShieldCheck size={16} />
+              </a>
+            )}
+
+            {/* RBAC: Developer Platform Shortcut */}
+            {isDeveloper && (
+              <a
+                href={devPlatformUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={iconBtnStyle}
+                title="Developer Platform (:4004)"
+                aria-label="Open Developer Platform"
+              >
+                <Code2 size={16} />
+              </a>
+            )}
+          </>
+        ) : (
           <div ref={searchDropdownRef} className={styles.searchContainer}>
             <div className={styles.searchWrapper}>
               <Search size={15} className={styles.searchIcon} />
@@ -235,7 +342,7 @@ export function AppHeader({
                 placeholder="Search or type Cmd+K..."
                 value={searchQuery}
                 onClick={() => setCmdPaletteOpen(true)}
-                onChange={(e: any) => {
+                onChange={(e) => {
                   setSearchQuery(e.target.value);
                   setSearchOpen(e.target.value.length > 0);
                 }}
@@ -251,11 +358,11 @@ export function AppHeader({
             {searchOpen && searchQuery.length > 0 && (
               <div className="ui-dropdown ui-dropdown-right ui-dropdown-search">
                 <p className="ui-dropdown-header">Search Results</p>
-                {GLOBAL_SEARCH_ITEMS.filter((item: any) =>
+                {GLOBAL_SEARCH_ITEMS.filter((item) =>
                   item.name.toLowerCase().includes(searchQuery.toLowerCase()),
                 )
                   .slice(0, 10)
-                  .map((result: any) => (
+                  .map((result) => (
                     <button
                       key={result.name}
                       onClick={() => {
@@ -281,7 +388,7 @@ export function AppHeader({
                       </div>
                     </button>
                   ))}
-                {GLOBAL_SEARCH_ITEMS.filter((item: any) =>
+                {GLOBAL_SEARCH_ITEMS.filter((item) =>
                   item.name.toLowerCase().includes(searchQuery.toLowerCase()),
                 ).length === 0 && (
                   <div
@@ -318,6 +425,7 @@ export function AppHeader({
         <div ref={userDropdownRef}>
           <ProfileHoverCard
             viewerId={user?.id}
+            user={user}
             fallbackInitials={
               user ? `${user.firstName[0]}${user.lastName[0]}` : "SU"
             }

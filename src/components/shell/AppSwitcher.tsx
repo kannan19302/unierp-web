@@ -150,16 +150,16 @@ export function AppSwitcher({
             <LayoutGrid size={14} className="ui-text-muted" />
             <span>Desk</span>
           </button>
-          <button
-            onClick={() => {
-              router.push("/apps/store");
-              setAppsDropdownOpen(false);
-            }}
+          <a
+            href={process.env.NEXT_PUBLIC_MARKETPLACE_URL || "http://localhost:4007"}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setAppsDropdownOpen(false)}
             className="ui-dropdown-item"
           >
             <ShoppingBag size={14} className="ui-text-muted" />
-            <span>App store</span>
-          </button>
+            <span>Marketplace (:4007)</span>
+          </a>
         </div>
       )}
     </div>

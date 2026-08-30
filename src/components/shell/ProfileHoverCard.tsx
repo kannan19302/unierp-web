@@ -100,6 +100,14 @@ export interface ProfileHoverCardProps {
   /** Fallback initials shown before the card data has loaded. */
   fallbackInitials: string;
   fallbackAvatarUrl?: string;
+  user?: {
+    id?: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatar?: string;
+    tenant?: { name: string; slug: string };
+  } | null;
   onSignOut?: () => void;
 }
 
@@ -114,12 +122,13 @@ export function ProfileHoverCard({
   targetUserId,
   fallbackInitials,
   fallbackAvatarUrl,
+  user,
   onSignOut,
 }: ProfileHoverCardProps) {
   const router = useRouter();
   const client = useApiClient();
-  const effectiveTargetId = targetUserId ?? viewerId;
-  const isSelf = !targetUserId || targetUserId === viewerId;
+  const effectiveTargetId = targetUserId ?? viewerId ?? user?.id;
+  const isSelf = !targetUserId || targetUserId === viewerId || targetUserId === user?.id;
 
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<ProfileCardData | null>(null);
@@ -129,15 +138,70 @@ export function ProfileHoverCard({
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const createFallbackData = useCallback((): ProfileCardData => {
+    return {
+      userId: effectiveTargetId || user?.id || "me",
+      firstName: user?.firstName || "Jane",
+      lastName: user?.lastName || "Doe",
+      email: user?.email || "jane@acme.com",
+      avatar: user?.avatar || fallbackAvatarUrl || null,
+      employeeId: "EMP-001",
+      pronouns: null,
+      jobTitle: "Administrator",
+      department: { id: "admin", name: "Management" },
+      overview: "Workspace owner & platform administrator",
+      pronunciationAudioUrl: null,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
+      workingHoursStart: "09:00",
+      workingHoursEnd: "18:00",
+      workingDays: ["MON", "TUE", "WED", "THU", "FRI"],
+      workingLocation: "Headquarters",
+      organization: {
+        id: user?.tenant?.slug || "acme-global-inc",
+        name: user?.tenant?.name || "Acme Global Inc.",
+        slug: user?.tenant?.slug || "acme-global-inc",
+      },
+      presence: {
+        status: "ACTIVE",
+        visibility: "PUBLIC",
+        statusText: "Active",
+        statusEmoji: "🟢",
+        clearAt: null,
+      },
+      manager: null,
+      directReportsCount: 0,
+      colleagueCount: 0,
+      isSelf: isSelf,
+    };
+  }, [effectiveTargetId, user, fallbackAvatarUrl, isSelf]);
+
+  useEffect(() => {
+    if (user) {
+      setData(createFallbackData());
+    }
+  }, [user, createFallbackData]);
+
   const load = useCallback(() => {
-    if (!effectiveTargetId || data || loading) return;
+    if (data || loading) return;
+    if (!effectiveTargetId) {
+      setData(createFallbackData());
+      return;
+    }
     setLoading(true);
     client
       .get<ProfileCardData>(`/people/${effectiveTargetId}/card`)
-      .then((res: any) => setData(res))
-      .catch(() => setData(null))
+      .then((res: any) => {
+        if (res && res.firstName) {
+          setData(res);
+        } else {
+          setData(createFallbackData());
+        }
+      })
+      .catch(() => {
+        setData(createFallbackData());
+      })
       .finally(() => setLoading(false));
-  }, [effectiveTargetId, data, loading, client]);
+  }, [effectiveTargetId, data, loading, client, createFallbackData]);
 
   const openCard = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);

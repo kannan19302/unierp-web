@@ -122,8 +122,8 @@ export default function AppShellPage() {
         <p className="ui-text-muted">
           This app isn’t installed for your workspace.
         </p>
-        <Link href="/apps/store" className="ui-text-primary">
-          Go to App Store →
+        <Link href="/apps" className="ui-text-primary">
+          Back to Applications Workspace →
         </Link>
       </div>
     );

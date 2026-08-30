@@ -87,7 +87,7 @@ const ITEM_META: Record<OnboardingChecklistKey, ItemMeta> = {
     key: "app",
     label: "Install your first app",
     hint: "Extend your ERP with modules",
-    href: "/apps/store",
+    href: "/apps",
   },
   plan: {
     key: "plan",

@@ -57,6 +57,10 @@ WORKDIR /build
 # tsconfig.base.json is required, not optional: a missing `extends` target makes
 # tsc fall back to its ES3/ES5 defaults and report dozens of spurious
 # "Property 'padStart' does not exist" errors instead of the real cause.
+COPY --from=localpkgs unierp-contracts/package.json unierp-contracts/tsconfig.json unierp-contracts/tsconfig.base.json ./unierp-contracts/
+COPY --from=localpkgs unierp-contracts/src ./unierp-contracts/src
+RUN cd unierp-contracts && npm install --no-audit --no-fund --legacy-peer-deps && npm run build
+
 COPY --from=localpkgs shared/package.json shared/tsconfig.json shared/tsconfig.base.json ./shared/
 COPY --from=localpkgs shared/src ./shared/src
 RUN cd shared && npm install --no-audit --no-fund --legacy-peer-deps && npm run build
@@ -64,10 +68,15 @@ RUN cd shared && npm install --no-audit --no-fund --legacy-peer-deps && npm run 
 # The design-system build is more than `tsc`: it also copies CSS, re-hoists the
 # "use client" directives tsc strips, and bundles CSS modules — so scripts/ has
 # to come across or `npm run build` dies on a missing module.
-COPY --from=localpkgs design-system/package.json design-system/tsconfig.json design-system/tsconfig.base.json design-system/tsconfig.build.json ./ui/
+COPY --from=localpkgs design-system/package.json design-system/tsconfig.json design-system/tsconfig.base.json design-system/tsconfig.build.json design-system/.token-baseline.json ./ui/
 COPY --from=localpkgs design-system/src ./ui/src
 COPY --from=localpkgs design-system/scripts ./ui/scripts
 RUN cd ui && npm install --no-audit --no-fund --legacy-peer-deps && npm run build
+
+COPY --from=localpkgs framework/package.json framework/tsconfig.json framework/tsconfig.base.json ./framework/
+COPY --from=localpkgs framework/src ./framework/src
+COPY --from=localpkgs framework/scripts ./framework/scripts
+RUN cd framework && npm install --no-audit --no-fund --legacy-peer-deps && npm run build
 
 # ── local package overlay (DEV ONLY) ────────────────────────────────────────
 # Drop the registry copies and put the locally built ones in their place. Only
@@ -80,10 +89,14 @@ COPY --from=localpkgs-build /build/shared/node_modules /tmp/shared/node_modules
 COPY --from=localpkgs-build /build/ui/package.json /tmp/ui/package.json
 COPY --from=localpkgs-build /build/ui/dist /tmp/ui/dist
 COPY --from=localpkgs-build /build/ui/node_modules /tmp/ui/node_modules
-RUN rm -rf node_modules/@kannan19302/shared node_modules/@kannan19302/ui \
+COPY --from=localpkgs-build /build/framework/package.json /tmp/framework/package.json
+COPY --from=localpkgs-build /build/framework/dist /tmp/framework/dist
+COPY --from=localpkgs-build /build/framework/node_modules /tmp/framework/node_modules
+RUN rm -rf node_modules/@kannan19302/shared node_modules/@kannan19302/ui node_modules/@kannan19302/framework \
  && mkdir -p node_modules/@kannan19302 \
  && mv /tmp/shared node_modules/@kannan19302/shared \
- && mv /tmp/ui node_modules/@kannan19302/ui
+ && mv /tmp/ui node_modules/@kannan19302/ui \
+ && mv /tmp/framework node_modules/@kannan19302/framework
 
 # ── dev ─────────────────────────────────────────────────────────────────────
 FROM localdeps AS dev

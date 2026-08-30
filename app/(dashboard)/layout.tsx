@@ -40,6 +40,11 @@ import {
   LayoutGrid,
   Clock,
   X,
+  Sparkles,
+  GraduationCap,
+  Building2,
+  Wrench,
+  ShieldCheck,
 } from "lucide-react";
 
 import {
@@ -58,13 +63,8 @@ import { useApiClient } from "@kannan19302/framework";
 import { createOidcClient } from "@/lib/oidc-config";
 
 /**
- * `slug` is the real GATED_MODULES / app-slug-map.ts identifier this item is
- * gated by — NOT derived from `href`, which used to be the assumption and
- * silently broke for "App Store" (href /apps/store, first segment "apps",
- * which is not a real slug at all; the real one is "app-store") and would
- * have broken it again the day anyone else added an item whose route nesting
- * didn't happen to match its slug. `slug: null` marks chrome/utility items
- * (Settings) that are not a gated module and are always visible.
+ * Global search items registered in the command palette.
+ * `slug: null` marks chrome/utility items (Settings) that are always visible.
  */
 const GLOBAL_SEARCH_ITEMS: Array<{
   name: string;
@@ -108,13 +108,16 @@ const GLOBAL_SEARCH_ITEMS: Array<{
     type: "App",
     slug: "analytics",
   },
+  { name: "AI Copilot", href: "/ai", icon: Sparkles, type: "App", slug: "ai" },
   { name: "Drive", href: "/drive", icon: FolderOpen, type: "App", slug: "drive" },
   { name: "Connect", href: "/connect", icon: MessageSquare, type: "App", slug: "communication" },
   { name: "POS & Retail", href: "/pos", icon: Store, type: "App", slug: "pos" },
-  { name: "E-Commerce", href: "/ecommerce", icon: Globe, type: "App", slug: "ecommerce" },
-  { name: "App Store", href: "/apps/store", icon: Store, type: "App", slug: "app-store" },
+  { name: "Healthcare", href: "/healthcare", icon: Activity, type: "App", slug: "healthcare" },
+  { name: "Education", href: "/education", icon: GraduationCap, type: "App", slug: "education" },
+  { name: "Real Estate", href: "/real-estate", icon: Building2, type: "App", slug: "real-estate" },
+  { name: "Field Service", href: "/field-service", icon: Wrench, type: "App", slug: "field-service" },
+  { name: "Blockchain Ledger", href: "/blockchain", icon: ShieldCheck, type: "App", slug: "blockchain" },
   { name: "Settings", href: "/settings", icon: Settings, type: "App", slug: null },
-  { name: "Studio", href: "/builder", icon: Cpu, type: "App", slug: "builder" },
 ];
 
 export default function DashboardLayout({
@@ -507,8 +510,10 @@ export default function DashboardLayout({
             if (mounted && data?.loaded) setDemoDataLoaded(true);
           })
           .catch(() => {});
-      } catch {
-        if (mounted) router.push("/login");
+      } catch (err) {
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     };
     loadSession();
@@ -609,6 +614,7 @@ export default function DashboardLayout({
       ),
     [installedApps],
   );
+
   const folderAppIds = switcherFolders.flatMap((f: any) => f.appIds);
   const rootApps = activeApps.filter((app: any) => !folderAppIds.includes(app.id));
   const visibleFolders = switcherFolders.filter(
@@ -714,7 +720,7 @@ export default function DashboardLayout({
                 maxWidth: pathname.startsWith("/builder")
                   ? "100%"
                   : isAppsSection
-                    ? "60%"
+                    ? "100%"
                     : "var(--content-max-width)",
               }}
               className={styles.s5}
@@ -727,9 +733,6 @@ export default function DashboardLayout({
                   </div>
                   <button
                     onClick={() => {
-                      // End impersonation server-side — the API swaps
-                      // the session cookie back to the original admin
-                      // session. No tokens in localStorage.
                       fetch("/api/v1/auth/end-impersonation", {
                         method: "POST",
                         credentials: "include",

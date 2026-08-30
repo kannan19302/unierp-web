@@ -24,6 +24,8 @@ export default function LoginPage() {
   useEffect(() => {
     if (status === "unauthenticated") {
       void signIn({ returnTo: "/" });
+    } else if (status === "authenticated") {
+      window.location.assign("/");
     }
   }, [status, signIn]);
 

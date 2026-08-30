@@ -64,9 +64,9 @@ export const OLD_TO_NEW: Record<string, string> = {
   "/settings/activity-feed": "/saas/admin?tab=activity",
   "/settings/notifications": "/saas/settings?tab=notifications",
   "/settings/tenant-analytics": "/saas/admin?tab=analytics",
-  // Module Manager / Marketplace
-  "/settings/modules": "/apps/store",
-  "/settings/marketplace": "/apps/store",
+  // Module Manager / Applications
+  "/settings/modules": "/apps",
+  "/settings/marketplace": "/apps",
   // Legacy settings index
-  "/settings": "/saas/portal",
+  "/settings": "/dashboard",
 };

@@ -29,37 +29,16 @@ export const AppsTabLayout: FC<ModuleTabLayoutProps> = (props: any) => {
 export const APPS_TABS: ModuleTab[] = [
   {
     id: "desk",
-    label: "Desk",
+    label: "Workspace Desk",
     href: "/apps",
     icon: LayoutGrid,
-    description: "Your installed workspace apps and modules",
-  },
-  {
-    id: "store",
-    label: "App Store",
-    href: "/apps/store",
-    icon: Store,
-    description: "Browse and install marketplace apps",
-  },
-  {
-    id: "collections",
-    label: "Collections",
-    href: "/apps/store/collections",
-    icon: Sparkles,
-    description: "Curated app bundles",
-  },
-  {
-    id: "favorites",
-    label: "Favorites",
-    href: "/apps/store/favorites",
-    icon: Heart,
-    description: "Your saved apps",
+    description: "Your operational enterprise applications",
   },
   {
     id: "developer",
     label: "Developer Portal",
     href: "/apps/developer",
     icon: Code2,
-    description: "Publish your own apps",
+    description: "Publish and manage developer extensions",
   },
 ];

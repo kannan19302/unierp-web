@@ -1613,7 +1613,7 @@ export const getAppSpecificNavigation = (
             href: "/saas/settings?tab=integrations",
             icon: Plug,
           },
-          { name: "Module Manager", href: "/apps/store", icon: Settings },
+          { name: "Applications Suite", href: "/apps", icon: Settings },
           {
             name: "Custom Domains",
             href: "/saas/settings?tab=domains",
@@ -1629,7 +1629,7 @@ export const getAppSpecificNavigation = (
             href: "/saas/admin?tab=updates",
             icon: Cpu,
           },
-          { name: "Marketplace", href: "/apps/store", icon: Box },
+          { name: "Applications Hub", href: "/apps", icon: Box },
           {
             name: "Subscription & Billing",
             href: "/saas/billing",
@@ -1817,11 +1817,10 @@ export const getAppSpecificNavigation = (
           ],
         },
         {
-          name: "Marketplace",
+          name: "Applications",
           isHeader: true,
           items: [
-            { name: "App Store", href: "/apps/store", icon: Store },
-            { name: "Installed Apps", href: "/apps", icon: LayoutGrid },
+            { name: "All Applications", href: "/apps", icon: LayoutGrid },
             { name: "Developer Portal", href: "/apps/developer", icon: Code2 },
           ],
         },
