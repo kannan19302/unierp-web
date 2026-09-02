@@ -1,4 +1,6 @@
 
+import path from 'node:path';
+
 /** @type {import('next').NextConfig} */
 const apiBaseUrl = process.env.API_URL || 'http://localhost:3001';
 // Authentication lives in its own service. § 5.2 gives each plane a separate
@@ -8,6 +10,7 @@ const apiBaseUrl = process.env.API_URL || 'http://localhost:3001';
 const idpBaseUrl = process.env.IDP_URL || 'http://localhost:3005';
 
 const nextConfig = {
+  outputFileTracingRoot: path.resolve(process.cwd(), '..'),
   // Force webpack to poll for file changes instead of relying on inotify,
   // which doesn't fire reliably on Docker Desktop bind mounts (Windows).
   // Polling is already set via WATCHPACK_POLLING=1000 in the Docker env,

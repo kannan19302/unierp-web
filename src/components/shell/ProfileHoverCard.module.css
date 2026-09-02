@@ -347,7 +347,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  padding: 2px 8px 2px 6px;
+  padding: 2px var(--space-2) 2px var(--space-1-5, 6px);
   background: var(--color-bg-sunken);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
@@ -363,8 +363,8 @@
 }
 
 .presenceDotSmall {
-  width: 8px;
-  height: 8px;
+  width: var(--space-2);
+  height: var(--space-2);
   border-radius: var(--radius-full);
   flex-shrink: 0;
 }
@@ -386,7 +386,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 6px var(--space-2);
+  padding: var(--space-1-5, 6px) var(--space-2);
   background: transparent;
   border: none;
   border-radius: var(--radius-md);
@@ -426,7 +426,7 @@
 .statusInput {
   flex: 1;
   font-size: var(--text-xs);
-  padding: 4px 8px;
+  padding: var(--space-1) var(--space-2);
   background: var(--color-bg-sunken);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -441,9 +441,9 @@
 .statusSetBtn {
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
-  padding: 4px 10px;
+  padding: var(--space-1) var(--space-2-5, 10px);
   background: var(--color-primary);
-  color: var(--color-primary-contrast, #ffffff);
+  color: var(--on-primary, #ffffff);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
