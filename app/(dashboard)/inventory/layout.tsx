@@ -35,14 +35,16 @@ export default function InventoryLayout({
   children: React.ReactNode;
 }) {
   return (
-    <InventoryTabLayout
-      tabs={INVENTORY_TABS}
-      moduleId="inventory"
-      moduleLabel="Inventory Management"
-      moduleIcon={Package}
-      moduleDescription="Stock control, warehouses, and item catalog"
-    >
-      {children}
-    </InventoryTabLayout>
+    <div data-density="ultra-compact">
+      <InventoryTabLayout
+        tabs={INVENTORY_TABS}
+        moduleId="inventory"
+        moduleLabel="Inventory Management"
+        moduleIcon={Package}
+        moduleDescription="Stock control, warehouses, and item catalog"
+      >
+        {children}
+      </InventoryTabLayout>
+    </div>
   );
 }

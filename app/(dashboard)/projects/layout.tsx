@@ -35,14 +35,16 @@ export default function ProjectsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ProjectsTabLayout
-      tabs={PROJECTS_TABS}
-      moduleId="projects"
-      moduleLabel="Projects"
-      moduleIcon={Briefcase}
-      moduleDescription="Project management, resources, workloads, and portfolios"
-    >
-      {children}
-    </ProjectsTabLayout>
+    <div data-density="compact">
+      <ProjectsTabLayout
+        tabs={PROJECTS_TABS}
+        moduleId="projects"
+        moduleLabel="Projects"
+        moduleIcon={Briefcase}
+        moduleDescription="Project management, resources, workloads, and portfolios"
+      >
+        {children}
+      </ProjectsTabLayout>
+    </div>
   );
 }

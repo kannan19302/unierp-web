@@ -28,14 +28,16 @@ import { CrmTabLayout, CRM_TABS } from "@/components/crm/CrmTabLayout";
 
 export default function CrmLayout({ children }: { children: React.ReactNode }) {
   return (
-    <CrmTabLayout
-      tabs={CRM_TABS}
-      moduleId="crm"
-      moduleLabel="CRM & Sales"
-      moduleIcon={BarChart3}
-      moduleDescription="Customer relationship management and sales operations"
-    >
-      {children}
-    </CrmTabLayout>
+    <div data-density="compact">
+      <CrmTabLayout
+        tabs={CRM_TABS}
+        moduleId="crm"
+        moduleLabel="CRM & Sales"
+        moduleIcon={BarChart3}
+        moduleDescription="Customer relationship management and sales operations"
+      >
+        {children}
+      </CrmTabLayout>
+    </div>
   );
 }

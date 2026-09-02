@@ -35,14 +35,16 @@ export default function ManufacturingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ManufacturingTabLayout
-      tabs={MANUFACTURING_TABS}
-      moduleId="manufacturing"
-      moduleLabel="Manufacturing"
-      moduleIcon={Factory}
-      moduleDescription="Production planning, BOMs, MRP, and shop floor"
-    >
-      {children}
-    </ManufacturingTabLayout>
+    <div data-density="compact">
+      <ManufacturingTabLayout
+        tabs={MANUFACTURING_TABS}
+        moduleId="manufacturing"
+        moduleLabel="Manufacturing"
+        moduleIcon={Factory}
+        moduleDescription="Production planning, BOMs, MRP, and shop floor"
+      >
+        {children}
+      </ManufacturingTabLayout>
+    </div>
   );
 }

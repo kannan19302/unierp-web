@@ -3,5 +3,5 @@ export default function FinanceLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <div data-density="ultra-compact">{children}</div>;
 }

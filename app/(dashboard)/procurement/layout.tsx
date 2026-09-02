@@ -35,14 +35,16 @@ export default function ProcurementLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ProcurementTabLayout
-      tabs={PROCUREMENT_TABS}
-      moduleId="procurement"
-      moduleLabel="Procurement"
-      moduleIcon={ShoppingBag}
-      moduleDescription="Purchasing, RFQs, vendor management, and contracts"
-    >
-      {children}
-    </ProcurementTabLayout>
+    <div data-density="ultra-compact">
+      <ProcurementTabLayout
+        tabs={PROCUREMENT_TABS}
+        moduleId="procurement"
+        moduleLabel="Procurement"
+        moduleIcon={ShoppingBag}
+        moduleDescription="Purchasing, RFQs, vendor management, and contracts"
+      >
+        {children}
+      </ProcurementTabLayout>
+    </div>
   );
 }

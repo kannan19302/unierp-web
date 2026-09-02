@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 import React, { useState, useEffect, useMemo } from "react";
 import { Spinner, TrialCountdown } from "@kannan19302/ui/components";
 import { DemoBanner } from "@kannan19302/ui/notifications";
+import { StrataBar } from "@kannan19302/ui/shell";
 import { useTheme } from "@kannan19302/ui/theme";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -701,6 +702,14 @@ export default function DashboardLayout({
             searchDropdownRef={searchDropdownRef}
             GLOBAL_SEARCH_ITEMS={visibleSearchItems}
           />
+
+          {/* Strata Operational Context Bar */}
+          {!isAppsSection && !pathname.startsWith("/builder") && pathSegments.length > 0 && (
+            <StrataBar
+              segments={[currentTenant?.name || "UniERP", ...pathSegments.map(formatSegment)]}
+              scope="app"
+            />
+          )}
 
           {/* Content View Workspace */}
           <main

@@ -32,14 +32,16 @@ export default function SalesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SalesTabLayout
-      tabs={SALES_TABS}
-      moduleId="sales"
-      moduleLabel="Sales Management"
-      moduleIcon={TrendingUp}
-      moduleDescription="Sales orders, quotations, CPQ, and commissions"
-    >
-      {children}
-    </SalesTabLayout>
+    <div data-density="ultra-compact">
+      <SalesTabLayout
+        tabs={SALES_TABS}
+        moduleId="sales"
+        moduleLabel="Sales Management"
+        moduleIcon={TrendingUp}
+        moduleDescription="Sales orders, quotations, CPQ, and commissions"
+      >
+        {children}
+      </SalesTabLayout>
+    </div>
   );
 }

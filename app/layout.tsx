@@ -51,13 +51,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={inter.variable}
-      data-theme="meridian"
+      data-theme="strata"
       data-density="standard"
       data-platform="apps"
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider defaultSetting="meridian" defaultDensity="standard" defaultPlatform="apps">
+        <ThemeProvider defaultSetting="strata" defaultDensity="standard" defaultPlatform="apps">
           <AuthShell>
             <QueryProvider>
               <AppFrameworkProvider>
