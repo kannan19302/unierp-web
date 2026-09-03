@@ -83,10 +83,6 @@ export default function AdvancedQualityPage() {
         <PageHeader
           title="Advanced Quality"
           description="SPC, FMEA, APQP, PPAP — comprehensive quality management"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "Advanced Quality" },
-          ]}
         />
 
         {dashboard && (

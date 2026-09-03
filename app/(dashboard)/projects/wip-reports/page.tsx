@@ -171,10 +171,6 @@ export default function WipReportsPage() {
         <PageHeader
           title="WIP Valuation & Job Costing"
           description="Over/Under-billing WIP report based on Percentage-of-Completion (POC) revenue recognition."
-          breadcrumbs={[
-            { label: "Projects", href: "/projects" },
-            { label: "WIP & Job Costing" },
-          ]}
         />
 
         <div className={styles.p2}>

@@ -74,11 +74,6 @@ export default function PatientDetailPage() {
         <PageHeader
           title={`${patient.firstName} ${patient.lastName}`}
           description={`Patient ID: ${patient.id.slice(0, 8)}`}
-          breadcrumbs={[
-            { label: "Healthcare", href: "/healthcare" },
-            { label: "Patients", href: "/healthcare/patients" },
-            { label: `${patient.firstName} ${patient.lastName}` },
-          ]}
         />
 
         <div className="ui-grid-auto-sm">

@@ -1,31 +1,38 @@
 "use client";
-// @ts-nocheck
 import styles from "./page.module.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageHeader, Card, Button, Badge, KPICard, DataTable } from "@kannan19302/ui";
 import { BookOpen, Award, Save, Users } from "lucide-react";
-
-const COURSES_MOCK = [
-  { id: "1", name: "Mathematics 101", code: "MATH101" },
-  { id: "2", name: "English Literature", code: "ENG201" },
-  { id: "3", name: "Physics", code: "PHY101" },
-];
-
-const STUDENTS_MOCK = [
-  { id: "1", name: "Alice Johnson", roll: "STU-001" },
-  { id: "2", name: "Bob Smith", roll: "STU-002" },
-  { id: "3", name: "Carol Williams", roll: "STU-003" },
-  { id: "4", name: "David Brown", roll: "STU-004" },
-  { id: "5", name: "Eva Davis", roll: "STU-005" },
-];
+import { useApiClient } from "@kannan19302/framework";
 
 export default function GradeBookPage() {
-  const [selectedCourse, setSelectedCourse] = useState(
-    COURSES_MOCK[0]?.id || "",
-  );
-  const [grades, setGrades] = useState<Record<string, Record<string, number>>>(
-    {},
-  );
+  const client = useApiClient();
+  const [courses, setCourses] = useState<any[]>([]);
+  const [students, setStudents] = useState<any[]>([]);
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [grades, setGrades] = useState<Record<string, Record<string, number>>>({});
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [cRes, sRes] = await Promise.all([
+          client.get<any[]>("/ext/education/deep/courses"),
+          client.get<any[]>("/ext/education/deep/students"),
+        ]);
+        const cList = Array.isArray(cRes) ? cRes : [];
+        const sList = Array.isArray(sRes) ? sRes : [];
+        setCourses(cList);
+        setStudents(sList);
+        if (cList.length > 0 && cList[0]?.id) {
+          setSelectedCourse(cList[0].id);
+        }
+      } catch {
+        setCourses([]);
+        setStudents([]);
+      }
+    }
+    loadData();
+  }, [client]);
 
   const assessments = ["Quiz 1", "Midterm", "Quiz 2", "Assignment", "Final"];
 
@@ -66,21 +73,16 @@ export default function GradeBookPage() {
       <PageHeader
         title="Grade Book"
         description="Spreadsheet-style grade entry per course and student"
-        breadcrumbs={[
-          { label: "Education", href: "/education" },
-          { label: "Grades" },
-        ]}
         actions={
           <Button variant="primary">
             <Save size={14} className="mr-2" /> Save Grades
           </Button>
         }
       />
-
       <div className="ui-grid-auto-sm">
         <KPICard
           title="Students"
-          value={STUDENTS_MOCK.length}
+          value={students.length}
           icon={<Users size={18} />}
           color="var(--color-primary)"
         />
@@ -92,7 +94,7 @@ export default function GradeBookPage() {
         />
         <KPICard
           title="Class Average"
-          value={`${Math.round(STUDENTS_MOCK.map((s: any) => getAverage(s.id)).reduce((a: any, b: any) => a + b, 0) / STUDENTS_MOCK.length) || 0}%`}
+          value={`${students.length > 0 ? Math.round(students.map((s: any) => getAverage(s.id)).reduce((a: any, b: any) => a + b, 0) / students.length) : 0}%`}
           icon={<Award size={18} />}
           color="var(--color-success)"
         />
@@ -100,29 +102,33 @@ export default function GradeBookPage() {
 
       <Card>
         <div className={styles.s1}>
-          {COURSES_MOCK.map((c: any) => (
-            <button
-              key={c.id}
-              onClick={() => setSelectedCourse(c.id)}
-              style={{
-                borderColor:
-                  selectedCourse === c.id
-                    ? "var(--color-primary)"
-                    : "var(--color-border)",
-                background:
-                  selectedCourse === c.id
-                    ? "var(--color-primary-light)"
-                    : "var(--color-bg)",
-                color:
-                  selectedCourse === c.id
-                    ? "var(--color-primary)"
-                    : "var(--color-text-secondary)",
-              }}
-              className={styles.s2}
-            >
-              {c.code}
-            </button>
-          ))}
+          {courses.length === 0 ? (
+            <p className="ui-text-muted">No courses registered.</p>
+          ) : (
+            courses.map((c: any) => (
+              <button
+                key={c.id}
+                onClick={() => setSelectedCourse(c.id)}
+                style={{
+                  borderColor:
+                    selectedCourse === c.id
+                      ? "var(--color-primary)"
+                      : "var(--color-border)",
+                  background:
+                    selectedCourse === c.id
+                      ? "var(--color-primary-light)"
+                      : "var(--color-bg)",
+                  color:
+                    selectedCourse === c.id
+                      ? "var(--color-primary)"
+                      : "var(--color-text-secondary)",
+                }}
+                className={styles.s2}
+              >
+                {c.code || c.name}
+              </button>
+            ))
+          )}
         </div>
       </Card>
 
@@ -136,41 +142,41 @@ export default function GradeBookPage() {
                 render: (student: any) => (
                   <>
                     <div className="font-medium">{student.name}</div>
-                    <div className="ui-text-xs-tertiary">{student.roll}</div>
+                    <div className="ui-text-xs-tertiary">{student.roll || student.enrollmentNumber}</div>
                   </>
                 ),
               },
-              ...assessments.map((a: string) => ({
-                key: `assessment_${a}`,
+              ...assessments.map((a: any) => ({
+                key: a,
                 header: a,
                 render: (student: any) => (
                   <input
                     type="number"
-                    min="0"
-                    max="100"
+                    min={0}
+                    max={100}
                     value={getGrade(student.id, a) || ""}
                     onChange={(e: any) =>
                       setGradeValue(student.id, a, Number(e.target.value))
                     }
-                    placeholder="—"
-                    className={styles.s11}
+                    className={styles.s4}
                   />
                 ),
               })),
               {
-                key: "avg",
-                header: "Avg",
+                key: "average",
+                header: "Average",
                 render: (student: any) => {
                   const avg = getAverage(student.id);
-                  return <>{avg > 0 ? `${avg}%` : "—"}</>;
+                  return (
+                    <span className="font-semibold">{avg > 0 ? `${avg}%` : "—"}</span>
+                  );
                 },
               },
               {
                 key: "grade",
                 header: "Grade",
                 render: (student: any) => {
-                  const avg = getAverage(student.id);
-                  const letter = getLetterGrade(avg);
+                  const letter = getLetterGrade(getAverage(student.id));
                   return (
                     <Badge
                       variant={
@@ -180,7 +186,7 @@ export default function GradeBookPage() {
                             ? "info"
                             : letter === "C"
                               ? "warning"
-                              : letter === "F"
+                              : letter === "D" || letter === "F"
                                 ? "danger"
                                 : "default"
                       }
@@ -194,7 +200,7 @@ export default function GradeBookPage() {
             return (
               <DataTable
                 columns={columns}
-                data={STUDENTS_MOCK}
+                data={students}
                 rowKey={(student: any) => student.id}
               />
             );

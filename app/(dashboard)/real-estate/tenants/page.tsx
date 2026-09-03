@@ -36,10 +36,6 @@ export default function TenantsPage() {
       <PageHeader
         title="Tenant Directory"
         description="Contact information and lease status for all tenants"
-        breadcrumbs={[
-          { label: "Real Estate", href: "/real-estate" },
-          { label: "Tenants" },
-        ]}
       />
       <div className="ui-grid-auto">
         <KPICard

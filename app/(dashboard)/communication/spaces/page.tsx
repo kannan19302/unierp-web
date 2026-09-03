@@ -117,10 +117,6 @@ export default function SpacesPage() {
         <PageHeader
           title="Spaces & Channels"
           description="Discover and join public or private discussion channels"
-          breadcrumbs={[
-            { label: "Connect", href: "/communication" },
-            { label: "Spaces" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Create Channel

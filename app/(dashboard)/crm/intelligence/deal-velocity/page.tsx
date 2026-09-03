@@ -38,10 +38,6 @@ export default function DealVelocityPage() {
         <PageHeader
           title="Deal Velocity Analysis"
           description="Stage duration analysis and stagnating deal detection"
-          breadcrumbs={[
-            { label: "CRM Intelligence", href: "/crm/intelligence" },
-            { label: "Deal Velocity" },
-          ]}
         />
 
         <div className={`ui-grid-2 ${styles.grid}`}>

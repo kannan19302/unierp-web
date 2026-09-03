@@ -189,12 +189,6 @@ export default function QuoteSignaturesPage() {
       <PageHeader
         title="Quote E-Signatures"
         description="Request electronic signatures on quotations and generate a legally-defensible, tamper-evident audit certificate once signed."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Quotations", href: "/crm/quotations" },
-          { label: "E-Signatures" },
-        ]}
       />
 
       <Card>

@@ -30,10 +30,6 @@ export default function RealEstateReportsPage() {
       <PageHeader
         title="Reports"
         description="Occupancy, rent collection, and maintenance cost analysis"
-        breadcrumbs={[
-          { label: "Real Estate", href: "/real-estate" },
-          { label: "Reports" },
-        ]}
       />
       <div className="ui-grid-auto-sm">
         <KPICard

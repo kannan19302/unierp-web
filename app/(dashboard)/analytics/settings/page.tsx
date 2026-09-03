@@ -17,11 +17,6 @@ export default function AnalyticsSettingsPage() {
       <PageHeader
         title="Analytics"
         description="Configure report templates, KPI definitions, data sources, and scheduled reports."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Analytics", href: "/analytics" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/analytics/report-templates" className={styles.card}>

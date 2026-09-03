@@ -125,10 +125,6 @@ export default function MaintenancePage() {
         <PageHeader
           title="Maintenance"
           description="Work orders and property maintenance tracking"
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Maintenance" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Work Order

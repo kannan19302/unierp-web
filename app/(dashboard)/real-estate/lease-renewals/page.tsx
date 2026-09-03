@@ -364,10 +364,6 @@ export default function LeaseRenewalsPage() {
         <PageHeader
           title="Lease Renewals"
           description="Lease renewal management and rent escalation schedules"
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Lease Renewals" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Renewal

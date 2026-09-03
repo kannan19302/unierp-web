@@ -45,10 +45,6 @@ export default function VitalsDashboardPage() {
       <PageHeader
         title="Vitals Dashboard"
         description="Patient vitals monitoring and trend analysis"
-        breadcrumbs={[
-          { label: "Healthcare", href: "/healthcare" },
-          { label: "Vitals" },
-        ]}
       />
 
       <div className="ui-grid-auto-sm">

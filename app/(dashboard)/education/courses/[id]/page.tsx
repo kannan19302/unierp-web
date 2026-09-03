@@ -68,11 +68,6 @@ export default function CourseDetailPage() {
         <PageHeader
           title={course.name}
           description={`Course Code: ${course.code}`}
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Courses", href: "/education/courses" },
-            { label: course.name },
-          ]}
         />
 
         <div className="ui-grid-auto">

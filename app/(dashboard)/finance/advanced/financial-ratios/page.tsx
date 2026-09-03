@@ -118,11 +118,6 @@ export default function FinancialRatiosPage() {
       <PageHeader
         title="Financial Ratios"
         description="Key financial health indicators, computed from live ledger and AR data"
-        breadcrumbs={[
-          { label: "Finance", href: "/finance" },
-          { label: "Advanced", href: "/finance/advanced" },
-          { label: "Financial Ratios" },
-        ]}
       />
 
       <div className={styles.s1}>

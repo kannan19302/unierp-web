@@ -63,10 +63,6 @@ export default function AgentPerformancePage() {
       <PageHeader
         title="Agent Performance"
         description="Support team KPIs by period"
-        breadcrumbs={[
-          { label: "Support", href: "/crm/support-deep" },
-          { label: "Agent Performance" },
-        ]}
       />
       <div className="ui-mb-4">
         <label className="ui-label">Period</label>

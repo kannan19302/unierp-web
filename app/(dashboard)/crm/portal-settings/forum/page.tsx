@@ -26,7 +26,7 @@ interface Topic {
   _count?: { replies: number };
 }
 
-export default function PortalForumPage() {
+export default function PortalForumSettingsPage() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [replies, setReplies] = useState<Record<string, any[]>>({});
   const [loading, setLoading] = useState(true);
@@ -103,10 +103,6 @@ export default function PortalForumPage() {
       <PageHeader
         title="Portal Forum"
         description="Manage community forum topics and replies"
-        breadcrumbs={[
-          { label: "Portal Settings", href: "/crm/portal-settings" },
-          { label: "Forum" },
-        ]}
       />
       <div className="ui-mb-4">
         <Button onClick={() => setShowForm(true)}>

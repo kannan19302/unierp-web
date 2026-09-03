@@ -118,10 +118,6 @@ export default function ProjectRevenueRecognitionPage() {
         <PageHeader
           title="Project Revenue Recognition"
           description="Time-based percentage-of-completion revenue recognition schedule across all projects."
-          breadcrumbs={[
-            { label: "Projects", href: "/projects" },
-            { label: "Revenue Recognition" },
-          ]}
         />
 
         <div className={styles.p2}>

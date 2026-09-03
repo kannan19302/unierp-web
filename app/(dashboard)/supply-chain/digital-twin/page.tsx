@@ -144,10 +144,6 @@ export default function DigitalTwinPage() {
         <PageHeader
           title="Digital Twin / Control Tower Simulation"
           description="Supply chain digital twin, what-if simulation, scenario comparison"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Digital Twin" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} /> New Twin

@@ -42,12 +42,6 @@ export default function ExportPage() {
       <PageHeader
         title="Export Data"
         description="Export your CRM data to CSV or JSON format"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Data Management", href: "/crm/data-management" },
-          { label: "Export" },
-        ]}
       />
 
       <Card title="Export Configuration">

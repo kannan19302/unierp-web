@@ -72,8 +72,8 @@ export default function SlottingPage() {
       const firstWarehouse = whs[0];
       if (firstWarehouse) setWarehouseId(firstWarehouse.id);
     } catch {
-      setWarehouses([{ id: "wh-1", name: "Schenectady Central Depot" }]);
-      setWarehouseId("wh-1");
+      setWarehouses([]);
+      setWarehouseId("");
     }
   }, [client]);
 
@@ -87,18 +87,8 @@ export default function SlottingPage() {
       );
       setRecommendations(data.recommendations || []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setRecommendations([
-        {
-          productId: "p1",
-          productName: "Refined Vibranium Alloy Ingot",
-          currentBinCode: "B-04-02",
-          currentZone: "B",
-          pickFrequency: 340,
-          recommendation: "MOVE_TO_PREFERRED_ZONE",
-          suggestedBinCode: "A-01-01",
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setRecommendations([]);
     } finally {
       setLoading(false);
     }
@@ -118,11 +108,6 @@ export default function SlottingPage() {
         <PageHeader
           title="Dynamic Slotting Optimization"
           description="Fast-moving products flagged for a preferred zone, slow movers flagged out of it — based on real pick frequency over the trailing 30 days."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Slotting Optimization" },
-          ]}
         />
 
         {error && (

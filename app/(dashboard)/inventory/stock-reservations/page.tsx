@@ -178,11 +178,6 @@ export default function StockReservationsPage() {
       <PageHeader
         title="Stock Reservations & Inventory Analytics"
         description="Allocation reservations against sales orders/transfers, plus ABC classification and dead-stock analytics."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Inventory", href: "/inventory" },
-          { label: "Stock Reservations & Analytics" },
-        ]}
         actions={
           <Button
             variant="primary"

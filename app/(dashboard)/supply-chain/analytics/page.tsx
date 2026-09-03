@@ -97,10 +97,6 @@ export default function SupplyChainAnalyticsPage() {
         <PageHeader
           title="Supply Chain Analytics"
           description="Loading performance metrics..."
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Analytics" },
-          ]}
         />
         <div className="ui-p-8 ui-text-center">
           <p className="ui-text-xs-tertiary">Loading analytics data...</p>
@@ -114,10 +110,6 @@ export default function SupplyChainAnalyticsPage() {
       <PageHeader
         title="Supply Chain Analytics"
         description="Performance metrics, cost analysis, and carrier benchmarks"
-        breadcrumbs={[
-          { label: "Supply Chain", href: "/supply-chain" },
-          { label: "Analytics" },
-        ]}
       />
 
       <div className="ui-grid-auto">

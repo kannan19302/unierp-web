@@ -80,11 +80,6 @@ export default function DataManagementPage() {
       <PageHeader
         title="Data Management"
         description="Import, clean, and manage your CRM data"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Data Management" },
-        ]}
       />
 
       <div className="ui-grid-3">

@@ -61,10 +61,6 @@ export default function MeioPage() {
         <PageHeader
           title="Multi-Echelon Inventory Optimization"
           description="MEIO modeling, optimal stocking, scenario simulation"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "MEIO" },
-          ]}
         />
 
         <SubTabBar tabs={SUB_TABS} />

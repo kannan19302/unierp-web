@@ -86,10 +86,6 @@ export default function BillingRatesPage() {
         <PageHeader
           title="Billing Rates"
           description="Configure project billing rates and roles"
-          breadcrumbs={[
-            { label: "Projects", href: "/projects" },
-            { label: "Billing Rates" },
-          ]}
         />
         <DataTable
           columns={columns}

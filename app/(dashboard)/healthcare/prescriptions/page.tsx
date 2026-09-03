@@ -116,10 +116,6 @@ export default function PrescriptionsPage() {
       <PageHeader
         title="Prescriptions"
         description="Manage patient prescriptions and medications"
-        breadcrumbs={[
-          { label: "Healthcare", href: "/healthcare" },
-          { label: "Prescriptions" },
-        ]}
         actions={
           <Button variant="primary" onClick={() => setCreateOpen(true)}>
             <Plus size={14} className="mr-2" /> New Prescription

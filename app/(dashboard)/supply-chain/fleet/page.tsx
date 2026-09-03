@@ -70,10 +70,6 @@ export default function FleetPage() {
         <PageHeader
           title="Fleet Management"
           description="Manage vehicles, drivers, maintenance, fuel, and trips"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Fleet" },
-          ]}
         />
 
         <SubTabBar tabs={SUB_TABS} />

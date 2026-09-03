@@ -388,15 +388,6 @@ export default function CorporateCardDetailPage() {
               : "Corporate Card"
           }
           description="Spend limits, category limits, utilization, and freeze controls"
-          breadcrumbs={[
-            { label: "Finance", href: "/finance" },
-            { label: "Advanced", href: "/finance/advanced" },
-            {
-              label: "Expense Policies",
-              href: "/finance/advanced/expense-policies",
-            },
-            { label: "Card Detail" },
-          ]}
           actions={
             card ? (
               <ProtectedComponent permission="finance.corporate-card.freeze">

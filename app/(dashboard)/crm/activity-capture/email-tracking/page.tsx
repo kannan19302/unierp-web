@@ -90,12 +90,6 @@ function EmailTrackingPage() {
       <PageHeader
         title="Email Tracking"
         description="Real-time email open, click, and bounce tracking events"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Activity Capture", href: "/crm/activity-capture" },
-          { label: "Email Tracking" },
-        ]}
       />
       <Card>
         <DataTable columns={columns} data={events} />

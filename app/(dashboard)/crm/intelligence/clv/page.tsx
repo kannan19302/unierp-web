@@ -95,12 +95,6 @@ export default function ClvAnalyticsPage() {
         <PageHeader
           title="Customer Lifetime Value (CLV)"
           description="Predictive lifetime value modeling, customer tiering, and churn indicators"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Intelligence", href: "/crm/intelligence" },
-            { label: "CLV Analytics" },
-          ]}
           actions={
             <Link href="/crm/intelligence">
               <Button variant="outline" size="sm">

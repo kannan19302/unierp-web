@@ -95,11 +95,6 @@ export default function StarredPage() {
       <PageHeader
         title="Starred"
         description="Your starred files and folders"
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Drive", href: "/drive" },
-          { label: "Starred" },
-        ]}
       />
       <Card padding="none">
         <DataTable

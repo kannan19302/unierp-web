@@ -138,11 +138,6 @@ export default function FolderDetailPage({
       <PageHeader
         title={folder.name}
         description="Drive folder contents"
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Drive", href: "/drive" },
-          { label: folder.name },
-        ]}
         actions={
           <Button
             variant="secondary"

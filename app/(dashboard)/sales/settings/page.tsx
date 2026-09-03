@@ -19,11 +19,6 @@ export default function SalesSettingsPage() {
       <PageHeader
         title="Sales"
         description="Configure order types, shipping, tax rules, and price books."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Sales", href: "/sales" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/sales/order-types" className={styles.card}>

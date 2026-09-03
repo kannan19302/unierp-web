@@ -156,12 +156,6 @@ export default function EmailIntegrationSettingsPage() {
       <PageHeader
         title="Email Integration"
         description="Connect a mailbox so inbound emails and calendar events with your Contacts, Leads, and Customers automatically appear on their activity timeline."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Settings", href: "/crm/settings" },
-          { label: "Email Integration" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.mailbox.create">
             <div className="ui-flex ui-gap-2">

@@ -298,11 +298,6 @@ export default function SubinventoryPage() {
         <PageHeader
           title="Subinventories"
           description="Manage subinventory zones within warehouses and transfer stock between them."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Subinventories" },
-          ]}
           actions={
             <div className="ui-hstack-2">
               <Button

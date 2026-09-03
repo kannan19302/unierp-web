@@ -236,11 +236,6 @@ export default function BankReconciliationPage() {
         <PageHeader
           title="Bank Reconciliation"
           description="Import statements, auto-match transactions, and reconcile accounts"
-          breadcrumbs={[
-            { label: "Finance", href: "/finance" },
-            { label: "Advanced", href: "/finance/advanced" },
-            { label: "Bank Reconciliation" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button

@@ -83,29 +83,11 @@ export default function PurchaseOrdersPage() {
       setVendors(Array.isArray(vRes) ? vRes : []);
       setProducts(Array.isArray(pRes) ? pRes : []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setPos([
-        {
-          id: "po-1",
-          poNumber: "PO-2026-001",
-          status: "APPROVED",
-          orderDate: new Date().toISOString(),
-          expectedDate: new Date().toISOString(),
-          subtotal: 1900,
-          taxAmount: 190,
-          totalAmount: 2090,
-          currency: "USD",
-          vendorName: "Oscorp Chemical Supply",
-          notes: "Special offer with bulk discount",
-        },
-      ]);
-      setVendors([
-        { id: "v-1", name: "Oscorp Chemical Supply" },
-        { id: "v-2", name: "LexCorp Heavy Industries" },
-      ]);
-      setProducts([
-        { id: "prod-1", name: "UltraBook Laptop Pro", sku: "SKU-LAP-001" },
-      ]);
+      setError("Could not load data. Please try again.");
+      setPos([]);
+      setVendors([]);
+      setProducts([]);
+
     } finally {
       setLoading(false);
     }
@@ -138,35 +120,8 @@ export default function PurchaseOrdersPage() {
       setIsModalOpen(false);
       resetForm();
       loadData();
-    } catch {
-      // Mock local update
-      const sub = items.reduce(
-        (sum: any, item: any) => sum + item.quantity * item.unitPrice,
-        0,
-      );
-      const tax = items.reduce(
-        (sum: any, item: any) =>
-          sum + item.quantity * item.unitPrice * (item.taxRate / 100),
-        0,
-      );
-      const newMock: PurchaseOrder = {
-        id: `po-mock-${Date.now()}`,
-        poNumber,
-        status: "DRAFT",
-        orderDate: new Date().toISOString(),
-        expectedDate: expectedDate || null,
-        subtotal: sub,
-        taxAmount: tax,
-        totalAmount: sub + tax,
-        currency: "USD",
-        vendorName:
-          vendors.find((v: any) => v.id === selectedVendor)?.name ||
-          "Unknown Vendor",
-        notes: notes || undefined,
-      };
-      setPos((prev: any) => [newMock, ...prev]);
-      setIsModalOpen(false);
-      resetForm();
+    } catch (err: any) {
+      alert(err?.message || "Failed to create purchase order.");
     } finally {
       setSubmitting(false);
     }
@@ -178,10 +133,8 @@ export default function PurchaseOrdersPage() {
         status: "APPROVED",
       });
       loadData();
-    } catch {
-      setPos((prev: any) =>
-        prev.map((po: any) => (po.id === id ? { ...po, status: "APPROVED" } : po)),
-      );
+    } catch (err: any) {
+      alert(err?.message || "Failed to approve purchase order.");
     }
   };
 
@@ -283,11 +236,6 @@ export default function PurchaseOrdersPage() {
         <PageHeader
           title="Purchase Orders"
           description="Draft, approve, and track commercial purchase contracts sent to suppliers."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Purchase Orders" },
-          ]}
           actions={
             <Button
               variant="primary"
@@ -303,7 +251,7 @@ export default function PurchaseOrdersPage() {
         {error && (
           <div className={styles.p3}>
             <AlertCircle size={16} />
-            <span>Note: {error} (Serving local mock fallback registry)</span>
+            <span>Note: {error}</span>
           </div>
         )}
 

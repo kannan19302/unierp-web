@@ -20,11 +20,6 @@ export default function EcommerceSettingsPage() {
       <PageHeader
         title="E-Commerce"
         description="Configure store settings, payment gateways, shipping methods, tax rules, and inventory sync."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "E-Commerce", href: "/ecommerce" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/ecommerce/store-config" className={styles.card}>

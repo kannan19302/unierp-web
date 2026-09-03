@@ -145,10 +145,6 @@ export default function LabResultsPage() {
         <PageHeader
           title="Pharmacy & Lab Results"
           description="Drug register, batch tracking, and expiry management"
-          breadcrumbs={[
-            { label: "Healthcare", href: "/healthcare" },
-            { label: "Lab Results" },
-          ]}
         />
 
         <div className="ui-grid-auto-sm">

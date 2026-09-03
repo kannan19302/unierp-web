@@ -11,11 +11,6 @@ export default function RealEstateSettingsPage() {
       <PageHeader
         title="Real Estate"
         description="Configure property types, lease templates, commission rules, and amenity categories."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Real Estate", href: "/real-estate" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/real-estate/property-types" className={styles.card}>

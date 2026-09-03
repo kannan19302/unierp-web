@@ -88,10 +88,6 @@ export default function ChecklistsPage() {
         <PageHeader
           title="Service Checklists"
           description="Standardized technician checklists and template management"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Checklists" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Create Template

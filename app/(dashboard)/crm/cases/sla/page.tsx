@@ -70,12 +70,6 @@ export default function CasesSlaPage() {
       <PageHeader
         title="Support Tickets SLA Analytics"
         description="Monitor response timelines, calendar business hours, and CSAT scores"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Support Cases", href: "/crm/cases" },
-          { label: "SLA Dashboard" },
-        ]}
       />
 
       {analytics && (

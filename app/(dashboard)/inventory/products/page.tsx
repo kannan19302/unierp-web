@@ -34,11 +34,6 @@ export default function InventoryProductsPage() {
         <PageHeader
           title="Products Catalog"
           description="Catalog product SKUs, manage storable assets, and review multi-warehouse variants."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Products" },
-          ]}
         />
 
         <ListView

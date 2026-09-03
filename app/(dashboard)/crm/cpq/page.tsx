@@ -65,11 +65,6 @@ export default function CrmCpqPage() {
       <PageHeader
         title="CPQ & Quoting Engine"
         description="Configure product bundles, pricing rules, and analyze quote margins"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "CPQ & Quoting" },
-        ]}
       />
 
       <div className="ui-grid-3">

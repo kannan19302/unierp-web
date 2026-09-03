@@ -112,13 +112,6 @@ export default function CpqBundleDetailPage() {
       <PageHeader
         title={bundle.name as string}
         description={`Bundle price: $${Number(bundle.bundlePrice).toFixed(2)}`}
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "CPQ", href: "/crm/cpq" },
-          { label: "Bundles", href: "/crm/cpq/bundles" },
-          { label: bundle.name as string },
-        ]}
         actions={
           <div className="ui-flex-row ui-gap-2">
             <Button size="sm" variant="outline" onClick={handlePreview}>

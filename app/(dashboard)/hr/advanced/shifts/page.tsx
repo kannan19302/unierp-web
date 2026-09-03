@@ -114,12 +114,6 @@ export default function ShiftsPage() {
       <PageHeader
         title="Shift Scheduling"
         description="Roster employees into working shift segments, map timing slots, and coordinate hourly coverage."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Advanced", href: "/hr/advanced" },
-          { label: "Shifts" },
-        ]}
         actions={
           <Button variant="primary" onClick={() => setShowForm(!showForm)}>
             <Plus size={14} /> Schedule Shift

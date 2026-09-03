@@ -159,11 +159,6 @@ export default function SalesContractsPage() {
         <PageHeader
           title="Sales Contracts"
           description="Manage customer contracts, renewals, and service agreements."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Sales", href: "/sales" },
-            { label: "Contracts" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => alert("Create Contract")}>
               <Plus size={16} /> New Contract

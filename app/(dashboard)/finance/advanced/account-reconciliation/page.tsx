@@ -95,11 +95,6 @@ export default function AccountReconciliationPage() {
       <PageHeader
         title="Account Reconciliation"
         description="Match sub-ledger balances to the general ledger and identify variances"
-        breadcrumbs={[
-          { label: "Finance", href: "/finance" },
-          { label: "Advanced", href: "/finance/advanced" },
-          { label: "Account Reconciliation" },
-        ]}
         actions={
           <Button variant="primary" onClick={fetchReconciliation}>
             Run Reconciliation

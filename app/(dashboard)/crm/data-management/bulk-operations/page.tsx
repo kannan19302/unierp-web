@@ -91,12 +91,6 @@ export default function BulkOperationsPage() {
             New Operation
           </Button>
         }
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Data Management", href: "/crm/data-management" },
-          { label: "Bulk Operations" },
-        ]}
       />
 
       {showNew && (

@@ -209,10 +209,6 @@ export default function SupplierPerformancePage() {
         <PageHeader
           title="Supplier Performance"
           description="KPI definitions, scorecards, and vendor performance tracking"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Supplier Performance" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button variant="secondary" onClick={() => setShowKpiForm(true)}>

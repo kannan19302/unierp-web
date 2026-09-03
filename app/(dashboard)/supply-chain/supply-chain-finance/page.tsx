@@ -65,10 +65,6 @@ export default function SupplyChainFinancePage() {
         <PageHeader
           title="Supply Chain Finance"
           description="Invoice factoring, dynamic discounting, reverse factoring programs"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Finance" },
-          ]}
         />
 
         <SubTabBar tabs={SUB_TABS} />

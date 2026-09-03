@@ -116,10 +116,6 @@ export default function VideoPage() {
           description={
             dashboard ? `${dashboard.activeMeetings} active meetings` : ""
           }
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "Video" },
-          ]}
           actions={
             <Button>
               <Video size={14} /> New Meeting

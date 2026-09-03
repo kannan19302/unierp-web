@@ -99,11 +99,6 @@ export default function TransactionsPage() {
         <PageHeader
           title="Transaction Explorer"
           description="Search and browse blockchain transactions."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Blockchain", href: "/blockchain" },
-            { label: "Transactions" },
-          ]}
         />
         <div className="ui-flex-row ui-gap-4">
           <input

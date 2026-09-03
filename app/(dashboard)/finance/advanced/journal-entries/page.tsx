@@ -16,11 +16,6 @@ export default function JournalEntriesPage() {
         <PageHeader
           title="Journal Entries"
           description="Record and post financial transactions to general ledger accounts"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Finance", href: "/finance" },
-            { label: "Journal Entries" },
-          ]}
         />
 
         <ListView

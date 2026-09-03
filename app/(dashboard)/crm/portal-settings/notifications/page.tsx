@@ -23,7 +23,7 @@ interface Notification {
   createdAt: string;
 }
 
-export default function PortalNotificationsPage() {
+export default function PortalNotificationsSettingsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [customerId, setCustomerId] = useState("");
@@ -70,10 +70,6 @@ export default function PortalNotificationsPage() {
       <PageHeader
         title="Portal Notifications"
         description="View and manage notifications sent to portal users"
-        breadcrumbs={[
-          { label: "Portal Settings", href: "/crm/portal-settings" },
-          { label: "Notifications" },
-        ]}
       />
       <div className="ui-input-group ui-mb-4" style={{ maxWidth: 400 }}>
         <Search size={16} />

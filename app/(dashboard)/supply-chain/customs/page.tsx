@@ -200,10 +200,6 @@ export default function CustomsPage() {
         <PageHeader
           title="Customs Documents"
           description="Manage import/export customs declarations and clearance"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Customs" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} /> New Customs Document

@@ -91,10 +91,6 @@ export default function TimesheetsPage() {
         <PageHeader
           title="Timesheets"
           description="Log and manage project time entries"
-          breadcrumbs={[
-            { label: "Projects", href: "/projects" },
-            { label: "Timesheets" },
-          ]}
         />
         <DataTable
           columns={columns}

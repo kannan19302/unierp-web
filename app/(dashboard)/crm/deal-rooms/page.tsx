@@ -111,11 +111,6 @@ export default function DealRoomsPage() {
       <PageHeader
         title="Deal Rooms & Mutual Action Plans"
         description="Shared buyer-seller collaborative workspaces per opportunity — milestones, stakeholder maps, and shared documents (DealHub/Recapped-style)."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Deal Rooms" },
-        ]}
       />
 
       <Card>

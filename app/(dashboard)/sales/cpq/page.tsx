@@ -118,11 +118,6 @@ export default function CpqPage() {
       <PageHeader
         title="Configure, Price, Quote (CPQ)"
         description="Configure product variations, analyze margins, and view quote profitability"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Sales", href: "/sales" },
-          { label: "CPQ Dashboard" },
-        ]}
       />
 
       {profitability && (

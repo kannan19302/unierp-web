@@ -89,10 +89,6 @@ export default function DdmrpPage() {
         <PageHeader
           title="Demand Driven MRP"
           description="Strategic inventory positioning, buffer management, net flow equation"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "DDMRP" },
-          ]}
         />
 
         {dashboard && (

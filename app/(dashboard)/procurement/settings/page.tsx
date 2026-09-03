@@ -17,11 +17,6 @@ export default function ProcurementSettingsPage() {
       <PageHeader
         title="Procurement"
         description="Configure purchase terms, approval rules, and supplier types."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Procurement", href: "/procurement" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/procurement/terms" className={styles.card}>

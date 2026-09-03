@@ -11,11 +11,6 @@ export default function ProcurementVendorsPage() {
         <PageHeader
           title="Procurement Vendors"
           description="Review the shared vendor master used by purchasing and supplier operations."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Vendors" },
-          ]}
         />
         <ListView resource={vendorResource} />
       </div>

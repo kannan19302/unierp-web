@@ -118,7 +118,6 @@ export default function CommunicationDashboard() {
         <PageHeader
           title="Connect Hub"
           description="Real-time messaging, channels, video meetings, and calendars"
-          breadcrumbs={[{ label: "Connect" }]}
         />
 
         <div className="ui-grid-auto">

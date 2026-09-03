@@ -61,11 +61,6 @@ export default function CashPositionPage() {
       <PageHeader
         title="Cash Position"
         description="Real-time view of cash across all bank accounts and payment processors"
-        breadcrumbs={[
-          { label: "Finance", href: "/finance" },
-          { label: "Advanced", href: "/finance/advanced" },
-          { label: "Cash Position" },
-        ]}
       />
 
       <div className={styles.s1}>

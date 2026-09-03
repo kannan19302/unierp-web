@@ -116,11 +116,6 @@ function MarketingDeepContent() {
       <PageHeader
         title="Marketing Deep"
         description="Campaign ROI, marketing calendar, landing pages, and attribution analytics"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Marketing Deep" },
-        ]}
       />
 
       <Tabs

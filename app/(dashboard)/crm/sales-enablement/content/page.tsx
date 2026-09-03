@@ -64,12 +64,6 @@ export default function ContentLibraryPage() {
             </Button>
           </Link>
         }
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Sales Enablement", href: "/crm/sales-enablement" },
-          { label: "Content Library" },
-        ]}
       />
 
       <div className="flex gap-2">

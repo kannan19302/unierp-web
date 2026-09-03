@@ -123,10 +123,6 @@ export default function ClinicalNotesPage() {
         <PageHeader
           title="Clinical Notes"
           description="Medical encounters, SOAP notes, and diagnosis codes"
-          breadcrumbs={[
-            { label: "Healthcare", href: "/healthcare" },
-            { label: "Clinical Notes" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Encounter

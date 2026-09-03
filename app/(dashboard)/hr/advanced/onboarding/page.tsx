@@ -194,12 +194,6 @@ export default function OnboardingPage() {
         <PageHeader
           title="Onboarding Checklists"
           description="Verify and checklist steps required to successfully get new team members integrated into departments."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Onboarding" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setShowForm(!showForm)}>
               <Plus size={14} /> Assign Checklist

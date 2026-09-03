@@ -102,12 +102,6 @@ export default function AnalyticsPage() {
         <PageHeader
           title="Workforce Analytics"
           description="Review company-wide salary averages, monthly gross pay runs, and department headcount breakdowns."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Analytics" },
-          ]}
         />
 
         {loadError && (

@@ -97,11 +97,6 @@ export default function LeaseDetailPage() {
         <PageHeader
           title={`Lease: ${lease.tenantName}`}
           description={`Property: ${lease.property?.name || lease.propertyId.slice(0, 8)}`}
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Leases", href: "/real-estate/leases" },
-            { label: lease.tenantName },
-          ]}
         />
         <div className="ui-grid-auto">
           <KPICard

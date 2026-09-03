@@ -196,12 +196,6 @@ export default function RecruitmentPage() {
         <PageHeader
           title="Recruitment"
           description="Job postings, applicants, and interview pipeline"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Recruitment" },
-          ]}
           actions={
             <>
               <Button

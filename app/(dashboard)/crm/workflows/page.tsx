@@ -229,11 +229,6 @@ export default function WorkflowsPage() {
         <PageHeader
           title="Workflow Automation"
           description="Create rules to automate CRM actions"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Workflows" },
-          ]}
           actions={
             <Button size="sm" onClick={() => setIsModalOpen(true)}>
               <Plus size={14} /> Create Rule

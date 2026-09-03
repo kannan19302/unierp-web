@@ -35,10 +35,6 @@ export default function TechniciansPage() {
         <PageHeader
           title="Technician Directory"
           description="Skill profiles, availability, and active workloads"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Technicians" },
-          ]}
         />
         <div className="ui-grid-auto">
           <KPICard

@@ -327,11 +327,6 @@ export default function CommissionPlansPage() {
       <PageHeader
         title="Commission Plan Automation"
         description="Quota-attainment accelerator tiers and SPIFF bonuses — deepens the existing per-deal commission rules with Xactly/CaptivateIQ-style plan automation."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Commission Plans" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.commission.manage">
             <div className="ui-flex ui-gap-2">

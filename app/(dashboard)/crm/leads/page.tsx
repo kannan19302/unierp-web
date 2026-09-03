@@ -19,11 +19,6 @@ export default function LeadsPage() {
         <PageHeader
           title="Leads Management"
           description="Track, qualify, and convert your sales leads"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Leads" },
-          ]}
           actions={
             <ProtectedComponent permission="crm.duplicates.scan">
               <Button

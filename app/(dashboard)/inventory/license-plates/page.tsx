@@ -69,27 +69,11 @@ export default function LicensePlatesPage() {
         if (firstWarehouse) setWarehouseId(firstWarehouse.id);
       }
     } catch {
-      setError("Serving local mock fallback registry.");
-      setWarehouses([{ id: "wh-1", name: "Schenectady Central Depot" }]);
-      setPlates([
-        {
-          id: "lp-1",
-          code: "LP-000123",
-          warehouseId: "wh-1",
-          status: "OPEN",
-          items: [],
-        },
-      ]);
-      setTasks([
-        {
-          id: "pt-1",
-          stockEntryId: "se-1",
-          inventoryItemId: "inv-1",
-          quantity: 40,
-          status: "PENDING",
-          suggestedBin: { code: "A-01-03" },
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setWarehouses([]);
+      setPlates([]);
+      setTasks([]);
+
     } finally {
       setLoading(false);
     }
@@ -136,11 +120,6 @@ export default function LicensePlatesPage() {
         <PageHeader
           title="License Plates & Directed Put-away"
           description="Pallet/container license-plate tracking and zone-optimized directed put-away, driven by barcode-scan receive/pick/pack workflows."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "License Plates & Put-away" },
-          ]}
           actions={
             <Button
               variant="primary"

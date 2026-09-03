@@ -144,10 +144,6 @@ export default function StudentRegistryPage() {
         <PageHeader
           title="Student Registry"
           description="Manage student records, enrollment, and demographics"
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Students" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Add Student

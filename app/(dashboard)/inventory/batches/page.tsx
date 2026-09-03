@@ -13,11 +13,6 @@ export default function BatchesPage() {
         <PageHeader
           title="Batch Tracking"
           description="Manage product batches, lot numbers, expiry dates, and usage status."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Batches" },
-          ]}
         />
         <ListView
           resource={batchResource}

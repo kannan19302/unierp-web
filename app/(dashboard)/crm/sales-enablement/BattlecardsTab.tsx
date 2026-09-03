@@ -24,67 +24,6 @@ interface Battlecard {
   createdAt: string;
 }
 
-const MOCK_BATTLECARDS: Battlecard[] = [
-  {
-    id: "1",
-    competitorName: "Acme Corp",
-    strengths: [
-      "Strong brand recognition",
-      "Large sales team",
-      "Enterprise integrations",
-    ],
-    weaknesses: ["Slow onboarding", "Limited customization", "Higher pricing"],
-    objections: [
-      {
-        objection: "They have more features",
-        response: "Our platform is more focused and delivers faster ROI",
-      },
-      {
-        objection: "They are more established",
-        response: "We move faster and offer dedicated support",
-      },
-    ],
-    winStrategy:
-      "Emphasize our faster implementation time and personalized support. Offer a pilot program to demonstrate value quickly.",
-    createdAt: "2026-06-01",
-  },
-  {
-    id: "2",
-    competitorName: "GlobalTech Solutions",
-    strengths: ["Global presence", "Multi-language support"],
-    weaknesses: [
-      "Complex UI",
-      "Poor mobile experience",
-      "Slow support response",
-    ],
-    objections: [
-      {
-        objection: "They operate in more countries",
-        response: "We cover all major markets and are expanding rapidly",
-      },
-    ],
-    winStrategy:
-      "Focus on user experience and mobile-first design. Highlight our faster support SLAs.",
-    createdAt: "2026-06-05",
-  },
-  {
-    id: "3",
-    competitorName: "QuickSell Pro",
-    strengths: ["Low price point", "Easy setup"],
-    weaknesses: ["Limited reporting", "No API access", "Basic CRM only"],
-    objections: [
-      {
-        objection: "They cost less",
-        response:
-          "Our platform delivers 3x more value per dollar with advanced features included",
-      },
-    ],
-    winStrategy:
-      "Position as the platform they will grow into. Show total cost of ownership over 3 years.",
-    createdAt: "2026-06-12",
-  },
-];
-
 export default function BattlecardsTab() {
   const [battlecards, setBattlecards] = useState<Battlecard[]>([]);
   const [loading, setLoading] = useState(true);
@@ -104,7 +43,7 @@ export default function BattlecardsTab() {
     setLoading(true);
     try {
       const res = await client.get<any>("/crm/battlecards");
-      setBattlecards(Array.isArray(res) ? res : res.data || MOCK_BATTLECARDS);
+      setBattlecards(Array.isArray(res) ? res : res.data || []);
     } catch {
       setBattlecards([]);
     } finally {

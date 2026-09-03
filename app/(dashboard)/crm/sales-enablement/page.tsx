@@ -69,11 +69,6 @@ export default function SalesEnablementPage() {
             </Link>
           </div>
         }
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Sales Enablement" },
-        ]}
       />
 
       {data && (

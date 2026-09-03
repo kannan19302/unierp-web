@@ -155,10 +155,6 @@ export default function OmnichannelPage() {
           description={
             dashboard ? `${dashboard.activeConversations} active` : ""
           }
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "Omnichannel" },
-          ]}
         />
         {dashboard && (
           <div className="ui-grid-auto mb-6">

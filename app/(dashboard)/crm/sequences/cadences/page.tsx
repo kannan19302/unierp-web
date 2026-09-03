@@ -226,12 +226,6 @@ export default function SalesCadencesPage() {
       <PageHeader
         title="Sales Cadences"
         description="Multi-channel outreach sequences — email, calls, tasks, and LinkedIn touchpoints in one auto-advancing playbook."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Sequences", href: "/crm/sequences" },
-          { label: "Sales Cadences" },
-        ]}
         actions={
           <div className="ui-flex ui-gap-3">
             <ProtectedComponent permission="crm.settings.update">

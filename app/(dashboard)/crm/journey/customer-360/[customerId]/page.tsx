@@ -138,10 +138,6 @@ export default function Customer360Page() {
           description={
             data ? `Comprehensive view of ${data.customer.name}` : "Loading..."
           }
-          breadcrumbs={[
-            { label: "CRM", href: "/crm" },
-            { label: "Customer 360" },
-          ]}
         />
 
         {loading ? (

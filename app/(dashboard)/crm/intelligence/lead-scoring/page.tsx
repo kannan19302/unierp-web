@@ -89,10 +89,6 @@ export default function LeadScoringPage() {
         <PageHeader
           title="Predictive Lead Scoring"
           description="ML-powered lead scoring with explainability"
-          breadcrumbs={[
-            { label: "CRM Intelligence", href: "/crm/intelligence" },
-            { label: "Lead Scoring" },
-          ]}
         />
 
         <div className={`ui-grid-3 ${styles.modelsGrid}`}>

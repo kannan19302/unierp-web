@@ -59,37 +59,9 @@ export default function MobilePickPage() {
         list.filter((w: any) => w.status === "PICKING" || w.status === "OPEN"),
       );
     } catch {
-      setError("Serving local mock fallback registry.");
-      setWaves([
-        {
-          id: "wave-1",
-          waveNumber: "WAVE-2026-00001",
-          status: "PICKING",
-          items: [
-            {
-              id: "wi-1",
-              productId: "p1",
-              quantity: 10,
-              pickedQty: 0,
-              status: "PENDING",
-              product: {
-                name: "Refined Vibranium Alloy Ingot",
-                sku: "RVA-001",
-              },
-              binLocation: { code: "A-01-03" },
-            },
-            {
-              id: "wi-2",
-              productId: "p2",
-              quantity: 4,
-              pickedQty: 0,
-              status: "PENDING",
-              product: { name: "Carbon Fiber Housing", sku: "CFH-020" },
-              binLocation: { code: "A-02-01" },
-            },
-          ],
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setWaves([]);
+
     } finally {
       setLoading(false);
     }
@@ -211,11 +183,6 @@ export default function MobilePickPage() {
         <PageHeader
           title="Mobile Scan Pick"
           description="Scan-first, one-item-at-a-time picking for handheld/mobile devices."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Mobile Scan Pick" },
-          ]}
         />
 
         {error && (

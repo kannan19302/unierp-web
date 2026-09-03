@@ -84,29 +84,11 @@ export default function SupplierQuotationsPage() {
       setRfqs(Array.isArray(rRes) ? rRes : rRes.data || []);
       setProducts(Array.isArray(pRes) ? pRes : pRes.data || []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setQuotes([
-        {
-          id: "sq-1",
-          quotationNumber: "SQ-OSC-001",
-          status: "APPROVED",
-          validUntil: new Date(
-            Date.now() + 30 * 24 * 3600 * 1000,
-          ).toISOString(),
-          subtotal: 1900,
-          taxAmount: 190,
-          totalAmount: 2090,
-          currency: "USD",
-          vendorName: "Oscorp Chemical Supply",
-          rfqNumber: "RFQ-2026-001",
-          notes: "Special offer with bulk discount",
-        },
-      ]);
-      setVendors([
-        { id: "v-1", name: "Oscorp Chemical Supply" },
-        { id: "v-2", name: "LexCorp Heavy Industries" },
-      ]);
-      setRfqs([{ id: "rfq-1", rfqNumber: "RFQ-2026-001" }]);
+      setError("Could not load data. Please try again.");
+      setQuotes([]);
+      setVendors([]);
+      setRfqs([]);
+
     } finally {
       setLoading(false);
     }
@@ -140,34 +122,8 @@ export default function SupplierQuotationsPage() {
       setIsModalOpen(false);
       resetForm();
       loadData();
-    } catch {
-      const sub = items.reduce(
-        (sum: any, item: any) => sum + item.quantity * item.unitPrice,
-        0,
-      );
-      const tax = items.reduce(
-        (sum: any, item: any) =>
-          sum + item.quantity * item.unitPrice * (item.taxRate / 100),
-        0,
-      );
-      const newMock: SupplierQuotation = {
-        id: `sq-mock-${Date.now()}`,
-        quotationNumber,
-        status: "DRAFT",
-        validUntil,
-        subtotal: sub,
-        taxAmount: tax,
-        totalAmount: sub + tax,
-        currency: "USD",
-        vendorName:
-          vendors.find((v: any) => v.id === selectedVendor)?.name ||
-          "Unknown supplier",
-        rfqNumber: rfqs.find((r: any) => r.id === selectedRfq)?.rfqNumber,
-        notes: notes || undefined,
-      };
-      setQuotes((prev: any) => [newMock, ...prev]);
-      setIsModalOpen(false);
-      resetForm();
+    } catch (err: any) {
+      alert(err?.message || "Failed to create supplier quotation.");
     } finally {
       setSubmitting(false);
     }
@@ -181,10 +137,8 @@ export default function SupplierQuotationsPage() {
         {},
       );
       loadData();
-    } catch {
-      setQuotes((prev: any) =>
-        prev.map((q: any) => (q.id === id ? { ...q, status: "CONVERTED" } : q)),
-      );
+    } catch (err: any) {
+      alert(err?.message || "Failed to convert quotation to PO.");
     }
   };
 
@@ -300,11 +254,6 @@ export default function SupplierQuotationsPage() {
         <PageHeader
           title="Supplier Bids & Quotations"
           description="Review incoming supplier quotes, compare pricing matrices, and select successful bids."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Bids" },
-          ]}
           actions={
             <Button
               variant="primary"
@@ -320,7 +269,7 @@ export default function SupplierQuotationsPage() {
         {error && (
           <div className={styles.p4}>
             <AlertCircle size={16} />
-            <span>Note: {error} (Serving local mock fallback registry)</span>
+            <span>Note: {error}</span>
           </div>
         )}
 

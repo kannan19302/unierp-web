@@ -10,7 +10,6 @@ import {
   Link2,
   Database,
 } from "lucide-react";
-import { FinanceTabLayout } from "@/components/finance/FinanceTabLayout";
 import { SubTabBar } from "@/components/finance/SubTabBar";
 import { FinanceDemoDataCard } from "@/components/finance/FinanceDemoDataCard";
 import { Card } from "@kannan19302/ui";
@@ -88,13 +87,8 @@ export default function FinanceSettingsPage() {
   const subTab = searchParams.get("subtab");
 
   return (
-    <FinanceTabLayout
-      tabs={SETTINGS_TABS}
-      moduleId="settings"
-      moduleLabel="Settings"
-      moduleIcon={Settings}
-      moduleDescription="Finance module configuration and preferences"
-    >
+    <div className="ui-stack-6">
+      <SubTabBar tabs={SETTINGS_TABS} />
       {activeTab === "overview" && (
         <div className="ui-stack-4 ui-animate-in">
           <div className="ui-grid-3" style={{ marginTop: 0 }}>
@@ -228,6 +222,6 @@ export default function FinanceSettingsPage() {
           <ExchangeRatesPage />
         </div>
       )}
-    </FinanceTabLayout>
+    </div>
   );
 }

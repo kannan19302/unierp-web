@@ -70,11 +70,6 @@ export default function SalesAnalyticsPage() {
         <PageHeader
           title="Sales Analytics"
           description="Performance dashboards, trends, and revenue breakdown."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Sales", href: "/sales" },
-            { label: "Analytics" },
-          ]}
           actions={
             <div className="ui-hstack-2">
               {["7d", "30d", "90d", "1y"].map((p: any) => (

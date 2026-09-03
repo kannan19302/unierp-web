@@ -116,10 +116,6 @@ export default function CarrierContractsPage() {
         <PageHeader
           title="Carrier Contracts"
           description="Manage carrier agreements, rate cards, and spot quotes"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Carrier Contracts" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} /> New Contract

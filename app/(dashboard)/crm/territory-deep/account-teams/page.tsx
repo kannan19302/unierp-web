@@ -51,10 +51,6 @@ export default function AccountTeamsPage() {
       <PageHeader
         title="Account Teams"
         description="View account team members by customer"
-        breadcrumbs={[
-          { label: "Territory Management", href: "/crm/territory-deep" },
-          { label: "Account Teams" },
-        ]}
       />
       <Card title="Search Account" className="ui-card-sm">
         <div className="ui-flex" style={{ gap: "var(--space-2)" }}>

@@ -141,7 +141,7 @@ function SortableRow({
   );
 }
 
-export default function PipelinesPage() {
+export default function PipelinesSettingsPage() {
   const [pipelines, setPipelines] = useState<Pipeline[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [stages, setStages] = useState<Stage[]>([]);
@@ -255,12 +255,6 @@ export default function PipelinesPage() {
       <PageHeader
         title="Sales Pipelines"
         description="Configure the stages for each sales process."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Settings", href: "/crm/settings" },
-          { label: "Pipelines" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.pipelines.create">
             <Button

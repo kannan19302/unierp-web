@@ -146,13 +146,6 @@ export default function VendorScorecardPage() {
           <PageHeader
             title={`${scorecard.vendorName} Performance`}
             description="Supplier Quality scorecard, on-time delivery audits, defect tracking, and volume analytics."
-            breadcrumbs={[
-              { label: "Apps", href: "/apps" },
-              { label: "Procurement", href: "/procurement" },
-              { label: "Suppliers", href: "/procurement/vendors" },
-              { label: scorecard.vendorName },
-              { label: "Performance" },
-            ]}
             actions={
               <Button
                 onClick={loadScorecard}

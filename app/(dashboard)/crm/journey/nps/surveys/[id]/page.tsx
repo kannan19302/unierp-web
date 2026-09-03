@@ -77,10 +77,6 @@ export default function SurveyDetailPage() {
         <PageHeader
           title={survey?.name || "Survey Details"}
           description={survey?.question || ""}
-          breadcrumbs={[
-            { label: "NPS Surveys", href: "/crm/journey/nps" },
-            { label: survey?.name || "Survey" },
-          ]}
           actions={
             <Button variant="outline" onClick={() => window.history.back()}>
               <ArrowLeft className="ui-w-4 ui-h-4 ui-mr-1" /> Back

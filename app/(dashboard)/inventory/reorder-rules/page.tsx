@@ -75,19 +75,9 @@ export default function ReorderRulesPage() {
       );
       setRows(data.rules || []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setRows([
-        {
-          ruleId: "r1",
-          productName: "Refined Vibranium Alloy Ingot",
-          onHand: 5,
-          minQty: 10,
-          reorderQty: 50,
-          leadTimeDays: 7,
-          isTriggered: true,
-          suggestedOrderDate: new Date().toISOString(),
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setRows([]);
+
     } finally {
       setLoading(false);
     }
@@ -136,11 +126,6 @@ export default function ReorderRulesPage() {
         <PageHeader
           title="Reorder Rules & Automation"
           description="Lead-time-aware reorder point dashboard with one-click purchase requisition creation for triggered rules."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Reorder Rules" },
-          ]}
           actions={
             <Button
               variant="primary"

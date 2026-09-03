@@ -56,10 +56,6 @@ export default function LiveChatPage() {
       <PageHeader
         title="Live Chat Sessions"
         description="Monitor and manage active chat sessions"
-        breadcrumbs={[
-          { label: "Support", href: "/crm/support-deep" },
-          { label: "Live Chat" },
-        ]}
       />
       <div className="ui-flex ui-gap-2 ui-mb-4 ui-flex-wrap">
         <Button

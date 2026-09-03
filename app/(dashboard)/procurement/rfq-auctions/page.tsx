@@ -44,11 +44,6 @@ export default function RfqAuctionsPage() {
       <PageHeader
         title="RFQ Auctions"
         description="Reverse auction management for competitive supplier bidding"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Procurement", href: "/procurement" },
-          { label: "RFQ Auctions" },
-        ]}
       />
 
       {stats && (

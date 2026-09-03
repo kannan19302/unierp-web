@@ -35,7 +35,7 @@ const emptyRule: Omit<Rule, "id"> = {
   active: true,
 };
 
-export default function DuplicateRulesPage() {
+export default function DuplicateRulesSettingsPage() {
   const [rules, setRules] = useState<Rule[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -128,12 +128,6 @@ export default function DuplicateRulesPage() {
       <PageHeader
         title="Duplicate Detection Rules"
         description="Configure how the system identifies potential duplicate records."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Settings", href: "/crm/settings" },
-          { label: "Duplicate Rules" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.duplicate-rules.create">
             <Button variant="primary" size="sm" onClick={openCreate}>

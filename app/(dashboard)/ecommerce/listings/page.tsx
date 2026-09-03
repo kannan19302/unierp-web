@@ -12,11 +12,6 @@ export default function ProductListingsPage() {
         <PageHeader
           title="Product Listings"
           description="Publish inventory products to the storefront with pricing and category controls."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "E-Commerce", href: "/ecommerce" },
-            { label: "Listings" },
-          ]}
         />
         <ListView
           resource={listingResource}

@@ -66,10 +66,6 @@ export default function CustomerHealthPage() {
         <PageHeader
           title="Customer Health & Churn Prediction"
           description="Monitor customer health scores and identify at-risk accounts"
-          breadcrumbs={[
-            { label: "CRM Intelligence", href: "/crm/intelligence" },
-            { label: "Customer Health" },
-          ]}
         />
 
         <div className={`ui-grid-2 ${styles.grid}`}>

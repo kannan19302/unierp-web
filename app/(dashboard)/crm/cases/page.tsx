@@ -16,11 +16,6 @@ export default function CasesPage() {
         <PageHeader
           title="Cases"
           description="Track customer support and operations cases"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Cases" },
-          ]}
         />
 
         <ListView

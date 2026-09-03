@@ -239,11 +239,6 @@ export default function ForecastingPage() {
       <PageHeader
         title="Sales Forecasting"
         description="Pipeline forecasts, rep performance, and conversion analytics"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Forecasting" },
-        ]}
       />
 
       {/* KPI Cards */}

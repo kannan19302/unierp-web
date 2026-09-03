@@ -1,38 +1,45 @@
 "use client";
 import styles from "./page.module.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageHeader, Card, Button, Badge, KPICard, DashboardChart } from "@kannan19302/ui";
 import { ClipboardCheck, Users, Calendar, CheckCircle, X } from "lucide-react";
-
-const STUDENTS_MOCK = [
-  { id: "1", name: "Alice Johnson", roll: "STU-001" },
-  { id: "2", name: "Bob Smith", roll: "STU-002" },
-  { id: "3", name: "Carol Williams", roll: "STU-003" },
-  { id: "4", name: "David Brown", roll: "STU-004" },
-  { id: "5", name: "Eva Davis", roll: "STU-005" },
-  { id: "6", name: "Frank Wilson", roll: "STU-006" },
-];
+import { useApiClient } from "@kannan19302/framework";
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
 export default function AttendancePage() {
+  const client = useApiClient();
+  const [students, setStudents] = useState<any[]>([]);
+
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0] || "",
   );
-  const [attendance, setAttendance] = useState<Record<string, boolean>>(
-    Object.fromEntries(STUDENTS_MOCK.map((s: any) => [s.id, true])),
-  );
+  const [attendance, setAttendance] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const sRes = await client.get<any[]>("/ext/education/deep/students");
+        const sList = Array.isArray(sRes) ? sRes : [];
+        setStudents(sList);
+        setAttendance(Object.fromEntries(sList.map((s: any) => [s.id, true])));
+      } catch {
+        setStudents([]);
+      }
+    }
+    loadData();
+  }, [client]);
 
   const presentCount = Object.values(attendance).filter(Boolean).length;
-  const absentCount = STUDENTS_MOCK.length - presentCount;
-  const attendanceRate = Math.round(
-    (presentCount / STUDENTS_MOCK.length) * 100,
-  );
+  const absentCount = Math.max(0, students.length - presentCount);
+  const attendanceRate = students.length > 0
+    ? Math.round((presentCount / students.length) * 100)
+    : 0;
 
   const weeklyData = WEEKDAYS.map((day: any) => ({
     name: day,
-    present: Math.floor(Math.random() * 3) + STUDENTS_MOCK.length - 2,
-    absent: Math.floor(Math.random() * 3),
+    present: presentCount,
+    absent: absentCount,
   }));
 
   return (
@@ -40,10 +47,6 @@ export default function AttendancePage() {
       <PageHeader
         title="Attendance"
         description="Daily attendance marking and reports"
-        breadcrumbs={[
-          { label: "Education", href: "/education" },
-          { label: "Attendance" },
-        ]}
         actions={<Button variant="primary">Save Attendance</Button>}
       />
 
@@ -68,7 +71,7 @@ export default function AttendancePage() {
         />
         <KPICard
           title="Total Students"
-          value={STUDENTS_MOCK.length}
+          value={students.length}
           icon={<Users size={18} />}
           color="var(--color-info)"
         />
@@ -98,71 +101,75 @@ export default function AttendancePage() {
         <div className="p-4">
           <h3 className="ui-heading-base mb-4">Mark Attendance</h3>
           <div className="ui-stack-2">
-            {STUDENTS_MOCK.map((student: any) => (
-              <div
-                key={student.id}
-                style={{
-                  background: attendance[student.id]
-                    ? "var(--color-success-light)"
-                    : "var(--color-danger-light)",
-                  border: `1px solid ${attendance[student.id] ? "var(--color-success)" : "var(--color-danger)"}`,
-                }}
-                className={styles.s3}
-              >
-                <div className="ui-hstack-3">
-                  <div className={styles.s4}>
-                    {student.name
-                      .split(" ")
-                      .map((n: any) => n[0])
-                      .join("")}
+            {students.length === 0 ? (
+              <p className="ui-text-muted">No students enrolled.</p>
+            ) : (
+              students.map((student: any) => (
+                <div
+                  key={student.id}
+                  style={{
+                    background: attendance[student.id]
+                      ? "var(--color-success-light)"
+                      : "var(--color-danger-light)",
+                    border: `1px solid ${attendance[student.id] ? "var(--color-success)" : "var(--color-danger)"}`,
+                  }}
+                  className={styles.s3}
+                >
+                  <div className="ui-hstack-3">
+                    <div className={styles.s4}>
+                      {(student.name || "S")
+                        .split(" ")
+                        .map((n: any) => n[0])
+                        .join("")}
+                    </div>
+                    <div>
+                      <div className={styles.s5}>{student.name}</div>
+                      <div className="ui-text-xs-tertiary">{student.roll || student.enrollmentNumber}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className={styles.s5}>{student.name}</div>
-                    <div className="ui-text-xs-tertiary">{student.roll}</div>
+                  <div className="ui-flex ui-gap-2">
+                    <button
+                      onClick={() =>
+                        setAttendance((p: any) => ({ ...p, [student.id]: true }))
+                      }
+                      style={{
+                        borderColor: attendance[student.id]
+                          ? "var(--color-success)"
+                          : "var(--color-border)",
+                        background: attendance[student.id]
+                          ? "var(--color-success)"
+                          : "var(--color-bg)",
+                        color: attendance[student.id]
+                          ? "white"
+                          : "var(--color-text)",
+                      }}
+                      className={styles.s6}
+                    >
+                      Present
+                    </button>
+                    <button
+                      onClick={() =>
+                        setAttendance((p: any) => ({ ...p, [student.id]: false }))
+                      }
+                      style={{
+                        borderColor: !attendance[student.id]
+                          ? "var(--color-danger)"
+                          : "var(--color-border)",
+                        background: !attendance[student.id]
+                          ? "var(--color-danger)"
+                          : "var(--color-bg)",
+                        color: !attendance[student.id]
+                          ? "white"
+                          : "var(--color-text)",
+                      }}
+                      className={styles.s6}
+                    >
+                      Absent
+                    </button>
                   </div>
                 </div>
-                <div className="ui-flex ui-gap-2">
-                  <button
-                    onClick={() =>
-                      setAttendance((p: any) => ({ ...p, [student.id]: true }))
-                    }
-                    style={{
-                      borderColor: attendance[student.id]
-                        ? "var(--color-success)"
-                        : "var(--color-border)",
-                      background: attendance[student.id]
-                        ? "var(--color-success)"
-                        : "var(--color-bg)",
-                      color: attendance[student.id]
-                        ? "white"
-                        : "var(--color-text)",
-                    }}
-                    className={styles.s6}
-                  >
-                    Present
-                  </button>
-                  <button
-                    onClick={() =>
-                      setAttendance((p: any) => ({ ...p, [student.id]: false }))
-                    }
-                    style={{
-                      borderColor: !attendance[student.id]
-                        ? "var(--color-danger)"
-                        : "var(--color-border)",
-                      background: !attendance[student.id]
-                        ? "var(--color-danger)"
-                        : "var(--color-bg)",
-                      color: !attendance[student.id]
-                        ? "white"
-                        : "var(--color-text)",
-                    }}
-                    className={styles.s6}
-                  >
-                    Absent
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </Card>

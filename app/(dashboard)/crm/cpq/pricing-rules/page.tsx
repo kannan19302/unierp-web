@@ -147,12 +147,6 @@ export default function CpqPricingRulesPage() {
       <PageHeader
         title="Pricing Rules"
         description="Configure volume discounts, tiered pricing, and promotional rules"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "CPQ & Quoting", href: "/crm/cpq" },
-          { label: "Pricing Rules" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.cpq-pricing-rules.create">
             <Button onClick={() => setShowCreate(true)}>

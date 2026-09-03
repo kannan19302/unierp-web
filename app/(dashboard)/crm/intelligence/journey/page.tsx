@@ -159,12 +159,6 @@ export default function JourneyTimelinePage() {
         <PageHeader
           title="Customer Journey & Attribution"
           description="Visualize all historical touchpoints for a Lead or Contact and compute marketing campaign attribution"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Intelligence", href: "/crm/intelligence" },
-            { label: "Customer Journey" },
-          ]}
           actions={
             <Link href="/crm/intelligence">
               <Button variant="outline" size="sm">

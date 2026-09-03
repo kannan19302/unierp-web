@@ -103,10 +103,6 @@ export default function PractitionersPage() {
       <PageHeader
         title="Practitioners"
         description="Doctor and nurse directory with specializations"
-        breadcrumbs={[
-          { label: "Healthcare", href: "/healthcare" },
-          { label: "Practitioners" },
-        ]}
         actions={
           <Button variant="primary" onClick={() => setCreateOpen(true)}>
             <Plus size={14} className="mr-2" /> Add Practitioner

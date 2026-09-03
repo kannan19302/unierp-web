@@ -14,11 +14,6 @@ export default function CrmProductsPage() {
         <PageHeader
           title="Products"
           description="Manage CRM catalog products, services, and rates"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Products" },
-          ]}
         />
 
         <ListView

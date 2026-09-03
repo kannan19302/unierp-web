@@ -232,12 +232,6 @@ export default function PipelineRiskAlertsPage() {
       <PageHeader
         title="Pipeline Risk Alerts"
         description="Einstein Pipeline Inspection-style stage-stall, close-date slippage, low-confidence, and no-activity risk detection across the whole pipeline."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Forecasting", href: "/crm/forecasting" },
-          { label: "Pipeline Risk Alerts" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.opportunity.update">
             <Button

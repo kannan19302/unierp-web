@@ -309,9 +309,10 @@ export default function RtvPage() {
       setShipments(shipmentData.data ?? []);
       setDashboard(dashboardData);
     } catch {
-      setError("Serving local mock fallback registry.");
+      setError("Could not load data. Please try again.");
       setRmaRequests([]);
       setShipments([]);
+
     } finally {
       setLoading(false);
     }
@@ -366,11 +367,6 @@ export default function RtvPage() {
         <PageHeader
           title="Returns to Vendor (RTV)"
           description="Manage vendor RMA requests, outbound return shipments, and credit memo tracking for supplier returns."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Returns to Vendor" },
-          ]}
           actions={
             <Button
               variant="primary"

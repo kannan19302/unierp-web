@@ -43,11 +43,6 @@ function MarketingOutreachHubContent() {
       <PageHeader
         title="Marketing & Outreach"
         description="Plan campaigns, capture leads with web forms, automate email sequences, and manage reusable templates"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Marketing & Outreach" },
-        ]}
       />
 
       <Tabs

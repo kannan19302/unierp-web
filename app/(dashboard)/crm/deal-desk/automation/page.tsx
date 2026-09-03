@@ -137,10 +137,6 @@ export default function DealAutomationPage() {
       <PageHeader
         title="Automation Rules"
         description="Configure and manage deal desk automation rules"
-        breadcrumbs={[
-          { label: "Deal Desk", href: "/crm/deal-desk" },
-          { label: "Automation" },
-        ]}
       />
 
       <Card>

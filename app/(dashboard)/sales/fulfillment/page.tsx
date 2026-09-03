@@ -133,11 +133,6 @@ export default function FulfillmentPage() {
       <PageHeader
         title="Order Fulfillment & Delivery"
         description="Monitor order backlog, delivery schedules, and fulfillment SLAs"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Sales", href: "/sales" },
-          { label: "Fulfillment & SLAs" },
-        ]}
       />
 
       {profitability && (

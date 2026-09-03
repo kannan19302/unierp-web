@@ -63,10 +63,6 @@ export default function LeanPage() {
         <PageHeader
           title="Lean Manufacturing"
           description="Kanban, continuous improvement, waste tracking, value stream mapping"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "Lean" },
-          ]}
         />
 
         {dashboard && (

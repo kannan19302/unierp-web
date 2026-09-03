@@ -142,10 +142,6 @@ export default function LeasesPage() {
         <PageHeader
           title="Leases"
           description="Active lease agreements and rent tracking"
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Leases" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Lease

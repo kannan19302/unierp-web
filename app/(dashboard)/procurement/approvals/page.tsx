@@ -503,11 +503,6 @@ export default function ProcurementApprovalsPage() {
         <PageHeader
           title="Approvals"
           description="Manage purchase requisition and purchase order approvals"
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Approvals" },
-          ]}
         />
 
         {error && (

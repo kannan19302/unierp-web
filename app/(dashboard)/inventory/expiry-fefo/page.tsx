@@ -32,16 +32,9 @@ export default function ExpiryFefoPage() {
       );
       setExpiring(data.batches || []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setExpiring([
-        {
-          batchId: "b1",
-          batchNo: "BATCH-2026-001",
-          productName: "Refined Vibranium Alloy Ingot",
-          quantity: 40,
-          daysUntilExpiry: 12,
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setExpiring([]);
+
     } finally {
       setLoading(false);
     }
@@ -95,11 +88,6 @@ export default function ExpiryFefoPage() {
         <PageHeader
           title="Expiry, FEFO & Recall Notices"
           description="Batches nearing expiry (First-Expired-First-Out rotation), and recall-notice generation from real traceability data."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Expiry & FEFO" },
-          ]}
         />
 
         {error && (

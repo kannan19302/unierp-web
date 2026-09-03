@@ -108,7 +108,7 @@ export default function CustomModulePage() {
     }
   };
 
-  const createMockRecord = async () => {
+  const createRecord = async () => {
     if (!schemaId) {
       showToast(
         "This module does not have a published data schema yet",
@@ -179,7 +179,7 @@ export default function CustomModulePage() {
           <div className="ui-flex ui-gap-2">
             <button
               className="ui-btn ui-btn-primary"
-              onClick={createMockRecord}
+              onClick={createRecord}
             >
               <PlusCircle size={15} />
               <span>New {moduleData.name}</span>

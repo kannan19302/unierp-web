@@ -257,11 +257,6 @@ export default function CustomerConsignmentPage() {
         <PageHeader
           title="Customer Consignment"
           description="Stock on customer premises with consumption tracking."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Customer Consignment" },
-          ]}
           actions={
             <Button
               variant="primary"

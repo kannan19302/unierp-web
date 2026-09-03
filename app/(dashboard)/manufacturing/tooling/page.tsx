@@ -77,10 +77,6 @@ export default function ToolingPage() {
         <PageHeader
           title="Tooling & Gage Management"
           description="Tool crib, calibration scheduling, gage R&R studies"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "Tooling" },
-          ]}
         />
 
         {dashboard && (

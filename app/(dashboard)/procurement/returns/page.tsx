@@ -241,11 +241,6 @@ export default function PurchaseReturnsPage() {
         <PageHeader
           title="Supplier Returns"
           description="Log returned procurement goods, generate debit notes against vendor accounts, and reduce stock logs."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Returns" },
-          ]}
           actions={
             <Button
               onClick={() => {

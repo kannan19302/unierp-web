@@ -124,10 +124,6 @@ export default function SurveyPage() {
           description={
             dashboard ? `${dashboard.publishedCount} active surveys` : ""
           }
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "Surveys" },
-          ]}
           actions={
             <Button>
               <Plus size={14} /> New Survey

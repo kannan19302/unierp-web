@@ -208,31 +208,9 @@ export default function VisualQueryBuilderPage() {
       const columns = data.fields || selectedFields.map((f: any) => f.alias);
       const rows = Array.isArray(data.rows) ? data.rows : [];
       setResults({ columns, rows });
-    } catch {
-      // Fallback demo data
-      const cols = selectedFields.map((f: any) => f.alias);
-      const demoRows = Array.from({ length: Math.min(limit, 10) }, (_: any, i: any) => {
-        const row: Record<string, string | number> = {};
-        cols.forEach((c: any) => {
-          if (
-            c.includes("Amount") ||
-            c.includes("price") ||
-            c.includes("salary")
-          ) {
-            row[c] = Math.round(Math.random() * 50000 + 1000);
-          } else if (c.includes("status")) {
-            row[c] = ["PAID", "DRAFT", "OVERDUE", "ACTIVE"][i % 4] as string;
-          } else if (c.includes("Date") || c.includes("date")) {
-            row[c] = new Date(
-              Date.now() - Math.random() * 86400000 * 90,
-            ).toLocaleDateString();
-          } else {
-            row[c] = `Row-${i + 1}`;
-          }
-        });
-        return row;
-      });
-      setResults({ columns: cols, rows: demoRows });
+    } catch (err: any) {
+      alert(err?.message || "Failed to execute query.");
+      setResults(null);
     } finally {
       setIsRunning(false);
     }

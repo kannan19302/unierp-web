@@ -207,10 +207,6 @@ export default function VanStockPage() {
         <PageHeader
           title="Van Stock"
           description="Technician van inventory management"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Van Stock" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Add Item

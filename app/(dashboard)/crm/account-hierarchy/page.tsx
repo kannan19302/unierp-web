@@ -86,11 +86,6 @@ export default function AccountHierarchyPage() {
       <PageHeader
         title="Account Hierarchy & Rollups"
         description="Real parent/child account hierarchy with automatic pipeline and closed-won revenue rollup across subsidiaries (Salesforce Account Hierarchy-style)."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Account Hierarchy" },
-        ]}
       />
 
       <Card>

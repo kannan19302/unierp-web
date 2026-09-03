@@ -14,11 +14,6 @@ export default function ChartOfAccountsPage() {
         <PageHeader
           title="Chart of Accounts"
           description="Manage general ledger accounts, hierarchy, and financial categories"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Finance", href: "/finance" },
-            { label: "Chart of Accounts" },
-          ]}
         />
 
         <ListView

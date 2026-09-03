@@ -127,7 +127,6 @@ export default function EducationDashboard() {
         <PageHeader
           title="Education"
           description="Student management, courses, fees, and academic operations"
-          breadcrumbs={[{ label: "Education" }]}
         />
 
         <div className="ui-grid-auto">

@@ -114,11 +114,6 @@ export default function ReportSchedulesPage() {
       <PageHeader
         title="Report Schedules"
         description="Schedule recurring report exports"
-        breadcrumbs={[
-          { label: "Reporting", href: "/crm/reporting-deep" },
-          { label: "Reports", href: "/crm/reporting-deep/reports" },
-          { label: "Schedules" },
-        ]}
         actions={
           <Button onClick={() => setShowCreate(true)}>
             <Plus size={16} /> New Schedule

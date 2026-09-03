@@ -155,10 +155,6 @@ export default function AppointmentsPage() {
         <PageHeader
           title="Appointments"
           description="Schedule and manage patient appointments"
-          breadcrumbs={[
-            { label: "Healthcare", href: "/healthcare" },
-            { label: "Appointments" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Book Appointment

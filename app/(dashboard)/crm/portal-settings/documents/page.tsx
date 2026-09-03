@@ -18,7 +18,7 @@ interface PortalDoc {
   createdAt: string;
 }
 
-export default function PortalDocumentsPage() {
+export default function PortalDocumentsSettingsPage() {
   const [docs, setDocs] = useState<PortalDoc[]>([]);
   const [loading, setLoading] = useState(true);
   const [customerId, setCustomerId] = useState("");
@@ -76,10 +76,6 @@ export default function PortalDocumentsPage() {
       <PageHeader
         title="Portal Documents"
         description="Manage documents shared with customers"
-        breadcrumbs={[
-          { label: "Portal Settings", href: "/crm/portal-settings" },
-          { label: "Documents" },
-        ]}
       />
       <div className="ui-flex ui-gap-2 ui-mb-4">
         <div className="ui-input-group" style={{ flex: 1, maxWidth: 400 }}>

@@ -83,11 +83,6 @@ export default function NetworkPage() {
         <PageHeader
           title="Network Health"
           description="Blockchain network status, block height, and sync status."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Blockchain", href: "/blockchain" },
-            { label: "Network" },
-          ]}
         />
         <div className="ui-grid-4">
           <Card>

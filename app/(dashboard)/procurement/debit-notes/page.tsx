@@ -44,11 +44,6 @@ export default function DebitNotesPage() {
       <PageHeader
         title="Debit Notes"
         description="Debit note lifecycle management for purchase returns and adjustments"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Procurement", href: "/procurement" },
-          { label: "Debit Notes" },
-        ]}
       />
 
       {stats && (

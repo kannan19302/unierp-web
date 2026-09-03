@@ -26,11 +26,6 @@ export default function ProcurementAnalyticsPage() {
       <PageHeader
         title="Procurement Analytics"
         description="Spend analysis, budget tracking, and vendor performance metrics."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Procurement", href: "/procurement" },
-          { label: "Analytics" },
-        ]}
       />
 
       {loading ? (

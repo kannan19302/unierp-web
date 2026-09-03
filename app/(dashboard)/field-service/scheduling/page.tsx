@@ -263,10 +263,6 @@ export default function SchedulingPage() {
         <PageHeader
           title="Scheduling"
           description="Technician schedules and calendar events"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Scheduling" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Schedule

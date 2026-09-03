@@ -167,10 +167,6 @@ export default function ContainersPage() {
         <PageHeader
           title="Container Tracking"
           description="Monitor container shipments across global trade lanes"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Containers" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} /> Track New Container

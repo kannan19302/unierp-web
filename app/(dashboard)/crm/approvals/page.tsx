@@ -26,49 +26,6 @@ interface ApprovalRequest {
   totalSteps: number;
 }
 
-const MOCK_REQUESTS: ApprovalRequest[] = [
-  {
-    id: "1",
-    entityType: "QUOTATION",
-    entityId: "QUO-2026-0042",
-    processName: "Quote Sign-off",
-    submittedBy: "jane.smith@company.com",
-    submittedAt: "2026-06-21T08:30:00Z",
-    currentStep: 1,
-    totalSteps: 2,
-  },
-  {
-    id: "2",
-    entityType: "DISCOUNT",
-    entityId: "DSC-2026-0015",
-    processName: "Discount Approval",
-    submittedBy: "mike.jones@company.com",
-    submittedAt: "2026-06-20T14:15:00Z",
-    currentStep: 2,
-    totalSteps: 2,
-  },
-  {
-    id: "3",
-    entityType: "OPPORTUNITY",
-    entityId: "OPP-2026-0089",
-    processName: "Large Deal Approval",
-    submittedBy: "sarah.lee@company.com",
-    submittedAt: "2026-06-21T10:00:00Z",
-    currentStep: 1,
-    totalSteps: 1,
-  },
-  {
-    id: "4",
-    entityType: "SALES_ORDER",
-    entityId: "SO-2026-0033",
-    processName: "Order Approval",
-    submittedBy: "tom.chen@company.com",
-    submittedAt: "2026-06-19T16:45:00Z",
-    currentStep: 1,
-    totalSteps: 3,
-  },
-];
-
 export default function ApprovalsPage() {
   const client = useApiClient();
   const [requests, setRequests] = useState<ApprovalRequest[]>([]);
@@ -79,6 +36,9 @@ export default function ApprovalsPage() {
   } | null>(null);
   const [comments, setComments] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState<
+    "ALL" | "QUOTATION" | "DISCOUNT" | "OPPORTUNITY" | "SALES_ORDER"
+  >("ALL");
   const [approvedToday, setApprovedToday] = useState(0);
   const [rejectedToday, setRejectedToday] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
@@ -102,7 +62,7 @@ export default function ApprovalsPage() {
       >("/api/v1/crm/approval-requests/pending");
       {
         setRequests(
-          Array.isArray(data) ? data : data.requests || MOCK_REQUESTS,
+          Array.isArray(data) ? data : data.requests || [],
         );
         setApprovedToday(Array.isArray(data) ? 0 : (data.approvedToday ?? 0));
         setRejectedToday(Array.isArray(data) ? 0 : (data.rejectedToday ?? 0));
@@ -290,11 +250,6 @@ export default function ApprovalsPage() {
       <div className={styles.p25}>
         <PageHeader
           title="Pending Approvals"
-          breadcrumbs={[
-            { label: "Home", href: "/" },
-            { label: "CRM", href: "/crm" },
-            { label: "Approvals" },
-          ]}
         />
 
         <div className={styles.p26}>

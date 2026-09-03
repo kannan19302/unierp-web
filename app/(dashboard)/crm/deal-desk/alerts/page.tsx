@@ -50,10 +50,6 @@ export default function DealAlertsPage() {
       <PageHeader
         title="Deal Alerts"
         description="View and manage alerts for deals requiring attention"
-        breadcrumbs={[
-          { label: "Deal Desk", href: "/crm/deal-desk" },
-          { label: "Alerts" },
-        ]}
       />
 
       <Card>

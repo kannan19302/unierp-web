@@ -12,11 +12,6 @@ export default function FieldServiceCustomersPage() {
         <PageHeader
           title="Field Service Customers"
           description="Use the shared customer master for field-service accounts and support activity."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Field Service", href: "/field-service" },
-            { label: "Customers" },
-          ]}
         />
         <ListView
           resource={customerResource}

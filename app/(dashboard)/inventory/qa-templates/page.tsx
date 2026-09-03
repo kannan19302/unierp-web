@@ -95,11 +95,6 @@ export default function QaTemplatesPage() {
       <PageHeader
         title="QA Inspection Templates & Disposition Routing"
         description="Reusable inspection checklists, plus routing a resolved inspection's disposition to a real downstream action (e.g. batch quarantine)."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Inventory", href: "/inventory" },
-          { label: "QA Templates" },
-        ]}
         actions={
           <Button
             variant="primary"

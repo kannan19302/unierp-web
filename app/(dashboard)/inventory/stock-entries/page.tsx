@@ -251,11 +251,6 @@ export default function StockEntriesPage() {
         <PageHeader
           title="Stock Entries"
           description="Record goods receipts, inter-depot transfers, and stock adjustments E2E with active valuations."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Stock Entries" },
-          ]}
           actions={
             <Button
               variant="primary"

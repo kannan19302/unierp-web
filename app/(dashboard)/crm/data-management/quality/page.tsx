@@ -77,12 +77,6 @@ export default function DataQualityPage() {
       <PageHeader
         title="Data Quality"
         description="Score and monitor the quality of your CRM data"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Data Management", href: "/crm/data-management" },
-          { label: "Quality" },
-        ]}
       />
 
       {dash && (

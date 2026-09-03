@@ -13,11 +13,6 @@ export default function CycleCountSchedulesPage() {
         <PageHeader
           title="Cycle Count Schedules"
           description="Schedule recurring blind or guided counts by warehouse zone and bin scope."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Cycle Count Schedules" },
-          ]}
         />
         <ListView
           resource={cycleCountScheduleResource}

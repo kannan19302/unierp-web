@@ -19,10 +19,6 @@ export default function FHIRIntegrationPage() {
       <PageHeader
         title="FHIR Integration"
         description="SMART on FHIR app launcher and resource browser"
-        breadcrumbs={[
-          { label: "Healthcare", href: "/healthcare" },
-          { label: "FHIR" },
-        ]}
       />
 
       <div className="ui-grid-auto-sm">

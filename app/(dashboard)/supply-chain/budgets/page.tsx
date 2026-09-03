@@ -175,10 +175,6 @@ export default function BudgetsPage() {
         <PageHeader
           title="Supply Chain Budgets"
           description="Track and manage supply chain spending across categories"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Budgets" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} /> New Budget

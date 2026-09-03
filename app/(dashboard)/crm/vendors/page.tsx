@@ -16,11 +16,6 @@ export default function VendorsPage() {
         <PageHeader
           title="Vendors"
           description="Manage supplier and partner profiles in your CRM"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Vendors" },
-          ]}
         />
 
         <ListView

@@ -226,10 +226,6 @@ export default function MaintenanceRequestsPage() {
         <PageHeader
           title="Maintenance Requests"
           description="Property maintenance request tracking"
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Maintenance Requests" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Request

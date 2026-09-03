@@ -234,11 +234,6 @@ export default function PromotionsPage() {
         <PageHeader
           title="Promotions & Coupons"
           description="Manage discount promotions and coupon codes."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Sales", href: "/sales" },
-            { label: "Promotions" },
-          ]}
         />
         {loading ? (
           <div className="ui-center-pad">

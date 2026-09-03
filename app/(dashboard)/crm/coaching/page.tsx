@@ -190,11 +190,6 @@ export default function CoachingPage() {
       <PageHeader
         title="Sales Coaching & Call Scoring"
         description="Structured scorecards (talk-ratio, objection-handling, next-steps-set) applied to logged calls, manager review workflow, and a coaching library — Gong/Chorus.ai/Salesloft-style."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Sales Coaching" },
-        ]}
       />
 
       <div className={styles.tabs}>

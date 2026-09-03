@@ -316,11 +316,6 @@ export default function ExpensePoliciesPage() {
         <PageHeader
           title="Expense Policies & Rates"
           description="Category spending limits, mileage/per-diem rates, and corporate card feeds"
-          breadcrumbs={[
-            { label: "Finance", href: "/finance" },
-            { label: "Advanced", href: "/finance/advanced" },
-            { label: "Expense Policies" },
-          ]}
         />
 
         <Tabs

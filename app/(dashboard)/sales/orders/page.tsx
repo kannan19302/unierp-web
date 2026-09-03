@@ -257,16 +257,8 @@ export default function SalesOrdersHub() {
       alert("Credit Hold released and order confirmed!");
       setSelectedOrder(null);
       loadData();
-    } catch {
-      alert("Mock Mode: Credit Hold approved!");
-      setOrders((prev: any) =>
-        prev.map((o: any) => (o.id === orderId ? { ...o, status: "CONFIRMED" } : o)),
-      );
-      if (selectedOrder) {
-        setSelectedOrder((prev: any) =>
-          prev ? { ...prev, status: "CONFIRMED" } : null,
-        );
-      }
+    } catch (err: any) {
+      alert(err?.message || "Failed to release Credit Hold.");
     }
   };
 
@@ -400,11 +392,6 @@ export default function SalesOrdersHub() {
         <PageHeader
           title="Sales Orders Registry"
           description="Fulfill B2B, B2C, and D2C customer shipments. Approve credit accounts and record payments."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Sales & Orders", href: "/sales" },
-            { label: "Orders" },
-          ]}
           actions={
             <Button
               variant="primary"
@@ -420,7 +407,7 @@ export default function SalesOrdersHub() {
         {error && (
           <div className={styles.p1}>
             <AlertCircle size={16} />
-            <span>Note: {error} (Mock Fallback Active)</span>
+            <span>Note: {error}</span>
           </div>
         )}
 

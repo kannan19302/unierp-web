@@ -65,11 +65,6 @@ export default function DealDeskRequestDetailPage() {
       <PageHeader
         title="Request Detail"
         description={`Request ID: ${id}`}
-        breadcrumbs={[
-          { label: "Deal Desk", href: "/crm/deal-desk" },
-          { label: "Requests", href: "/crm/deal-desk/requests" },
-          { label: id },
-        ]}
       />
 
       <div className="ui-grid-2">

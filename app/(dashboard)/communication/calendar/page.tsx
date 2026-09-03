@@ -73,10 +73,6 @@ export default function CalendarPage() {
       <PageHeader
         title="Shared Calendar"
         description="Corporate schedule, team events, and availability calendars"
-        breadcrumbs={[
-          { label: "Connect", href: "/communication" },
-          { label: "Calendar" },
-        ]}
       />
       <div className={styles.s3}>
         <ConnectCalendar

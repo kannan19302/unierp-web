@@ -134,7 +134,6 @@ export default function HealthcareDashboard() {
         <PageHeader
           title="Healthcare"
           description="Patient care, appointments, prescriptions, and clinical management"
-          breadcrumbs={[{ label: "Healthcare" }]}
         />
 
         <div className="ui-grid-auto">

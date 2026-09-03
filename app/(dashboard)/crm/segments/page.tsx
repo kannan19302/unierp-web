@@ -175,11 +175,6 @@ export default function SegmentsPage() {
       <PageHeader
         title="Customer Segments"
         description="Group customers/leads by attributes to target campaigns."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Segments" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.segments.create">
             <Button variant="primary" size="sm" onClick={openCreate}>

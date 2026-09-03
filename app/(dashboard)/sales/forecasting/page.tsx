@@ -101,11 +101,6 @@ export default function SalesForecastingPage() {
         <PageHeader
           title="Sales Forecasting"
           description="Predictive analytics for revenue planning and inventory optimization."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Sales", href: "/sales" },
-            { label: "Forecasting" },
-          ]}
           actions={
             <div className="ui-hstack-2">
               {[1, 3, 6, 12].map((m: any) => (

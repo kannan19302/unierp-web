@@ -136,12 +136,6 @@ export default function DealRoomDetailPage() {
       <PageHeader
         title={room.name}
         description={`Opportunity: ${room.opportunity.name} · Stage: ${room.opportunity.stage}`}
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Deal Rooms", href: "/crm/deal-rooms" },
-          { label: room.name },
-        ]}
       />
 
       <Card>

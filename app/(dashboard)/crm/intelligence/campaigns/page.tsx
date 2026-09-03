@@ -103,12 +103,6 @@ export default function CampaignIntelligencePage() {
         <PageHeader
           title="Campaign Intelligence"
           description="Optimize marketing campaigns with A/B testing insights and send-time predictions"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Intelligence", href: "/crm/intelligence" },
-            { label: "Campaign Analytics" },
-          ]}
           actions={
             <Link href="/crm/intelligence">
               <Button variant="outline" size="sm">

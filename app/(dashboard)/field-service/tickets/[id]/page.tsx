@@ -90,11 +90,6 @@ export default function ServiceTicketDetailPage() {
         <PageHeader
           title={ticket.title}
           description={`Customer: ${ticket.customerName}`}
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Tickets", href: "/field-service/tickets" },
-            { label: ticket.title },
-          ]}
         />
         <div className="ui-grid-auto">
           <KPICard

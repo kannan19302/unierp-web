@@ -186,10 +186,6 @@ export default function SalesDashboard() {
         <PageHeader
           title="Sales & Orders Dashboard"
           description="Monitor corporate accounts, B2C retail checkouts, and D2C online channels."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Sales & Orders" },
-          ]}
           actions={
             <ViewSwitcher
               activeView={activeView}

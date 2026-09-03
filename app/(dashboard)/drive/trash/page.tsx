@@ -123,11 +123,6 @@ export default function TrashPage() {
       <PageHeader
         title="Trash"
         description="Recently deleted files and folders"
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Drive", href: "/drive" },
-          { label: "Trash" },
-        ]}
       />
       <div className="ui-flex ui-gap-2 ui-bg-warning-light ui-p-3 ui-rounded ui-items-center">
         <AlertTriangle size={16} className="ui-text-warning" />

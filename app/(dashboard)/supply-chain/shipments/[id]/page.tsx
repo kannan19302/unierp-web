@@ -160,11 +160,6 @@ export default function ShipmentDetailPage() {
         <PageHeader
           title={shipment.shipmentNumber}
           description={`${shipment.type} shipment via ${shipment.carrierName || "Unassigned carrier"}`}
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Shipments", href: "/supply-chain/shipments" },
-            { label: shipment.shipmentNumber },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button

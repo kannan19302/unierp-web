@@ -13,11 +13,6 @@ export default function SerialNumbersPage() {
         <PageHeader
           title="Serial Numbers"
           description="Track serialized inventory, status, warehouse assignment, and warranty dates."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Serial Numbers" },
-          ]}
         />
         <ListView
           resource={serialNumberResource}

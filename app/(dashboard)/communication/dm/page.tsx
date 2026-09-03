@@ -122,10 +122,6 @@ export default function DirectMessagesPage() {
         <PageHeader
           title="Direct Messages"
           description="Start a private chat or browse active conversations"
-          breadcrumbs={[
-            { label: "Connect", href: "/communication" },
-            { label: "Direct Messages" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Conversation

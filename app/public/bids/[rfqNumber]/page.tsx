@@ -67,7 +67,7 @@ export default function PublicBiddingPage() {
       );
       setRfq(rfqData);
 
-      // Fetch vendors publicly for mock demo matching
+      // Fetch registered vendors for bid matching
       const vData = await client.get<Vendor[] | { data?: Vendor[] }>(
         "/crm/vendors",
       );
@@ -83,45 +83,10 @@ export default function PublicBiddingPage() {
       });
       setLinePrices(initialPrices);
     } catch {
-      setError("Could not load data. Please try again.");
-
-      // Mock RFQ matching schema
-      setRfq({
-        id: "rfq-mock-1",
-        rfqNumber,
-        notes:
-          "Provide quotes for construction steel sheets. Delivery expected at central warehouse.",
-        expectedDate: new Date(
-          Date.now() + 14 * 24 * 3600 * 1000,
-        ).toISOString(),
-        lineItems: [
-          {
-            id: "rfqi-1",
-            productId: "prod-1",
-            description: "Structural Steel I-Beam (Type A)",
-            quantity: 50,
-            product: { name: "Structural Steel I-Beam", sku: "SKU-STEEL-001" },
-          },
-          {
-            id: "rfqi-2",
-            productId: null,
-            description: "Anti-corrosion coating application service",
-            quantity: 10,
-            product: null,
-          },
-        ],
-      });
-
+      setError("Could not load RFQ details. The RFQ may not exist or has expired.");
+      setRfq(null);
       setVendors([]);
-
-      const initialPrices: Record<
-        string,
-        { unitPrice: number; taxRate: number }
-      > = {
-        "rfqi-1": { unitPrice: 0, taxRate: 10 },
-        "rfqi-2": { unitPrice: 0, taxRate: 5 },
-      };
-      setLinePrices(initialPrices);
+      setLinePrices({});
     } finally {
       setLoading(false);
     }
@@ -181,7 +146,6 @@ export default function PublicBiddingPage() {
       );
       setSubmittedSuccess(true);
     } catch {
-      // save failed — surface the error instead of fabricating a result
       setError("Action could not be completed. Please try again.");
       setSubmitting(false);
     } finally {
@@ -207,6 +171,20 @@ export default function PublicBiddingPage() {
     return (
       <div className={styles.s1}>
         <Spinner size="lg" />
+      </div>
+    );
+  }
+
+  if (!rfq) {
+    return (
+      <div className={styles.s1}>
+        <div className={styles.s2}>
+          <AlertCircle size={32} className="ui-text-warning" />
+          <h2 className={styles.s4}>RFQ Not Available</h2>
+          <p className={styles.s5}>
+            {error || "The requested RFQ could not be found or has expired."}
+          </p>
+        </div>
       </div>
     );
   }

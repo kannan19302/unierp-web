@@ -58,12 +58,6 @@ function VisitorAnalyticsPage() {
       <PageHeader
         title="Web Visitor Analytics"
         description="Analyze web traffic sources, visitor behavior, and conversion patterns"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Marketing Deep", href: "/crm/marketing-deep" },
-          { label: "Visitor Analytics" },
-        ]}
       />
       {analytics && (
         <div className="ui-stack-4">

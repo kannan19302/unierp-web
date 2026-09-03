@@ -60,11 +60,6 @@ function ActivityCaptureContent() {
       <PageHeader
         title="Activity Capture"
         description="Auto-capture emails, calendar events, and email engagement tracking"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Activity Capture" },
-        ]}
       />
 
       <Tabs

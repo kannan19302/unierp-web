@@ -52,10 +52,6 @@ export default function HealthcareReportsPage() {
       <PageHeader
         title="Healthcare Reports"
         description="Patient demographics, appointment utilization, and revenue analytics"
-        breadcrumbs={[
-          { label: "Healthcare", href: "/healthcare" },
-          { label: "Reports" },
-        ]}
       />
 
       <div className="ui-grid-auto-sm">

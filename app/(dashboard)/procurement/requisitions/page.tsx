@@ -236,21 +236,8 @@ export default function RequisitionsPage() {
       );
       loadData();
       setSelectedRequisition(null);
-    } catch {
-      setRequisitions(
-        requisitions.map((r: any) => {
-          if (r.id === id) {
-            return { ...r, status: "CONVERTED" };
-          }
-          return r;
-        }),
-      );
-      alert(
-        "Successfully converted Requisition (Mock Flow) to a Purchase Order.",
-      );
-      if (selectedRequisition?.id === id) {
-        setSelectedRequisition({ ...selectedRequisition, status: "CONVERTED" });
-      }
+    } catch (err: any) {
+      alert(err?.message || "Failed to convert requisition to Purchase Order.");
     }
   };
 
@@ -445,11 +432,6 @@ export default function RequisitionsPage() {
         <PageHeader
           title="Purchase Requisitions"
           description="Internal employee purchasing requests, approval logs, and automated Purchase Order conversions."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Requisitions" },
-          ]}
           actions={
             <Button
               onClick={handleOpenCreateModal}

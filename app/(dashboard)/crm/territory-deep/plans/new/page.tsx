@@ -36,10 +36,6 @@ export default function NewTerritoryPlanPage() {
     <div className="ui-page">
       <PageHeader
         title="New Territory Plan"
-        breadcrumbs={[
-          { label: "Territory Management", href: "/crm/territory-deep" },
-          { label: "New Plan" },
-        ]}
       />
       <Card className="ui-card-md">
         <form onSubmit={handleSubmit} className="ui-form">

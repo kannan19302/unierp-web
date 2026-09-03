@@ -50,7 +50,7 @@ const emptyRule: Omit<Rule, "id"> = {
   active: true,
 };
 
-export default function LeadScoringPage() {
+export default function LeadScoringSettingsPage() {
   const [rules, setRules] = useState<Rule[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -154,12 +154,6 @@ export default function LeadScoringPage() {
       <PageHeader
         title="Lead Scoring Rules"
         description="Automated point rules used to prioritise incoming leads."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Settings", href: "/crm/settings" },
-          { label: "Lead Scoring" },
-        ]}
         actions={
           <div className="ui-flex ui-gap-2">
             <ProtectedComponent permission="crm.lead-scoring.recalculate">

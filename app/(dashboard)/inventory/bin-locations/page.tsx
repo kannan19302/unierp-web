@@ -13,11 +13,6 @@ export default function BinLocationsPage() {
         <PageHeader
           title="Bin Locations"
           description="Manage warehouse zones, aisles, racks, and bin capacity."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Bin Locations" },
-          ]}
         />
         <ListView
           resource={binLocationResource}

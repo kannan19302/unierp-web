@@ -161,10 +161,6 @@ export default function LibraryPage() {
         <PageHeader
           title="Library"
           description="Book register, checkouts, and availability tracking"
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Library" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button variant="secondary" onClick={() => setCheckoutOpen(true)}>

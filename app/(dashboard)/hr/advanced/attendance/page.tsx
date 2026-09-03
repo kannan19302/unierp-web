@@ -121,12 +121,6 @@ export default function AttendancePage() {
         <PageHeader
           title="Attendance"
           description="Track employee check-ins, check-outs, and overtime records"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Attendance" },
-          ]}
         />
         {error && <div className={styles.errorMessage}>{error}</div>}
         {msg && <div className={styles.message}>{msg}</div>}

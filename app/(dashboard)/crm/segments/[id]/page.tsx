@@ -93,12 +93,6 @@ export default function SegmentDetailPage() {
       <PageHeader
         title={segment.name}
         description={segment.description || "Segment detail"}
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Segments", href: "/crm/segments" },
-          { label: segment.name },
-        ]}
         actions={
           <div className="ui-flex ui-gap-2">
             <Link href="/crm/segments">

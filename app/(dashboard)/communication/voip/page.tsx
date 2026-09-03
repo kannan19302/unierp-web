@@ -128,10 +128,6 @@ export default function VoipPage() {
         <PageHeader
           title="VoIP & Telephony"
           description={dashboard ? `${dashboard.activeCalls} active calls` : ""}
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "VoIP" },
-          ]}
           actions={
             <Button>
               <Phone size={14} /> New Call

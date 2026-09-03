@@ -93,11 +93,6 @@ export default function PropertyDetailPage() {
         <PageHeader
           title={property.name}
           description={`${property.type} · ${property.portfolio}`}
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Properties", href: "/real-estate/properties" },
-            { label: property.name },
-          ]}
         />
         <div className="ui-grid-auto">
           <KPICard

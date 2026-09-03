@@ -86,10 +86,6 @@ export default function TpmPage() {
         <PageHeader
           title="Total Productive Maintenance"
           description="TPM pillars, autonomous maintenance, 5S audits, OEE deep dive"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "TPM" },
-          ]}
         />
 
         {dashboard && (

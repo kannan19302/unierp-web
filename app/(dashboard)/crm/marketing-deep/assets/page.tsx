@@ -75,12 +75,6 @@ function AssetsPage() {
       <PageHeader
         title="Campaign Assets"
         description="Manage images, videos, documents, and templates for campaigns"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Marketing Deep", href: "/crm/marketing-deep" },
-          { label: "Assets" },
-        ]}
       />
       <Card>
         <div className="ui-form-group ui-mb-4">

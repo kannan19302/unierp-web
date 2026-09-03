@@ -137,11 +137,6 @@ export default function RevenueRecognitionPage() {
       <PageHeader
         title="Revenue Recognition"
         description="Manage deferred revenue schedules and recognition rules"
-        breadcrumbs={[
-          { label: "Finance", href: "/finance" },
-          { label: "Advanced", href: "/finance/advanced" },
-          { label: "Revenue Recognition" },
-        ]}
         actions={
           <Button variant="primary" onClick={() => setCreateOpen(true)}>
             <Plus size={14} className="mr-2" /> New Schedule

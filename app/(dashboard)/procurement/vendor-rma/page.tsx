@@ -45,11 +45,6 @@ export default function VendorRMAPage() {
       <PageHeader
         title="Vendor RMA"
         description="Return merchandise authorization requests to suppliers"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Procurement", href: "/procurement" },
-          { label: "Vendor RMA" },
-        ]}
       />
 
       {stats && (

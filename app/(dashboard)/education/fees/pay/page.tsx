@@ -76,11 +76,6 @@ export default function FeePaymentPage() {
           <PageHeader
             title="Fee Payment"
             description="Process student fee payments"
-            breadcrumbs={[
-              { label: "Education", href: "/education" },
-              { label: "Fees", href: "/education/fees" },
-              { label: "Payment" },
-            ]}
           />
           <Card>
             <div className={styles.s1}>
@@ -115,11 +110,6 @@ export default function FeePaymentPage() {
         <PageHeader
           title="Fee Payment"
           description="Process student fee payments"
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Fees", href: "/education/fees" },
-            { label: "Payment" },
-          ]}
         />
 
         <div className="ui-grid-auto">

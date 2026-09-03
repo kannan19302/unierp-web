@@ -46,59 +46,7 @@ interface ProcessForm {
   steps: ApprovalStep[];
 }
 
-const MOCK_PROCESSES: ApprovalProcess[] = [
-  {
-    id: "1",
-    name: "Discount Approval",
-    entity: "DISCOUNT",
-    isActive: true,
-    steps: [
-      {
-        order: 1,
-        approverType: "MANAGER",
-        approverId: "",
-        autoApproveAfterHours: 24,
-      },
-      {
-        order: 2,
-        approverType: "ROLE",
-        approverId: "finance_head",
-        autoApproveAfterHours: null,
-      },
-    ],
-    createdAt: "2026-06-10T10:00:00Z",
-  },
-  {
-    id: "2",
-    name: "Large Deal Approval",
-    entity: "OPPORTUNITY",
-    isActive: true,
-    steps: [
-      {
-        order: 1,
-        approverType: "USER",
-        approverId: "vp-sales",
-        autoApproveAfterHours: 48,
-      },
-    ],
-    createdAt: "2026-06-15T14:00:00Z",
-  },
-  {
-    id: "3",
-    name: "Quote Sign-off",
-    entity: "QUOTATION",
-    isActive: false,
-    steps: [
-      {
-        order: 1,
-        approverType: "MANAGER",
-        approverId: "",
-        autoApproveAfterHours: null,
-      },
-    ],
-    createdAt: "2026-05-20T09:00:00Z",
-  },
-];
+
 
 const emptyForm = (): ProcessForm => ({
   name: "",
@@ -148,17 +96,8 @@ export default function ApprovalSettingsPage() {
       setProcesses((prev: any) => [...prev, created]);
       setShowModal(false);
       setForm(emptyForm());
-    } catch {
-      setProcesses((prev: any) => [
-        ...prev,
-        {
-          ...form,
-          id: `local-${Date.now()}`,
-          isActive: true,
-          createdAt: new Date().toISOString(),
-        },
-      ]);
-      setShowModal(false);
+    } catch (err: any) {
+      alert(err?.message || "Failed to create approval process.");
     } finally {
       setSubmitting(false);
     }
@@ -256,12 +195,6 @@ export default function ApprovalSettingsPage() {
       <div className={styles.style1}>
         <PageHeader
           title="Approval Processes"
-          breadcrumbs={[
-            { label: "Home", href: "/" },
-            { label: "CRM", href: "/crm" },
-            { label: "Settings", href: "/crm/settings" },
-            { label: "Approvals" },
-          ]}
         />
 
         <div className={styles.style2}>

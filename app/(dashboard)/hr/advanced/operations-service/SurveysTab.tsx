@@ -179,7 +179,7 @@ export default function SurveysTab() {
               onChange={(e: any) => setSubmitEmpId(e.target.value)}
               required
             >
-              <option value="">Select Employee (Mock Submitter)</option>
+              <option value="">Select Employee</option>
               {employees.map((e: any) => (
                 <option key={e.id} value={e.id}>
                   {e.firstName} {e.lastName}

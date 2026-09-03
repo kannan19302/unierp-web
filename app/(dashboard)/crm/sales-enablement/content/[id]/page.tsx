@@ -62,13 +62,6 @@ export default function ContentDetailPage() {
     <div className="ui-stack-6 max-w-3xl">
       <PageHeader
         title={item.title}
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Sales Enablement", href: "/crm/sales-enablement" },
-          { label: "Content Library", href: "/crm/sales-enablement/content" },
-          { label: item.title },
-        ]}
       />
 
       <Card>

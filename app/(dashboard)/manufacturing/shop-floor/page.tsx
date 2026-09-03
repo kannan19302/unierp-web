@@ -180,7 +180,7 @@ export default function ShopFloorTerminal() {
         await client.post("/manufacturing/downtime", {
           workstationId: selectedWorkstationId,
           downtimeCode: downtimeCode,
-          startTime: new Date(Date.now() - 15 * 60000).toISOString(), // mock 15m downtime
+          startTime: new Date(Date.now() - 15 * 60000).toISOString(),
           endTime: new Date().toISOString(),
           notes: downtimeNotes,
         });

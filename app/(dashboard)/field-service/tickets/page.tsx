@@ -143,10 +143,6 @@ export default function ServiceTicketsPage() {
         <PageHeader
           title="Service Tickets"
           description="Customer service tickets, priority queues, and SLA management"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Tickets" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Ticket

@@ -16,11 +16,6 @@ export default function OpportunitiesPage() {
         <PageHeader
           title="Opportunities"
           description="Track sales deals and pipeline progress"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Opportunities" },
-          ]}
         />
 
         <ListView

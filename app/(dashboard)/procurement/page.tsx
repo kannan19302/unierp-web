@@ -161,10 +161,6 @@ export default function ProcurementDashboard() {
         <PageHeader
           title="Procurement Hub"
           description="Source materials, negotiate supplier bids, and track inventory procure-to-pay lifecycles."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Procurement" },
-          ]}
           actions={
             <ViewSwitcher
               activeView={activeView}

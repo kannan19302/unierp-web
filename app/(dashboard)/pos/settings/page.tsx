@@ -17,11 +17,6 @@ export default function PosSettingsPage() {
       <PageHeader
         title="Point of Sale"
         description="Configure receipt templates, payment methods, tax profiles, and shift settings."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "POS", href: "/pos" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/pos/receipt-templates" className={styles.card}>

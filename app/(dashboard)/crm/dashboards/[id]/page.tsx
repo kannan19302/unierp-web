@@ -84,63 +84,7 @@ const DATA_SOURCES: DataSource[] = [
   "COMMISSIONS",
 ];
 
-const MOCK_DASHBOARD: Dashboard = {
-  id: "1",
-  name: "Sales Overview",
-  description: "Key metrics for the sales team",
-  widgets: [
-    {
-      id: "w1",
-      widgetType: "KPI_CARD",
-      title: "Total Revenue",
-      dataSource: "REVENUE",
-      config: {},
-      position: { x: 0, y: 0, w: 3, h: 2 },
-    },
-    {
-      id: "w2",
-      widgetType: "BAR_CHART",
-      title: "Pipeline by Stage",
-      dataSource: "PIPELINE",
-      config: {},
-      position: { x: 3, y: 0, w: 5, h: 4 },
-    },
-    {
-      id: "w3",
-      widgetType: "PIE_CHART",
-      title: "Lead Sources",
-      dataSource: "LEADS",
-      config: {},
-      position: { x: 8, y: 0, w: 4, h: 4 },
-    },
-    {
-      id: "w4",
-      widgetType: "KPI_CARD",
-      title: "Win Rate",
-      dataSource: "CONVERSIONS",
-      config: {},
-      position: { x: 0, y: 2, w: 3, h: 2 },
-    },
-    {
-      id: "w5",
-      widgetType: "FUNNEL",
-      title: "Sales Funnel",
-      dataSource: "PIPELINE",
-      config: {},
-      position: { x: 0, y: 4, w: 6, h: 4 },
-    },
-    {
-      id: "w6",
-      widgetType: "LEADERBOARD",
-      title: "Top Reps",
-      dataSource: "COMMISSIONS",
-      config: {},
-      position: { x: 6, y: 4, w: 6, h: 4 },
-    },
-  ],
-};
-
-function MockVisualization({
+function WidgetVisualization({
   type,
   title,
 }: {
@@ -278,7 +222,7 @@ export default function DashboardCanvasPage() {
       const data = await client.get<any>(`/crm/dashboards/${dashboardId}`);
       setDashboard(data);
     } catch {
-      setDashboard({ ...MOCK_DASHBOARD, id: dashboardId });
+      setDashboard(null);
     } finally {
       setLoading(false);
     }
@@ -307,42 +251,17 @@ export default function DashboardCanvasPage() {
       });
       fetchDashboard();
     } catch {
-      // fallback: add locally
-      if (dashboard) {
-        const newWidget: Widget = {
-          id: `w${Date.now()}`,
-          ...widgetForm,
-          title: widgetForm.title.trim(),
-          config: {},
-          position: { x: 0, y: 0, w: 4, h: 3 },
-        };
-        setDashboard({
-          ...dashboard,
-          widgets: [...dashboard.widgets, newWidget],
-        });
-      }
       setShowAddModal(false);
-      setWidgetForm({
-        widgetType: "KPI_CARD",
-        title: "",
-        dataSource: "PIPELINE",
-      });
     } finally {
       setSaving(false);
     }
   };
 
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "CRM", href: "/crm" },
-    { label: "Dashboards", href: "/crm/dashboards" },
-    { label: dashboard?.name || "Dashboard" },
-  ];
   if (loading) {
     return (
       <RouteGuard permission="crm.read">
         <div className={styles.page}>
-          <PageHeader title="Dashboard" breadcrumbs={breadcrumbs} />
+          <PageHeader title="Dashboard" />
           <div className={styles.loading}>
             <Spinner />
           </div>
@@ -364,7 +283,6 @@ export default function DashboardCanvasPage() {
       <div className={styles.page}>
         <PageHeader
           title={dashboard.name}
-          breadcrumbs={breadcrumbs}
           actions={
             <Button onClick={() => setEditMode(!editMode)}>
               {editMode ? (
@@ -424,7 +342,7 @@ export default function DashboardCanvasPage() {
                   </span>
                 </div>
                 <div className={styles.widgetContent}>
-                  <MockVisualization
+                  <WidgetVisualization
                     type={widget.widgetType}
                     title={widget.title}
                   />

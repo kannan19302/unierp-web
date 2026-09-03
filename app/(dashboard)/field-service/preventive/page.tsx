@@ -111,10 +111,6 @@ export default function PreventiveMaintenancePage() {
         <PageHeader
           title="Preventive Maintenance"
           description="Automated scheduling, inspection intervals, and ticket dispatch rules"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Preventive" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Create Plan

@@ -90,17 +90,9 @@ export default function TransferApprovalsPage() {
           : [];
       setApprovals((Array.isArray(items) ? items : []) as Approval[]);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setApprovals([
-        {
-          id: "appr-1",
-          stockEntryId: "se-1",
-          thresholdValue: 1000,
-          entryValue: 5400,
-          status: "PENDING",
-          stockEntry: { entryNumber: "STE-2026-00042" },
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setApprovals([]);
+
     } finally {
       setLoading(false);
     }
@@ -156,11 +148,6 @@ export default function TransferApprovalsPage() {
         <PageHeader
           title="Multi-Warehouse Transfer Approvals"
           description="Value-threshold approval workflow for inter-warehouse transfers, plus per-warehouse threshold rules."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Transfer Approvals" },
-          ]}
           actions={
             <Button
               variant="primary"

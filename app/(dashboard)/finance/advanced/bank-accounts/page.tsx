@@ -14,11 +14,6 @@ export default function BankAccountsPage() {
         <PageHeader
           title="Bank Accounts"
           description="Manage treasury, bank accounts, and corporate cash ledger"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Finance", href: "/finance" },
-            { label: "Bank Accounts" },
-          ]}
         />
 
         <ListView

@@ -11,11 +11,6 @@ export default function FieldServiceSettingsPage() {
       <PageHeader
         title="Field Service"
         description="Configure service templates, technician skills, service zones, and contract templates."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Field Service", href: "/field-service" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/field-service/templates" className={styles.card}>

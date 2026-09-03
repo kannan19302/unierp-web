@@ -173,11 +173,6 @@ export default function ConsolidationPage() {
         <PageHeader
           title="Financial Consolidation"
           description="Multi-entity consolidated financial statements and inter-company eliminations"
-          breadcrumbs={[
-            { label: "Finance", href: "/finance" },
-            { label: "Advanced", href: "/finance/advanced" },
-            { label: "Consolidation" },
-          ]}
           actions={
             <Button
               variant="primary"

@@ -92,11 +92,6 @@ export default function ValuationsPage() {
         <PageHeader
           title="Inventory Cost Valuations"
           description="Monitor real-time product inventory values and weighted average costing models."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Valuations" },
-          ]}
         />
 
         {error && (

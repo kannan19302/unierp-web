@@ -60,111 +60,14 @@ export default function PartnerManagementPage() {
           );
           setMdfSummary(mdfData?.data || null);
         } catch {
-          /* ignore */
+          setMdfSummary(null);
         }
       } else {
-        // Mock fallback
-        const mockList = [
-          {
-            partnerId: "p1",
-            partnerName: "Acme Distributors",
-            totalRevenue: 150000,
-            totalOrders: 20,
-            wonOrders: 15,
-            conversionRate: 75,
-            commissionEarned: 15000,
-            contactsCount: 5,
-            lastOrderDate: new Date().toISOString(),
-          },
-          {
-            partnerId: "p2",
-            partnerName: "Global Resellers",
-            totalRevenue: 85000,
-            totalOrders: 12,
-            wonOrders: 8,
-            conversionRate: 66,
-            commissionEarned: 8500,
-            contactsCount: 3,
-            lastOrderDate: new Date(Date.now() - 86400000).toISOString(),
-          },
-        ];
-        setPartners(mockList);
-        setMdfSummary({
-          partnerId: "p1",
-          partnerName: "Acme Distributors",
-          totalBudget: 50000,
-          utilized: 18500,
-          remaining: 31500,
-          utilizationRate: 37,
-          claims: [
-            {
-              id: "mdf-1",
-              name: "Q1 Co-marketing Campaign",
-              amount: 10000,
-              status: "APPROVED",
-              date: "2026-02-15",
-            },
-            {
-              id: "mdf-2",
-              name: "Trade Show Booth",
-              amount: 5000,
-              status: "PAID",
-              date: "2026-03-10",
-            },
-          ],
-        });
+        setMdfSummary(null);
       }
     } catch {
-      // Mock fallback
-      const mockList = [
-        {
-          partnerId: "p1",
-          partnerName: "Acme Distributors",
-          totalRevenue: 150000,
-          totalOrders: 20,
-          wonOrders: 15,
-          conversionRate: 75,
-          commissionEarned: 15000,
-          contactsCount: 5,
-          lastOrderDate: new Date().toISOString(),
-        },
-        {
-          partnerId: "p2",
-          partnerName: "Global Resellers",
-          totalRevenue: 85000,
-          totalOrders: 12,
-          wonOrders: 8,
-          conversionRate: 66,
-          commissionEarned: 8500,
-          contactsCount: 3,
-          lastOrderDate: new Date(Date.now() - 86400000).toISOString(),
-        },
-      ];
-      setPartners(mockList);
-      setMdfSummary({
-        partnerId: "p1",
-        partnerName: "Acme Distributors",
-        totalBudget: 50000,
-        utilized: 18500,
-        remaining: 31500,
-        utilizationRate: 37,
-        claims: [
-          {
-            id: "mdf-1",
-            name: "Q1 Co-marketing Campaign",
-            amount: 10000,
-            status: "APPROVED",
-            date: "2026-02-15",
-          },
-          {
-            id: "mdf-2",
-            name: "Trade Show Booth",
-            amount: 5000,
-            status: "PAID",
-            date: "2026-03-10",
-          },
-        ],
-      });
+      setPartners([]);
+      setMdfSummary(null);
     } finally {
       setLoading(false);
     }
@@ -235,12 +138,6 @@ export default function PartnerManagementPage() {
         <PageHeader
           title="Partner Management"
           description="Monitor affiliate reselling performance, commission allocations, and market development funds (MDF)"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Intelligence", href: "/crm/intelligence" },
-            { label: "Partner Management" },
-          ]}
           actions={
             <div className="ui-hstack-2">
               <Button

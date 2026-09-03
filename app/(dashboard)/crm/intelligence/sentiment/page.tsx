@@ -91,12 +91,6 @@ export default function SentimentAnalysisPage() {
         <PageHeader
           title="Sentiment & Deal Health"
           description="Monitor lead conversation sentiment trends and predictive deal health indicators"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Intelligence", href: "/crm/intelligence" },
-            { label: "Sentiment & Health" },
-          ]}
           actions={
             <Link href="/crm/intelligence">
               <Button variant="outline" size="sm">

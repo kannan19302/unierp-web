@@ -126,10 +126,6 @@ export default function PropertiesPage() {
         <PageHeader
           title="Properties"
           description="Manage your property portfolio"
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Properties" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Add Property

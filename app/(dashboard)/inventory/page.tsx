@@ -290,10 +290,6 @@ export default function InventoryPage() {
         <PageHeader
           title="Inventory & Warehouse"
           description="Manage products, warehouses, stock levels, and movement entries."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory" },
-          ]}
           actions={
             <div className="ui-hstack-3">
               <ViewSwitcher

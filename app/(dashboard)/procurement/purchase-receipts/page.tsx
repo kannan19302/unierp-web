@@ -85,35 +85,11 @@ export default function PurchaseReceiptsPage() {
       const firstWarehouse = whs[0];
       if (firstWarehouse) setSelectedWarehouse(firstWarehouse.id);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setPos([
-        {
-          id: "po-1",
-          poNumber: "PO-2026-001",
-          vendorName: "Oscorp Chemical Supply",
-          lineItems: [
-            {
-              productId: "prod-1",
-              description: '4K IPS Curved Monitor 32"',
-              quantity: 10,
-              receivedQty: 0,
-            },
-          ],
-        },
-      ]);
-      setWarehouses([{ id: "wh-1", name: "Main Central Warehouse" }]);
-      setReceipts([
-        {
-          id: "r-1",
-          receiptNumber: "REC-2026-001",
-          receivedDate: new Date().toISOString(),
-          notes: "Standard warehouse goods receipt",
-          purchaseOrder: {
-            poNumber: "PO-2026-001",
-            vendorName: "Oscorp Chemical Supply",
-          },
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setPos([]);
+      setWarehouses([]);
+      setReceipts([]);
+
     } finally {
       setLoading(false);
     }
@@ -191,20 +167,8 @@ export default function PurchaseReceiptsPage() {
       setIsModalOpen(false);
       resetForm();
       loadData();
-    } catch {
-      const poObj = pos.find((p: any) => p.id === selectedPo);
-      const newMock: PurchaseReceipt = {
-        id: `r-mock-${Date.now()}`,
-        receiptNumber,
-        receivedDate: new Date().toISOString(),
-        notes: notes || undefined,
-        purchaseOrder: poObj
-          ? { poNumber: poObj.poNumber, vendorName: poObj.vendorName }
-          : null,
-      };
-      setReceipts((prev: any) => [newMock, ...prev]);
-      setIsModalOpen(false);
-      resetForm();
+    } catch (err: any) {
+      alert(err?.message || "Failed to create purchase receipt.");
     } finally {
       setSubmitting(false);
     }
@@ -274,11 +238,6 @@ export default function PurchaseReceiptsPage() {
         <PageHeader
           title="Purchase Receipts (GRN)"
           description="Verify supplier shipments, log material discrepancies, and increase inventory warehouse stock."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Purchase Receipts" },
-          ]}
           actions={
             <Button
               variant="primary"
@@ -294,7 +253,7 @@ export default function PurchaseReceiptsPage() {
         {error && (
           <div className={styles.p1}>
             <AlertCircle size={16} />
-            <span>Note: {error} (Serving local mock fallback registry)</span>
+            <span>Note: {error}</span>
           </div>
         )}
 

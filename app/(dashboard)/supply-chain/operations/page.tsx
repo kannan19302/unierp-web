@@ -94,10 +94,6 @@ function OperationsHubContent() {
         <PageHeader
           title="Operations"
           description="Day-to-day shipment operations: view shipments, track deliveries, manage carriers, and optimize routes"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Operations" },
-          ]}
         />
 
         <SubTabBar tabs={OPERATIONS_TABS} />

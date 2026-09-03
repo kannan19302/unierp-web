@@ -104,11 +104,6 @@ export default function ApiTokensPage() {
         <PageHeader
           title="API Tokens"
           description="Manage personal access tokens for API authentication."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Auth", href: "/auth" },
-            { label: "API Tokens" },
-          ]}
         />
         <div className="ui-flex-row ui-gap-4">
           <Button

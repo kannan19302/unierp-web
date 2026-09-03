@@ -69,76 +69,7 @@ interface FieldForm {
   options: PicklistOption[];
 }
 
-const MOCK_FIELDS: CustomField[] = [
-  {
-    id: "1",
-    entity: "CUSTOMER",
-    fieldName: "industry_code",
-    label: "Industry Code",
-    fieldType: "TEXT",
-    isRequired: false,
-    isActive: true,
-    defaultValue: null,
-    section: "General",
-    sortOrder: 1,
-    options: [],
-  },
-  {
-    id: "2",
-    entity: "CUSTOMER",
-    fieldName: "annual_revenue",
-    label: "Annual Revenue",
-    fieldType: "DECIMAL",
-    isRequired: false,
-    isActive: true,
-    defaultValue: null,
-    section: "Financial",
-    sortOrder: 2,
-    options: [],
-  },
-  {
-    id: "3",
-    entity: "LEAD",
-    fieldName: "lead_source_detail",
-    label: "Lead Source Detail",
-    fieldType: "PICKLIST",
-    isRequired: true,
-    isActive: true,
-    defaultValue: null,
-    section: "Source",
-    sortOrder: 1,
-    options: [
-      { value: "webinar", label: "Webinar", color: "var(--color-primary)" },
-      { value: "referral", label: "Referral", color: "var(--color-success)" },
-    ],
-  },
-  {
-    id: "4",
-    entity: "OPPORTUNITY",
-    fieldName: "competitor",
-    label: "Competitor",
-    fieldType: "TEXT",
-    isRequired: false,
-    isActive: false,
-    defaultValue: null,
-    section: "Details",
-    sortOrder: 1,
-    options: [],
-  },
-  {
-    id: "5",
-    entity: "CONTACT",
-    fieldName: "linkedin_url",
-    label: "LinkedIn URL",
-    fieldType: "URL",
-    isRequired: false,
-    isActive: true,
-    defaultValue: null,
-    section: "Social",
-    sortOrder: 1,
-    options: [],
-  },
-];
+
 
 const emptyForm = (entity: Entity): FieldForm => ({
   entity,
@@ -152,7 +83,7 @@ const emptyForm = (entity: Entity): FieldForm => ({
   options: [],
 });
 
-export default function CustomFieldsPage() {
+export default function CustomFieldsSettingsPage() {
   const [fields, setFields] = useState<CustomField[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeEntity, setActiveEntity] = useState<Entity>("CUSTOMER");
@@ -188,19 +119,8 @@ export default function CustomFieldsPage() {
       setFields((prev: any) => [...prev, created]);
       setShowModal(false);
       setForm(emptyForm(activeEntity));
-    } catch {
-      setFields((prev: any) => [
-        ...prev,
-        {
-          ...form,
-          id: `local-${Date.now()}`,
-          isActive: true,
-          defaultValue: form.defaultValue || null,
-          section: form.section || null,
-          options: form.options,
-        },
-      ]);
-      setShowModal(false);
+    } catch (err: any) {
+      alert(err?.message || "Failed to create custom field.");
     } finally {
       setSubmitting(false);
     }
@@ -284,12 +204,6 @@ export default function CustomFieldsPage() {
       <div className={styles.style1}>
         <PageHeader
           title="Custom Fields"
-          breadcrumbs={[
-            { label: "Home", href: "/" },
-            { label: "CRM", href: "/crm" },
-            { label: "Settings", href: "/crm/settings" },
-            { label: "Custom Fields" },
-          ]}
         />
 
         <div className={styles.style2}>

@@ -163,11 +163,6 @@ export default function AccountPlansPage() {
       <PageHeader
         title="Account Planning & Health"
         description="Create strategic account plans, log customer health metrics, and merge accounts"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Account Plans" },
-        ]}
       />
 
       {/* Account Plans List */}

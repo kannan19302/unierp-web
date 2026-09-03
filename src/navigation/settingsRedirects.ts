@@ -68,5 +68,5 @@ export const OLD_TO_NEW: Record<string, string> = {
   "/settings/modules": "/apps",
   "/settings/marketplace": "/apps",
   // Legacy settings index
-  "/settings": "/dashboard",
+  "/settings": "/apps",
 };

@@ -61,23 +61,10 @@ export default function RFQsPage() {
       setRfqs(Array.isArray(rfqRes) ? rfqRes : rfqRes.data || []);
       setProducts(Array.isArray(prodRes) ? prodRes : prodRes.data || []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setRfqs([
-        {
-          id: "rfq-1",
-          rfqNumber: "RFQ-2026-001",
-          status: "SENT",
-          expectedDate: new Date().toISOString(),
-          notes: "Quotation request for office monitor upgrade",
-          createdAt: new Date().toISOString(),
-          itemsCount: 1,
-          quotesCount: 2,
-        },
-      ]);
-      setProducts([
-        { id: "prod-1", name: "UltraBook Laptop Pro", sku: "SKU-LAP-001" },
-        { id: "prod-2", name: '4K IPS Curved Monitor 32"', sku: "SKU-MON-002" },
-      ]);
+      setError("Could not load data. Please try again.");
+      setRfqs([]);
+      setProducts([]);
+
     } finally {
       setLoading(false);
     }
@@ -107,20 +94,8 @@ export default function RFQsPage() {
       setIsModalOpen(false);
       resetForm();
       loadData();
-    } catch {
-      const newMock: RFQ = {
-        id: `rfq-mock-${Date.now()}`,
-        rfqNumber,
-        status: "DRAFT",
-        expectedDate: expectedDate || null,
-        notes: notes || null,
-        createdAt: new Date().toISOString(),
-        itemsCount: items.length,
-        quotesCount: 0,
-      };
-      setRfqs((prev: any) => [newMock, ...prev]);
-      setIsModalOpen(false);
-      resetForm();
+    } catch (err: any) {
+      alert(err?.message || "Failed to create RFQ.");
     } finally {
       setSubmitting(false);
     }
@@ -204,11 +179,6 @@ export default function RFQsPage() {
         <PageHeader
           title="Requests for Quotation (RFQ)"
           description="Solicit bids and negotiate commercial pricing terms from invited suppliers."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "RFQs" },
-          ]}
           actions={
             <Button
               variant="primary"
@@ -224,7 +194,7 @@ export default function RFQsPage() {
         {error && (
           <div className={styles.p1}>
             <AlertCircle size={16} />
-            <span>Note: {error} (Serving local mock fallback registry)</span>
+            <span>Note: {error}</span>
           </div>
         )}
 

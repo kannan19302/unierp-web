@@ -176,10 +176,6 @@ export default function MobileDispatchPage() {
         <PageHeader
           title="Mobile Dispatch"
           description="Technician mobile dashboard and live status"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Mobile Dispatch" },
-          ]}
         />
         <Card title="Technician Statuses" padding="none">
           <DataTable

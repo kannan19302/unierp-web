@@ -107,12 +107,6 @@ function LandingPagesPage() {
       <PageHeader
         title="Landing Pages"
         description="Create and manage landing pages for campaigns"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Marketing Deep", href: "/crm/marketing-deep" },
-          { label: "Landing Pages" },
-        ]}
         actions={
           <Button onClick={() => setShowCreate(true)}>
             <Plus size={14} /> New Landing Page

@@ -72,11 +72,6 @@ export default function CrmSettingsPage() {
         <PageHeader
           title="CRM Settings"
           description="Configure CRM pipelines, scoring, integrations, and rules"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Settings" },
-          ]}
         />
         <div className="ui-grid-3" style={{ padding: "var(--space-4)" }}>
           {settingsCards.map((card: any) => {

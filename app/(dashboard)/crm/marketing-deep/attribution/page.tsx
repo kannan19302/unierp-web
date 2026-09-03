@@ -58,12 +58,6 @@ function AttributionPage() {
       <PageHeader
         title="Campaign Attribution"
         description="Track and analyze revenue attribution across campaigns"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Marketing Deep", href: "/crm/marketing-deep" },
-          { label: "Attribution" },
-        ]}
       />
       <Card>
         <div className="ui-form-group ui-mb-4">

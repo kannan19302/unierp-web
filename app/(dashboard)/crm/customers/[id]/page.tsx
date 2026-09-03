@@ -201,131 +201,7 @@ export default function CustomerDetailPage() {
       const result = await client.get<any>(`/crm/customers/${id}/summary`);
       setData(result);
     } catch {
-      // Mock data fallback for local demo and test environments
-      setTimeout(() => {
-        const nowStr = new Date().toISOString();
-        const yesterdayStr = new Date(
-          Date.now() - 24 * 3600 * 1000,
-        ).toISOString();
-        const lastWeekStr = new Date(
-          Date.now() - 7 * 24 * 3600 * 1000,
-        ).toISOString();
-
-        setData({
-          customer: {
-            id,
-            name:
-              id === "1"
-                ? "Stark Industries"
-                : id === "2"
-                  ? "Wayne Enterprises"
-                  : "Oscorp Industries",
-            type: "COMPANY",
-            email: "procurement@stark.com",
-            phone: "+1-555-0101",
-            taxId: "TX-001",
-            billingAddress: {
-              street: "10880 Malibu Point",
-              city: "Malibu",
-              state: "CA",
-              postalCode: "90265",
-              country: "USA",
-            },
-            shippingAddress: {
-              street: "Stark Tower, 200 Park Ave",
-              city: "New York",
-              state: "NY",
-              postalCode: "10166",
-              country: "USA",
-            },
-            creditLimit: id === "2" ? 100000 : 50000,
-            paymentTerms: 30,
-            status: "ACTIVE",
-            notes:
-              "Key enterprise account. Prefers invoicing via electronic portals. High volume buyer.",
-            createdAt: lastWeekStr,
-          },
-          metrics: {
-            ltv: 75000,
-            unpaidBalance: 12500,
-            creditLimit: id === "2" ? 100000 : 50000,
-            availableCredit: id === "2" ? 87500 : 37500,
-            isCreditLimitExceeded: false,
-            openCases: 2,
-            resolvedCases: 5,
-          },
-          recentSalesOrders: [
-            {
-              id: "so1",
-              orderNumber: "SO-2026-0004",
-              totalAmount: 12500,
-              status: "PROCESSING",
-              orderDate: nowStr,
-            },
-            {
-              id: "so2",
-              orderNumber: "SO-2026-0003",
-              totalAmount: 25000,
-              status: "DELIVERED",
-              orderDate: yesterdayStr,
-            },
-            {
-              id: "so3",
-              orderNumber: "SO-2026-0002",
-              totalAmount: 37500,
-              status: "DELIVERED",
-              orderDate: lastWeekStr,
-            },
-          ],
-          recentInvoices: [
-            {
-              id: "inv1",
-              invoiceNumber: "INV-2026-0003",
-              totalAmount: 12500,
-              status: "UNPAID",
-              issueDate: nowStr,
-              dueDate: new Date(
-                Date.now() + 30 * 24 * 3600 * 1000,
-              ).toISOString(),
-            },
-            {
-              id: "inv2",
-              invoiceNumber: "INV-2026-0002",
-              totalAmount: 25000,
-              status: "PAID",
-              issueDate: yesterdayStr,
-              dueDate: nowStr,
-            },
-            {
-              id: "inv3",
-              invoiceNumber: "INV-2026-0001",
-              totalAmount: 37500,
-              status: "PAID",
-              issueDate: lastWeekStr,
-              dueDate: yesterdayStr,
-            },
-          ],
-          recentCases: [
-            {
-              id: "case1",
-              caseNumber: "CS-2026-0002",
-              subject: "Invoicing dispute on shipment SO-0003",
-              status: "IN_PROGRESS",
-              priority: "HIGH",
-              createdAt: nowStr,
-            },
-            {
-              id: "case2",
-              caseNumber: "CS-2026-0001",
-              subject: "API endpoint auth error",
-              status: "RESOLVED",
-              priority: "MEDIUM",
-              createdAt: lastWeekStr,
-            },
-          ],
-        });
-        setLoading(false);
-      }, 500);
+      setData(null);
     } finally {
       setLoading(false);
     }
@@ -755,12 +631,6 @@ export default function CustomerDetailPage() {
         <PageHeader
           title={customer.name}
           description={`Payment Terms: Net ${customer.paymentTerms} Days | Type: ${customer.type}`}
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Customers", href: "/crm/customers" },
-            { label: customer.name },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button

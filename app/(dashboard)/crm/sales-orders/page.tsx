@@ -279,10 +279,6 @@ export default function CrmSalesOrdersPage() {
         <PageHeader
           title="Sales Orders"
           description="Track customer orders from confirmation through delivery"
-          breadcrumbs={[
-            { label: "CRM", href: "/crm" },
-            { label: "Sales Orders" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button variant="outline" onClick={() => {}}>

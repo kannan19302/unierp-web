@@ -49,19 +49,10 @@ export default function DockSchedulingPage() {
         if (firstWarehouse) setWarehouseId(firstWarehouse.id);
       }
     } catch {
-      setError("Serving local mock fallback registry.");
-      setWarehouses([{ id: "wh-1", name: "Schenectady Central Depot" }]);
-      setAppointments([
-        {
-          id: "appt-1",
-          dockDoor: "D1",
-          type: "INBOUND",
-          carrierName: "Acme Freight",
-          scheduledAt: new Date().toISOString(),
-          durationMinutes: 60,
-          status: "SCHEDULED",
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setWarehouses([]);
+      setAppointments([]);
+
     } finally {
       setLoading(false);
     }
@@ -176,11 +167,6 @@ export default function DockSchedulingPage() {
         <PageHeader
           title="Yard & Dock Appointment Scheduling"
           description="Conflict-checked dock-door booking for inbound/outbound trucks, with check-in/complete lifecycle and utilization reporting."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Dock Scheduling" },
-          ]}
           actions={
             <Button
               variant="primary"

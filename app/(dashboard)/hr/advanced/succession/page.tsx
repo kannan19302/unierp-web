@@ -98,12 +98,6 @@ export default function SuccessionPage() {
       <PageHeader
         title="Succession Plan"
         description="Address organizational vacancy risks, map high-potential successor roles, and coordinate readiness development plans."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Advanced", href: "/hr/advanced" },
-          { label: "Succession" },
-        ]}
         actions={
           <Button variant="primary" onClick={() => setShowForm(!showForm)}>
             <Plus size={14} /> Design Plan

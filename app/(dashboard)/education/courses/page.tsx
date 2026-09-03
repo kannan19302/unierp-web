@@ -127,10 +127,6 @@ export default function CourseCatalogPage() {
         <PageHeader
           title="Course Catalog"
           description="Browse and manage academic courses"
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Courses" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Add Course

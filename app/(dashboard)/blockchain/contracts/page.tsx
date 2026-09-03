@@ -114,11 +114,6 @@ export default function ContractsPage() {
         <PageHeader
           title="Smart Contract Registry"
           description="Register and manage blockchain smart contracts."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Blockchain", href: "/blockchain" },
-            { label: "Contracts" },
-          ]}
         />
         <div>
           <Button

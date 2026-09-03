@@ -67,13 +67,6 @@ export default function CpqPricingRuleDetailPage() {
       <PageHeader
         title={rule.name as string}
         description={`Rule type: ${rule.ruleType as string}`}
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "CPQ", href: "/crm/cpq" },
-          { label: "Pricing Rules", href: "/crm/cpq/pricing-rules" },
-          { label: rule.name as string },
-        ]}
         actions={
           <Button
             size="sm"

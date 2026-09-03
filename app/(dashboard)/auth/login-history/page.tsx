@@ -81,11 +81,6 @@ export default function LoginHistoryPage() {
         <PageHeader
           title="Login History"
           description="Review all sign-in attempts to your account."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Auth", href: "/auth" },
-            { label: "Login History" },
-          ]}
         />
         <div className="ui-flex-row ui-gap-4">
           <select

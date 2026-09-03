@@ -241,11 +241,6 @@ export default function DrpPlanningPage() {
         <PageHeader
           title="Distribution Planning"
           description="Distribution Requirements Planning — runs and generated plans."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "DRP Planning" },
-          ]}
           actions={
             <Button
               variant="primary"

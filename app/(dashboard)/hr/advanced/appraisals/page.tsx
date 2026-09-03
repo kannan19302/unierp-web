@@ -123,12 +123,6 @@ export default function AppraisalsPage() {
         <PageHeader
           title="Performance Appraisals"
           description="Oversee corporate review cycles, compile employee performance scorecards, and store growth feedback."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Appraisals" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setShowForm(!showForm)}>
               <Plus size={14} /> New Appraisal

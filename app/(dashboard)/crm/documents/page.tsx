@@ -242,11 +242,6 @@ export default function DocumentsPage() {
         <PageHeader
           title="Documents"
           description="Manage proposals, contracts, and attachments linked to your CRM records."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Documents" },
-          ]}
           actions={
             <Button
               onClick={() => setIsModalOpen(true)}

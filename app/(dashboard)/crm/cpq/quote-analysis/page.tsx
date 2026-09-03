@@ -103,12 +103,6 @@ export default function CpqQuoteAnalysisPage() {
       <PageHeader
         title="Quote Analysis"
         description="Analyze quote margins, compare versions, and view quote history"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "CPQ & Quoting", href: "/crm/cpq" },
-          { label: "Quote Analysis" },
-        ]}
       />
 
       <Card>

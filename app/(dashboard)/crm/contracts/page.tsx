@@ -38,11 +38,6 @@ export default function ContractsPage() {
         <PageHeader
           title="Contracts"
           description="Manage customer and vendor contracts, track renewals, and monitor contract value."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Contracts" },
-          ]}
         />
 
         <div className="ui-grid-auto">

@@ -119,11 +119,6 @@ export default function AiSettingsPage() {
       <PageHeader
         title="AI Copilot"
         description="Manage UniERP's AI copilot — the self-hosted assistant available across the app."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "AI Copilot", href: "/ai" },
-          { label: "Settings" },
-        ]}
       />
 
       <div className={styles.grid}>

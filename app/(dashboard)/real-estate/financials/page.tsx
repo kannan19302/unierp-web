@@ -221,10 +221,6 @@ export default function FinancialsPage() {
         <PageHeader
           title="Property Financials"
           description="NOI, P&L, Cap Rate, and cash flow analysis"
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Financials" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Record

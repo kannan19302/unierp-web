@@ -11,11 +11,6 @@ export default function StockLevelsPage() {
         <PageHeader
           title="Warehouse Stock Levels"
           description="Monitor quantities on hand across company storage depots and warehouses."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Stock Levels" },
-          ]}
         />
         <ListView resource={stockLevelResource} />
       </div>

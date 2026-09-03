@@ -93,10 +93,6 @@ export default function ContractMfgPage() {
         <PageHeader
           title="Contract Manufacturing"
           description="Outsource production, manage co-packers, receive subcontracted goods"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "Contract MFG" },
-          ]}
         />
 
         {dashboard && (

@@ -147,10 +147,6 @@ export default function KnowledgeBasePage() {
           description={
             dashboard ? `${dashboard.publishedCount} published articles` : ""
           }
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "Knowledge Base" },
-          ]}
           actions={
             <Button>
               <Plus size={14} /> New Article

@@ -139,10 +139,6 @@ export default function HelpdeskPage() {
         <PageHeader
           title="Help Desk"
           description={dashboard ? `${dashboard.openCount} open tickets` : ""}
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "Help Desk" },
-          ]}
           actions={
             <Button>
               <Plus size={14} /> New Ticket

@@ -17,11 +17,6 @@ export default function EducationSettingsPage() {
       <PageHeader
         title="Education"
         description="Configure academic terms, grading scales, fee structures, and library settings."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Education", href: "/education" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/education/terms" className={styles.card}>

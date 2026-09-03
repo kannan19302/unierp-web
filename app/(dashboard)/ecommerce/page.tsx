@@ -120,10 +120,6 @@ export default function EcommerceConfigPage() {
         <PageHeader
           title="E-Commerce Storefront"
           description="Configure your public-facing online store: branding, currency, and availability."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "E-Commerce" },
-          ]}
           actions={
             <ProtectedComponent permission={MANAGE_PERMISSION}>
               <Button

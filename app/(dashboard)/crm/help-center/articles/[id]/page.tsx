@@ -66,11 +66,6 @@ export default function ArticleDetailPage() {
       <PageHeader
         title={article.title}
         description={article.excerpt || ""}
-        breadcrumbs={[
-          { label: "Help Center", href: "/crm/help-center" },
-          { label: "Articles", href: "/crm/help-center/articles" },
-          { label: article.title },
-        ]}
       />
       <Card>
         <div className="ui-card-body">

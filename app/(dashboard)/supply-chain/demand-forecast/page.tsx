@@ -80,10 +80,6 @@ export default function DemandForecastPage() {
         <PageHeader
           title="Demand Forecast"
           description="Predictive demand planning based on historical trends and market signals"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Demand Forecast" },
-          ]}
         />
 
         <div className="ui-grid-auto">

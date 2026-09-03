@@ -194,11 +194,6 @@ export default function RecurringInvoicesPage() {
         <PageHeader
           title="Recurring Invoices"
           description="Automate invoice generation on a recurring schedule"
-          breadcrumbs={[
-            { label: "Finance", href: "/finance" },
-            { label: "Advanced", href: "/finance/advanced" },
-            { label: "Recurring Invoices" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button

@@ -337,11 +337,6 @@ export default function RfidTagsPage() {
         <PageHeader
           title="RFID Tags"
           description="Register, track, and manage RFID-tagged inventory items."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "RFID Tags" },
-          ]}
           actions={
             <div className="ui-hstack-2">
               <Button

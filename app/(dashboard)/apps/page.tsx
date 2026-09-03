@@ -26,6 +26,7 @@ import {
   GraduationCap,
   Building2,
   LogOut,
+  Workflow,
 } from "lucide-react";
 import Link from "next/link";
 import styles from "./apps-wizard.module.css";
@@ -42,12 +43,12 @@ export interface AppIconConfig {
 export const APPS_CATALOG: AppIconConfig[] = [
   // Row 1 (Core ERP - 7 apps)
   {
-    id: "dashboard",
-    name: "Dashboard",
-    displayName: "Dashboard",
+    id: "analytics",
+    name: "Analytics",
+    displayName: "Analytics",
     category: "core",
-    icon: Home,
-    href: "/dashboard",
+    icon: PieChart,
+    href: "/analytics",
   },
   {
     id: "finance",
@@ -166,12 +167,12 @@ export const APPS_CATALOG: AppIconConfig[] = [
     href: "/connect",
   },
   {
-    id: "analytics",
-    name: "Analytics",
-    displayName: "Analytics",
+    id: "workflow",
+    name: "Workflow",
+    displayName: "Workflow",
     category: "productivity",
-    icon: PieChart,
-    href: "/analytics",
+    icon: Workflow,
+    href: "/workflow",
   },
   {
     id: "ai",

@@ -1,6 +1,5 @@
 "use client";
 
-import type { CrmTab } from "@/components/crm/CrmTabLayout";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
@@ -393,11 +392,6 @@ export default function CommissionsPage() {
         <PageHeader
           title="Commissions"
           description="Configure commission rules and track earned commissions for your sales team."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Commissions" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-3">
               <Button

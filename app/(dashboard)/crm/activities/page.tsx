@@ -14,11 +14,6 @@ export default function ActivitiesPage() {
         <PageHeader
           title="Activities"
           description="Track all customer communications, meetings, calls, and tasks"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Activities" },
-          ]}
         />
 
         <ListView

@@ -17,11 +17,6 @@ export default function HealthcareSettingsPage() {
       <PageHeader
         title="Healthcare"
         description="Configure clinical templates, department settings, insurance providers, and pharmacy settings."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Healthcare", href: "/healthcare" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/healthcare/templates" className={styles.card}>

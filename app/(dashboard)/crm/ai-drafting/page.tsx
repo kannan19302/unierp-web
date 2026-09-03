@@ -249,11 +249,6 @@ export default function AiDraftingPage() {
       <PageHeader
         title="AI-Assisted Email & Quote Drafting"
         description="Einstein GPT / Breeze Copilot-style follow-up email and quote cover-note drafting from real deal context. Every draft is reviewed and sent by a human — nothing is auto-sent."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "AI Drafting" },
-        ]}
       />
 
       <Card>

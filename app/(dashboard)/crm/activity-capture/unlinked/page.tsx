@@ -93,12 +93,6 @@ function UnlinkedEmailsPage() {
       <PageHeader
         title="Unlinked Emails"
         description="Emails not yet linked to CRM records — manually link them to leads, contacts, or customers"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Activity Capture", href: "/crm/activity-capture" },
-          { label: "Unlinked Emails" },
-        ]}
       />
       <Card>
         <DataTable columns={columns} data={emails} />

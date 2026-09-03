@@ -122,12 +122,6 @@ function ABTestsPage() {
       <PageHeader
         title="A/B Tests"
         description="Run A/B tests on email sequences to optimize engagement"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Activity Capture", href: "/crm/activity-capture" },
-          { label: "A/B Tests" },
-        ]}
         actions={
           <Button onClick={() => setShowCreate(true)}>
             <Plus size={14} /> New A/B Test

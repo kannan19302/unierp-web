@@ -19,11 +19,6 @@ export default function InventorySettingsPage() {
       <PageHeader
         title="Inventory"
         description="Configure warehouses, units of measure, reorder rules, quality templates, and license plates."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Inventory", href: "/inventory" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/inventory/warehouses" className={styles.card}>

@@ -263,12 +263,6 @@ export default function TerritoryAssignmentRulesPage() {
       <PageHeader
         title="Territory Assignment Rules"
         description="Auto-route leads and accounts to sales territories by geography, industry, company size, or round-robin."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Territories", href: "/crm/territories" },
-          { label: "Assignment Rules" },
-        ]}
         actions={
           <div className="ui-flex ui-gap-3">
             <ProtectedComponent permission="crm.lead.update">

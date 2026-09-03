@@ -58,12 +58,6 @@ export default function DuplicatesPage() {
       <PageHeader
         title="Duplicate Detection & Merge"
         description="Find and merge duplicate records to keep your data clean"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Data Management", href: "/crm/data-management" },
-          { label: "Duplicates" },
-        ]}
       />
 
       <Card title="Find Duplicates">

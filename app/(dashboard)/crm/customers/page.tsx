@@ -22,11 +22,6 @@ export default function CustomersPage() {
         <PageHeader
           title="Customers"
           description="Manage your customer accounts, credit limits, and terms"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Customers" },
-          ]}
           actions={
             <ProtectedComponent permission="crm.duplicates.scan">
               <Button

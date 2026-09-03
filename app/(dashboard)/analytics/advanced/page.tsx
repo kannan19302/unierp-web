@@ -178,7 +178,7 @@ export default function AdvancedReportingPage() {
                         Type: {w.chartType} Chart
                       </p>
                       <div className={styles.s15}>
-                        [Mock {w.chartType} Visualization]
+                        [{w.chartType} Visualization Preview]
                       </div>
                     </div>
                   ))}

@@ -201,11 +201,6 @@ export default function CommissionsPage() {
         <PageHeader
           title="Sales Commissions"
           description="Manage commission plans and track payouts."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Sales", href: "/sales" },
-            { label: "Commissions" },
-          ]}
         />
         {loading ? (
           <div className="ui-center-pad">

@@ -39,12 +39,6 @@ export default function ContentAnalyticsPage() {
       <PageHeader
         title="Content Analytics"
         description="Track engagement and performance of your sales enablement content"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Sales Enablement", href: "/crm/sales-enablement" },
-          { label: "Analytics" },
-        ]}
       />
 
       {data && (

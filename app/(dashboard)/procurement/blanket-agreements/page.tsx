@@ -165,7 +165,7 @@ export default function BlanketAgreementsPage() {
       const prod = products.find((p: any) => p.id === value);
       if (prod) {
         updated.description = prod.name;
-        updated.unitPrice = 50; // Mock default price
+        updated.unitPrice = Number((prod as any)?.costPrice || (prod as any)?.price || 0);
       }
     }
     setItems(newItems);
@@ -225,17 +225,17 @@ export default function BlanketAgreementsPage() {
     setReleaseQuantities({ ...releaseQuantities, [itemId]: val });
   };
 
-  const handleReleasePO = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleReleasePO = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!selectedAgreement) return;
     setReleasing(true);
     try {
       const itemsPayload = Object.entries(releaseQuantities)
-        .map(([itemId, qty]: any) => ({
-          agreementItemId: itemId,
+        .filter(([_, qty]) => Number(qty) > 0)
+        .map(([lineId, qty]) => ({
+          lineId,
           quantity: Number(qty),
-        }))
-        .filter((item: any) => item.quantity > 0);
+        }));
 
       if (itemsPayload.length === 0) {
         alert("Please specify at least one item quantity to release.");
@@ -252,36 +252,7 @@ export default function BlanketAgreementsPage() {
       setIsReleaseModalOpen(false);
       loadData();
     } catch (err: any) {
-      // Local fallback release
-      alert(
-        err.message ||
-          "Released mock Purchase Order successfully (Contract Release Flow).",
-      );
-
-      // Update local state to reflect release drawdown
-      let addAmount = 0;
-      const updatedLines = selectedAgreement.lineItems?.map((line: any) => {
-        const rel = releaseQuantities[line.id] || 0;
-        addAmount += rel * Number(line.unitPrice);
-        return {
-          ...line,
-          releasedQty: Number(line.releasedQty) + rel,
-        };
-      });
-
-      setAgreements(
-        agreements.map((ba: any) => {
-          if (ba.id === selectedAgreement.id) {
-            return {
-              ...ba,
-              releasedAmount: Number(ba.releasedAmount) + addAmount,
-              lineItems: updatedLines,
-            };
-          }
-          return ba;
-        }),
-      );
-      setIsReleaseModalOpen(false);
+      alert(err?.message || "Failed to release Purchase Order.");
     } finally {
       setReleasing(false);
     }
@@ -293,11 +264,6 @@ export default function BlanketAgreementsPage() {
         <PageHeader
           title="Blanket Purchase Agreements"
           description="Establish long-term supply contracts, locking in prices for items and releasing orders against the contract."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Procurement", href: "/procurement" },
-            { label: "Blanket Agreements" },
-          ]}
           actions={
             <Button
               onClick={handleOpenCreateModal}

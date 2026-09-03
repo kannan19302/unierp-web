@@ -16,11 +16,6 @@ export default function WarehousesPage() {
         <PageHeader
           title="Warehouse Directory"
           description="Manage storage locations, transit hubs, and stock distribution sites."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Warehouses" },
-          ]}
         />
 
         <ListView

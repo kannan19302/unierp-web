@@ -195,12 +195,6 @@ export default function LeavesPage() {
         <PageHeader
           title="Leave Management"
           description="Allocate leaves, review requests, and configure company holidays."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Leaves" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button

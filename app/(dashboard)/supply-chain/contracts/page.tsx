@@ -228,10 +228,6 @@ export default function ContractsPage() {
         <PageHeader
           title="Supplier Contracts"
           description="Manage supplier agreements and contract lifecycle"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Contracts" },
-          ]}
           actions={
             <Button
               variant="primary"

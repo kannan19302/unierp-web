@@ -127,10 +127,6 @@ export default function MeetingsPage() {
         <PageHeader
           title="Meetings Center"
           description="Schedule, launch, and join video meetings or audio calls"
-          breadcrumbs={[
-            { label: "Connect", href: "/communication" },
-            { label: "Meetings" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Schedule Meeting

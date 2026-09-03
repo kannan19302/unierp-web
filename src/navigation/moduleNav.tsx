@@ -2019,6 +2019,6 @@ export const getAppSpecificNavigation = (
   return {
     title: "UniERP Hub",
     icon: Building,
-    items: [{ name: "Dashboard", href: "/dashboard", icon: Home }],
+    items: [{ name: "Analytics & Cockpit", href: "/analytics", icon: Home }],
   };
 };

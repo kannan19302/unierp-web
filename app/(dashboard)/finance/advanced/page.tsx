@@ -345,11 +345,6 @@ export default function AdvancedFinancePage() {
       <PageHeader
         title="Advanced Finance"
         description="Financial operations, analytics, and compliance tools"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Finance", href: "/finance" },
-          { label: "Advanced" },
-        ]}
       />
 
       {groups.map((group: any) => (

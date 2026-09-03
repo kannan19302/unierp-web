@@ -14,11 +14,6 @@ export default function PriceBooksPage() {
         <PageHeader
           title="Price Books"
           description="Manage standard and custom price lists for products"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Price Books" },
-          ]}
         />
 
         <ListView

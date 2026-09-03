@@ -74,10 +74,6 @@ export default function SustainabilityPage() {
         <PageHeader
           title="Sustainability & Carbon Tracking"
           description="Carbon emissions, sustainability targets, offsets, and ESG reporting"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Sustainability" },
-          ]}
         />
 
         <SubTabBar tabs={SUB_TABS} />

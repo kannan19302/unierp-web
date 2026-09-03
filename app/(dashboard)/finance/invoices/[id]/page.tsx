@@ -250,12 +250,6 @@ export default function InvoiceDetailPage() {
           <PageHeader
             title={`Invoice: ${invoice.invoiceNumber}`}
             description={`Details & status for ${invoice.invoiceNumber}`}
-            breadcrumbs={[
-              { label: "Apps", href: "/apps" },
-              { label: "Finance", href: "/finance" },
-              { label: "Invoices", href: "/finance" },
-              { label: invoice.invoiceNumber },
-            ]}
           />
         </div>
 

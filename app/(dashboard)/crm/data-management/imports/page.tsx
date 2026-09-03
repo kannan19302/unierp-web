@@ -81,12 +81,6 @@ export default function ImportPage() {
             Import Data
           </Button>
         }
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Data Management", href: "/crm/data-management" },
-          { label: "Imports" },
-        ]}
       />
 
       {showImport && (

@@ -208,11 +208,6 @@ export default function EdiTransactionsPage() {
         <PageHeader
           title="EDI Transactions"
           description="Electronic Data Interchange — inventory transaction types 846, 856, 850."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "EDI Transactions" },
-          ]}
           actions={
             <Button
               variant="primary"

@@ -103,10 +103,6 @@ export default function ApsPage() {
         <PageHeader
           title="Advanced Planning & Scheduling"
           description="Constraint-based APS with finite loading and what-if simulation"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "APS" },
-          ]}
         />
 
         {dashboard && (

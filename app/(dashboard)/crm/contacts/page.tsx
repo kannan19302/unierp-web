@@ -19,11 +19,6 @@ export default function ContactsPage() {
         <PageHeader
           title="Contacts"
           description="Manage contact persons linked to your customer accounts"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Contacts" },
-          ]}
           actions={
             <ProtectedComponent permission="crm.duplicates.scan">
               <Button

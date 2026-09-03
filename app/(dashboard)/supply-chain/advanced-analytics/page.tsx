@@ -92,10 +92,6 @@ export default function AdvancedAnalyticsPage() {
         <PageHeader
           title="Advanced Analytics & AI"
           description="ML-based demand sensing, anomaly detection, predictive lead times"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Advanced Analytics" },
-          ]}
         />
 
         <SubTabBar tabs={SUB_TABS} />

@@ -45,11 +45,6 @@ export default function PaymentSchedulesPage() {
       <PageHeader
         title="Payment Schedules"
         description="Track scheduled payments, due dates, and payment status across purchase orders"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "Procurement", href: "/procurement" },
-          { label: "Payment Schedules" },
-        ]}
       />
 
       {stats && (

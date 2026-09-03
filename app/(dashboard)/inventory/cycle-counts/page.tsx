@@ -99,40 +99,11 @@ export default function CycleCountsPage() {
         if (firstWarehouse) setSelectedWarehouse(firstWarehouse.id);
       }
     } catch {
-      setError("Serving local mock fallback registry.");
-      setCycleCounts([
-        {
-          id: "cc-1",
-          createdAt: new Date().toISOString(),
-          status: "DRAFT",
-          notes: "Routine inventory count audit",
-          warehouseId: "wh-1",
-          items: [
-            {
-              id: "cci-1",
-              productId: "prod-1",
-              expectedQty: 45,
-              countedQty: null,
-              varianceQty: null,
-              varianceValue: null,
-              status: "PENDING",
-              product: {
-                name: "Refined Vibranium Alloy Ingot",
-                sku: "SKU-VIB-001",
-              },
-            },
-          ],
-        },
-      ]);
-      setProducts([
-        {
-          id: "prod-1",
-          name: "Refined Vibranium Alloy Ingot",
-          sku: "SKU-VIB-001",
-          costPrice: 8500,
-        },
-      ]);
-      setWarehouses([{ id: "wh-1", name: "Schenectady Central Depot" }]);
+      setError("Could not load data. Please try again.");
+      setCycleCounts([]);
+      setProducts([]);
+      setWarehouses([]);
+
     } finally {
       setLoading(false);
     }
@@ -193,9 +164,8 @@ export default function CycleCountsPage() {
       );
       setActiveCountSession(null);
       loadData();
-    } catch {
-      alert("Audit count saved (mock mode)");
-      setActiveCountSession(null);
+    } catch (err: any) {
+      alert(err?.message || "Failed to submit audit count.");
     }
   };
 
@@ -203,8 +173,8 @@ export default function CycleCountsPage() {
     try {
       await client.post(`/inventory/cycle-counts/${id}/approve`, {});
       loadData();
-    } catch {
-      alert("Stock adjustment ledger entries created (mock mode)");
+    } catch (err: any) {
+      alert(err?.message || "Failed to approve stock adjustments.");
     }
   };
 
@@ -305,11 +275,6 @@ export default function CycleCountsPage() {
         <PageHeader
           title="Cycle Count Audits"
           description="Verify actual physical inventory quantities and trigger reconciliations."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Cycle Counts" },
-          ]}
           actions={
             <Button
               variant="primary"

@@ -41,20 +41,8 @@ export default function MovementHistoryPage() {
       );
       setMovements(data.movements || []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setMovements([
-        {
-          type: "LEDGER",
-          timestamp: new Date().toISOString(),
-          productName: "Refined Vibranium Alloy Ingot",
-          warehouseId: "wh-1",
-          voucherType: "STOCK_ENTRY",
-          voucherNumber: "STE-2026-00042",
-          qtyIn: 50,
-          qtyOut: 0,
-          balanceQty: 150,
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setMovements([]);
     }
   };
 
@@ -65,8 +53,8 @@ export default function MovementHistoryPage() {
         await client.get(`/inventory/labels/${labelType}/${labelLookupId}`),
       );
     } catch {
-      setError("Serving local mock fallback registry.");
-      setLabel({ type: labelType.toUpperCase(), barcodeValue: "SKU-VIB-001" });
+      setError("Could not load data. Please try again.");
+      setLabel(null);
     }
   };
 
@@ -76,11 +64,6 @@ export default function MovementHistoryPage() {
         <PageHeader
           title="Movement History & Barcode Labels"
           description="Consolidated per-product/per-warehouse movement timeline, plus barcode label lookups for SKU, batch, license-plate, and bin printing."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Movement History & Labels" },
-          ]}
         />
 
         {error && <div className={styles.s1}>Note: {error}</div>}

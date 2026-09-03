@@ -11,11 +11,6 @@ export default function StockLedgerPage() {
         <PageHeader
           title="Stock Ledger"
           description="Review inventory movements, valuation changes, and running balances."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Stock Ledger" },
-          ]}
         />
         <ListView resource={stockLedgerResource} />
       </div>

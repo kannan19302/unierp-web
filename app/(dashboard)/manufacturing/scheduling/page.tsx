@@ -174,10 +174,6 @@ export default function SchedulingPage() {
         <PageHeader
           title="Finite Capacity Scheduling"
           description="Advanced planning & scheduling (APS): sequence work orders against real workstation availability, forward or backward from a start date."
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "Scheduling" },
-          ]}
         />
 
         <Card padding="md">

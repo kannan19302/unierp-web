@@ -103,11 +103,6 @@ export default function SessionsPage() {
         <PageHeader
           title="Active Sessions"
           description="Manage your active login sessions across devices."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Auth", href: "/auth" },
-            { label: "Sessions" },
-          ]}
         />
         <DataTable columns={columns} data={sessions} loading={loading} />
       </div>

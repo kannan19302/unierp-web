@@ -12,11 +12,6 @@ export default function StorefrontCategoriesPage() {
         <PageHeader
           title="Storefront Categories"
           description="Organize products into customer-facing storefront categories."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "E-Commerce", href: "/ecommerce" },
-            { label: "Categories" },
-          ]}
         />
         <ListView
           resource={categoryResource}

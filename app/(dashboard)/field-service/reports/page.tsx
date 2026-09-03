@@ -32,10 +32,6 @@ export default function FieldServiceReportsPage() {
         <PageHeader
           title="Field Service Reports"
           description="First-time fix rates, response times, and technician utilization"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Reports" },
-          ]}
         />
         <div className="ui-grid-auto-sm">
           <KPICard

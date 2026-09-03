@@ -84,12 +84,6 @@ function OperationsServiceHubContent() {
       <PageHeader
         title="Operations & Service"
         description="Asset assignment, holiday calendars, labor compliance audits, employee helpdesk, and engagement surveys"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Advanced", href: "/hr/advanced" },
-          { label: "Operations & Service" },
-        ]}
       />
 
       <SubTabBar tabs={OPERATIONS_SERVICE_TABS} />

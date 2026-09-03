@@ -24,10 +24,6 @@ export default function HrPage() {
             </div>
           }
           description="Manage employee records, departments, employment types, and workforce status."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Human Resources" },
-          ]}
         />
         <ListView
           resource={employeeResource}

@@ -210,15 +210,6 @@ export default function PurchaseOrderDetailPage() {
           <PageHeader
             title={`Order: ${po.poNumber}`}
             description={`Details & 3-Way Match Check for ${po.poNumber}`}
-            breadcrumbs={[
-              { label: "Apps", href: "/apps" },
-              { label: "Procurement", href: "/procurement" },
-              {
-                label: "Purchase Orders",
-                href: "/procurement/purchase-orders",
-              },
-              { label: po.poNumber },
-            ]}
           />
         </div>
 

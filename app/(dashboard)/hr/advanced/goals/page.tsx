@@ -204,12 +204,6 @@ export default function GoalsPage() {
         <PageHeader
           title="Goals & OKRs"
           description="Set objectives and track key results with efforts log comments"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Goals" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setShowForm(!showForm)}>
               <Plus size={14} /> New Goal

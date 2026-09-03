@@ -131,7 +131,6 @@ export default function RealEstateDashboard() {
         <PageHeader
           title="Real Estate"
           description="Property portfolio, leases, and maintenance management"
-          breadcrumbs={[{ label: "Real Estate" }]}
         />
 
         <div className="ui-grid-auto">

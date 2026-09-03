@@ -13,12 +13,6 @@ export default function ExchangeRatesPage() {
         <PageHeader
           title="Multi-Currency & Exchange Rates"
           description="Manage exchange rates for multi-currency transactions and revaluation."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Finance", href: "/finance" },
-            { label: "Advanced", href: "/finance/advanced" },
-            { label: "Exchange Rates" },
-          ]}
         />
         <ListView
           resource={exchangeRateResource}

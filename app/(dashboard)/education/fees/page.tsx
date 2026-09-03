@@ -153,10 +153,6 @@ export default function FeeManagementPage() {
         <PageHeader
           title="Fee Management"
           description="Fee structures, student ledger, and payment tracking"
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Fees" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Add Fee Structure

@@ -76,10 +76,6 @@ export default function EnergyPage() {
         <PageHeader
           title="Energy Management"
           description="Track energy consumption, machine-level monitoring, KPIs, and cost allocation"
-          breadcrumbs={[
-            { label: "Manufacturing", href: "/manufacturing" },
-            { label: "Energy" },
-          ]}
         />
 
         {dashboard && (

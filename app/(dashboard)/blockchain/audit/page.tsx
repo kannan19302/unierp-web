@@ -83,11 +83,6 @@ export default function AuditPage() {
         <PageHeader
           title="Blockchain Audit Trail"
           description="Append-only log of critical entity changes with blockchain proof."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Blockchain", href: "/blockchain" },
-            { label: "Audit" },
-          ]}
         />
         <div className="ui-form-group">
           <select

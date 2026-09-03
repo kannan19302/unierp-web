@@ -205,10 +205,6 @@ export default function PartsPage() {
         <PageHeader
           title="Parts & Inventory"
           description="Part requests and van stock management"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Parts" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Request Part

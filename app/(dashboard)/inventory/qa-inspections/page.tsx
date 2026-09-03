@@ -151,38 +151,10 @@ export default function QaInspectionsPage() {
       const qas = Array.isArray(qaRes) ? qaRes : qaRes.data || [];
       setInspections(qas);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setProducts([
-        {
-          id: "prod-1",
-          name: "Refined Vibranium Alloy Ingot",
-          sku: "SKU-VIB-001",
-        },
-        {
-          id: "prod-2",
-          name: "Tactical Kevlar Micro-Weave",
-          sku: "SKU-KEV-404",
-        },
-      ]);
-      setInspections([
-        {
-          id: "qa-1",
-          inspectionNumber: "QA-2026-001",
-          referenceType: "STOCK_ENTRY",
-          referenceId: "ste-1",
-          product: {
-            name: "Refined Vibranium Alloy Ingot",
-            sku: "SKU-VIB-001",
-          },
-          status: "PASS",
-          inspectedQty: 10,
-          acceptedQty: 10,
-          rejectedQty: 0,
-          inspectedBy: "QA Auditor",
-          inspectedDate: new Date().toISOString(),
-          checkpoints: [],
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setProducts([]);
+      setInspections([]);
+
     } finally {
       setLoading(false);
     }
@@ -266,9 +238,8 @@ export default function QaInspectionsPage() {
       );
       setActiveInspection(null);
       loadData();
-    } catch {
-      alert("Audit submitted (mock mode)");
-      setActiveInspection(null);
+    } catch (err: any) {
+      alert(err?.message || "Failed to submit QA audit.");
     }
   };
 
@@ -278,11 +249,6 @@ export default function QaInspectionsPage() {
         <PageHeader
           title="QA Inspections Queue"
           description="Verify raw material shipments, inspect production lots, and log compliance checklists."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "QA Inspections" },
-          ]}
           actions={
             <Button
               variant="primary"

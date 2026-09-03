@@ -129,12 +129,6 @@ export default function RevenueIntelligenceDigestPage() {
       <PageHeader
         title="Revenue Intelligence — Deal-Risk Digest"
         description="Gong/Clari-style daily or weekly digest of new and open pipeline risk alerts, sent to each rep and rolled up for managers."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Forecasting", href: "/crm/forecasting" },
-          { label: "Revenue Intelligence" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.opportunity.update">
             <div className="ui-flex ui-gap-2">

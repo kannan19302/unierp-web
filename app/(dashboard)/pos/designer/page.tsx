@@ -163,7 +163,7 @@ export default function POSDesignerPage() {
           {/* Live Preview Pane */}
           <div className={["ui-card", styles.p13].join(" ")}>
             <h3 className={styles.p14}>
-              <Layout size={16} /> Print Layout Visual Mock Preview
+              <Layout size={16} /> Print Layout Visual Preview
             </h3>
 
             <div

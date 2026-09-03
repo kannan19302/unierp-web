@@ -56,10 +56,6 @@ export default function ArticlesPage() {
       <PageHeader
         title="All Articles"
         description="Browse and manage knowledge base articles"
-        breadcrumbs={[
-          { label: "Help Center", href: "/crm/help-center" },
-          { label: "Articles" },
-        ]}
       />
       <div className="ui-input-group ui-mb-4" style={{ maxWidth: 400 }}>
         <Search size={16} />

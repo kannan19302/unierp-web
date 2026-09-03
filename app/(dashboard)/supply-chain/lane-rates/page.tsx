@@ -184,10 +184,6 @@ export default function LaneRatesPage() {
         <PageHeader
           title="Lane Rates"
           description="Manage carrier rate cards by origin-destination lane"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Lane Rates" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button variant="secondary" onClick={() => setFindRateOpen(true)}>

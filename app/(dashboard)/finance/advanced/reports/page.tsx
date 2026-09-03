@@ -763,11 +763,6 @@ export default function AdvancedReportsPage() {
         <PageHeader
           title="Financial Reports"
           description="Generate dynamic P&L, Balance Sheet, Cash Flow, Trial Balance, and Aging reports."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Finance", href: "/finance" },
-            { label: "Reports" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button

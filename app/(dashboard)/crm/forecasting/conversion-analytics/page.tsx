@@ -165,12 +165,6 @@ export default function ConversionAnalyticsPage() {
       <PageHeader
         title="Lead-to-Opportunity Conversion Analytics"
         description="Salesforce/HubSpot-style funnel conversion-rate reporting by lead source, campaign, and rep, with average sales-cycle time and a trailing 12-week trend."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Forecasting", href: "/crm/forecasting" },
-          { label: "Conversion Analytics" },
-        ]}
       />
 
       {loading ? (

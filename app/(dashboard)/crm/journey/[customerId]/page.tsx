@@ -95,7 +95,6 @@ export default function CustomerJourneyPage() {
           description={
             data ? `Track ${data.customer.name}'s lifecycle journey` : ""
           }
-          breadcrumbs={[{ label: "Journey", href: "/crm/journey" }]}
           actions={
             <Button onClick={() => setShowModal(true)}>
               <Plus className="ui-w-4 ui-h-4 ui-mr-1" /> Record Event

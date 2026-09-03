@@ -94,7 +94,6 @@ export default function SalesReturnsPage() {
       setOrders(Array.isArray(ordersRes) ? ordersRes : ordersRes.data || []);
     } catch {
       setError("Could not load data. Please try again.");
-      // Mock data
       setReturns([]);
       setOrders([]);
     } finally {
@@ -128,7 +127,6 @@ export default function SalesReturnsPage() {
         })),
       );
     } catch {
-      // Mock fallback line items
       setLineItems([]);
     } finally {
       setLoadingOrderItems(false);
@@ -188,11 +186,6 @@ export default function SalesReturnsPage() {
         <PageHeader
           title="Customer Returns"
           description="Log returned deliveries, issue financial credit notes, and trigger restocking automation."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Sales & Orders", href: "/sales" },
-            { label: "Returns" },
-          ]}
           actions={
             <Button
               onClick={() => {

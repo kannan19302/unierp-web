@@ -96,11 +96,6 @@ export default function RecentPage() {
       <PageHeader
         title="Recent"
         description="Recently modified files and folders"
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Drive", href: "/drive" },
-          { label: "Recent" },
-        ]}
       />
       <Card padding="none">
         <DataTable

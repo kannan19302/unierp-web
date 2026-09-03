@@ -165,11 +165,6 @@ export default function ConversationIntelligencePage() {
       <PageHeader
         title="Conversation Intelligence"
         description="Einstein Conversation Insights / HubSpot Breeze-style call logging with AI-generated summary, sentiment, and action items auto-attached to the deal timeline."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Conversation Intelligence" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.activity.create">
             <Button

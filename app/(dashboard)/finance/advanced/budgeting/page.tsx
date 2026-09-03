@@ -646,10 +646,6 @@ export default function BudgetingPage() {
         <PageHeader
           title="Budgeting & Planning"
           description="Allocate general ledger budgets, configure rolling forecasts, and track performance vs actuals"
-          breadcrumbs={[
-            { label: "Finance", href: "/finance" },
-            { label: "Budgeting & Planning" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button variant="outline" onClick={fetchData}>

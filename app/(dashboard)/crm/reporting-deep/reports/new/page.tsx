@@ -37,11 +37,6 @@ export default function NewReportPage() {
     <div className="ui-page">
       <PageHeader
         title="New Saved Report"
-        breadcrumbs={[
-          { label: "Reporting", href: "/crm/reporting-deep" },
-          { label: "Reports", href: "/crm/reporting-deep/reports" },
-          { label: "New" },
-        ]}
       />
       <Card className="ui-card-md">
         <form onSubmit={handleSubmit} className="ui-form">

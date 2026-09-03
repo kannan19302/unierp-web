@@ -206,11 +206,6 @@ export default function TerritoriesPage() {
         <PageHeader
           title="Territories"
           description="Manage sales territories, assign members, and track regional performance."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Territories" },
-          ]}
           actions={
             <Button
               onClick={() => setIsModalOpen(true)}

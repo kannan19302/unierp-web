@@ -153,10 +153,6 @@ export default function PatientRegistryPage() {
       <PageHeader
         title="Patient Registry"
         description="Manage patient records, demographics, and medical information"
-        breadcrumbs={[
-          { label: "Healthcare", href: "/healthcare" },
-          { label: "Patients" },
-        ]}
         actions={
           <Button variant="primary" onClick={() => setCreateOpen(true)}>
             <Plus size={14} className="mr-2" /> New Patient

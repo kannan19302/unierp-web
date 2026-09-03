@@ -11,11 +11,6 @@ export default function ProjectsSettingsPage() {
       <PageHeader
         title="Projects"
         description="Configure project templates, billing rates, and milestone templates."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Projects", href: "/projects" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/projects/templates" className={styles.card}>

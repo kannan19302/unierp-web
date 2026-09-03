@@ -93,14 +93,13 @@ export default function BankFeedsConnectionsPage() {
         accountNumber: accountNumber || "•••• 5543",
         accountType,
         bankAccountId: targetBankAccountId,
-        credentialsHash: "plaid-mock-token-" + Math.random(),
+        credentialsHash: "feed-token-" + Math.random().toString(36).substring(2),
       });
       setShowAddModal(false);
       setAccountNumber("");
       fetchConnections();
-    } catch {
-      alert("Unable to add the bank connection.");
-      alert("Failed to connect feed");
+    } catch (err: any) {
+      alert(err?.message || "Failed to connect bank feed");
     }
   };
 

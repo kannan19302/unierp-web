@@ -77,11 +77,6 @@ export default function StudentDetailPage() {
         <PageHeader
           title={`${student.firstName} ${student.lastName}`}
           description={`Enrollment: ${student.enrollmentNumber}`}
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Students", href: "/education/students" },
-            { label: `${student.firstName} ${student.lastName}` },
-          ]}
         />
 
         <div className="ui-grid-auto">

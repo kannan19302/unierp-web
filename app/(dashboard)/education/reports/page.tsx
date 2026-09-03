@@ -50,10 +50,6 @@ export default function EducationReportsPage() {
       <PageHeader
         title="Reports & Analytics"
         description="Enrollment trends, fee collection, and academic performance analysis"
-        breadcrumbs={[
-          { label: "Education", href: "/education" },
-          { label: "Reports" },
-        ]}
       />
 
       <div className="ui-grid-auto-sm">

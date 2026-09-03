@@ -54,10 +54,6 @@ export default function DealDeskRequestsPage() {
       <PageHeader
         title="Deal Desk Requests"
         description="View and manage discount, special terms, and pricing requests"
-        breadcrumbs={[
-          { label: "Deal Desk", href: "/crm/deal-desk" },
-          { label: "Requests" },
-        ]}
       />
 
       <Card>

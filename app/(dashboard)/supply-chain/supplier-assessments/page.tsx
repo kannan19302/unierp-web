@@ -155,10 +155,6 @@ export default function SupplierAssessmentsPage() {
         <PageHeader
           title="Supplier Assessments"
           description="Audit and evaluation records for supplier compliance and quality"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Supplier Assessments" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} /> New Assessment

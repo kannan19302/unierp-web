@@ -119,10 +119,6 @@ export default function DispatchBoardPage() {
         <PageHeader
           title="Dispatch Board"
           description="Technician dispatch schedules and routing"
-          breadcrumbs={[
-            { label: "Field Service", href: "/field-service" },
-            { label: "Dispatch" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Dispatch

@@ -68,12 +68,6 @@ export default function ContentCategoriesPage() {
             </Button>
           </ProtectedComponent>
         }
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Sales Enablement", href: "/crm/sales-enablement" },
-          { label: "Categories" },
-        ]}
       />
 
       {showNew && (

@@ -217,10 +217,6 @@ export default function CrmPage() {
             </div>
           }
           description="Manage leads, opportunities, and customer relationships."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM" },
-          ]}
         />
       </div>
       <div style={{ position: "relative" }}>

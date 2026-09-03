@@ -824,10 +824,6 @@ export default function FinanceDashboardPage() {
             </div>
           }
           description="Executive dashboard — revenue, cash flow, receivables, compliance, and module workspaces."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Finance" },
-          ]}
           actions={
             <div className="ui-hstack-2">
               <Button

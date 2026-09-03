@@ -22,6 +22,7 @@ import {
   ShoppingBag,
   Cpu,
   Sparkles,
+  Workflow,
 } from "lucide-react";
 import { Globe as StorefrontIcon } from "lucide-react";
 import type { AppDefinition, SwitcherFolder } from "./types";
@@ -575,10 +576,10 @@ import { Activity, ShieldCheck } from "lucide-react";
  */
 export const allApplications: AppDefinition[] = [
   {
-    id: "dashboard",
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: Home,
+    id: "analytics",
+    name: "Analytics & Cockpit",
+    href: "/analytics",
+    icon: PieChart,
     installed: true,
   },
   {
@@ -645,10 +646,10 @@ export const allApplications: AppDefinition[] = [
     installed: true,
   },
   {
-    id: "analytics",
-    name: "Business Intelligence",
-    href: "/analytics",
-    icon: PieChart,
+    id: "workflow",
+    name: "Workflow Automation",
+    href: "/workflow",
+    icon: Workflow,
     installed: true,
   },
   {
@@ -742,4 +743,5 @@ export const KERNEL_APP_IDS = new Set([
   "real-estate",
   "field-service",
   "blockchain",
+  "workflow",
 ]);

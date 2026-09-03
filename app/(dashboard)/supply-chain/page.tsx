@@ -250,10 +250,6 @@ export default function SupplyChainDashboard() {
         <PageHeader
           title="Supply Chain Operations"
           description="Manage shipments, carriers, logistics, and demand planning"
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Supply Chain" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <ViewSwitcher

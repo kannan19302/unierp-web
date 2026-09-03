@@ -43,65 +43,6 @@ interface RecordTypeForm {
   isDefault: boolean;
 }
 
-const MOCK_RECORD_TYPES: RecordType[] = [
-  {
-    id: "1",
-    entity: "CUSTOMER",
-    name: "Standard Customer",
-    description: "Default customer record layout with all standard fields.",
-    isDefault: true,
-    fieldCount: 24,
-    createdAt: "2026-06-01T10:00:00Z",
-  },
-  {
-    id: "2",
-    entity: "CUSTOMER",
-    name: "Enterprise Customer",
-    description:
-      "Extended layout for enterprise accounts with additional compliance fields.",
-    isDefault: false,
-    fieldCount: 32,
-    createdAt: "2026-06-05T14:00:00Z",
-  },
-  {
-    id: "3",
-    entity: "LEAD",
-    name: "Inbound Lead",
-    description:
-      "Layout for leads generated from website and marketing campaigns.",
-    isDefault: true,
-    fieldCount: 18,
-    createdAt: "2026-06-02T09:00:00Z",
-  },
-  {
-    id: "4",
-    entity: "LEAD",
-    name: "Outbound Lead",
-    description: "Layout for outbound prospecting leads with call tracking.",
-    isDefault: false,
-    fieldCount: 20,
-    createdAt: "2026-06-08T11:00:00Z",
-  },
-  {
-    id: "5",
-    entity: "OPPORTUNITY",
-    name: "Standard Deal",
-    description: "Default opportunity layout for standard sales processes.",
-    isDefault: true,
-    fieldCount: 22,
-    createdAt: "2026-06-03T10:00:00Z",
-  },
-  {
-    id: "6",
-    entity: "CONTACT",
-    name: "Standard Contact",
-    description: "Default contact record type.",
-    isDefault: true,
-    fieldCount: 16,
-    createdAt: "2026-06-01T10:00:00Z",
-  },
-];
-
 const emptyForm = (entity: Entity): RecordTypeForm => ({
   entity,
   name: "",
@@ -109,7 +50,7 @@ const emptyForm = (entity: Entity): RecordTypeForm => ({
   isDefault: false,
 });
 
-export default function RecordTypesPage() {
+export default function RecordTypesSettingsPage() {
   const [recordTypes, setRecordTypes] = useState<RecordType[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeEntity, setActiveEntity] = useState<Entity>("CUSTOMER");
@@ -144,18 +85,8 @@ export default function RecordTypesPage() {
       setRecordTypes((prev: any) => [...prev, created]);
       setShowModal(false);
       setForm(emptyForm(activeEntity));
-    } catch {
-      setRecordTypes((prev: any) => [
-        ...prev,
-        {
-          ...form,
-          id: `local-${Date.now()}`,
-          fieldCount: 0,
-          description: form.description || null,
-          createdAt: new Date().toISOString(),
-        },
-      ]);
-      setShowModal(false);
+    } catch (err: any) {
+      alert(err?.message || "Failed to create record type.");
     } finally {
       setSubmitting(false);
     }
@@ -227,12 +158,6 @@ export default function RecordTypesPage() {
       <div className={styles.style1}>
         <PageHeader
           title="Record Types"
-          breadcrumbs={[
-            { label: "Home", href: "/" },
-            { label: "CRM", href: "/crm" },
-            { label: "Settings", href: "/crm/settings" },
-            { label: "Record Types" },
-          ]}
         />
 
         <div className={styles.style2}>

@@ -86,12 +86,6 @@ export default function SkillsPage() {
       <PageHeader
         title="Skills Matrix"
         description="Design target skill levels per designation and review employee skill gap diagnostics."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Advanced", href: "/hr/advanced" },
-          { label: "Skills" },
-        ]}
         actions={
           <Button
             variant="primary"

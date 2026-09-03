@@ -121,11 +121,6 @@ export default function DeliveryNotesPage() {
         <PageHeader
           title="Fulfillment Delivery Notes"
           description="Verify inventory release details, log shipment carrier tracking, and monitor parcel transit statuses."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Sales & Orders", href: "/sales" },
-            { label: "Delivery Notes" },
-          ]}
         />
 
         {error && (

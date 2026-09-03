@@ -13,8 +13,10 @@ export const dynamic = "force-dynamic";
 import React, { useState, useEffect, useMemo } from "react";
 import { Spinner, TrialCountdown } from "@kannan19302/ui/components";
 import { DemoBanner } from "@kannan19302/ui/notifications";
-import { StrataBar } from "@kannan19302/ui/shell";
+import { StrataBar, MeridianBar } from "@kannan19302/ui/shell";
 import { useTheme } from "@kannan19302/ui/theme";
+
+const ContextBar = (StrataBar || MeridianBar) as any;
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -74,7 +76,7 @@ const GLOBAL_SEARCH_ITEMS: Array<{
   type: string;
   slug: string | null;
 }> = [
-  { name: "Dashboard", href: "/dashboard", icon: Home, type: "App", slug: null },
+  { name: "Analytics & Cockpit", href: "/analytics", icon: PieChart, type: "App", slug: "analytics" },
   {
     name: "Finance & Accounting",
     href: "/finance",
@@ -704,8 +706,8 @@ export default function DashboardLayout({
           />
 
           {/* Strata Operational Context Bar */}
-          {!isAppsSection && !pathname.startsWith("/builder") && pathSegments.length > 0 && (
-            <StrataBar
+          {!isAppsSection && !pathname.startsWith("/builder") && pathSegments.length > 0 && ContextBar && (
+            <ContextBar
               segments={[currentTenant?.name || "UniERP", ...pathSegments.map(formatSegment)]}
               scope="app"
             />
@@ -755,13 +757,13 @@ export default function DashboardLayout({
                   </button>
                 </div>
               )}
-              {demoDataLoaded && (
+              {demoDataLoaded && DemoBanner && (
                 <DemoBanner
                   currentModule={pathname.split("/")[1]}
                   onRemoved={() => setDemoDataLoaded(false)}
                 />
               )}
-              {subscription?.status === "TRIAL" && showTrialBanner && (
+              {subscription?.status === "TRIAL" && showTrialBanner && TrialCountdown && (
                 <div className={`${styles.trialBanner} ui-animate-in`}>
                   <div className={styles.trialInfo}>
                     <Clock size={16} className={styles.trialIcon} />
@@ -803,15 +805,17 @@ export default function DashboardLayout({
         </div>
 
         {/* Command Palette (Ctrl+K) */}
-        <CommandPalette
-          isOpen={cmdPaletteOpen}
-          onClose={() => setCmdPaletteOpen(false)}
-          GLOBAL_SEARCH_ITEMS={visibleSearchItems}
-          onLogout={handleLogout}
-        />
+        {CommandPalette && (
+          <CommandPalette
+            isOpen={cmdPaletteOpen}
+            onClose={() => setCmdPaletteOpen(false)}
+            GLOBAL_SEARCH_ITEMS={visibleSearchItems}
+            onLogout={handleLogout}
+          />
+        )}
 
         {/* Floating AI Chatbot Companion */}
-        <AICopilot theme={theme} />
+        {AICopilot && <AICopilot theme={theme} />}
       </div>
     </PermissionProvider>
   );

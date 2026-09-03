@@ -339,10 +339,6 @@ export default function CrmQuotationsPage() {
         <PageHeader
           title="Quotations"
           description="Create, send, and track customer quotes and proposals"
-          breadcrumbs={[
-            { label: "CRM", href: "/crm" },
-            { label: "Quotations" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button variant="outline" onClick={() => {}}>

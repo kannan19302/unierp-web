@@ -125,12 +125,6 @@ export default function CpqBundlesPage() {
       <PageHeader
         title="Product Bundles"
         description="Manage product bundle configurations and pricing"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "CPQ & Quoting", href: "/crm/cpq" },
-          { label: "Bundles" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.cpq-bundles.create">
             <Button onClick={() => setShowCreate(true)}>

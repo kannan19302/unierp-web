@@ -189,12 +189,6 @@ export default function OffboardingPage() {
         <PageHeader
           title="Offboarding Checklists"
           description="Oversee exit checklists, clear company assets, and record resignation feedback."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Offboarding" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setShowForm(!showForm)}>
               <Plus size={14} /> Schedule Offboarding

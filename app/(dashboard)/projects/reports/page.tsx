@@ -72,10 +72,6 @@ export default function ReportsPage() {
         <PageHeader
           title="Reports"
           description="Project performance and financial reports"
-          breadcrumbs={[
-            { label: "Projects", href: "/projects" },
-            { label: "Reports" },
-          ]}
         />
         <Card padding="lg">
           <div className={styles.grid}>

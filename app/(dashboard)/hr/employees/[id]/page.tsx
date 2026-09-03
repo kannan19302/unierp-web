@@ -227,12 +227,6 @@ export default function EmployeeDetailPage() {
           <PageHeader
             title={`${employee.employeeCode}: ${fullName}`}
             description={`${employee.designation || "Employee"} · ${employee.departmentName || "No Department"}`}
-            breadcrumbs={[
-              { label: "Apps", href: "/apps" },
-              { label: "HR", href: "/hr" },
-              { label: "Employees", href: "/hr" },
-              { label: `${employee.employeeCode}` },
-            ]}
           />
         </div>
 

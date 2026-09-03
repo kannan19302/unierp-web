@@ -173,11 +173,6 @@ export default function AdvancedHRPage() {
       <PageHeader
         title="Advanced HR"
         description="Configure talent management, day-to-day employee operations, and compensation details"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Advanced" },
-        ]}
       />
 
       {groups.map((group: any) => (

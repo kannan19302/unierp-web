@@ -26,56 +26,6 @@ interface Dashboard {
   createdAt: string;
 }
 
-const MOCK_DASHBOARDS: Dashboard[] = [
-  {
-    id: "1",
-    name: "Sales Overview",
-    description:
-      "Key metrics for the sales team including pipeline and revenue",
-    isShared: true,
-    isDefault: true,
-    widgetCount: 6,
-    createdAt: "2026-05-15",
-  },
-  {
-    id: "2",
-    name: "Pipeline Health",
-    description: "Detailed pipeline analysis with stage breakdown and velocity",
-    isShared: true,
-    isDefault: false,
-    widgetCount: 4,
-    createdAt: "2026-06-01",
-  },
-  {
-    id: "3",
-    name: "My Performance",
-    description: "Personal sales targets and activity tracking",
-    isShared: false,
-    isDefault: false,
-    widgetCount: 3,
-    createdAt: "2026-06-10",
-  },
-  {
-    id: "4",
-    name: "Marketing ROI",
-    description: "Lead source attribution and campaign effectiveness metrics",
-    isShared: true,
-    isDefault: false,
-    widgetCount: 5,
-    createdAt: "2026-06-14",
-  },
-  {
-    id: "5",
-    name: "Executive Summary",
-    description:
-      "High-level revenue, win rate, and forecast overview for leadership",
-    isShared: true,
-    isDefault: false,
-    widgetCount: 8,
-    createdAt: "2026-06-18",
-  },
-];
-
 export default function DashboardsPage() {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,7 +42,7 @@ export default function DashboardsPage() {
     setLoading(true);
     try {
       const data = await client.get<any>("/crm/dashboards");
-      setDashboards(Array.isArray(data) ? data : data.data || MOCK_DASHBOARDS);
+      setDashboards(Array.isArray(data) ? data : data.data || []);
     } catch {
       setDashboards([]);
     } finally {
@@ -156,7 +106,7 @@ export default function DashboardsPage() {
     return (
       <RouteGuard permission="crm.read">
         <div className={styles.page}>
-          <PageHeader title="Dashboards" breadcrumbs={breadcrumbs} />
+          <PageHeader title="Dashboards" />
           <div className={styles.loading}>
             <Spinner />
           </div>
@@ -170,7 +120,6 @@ export default function DashboardsPage() {
       <div className={styles.page}>
         <PageHeader
           title="Dashboards"
-          breadcrumbs={breadcrumbs}
           actions={
             <Button onClick={() => setShowModal(true)}>
               <Plus className={styles.buttonIcon} /> New Dashboard

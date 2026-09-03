@@ -159,10 +159,6 @@ export default function NotificationListPage() {
       <PageHeader
         title="Notifications"
         description={`${unreadCount} unread`}
-        breadcrumbs={[
-          { label: "Communication", href: "/communication" },
-          { label: "Notifications" },
-        ]}
         actions={
           <Button variant="ghost" onClick={fetchNotifications}>
             <RefreshCw size={14} /> Refresh

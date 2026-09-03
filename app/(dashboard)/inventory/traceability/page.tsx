@@ -54,18 +54,8 @@ export default function TraceabilityPage() {
         await client.get(`/inventory/batches/${batchId}/genealogy`),
       );
     } catch {
-      setError("Serving local mock fallback trace.");
-      setBatchTrace({
-        batch: {
-          id: batchId || "batch-1",
-          batchNo: "BATCH-2026-001",
-          status: "ACTIVE",
-          product: { name: "Refined Vibranium Alloy Ingot" },
-        },
-        origin: { entryNumber: "SE-RECEIPT-0042" },
-        consumedIn: [{ entryNumber: "SE-ISSUE-0091" }],
-        licensePlates: [{ code: "LP-000123" }],
-      });
+      setError("Could not load traceability data. Please try again.");
+      setBatchTrace(null);
     }
   };
 
@@ -76,28 +66,8 @@ export default function TraceabilityPage() {
         await client.get(`/inventory/serial-numbers/${serialId}/trace`),
       );
     } catch {
-      setError("Serving local mock fallback trace.");
-      setSerialTrace({
-        serial: {
-          id: serialId || "serial-1",
-          serialNo: "SN-000456",
-          status: "SOLD",
-          product: { name: "Industrial Servo Motor" },
-        },
-        history: [
-          {
-            action: "RECEIVED",
-            toStatus: "AVAILABLE",
-            createdAt: new Date().toISOString(),
-          },
-          {
-            action: "SHIPPED",
-            toStatus: "SOLD",
-            createdAt: new Date().toISOString(),
-          },
-        ],
-        licensePlates: [],
-      });
+      setError("Could not load traceability data. Please try again.");
+      setSerialTrace(null);
     }
   };
 
@@ -110,7 +80,7 @@ export default function TraceabilityPage() {
       setQuarantineReason("");
       traceBatch();
     } catch {
-      alert("Local fallback: batch quarantined.");
+      setError("Failed to quarantine batch. Please try again.");
     }
   };
 
@@ -120,7 +90,7 @@ export default function TraceabilityPage() {
       await client.post(`/inventory/batches/${batchId}/quarantine/release`, {});
       traceBatch();
     } catch {
-      alert("Local fallback: batch released from quarantine.");
+      setError("Failed to release batch from quarantine. Please try again.");
     }
   };
 
@@ -130,11 +100,6 @@ export default function TraceabilityPage() {
         <PageHeader
           title="Serial & Lot Traceability"
           description="Genealogy trace for batches/lots and where-used trace for serial numbers, plus the batch quarantine workflow."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Traceability" },
-          ]}
         />
 
         {error && <div className={styles.s1}>Note: {error}</div>}

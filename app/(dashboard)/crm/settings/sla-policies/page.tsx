@@ -27,7 +27,7 @@ const emptyForm: Omit<Policy, "id"> = {
   active: true,
 };
 
-export default function SlaPoliciesPage() {
+export default function SlaPoliciesSettingsPage() {
   const [policies, setPolicies] = useState<Policy[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -115,12 +115,6 @@ export default function SlaPoliciesPage() {
       <PageHeader
         title="SLA Policies"
         description="Response and resolution deadlines by priority."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Settings", href: "/crm/settings" },
-          { label: "SLA Policies" },
-        ]}
         actions={
           <ProtectedComponent permission="crm.sla-policies.create">
             <Button variant="primary" size="sm" onClick={openCreate}>

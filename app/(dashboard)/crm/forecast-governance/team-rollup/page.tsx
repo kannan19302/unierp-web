@@ -74,10 +74,6 @@ export default function TeamRollupPage() {
       <PageHeader
         title="Team Rollups"
         description="View and manage manager-level forecast rollups"
-        breadcrumbs={[
-          { label: "Forecast Governance", href: "/crm/forecast-governance" },
-          { label: "Team Rollups" },
-        ]}
       />
 
       <Card>

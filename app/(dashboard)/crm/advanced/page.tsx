@@ -107,11 +107,6 @@ export default function CrmAdvancedPage() {
       <PageHeader
         title="Advanced CRM"
         description="Customer relationship management, sales pipeline, and analytics tools"
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Advanced" },
-        ]}
       />
 
       {groups.map((group: any) => (

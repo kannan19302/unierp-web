@@ -112,10 +112,6 @@ export default function EnterpriseSearchPage() {
         <PageHeader
           title="Enterprise Search"
           description="Full-text search across all communication entities"
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "Search" },
-          ]}
         />
         <Tabs
           tabs={[

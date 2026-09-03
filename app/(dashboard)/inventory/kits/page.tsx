@@ -63,20 +63,10 @@ export default function KitsPage() {
         if (firstWarehouse) setWarehouseId(firstWarehouse.id);
       }
     } catch {
-      setError("Serving local mock fallback registry.");
-      setWarehouses([{ id: "wh-1", name: "Schenectady Central Depot" }]);
-      setKits([
-        {
-          id: "kit-1",
-          name: "Starter Bundle",
-          sellPrice: 100,
-          isActive: true,
-          product: { name: "Starter Bundle Product", sku: "SKU-BUNDLE-001" },
-          components: [
-            { productId: "p1", quantity: 2, product: { name: "Component A" } },
-          ],
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setWarehouses([]);
+      setKits([]);
+
     } finally {
       setLoading(false);
     }
@@ -193,11 +183,6 @@ export default function KitsPage() {
         <PageHeader
           title="Product Kits & Assembly"
           description="Bundle/kit definitions with component availability checks, cost rollup, and assemble/disassemble stock operations."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Kits & Assembly" },
-          ]}
         />
 
         {error && (

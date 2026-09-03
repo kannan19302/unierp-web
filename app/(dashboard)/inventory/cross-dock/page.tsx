@@ -31,18 +31,9 @@ export default function CrossDockPage() {
       );
       setOpportunities(data.opportunities || []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setOpportunities([
-        {
-          putawayTaskId: "pt1",
-          productId: "p1",
-          productName: "Refined Vibranium Alloy Ingot",
-          inboundQty: 50,
-          pickWaveItemId: "wi1",
-          demandQty: 30,
-          matchedQty: 30,
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setOpportunities([]);
+
     } finally {
       setLoading(false);
     }
@@ -103,11 +94,6 @@ export default function CrossDockPage() {
         <PageHeader
           title="Cross-Docking"
           description="Inbound receipts matched to open pick-wave demand for the same product/warehouse — bypass storage and route straight to shipping."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Cross-Docking" },
-          ]}
         />
 
         {error && (

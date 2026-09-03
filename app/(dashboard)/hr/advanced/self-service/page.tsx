@@ -131,11 +131,6 @@ export default function SelfServicePage() {
       <PageHeader
         title="Self-Service Portal"
         description="View your corporate documents, update your contact details, check your leaves status, and view payslips."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Self-Service" },
-        ]}
       />
 
       {error && <div className={styles.s0}>{error}</div>}

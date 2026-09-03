@@ -113,10 +113,6 @@ export default function CommissionsPage() {
         <PageHeader
           title="Agent Commissions"
           description="Commission rules, calculations, and payouts"
-          breadcrumbs={[
-            { label: "Real Estate", href: "/real-estate" },
-            { label: "Commissions" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Add Commission

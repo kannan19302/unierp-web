@@ -100,10 +100,6 @@ export default function DashboardTemplatesPage() {
       <PageHeader
         title="Dashboard Templates"
         description="Pre-built dashboard layouts"
-        breadcrumbs={[
-          { label: "Reporting", href: "/crm/reporting-deep" },
-          { label: "Templates" },
-        ]}
         actions={
           <Button onClick={() => setShowCreate(true)}>
             <Plus size={16} /> New Template

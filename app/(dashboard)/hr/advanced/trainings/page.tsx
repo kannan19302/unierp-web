@@ -127,12 +127,6 @@ export default function TrainingsPage() {
       <PageHeader
         title="Trainings & Certifications"
         description="Plan skill development classes, record certifications, and track employee course attendance."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Advanced", href: "/hr/advanced" },
-          { label: "Trainings" },
-        ]}
         actions={
           <Button variant="primary" onClick={() => setShowForm(!showForm)}>
             <Plus size={14} /> Schedule Course

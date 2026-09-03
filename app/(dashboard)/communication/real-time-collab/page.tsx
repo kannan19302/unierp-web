@@ -151,10 +151,6 @@ export default function RealTimeCollabPage() {
         <PageHeader
           title="Real-Time Collaboration"
           description="Collaborative documents and whiteboards"
-          breadcrumbs={[
-            { label: "Communication", href: "/communication" },
-            { label: "Real-Time Collab" },
-          ]}
           actions={
             <div className="flex gap-2">
               <Button>

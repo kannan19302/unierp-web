@@ -70,10 +70,6 @@ export default function SupplierPortalPage() {
         <PageHeader
           title="Supplier Collaboration Portal"
           description="Supplier onboarding, document exchange, PO collaboration"
-          breadcrumbs={[
-            { label: "Supply Chain", href: "/supply-chain" },
-            { label: "Supplier Portal" },
-          ]}
         />
 
         <SubTabBar tabs={SUB_TABS} />

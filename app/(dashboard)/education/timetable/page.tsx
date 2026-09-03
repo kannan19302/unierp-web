@@ -102,10 +102,6 @@ export default function TimetablePage() {
         <PageHeader
           title="Timetable"
           description="Weekly class schedule and room allocation"
-          breadcrumbs={[
-            { label: "Education", href: "/education" },
-            { label: "Timetable" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> Add Slot

@@ -51,10 +51,6 @@ export default function MilestoneTemplatesPage() {
         <PageHeader
           title="Milestone Templates"
           description="Define milestone templates for project phases"
-          breadcrumbs={[
-            { label: "Projects", href: "/projects" },
-            { label: "Milestone Templates" },
-          ]}
         />
         <div className={styles.grid}>
           {templates.map((t: any) => (

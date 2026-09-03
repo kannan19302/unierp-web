@@ -145,12 +145,6 @@ export default function PositionsPage() {
         <PageHeader
           title="Position Control"
           description="Verify authorized headcounts vs filled vacancies, control departmental budgets, and log variances."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Positions" },
-          ]}
           actions={
             <Button
               variant="primary"

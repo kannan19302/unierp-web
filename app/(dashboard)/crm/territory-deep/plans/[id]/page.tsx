@@ -86,10 +86,6 @@ export default function TerritoryPlanDetail() {
       <PageHeader
         title={plan.name}
         description={`Fiscal Year: ${plan.fiscalYear}`}
-        breadcrumbs={[
-          { label: "Territory Management", href: "/crm/territory-deep" },
-          { label: plan.name },
-        ]}
         actions={
           <div className="ui-flex" style={{ gap: "var(--space-2)" }}>
             <Button variant="outline" onClick={handlePreviewRebalance}>

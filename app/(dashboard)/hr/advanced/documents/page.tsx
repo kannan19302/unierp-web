@@ -168,12 +168,6 @@ export default function DocumentsPage() {
       <PageHeader
         title="Documents Manager"
         description="Verify and track employee contract signatures, background clearance certificates, and tax compliance forms."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "HR", href: "/hr" },
-          { label: "Advanced", href: "/hr/advanced" },
-          { label: "Documents" },
-        ]}
         actions={
           selectedEmpId && (
             <Button variant="primary" onClick={() => setShowForm(!showForm)}>

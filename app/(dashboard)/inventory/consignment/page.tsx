@@ -49,27 +49,10 @@ export default function ConsignmentPage() {
       setStocks(Array.isArray(sRes) ? sRes : []);
       setUnbilled(Array.isArray(cRes) ? cRes : []);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setStocks([
-        {
-          id: "cs-1",
-          supplierName: "Acme Supply Co",
-          quantityOnHand: 200,
-          unitCost: 12.5,
-          status: "ACTIVE",
-          product: { name: "Industrial Servo Motor" },
-          warehouse: { name: "Schenectady Central Depot" },
-        },
-      ]);
-      setUnbilled([
-        {
-          id: "cc-1",
-          quantity: 10,
-          totalCost: 125,
-          billed: false,
-          consignmentStock: { supplierName: "Acme Supply Co" },
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setStocks([]);
+      setUnbilled([]);
+
     } finally {
       setLoading(false);
     }
@@ -161,11 +144,6 @@ export default function ConsignmentPage() {
         <PageHeader
           title="Vendor-Managed / Consignment Inventory"
           description="Supplier-owned stock held at tenant warehouses, with consumption-triggered billing."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Consignment Inventory" },
-          ]}
           actions={
             <Button
               variant="primary"

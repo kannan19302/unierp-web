@@ -122,12 +122,6 @@ export default function FeedbackPage() {
         <PageHeader
           title="360° Feedback"
           description="Aggregate anonymous multi-rater peer reviews, manager evaluations, and customer feedback reports."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "HR", href: "/hr" },
-            { label: "Advanced", href: "/hr/advanced" },
-            { label: "Feedback" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setShowForm(!showForm)}>
               <Plus size={14} /> Submit Feedback

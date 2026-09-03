@@ -261,11 +261,6 @@ export default function GamificationPage() {
       <PageHeader
         title="Gamification & Leaderboards"
         description="Rep/team leaderboards, activity streaks, and badge-style recognition driven by closed-won deals and activity volume (SalesScreen/Ambition-style)."
-        breadcrumbs={[
-          { label: "Home", href: "/dashboard" },
-          { label: "CRM", href: "/crm" },
-          { label: "Gamification & Leaderboards" },
-        ]}
       />
 
       <div className={styles.tabs}>

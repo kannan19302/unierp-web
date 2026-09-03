@@ -270,10 +270,6 @@ export default function POSPage() {
         <PageHeader
           title="Point of Sale Terminal"
           description="Run retail counter checkout, handle registers, open cash sessions, and log staff shifts."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "POS" },
-          ]}
         />
 
         {/* Check Register Status */}

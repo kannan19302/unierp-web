@@ -139,28 +139,7 @@ export default function QuotationsPage() {
         await client.get<QuotationDetail>(`/sales/quotations/${quote.id}`),
       );
     } catch {
-      // Mock details
-      setQuoteDetails({
-        id: quote.id,
-        quotationNumber: quote.quotationNumber,
-        status: quote.status,
-        validUntil: quote.validUntil,
-        customer: { name: quote.customerName },
-        subtotal: quote.subtotal,
-        taxAmount: quote.taxAmount,
-        totalAmount: quote.totalAmount,
-        notes: "Quote for supply materials.",
-        lineItems: [
-          {
-            id: "li-1",
-            description: "Materials Supply",
-            quantity: 1,
-            unitPrice: quote.subtotal,
-            taxRate: 5,
-            totalAmount: quote.totalAmount,
-          },
-        ],
-      });
+      setQuoteDetails(null);
     } finally {
       setLoadingDetails(false);
     }
@@ -168,34 +147,30 @@ export default function QuotationsPage() {
 
   const handleCreateQuotation = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!customerId || !quotationNumber) return;
+
     setSubmitting(true);
-    const payload = {
-      customerId,
-      quotationNumber,
-      validUntil: new Date(validUntil).toISOString(),
-      notes,
-      lineItems: lineItems.map((item: any) => ({
-        productId: item.productId || undefined,
-        description: item.description,
-        quantity: item.quantity,
-        unitPrice: item.unitPrice,
-        taxRate: item.taxRate,
-      })),
-    };
-
     try {
-      await client.post("/sales/quotations", payload);
-
+      await client.post("/sales/quotations", {
+        customerId,
+        quotationNumber,
+        validUntil: validUntil || undefined,
+        notes: notes || undefined,
+        lineItems: lineItems.map((li: any) => ({
+          description: li.description,
+          quantity: li.quantity,
+          unitPrice: li.unitPrice,
+          taxRate: li.taxRate,
+        })),
+      });
       setModalSuccess(true);
       setTimeout(() => {
         setIsModalOpen(false);
         resetForm();
         loadData();
-      }, 1500);
-    } catch {
-      // save failed — surface the error instead of fabricating a result
-      setError("Action could not be completed. Please try again.");
-      setSubmitting(false);
+      }, 1000);
+    } catch (err: any) {
+      alert(err.message || "Failed to create quotation");
     } finally {
       setSubmitting(false);
     }
@@ -207,17 +182,8 @@ export default function QuotationsPage() {
       alert("Quotation successfully converted to Sales Order!");
       setSelectedQuote(null);
       loadData();
-    } catch {
-      // Mock conversion
-      alert("Mock Mode: Quotation converted successfully!");
-      setQuotes((prev: any) =>
-        prev.map((q: any) => (q.id === quoteId ? { ...q, status: "CONVERTED" } : q)),
-      );
-      if (selectedQuote) {
-        setSelectedQuote((prev: any) =>
-          prev ? { ...prev, status: "CONVERTED" } : null,
-        );
-      }
+    } catch (err: any) {
+      alert(err?.message || "Failed to convert quotation to Sales Order.");
     }
   };
 
@@ -284,11 +250,6 @@ export default function QuotationsPage() {
         <PageHeader
           title="Customer Quotations"
           description="Negotiate orders, draft proposals, and convert accepted quotes into orders."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Sales & Orders", href: "/sales" },
-            { label: "Quotations" },
-          ]}
           actions={
             <Button
               variant="primary"
@@ -304,7 +265,7 @@ export default function QuotationsPage() {
         {error && (
           <div className={styles.p1}>
             <AlertCircle size={16} />
-            <span>Note: {error} (Mock Fallback Active)</span>
+            <span>Note: {error}</span>
           </div>
         )}
 

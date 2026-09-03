@@ -11,11 +11,6 @@ export default function ManufacturingSettingsPage() {
       <PageHeader
         title="Manufacturing"
         description="Configure BOM settings, production calendars, routing templates, and work centers."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Manufacturing", href: "/manufacturing" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/manufacturing/bom-settings" className={styles.card}>

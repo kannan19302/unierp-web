@@ -18,11 +18,6 @@ export default function HrSettingsPage() {
       <PageHeader
         title="Human Resources"
         description="Configure leave types, payroll structures, attendance policies, departments, and positions."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "HR", href: "/hr" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/hr/leave-types" className={styles.card}>

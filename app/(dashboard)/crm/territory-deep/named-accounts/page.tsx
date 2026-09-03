@@ -100,10 +100,6 @@ export default function NamedAccountsPage() {
       <PageHeader
         title="Named Accounts"
         description="Strategic, key, and target accounts"
-        breadcrumbs={[
-          { label: "Territory Management", href: "/crm/territory-deep" },
-          { label: "Named Accounts" },
-        ]}
         actions={
           <Button onClick={() => setShowCreate(true)}>
             <Plus size={16} /> Add Named Account

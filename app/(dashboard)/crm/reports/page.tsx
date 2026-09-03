@@ -233,11 +233,6 @@ export default function CrmReportsPage() {
         <PageHeader
           title="CRM Reports & Analytics"
           description="Comprehensive analytics, custom reports, and sales insights"
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "CRM", href: "/crm" },
-            { label: "Reports" },
-          ]}
           actions={
             <div className="ui-flex ui-gap-2">
               <Button variant="outline" size="sm" onClick={handleExportCSV}>

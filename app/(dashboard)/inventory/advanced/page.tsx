@@ -171,60 +171,15 @@ export default function AdvancedInventoryPage() {
         setProducts(prods);
       }
     } catch {
-      setError("Serving local mock fallback data.");
-      // Mock fallbacks
-      if (activeTab === "categories") {
-        setCategories([
-          { id: "cat-1", name: "Raw Materials", slug: "raw-materials" },
-          { id: "cat-2", name: "Finished Goods", slug: "finished-goods" },
-        ]);
-      } else if (activeTab === "uoms") {
-        setUoms([
-          {
-            id: "uom-1",
-            name: "Each",
-            abbreviation: "PCS",
-            type: "UNIT",
-            isBase: true,
-          },
-          {
-            id: "uom-2",
-            name: "Kilogram",
-            abbreviation: "KG",
-            type: "WEIGHT",
-            isBase: true,
-          },
-        ]);
-        setUomConversions([]);
-      } else if (activeTab === "reorder") {
-        setReorderRules([
-          {
-            id: "rule-1",
-            productId: "prod-1",
-            minQty: 10,
-            maxQty: 100,
-            reorderQty: 50,
-            leadTimeDays: 5,
-            product: { name: "Vibranium", sku: "SKU-VIB" },
-            isActive: true,
-          },
-        ]);
-        setProducts([{ id: "prod-1", name: "Vibranium", sku: "SKU-VIB" }]);
-        setWarehouses([{ id: "wh-1", name: "Central Depot", code: "WH-01" }]);
-      } else if (activeTab === "kits") {
-        setKits([
-          {
-            id: "kit-1",
-            productId: "prod-1",
-            name: "Defense Shield Assembly Kit",
-            sellPrice: 24500,
-            discount: 5,
-            components: [],
-            product: { sku: "SKU-VIB" },
-          },
-        ]);
-        setProducts([{ id: "prod-1", name: "Vibranium", sku: "SKU-VIB" }]);
-      }
+      setError("Could not load data. Please try again.");
+      setCategories([]);
+      setUoms([]);
+      setUomConversions([]);
+      setReorderRules([]);
+      setProducts([]);
+      setWarehouses([]);
+      setKits([]);
+
     } finally {
       setLoading(false);
     }
@@ -287,10 +242,8 @@ export default function AdvancedInventoryPage() {
       await client.post(url.replace("/api/v1", ""), payload);
       setIsModalOpen(false);
       loadData();
-    } catch {
-      // Mock local insertion
-      setIsModalOpen(false);
-      alert("Action completed (mock mode)");
+    } catch (err: any) {
+      alert(err?.message || "Failed to save configuration.");
     }
   };
 
@@ -300,11 +253,6 @@ export default function AdvancedInventoryPage() {
         <PageHeader
           title="Advanced Inventory Hub"
           description="Configure classifications, Unit of Measure mappings, reorder rules, and product bundle definitions."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Advanced Settings" },
-          ]}
         />
 
         {error && (

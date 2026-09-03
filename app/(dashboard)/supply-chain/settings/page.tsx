@@ -11,11 +11,6 @@ export default function SupplyChainSettingsPage() {
       <PageHeader
         title="Supply Chain"
         description="Configure carriers, shipment tracking, and shipping zones."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Supply Chain", href: "/supply-chain" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/supply-chain/carriers" className={styles.card}>

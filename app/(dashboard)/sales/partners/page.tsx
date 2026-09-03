@@ -182,11 +182,6 @@ export default function PartnersPage() {
         <PageHeader
           title="Sales Partners & Resellers"
           description="Manage partner relationships and referral programs."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Sales", href: "/sales" },
-            { label: "Partners" },
-          ]}
           actions={
             <Button
               variant="primary"

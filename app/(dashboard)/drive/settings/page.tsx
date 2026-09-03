@@ -17,11 +17,6 @@ export default function DriveSettingsPage() {
       <PageHeader
         title="Drive"
         description="Configure document templates, storage quotas, media conversion, and e-signatures."
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Drive", href: "/drive" },
-          { label: "Settings" },
-        ]}
       />
       <div className={styles.grid}>
         <Link href="/drive/templates" className={styles.card}>

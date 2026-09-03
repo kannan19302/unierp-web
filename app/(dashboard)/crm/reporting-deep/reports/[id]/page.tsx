@@ -74,11 +74,6 @@ export default function ReportDetailPage() {
           report.description ||
           `${report.type} report · ${report.module} module`
         }
-        breadcrumbs={[
-          { label: "Reporting", href: "/crm/reporting-deep" },
-          { label: "Reports", href: "/crm/reporting-deep/reports" },
-          { label: report.name },
-        ]}
         actions={
           <div className="ui-flex" style={{ gap: "var(--space-2)" }}>
             <Button variant="outline" onClick={() => handleExport("csv")}>

@@ -55,10 +55,6 @@ export default function ForecastAccuracyPage() {
       <PageHeader
         title="Forecast Accuracy"
         description="Compare forecasted vs actual revenue across periods"
-        breadcrumbs={[
-          { label: "Forecast Governance", href: "/crm/forecast-governance" },
-          { label: "Accuracy" },
-        ]}
       />
 
       <div className="ui-card-grid ui-grid-3">

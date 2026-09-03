@@ -128,11 +128,6 @@ export default function SecurityPage() {
         <PageHeader
           title="Security Settings"
           description="Password policies and IP allowlisting."
-          breadcrumbs={[
-            { label: "Apps", href: "/apps" },
-            { label: "Auth", href: "/auth" },
-            { label: "Security" },
-          ]}
         />
 
         <Card>

@@ -341,11 +341,6 @@ export default function ExpenseManagementPage() {
         <PageHeader
           title="Expense Management"
           description="Employee expense reports, OCR receipt capture, policy enforcement, and reimbursement"
-          breadcrumbs={[
-            { label: "Finance", href: "/finance" },
-            { label: "Advanced", href: "/finance/advanced" },
-            { label: "Expense Management" },
-          ]}
           actions={
             <Button variant="primary" onClick={() => setCreateOpen(true)}>
               <Plus size={14} className="mr-2" /> New Report

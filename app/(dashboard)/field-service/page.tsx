@@ -126,7 +126,6 @@ export default function FieldServiceDashboard() {
         <PageHeader
           title="Field Service"
           description="Dispatching, service tickets, preventive maintenance, and technician management"
-          breadcrumbs={[{ label: "Field Service" }]}
         />
 
         <div className="ui-grid-auto">

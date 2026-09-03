@@ -26,65 +26,6 @@ interface Playbook {
   createdAt: string;
 }
 
-const MOCK_PLAYBOOKS: Playbook[] = [
-  {
-    id: "1",
-    name: "Enterprise Sales",
-    description: "Playbook for large enterprise deals with long sales cycles",
-    pipelineId: "p1",
-    pipelineName: "Enterprise Pipeline",
-    isActive: true,
-    stages: [{ id: "s1" }, { id: "s2" }, { id: "s3" }],
-    battlecards: [{ id: "b1" }, { id: "b2" }],
-    createdAt: "2026-06-01",
-  },
-  {
-    id: "2",
-    name: "SMB Quick Close",
-    description: "Fast-track playbook for small and mid-size businesses",
-    pipelineId: "p2",
-    pipelineName: "SMB Pipeline",
-    isActive: true,
-    stages: [{ id: "s4" }, { id: "s5" }],
-    battlecards: [{ id: "b3" }],
-    createdAt: "2026-06-10",
-  },
-  {
-    id: "3",
-    name: "Partner Channel",
-    description: "Reseller and partner-driven sales motion",
-    pipelineId: null,
-    pipelineName: null,
-    isActive: false,
-    stages: [{ id: "s6" }],
-    battlecards: [],
-    createdAt: "2026-05-20",
-  },
-  {
-    id: "4",
-    name: "Inbound Qualification",
-    description:
-      "Playbook for qualifying and converting inbound marketing leads",
-    pipelineId: "p3",
-    pipelineName: "Inbound Pipeline",
-    isActive: true,
-    stages: [{ id: "s7" }, { id: "s8" }, { id: "s9" }, { id: "s10" }],
-    battlecards: [{ id: "b4" }, { id: "b5" }, { id: "b6" }],
-    createdAt: "2026-06-15",
-  },
-  {
-    id: "5",
-    name: "Renewal Playbook",
-    description: "Customer renewal and upsell strategies for existing accounts",
-    pipelineId: "p4",
-    pipelineName: "Renewals Pipeline",
-    isActive: true,
-    stages: [{ id: "s11" }, { id: "s12" }],
-    battlecards: [{ id: "b7" }],
-    createdAt: "2026-06-18",
-  },
-];
-
 export default function PlaybooksTab() {
   const [playbooks, setPlaybooks] = useState<Playbook[]>([]);
   const [loading, setLoading] = useState(true);
@@ -101,7 +42,7 @@ export default function PlaybooksTab() {
     setLoading(true);
     try {
       const res = await client.get<any>("/crm/playbooks");
-      setPlaybooks(Array.isArray(res) ? res : res.data || MOCK_PLAYBOOKS);
+      setPlaybooks(Array.isArray(res) ? res : res.data || []);
     } catch {
       setPlaybooks([]);
     } finally {

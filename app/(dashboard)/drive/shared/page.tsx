@@ -103,11 +103,6 @@ export default function SharedPage() {
       <PageHeader
         title="Shared with me"
         description="Files and folders shared with you"
-        breadcrumbs={[
-          { label: "Apps", href: "/apps" },
-          { label: "Drive", href: "/drive" },
-          { label: "Shared" },
-        ]}
       />
       <Card padding="none">
         <DataTable

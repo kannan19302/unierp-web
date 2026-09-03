@@ -105,25 +105,9 @@ export default function PickWavesPage() {
       else if (data && typeof data === "object" && "data" in data)
         setWaves(((data as { data?: unknown }).data ?? []) as PickWave[]);
     } catch {
-      setError("Serving local mock fallback registry.");
-      setWaves([
-        {
-          id: "wave-1",
-          waveNumber: "WAVE-2026-00001",
-          status: "OPEN",
-          items: [
-            {
-              id: "wi-1",
-              productId: "p1",
-              quantity: 10,
-              pickedQty: 0,
-              status: "PENDING",
-              product: { name: "Refined Vibranium Alloy Ingot" },
-              binLocation: { code: "A-01-03" },
-            },
-          ],
-        },
-      ]);
+      setError("Could not load data. Please try again.");
+      setWaves([]);
+
     } finally {
       setLoading(false);
     }
@@ -194,11 +178,6 @@ export default function PickWavesPage() {
         <PageHeader
           title="Wave Picking & Pack Lists"
           description="Batch multiple sales orders into a pick wave, sequence picks by bin location, and generate pack lists."
-          breadcrumbs={[
-            { label: "Home", href: "/dashboard" },
-            { label: "Inventory", href: "/inventory" },
-            { label: "Wave Picking" },
-          ]}
           actions={
             <Button
               variant="primary"

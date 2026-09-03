@@ -133,10 +133,6 @@ export default function ReportsPage() {
       <PageHeader
         title="Saved Reports"
         description={`${reports.length} reports · ${systemReports.length} system templates`}
-        breadcrumbs={[
-          { label: "Reporting", href: "/crm/reporting-deep" },
-          { label: "Reports" },
-        ]}
         actions={
           <div className="ui-flex" style={{ gap: "var(--space-2)" }}>
             <Button
