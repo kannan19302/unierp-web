@@ -11,38 +11,6 @@ import {
 } from "lucide-react";
 import { PageHeader, Button, Card, Spinner, KPICard } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
-import { useCrmKeyMigration, type CrmTab } from "@/components/crm/CrmTabLayout";
-
-const TAB_DEFINITIONS: CrmTab[] = [
-  { id: "overview", label: "Dashboard", href: "/crm", icon: BarChart3 },
-  { id: "leads", label: "Leads", href: "/crm/leads", icon: Target },
-  {
-    id: "opportunities",
-    label: "Opportunities",
-    href: "/crm/opportunities",
-    icon: Target,
-  },
-  {
-    id: "automation",
-    label: "Automation",
-    href: "/crm/automation",
-    icon: Activity,
-  },
-  {
-    id: "customer-success",
-    label: "Customer Success",
-    href: "/crm/customer-success",
-    icon: Users,
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    href: "/crm/settings",
-    icon: Settings,
-    advanced: true,
-    group: "Settings",
-  },
-];
 
 const AUTOMATION_TABS = [
   { id: "overview", label: "Overview" },
@@ -53,7 +21,6 @@ const AUTOMATION_TABS = [
 ];
 
 export default function CrmAutomationPage() {
-  useCrmKeyMigration();
   const api = useApiClient();
   const [activeTab, setActiveTab] = useState("overview");
   const [dashboard, setDashboard] = useState<any>(null);
