@@ -1,6 +1,5 @@
 "use client";
 
-import { useCrmKeyMigration, type CrmTab } from "@/components/crm/CrmTabLayout";
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -39,80 +38,6 @@ const PAGES = [
   { id: "customer-health", label: "Customer Health", icon: Users },
   { id: "forecast", label: "Forecast & Revenue", icon: DollarSign },
   { id: "activity-stream", label: "Activity Stream", icon: Activity },
-];
-
-const TAB_DEFINITIONS: CrmTab[] = [
-  {
-    id: "overview",
-    label: "Dashboard",
-    href: "/crm",
-    icon: BarChart3,
-    description: "CRM executive dashboard",
-  },
-  {
-    id: "leads",
-    label: "Leads",
-    href: "/crm/leads",
-    icon: UserPlus,
-    description: "Lead management",
-  },
-  {
-    id: "opportunities",
-    label: "Opportunities",
-    href: "/crm/opportunities",
-    icon: Target,
-    description: "Sales pipeline",
-  },
-  {
-    id: "customers",
-    label: "Customers",
-    href: "/crm/customers",
-    icon: Building2,
-    description: "Customer management",
-  },
-  {
-    id: "contacts",
-    label: "Contacts",
-    href: "/crm/contacts",
-    icon: Users,
-    description: "Contact directory",
-  },
-  {
-    id: "marketing",
-    label: "Marketing",
-    href: "/crm/marketing-outreach",
-    icon: PieChart,
-    description: "Campaigns & outreach",
-    advanced: true,
-    group: "Advanced",
-  },
-  {
-    id: "automation",
-    label: "Automation",
-    href: "/crm/automation",
-    icon: Activity,
-    description: "Sales automation",
-    advanced: true,
-    group: "Advanced",
-  },
-  {
-    id: "customer-success",
-    label: "Customer Success",
-    href: "/crm/customer-success",
-    icon: Handshake,
-    description: "Health & retention",
-    advanced: true,
-    group: "Advanced",
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    href: "/crm/settings",
-    icon: Activity,
-    description: "CRM configuration",
-    advanced: true,
-    group: "Settings",
-  },
 ];
 
 function KPICardGroup({ data }: { data: DashboardData }) {
@@ -172,7 +97,6 @@ function NavCard({
 }
 
 export default function CrmPage() {
-  useCrmKeyMigration();
   const searchParams = useSearchParams();
   const activePage = searchParams.get("page") || "executive-overview";
   const [data, setData] = useState<DashboardData | null>(null);

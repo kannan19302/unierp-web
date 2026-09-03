@@ -86,11 +86,7 @@ export default function DashboardsPage() {
     }
   };
 
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "CRM", href: "/crm" },
-    { label: "Dashboards" },
-  ];
+
   const inputStyle: React.CSSProperties = {
     padding: "var(--spacing-2) var(--spacing-3)",
     border: "1px solid var(--color-border)",
