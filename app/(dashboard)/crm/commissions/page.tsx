@@ -49,15 +49,7 @@ interface CommissionEntry {
   createdAt: string;
 }
 
-const CRM_TABS: CrmTab[] = [
-  { id: "deals", label: "Deals", href: "/crm/deals" },
-  { id: "leads", label: "Leads", href: "/crm/leads" },
-  { id: "contacts", label: "Contacts", href: "/crm/contacts" },
-  { id: "accounts", label: "Accounts", href: "/crm/customers" },
-  { id: "opportunities", label: "Opportunities", href: "/crm/opportunities" },
-  { id: "commissions", label: "Commissions", href: "/crm/commissions" },
-  { id: "reports", label: "Reports", href: "/crm/reports" },
-];
+
 
 export default function CommissionsPage() {
   const client = useApiClient();
