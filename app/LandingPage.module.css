@@ -10,13 +10,13 @@
   width: fit-content;
 }
 .s3 {
-  background: #ff5f57;
+  background: var(--color-danger);
 }
 .s4 {
-  background: #febc2e;
+  background: var(--color-warning);
 }
 .s5 {
-  background: #28c840;
+  background: var(--color-success);
 }
 .s6 {
   align-items: center;

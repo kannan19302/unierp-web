@@ -251,7 +251,7 @@
   border: none;
   border-radius: var(--token-radius-md);
   background: var(--token-color-primary);
-  color: var(--token-color-text-inverse, #ffffff);
+  color: var(--token-color-text-inverse, var(--color-text-inverse));
   font-size: var(--token-text-sm);
   font-weight: 600;
   cursor: pointer;

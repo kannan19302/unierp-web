@@ -127,7 +127,7 @@
   width: 56px;
   height: 56px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
   color: var(--color-text-inverse);
   display: flex;
   align-items: center;
@@ -443,7 +443,7 @@
   font-weight: var(--weight-medium);
   padding: var(--space-1) var(--space-2-5, 10px);
   background: var(--color-primary);
-  color: var(--on-primary, #ffffff);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
