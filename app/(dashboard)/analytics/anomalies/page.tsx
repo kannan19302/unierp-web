@@ -1,28 +1,45 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, DataTable } from "@kannan19302/ui";
+import React, { useState, useEffect, useMemo } from "react";
+import { Card, PageHeader, Spinner, useToast, Badge, DataTable, Button } from "@kannan19302/ui";
 import {
   AlertTriangle,
   AlertOctagon,
-  ShieldAlert,
-  CheckCircle2,
+  ShieldCheck,
+  RefreshCw,
+  Info,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
+
+interface AnomalyItem {
+  id: string;
+  metric: string;
+  severity: "CRITICAL" | "WARNING" | "INFO";
+  deviationPercent: string;
+  detectedAt: string;
+  status: string;
+}
 
 export default function AnalyticsAnomaliesPage() {
   const client = useApiClient();
   const [loading, setLoading] = useState(true);
-  const [anomalies, setAnomalies] = useState<any[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [anomalies, setAnomalies] = useState<AnomalyItem[]>([]);
+  const [selectedSeverity, setSelectedSeverity] = useState<string>("ALL");
   const toast = useToast();
 
-  const loadAnomalies = async () => {
+  const loadAnomalies = async (isManual = false) => {
     try {
-      setLoading(true);
-      const data = await client.get<any[]>(
+      if (isManual) setRefreshing(true);
+      else setLoading(true);
+      const data = await client.get<AnomalyItem[]>(
         "/analytics/anomaly-detection-deep/anomalies",
       );
       setAnomalies(Array.isArray(data) ? data : []);
+      if (isManual) {
+        toast.success("Anomalies Refreshed", "Live anomaly scan completed.");
+      }
     } catch (err) {
       toast.error(
         "Failed to load Anomaly Detection entries",
@@ -30,12 +47,28 @@ export default function AnalyticsAnomaliesPage() {
       );
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
   useEffect(() => {
     loadAnomalies();
   }, []);
+
+  const criticalCount = useMemo(
+    () => anomalies.filter((a) => a.severity === "CRITICAL").length,
+    [anomalies],
+  );
+
+  const warningCount = useMemo(
+    () => anomalies.filter((a) => a.severity === "WARNING").length,
+    [anomalies],
+  );
+
+  const filteredAnomalies = useMemo(() => {
+    if (selectedSeverity === "ALL") return anomalies;
+    return anomalies.filter((a) => a.severity === selectedSeverity);
+  }, [anomalies, selectedSeverity]);
 
   if (loading) {
     return (
@@ -44,7 +77,7 @@ export default function AnalyticsAnomaliesPage() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "60vh",
+          height: "calc(var(--space-12) * 5)",
         }}
       >
         <Spinner size="lg" />
@@ -53,41 +86,149 @@ export default function AnalyticsAnomaliesPage() {
   }
 
   return (
-    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
+    <div className={styles.container} data-density="compact">
       <PageHeader
         title="AI Automated Metric Anomaly Detection"
         description="Continuous statistical anomaly detection, unexpected traffic spikes, and financial divergence alerts."
+        actions={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => loadAnomalies(true)}
+            disabled={refreshing}
+          >
+            <RefreshCw
+              size={14}
+              style={{
+                marginRight: "var(--space-1-5)",
+                animation: refreshing ? "spin 1s linear infinite" : undefined,
+              }}
+            />
+            Scan Live Metrics
+          </Button>
+        }
       />
 
-      <Card style={{ padding: "var(--space-6)" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
-          Detected Metric Anomalies
-        </h3>
-        {anomalies.length === 0 ? (
-          <p
-            style={{
-              color: "var(--color-text-secondary)",
-              textAlign: "center",
-              padding: "var(--space-8) 0",
-            }}
-          >
-            No active metric anomalies detected.
-          </p>
+      <div className={styles.statsGrid}>
+        <div className={styles.statCard}>
+          <div className={styles.statIconWrapper}>
+            <AlertOctagon size={18} style={{ color: "var(--color-danger)" }} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>Critical Outliers</p>
+            <p className={styles.statValue}>{criticalCount}</p>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIconWrapper}>
+            <AlertTriangle size={18} style={{ color: "var(--color-warning)" }} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>Warning Deviations</p>
+            <p className={styles.statValue}>{warningCount}</p>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIconWrapper}>
+            <ShieldCheck size={18} style={{ color: "var(--color-success)" }} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>Algorithm Model</p>
+            <p className={styles.statValue} style={{ fontSize: "var(--text-sm)" }}>
+              Rolling Z-Score (3σ)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.filterBar}>
+        <button
+          className={`${styles.filterBtn} ${selectedSeverity === "ALL" ? styles.filterBtnActive : ""}`}
+          onClick={() => setSelectedSeverity("ALL")}
+        >
+          All Events ({anomalies.length})
+        </button>
+        <button
+          className={`${styles.filterBtn} ${selectedSeverity === "CRITICAL" ? styles.filterBtnActive : ""}`}
+          onClick={() => setSelectedSeverity("CRITICAL")}
+        >
+          Critical ({criticalCount})
+        </button>
+        <button
+          className={`${styles.filterBtn} ${selectedSeverity === "WARNING" ? styles.filterBtnActive : ""}`}
+          onClick={() => setSelectedSeverity("WARNING")}
+        >
+          Warning ({warningCount})
+        </button>
+      </div>
+
+      <Card className={styles.cardSection}>
+        <h3 className={styles.cardTitle}>Detected Metric Anomalies</h3>
+        {filteredAnomalies.length === 0 ? (
+          <div className={styles.emptyState}>
+            <ShieldCheck size={32} style={{ color: "var(--color-success)" }} />
+            <p className={styles.emptyStateTitle}>Zero Outliers Detected</p>
+            <p className={styles.emptyStateDesc}>
+              All tenant metrics and operational financial transactions are currently performing within expected statistical variance bounds.
+            </p>
+          </div>
         ) : (
-          <>{(() => {
-                              const columns = [
-                        { key: "col_0", header: "Metric" , render: (a: any) => (<>{a.metric}</>) },
-                        { key: "col_1", header: "Severity" , render: (a: any) => (<><Badge
-                                            variant={a.severity === "CRITICAL" ? "danger" : "warning"}
-                                          >
-                                            {a.severity}
-                                          </Badge></>) },
-                        { key: "col_2", header: "Deviation" , render: (a: any) => (<>{a.deviationPercent}</>) },
-                        { key: "col_3", header: "Detected At" , render: (a: any) => (<>{new Date(a.detectedAt).toLocaleString()}</>) },
-                        { key: "col_4", header: "Status" , render: (a: any) => (<><Badge variant="info">{a.status}</Badge></>) },
-                      ];
-                              return <DataTable columns={columns} data={anomalies} rowKey={(a: any) => a.id} />;
-                          })()}</>
+          <DataTable
+            columns={[
+              {
+                key: "metric",
+                header: "Observed Metric",
+                render: (a: AnomalyItem) => (
+                  <span style={{ fontWeight: "var(--weight-semibold)" }}>{a.metric}</span>
+                ),
+              },
+              {
+                key: "severity",
+                header: "Severity",
+                render: (a: AnomalyItem) => (
+                  <Badge variant={a.severity === "CRITICAL" ? "danger" : "warning"}>
+                    {a.severity}
+                  </Badge>
+                ),
+              },
+              {
+                key: "deviationPercent",
+                header: "Deviation Delta",
+                render: (a: AnomalyItem) => (
+                  <span
+                    style={{
+                      color:
+                        a.severity === "CRITICAL"
+                          ? "var(--color-danger)"
+                          : "var(--color-warning)",
+                      fontFamily: "var(--font-mono, monospace)",
+                      fontWeight: "var(--weight-bold)",
+                    }}
+                  >
+                    {a.deviationPercent}
+                  </span>
+                ),
+              },
+              {
+                key: "detectedAt",
+                header: "Detected Timestamp",
+                render: (a: AnomalyItem) => (
+                  <span style={{ color: "var(--color-text-secondary)" }}>
+                    {new Date(a.detectedAt).toLocaleString()}
+                  </span>
+                ),
+              },
+              {
+                key: "status",
+                header: "Resolution Status",
+                render: (a: AnomalyItem) => <Badge variant="info">{a.status}</Badge>,
+              },
+            ]}
+            data={filteredAnomalies}
+            rowKey={(a: AnomalyItem) => a.id}
+          />
         )}
       </Card>
     </div>

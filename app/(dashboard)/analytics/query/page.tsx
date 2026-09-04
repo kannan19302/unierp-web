@@ -1,5 +1,4 @@
 "use client";
-// @ts-nocheck
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import { DataTable } from "@kannan19302/ui";
@@ -602,7 +601,7 @@ export default function VisualQueryBuilderPage() {
                             : "var(--color-bg)",
                         color:
                           viewMode === "table"
-                            ? "#fff"
+                            ? "var(--color-surface-base)"
                             : "var(--color-text-secondary)",
                       }}
                       className={styles.s36}
@@ -618,7 +617,7 @@ export default function VisualQueryBuilderPage() {
                             : "var(--color-bg)",
                         color:
                           viewMode === "chart"
-                            ? "#fff"
+                            ? "var(--color-surface-base)"
                             : "var(--color-text-secondary)",
                       }}
                       className={styles.s36}
@@ -636,7 +635,7 @@ export default function VisualQueryBuilderPage() {
                         header: c,
                         render: (row: any) => <>{String(row[c] ?? "")}</>
                       }));
-                                              return <DataTable columns={columns} data={results.rows} rowKey={(row: any, i: number) => String(i)} />;
+                                              return <DataTable columns={columns} data={results.rows} rowKey={(_row: any, i: number) => String(i)} />;
                                           })()}</>
                   </div>
                 ) : (
@@ -665,7 +664,7 @@ export default function VisualQueryBuilderPage() {
                             <div
                               style={{
                                 height: `${height}px`,
-                                background: `hsl(${210 + i * 15}, 70%, 55%)`,
+                                background: `var(--chart-${(i % 10) + 1})`,
                               }}
                               className={styles.s43}
                             />

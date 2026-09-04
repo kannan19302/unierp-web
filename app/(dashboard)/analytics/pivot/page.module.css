@@ -3,7 +3,7 @@
   background: var(--color-primary);
   border-radius: var(--radius-md);
   border: none;
-  color: white;
+  color: var(--color-surface-base);
   cursor: pointer;
   display: flex;
   font-size: var(--text-xs);
@@ -31,7 +31,7 @@
 }
 .s4 {
   color: var(--color-text-secondary);
-  font-size: 11px;
+  font-size: var(--text-xs);
   font-weight: bold;
 }
 .s5 {

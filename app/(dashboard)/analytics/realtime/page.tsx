@@ -1,20 +1,36 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Spinner, useToast, Badge, DataTable } from "@kannan19302/ui";
-import { Activity, Users, Zap, Globe } from "lucide-react";
+import { Card, PageHeader, Spinner, useToast, DataTable } from "@kannan19302/ui";
+import { Globe } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
+
+interface ActiveSession {
+  id: string;
+  location: string;
+  activePage: string;
+  duration: string;
+}
+
+interface RealtimeTelemetryData {
+  activeUsersNow: number;
+  requestsPerSecond: number;
+  p99LatencyMs: number;
+  activeSessions: ActiveSession[];
+  timestamp?: string;
+}
 
 export default function AnalyticsRealtimePage() {
   const client = useApiClient();
   const [loading, setLoading] = useState(true);
-  const [liveMetrics, setLiveMetrics] = useState<any>(null);
+  const [liveMetrics, setLiveMetrics] = useState<RealtimeTelemetryData | null>(null);
   const toast = useToast();
 
   const loadMetrics = async () => {
     try {
       setLoading(true);
-      const data = await client.get<any>(
+      const data = await client.get<RealtimeTelemetryData>(
         "/analytics/realtime-stream-deep/live",
       );
       setLiveMetrics(data);
@@ -30,118 +46,86 @@ export default function AnalyticsRealtimePage() {
 
   useEffect(() => {
     loadMetrics();
+    const interval = setInterval(loadMetrics, 15000);
+    return () => clearInterval(interval);
   }, []);
 
-  if (loading) {
+  if (loading && !liveMetrics) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "60vh",
-        }}
-      >
+      <div className="ui-flex-center" style={{ height: "60vh" }}>
         <Spinner size="lg" />
       </div>
     );
   }
 
+  const columns = [
+    {
+      key: "col_0",
+      header: "Session ID",
+      render: (s: ActiveSession) => <code>{s.id}</code>,
+    },
+    {
+      key: "col_1",
+      header: "Geographic Location",
+      render: (s: ActiveSession) => (
+        <span className={styles.locationCell}>
+          <Globe size={16} /> {s.location}
+        </span>
+      ),
+    },
+    {
+      key: "col_2",
+      header: "Active Page",
+      render: (s: ActiveSession) => <code>{s.activePage}</code>,
+    },
+    {
+      key: "col_3",
+      header: "Duration",
+      render: (s: ActiveSession) => <>{s.duration}</>,
+    },
+  ];
+
   return (
-    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
+    <div className={styles.container}>
       <PageHeader
         title="Real-Time Analytics & Sub-Second Event Streaming"
         description="Monitor concurrent active user sessions, live API throughput, and sub-second system latency."
       />
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "var(--space-4)",
-          margin: "var(--space-6) 0",
-        }}
-      >
-        <Card style={{ padding: "var(--space-5)" }}>
-          <span
-            style={{ fontSize: "13px", color: "var(--color-text-secondary)" }}
-          >
-            Active Users Right Now
-          </span>
-          <div
-            style={{
-              fontSize: "var(--space-8)",
-              fontWeight: "bold",
-              color: "var(--chart-9)",
-              marginTop: "var(--space-1)",
-            }}
-          >
-            {liveMetrics?.activeUsersNow || 418}
+      <div className={styles.metricsGrid}>
+        <div className={styles.metricCard}>
+          <span className={styles.metricTitle}>Active Users Right Now</span>
+          <div className={styles.metricValuePrimary}>
+            {liveMetrics?.activeUsersNow ?? 0}
           </div>
-        </Card>
-        <Card style={{ padding: "var(--space-5)" }}>
-          <span
-            style={{ fontSize: "13px", color: "var(--color-text-secondary)" }}
-          >
-            Requests / Second
-          </span>
-          <div
-            style={{
-              fontSize: "var(--space-8)",
-              fontWeight: "bold",
-              color: "var(--color-primary)",
-              marginTop: "var(--space-1)",
-            }}
-          >
-            {liveMetrics?.requestsPerSecond || 124.5}
+        </div>
+        <div className={styles.metricCard}>
+          <span className={styles.metricTitle}>Requests / Second</span>
+          <div className={styles.metricValueSecondary}>
+            {liveMetrics?.requestsPerSecond ?? 0}
           </div>
-        </Card>
-        <Card style={{ padding: "var(--space-5)" }}>
-          <span
-            style={{ fontSize: "13px", color: "var(--color-text-secondary)" }}
-          >
-            p99 API Latency
-          </span>
-          <div
-            style={{
-              fontSize: "var(--space-8)",
-              fontWeight: "bold",
-              color: "var(--chart-5)",
-              marginTop: "var(--space-1)",
-            }}
-          >
-            {liveMetrics?.p99LatencyMs || 42}ms
+        </div>
+        <div className={styles.metricCard}>
+          <span className={styles.metricTitle}>p99 API Latency</span>
+          <div className={styles.metricValueTertiary}>
+            {liveMetrics?.p99LatencyMs ?? 0}ms
           </div>
-        </Card>
+        </div>
       </div>
 
-      <Card style={{ padding: "var(--space-6)" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
-          Live User Sessions Stream
-        </h3>
+      <div className={styles.sessionCard}>
+        <h3 className={styles.sessionCardTitle}>Live User Sessions Stream</h3>
         {!liveMetrics?.activeSessions ||
         liveMetrics.activeSessions.length === 0 ? (
-          <p
-            style={{
-              color: "var(--color-text-secondary)",
-              textAlign: "center",
-              padding: "var(--space-8) 0",
-            }}
-          >
-            No active user sessions.
-          </p>
+          <p className={styles.emptyState}>No active user sessions.</p>
         ) : (
-          <>{(() => {
-                              const columns = [
-                        { key: "col_0", header: "Session ID" , render: (s: any) => (<>{s.id}</>) },
-                        { key: "col_1", header: "Geographic Location" , render: (s: any) => (<><Globe size={16} color="var(--color-primary)" />{" "}{s.location}</>) },
-                        { key: "col_2", header: "Active Page" , render: (s: any) => (<><code>{s.activePage}</code></>) },
-                        { key: "col_3", header: "Duration" , render: (s: any) => (<>{s.duration}</>) },
-                      ];
-                              return <DataTable columns={columns} data={liveMetrics.activeSessions} rowKey={(s: any) => s.id} />;
-                          })()}</>
+          <DataTable
+            columns={columns}
+            data={liveMetrics.activeSessions}
+            rowKey={(s: ActiveSession) => s.id}
+          />
         )}
-      </Card>
+      </div>
     </div>
   );
 }

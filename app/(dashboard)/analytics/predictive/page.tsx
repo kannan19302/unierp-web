@@ -1,21 +1,67 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, DataTable } from "@kannan19302/ui";
-import { Cpu, TrendingUp, Sparkles, Target } from "lucide-react";
+import {
+  Card,
+  PageHeader,
+  Button,
+  Spinner,
+  useToast,
+  Badge,
+  DataTable,
+} from "@kannan19302/ui";
+import {
+  TrendingUp,
+  Sparkles,
+  Target,
+  Play,
+  CheckCircle2,
+  BarChart2,
+} from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
+
+interface PredictiveModelItem {
+  id: string;
+  modelName: string;
+  algorithm: string;
+  targetMetric: string;
+  accuracyScore: number;
+  status: string;
+  trainedAt?: string;
+}
+
+interface ForecastRunResult {
+  id: string;
+  modelId: string;
+  forecastHorizon: string;
+  resultMetrics: {
+    predictedGrowth: string;
+    confidenceInterval: string;
+    forecastedValue: number;
+    lowerBound: number;
+    upperBound: number;
+    historicalPointsCount: number;
+  };
+  createdAt: string;
+}
 
 export default function AnalyticsPredictivePage() {
   const client = useApiClient();
   const [loading, setLoading] = useState(true);
-  const [models, setModels] = useState<any[]>([]);
+  const [training, setTraining] = useState(false);
+  const [simulatingModelId, setSimulatingModelId] = useState<string | null>(null);
+  const [models, setModels] = useState<PredictiveModelItem[]>([]);
   const [modelName, setModelName] = useState("");
+  const [algorithm, setAlgorithm] = useState("LINEAR_REGRESSION");
+  const [targetMetric, setTargetMetric] = useState("REVENUE_GROWTH");
+  const [activeForecast, setActiveForecast] = useState<ForecastRunResult | null>(null);
   const toast = useToast();
 
   const loadModels = async () => {
     try {
       setLoading(true);
-      const data = await client.get<any[]>(
+      const data = await client.get<PredictiveModelItem[]>(
         "/analytics/predictive-engine-deep/models",
       );
       setModels(Array.isArray(data) ? data : []);
@@ -34,27 +80,55 @@ export default function AnalyticsPredictivePage() {
   }, []);
 
   const handleTrain = async () => {
+    if (!modelName.trim()) {
+      toast.error("Validation Error", "Model title is required.");
+      return;
+    }
     try {
-      if (!modelName) {
-        toast.error("Validation Error", "Model name is required");
-        return;
-      }
-      await client.post("/analytics/predictive-engine-deep/models", {
-        modelName,
-        algorithm: "RANDOM_FOREST",
-        targetMetric: "REVENUE_GROWTH",
-      });
+      setTraining(true);
+      const newModel = await client.post<PredictiveModelItem>(
+        "/analytics/predictive-engine-deep/models",
+        {
+          modelName: modelName.trim(),
+          algorithm,
+          targetMetric,
+        },
+      );
       toast.success(
-        "Model Trained",
-        `Predictive AI model "${modelName}" trained with 94.5% accuracy.`,
+        "Model Trained Successfully",
+        `AI Model "${newModel.modelName}" trained with ${Number(newModel.accuracyScore || 85).toFixed(1)}% confidence score.`,
       );
       setModelName("");
       loadModels();
     } catch (err) {
       toast.error(
-        "Failed to train model",
-        err instanceof Error ? err.message : "Error",
+        "Training Failed",
+        err instanceof Error ? err.message : "Error training model",
       );
+    } finally {
+      setTraining(false);
+    }
+  };
+
+  const handleRunForecast = async (model: PredictiveModelItem) => {
+    try {
+      setSimulatingModelId(model.id);
+      const result = await client.post<ForecastRunResult>(
+        `/analytics/predictive-engine-deep/models/${model.id}/forecast`,
+        { forecastHorizon: "30D" },
+      );
+      setActiveForecast(result);
+      toast.success(
+        "Simulation Complete",
+        `Forecast run executed for model "${model.modelName}".`,
+      );
+    } catch (err) {
+      toast.error(
+        "Forecast Simulation Failed",
+        err instanceof Error ? err.message : "Error executing forecast",
+      );
+    } finally {
+      setSimulatingModelId(null);
     }
   };
 
@@ -65,7 +139,7 @@ export default function AnalyticsPredictivePage() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "60vh",
+          height: "calc(var(--space-12) * 5)",
         }}
       >
         <Spinner size="lg" />
@@ -74,61 +148,204 @@ export default function AnalyticsPredictivePage() {
   }
 
   return (
-    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
+    <div className={styles.container} data-density="compact">
       <PageHeader
         title="Predictive Analytics & AI Forecasting Engine"
-        description="Train machine learning forecasting models, simulate revenue projections, and detect financial anomalies."
+        description="Train machine learning forecasting models, simulate revenue projections, and detect financial trends."
       />
 
-      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
-        <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-3)" }}>
-          Train New Predictive Model
+      {/* Model Training Section */}
+      <Card className={styles.trainCard}>
+        <h3 className={styles.trainTitle}>
+          <Sparkles size={16} style={{ color: "var(--color-primary)" }} />
+          Train Enterprise Predictive Model
         </h3>
-        <div style={{ display: "flex", gap: "var(--space-3)" }}>
-          <input
-            type="text"
-            placeholder="Model Title (e.g. Q4 Revenue Growth Predictor)..."
-            value={modelName}
-            onChange={(e: any) => setModelName(e.target.value)}
-            style={{
-              flex: 1,
-              padding: "var(--space-2) var(--space-3)",
-              borderRadius: "6px",
-              border: "1px solid #cbd5e1",
-            }}
-          />
-          <Button onClick={handleTrain}>
-            <Sparkles size={14} style={{ marginRight: "6px" }} /> Train ML Model
+        <div className={styles.trainGrid}>
+          <div className={styles.formField}>
+            <label className={styles.fieldLabel}>Model Title</label>
+            <input
+              type="text"
+              placeholder="e.g. Q4 Enterprise Revenue Predictor..."
+              value={modelName}
+              onChange={(e) => setModelName(e.target.value)}
+              className={styles.textInput}
+            />
+          </div>
+
+          <div className={styles.formField}>
+            <label className={styles.fieldLabel}>ML Algorithm</label>
+            <select
+              value={algorithm}
+              onChange={(e) => setAlgorithm(e.target.value)}
+              className={styles.selectInput}
+            >
+              <option value="LINEAR_REGRESSION">Linear Regression (OLS)</option>
+              <option value="RANDOM_FOREST">Random Forest Regressor</option>
+              <option value="ARIMA">ARIMA Time Series</option>
+              <option value="GRADIENT_BOOSTING">Gradient Boosting (XGB)</option>
+            </select>
+          </div>
+
+          <div className={styles.formField}>
+            <label className={styles.fieldLabel}>Target Metric</label>
+            <select
+              value={targetMetric}
+              onChange={(e) => setTargetMetric(e.target.value)}
+              className={styles.selectInput}
+            >
+              <option value="REVENUE_GROWTH">Monthly Revenue Growth</option>
+              <option value="CASH_FLOW">Operating Cash Flow</option>
+              <option value="INVENTORY_TURNOVER">Inventory Turn Velocity</option>
+            </select>
+          </div>
+
+          <Button onClick={handleTrain} disabled={training}>
+            <Sparkles
+              size={14}
+              style={{
+                marginRight: "var(--space-1-5)",
+                animation: training ? "spin 1s linear infinite" : undefined,
+              }}
+            />
+            {training ? "Training ML..." : "Train Model"}
           </Button>
         </div>
       </Card>
 
-      <Card style={{ padding: "var(--space-6)" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
-          Trained ML Models
-        </h3>
+      {/* Active Forecast Simulation Results */}
+      {activeForecast && (
+        <Card className={styles.forecastResultCard}>
+          <div className={styles.forecastResultHeader}>
+            <h3 className={styles.forecastResultTitle}>
+              <TrendingUp size={18} style={{ color: "var(--color-primary)" }} />
+              Live Forecast Simulation ({activeForecast.forecastHorizon} Horizon)
+            </h3>
+            <Badge variant="success">Confidence: {activeForecast.resultMetrics.confidenceInterval}</Badge>
+          </div>
+
+          <div className={styles.forecastMetricsGrid}>
+            <div className={styles.forecastMetricItem}>
+              <div className={styles.forecastMetricLabel}>Projected Growth</div>
+              <div
+                className={styles.forecastMetricVal}
+                style={{ color: "var(--color-success)" }}
+              >
+                {activeForecast.resultMetrics.predictedGrowth}
+              </div>
+            </div>
+
+            <div className={styles.forecastMetricItem}>
+              <div className={styles.forecastMetricLabel}>Forecasted Value</div>
+              <div className={styles.forecastMetricVal}>
+                ${activeForecast.resultMetrics.forecastedValue.toLocaleString()}
+              </div>
+            </div>
+
+            <div className={styles.forecastMetricItem}>
+              <div className={styles.forecastMetricLabel}>95% Confidence Bounds</div>
+              <div
+                className={styles.forecastMetricVal}
+                style={{ fontSize: "var(--text-sm)" }}
+              >
+                ${activeForecast.resultMetrics.lowerBound.toLocaleString()} – $
+                {activeForecast.resultMetrics.upperBound.toLocaleString()}
+              </div>
+            </div>
+
+            <div className={styles.forecastMetricItem}>
+              <div className={styles.forecastMetricLabel}>Historical Data Points</div>
+              <div className={styles.forecastMetricVal}>
+                {activeForecast.resultMetrics.historicalPointsCount} periods
+              </div>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Trained Models Table */}
+      <Card className={styles.modelsSection}>
+        <h3 className={styles.modelsHeader}>Registered Machine Learning Models</h3>
         {models.length === 0 ? (
-          <p
-            style={{
-              color: "var(--color-text-secondary)",
-              textAlign: "center",
-              padding: "var(--space-8) 0",
-            }}
-          >
-            No trained predictive models.
+          <p className={styles.emptyModels}>
+            No predictive models trained yet. Configure and train a model above to begin forecasting.
           </p>
         ) : (
-          <>{(() => {
-                              const columns = [
-                        { key: "col_0", header: "Model Name" , render: (m: any) => (<>{m.modelName}</>) },
-                        { key: "col_1", header: "Algorithm" , render: (m: any) => (<>{m.algorithm}</>) },
-                        { key: "col_2", header: "Target Metric" , render: (m: any) => (<>{m.targetMetric}</>) },
-                        { key: "col_3", header: "Accuracy Score" , render: (m: any) => (<>{Number(m.accuracyScore).toFixed(2)}%
-                                        </>) },
-                        { key: "col_4", header: "Status" , render: (m: any) => (<><Badge variant="success">{m.status}</Badge></>) },
-                      ];
-                              return <DataTable columns={columns} data={models} rowKey={(m: any) => m.id} />;
-                          })()}</>
+          <DataTable
+            columns={[
+              {
+                key: "modelName",
+                header: "Model Name",
+                render: (m: PredictiveModelItem) => (
+                  <span style={{ fontWeight: "var(--weight-semibold)" }}>
+                    {m.modelName}
+                  </span>
+                ),
+              },
+              {
+                key: "algorithm",
+                header: "Algorithm",
+                render: (m: PredictiveModelItem) => (
+                  <span style={{ fontFamily: "var(--font-mono, monospace)" }}>
+                    {m.algorithm}
+                  </span>
+                ),
+              },
+              {
+                key: "targetMetric",
+                header: "Target Dimension",
+                render: (m: PredictiveModelItem) => (
+                  <Badge variant="info">{m.targetMetric}</Badge>
+                ),
+              },
+              {
+                key: "accuracyScore",
+                header: "Accuracy Score",
+                render: (m: PredictiveModelItem) => (
+                  <span
+                    style={{
+                      color: "var(--color-success)",
+                      fontWeight: "var(--weight-bold)",
+                    }}
+                  >
+                    {Number(m.accuracyScore).toFixed(1)}%
+                  </span>
+                ),
+              },
+              {
+                key: "status",
+                header: "Status",
+                render: (m: PredictiveModelItem) => (
+                  <Badge variant="success">{m.status}</Badge>
+                ),
+              },
+              {
+                key: "actions",
+                header: "Actions",
+                render: (m: PredictiveModelItem) => (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleRunForecast(m)}
+                    disabled={simulatingModelId === m.id}
+                  >
+                    <Play
+                      size={12}
+                      style={{
+                        marginRight: "var(--space-1)",
+                        animation:
+                          simulatingModelId === m.id
+                            ? "spin 1s linear infinite"
+                            : undefined,
+                      }}
+                    />
+                    {simulatingModelId === m.id ? "Simulating..." : "Run Forecast"}
+                  </Button>
+                ),
+              },
+            ]}
+            data={models}
+            rowKey={(m: PredictiveModelItem) => m.id}
+          />
         )}
       </Card>
     </div>
