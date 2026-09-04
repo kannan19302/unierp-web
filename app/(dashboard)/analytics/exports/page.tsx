@@ -1,9 +1,28 @@
 "use client";
-import { DataTable } from "@kannan19302/ui";
-import styles from "./page.module.css";
+
 import React, { useState, useEffect } from "react";
-import { FileDown, Plus, X, Play, Trash2 } from "lucide-react";
+import {
+  PageHeader,
+  Card,
+  Button,
+  Badge,
+  DataTable,
+  Spinner,
+  useToast,
+} from "@kannan19302/ui";
+import {
+  FileDown,
+  Plus,
+  X,
+  Play,
+  Trash2,
+  Clock,
+  Calendar,
+  Layers,
+  Send,
+} from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
 
 interface ScheduledExport {
   id: string;
@@ -20,21 +39,25 @@ interface ScheduledExport {
 
 export default function ExportsPage() {
   const client = useApiClient();
+  const toast = useToast();
   const [exports, setExports] = useState<ScheduledExport[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [runningId, setRunningId] = useState<string | null>(null);
+
+  // Delete modal confirmation
+  const [deleteTarget, setDeleteTarget] = useState<ScheduledExport | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
   const [newExport, setNewExport] = useState({
     name: "",
     source: "PURCHASE_ORDER",
     format: "CSV",
-    scheduleType: "ONCE",
-    scheduleConfig: "{}",
+    scheduleType: "WEEKLY",
+    scheduleConfig: '{"dayOfWeek": "MONDAY", "time": "08:00"}',
     recipients: "",
   });
-
-  useEffect(() => {
-    fetchExports();
-  }, [client]);
 
   const fetchExports = async () => {
     try {
@@ -43,58 +66,101 @@ export default function ExportsPage() {
         ScheduledExport[] | { data?: ScheduledExport[] }
       >("/analytics/scheduled-exports");
       setExports(Array.isArray(data) ? data : data?.data || []);
-    } catch {
-      /* ignore */
+    } catch (err) {
+      toast.error(
+        "Failed to load exports",
+        err instanceof Error ? err.message : "Error loading scheduled exports",
+      );
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchExports();
+  }, []);
+
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!newExport.name.trim()) {
+      toast.error("Validation Error", "Schedule export name is required.");
+      return;
+    }
+
     try {
-      const scheduleConfig = JSON.parse(newExport.scheduleConfig);
+      setSubmitting(true);
+      let scheduleConfig = {};
+      try {
+        scheduleConfig = JSON.parse(newExport.scheduleConfig);
+      } catch {
+        scheduleConfig = { interval: newExport.scheduleType };
+      }
       const recipients = newExport.recipients
         .split(",")
-        .map((r: any) => r.trim())
+        .map((r) => r.trim())
         .filter(Boolean);
+
       await client.post("/analytics/scheduled-exports", {
         ...newExport,
         scheduleConfig,
         recipients,
       });
+
+      toast.success(
+        "Export Scheduled",
+        `Automated export "${newExport.name}" scheduled successfully.`,
+      );
       setIsModalOpen(false);
       setNewExport({
         name: "",
         source: "PURCHASE_ORDER",
         format: "CSV",
-        scheduleType: "ONCE",
-        scheduleConfig: "{}",
+        scheduleType: "WEEKLY",
+        scheduleConfig: '{"dayOfWeek": "MONDAY", "time": "08:00"}',
         recipients: "",
       });
       fetchExports();
-      alert("Scheduled export created!");
-    } catch {
-      alert("Invalid config JSON");
+    } catch (err) {
+      toast.error(
+        "Save Failed",
+        err instanceof Error ? err.message : "Could not create export schedule",
+      );
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Delete this scheduled export?")) return;
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
     try {
-      await client.delete(`/analytics/scheduled-exports/${id}`);
+      setDeleting(true);
+      await client.delete(`/analytics/scheduled-exports/${deleteTarget.id}`);
+      toast.success("Schedule Removed", `Export "${deleteTarget.name}" deleted.`);
+      setDeleteTarget(null);
       fetchExports();
-    } catch {
-      alert("Delete failed");
+    } catch (err) {
+      toast.error(
+        "Delete Failed",
+        err instanceof Error ? err.message : "Error deleting scheduled export",
+      );
+    } finally {
+      setDeleting(false);
     }
   };
 
-  const handleRunNow = async (id: string) => {
+  const handleRunNow = async (id: string, name: string) => {
     try {
+      setRunningId(id);
       await client.post(`/analytics/scheduled-exports/${id}/run`);
-      alert("Export triggered!");
-    } catch {
-      alert("Run failed");
+      toast.success("Export Triggered", `Dispatched export job for "${name}".`);
+      fetchExports();
+    } catch (err) {
+      toast.error(
+        "Run Failed",
+        err instanceof Error ? err.message : "Error triggering export execution",
+      );
+    } finally {
+      setRunningId(null);
     }
   };
 
@@ -112,165 +178,309 @@ export default function ExportsPage() {
   const formats = ["CSV", "PDF", "XLSX", "JSON"];
   const schedules = ["ONCE", "DAILY", "WEEKLY", "MONTHLY", "QUARTERLY"];
 
-  return (
-    <div className="ui-stack-6">
-      <div className="ui-flex-between">
-        <div>
-          <h1 className={styles.p1}>
-            <FileDown size={28} className="ui-text-primary" /> Scheduled Exports
-          </h1>
-          <p className={styles.p2}>
-            Automate data exports to CSV, PDF, or XLSX
-          </p>
-        </div>
-        <button onClick={() => setIsModalOpen(true)} className={styles.addBtn}>
-          <Plus size={18} /> Schedule Export
-        </button>
+  if (loading && exports.length === 0) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(var(--space-12) * 5)",
+        }}
+      >
+        <Spinner size="lg" />
       </div>
-      <>{(() => {
-                  const columns = [
-            { key: "col_0", header: "Name" , render: (e: any) => (<>{e.name}</>) },
-            { key: "col_1", header: "Source" , render: (e: any) => (<><span className={styles.sourceBadge}>{e.source}</span></>) },
-            { key: "col_2", header: "Format" , render: (e: any) => (<><span className={styles.formatBadge}>{e.format}</span></>) },
-            { key: "col_3", header: "Schedule" , render: (e: any) => (<>{e.scheduleType}</>) },
-            { key: "col_4", header: "Last Run" , render: (e: any) => (<>{e.lastRunAt
-                            ? new Date(e.lastRunAt).toLocaleDateString()
-                            : "Never"}</>) },
-            { key: "col_5", header: "Next Run" , render: (e: any) => (<>{e.nextRunAt ? new Date(e.nextRunAt).toLocaleDateString() : "-"}</>) },
-            { key: "col_6", header: "" , render: (e: any) => (<><div className="ui-flex ui-gap-1">
-                            <button
-                              onClick={() => handleRunNow(e.id)}
-                              className={styles.iconBtn}
-                              title="Run now"
-                            >
-                              <Play size={14} />
-                            </button>
-                            <button
-                              onClick={() => handleDelete(e.id)}
-                              className={styles.iconBtn}
-                              title="Delete"
-                            >
-                              <Trash2 size={14} />
-                            </button>
-                          </div></>) },
-          ];
-                  return <DataTable columns={columns} data={exports} rowKey={(e: any) => e.id} />;
-              })()}</>
-      {exports.length === 0 && !loading && (
-        <div className="ui-text-muted">No scheduled exports yet.</div>
-      )}
+    );
+  }
+
+  return (
+    <div className={styles.container} data-density="compact">
+      <PageHeader
+        title="Automated Scheduled Data Exports"
+        description="Configure recurrent data extract distributions delivered via email, Webhook, or S3 cloud storage in CSV, XLSX, PDF, or JSON formats."
+        actions={
+          <Button size="sm" onClick={() => setIsModalOpen(true)}>
+            <Plus size={14} style={{ marginRight: "var(--space-1-5)" }} />
+            Schedule Export
+          </Button>
+        }
+      />
+
+      {/* Export Schedule Table */}
+      <Card className={styles.tableSection}>
+        <div className={styles.sectionHeader}>
+          <h3 className={styles.sectionTitle}>
+            Scheduled Export Distributions ({exports.length})
+          </h3>
+        </div>
+
+        {exports.length === 0 ? (
+          <div className={styles.emptyState}>
+            <FileDown size={32} style={{ color: "var(--color-text-tertiary)", margin: "0 auto var(--space-2) auto" }} />
+            <p style={{ margin: 0, fontWeight: "var(--weight-semibold)" }}>
+              No automated exports scheduled yet.
+            </p>
+            <p style={{ margin: "var(--space-1) 0 var(--space-3) 0", fontSize: "var(--text-xs)", color: "var(--color-text-secondary)" }}>
+              Schedule automated periodic exports to distribute reports to leadership or downstream systems.
+            </p>
+            <Button size="sm" onClick={() => setIsModalOpen(true)}>
+              <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+              Schedule First Export
+            </Button>
+          </div>
+        ) : (
+          <DataTable
+            columns={[
+              {
+                key: "name",
+                header: "Schedule Title",
+                render: (e: ScheduledExport) => (
+                  <span style={{ fontWeight: "var(--weight-semibold)" }}>{e.name}</span>
+                ),
+              },
+              {
+                key: "source",
+                header: "Source Domain",
+                render: (e: ScheduledExport) => (
+                  <Badge variant="default">{e.source}</Badge>
+                ),
+              },
+              {
+                key: "format",
+                header: "Format",
+                render: (e: ScheduledExport) => (
+                  <Badge variant="info">{e.format}</Badge>
+                ),
+              },
+              {
+                key: "scheduleType",
+                header: "Frequency",
+                render: (e: ScheduledExport) => (
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <Clock size={12} style={{ color: "var(--color-text-tertiary)" }} />
+                    <span>{e.scheduleType}</span>
+                  </div>
+                ),
+              },
+              {
+                key: "recipients",
+                header: "Recipients",
+                render: (e: ScheduledExport) => (
+                  <span style={{ fontSize: "var(--text-xs)", color: "var(--color-text-secondary)" }}>
+                    {e.recipients?.length > 0 ? e.recipients.join(", ") : "System Download"}
+                  </span>
+                ),
+              },
+              {
+                key: "lastRunAt",
+                header: "Last Executed",
+                render: (e: ScheduledExport) => (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono, monospace)",
+                      fontVariantNumeric: "tabular-nums lining-nums",
+                      color: "var(--color-text-secondary)",
+                      fontSize: "var(--text-xs)",
+                    }}
+                  >
+                    {e.lastRunAt ? new Date(e.lastRunAt).toLocaleDateString() : "Never"}
+                  </span>
+                ),
+              },
+              {
+                key: "actions",
+                header: "Actions",
+                render: (e: ScheduledExport) => (
+                  <div style={{ display: "flex", gap: "var(--space-1)" }}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleRunNow(e.id, e.name)}
+                      disabled={runningId === e.id}
+                      title="Run Export Now"
+                    >
+                      <Play
+                        size={12}
+                        style={{
+                          marginRight: "var(--space-1)",
+                          animation: runningId === e.id ? "spin 1s linear infinite" : undefined,
+                        }}
+                      />
+                      {runningId === e.id ? "Running..." : "Run Now"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setDeleteTarget(e)}
+                      title="Delete Schedule"
+                    >
+                      <Trash2 size={13} style={{ color: "var(--color-danger)" }} />
+                    </Button>
+                  </div>
+                ),
+              },
+            ]}
+            data={exports}
+            rowKey={(e: ScheduledExport) => e.id}
+          />
+        )}
+      </Card>
+
+      {/* Schedule Export Modal */}
       {isModalOpen && (
-        <div className={styles.overlay}>
-          <div className={styles.modal}>
-            <div className="ui-flex-between">
-              <h3>Schedule Export</h3>
-              <button
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>Configure Scheduled Export</h3>
+              <Button
+                size="sm"
+                variant="ghost"
                 onClick={() => setIsModalOpen(false)}
-                className={styles.closeBtn}
               >
-                <X size={18} />
-              </button>
+                <X size={16} />
+              </Button>
             </div>
-            <form onSubmit={handleCreate} className="ui-stack-3">
-              <div className="ui-grid-2">
-                <div className="ui-form-group">
-                  <label className="ui-label">Name</label>
-                  <input
-                    className="ui-input"
-                    value={newExport.name}
-                    onChange={(e: any) =>
-                      setNewExport((p: any) => ({ ...p, name: e.target.value }))
-                    }
-                    required
-                  />
-                </div>
-                <div className="ui-form-group">
-                  <label className="ui-label">Source</label>
+
+            <form onSubmit={handleCreate} className={styles.formGrid}>
+              <div className={styles.formField}>
+                <label className={styles.fieldLabel}>Export Schedule Name</label>
+                <input
+                  className={styles.formInput}
+                  placeholder="e.g. Weekly Executive Financial Ledger CSV..."
+                  value={newExport.name}
+                  onChange={(e) =>
+                    setNewExport((p) => ({ ...p, name: e.target.value }))
+                  }
+                  required
+                />
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)" }}>
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Entity Source</label>
                   <select
-                    className="ui-input"
+                    className={styles.formInput}
                     value={newExport.source}
-                    onChange={(e: any) =>
-                      setNewExport((p: any) => ({ ...p, source: e.target.value }))
+                    onChange={(e) =>
+                      setNewExport((p) => ({ ...p, source: e.target.value }))
                     }
                   >
-                    {sources.map((s: any) => (
+                    {sources.map((s) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
                     ))}
                   </select>
                 </div>
-              </div>
-              <div className="ui-grid-3">
-                <div className="ui-form-group">
-                  <label className="ui-label">Format</label>
+
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Export Format</label>
                   <select
-                    className="ui-input"
+                    className={styles.formInput}
                     value={newExport.format}
-                    onChange={(e: any) =>
-                      setNewExport((p: any) => ({ ...p, format: e.target.value }))
+                    onChange={(e) =>
+                      setNewExport((p) => ({ ...p, format: e.target.value }))
                     }
                   >
-                    {formats.map((f: any) => (
+                    {formats.map((f) => (
                       <option key={f} value={f}>
                         {f}
                       </option>
                     ))}
                   </select>
                 </div>
-                <div className="ui-form-group">
-                  <label className="ui-label">Schedule</label>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)" }}>
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Cadence Schedule</label>
                   <select
-                    className="ui-input"
+                    className={styles.formInput}
                     value={newExport.scheduleType}
-                    onChange={(e: any) =>
-                      setNewExport((p: any) => ({
+                    onChange={(e) =>
+                      setNewExport((p) => ({
                         ...p,
                         scheduleType: e.target.value,
                       }))
                     }
                   >
-                    {schedules.map((s: any) => (
+                    {schedules.map((s) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
                     ))}
                   </select>
                 </div>
-                <div className="ui-form-group">
-                  <label className="ui-label">Recipients</label>
+
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Email Recipients (Comma-sep)</label>
                   <input
-                    className="ui-input"
+                    className={styles.formInput}
+                    placeholder="finance@corp.com, exec@corp.com"
                     value={newExport.recipients}
-                    onChange={(e: any) =>
-                      setNewExport((p: any) => ({
+                    onChange={(e) =>
+                      setNewExport((p) => ({
                         ...p,
                         recipients: e.target.value,
                       }))
                     }
-                    placeholder="email1@a.com,email2@a.com"
                   />
                 </div>
               </div>
-              <div className="ui-form-group">
-                <label className="ui-label">Schedule Config (JSON)</label>
-                <textarea
-                  className={styles.codeInput}
-                  value={newExport.scheduleConfig}
-                  onChange={(e: any) =>
-                    setNewExport((p: any) => ({
-                      ...p,
-                      scheduleConfig: e.target.value,
-                    }))
-                  }
-                  placeholder='{"dayOfWeek": "MONDAY", "time": "08:00"}'
-                  rows={2}
-                />
+
+              <div className={styles.modalActions}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" size="sm" disabled={submitting}>
+                  {submitting ? "Scheduling..." : "Save Schedule"}
+                </Button>
               </div>
-              <button type="submit" className={styles.submitBtn}>
-                Create
-              </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteTarget && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>Delete Export Schedule</h3>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setDeleteTarget(null)}
+              >
+                <X size={16} />
+              </Button>
+            </div>
+            <p style={{ color: "var(--color-text-secondary)", fontSize: "var(--text-sm)", margin: 0 }}>
+              Are you sure you want to cancel and delete the scheduled export for <strong>"{deleteTarget.name}"</strong>?
+            </p>
+            <div className={styles.modalActions}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setDeleteTarget(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={confirmDelete}
+                disabled={deleting}
+                style={{ background: "var(--color-danger)", borderColor: "var(--color-danger)" }}
+              >
+                {deleting ? "Deleting..." : "Confirm Delete"}
+              </Button>
+            </div>
           </div>
         </div>
       )}

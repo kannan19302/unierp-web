@@ -17,6 +17,9 @@ import {
   Play,
   CheckCircle2,
   BarChart2,
+  Activity,
+  Layers,
+  Zap,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -151,13 +154,13 @@ export default function AnalyticsPredictivePage() {
     <div className={styles.container} data-density="compact">
       <PageHeader
         title="Predictive Analytics & AI Forecasting Engine"
-        description="Train machine learning forecasting models, simulate revenue projections, and detect financial trends."
+        description="Train machine learning forecasting models, simulate revenue projections, and detect financial trends with statistical confidence intervals."
       />
 
       {/* Model Training Section */}
       <Card className={styles.trainCard}>
         <h3 className={styles.trainTitle}>
-          <Sparkles size={16} style={{ color: "var(--color-primary)" }} />
+          <Sparkles size={16} style={{ color: "var(--color-brand, var(--color-primary))" }} />
           Train Enterprise Predictive Model
         </h3>
         <div className={styles.trainGrid}>
@@ -196,6 +199,7 @@ export default function AnalyticsPredictivePage() {
               <option value="REVENUE_GROWTH">Monthly Revenue Growth</option>
               <option value="CASH_FLOW">Operating Cash Flow</option>
               <option value="INVENTORY_TURNOVER">Inventory Turn Velocity</option>
+              <option value="RETENTION_RATE">Net Retention Rate (NRR)</option>
             </select>
           </div>
 
@@ -217,10 +221,12 @@ export default function AnalyticsPredictivePage() {
         <Card className={styles.forecastResultCard}>
           <div className={styles.forecastResultHeader}>
             <h3 className={styles.forecastResultTitle}>
-              <TrendingUp size={18} style={{ color: "var(--color-primary)" }} />
+              <TrendingUp size={18} style={{ color: "var(--color-brand, var(--color-primary))" }} />
               Live Forecast Simulation ({activeForecast.forecastHorizon} Horizon)
             </h3>
-            <Badge variant="success">Confidence: {activeForecast.resultMetrics.confidenceInterval}</Badge>
+            <Badge variant="success">
+              Confidence Interval: {activeForecast.resultMetrics.confidenceInterval}
+            </Badge>
           </div>
 
           <div className={styles.forecastMetricsGrid}>
@@ -257,6 +263,40 @@ export default function AnalyticsPredictivePage() {
               <div className={styles.forecastMetricVal}>
                 {activeForecast.resultMetrics.historicalPointsCount} periods
               </div>
+            </div>
+          </div>
+
+          {/* SVG Confidence Ribbon Trajectory */}
+          <div className={styles.forecastRibbonContainer}>
+            <svg width="100%" height="90" viewBox="0 0 600 90" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="ribbonGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="var(--color-brand, var(--color-primary))" stopOpacity="0.1" />
+                  <stop offset="60%" stopColor="var(--color-brand, var(--color-primary))" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="var(--color-brand, var(--color-primary))" stopOpacity="0.4" />
+                </linearGradient>
+              </defs>
+              {/* Historical curve */}
+              <path d="M 20 60 Q 120 40, 240 50 T 360 42" fill="none" stroke="var(--color-text-secondary)" strokeWidth="2" strokeDasharray="3 3" />
+              {/* 95% Confidence Ribbon Area */}
+              <path d="M 360 42 Q 450 25, 580 15 L 580 65 Q 450 55, 360 42 Z" fill="url(#ribbonGrad)" />
+              {/* Projected median line */}
+              <path d="M 360 42 Q 450 38, 580 32" fill="none" stroke="var(--color-brand, var(--color-primary))" strokeWidth="2.5" />
+              <circle cx="360" cy="42" r="4" fill="var(--color-brand, var(--color-primary))" />
+              <circle cx="580" cy="32" r="5" fill="var(--color-brand, var(--color-primary))" />
+            </svg>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                fontSize: "var(--text-xs)",
+                color: "var(--color-text-tertiary)",
+              }}
+            >
+              <span>← Historical Baseline</span>
+              <span>Model Projection Point (T0)</span>
+              <span>Forecast Horizon (+30D with 95% Interval) →</span>
             </div>
           </div>
         </Card>
@@ -305,6 +345,8 @@ export default function AnalyticsPredictivePage() {
                     style={{
                       color: "var(--color-success)",
                       fontWeight: "var(--weight-bold)",
+                      fontFamily: "var(--font-mono, monospace)",
+                      fontVariantNumeric: "tabular-nums lining-nums",
                     }}
                   >
                     {Number(m.accuracyScore).toFixed(1)}%

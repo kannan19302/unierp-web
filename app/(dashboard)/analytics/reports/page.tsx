@@ -69,7 +69,6 @@ export default function ReportsPage() {
   const fetchReports = async () => {
     try {
       setLoading(true);
-      // Attempt to load standard reports; fallback to saved-filters if needed
       let data: any = await client.get("/analytics/reports").catch(() => null);
       if (!data || (Array.isArray(data) && data.length === 0)) {
         data = await client.get("/analytics/saved-filters").catch(() => []);
@@ -263,6 +262,7 @@ export default function ReportsPage() {
             {["ALL", "FINANCIAL", "SALES", "INVENTORY", "OPERATIONS"].map((cat) => (
               <button
                 key={cat}
+                type="button"
                 className={`${styles.filterBtn} ${selectedCategory === cat ? styles.filterBtnActive : ""}`}
                 onClick={() => setSelectedCategory(cat)}
               >
@@ -278,7 +278,7 @@ export default function ReportsPage() {
         <Card className={styles.previewSection}>
           <div className={styles.previewHeader}>
             <h3 className={styles.previewTitle}>
-              <Layers size={18} style={{ color: "var(--color-primary)" }} />
+              <Layers size={18} style={{ color: "var(--color-brand, var(--color-primary))" }} />
               Live Execution Preview: {activePreview.reportName}
             </h3>
             <Button
@@ -314,6 +314,7 @@ export default function ReportsPage() {
                     <span
                       style={{
                         fontFamily: "var(--font-mono, monospace)",
+                        fontVariantNumeric: "tabular-nums lining-nums",
                         fontWeight: "var(--weight-bold)",
                       }}
                     >
@@ -325,7 +326,13 @@ export default function ReportsPage() {
                   key: "count",
                   header: "Record Count",
                   render: (p: any) => (
-                    <span style={{ color: "var(--color-text-secondary)" }}>
+                    <span
+                      style={{
+                        color: "var(--color-text-secondary)",
+                        fontFamily: "var(--font-mono, monospace)",
+                        fontVariantNumeric: "tabular-nums lining-nums",
+                      }}
+                    >
                       {p.count} records
                     </span>
                   ),
@@ -383,7 +390,7 @@ export default function ReportsPage() {
                 key: "description",
                 header: "Description",
                 render: (r: ReportItem) => (
-                  <span style={{ color: "var(--color-text-secondary)" }}>
+                  <span style={{ color: "var(--color-text-secondary)", fontSize: "var(--text-xs)" }}>
                     {r.description || "System standard report"}
                   </span>
                 ),
@@ -392,7 +399,14 @@ export default function ReportsPage() {
                 key: "createdAt",
                 header: "Created Date",
                 render: (r: ReportItem) => (
-                  <span style={{ color: "var(--color-text-secondary)" }}>
+                  <span
+                    style={{
+                      color: "var(--color-text-secondary)",
+                      fontFamily: "var(--font-mono, monospace)",
+                      fontVariantNumeric: "tabular-nums lining-nums",
+                      fontSize: "var(--text-xs)",
+                    }}
+                  >
                     {new Date(r.createdAt).toLocaleDateString()}
                   </span>
                 ),

@@ -1,24 +1,56 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, PageHeader, Button, Spinner, useToast, Badge, DataTable } from "@kannan19302/ui";
-import { Database, Play, GitMerge, RefreshCw } from "lucide-react";
+import {
+  Card,
+  PageHeader,
+  Button,
+  Spinner,
+  useToast,
+  Badge,
+  DataTable,
+} from "@kannan19302/ui";
+import {
+  Database,
+  Play,
+  GitMerge,
+  RefreshCw,
+  Plus,
+  X,
+  Layers,
+  ArrowRight,
+} from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
+
+interface PipelineItem {
+  id: string;
+  pipelineName: string;
+  sourceDatasetId?: string;
+  targetDatasetId?: string;
+  status: string;
+  lastRunAt: string | null;
+}
 
 export default function AnalyticsPipelinesPage() {
   const client = useApiClient();
-  const [loading, setLoading] = useState(true);
-  const [pipelines, setPipelines] = useState<any[]>([]);
-  const [pipelineName, setPipelineName] = useState("");
   const toast = useToast();
+  const [loading, setLoading] = useState(true);
+  const [pipelines, setPipelines] = useState<PipelineItem[]>([]);
+  const [pipelineName, setPipelineName] = useState("");
+  const [sourceDs, setSourceDs] = useState("ds-pg-oltp");
+  const [targetDs, setTargetDs] = useState("ds-ch-olap");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [runningId, setRunningId] = useState<string | null>(null);
 
   const loadPipelines = async () => {
     try {
       setLoading(true);
-      const data = await client.get<any[]>(
+      const data = await client.get<PipelineItem[] | { data?: PipelineItem[] }>(
         "/analytics/data-pipelines-deep/pipelines",
       );
-      setPipelines(Array.isArray(data) ? data : []);
+      setPipelines(Array.isArray(data) ? data : data?.data || []);
     } catch (err) {
       toast.error(
         "Failed to load ETL Data Pipelines",
@@ -33,58 +65,63 @@ export default function AnalyticsPipelinesPage() {
     loadPipelines();
   }, []);
 
-  const handleCreate = async () => {
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!pipelineName.trim()) {
+      toast.error("Validation Error", "Pipeline name is required.");
+      return;
+    }
     try {
-      if (!pipelineName) {
-        toast.error("Validation Error", "Pipeline name is required");
-        return;
-      }
+      setCreating(true);
       await client.post("/analytics/data-pipelines-deep/pipelines", {
-        pipelineName,
-        sourceDatasetId: "ds-pg-1",
-        targetDatasetId: "ds-ch-1",
+        pipelineName: pipelineName.trim(),
+        sourceDatasetId: sourceDs,
+        targetDatasetId: targetDs,
       });
       toast.success(
-        "Pipeline Created",
-        `ETL data pipeline "${pipelineName}" initialized.`,
+        "Pipeline Deployed",
+        `ETL pipeline "${pipelineName}" initialized successfully.`,
       );
       setPipelineName("");
+      setIsModalOpen(false);
       loadPipelines();
     } catch (err) {
       toast.error(
-        "Failed to create pipeline",
-        err instanceof Error ? err.message : "Error",
+        "Deployment Failed",
+        err instanceof Error ? err.message : "Error creating pipeline",
       );
+    } finally {
+      setCreating(false);
     }
   };
 
-  const handleRun = async (id: string) => {
+  const handleRun = async (id: string, name: string) => {
     try {
-      await client.post(
-        `/analytics/data-pipelines-deep/pipelines/${id}/run`,
-        {},
-      );
+      setRunningId(id);
+      await client.post(`/analytics/data-pipelines-deep/pipelines/${id}/run`, {});
       toast.success(
-        "Pipeline Triggered",
-        "ETL sync process triggered in background.",
+        "Sync Triggered",
+        `ETL sync task started for "${name}".`,
       );
       loadPipelines();
     } catch (err) {
       toast.error(
-        "Failed to run pipeline",
-        err instanceof Error ? err.message : "Error",
+        "Execution Failed",
+        err instanceof Error ? err.message : "Error running pipeline sync",
       );
+    } finally {
+      setRunningId(null);
     }
   };
 
-  if (loading) {
+  if (loading && pipelines.length === 0) {
     return (
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "60vh",
+          height: "calc(var(--space-12) * 5)",
         }}
       >
         <Spinner size="lg" />
@@ -93,67 +130,192 @@ export default function AnalyticsPipelinesPage() {
   }
 
   return (
-    <div style={{ padding: "var(--space-6)", maxWidth: "1400px", margin: "0 auto" }}>
+    <div className={styles.container} data-density="compact">
       <PageHeader
         title="Enterprise ETL Data Pipelines & Warehouse Ingestion"
-        description="Schedule automated data extraction, SQL transformations, and analytical data warehouse sync."
+        description="Schedule automated data extraction, continuous schema transformation, and analytical data warehouse ingestion with sub-second health monitors."
+        actions={
+          <Button size="sm" onClick={() => setIsModalOpen(true)}>
+            <Plus size={14} style={{ marginRight: "var(--space-1-5)" }} />
+            Deploy ETL Pipeline
+          </Button>
+        }
       />
 
-      <Card style={{ padding: "var(--space-5)", margin: "var(--space-6) 0" }}>
-        <h3 style={{ fontSize: "var(--space-4)", fontWeight: 600, marginBottom: "var(--space-3)" }}>
-          Create New Data Pipeline
-        </h3>
-        <div style={{ display: "flex", gap: "var(--space-3)" }}>
-          <input
-            type="text"
-            placeholder="Pipeline Name (e.g. Postgres to ClickHouse Sales ETL)..."
-            value={pipelineName}
-            onChange={(e: any) => setPipelineName(e.target.value)}
-            style={{
-              flex: 1,
-              padding: "var(--space-2) var(--space-3)",
-              borderRadius: "6px",
-              border: "1px solid #cbd5e1",
-            }}
-          />
-          <Button onClick={handleCreate}>Deploy Pipeline</Button>
+      {/* Pipeline Management Table */}
+      <Card className={styles.tableSection}>
+        <div className={styles.sectionHeader}>
+          <h3 className={styles.sectionTitle}>Active Warehouse Pipelines ({pipelines.length})</h3>
+          <Button variant="outline" size="sm" onClick={loadPipelines}>
+            <RefreshCw size={13} style={{ marginRight: "var(--space-1)" }} />
+            Refresh
+          </Button>
         </div>
-      </Card>
 
-      <Card style={{ padding: "var(--space-6)" }}>
-        <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "var(--space-4)" }}>
-          Active ETL Pipelines
-        </h3>
         {pipelines.length === 0 ? (
-          <p
-            style={{
-              color: "var(--color-text-secondary)",
-              textAlign: "center",
-              padding: "var(--space-8) 0",
-            }}
-          >
-            No active ETL data pipelines.
-          </p>
+          <div className={styles.emptyState}>
+            <Database size={32} style={{ color: "var(--color-text-tertiary)", margin: "0 auto var(--space-2) auto" }} />
+            <p style={{ margin: 0, fontWeight: "var(--weight-semibold)" }}>
+              No active ETL data pipelines deployed.
+            </p>
+            <p style={{ margin: "var(--space-1) 0 var(--space-3) 0", fontSize: "var(--text-xs)", color: "var(--color-text-secondary)" }}>
+              Deploy a pipeline to replicate OLTP operational tables into the OLAP analytics lakehouse.
+            </p>
+            <Button size="sm" onClick={() => setIsModalOpen(true)}>
+              <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+              Deploy First Pipeline
+            </Button>
+          </div>
         ) : (
-          <>{(() => {
-                              const columns = [
-                        { key: "col_0", header: "Pipeline Name" , render: (p: any) => (<>{p.pipelineName}</>) },
-                        { key: "col_1", header: "Status" , render: (p: any) => (<><Badge variant="success">{p.status}</Badge></>) },
-                        { key: "col_2", header: "Last Run" , render: (p: any) => (<>{p.lastRunAt
-                                            ? new Date(p.lastRunAt).toLocaleString()
-                                            : "Never"}</>) },
-                        { key: "col_3", header: "Action" , render: (p: any) => (<><Button
-                                            size="sm"
-                                            variant="outline"
-                                            onClick={() => handleRun(p.id)}
-                                          >
-                                            <Play size={12} style={{ marginRight: "6px" }} /> Run Sync
-                                          </Button></>) },
-                      ];
-                              return <DataTable columns={columns} data={pipelines} rowKey={(p: any) => p.id} />;
-                          })()}</>
+          <DataTable
+            columns={[
+              {
+                key: "pipelineName",
+                header: "Pipeline Name",
+                render: (p: PipelineItem) => (
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                    <Database size={15} style={{ color: "var(--color-brand, var(--color-primary))" }} />
+                    <span style={{ fontWeight: "var(--weight-semibold)" }}>{p.pipelineName}</span>
+                  </div>
+                ),
+              },
+              {
+                key: "mapping",
+                header: "Source → Lakehouse Target",
+                render: (p: PipelineItem) => (
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-1-5)" }}>
+                    <Badge variant="default">{p.sourceDatasetId || "PostgreSQL OLTP"}</Badge>
+                    <ArrowRight size={12} style={{ color: "var(--color-text-tertiary)" }} />
+                    <Badge variant="info">{p.targetDatasetId || "ClickHouse OLAP"}</Badge>
+                  </div>
+                ),
+              },
+              {
+                key: "status",
+                header: "Status",
+                render: (p: PipelineItem) => (
+                  <Badge variant={p.status === "ACTIVE" || p.status === "SUCCESS" ? "success" : "warning"}>
+                    {p.status || "IDLE"}
+                  </Badge>
+                ),
+              },
+              {
+                key: "lastRunAt",
+                header: "Last Sync Completed",
+                render: (p: PipelineItem) => (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono, monospace)",
+                      fontVariantNumeric: "tabular-nums lining-nums",
+                      color: "var(--color-text-secondary)",
+                      fontSize: "var(--text-xs)",
+                    }}
+                  >
+                    {p.lastRunAt ? new Date(p.lastRunAt).toLocaleString() : "Never Synced"}
+                  </span>
+                ),
+              },
+              {
+                key: "actions",
+                header: "Actions",
+                render: (p: PipelineItem) => (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleRun(p.id, p.pipelineName)}
+                    disabled={runningId === p.id}
+                  >
+                    <Play
+                      size={12}
+                      style={{
+                        marginRight: "var(--space-1)",
+                        animation: runningId === p.id ? "spin 1s linear infinite" : undefined,
+                      }}
+                    />
+                    {runningId === p.id ? "Syncing..." : "Trigger Sync"}
+                  </Button>
+                ),
+              },
+            ]}
+            data={pipelines}
+            rowKey={(p: PipelineItem) => p.id}
+          />
         )}
       </Card>
+
+      {/* Deploy Pipeline Modal */}
+      {isModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>Deploy New ETL Pipeline</h3>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setIsModalOpen(false)}
+              >
+                <X size={16} />
+              </Button>
+            </div>
+
+            <form onSubmit={handleCreate} className={styles.formGrid}>
+              <div className={styles.formField}>
+                <label className={styles.fieldLabel}>Pipeline Identifier Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Postgres to ClickHouse Financials..."
+                  value={pipelineName}
+                  onChange={(e) => setPipelineName(e.target.value)}
+                  className={styles.formInput}
+                  required
+                />
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)" }}>
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Source OLTP Engine</label>
+                  <select
+                    className={styles.formInput}
+                    value={sourceDs}
+                    onChange={(e) => setSourceDs(e.target.value)}
+                  >
+                    <option value="ds-pg-oltp">PostgreSQL Multi-Tenant</option>
+                    <option value="ds-kafka-events">Kafka Event Stream</option>
+                    <option value="ds-s3-logs">S3 Telemetry Parquet</option>
+                  </select>
+                </div>
+
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Target OLAP Lakehouse</label>
+                  <select
+                    className={styles.formInput}
+                    value={targetDs}
+                    onChange={(e) => setTargetDs(e.target.value)}
+                  >
+                    <option value="ds-ch-olap">ClickHouse Analytical Engine</option>
+                    <option value="ds-snowflake">Snowflake Data Cloud</option>
+                    <option value="ds-bigquery">Google BigQuery</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className={styles.modalActions}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" size="sm" disabled={creating}>
+                  {creating ? "Deploying..." : "Deploy Pipeline"}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

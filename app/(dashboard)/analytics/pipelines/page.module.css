@@ -1,4 +1,4 @@
-/* Strata DL 2.0 - Reports Analytics Styles */
+/* Strata DL 2.0 - ETL Pipelines Styles */
 .container {
   display: flex;
   flex-direction: column;
@@ -6,7 +6,11 @@
   width: 100%;
 }
 
-.topBar {
+.createCard {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,109 +18,50 @@
   gap: var(--space-3);
 }
 
-.searchAndFilters {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  flex: 1;
-}
-
-.searchInput {
-  background: var(--color-bg-sunken);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-3);
-  font-size: var(--text-sm);
+.createTitle {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
   color: var(--color-text-primary);
-  min-width: calc(var(--space-12) * 4);
-  transition: border-color 150ms ease;
+  margin: 0;
 }
 
-.searchInput:focus {
-  outline: none;
-  border-color: var(--color-brand, var(--color-primary));
-}
-
-.filterChips {
-  display: flex;
-  gap: var(--space-1-5);
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.filterBtn {
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-1-5) var(--space-3);
+.createDesc {
   font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
   color: var(--color-text-secondary);
-  cursor: pointer;
-  transition: all 120ms ease;
+  margin: var(--space-1) 0 0 0;
 }
 
-.filterBtn:hover {
-  background: var(--color-bg-hover);
-  color: var(--color-text-primary);
-}
-
-.filterBtnActive {
-  background: var(--color-brand, var(--color-primary));
-  color: var(--color-bg-elevated);
-  border-color: var(--color-brand, var(--color-primary));
-  font-weight: var(--weight-semibold);
-}
-
-.previewSection {
+.tableSection {
   background: var(--color-bg-elevated);
-  border: 1px solid var(--color-brand, var(--color-primary));
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  box-shadow: var(--shadow-sm);
 }
 
-.previewHeader {
+.sectionHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.previewTitle {
+.sectionTitle {
   font-size: var(--text-base);
   font-weight: var(--weight-bold);
   color: var(--color-text-primary);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
   margin: 0;
-}
-
-.cardSection {
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
-}
-
-.cardTitle {
-  font-size: var(--text-base);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-4) 0;
 }
 
 .emptyState {
   color: var(--color-text-secondary);
   text-align: center;
-  padding: var(--space-8) 0;
+  padding: var(--space-10) var(--space-4);
   font-size: var(--text-sm);
 }
 
+/* Modal */
 .modalOverlay {
   position: fixed;
   inset: 0;

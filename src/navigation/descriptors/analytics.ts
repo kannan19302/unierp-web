@@ -8,49 +8,111 @@ registerModule({
   dashboardRoute: "/analytics",
   settingsRoute: "/analytics/settings",
   nav: [
-    { label: "BI Analytics Dashboard", href: "/analytics", icon: "PieChart" },
     {
-      label: "Dashboard Builder",
-      href: "/analytics/builder",
-      icon: "LayoutDashboard",
+      label: "Executive Intelligence",
+      isHeader: true,
+      items: [
+        { label: "Executive Cockpit", href: "/analytics", icon: "PieChart" },
+        {
+          label: "Saved Dashboards",
+          href: "/analytics/dashboards",
+          icon: "LayoutGrid",
+        },
+        {
+          label: "Dashboard Studio",
+          href: "/analytics/builder",
+          icon: "LayoutDashboard",
+        },
+        {
+          label: "Executive Reports",
+          href: "/analytics/reports",
+          icon: "FileText",
+        },
+        { label: "KPI Scorecards", href: "/analytics/kpis", icon: "Target" },
+      ],
     },
     {
-      label: "Saved Dashboards",
-      href: "/analytics/dashboards",
-      icon: "LayoutGrid",
+      label: "Deep Exploration",
+      isHeader: true,
+      items: [
+        {
+          label: "Visual Query Studio",
+          href: "/analytics/query",
+          icon: "GitFork",
+        },
+        {
+          label: "Pivot Matrix",
+          href: "/analytics/pivot",
+          icon: "Layers",
+        },
+        {
+          label: "Historical Trends",
+          href: "/analytics/trends",
+          icon: "TrendingUp",
+        },
+        {
+          label: "Advanced BI Studio",
+          href: "/analytics/advanced",
+          icon: "BarChart3",
+        },
+      ],
     },
     {
-      label: "Smart Insights",
-      href: "/analytics/insights",
-      icon: "ShieldAlert",
+      label: "AI & Algorithmic Insights",
+      isHeader: true,
+      items: [
+        {
+          label: "Smart Insights",
+          href: "/analytics/insights",
+          icon: "Brain",
+        },
+        {
+          label: "Anomaly Detection",
+          href: "/analytics/anomalies",
+          icon: "ShieldAlert",
+        },
+        {
+          label: "Conversion Funnels",
+          href: "/analytics/funnels",
+          icon: "Workflow",
+        },
+        {
+          label: "Predictive Forecasting",
+          href: "/analytics/predictive",
+          icon: "Activity",
+        },
+      ],
     },
     {
-      label: "Visual Query Builder",
-      href: "/analytics/query",
-      icon: "GitFork",
+      label: "Data Ingestion & Delivery",
+      isHeader: true,
+      items: [
+        {
+          label: "Live Telemetry",
+          href: "/analytics/realtime",
+          icon: "Zap",
+        },
+        {
+          label: "Metric Catalog",
+          href: "/analytics/catalog",
+          icon: "Database",
+        },
+        {
+          label: "Data Pipelines",
+          href: "/analytics/pipelines",
+          icon: "Network",
+        },
+        {
+          label: "Scheduled Exports",
+          href: "/analytics/exports",
+          icon: "Download",
+        },
+        {
+          label: "Engine Governance",
+          href: "/analytics/settings",
+          icon: "Settings",
+        },
+      ],
     },
-    {
-      label: "Pivot Matrix Aggregator",
-      href: "/analytics/pivot",
-      icon: "Layers",
-    },
-    {
-      label: "Predictive Analytics",
-      href: "/analytics/predictive",
-      icon: "TrendingUp",
-    },
-    {
-      label: "Advanced BI Analytics",
-      href: "/analytics/advanced",
-      icon: "BarChart3",
-    },
-    { label: "Saved Reports", href: "/analytics/reports", icon: "FileText" },
-    { label: "KPI Dashboard", href: "/analytics/kpis", icon: "Activity" },
-    {
-      label: "Scheduled Exports",
-      href: "/analytics/exports",
-      icon: "FileDown",
-    },
-    { label: "Settings", href: "/analytics/settings", icon: "Settings" },
   ],
 });

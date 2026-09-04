@@ -1,5 +1,8 @@
+/* Strata DL 2.0 - Dashboards Registry Styles */
 .container {
-  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
   width: 100%;
 }
 
@@ -7,27 +10,109 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: var(--space-4);
-  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
-.dashboardList {
+.searchAndFilters {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  max-width: 36rem;
+}
+
+.searchInputWrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.searchInput {
+  background: var(--color-bg-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-9);
+  width: 100%;
+  transition: border-color 150ms ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-brand, var(--color-primary));
+}
+
+.viewToggleGroup {
+  display: flex;
+  background: var(--color-bg-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-0-5);
+  gap: var(--space-0-5);
+}
+
+.viewToggleBtn {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-tertiary);
+  padding: var(--space-1-5) var(--space-2-5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+}
+
+.viewToggleBtn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-hover);
+}
+
+.viewToggleBtnActive {
+  background: var(--color-bg-elevated);
+  color: var(--color-brand, var(--color-primary));
+  box-shadow: var(--shadow-sm);
+}
+
+/* Grid Layout */
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
   gap: var(--space-4);
 }
 
 .dashboardCard {
-  background: var(--color-surface-elevated);
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: all 150ms ease;
+}
+
+.dashboardCard:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
 }
 
 .dashboardHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: var(--space-2);
 }
 
 .dashboardName {
@@ -44,32 +129,38 @@
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
   margin-top: var(--space-1);
+  line-height: 1.4;
 }
 
 .cardActions {
   display: flex;
+  align-items: center;
   gap: var(--space-1);
 }
 
 .widgetGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-12) * 3), 1fr));
-  gap: var(--space-3);
-  margin-top: var(--space-4);
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+  background: var(--color-bg-sunken);
+  border-radius: var(--radius-md);
+  padding: var(--space-2-5);
+  border: 1px solid var(--color-border);
 }
 
 .widgetCard {
-  background: var(--color-surface-base);
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: var(--space-3);
+  padding: var(--space-2);
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1-5);
 }
 
 .widgetIcon {
-  font-size: var(--text-lg);
+  font-size: var(--text-sm);
+  color: var(--color-brand, var(--color-primary));
 }
 
 .widgetTitle {
@@ -77,52 +168,84 @@
   font-weight: var(--weight-semibold);
   color: var(--color-text-primary);
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .widgetType {
-  font-size: var(--text-2xs, 0.65rem);
+  font-size: var(--text-xs);
   color: var(--color-text-tertiary);
   text-transform: uppercase;
   margin: 0;
 }
 
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+.cardDate {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono, monospace);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
 .emptyState {
   color: var(--color-text-secondary);
   text-align: center;
-  padding: var(--space-8) 0;
-  font-size: var(--text-xs);
+  padding: var(--space-10) var(--space-4);
+  font-size: var(--text-sm);
+  background: var(--color-bg-elevated);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
 }
 
+/* Modal */
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--color-bg-overlay, rgba(0, 0, 0, 0.5));
+  backdrop-filter: blur(var(--space-1));
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 50;
+  z-index: 1000;
   padding: var(--space-4);
 }
 
 .modalContent {
-  background: var(--color-surface-elevated);
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);
   padding: var(--space-6);
   width: 100%;
-  max-width: calc(var(--space-12) * 6);
+  max-width: 30rem;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
 .modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-4);
 }
 
 .modalTitle {
-  font-size: var(--text-base);
-  font-weight: var(--weight-semibold);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
   color: var(--color-text-primary);
   margin: 0;
 }
@@ -130,34 +253,42 @@
 .formGrid {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-3-5);
 }
 
 .formField {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-1-5);
 }
 
 .fieldLabel {
   font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-semibold);
   color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .formInput {
-  background: var(--color-surface-base);
+  background: var(--color-bg-sunken);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: var(--space-2) var(--space-3);
-  font-size: var(--text-xs);
+  border-radius: var(--radius-md);
+  padding: var(--space-2-5) var(--space-3);
+  font-size: var(--text-sm);
   color: var(--color-text-primary);
   width: 100%;
+  transition: border-color 150ms ease;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--color-brand, var(--color-primary));
 }
 
 .modalActions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--space-2);
-  margin-top: var(--space-5);
+  gap: var(--space-2-5);
+  margin-top: var(--space-2);
 }

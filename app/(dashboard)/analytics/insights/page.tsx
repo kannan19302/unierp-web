@@ -1,6 +1,14 @@
 "use client";
-import styles from "./page.module.css";
+
 import React, { useState, useEffect } from "react";
+import {
+  PageHeader,
+  Card,
+  Button,
+  Badge,
+  Spinner,
+  useToast,
+} from "@kannan19302/ui";
 import {
   AlertTriangle,
   AlertOctagon,
@@ -8,8 +16,12 @@ import {
   RefreshCw,
   ShieldAlert,
   Search,
+  CheckCircle2,
+  ArrowRight,
+  ExternalLink,
 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
 
 type Severity = "critical" | "warning" | "info";
 
@@ -30,39 +42,46 @@ interface InsightResponse {
 
 const SEVERITY_STYLE: Record<
   Severity,
-  { color: string; bg: string; label: string; icon: React.ReactNode }
+  { color: string; label: string; icon: React.ReactNode }
 > = {
   critical: {
     color: "var(--color-danger)",
-    bg: "var(--color-danger-light, rgba(239,68,68,0.1))",
-    label: "Critical",
-    icon: <AlertOctagon size={18} />,
+    label: "Critical Risks",
+    icon: <AlertOctagon size={16} />,
   },
   warning: {
     color: "var(--color-warning)",
-    bg: "var(--color-warning-light, rgba(245,158,11,0.1))",
-    label: "Warning",
-    icon: <AlertTriangle size={18} />,
+    label: "Warnings",
+    icon: <AlertTriangle size={16} />,
   },
   info: {
-    color: "var(--color-primary)",
-    bg: "var(--color-primary-light)",
-    label: "Info",
-    icon: <Info size={18} />,
+    color: "var(--color-brand, var(--color-primary))",
+    label: "Observations",
+    icon: <Info size={16} />,
   },
 };
 
 export default function SmartInsightsPage() {
   const client = useApiClient();
+  const toast = useToast();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<InsightResponse | null>(null);
   const [filter, setFilter] = useState<Severity | "all">("all");
+  const [acknowledgedIds, setAcknowledgedIds] = useState<Set<string>>(new Set());
 
-  const loadData = async () => {
+  const loadData = async (manual = false) => {
     setLoading(true);
     try {
-      setData(await client.get<InsightResponse | null>("/analytics/insights"));
-    } catch {
+      const res = await client.get<InsightResponse | null>("/analytics/insights");
+      setData(res);
+      if (manual) {
+        toast.success("Intelligence Rescan Complete", "Updated statistical outlier scan.");
+      }
+    } catch (err) {
+      toast.error(
+        "Scan Failed",
+        err instanceof Error ? err.message : "Error scanning insights",
+      );
       setData(null);
     } finally {
       setLoading(false);
@@ -71,129 +90,171 @@ export default function SmartInsightsPage() {
 
   useEffect(() => {
     loadData();
-  }, [client]);
+  }, []);
 
-  const insights = data?.insights ?? [];
+  const handleAcknowledge = (id: string, title: string) => {
+    setAcknowledgedIds((prev) => new Set([...prev, id]));
+    toast.success("Insight Acknowledged", `Marked "${title}" as reviewed.`);
+  };
+
+  const insights = (data?.insights ?? []).filter(
+    (ins) => !acknowledgedIds.has(ins.id),
+  );
   const counts: Record<Severity, number> = {
-    critical: insights.filter((i: any) => i.severity === "critical").length,
-    warning: insights.filter((i: any) => i.severity === "warning").length,
-    info: insights.filter((i: any) => i.severity === "info").length,
+    critical: insights.filter((i) => i.severity === "critical").length,
+    warning: insights.filter((i) => i.severity === "warning").length,
+    info: insights.filter((i) => i.severity === "info").length,
   };
   const filtered =
-    filter === "all" ? insights : insights.filter((i: any) => i.severity === filter);
+    filter === "all" ? insights : insights.filter((i) => i.severity === filter);
+
+  if (loading && !data) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(var(--space-12) * 5)",
+        }}
+      >
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <RouteGuard permission="analytics.insights.read">
-      <div className="ui-stack-6">
-        <div className={styles.s1}>
-          <div>
-            <h1 className="text-2xl ui-hstack-2">
-              <ShieldAlert className="ui-text-primary" />
-              Smart Insights & Anomaly Detection
-            </h1>
-            <p className="ui-text-sm-muted">
-              Statistical scan of live revenue trends, receivables, and product
-              margins for anomalies and risks.
-            </p>
-          </div>
-          <button
-            onClick={loadData}
-            disabled={loading}
-            style={{ cursor: loading ? "wait" : "pointer" }}
-            className={styles.s2}
-          >
-            <RefreshCw size={14} className={loading ? "animate-spin" : ""} />{" "}
-            {loading ? "Scanning…" : "Re-scan"}
-          </button>
-        </div>
+      <div className={styles.container} data-density="compact">
+        <PageHeader
+          title="Smart Insights & AI Anomaly Intelligence"
+          description="Continuous statistical surveillance across live revenue velocities, receivables aging, and inventory margins to uncover operational risks."
+          actions={
+            <Button
+              size="sm"
+              onClick={() => loadData(true)}
+              disabled={loading}
+            >
+              <RefreshCw
+                size={14}
+                className={loading ? "spin-animation" : ""}
+                style={{ marginRight: "var(--space-1-5)" }}
+              />
+              {loading ? "Scanning Metrics..." : "Re-Scan Telemetry"}
+            </Button>
+          }
+        />
 
-        {/* Severity summary cards */}
-        <div className={styles.s3}>
-          {(["critical", "warning", "info"] as Severity[]).map((sev: any) => {
+        {/* Severity Summary Matrix */}
+        <div className={styles.summaryGrid}>
+          {(["critical", "warning", "info"] as Severity[]).map((sev) => {
             const s = SEVERITY_STYLE[sev];
             const active = filter === sev;
             return (
               <button
                 key={sev}
+                type="button"
                 onClick={() => setFilter(active ? "all" : sev)}
                 style={{
                   border: `1px solid ${active ? s.color : "var(--color-border)"}`,
                 }}
-                className={styles.s4}
+                className={styles.severityBtn}
               >
-                <span style={{ color: s.color }} className={styles.s5}>
+                <div style={{ color: s.color }} className={styles.severityHeader}>
                   {s.icon} {s.label}
-                </span>
-                <span className="text-2xl">{counts[sev]}</span>
+                </div>
+                <div className={styles.severityCount}>{counts[sev]}</div>
               </button>
             );
           })}
-          <div className={styles.s6}>
-            <span className={styles.s7}>
-              <Search size={16} /> Records Scanned
-            </span>
-            <span className={styles.s8}>
+
+          <div className={styles.scannedCard}>
+            <div className={styles.scannedLabel}>
+              <Search size={14} /> Records Evaluated
+            </div>
+            <div className={styles.scannedValue}>
               {data
-                ? `${data.scanned.invoices} inv / ${data.scanned.products} prod`
+                ? `${data.scanned.invoices.toLocaleString()} inv · ${data.scanned.products.toLocaleString()} prod`
                 : "—"}
-            </span>
+            </div>
           </div>
         </div>
 
-        {loading && (
-          <div className={styles.s9}>
-            <RefreshCw className="animate-spin" size={28} />
-            <span className={styles.s10}>Running anomaly detection…</span>
+        {/* Filter Toolbar */}
+        {filter !== "all" && (
+          <div className={styles.filterBar}>
+            <span style={{ fontSize: "var(--text-xs)", color: "var(--color-text-secondary)" }}>
+              Filtering by: <strong>{filter.toUpperCase()}</strong> ({filtered.length} items)
+            </span>
+            <button
+              type="button"
+              onClick={() => setFilter("all")}
+              className={styles.resetFilterBtn}
+            >
+              ← Show All Severities
+            </button>
           </div>
         )}
 
-        {/* Insight list */}
-        {!loading && (
-          <div className="ui-stack-3">
-            {filter !== "all" && (
-              <button onClick={() => setFilter("all")} className={styles.s11}>
-                ← Show all severities
-              </button>
-            )}
-            {filtered.map((ins: any) => {
-              const s = SEVERITY_STYLE[ins.severity];
-              return (
-                <div
-                  key={ins.id}
-                  style={{ borderLeft: `var(--space-1) solid ${s.color}` }}
-                  className={styles.s12}
-                >
-                  <span style={{ color: s.color }} className={styles.s13}>
-                    {s.icon}
-                  </span>
-                  <div className="flex-1">
-                    <div className={styles.s14}>
-                      <span
-                        style={{ color: s.color, background: s.bg }}
-                        className={styles.s15}
-                      >
-                        {ins.category}
-                      </span>
-                      <h3 className={styles.s16}>{ins.title}</h3>
-                    </div>
-                    <p className={styles.s17}>{ins.detail}</p>
-                  </div>
-                  {ins.metric && (
-                    <span style={{ color: s.color }} className={styles.s18}>
-                      {ins.metric}
-                    </span>
-                  )}
+        {/* Insights Triage List */}
+        <div className={styles.insightsList}>
+          {filtered.map((ins) => {
+            const s = SEVERITY_STYLE[ins.severity];
+            return (
+              <div
+                key={ins.id}
+                style={{ borderLeft: `var(--space-1) solid ${s.color}` }}
+                className={styles.insightCard}
+              >
+                <div style={{ color: s.color, marginTop: "var(--space-0-5)" }}>
+                  {s.icon}
                 </div>
-              );
-            })}
-            {filtered.length === 0 && (
-              <div className={styles.s19}>No insights for this filter.</div>
-            )}
-            {data && (
-              <p className={styles.s20}>
-                Last scanned {new Date(data.generatedAt).toLocaleString()}
+                <div className={styles.insightContent}>
+                  <div className={styles.insightTopRow}>
+                    <Badge variant={ins.severity === "critical" ? "danger" : ins.severity === "warning" ? "warning" : "info"}>
+                      {ins.category}
+                    </Badge>
+                    <h3 className={styles.insightTitle}>{ins.title}</h3>
+                  </div>
+                  <p className={styles.insightDetail}>{ins.detail}</p>
+                </div>
+
+                {ins.metric && (
+                  <div style={{ color: s.color }} className={styles.insightMetric}>
+                    {ins.metric}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", gap: "var(--space-1-5)", alignSelf: "center" }}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleAcknowledge(ins.id, ins.title)}
+                  >
+                    <CheckCircle2 size={13} style={{ marginRight: "var(--space-1)" }} />
+                    Acknowledge
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+
+          {filtered.length === 0 && (
+            <div className={styles.emptyState}>
+              <CheckCircle2 size={32} style={{ color: "var(--color-success)", margin: "0 auto var(--space-2) auto" }} />
+              <p style={{ margin: 0, fontWeight: "var(--weight-semibold)" }}>
+                No active insights for this filter.
               </p>
-            )}
+              <p style={{ margin: "var(--space-1) 0 0 0", fontSize: "var(--text-xs)", color: "var(--color-text-secondary)" }}>
+                All observed transactions and metric deviations are resolved.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {data && (
+          <div className={styles.scanFooter}>
+            Last live anomaly scan evaluated on {new Date(data.generatedAt).toLocaleString()}
           </div>
         )}
       </div>

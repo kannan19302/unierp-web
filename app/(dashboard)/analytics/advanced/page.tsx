@@ -1,7 +1,15 @@
 "use client";
-import styles from "./page.module.css";
-import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+
+import React, { useState, useEffect, useMemo } from "react";
+import {
+  PageHeader,
+  Card,
+  Button,
+  Badge,
+  DataTable,
+  Spinner,
+  useToast,
+} from "@kannan19302/ui";
 import {
   BarChart4,
   RefreshCw,
@@ -10,9 +18,12 @@ import {
   FileDown,
   Search,
   Sparkles,
+  Plus,
+  X,
+  Layers,
 } from "lucide-react";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
-import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
+import styles from "./page.module.css";
 
 interface ReportWidget {
   id: string;
@@ -31,202 +42,307 @@ interface ReportView {
 
 export default function AdvancedReportingPage() {
   const client = useApiClient();
+  const toast = useToast();
   const [loading, setLoading] = useState(true);
   const [widgets, setWidgets] = useState<ReportWidget[]>([]);
   const [views, setViews] = useState<ReportView[]>([]);
-  const searchParams = useSearchParams();
-  const activeTab = (searchParams?.get("subtab") || "widgets") as
-    | "widgets"
-    | "views";
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState<"widgets" | "views">("widgets");
+
+  // Create Widget Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newWidgetTitle, setNewWidgetTitle] = useState("");
+  const [newChartType, setNewChartType] = useState("BAR");
+  const [submitting, setSubmitting] = useState(false);
 
   const loadData = async () => {
     try {
+      setLoading(true);
       const [widgetsRes, viewsRes] = await Promise.all([
-        client.get<ReportWidget[]>("/reporting/widgets"),
-        client.get<ReportView[]>("/reporting/views"),
+        client.get<ReportWidget[]>("/reporting/widgets").catch(() => []),
+        client.get<ReportView[]>("/reporting/views").catch(() => []),
       ]);
       setWidgets(Array.isArray(widgetsRes) ? widgetsRes : []);
       setViews(Array.isArray(viewsRes) ? viewsRes : []);
-      setLoading(false);
-    } catch {
+    } catch (err) {
+      toast.error(
+        "Failed to load analytics builder data",
+        err instanceof Error ? err.message : "Error",
+      );
+    } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
     loadData();
-  }, [client]);
+  }, []);
 
-  const handleCreateWidget = async () => {
-    const title = prompt("Enter report widget title:");
-    if (!title) return;
+  const handleCreateWidget = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newWidgetTitle.trim()) {
+      toast.error("Validation Error", "Widget title is required.");
+      return;
+    }
 
     try {
+      setSubmitting(true);
       await client.post("/reporting/widgets", {
         dashboardId: "main-db",
-        title,
-        chartType: "BAR",
+        title: newWidgetTitle.trim(),
+        chartType: newChartType,
         queryConfig: JSON.stringify({ series: "encounters", period: "weekly" }),
         position: JSON.stringify({ x: 0, y: 0, w: 6, h: 4 }),
       });
+      toast.success("Widget Created", `Added "${newWidgetTitle}" to repository.`);
+      setIsModalOpen(false);
+      setNewWidgetTitle("");
       loadData();
-    } catch {
-      alert("Error creating widget.");
+    } catch (err) {
+      toast.error(
+        "Save Failed",
+        err instanceof Error ? err.message : "Could not save widget.",
+      );
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const handleCreateView = async () => {
-    const name = prompt("Enter report view name:");
-    if (!name) return;
+  const filteredWidgets = useMemo(() => {
+    if (!searchQuery.trim()) return widgets;
+    return widgets.filter((w) =>
+      w.title.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [widgets, searchQuery]);
 
-    try {
-      await client.post("/reporting/views", {
-        name,
-        queryConfig: JSON.stringify({ filter: "all" }),
-        isScheduled: true,
-        scheduleCron: "0 8 * * 1",
-        recipientEmails: "admin@kannan19302.dev",
-      });
-      loadData();
-    } catch {
-      alert("Error creating view.");
-    }
-  };
-
-  const filteredWidgets = widgets.filter((w: any) =>
-    w.title.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
-
-  if (loading) {
+  if (loading && widgets.length === 0) {
     return (
-      <div className={styles.s1}>
-        <RefreshCw className="animate-spin" size={32} />
-        <span className={styles.s2}>Loading Analytics Builder...</span>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(var(--space-12) * 5)",
+        }}
+      >
+        <Spinner size="lg" />
       </div>
     );
   }
 
   return (
     <RouteGuard permission="analytics.reporting.read">
-      <div className="ui-stack-6">
-        {/* Header */}
-        <div className={styles.s3}>
-          <div>
-            <h1 className="text-2xl ui-hstack-2">
-              <BarChart4 className="ui-text-primary" />
-              Advanced Reporting & Pivot Builder
-            </h1>
-            <p className="ui-text-sm-muted">
-              Configure pivot matrix grids, schedule report distributions, and
-              construct drag-and-drop dashboard layouts.
-            </p>
-          </div>
-          <div className="ui-flex ui-gap-2">
-            <button onClick={handleCreateView} className={styles.s4}>
-              <CalendarRange size={16} className="ui-text-primary" /> Schedule
-              Distribution
-            </button>
-            <button onClick={handleCreateWidget} className={styles.s5}>
+      <div className={styles.container} data-density="compact">
+        <PageHeader
+          title="Advanced BI Reporting & Matrix Builder"
+          description="Configure multi-domain pivot matrix grids, review scheduled distribution pipelines, and manage custom report widgets."
+          actions={
+            <Button size="sm" onClick={() => setIsModalOpen(true)}>
+              <Plus size={14} style={{ marginRight: "var(--space-1-5)" }} />
               Add Chart Widget
-            </button>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <SubTabBar
-          tabs={
-            [
-              {
-                id: "widgets",
-                label: "Dashboard Widgets",
-                href: "/analytics/advanced?subtab=widgets",
-                icon: LayoutGrid,
-              },
-              {
-                id: "views",
-                label: "Saved Report Runs",
-                href: "/analytics/advanced?subtab=views",
-                icon: FileDown,
-              },
-            ] as SubTab[]
+            </Button>
           }
         />
 
-        {/* Main Grid content */}
-        <div className={styles.s8}>
-          {/* Tab view */}
-          <div className="ui-card p-5">
-            {activeTab === "widgets" && (
-              <div className="ui-stack-4">
-                <div className={styles.s9}>
-                  <Search size={16} className={styles.s10} />
+        {/* Search & Segmented Filter Bar */}
+        <div className={styles.topBar}>
+          <div className={styles.searchBox}>
+            <Search size={14} className={styles.searchIcon} />
+            <input
+              type="text"
+              placeholder="Search widgets by title..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
+
+          <div style={{ display: "flex", gap: "var(--space-2)" }}>
+            <Button
+              size="sm"
+              variant={activeTab === "widgets" ? "primary" : "outline"}
+              onClick={() => setActiveTab("widgets")}
+            >
+              <LayoutGrid size={13} style={{ marginRight: "var(--space-1)" }} />
+              Dashboard Widgets ({widgets.length})
+            </Button>
+            <Button
+              size="sm"
+              variant={activeTab === "views" ? "primary" : "outline"}
+              onClick={() => setActiveTab("views")}
+            >
+              <FileDown size={13} style={{ marginRight: "var(--space-1)" }} />
+              Saved Report Runs ({views.length})
+            </Button>
+          </div>
+        </div>
+
+        {/* Main Content Layout */}
+        <div className={styles.mainLayout}>
+          {activeTab === "widgets" && (
+            <div>
+              {filteredWidgets.length === 0 ? (
+                <div className={styles.emptyState}>
+                  <LayoutGrid size={32} style={{ color: "var(--color-text-tertiary)", margin: "0 auto var(--space-2) auto" }} />
+                  <p style={{ margin: 0, fontWeight: "var(--weight-semibold)" }}>
+                    No report widgets found.
+                  </p>
+                  <p style={{ margin: "var(--space-1) 0 var(--space-3) 0", fontSize: "var(--text-xs)", color: "var(--color-text-secondary)" }}>
+                    Add a chart widget to start composing advanced reporting views.
+                  </p>
+                  <Button size="sm" onClick={() => setIsModalOpen(true)}>
+                    <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+                    Add First Widget
+                  </Button>
+                </div>
+              ) : (
+                <div className={styles.widgetsGrid}>
+                  {filteredWidgets.map((w) => (
+                    <Card key={w.id} className={styles.widgetCard}>
+                      <div className={styles.widgetTopRow}>
+                        <h4 className={styles.widgetTitle}>{w.title}</h4>
+                        <Badge variant="info">{w.chartType}</Badge>
+                      </div>
+
+                      <div className={styles.visualPreviewBox}>
+                        <svg width="100%" height="45" viewBox="0 0 200 45" preserveAspectRatio="none">
+                          <rect x="15" y="15" width="20" height="30" rx="2" fill="var(--color-brand, var(--color-primary))" opacity="0.8" />
+                          <rect x="50" y="8" width="20" height="37" rx="2" fill="var(--color-brand, var(--color-primary))" />
+                          <rect x="85" y="22" width="20" height="23" rx="2" fill="var(--color-brand, var(--color-primary))" opacity="0.6" />
+                          <rect x="120" y="5" width="20" height="40" rx="2" fill="var(--color-brand, var(--color-primary))" />
+                          <rect x="155" y="18" width="20" height="27" rx="2" fill="var(--color-brand, var(--color-primary))" opacity="0.75" />
+                        </svg>
+                        <span style={{ fontSize: "var(--text-xs)", color: "var(--color-text-tertiary)", marginTop: "var(--space-1)" }}>
+                          {w.chartType} Series Visualization
+                        </span>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === "views" && (
+            <Card style={{ padding: "var(--space-4)" }}>
+              {views.length === 0 ? (
+                <div className={styles.emptyState}>
+                  <FileDown size={32} style={{ color: "var(--color-text-tertiary)", margin: "0 auto var(--space-2) auto" }} />
+                  <p style={{ margin: 0, fontWeight: "var(--weight-semibold)" }}>
+                    No saved view runs configured.
+                  </p>
+                </div>
+              ) : (
+                <DataTable
+                  columns={[
+                    {
+                      key: "name",
+                      header: "Report View Name",
+                      render: (v: ReportView) => (
+                        <span style={{ fontWeight: "var(--weight-semibold)" }}>{v.name}</span>
+                      ),
+                    },
+                    {
+                      key: "scheduleCron",
+                      header: "Cron Cadence",
+                      render: (v: ReportView) => (
+                        <code style={{ fontFamily: "var(--font-mono, monospace)", fontSize: "var(--text-xs)" }}>
+                          {v.scheduleCron}
+                        </code>
+                      ),
+                    },
+                    {
+                      key: "recipientEmails",
+                      header: "Recipients",
+                      render: (v: ReportView) => (
+                        <span style={{ fontSize: "var(--text-xs)", color: "var(--color-text-secondary)" }}>
+                          {v.recipientEmails}
+                        </span>
+                      ),
+                    },
+                    {
+                      key: "status",
+                      header: "Status",
+                      render: () => <Badge variant="success">Active Cron</Badge>,
+                    },
+                  ]}
+                  data={views}
+                  rowKey={(v: ReportView) => v.id}
+                />
+              )}
+            </Card>
+          )}
+
+          {/* Right Architecture & Guidance Dock */}
+          <Card className={styles.sideCard}>
+            <h3 className={styles.sideTitle}>
+              <Sparkles size={16} style={{ color: "var(--color-brand, var(--color-primary))" }} />
+              Consolidated Pivot Engine
+            </h3>
+            <p className={styles.sideDesc}>
+              Advanced reporting pull directly from consolidated general ledgers, sales CPQ, inventory velocity registers, and operational telemetry schemas with sub-second aggregate calculations.
+            </p>
+          </Card>
+        </div>
+
+        {/* Add Chart Widget Modal */}
+        {isModalOpen && (
+          <div className={styles.modalOverlay}>
+            <div className={styles.modalContent}>
+              <div className={styles.modalHeader}>
+                <h3 className={styles.modalTitle}>Add Report Chart Widget</h3>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  <X size={16} />
+                </Button>
+              </div>
+
+              <form onSubmit={handleCreateWidget} className={styles.formGrid}>
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Widget Title</label>
                   <input
-                    type="text"
-                    placeholder="widgets..."
-                    value={searchQuery}
-                    onChange={(e: any) => setSearchQuery(e.target.value)}
-                    className={styles.s11}
+                    className={styles.formInput}
+                    placeholder="e.g. Monthly Encounter Distribution..."
+                    value={newWidgetTitle}
+                    onChange={(e) => setNewWidgetTitle(e.target.value)}
+                    required
                   />
                 </div>
 
-                <div className={styles.s12}>
-                  {filteredWidgets.map((w: any) => (
-                    <div key={w.id} className={styles.s13}>
-                      <h4 className={styles.s14}>{w.title}</h4>
-                      <p className="ui-text-xs-muted m-0">
-                        Type: {w.chartType} Chart
-                      </p>
-                      <div className={styles.s15}>
-                        [{w.chartType} Visualization Preview]
-                      </div>
-                    </div>
-                  ))}
-                  {filteredWidgets.length === 0 && (
-                    <div className={styles.s16}>No report widgets found.</div>
-                  )}
+                <div className={styles.formField}>
+                  <label className={styles.fieldLabel}>Chart Type</label>
+                  <select
+                    className={styles.formInput}
+                    value={newChartType}
+                    onChange={(e) => setNewChartType(e.target.value)}
+                  >
+                    <option value="BAR">Bar Chart</option>
+                    <option value="LINE">Line Trend</option>
+                    <option value="PIE">Donut / Breakdown</option>
+                    <option value="AREA">Area Curve</option>
+                  </select>
                 </div>
-              </div>
-            )}
 
-            {activeTab === "views" && (
-              <div className="ui-stack-4">
-                <h2 className={styles.s17}>Saved Views & Schedules</h2>
-                <div className="ui-stack-3">
-                  {views.map((v: any) => (
-                    <div key={v.id} className={styles.s18}>
-                      <div>
-                        <p className={styles.s19}>{v.name}</p>
-                        <p className="ui-text-xs-muted m-0">
-                          Recipients: {v.recipientEmails}
-                        </p>
-                        <p className={styles.s20}>
-                          Cron Schedule: {v.scheduleCron}
-                        </p>
-                      </div>
-                      <span className={styles.s21}>Active Cron</span>
-                    </div>
-                  ))}
-                  {views.length === 0 && (
-                    <p className={styles.s22}>No saved views found.</p>
-                  )}
+                <div className={styles.modalActions}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" size="sm" disabled={submitting}>
+                    {submitting ? "Saving..." : "Create Widget"}
+                  </Button>
                 </div>
-              </div>
-            )}
+              </form>
+            </div>
           </div>
-
-          {/* Side Panel: Rules info */}
-          <div className={styles.s23}>
-            <h3 className={styles.s24}>
-              <Sparkles size={16} className="ui-text-primary" />
-              Pivot Matrices
-            </h3>
-            <p className={styles.s25}>
-              Reporting views pull directly from the consolidated double-entry
-              ledger ledger schemas, patient logs, and class course registries.
-            </p>
-          </div>
-        </div>
+        )}
       </div>
     </RouteGuard>
   );

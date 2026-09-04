@@ -87,7 +87,8 @@ function SidebarNavigation({
         itemPath === "/builder" ||
         itemPath === "/dashboard" ||
         itemPath === "/drive" ||
-        itemPath === "/storage"
+        itemPath === "/storage" ||
+        itemPath === "/analytics"
           ? pathname === itemPath
           : pathname === itemPath || pathname.startsWith(itemPath + "/");
 

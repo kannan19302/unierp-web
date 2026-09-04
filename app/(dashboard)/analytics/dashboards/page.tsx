@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import {
   PageHeader,
   Button,
@@ -8,8 +9,24 @@ import {
   useToast,
   Badge,
   Card,
+  DataTable,
 } from "@kannan19302/ui";
-import { LayoutDashboard, Plus, X, Trash2, Edit3 } from "lucide-react";
+import {
+  LayoutDashboard,
+  Plus,
+  X,
+  Trash2,
+  Edit3,
+  Search,
+  LayoutGrid,
+  List,
+  ExternalLink,
+  BarChart3,
+  LineChart,
+  PieChart,
+  Gauge,
+  Layers,
+} from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
 
@@ -34,13 +51,19 @@ interface Dashboard {
 
 export default function DashboardsPage() {
   const client = useApiClient();
+  const toast = useToast();
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editDashboard, setEditDashboard] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", description: "" });
-  const toast = useToast();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+
+  // Delete modal confirmation
+  const [deleteTarget, setDeleteTarget] = useState<Dashboard | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const fetchDashboards = async () => {
     try {
@@ -102,16 +125,21 @@ export default function DashboardsPage() {
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
     try {
-      await client.delete(`/analytics/dashboards/${id}`);
-      toast.success("Dashboard Deleted", `Dashboard "${name}" removed.`);
+      setDeleting(true);
+      await client.delete(`/analytics/dashboards/${deleteTarget.id}`);
+      toast.success("Dashboard Deleted", `Dashboard "${deleteTarget.name}" removed.`);
+      setDeleteTarget(null);
       fetchDashboards();
     } catch (err) {
       toast.error(
         "Delete failed",
         err instanceof Error ? err.message : "Error deleting dashboard",
       );
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -121,13 +149,29 @@ export default function DashboardsPage() {
     setIsModalOpen(true);
   };
 
-  const widgetTypeIcons: Record<string, string> = {
-    LINE_CHART: "📈",
-    BAR_CHART: "📊",
-    PIE_CHART: "🥧",
-    TABLE: "📋",
-    KPI: "🎯",
-    GAUGE: "⏱️",
+  const filteredDashboards = useMemo(() => {
+    if (!searchQuery.trim()) return dashboards;
+    const q = searchQuery.toLowerCase();
+    return dashboards.filter(
+      (d) =>
+        d.name.toLowerCase().includes(q) ||
+        (d.description && d.description.toLowerCase().includes(q)),
+    );
+  }, [dashboards, searchQuery]);
+
+  const renderWidgetIcon = (type: string) => {
+    switch (type) {
+      case "LINE_CHART":
+        return <LineChart size={14} className={styles.widgetIcon} />;
+      case "BAR_CHART":
+        return <BarChart3 size={14} className={styles.widgetIcon} />;
+      case "PIE_CHART":
+        return <PieChart size={14} className={styles.widgetIcon} />;
+      case "GAUGE":
+        return <Gauge size={14} className={styles.widgetIcon} />;
+      default:
+        return <Layers size={14} className={styles.widgetIcon} />;
+    }
   };
 
   if (loading) {
@@ -148,8 +192,8 @@ export default function DashboardsPage() {
   return (
     <div className={styles.container} data-density="compact">
       <PageHeader
-        title="Custom Analytics Dashboards"
-        description="Design, compose, and organize executive workspace analytics and cross-functional KPI boards."
+        title="Curated Analytics Dashboards"
+        description="Organize executive KPI cockpits, departmental performance boards, and custom visualization suites."
         actions={
           <Button
             size="sm"
@@ -165,76 +209,242 @@ export default function DashboardsPage() {
         }
       />
 
-      <div className={styles.dashboardList} style={{ marginTop: "var(--space-6)" }}>
-        {dashboards.map((d) => (
-          <Card key={d.id} className={styles.dashboardCard}>
-            <div className={styles.dashboardHeader}>
-              <div>
-                <h3 className={styles.dashboardName}>
-                  {d.name}
-                  {d.isDefault && <Badge variant="info">Default</Badge>}
-                </h3>
-                {d.description && <p className={styles.desc}>{d.description}</p>}
-              </div>
-              <div className={styles.cardActions}>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => openEdit(d)}
-                >
-                  <Edit3 size={14} />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => handleDelete(d.id, d.name)}
-                >
-                  <Trash2 size={14} style={{ color: "var(--color-danger)" }} />
-                </Button>
-              </div>
-            </div>
+      {/* Top Search & Filter Bar */}
+      <div className={styles.topBar}>
+        <div className={styles.searchAndFilters}>
+          <div className={styles.searchInputWrapper}>
+            <Search size={14} className={styles.searchIcon} />
+            <input
+              type="text"
+              placeholder="Search dashboards by name or description..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
+        </div>
 
-            {d.widgets && d.widgets.length > 0 ? (
-              <div className={styles.widgetGrid}>
-                {d.widgets.map((w) => (
-                  <div key={w.id} className={styles.widgetCard}>
-                    <span className={styles.widgetIcon}>
-                      {widgetTypeIcons[w.widgetType] || "📦"}
-                    </span>
-                    <div>
-                      <p className={styles.widgetTitle}>{w.title}</p>
-                      <p className={styles.widgetType}>{w.widgetType}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p
-                style={{
-                  color: "var(--color-text-tertiary)",
-                  fontSize: "var(--text-xs)",
-                  marginTop: "var(--space-3)",
-                }}
-              >
-                No widgets attached yet. Configure widgets in Dashboard Builder.
-              </p>
-            )}
-          </Card>
-        ))}
-
-        {dashboards.length === 0 && (
-          <p className={styles.emptyState}>
-            No custom dashboards configured yet. Click "New Dashboard" to create one.
-          </p>
-        )}
+        <div className={styles.viewToggle}>
+          <button
+            type="button"
+            className={`${styles.viewToggleBtn} ${viewMode === "grid" ? styles.viewToggleBtnActive : ""}`}
+            onClick={() => setViewMode("grid")}
+          >
+            <LayoutGrid size={13} />
+            Cards
+          </button>
+          <button
+            type="button"
+            className={`${styles.viewToggleBtn} ${viewMode === "table" ? styles.viewToggleBtnActive : ""}`}
+            onClick={() => setViewMode("table")}
+          >
+            <List size={13} />
+            Table
+          </button>
+        </div>
       </div>
 
+      {/* Grid View */}
+      {viewMode === "grid" && (
+        <div className={styles.dashboardGrid}>
+          {filteredDashboards.map((d) => (
+            <Card key={d.id} className={styles.dashboardCard}>
+              <div className={styles.dashboardHeader}>
+                <div>
+                  <h3 className={styles.dashboardName}>
+                    {d.name}
+                    {d.isDefault && <Badge variant="info">Default</Badge>}
+                  </h3>
+                  {d.description && <p className={styles.desc}>{d.description}</p>}
+                </div>
+                <div className={styles.cardActions}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => openEdit(d)}
+                    title="Edit Metadata"
+                  >
+                    <Edit3 size={13} />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setDeleteTarget(d)}
+                    title="Delete Dashboard"
+                  >
+                    <Trash2 size={13} style={{ color: "var(--color-danger)" }} />
+                  </Button>
+                </div>
+              </div>
+
+              {d.widgets && d.widgets.length > 0 ? (
+                <div className={styles.widgetGrid}>
+                  {d.widgets.slice(0, 4).map((w) => (
+                    <div key={w.id} className={styles.widgetCard}>
+                      {renderWidgetIcon(w.widgetType)}
+                      <div style={{ overflow: "hidden" }}>
+                        <p className={styles.widgetTitle}>{w.title}</p>
+                        <p className={styles.widgetType}>{w.widgetType}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {d.widgets.length > 4 && (
+                    <div
+                      style={{
+                        gridColumn: "span 2",
+                        textAlign: "center",
+                        fontSize: "var(--text-xs)",
+                        color: "var(--color-text-secondary)",
+                      }}
+                    >
+                      +{d.widgets.length - 4} more widgets
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div
+                  style={{
+                    background: "var(--color-bg-sunken)",
+                    borderRadius: "var(--radius-md)",
+                    padding: "var(--space-3)",
+                    textAlign: "center",
+                    fontSize: "var(--text-xs)",
+                    color: "var(--color-text-tertiary)",
+                  }}
+                >
+                  No widgets pinned yet.
+                </div>
+              )}
+
+              <div className={styles.cardFooter}>
+                <span className={styles.cardDate}>
+                  Created {new Date(d.createdAt).toLocaleDateString()}
+                </span>
+                <Link href="/analytics/builder">
+                  <Button size="sm" variant="outline">
+                    <ExternalLink size={12} style={{ marginRight: "var(--space-1)" }} />
+                    Open in Studio
+                  </Button>
+                </Link>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {/* Table View */}
+      {viewMode === "table" && (
+        <Card style={{ padding: "var(--space-4)" }}>
+          <DataTable
+            columns={[
+              {
+                key: "name",
+                header: "Dashboard Name",
+                render: (d: Dashboard) => (
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                    <LayoutDashboard size={16} style={{ color: "var(--color-brand, var(--color-primary))" }} />
+                    <span style={{ fontWeight: "var(--weight-semibold)" }}>{d.name}</span>
+                    {d.isDefault && <Badge variant="info">Default</Badge>}
+                  </div>
+                ),
+              },
+              {
+                key: "description",
+                header: "Description",
+                render: (d: Dashboard) => (
+                  <span style={{ color: "var(--color-text-secondary)", fontSize: "var(--text-xs)" }}>
+                    {d.description || "No description provided."}
+                  </span>
+                ),
+              },
+              {
+                key: "widgets",
+                header: "Widgets",
+                render: (d: Dashboard) => (
+                  <Badge variant="default">{d.widgets?.length || 0} widgets</Badge>
+                ),
+              },
+              {
+                key: "createdAt",
+                header: "Created Date",
+                render: (d: Dashboard) => (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono, monospace)",
+                      fontVariantNumeric: "tabular-nums lining-nums",
+                      color: "var(--color-text-secondary)",
+                      fontSize: "var(--text-xs)",
+                    }}
+                  >
+                    {new Date(d.createdAt).toLocaleDateString()}
+                  </span>
+                ),
+              },
+              {
+                key: "actions",
+                header: "Actions",
+                render: (d: Dashboard) => (
+                  <div style={{ display: "flex", gap: "var(--space-1)" }}>
+                    <Link href="/analytics/builder">
+                      <Button size="sm" variant="outline">
+                        <ExternalLink size={12} style={{ marginRight: "var(--space-1)" }} />
+                        Studio
+                      </Button>
+                    </Link>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => openEdit(d)}
+                      title="Edit Metadata"
+                    >
+                      <Edit3 size={13} />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setDeleteTarget(d)}
+                      title="Delete Dashboard"
+                    >
+                      <Trash2 size={13} style={{ color: "var(--color-danger)" }} />
+                    </Button>
+                  </div>
+                ),
+              },
+            ]}
+            data={filteredDashboards}
+            rowKey={(d: Dashboard) => d.id}
+          />
+        </Card>
+      )}
+
+      {filteredDashboards.length === 0 && (
+        <div className={styles.emptyState}>
+          <LayoutDashboard size={32} style={{ color: "var(--color-text-tertiary)" }} />
+          <p style={{ margin: 0, fontWeight: "var(--weight-semibold)" }}>
+            No dashboards found matching your criteria.
+          </p>
+          <Button
+            size="sm"
+            onClick={() => {
+              setSearchQuery("");
+              setEditDashboard(null);
+              setForm({ name: "", description: "" });
+              setIsModalOpen(true);
+            }}
+          >
+            <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+            Create New Dashboard
+          </Button>
+        </div>
+      )}
+
+      {/* Edit / Create Modal */}
       {isModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <div className={styles.modalHeader}>
               <h3 className={styles.modalTitle}>
-                {editDashboard ? "Edit Dashboard" : "New Dashboard"}
+                {editDashboard ? "Edit Dashboard Details" : "Create New Dashboard"}
               </h3>
               <Button
                 size="sm"
@@ -290,6 +500,45 @@ export default function DashboardsPage() {
                 </Button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteTarget && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>Delete Dashboard</h3>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setDeleteTarget(null)}
+              >
+                <X size={16} />
+              </Button>
+            </div>
+            <p style={{ color: "var(--color-text-secondary)", fontSize: "var(--text-sm)", margin: 0 }}>
+              Are you sure you want to delete <strong>"{deleteTarget.name}"</strong>? This will permanently remove this dashboard layout and its attached widgets.
+            </p>
+            <div className={styles.modalActions}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setDeleteTarget(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={confirmDelete}
+                disabled={deleting}
+                style={{ background: "var(--color-danger)", borderColor: "var(--color-danger)" }}
+              >
+                {deleting ? "Deleting..." : "Confirm Delete"}
+              </Button>
+            </div>
           </div>
         </div>
       )}
