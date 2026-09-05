@@ -210,12 +210,12 @@ export const APPS_CATALOG: AppIconConfig[] = [
 
 type CategoryFilter = "all" | "core" | "operations" | "productivity" | "verticals";
 
-const CATEGORIES: Array<{ id: CategoryFilter; label: string; count: number; indicatorClass?: string }> = [
+const CATEGORIES: Array<{ id: CategoryFilter; label: string; count: number }> = [
   { id: "all", label: "All", count: 20 },
-  { id: "core", label: "Core ERP", count: 9, indicatorClass: styles.indicatorCore },
-  { id: "operations", label: "Operations", count: 4, indicatorClass: styles.indicatorOperations },
-  { id: "productivity", label: "Productivity", count: 4, indicatorClass: styles.indicatorProductivity },
-  { id: "verticals", label: "Industry", count: 3, indicatorClass: styles.indicatorVerticals },
+  { id: "core", label: "Core ERP", count: 9 },
+  { id: "operations", label: "Operations", count: 4 },
+  { id: "productivity", label: "Productivity", count: 4 },
+  { id: "verticals", label: "Industry", count: 3 },
 ];
 
 export default function ApplicationWizardPage() {
@@ -263,98 +263,45 @@ export default function ApplicationWizardPage() {
   return (
     <div className={styles.launcherBackdrop}>
       <main className={styles.launcherCard}>
-        {/* Top Hero Grid: Left Hero & Right Module Index Card */}
+        {/* Top Hero Section: Left Title/Subtitle & Right Search Bar */}
         <section className={styles.heroSection}>
           <div className={styles.heroLeft}>
             <h1 className={styles.launcherTitle}>Select an app to continue</h1>
             <p className={styles.launcherSubtitle}>
               Choose an operational workspace application to launch.
             </p>
-
-            {/* Compact Search Bar with '/' Shortcut */}
-            <div className={styles.searchWrap}>
-              <Search size={14} className={styles.searchIcon} aria-hidden="true" />
-              <input
-                ref={searchInputRef}
-                type="text"
-                className={styles.searchInput}
-                placeholder="Search apps — Finance, CRM, Payroll..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                aria-label="Search applications"
-              />
-              {searchQuery ? (
-                <button
-                  type="button"
-                  className={styles.clearBtn}
-                  onClick={() => {
-                    setSearchQuery("");
-                    searchInputRef.current?.focus();
-                  }}
-                  aria-label="Clear search"
-                >
-                  <X size={11} />
-                </button>
-              ) : (
-                <kbd className={styles.searchKbdShortcut} title="Press '/' to focus search">
-                  /
-                </kbd>
-              )}
-            </div>
           </div>
 
-          {/* Right Module Index Card Widget */}
-          <aside className={styles.moduleIndexCard} aria-label="Module Index">
-            <div className={styles.moduleIndexHeader}>
-              <span className={styles.moduleIndexLabel}>MODULE INDEX</span>
-            </div>
-
-            <div className={styles.moduleIndexList}>
+          {/* Compact Search Bar with '/' Shortcut */}
+          <div className={styles.searchWrap}>
+            <Search size={14} className={styles.searchIcon} aria-hidden="true" />
+            <input
+              ref={searchInputRef}
+              type="text"
+              className={styles.searchInput}
+              placeholder="Search apps — Finance, CRM, Payroll..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Search applications"
+            />
+            {searchQuery ? (
               <button
                 type="button"
-                className={`${styles.moduleIndexRow} ${category === "core" ? styles.moduleIndexRowActive : ""}`}
-                onClick={() => setCategory(category === "core" ? "all" : "core")}
-                title="Filter by Core ERP"
+                className={styles.clearBtn}
+                onClick={() => {
+                  setSearchQuery("");
+                  searchInputRef.current?.focus();
+                }}
+                aria-label="Clear search"
               >
-                <span className={`${styles.moduleIndicator} ${styles.indicatorCore}`} />
-                <span className={styles.moduleCategoryName}>Core ERP</span>
-                <span className={styles.moduleCount}>9</span>
+                <X size={11} />
               </button>
-
-              <button
-                type="button"
-                className={`${styles.moduleIndexRow} ${category === "operations" ? styles.moduleIndexRowActive : ""}`}
-                onClick={() => setCategory(category === "operations" ? "all" : "operations")}
-                title="Filter by Operations"
-              >
-                <span className={`${styles.moduleIndicator} ${styles.indicatorOperations}`} />
-                <span className={styles.moduleCategoryName}>Operations</span>
-                <span className={styles.moduleCount}>4</span>
-              </button>
-
-              <button
-                type="button"
-                className={`${styles.moduleIndexRow} ${category === "productivity" ? styles.moduleIndexRowActive : ""}`}
-                onClick={() => setCategory(category === "productivity" ? "all" : "productivity")}
-                title="Filter by Productivity"
-              >
-                <span className={`${styles.moduleIndicator} ${styles.indicatorProductivity}`} />
-                <span className={styles.moduleCategoryName}>Productivity</span>
-                <span className={styles.moduleCount}>4</span>
-              </button>
-
-              <button
-                type="button"
-                className={`${styles.moduleIndexRow} ${category === "verticals" ? styles.moduleIndexRowActive : ""}`}
-                onClick={() => setCategory(category === "verticals" ? "all" : "verticals")}
-                title="Filter by Industry"
-              >
-                <span className={`${styles.moduleIndicator} ${styles.indicatorVerticals}`} />
-                <span className={styles.moduleCategoryName}>Industry</span>
-                <span className={styles.moduleCount}>3</span>
-              </button>
-            </div>
-          </aside>
+            ) : (
+              <kbd className={styles.searchKbdShortcut} title="Press '/' to focus search">
+                /
+              </kbd>
+            )}
+          </div>
         </section>
 
         {/* Category Tabs Filter Bar */}

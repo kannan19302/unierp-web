@@ -13,6 +13,7 @@
 .launcherCard {
   width: 100%;
   max-width: 76rem;
+  min-height: 33.5rem; /* Fixed comfortable launcher card height so it NEVER shifts or shrinks */
   background-color: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-2xl, 1.25rem);
@@ -25,18 +26,17 @@
   transition: box-shadow var(--duration-normal) var(--ease-default);
 }
 
-/* Hero Section: Left Hero Content & Right Module Index Card */
+/* Hero Section: Left Hero Content & Right Search Box */
 .heroSection {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: var(--space-5);
+  align-items: flex-end;
+  gap: var(--space-4);
   margin-bottom: var(--space-2);
 }
 
 .heroLeft {
   flex: 1;
-  max-width: 36rem;
 }
 
 .launcherTitle {
@@ -44,14 +44,14 @@
   font-weight: 800;
   color: var(--color-text);
   letter-spacing: -0.025em;
-  line-height: 1.15;
-  margin: 0 0 0.125rem;
+  line-height: 1.2;
+  margin: 0 0 0.1875rem;
 }
 
 .launcherSubtitle {
   font-size: var(--text-2xs, 0.6875rem);
   color: var(--color-text-secondary);
-  margin: 0 0 var(--space-2);
+  margin: 0;
   line-height: 1.35;
 }
 
@@ -62,6 +62,7 @@
   max-width: 22rem;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .searchIcon {
@@ -133,103 +134,13 @@
   user-select: none;
 }
 
-/* Module Index Card Widget */
-.moduleIndexCard {
-  width: 13rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg, 0.625rem);
-  padding: var(--space-1-5, 0.375rem) var(--space-2-5, 0.625rem);
-  box-shadow: var(--shadow-xs);
-  flex-shrink: 0;
-}
-
-.moduleIndexHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.125rem;
-}
-
-.moduleIndexLabel {
-  font-size: var(--text-3xs, 0.5625rem);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
-}
-
-.moduleIndexList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.moduleIndexRow {
-  display: flex;
-  align-items: center;
-  padding: 0.125rem var(--space-1);
-  border-radius: var(--radius-sm, 0.25rem);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  transition: background var(--duration-fast, 100ms) var(--ease-default);
-}
-
-.moduleIndexRow:hover {
-  background: var(--color-surface-hover);
-}
-
-.moduleIndexRowActive {
-  background: var(--color-surface-hover);
-  font-weight: 600;
-}
-
-.moduleIndicator {
-  width: 0.3125rem;
-  height: 0.3125rem;
-  border-radius: var(--radius-xs, 0.125rem);
-  flex-shrink: 0;
-  margin-right: var(--space-1-5, 0.375rem);
-}
-
-.indicatorCore {
-  background-color: var(--color-primary);
-}
-
-.indicatorOperations {
-  background-color: var(--color-info);
-}
-
-.indicatorProductivity {
-  background-color: var(--color-success);
-}
-
-.indicatorVerticals {
-  background-color: var(--color-warning);
-}
-
-.moduleCategoryName {
-  font-size: var(--text-2xs, 0.625rem);
-  color: var(--color-text);
-  flex: 1;
-  text-align: left;
-}
-
-.moduleCount {
-  font-size: var(--text-2xs, 0.625rem);
-  font-weight: 600;
-  color: var(--color-text-secondary);
-}
-
 /* Category Filter Tabs Bar */
 .tabsBar {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   border-bottom: 1px solid var(--color-border);
-  margin: var(--space-1-5, 0.375rem) 0 var(--space-2);
+  margin: var(--space-2) 0 var(--space-2);
   padding-bottom: 0;
 }
 
@@ -283,8 +194,11 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 5.25rem;
+  align-content: start;
+  min-height: 16.75rem; /* Exactly 3 rows fixed height: switching categories NEVER resizes card! */
   gap: var(--space-2);
-  margin-bottom: var(--space-2);
+  margin-bottom: auto;
 }
 
 /* App Tile Card — Soft rounded card with seamless hover */
@@ -461,8 +375,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 16.75rem;
   padding: var(--space-6) var(--space-4);
   text-align: center;
+  margin-bottom: auto;
 }
 
 .emptyIcon {

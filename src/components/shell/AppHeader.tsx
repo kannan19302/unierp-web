@@ -281,7 +281,7 @@ export function AppHeader({
               <ChevronLeft size={16} />
             </button>
 
-            {/* Tenant Website Shortcut */}
+            {/* Tenant Website Shortcut (Browser) */}
             <a
               href={tenantSiteUrl}
               target="_blank"
@@ -292,6 +292,20 @@ export function AppHeader({
             >
               <Globe size={16} />
             </a>
+
+            {/* Developer Platform Shortcut (Placed near Browser icon) */}
+            {isDeveloper && (
+              <a
+                href={devPlatformUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={iconBtnStyle}
+                title="Developer Platform (:4004)"
+                aria-label="Open Developer Platform"
+              >
+                <Code2 size={16} />
+              </a>
+            )}
 
             {/* Marketplace Shortcut */}
             <a
@@ -316,20 +330,6 @@ export function AppHeader({
                 aria-label="Open Tenant Admin OS"
               >
                 <ShieldCheck size={16} />
-              </a>
-            )}
-
-            {/* RBAC: Developer Platform Shortcut */}
-            {isDeveloper && (
-              <a
-                href={devPlatformUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={iconBtnStyle}
-                title="Developer Platform (:4004)"
-                aria-label="Open Developer Platform"
-              >
-                <Code2 size={16} />
               </a>
             )}
           </>

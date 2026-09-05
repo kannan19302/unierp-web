@@ -240,8 +240,8 @@ export default function DashboardBuilderPage() {
           <svg width="70" height="70" viewBox="0 0 42 42">
             <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--color-border)" strokeWidth="5" />
             <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--color-brand, var(--color-primary))" strokeWidth="5" strokeDasharray="45 55" strokeDashoffset="25" />
-            <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--color-success, #10b981)" strokeWidth="5" strokeDasharray="30 70" strokeDashoffset="80" />
-            <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--color-warning, #f59e0b)" strokeWidth="5" strokeDasharray="25 75" strokeDashoffset="50" />
+            <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--color-success)" strokeWidth="5" strokeDasharray="30 70" strokeDashoffset="80" />
+            <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--color-warning)" strokeWidth="5" strokeDasharray="25 75" strokeDashoffset="50" />
           </svg>
         );
       case "GAUGE":
@@ -258,14 +258,7 @@ export default function DashboardBuilderPage() {
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(var(--space-12) * 5)",
-        }}
-      >
+      <div className={styles.loadingContainer}>
         <Spinner size="lg" />
       </div>
     );
@@ -280,14 +273,14 @@ export default function DashboardBuilderPage() {
           title="Interactive Dashboard Layout Studio"
           description="Compose responsive drag-and-drop executive dashboards, arrange dynamic chart widgets, and configure live business telemetry sources."
           actions={
-            <div style={{ display: "flex", gap: "var(--space-2)" }}>
+            <div className={styles.headerActions}>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={addWidget}
                 disabled={!activeId}
               >
-                <Plus size={14} style={{ marginRight: "var(--space-1-5)" }} />
+                <Plus size={14} className={styles.btnIcon} />
                 Add Widget
               </Button>
               <Button
@@ -296,9 +289,9 @@ export default function DashboardBuilderPage() {
                 disabled={!activeId || saving}
               >
                 {saved ? (
-                  <Check size={14} style={{ marginRight: "var(--space-1-5)" }} />
+                  <Check size={14} className={styles.btnIcon} />
                 ) : (
-                  <Save size={14} style={{ marginRight: "var(--space-1-5)" }} />
+                  <Save size={14} className={styles.btnIcon} />
                 )}
                 {saving ? "Saving..." : saved ? "Saved!" : "Save Layout"}
               </Button>
@@ -350,13 +343,13 @@ export default function DashboardBuilderPage() {
           <div className={styles.canvasArea}>
             {!activeId && (
               <Card className={styles.canvasEmptyCard}>
-                <Layers size={36} style={{ color: "var(--color-primary)" }} />
+                <Layers size={36} className={styles.emptyCanvasIcon} />
                 <h4 className={styles.canvasEmptyTitle}>No Dashboard Selected</h4>
                 <p className={styles.canvasEmptyDesc}>
                   Select an existing dashboard from the left panel or create a new board to start customizing widgets.
                 </p>
                 <Button size="sm" onClick={() => setIsModalOpen(true)}>
-                  <Plus size={14} style={{ marginRight: "var(--space-1-5)" }} />
+                  <Plus size={14} className={styles.btnIcon} />
                   Create Dashboard
                 </Button>
               </Card>
@@ -364,27 +357,15 @@ export default function DashboardBuilderPage() {
 
             {activeId && (
               <>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "var(--space-2) var(--space-1)",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                    <LayoutDashboard size={16} style={{ color: "var(--color-primary)" }} />
-                    <span style={{ fontWeight: "var(--weight-bold)", fontSize: "var(--text-sm)" }}>
+                <div className={styles.boardHeader}>
+                  <div className={styles.boardTitleGroup}>
+                    <LayoutDashboard size={16} className={styles.boardTitleIcon} />
+                    <span className={styles.boardTitleText}>
                       {activeDashboard?.name || "Active Board"}
                     </span>
                     <Badge variant="info">{widgets.length} Widgets Configured</Badge>
                   </div>
-                  <span
-                    style={{
-                      fontSize: "var(--text-xs)",
-                      color: "var(--color-text-tertiary)",
-                    }}
-                  >
+                  <span className={styles.dragHint}>
                     Drag grip handle to reorder widgets
                   </span>
                 </div>
@@ -397,11 +378,7 @@ export default function DashboardBuilderPage() {
                       onDragStart={() => setDragIndex(idx)}
                       onDragOver={(e) => e.preventDefault()}
                       onDrop={() => onDrop(idx)}
-                      style={{
-                        gridColumn: w.width === 2 ? "span 2" : "span 1",
-                        opacity: dragIndex === idx ? 0.45 : 1,
-                      }}
-                      className={styles.widgetCard}
+                      className={`${styles.widgetCard} ${w.width === 2 ? styles.widgetSpan2 : ""} ${dragIndex === idx ? styles.widgetDragging : ""}`}
                     >
                       <div className={styles.widgetTopBar}>
                         <div className={styles.dragHandle} title="Drag to reorder">
@@ -423,7 +400,7 @@ export default function DashboardBuilderPage() {
                         >
                           <Trash2
                             size={14}
-                            style={{ color: "var(--color-danger)" }}
+                            className={styles.deleteWidgetIcon}
                           />
                         </Button>
                       </div>
@@ -484,35 +461,19 @@ export default function DashboardBuilderPage() {
                   ))}
 
                   {widgets.length === 0 && (
-                    <Card
-                      style={{
-                        gridColumn: "span 2",
-                        padding: "var(--space-8)",
-                        textAlign: "center",
-                      }}
-                    >
+                    <Card className={styles.emptyWidgetsCard}>
                       <Sparkles
                         size={28}
-                        style={{
-                          color: "var(--color-primary)",
-                          margin: "0 auto var(--space-2) auto",
-                          display: "block",
-                        }}
+                        className={styles.emptyWidgetsIcon}
                       />
-                      <h4 style={{ margin: 0, fontSize: "var(--text-sm)" }}>
+                      <h4 className={styles.emptyWidgetsTitle}>
                         No Widgets in this Dashboard
                       </h4>
-                      <p
-                        style={{
-                          color: "var(--color-text-secondary)",
-                          fontSize: "var(--text-xs)",
-                          margin: "var(--space-1) 0 var(--space-3) 0",
-                        }}
-                      >
+                      <p className={styles.emptyWidgetsDesc}>
                         Click "Add Widget" to place your first telemetry chart.
                       </p>
                       <Button size="sm" onClick={addWidget}>
-                        <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+                        <Plus size={14} className={styles.btnIconSm} />
                         Add First Widget
                       </Button>
                     </Card>

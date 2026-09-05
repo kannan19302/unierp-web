@@ -833,3 +833,39 @@
   display: inline-block;
   margin-right: var(--space-1);
 }
+
+.tabularNums {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.emptyStateCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  text-align: center;
+  min-height: 14rem;
+  color: var(--color-text-secondary);
+}
+
+.emptyStateIcon {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.emptyStateTitle {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.emptyStateDesc {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  max-width: 28rem;
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-relaxed);
+}
+
