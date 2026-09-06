@@ -164,7 +164,7 @@ export default function SubscriptionsListPage() {
       key: "amount",
       header: "Amount",
       render: (row: Subscription) => (
-        <span className="text-sm font-medium">
+        <span className="text-sm font-medium" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
           {fmt(Number(row.unitAmount) * row.quantity, row.currency)}
         </span>
       ),
@@ -289,7 +289,7 @@ export default function SubscriptionsListPage() {
               <p className="text-xs text-slate-500 font-medium">
                 Monthly Recurring Revenue (MRR)
               </p>
-              <p className="text-xl font-bold text-slate-900">
+              <p className="text-xl font-bold text-slate-900" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                 {fmt(metrics.mrr)}
               </p>
             </div>
@@ -302,7 +302,7 @@ export default function SubscriptionsListPage() {
               <p className="text-xs text-slate-500 font-medium">
                 Annual Recurring Revenue (ARR)
               </p>
-              <p className="text-xl font-bold text-slate-900">
+              <p className="text-xl font-bold text-slate-900" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                 {fmt(metrics.arr)}
               </p>
             </div>
@@ -315,7 +315,7 @@ export default function SubscriptionsListPage() {
               <p className="text-xs text-slate-500 font-medium">
                 Active Subscriptions
               </p>
-              <p className="text-xl font-bold text-slate-900">
+              <p className="text-xl font-bold text-slate-900" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                 {metrics.totalActiveSubs}
               </p>
             </div>
@@ -328,7 +328,7 @@ export default function SubscriptionsListPage() {
               <p className="text-xs text-slate-500 font-medium">
                 Churn Rate (This Month)
               </p>
-              <p className="text-xl font-bold text-slate-900">
+              <p className="text-xl font-bold text-slate-900" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                 {metrics.churnRate}%
               </p>
             </div>

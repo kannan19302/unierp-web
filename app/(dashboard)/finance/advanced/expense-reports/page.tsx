@@ -273,7 +273,12 @@ export default function ExpenseManagementPage() {
       header: "Amount",
       align: "right" as const,
       render: (row: any) => (
-        <span className="font-semibold">{fmt(row.totalAmount)}</span>
+        <span
+          className="font-semibold"
+          style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+        >
+          {fmt(row.totalAmount)}
+        </span>
       ),
     },
     {
@@ -348,7 +353,10 @@ export default function ExpenseManagementPage() {
           }
         />
 
-        <div className="ui-grid-auto">
+        <div
+          className="ui-grid-auto"
+          style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+        >
           <KPICard
             title="Pending Approval"
             value={pending}
@@ -515,7 +523,14 @@ export default function ExpenseManagementPage() {
                       </div>
                     </div>
                     <div className="ui-hstack-2">
-                      <span className="font-semibold">{fmt(item.amount)}</span>
+                      <span
+                        className="font-semibold"
+                        style={{
+                          fontVariantNumeric: "tabular-nums lining-nums",
+                        }}
+                      >
+                        {fmt(item.amount)}
+                      </span>
                       {detailReport.status === "DRAFT" && (
                         <Button
                           variant="danger"

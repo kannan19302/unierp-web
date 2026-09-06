@@ -630,18 +630,24 @@ export default function AccountingBooksPage() {
                         {
                           key: "debit",
                           header: "Debit",
-                          render: (v: any) =>
-                            Number(v).toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                            }),
+                          render: (v: any) => (
+                            <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                              {Number(v).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                              })}
+                            </span>
+                          ),
                         },
                         {
                           key: "credit",
                           header: "Credit",
-                          render: (v: any) =>
-                            Number(v).toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                            }),
+                          render: (v: any) => (
+                            <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                              {Number(v).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                              })}
+                            </span>
+                          ),
                         },
                         {
                           key: "balance",
@@ -718,18 +724,24 @@ export default function AccountingBooksPage() {
                       {
                         key: "book1Balance",
                         header: variance.book1.name,
-                        render: (v: any) =>
-                          Number(v).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                          }),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {Number(v).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                            })}
+                          </span>
+                        ),
                       },
                       {
                         key: "book2Balance",
                         header: variance.book2.name,
-                        render: (v: any) =>
-                          Number(v).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                          }),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {Number(v).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                            })}
+                          </span>
+                        ),
                       },
                       {
                         key: "variance",

@@ -11,6 +11,7 @@
   padding: var(--space-4) var(--space-5);
 }
 .s3 {
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-semibold);
 }
 .s4 {

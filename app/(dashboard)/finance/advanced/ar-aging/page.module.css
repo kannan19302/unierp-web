@@ -14,6 +14,7 @@
 
 .s4 {
   font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-bold);
   color: var(--color-primary);
   margin-top: var(--space-1);
@@ -27,6 +28,7 @@
 
 .s6 {
   font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-bold);
   color: var(--color-danger);
   margin-top: var(--space-1);
@@ -44,6 +46,7 @@
 
 .s9 {
   font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-bold);
   color: var(--color-danger);
   margin-top: var(--space-1);
@@ -132,6 +135,7 @@
 }
 .bucketTotal {
   font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-bold);
 }
 .bucketTable {
@@ -139,5 +143,6 @@
   border-top-style: solid;
 }
 .overdueDays {
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-semibold);
 }

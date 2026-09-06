@@ -10,7 +10,10 @@ export default function PaymentTermsPage() {
 
   return (
     <RouteGuard permission="finance.paymentterm.read">
-      <div className="ui-stack-6">
+      <div
+        className="ui-stack-6"
+        style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+      >
         <PageHeader
           title="Payment Terms"
           description="Configure payment schedules, due day intervals, and early payment discounts"

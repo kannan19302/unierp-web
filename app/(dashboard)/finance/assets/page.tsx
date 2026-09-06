@@ -135,7 +135,7 @@ export default function AssetsPage() {
                 <p className="ui-text-xs-muted">Total Asset Value</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-primary)" }}
+                  style={{ color: "var(--color-primary)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.totalValue.toLocaleString(undefined, {
                     style: "currency",
@@ -153,7 +153,7 @@ export default function AssetsPage() {
                 <p className="ui-text-xs-muted">Monthly Depreciation</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-warning)" }}
+                  style={{ color: "var(--color-warning)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.monthlyDepreciation.toLocaleString(undefined, {
                     style: "currency",
@@ -169,7 +169,7 @@ export default function AssetsPage() {
                 <p className="ui-text-xs-muted">Active Leases</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-success)" }}
+                  style={{ color: "var(--color-success)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.activeLeases}
                 </p>

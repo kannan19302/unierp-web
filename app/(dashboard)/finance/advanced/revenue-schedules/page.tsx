@@ -102,7 +102,29 @@ export default function RevenueRecognitionPage() {
       header: "Total",
       align: "right" as const,
       render: (row: any) => (
-        <span className="font-semibold">{fmtCurrency(row.totalAmount)}</span>
+        <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {fmtCurrency(row.totalAmount)}
+        </span>
+      ),
+    },
+    {
+      key: "recognizedAmount",
+      header: "Recognized",
+      align: "right" as const,
+      render: (row: any) => (
+        <span className="ui-text-success" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {fmtCurrency(row.recognizedAmount)}
+        </span>
+      ),
+    },
+    {
+      key: "deferredAmount",
+      header: "Deferred",
+      align: "right" as const,
+      render: (row: any) => (
+        <span className="ui-text-muted" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {fmtCurrency(row.deferredAmount)}
+        </span>
       ),
     },
     {
@@ -116,7 +138,9 @@ export default function RevenueRecognitionPage() {
             <div className={styles.s1}>
               <div style={{ width: `${pct}%` }} className={styles.s2} />
             </div>
-            <span className={styles.s3}>{pct}%</span>
+            <span className={styles.s3} style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {pct}%
+            </span>
           </div>
         );
       },
@@ -138,13 +162,30 @@ export default function RevenueRecognitionPage() {
         title="Revenue Recognition"
         description="Manage deferred revenue schedules and recognition rules"
         actions={
-          <Button variant="primary" onClick={() => setCreateOpen(true)}>
-            <Plus size={14} className="mr-2" /> New Schedule
-          </Button>
+          <div className="ui-flex ui-gap-2">
+            <Button
+              variant="outline"
+              onClick={async () => {
+                try {
+                  await client.post("/advanced-finance/revenue-schedules/recognize-period", {
+                    period: "2026-03",
+                  });
+                  fetchSchedules();
+                } catch {
+                  fetchSchedules();
+                }
+              }}
+            >
+              Recognize Period Revenue
+            </Button>
+            <Button variant="primary" onClick={() => setCreateOpen(true)}>
+              <Plus size={14} className="mr-2" /> New Schedule
+            </Button>
+          </div>
         }
       />
 
-      <div className="ui-grid-auto">
+      <div className="ui-grid-auto" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
         <KPICard
           title="Total Contract Value"
           value={fmtCurrency(

@@ -316,6 +316,7 @@ export default function BudgetScenariosPage() {
           return (
             <input
               type="number"
+              style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
               className={`w-full text-right p-1 text-sm border rounded focus:ring-1 focus:outline-none ${
                 selectedScenario?.isLocked
                   ? "bg-gray-50 border-transparent cursor-not-allowed"
@@ -356,7 +357,7 @@ export default function BudgetScenariosPage() {
           rowTotal += lineMap.get(`${acc.id}-${m}`) || 0;
         }
         return (
-          <span className="font-bold text-gray-800">
+          <span className="font-bold text-gray-800" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
             $
             {rowTotal.toLocaleString(undefined, {
               minimumFractionDigits: 2,
@@ -373,13 +374,6 @@ export default function BudgetScenariosPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>FP&A</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">Budget Scenarios</span>
-            </nav>
             <div className="ui-title-section">
               <Layers className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Budget Scenarios & Drivers</h1>

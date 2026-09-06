@@ -175,15 +175,22 @@ export default function ExpensePoliciesPage() {
     {
       key: "max",
       header: "Max Per Item",
-      render: (r: any) =>
-        r.maxAmountPerItem != null
-          ? `$${Number(r.maxAmountPerItem).toFixed(2)}`
-          : "—",
+      render: (r: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {r.maxAmountPerItem != null
+            ? `$${Number(r.maxAmountPerItem).toFixed(2)}`
+            : "—"}
+        </span>
+      ),
     },
     {
       key: "receipt",
       header: "Receipt Required Above",
-      render: (r: any) => `$${Number(r.receiptRequiredAbove).toFixed(2)}`,
+      render: (r: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(r.receiptRequiredAbove).toFixed(2)}
+        </span>
+      ),
     },
     {
       key: "active",
@@ -210,7 +217,11 @@ export default function ExpensePoliciesPage() {
     {
       key: "rate",
       header: "Rate / Mile",
-      render: (r: any) => `$${Number(r.ratePerMile).toFixed(4)}`,
+      render: (r: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(r.ratePerMile).toFixed(4)}
+        </span>
+      ),
     },
     {
       key: "effective",
@@ -230,7 +241,11 @@ export default function ExpensePoliciesPage() {
     {
       key: "rate",
       header: "Daily Rate",
-      render: (r: any) => `${r.currency} ${Number(r.dailyRate).toFixed(2)}`,
+      render: (r: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {r.currency} {Number(r.dailyRate).toFixed(2)}
+        </span>
+      ),
     },
     {
       key: "active",
@@ -286,7 +301,11 @@ export default function ExpensePoliciesPage() {
       key: "amount",
       header: "Amount",
       align: "right" as const,
-      render: (r: any) => `$${Number(r.amount).toFixed(2)}`,
+      render: (r: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(r.amount).toFixed(2)}
+        </span>
+      ),
     },
     {
       key: "date",

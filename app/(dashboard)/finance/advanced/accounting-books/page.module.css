@@ -437,8 +437,13 @@
   cursor: pointer;
 }
 
+.s47 {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
 .balance {
   font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .balancePositive {
   color: var(--color-text-primary);
@@ -448,6 +453,7 @@
 }
 .variance {
   font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .variancePositive {
   color: var(--color-success-text);

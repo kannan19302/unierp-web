@@ -331,7 +331,11 @@ export default function FixedAssetsDashboard() {
                   {
                     key: "purchaseValue",
                     header: "Cost",
-                    render: (v: any) => `$${Number(v).toFixed(2)}`,
+                    render: (v: any) => (
+                      <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                        ${Number(v).toFixed(2)}
+                      </span>
+                    ),
                   },
                   {
                     key: "currentValue",

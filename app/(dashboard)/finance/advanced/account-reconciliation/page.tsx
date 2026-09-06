@@ -56,7 +56,9 @@ export default function AccountReconciliationPage() {
       header: "GL Balance",
       align: "right" as const,
       render: (row: any) => (
-        <span className="text-sm">{fmtCurrency(row.glBalance)}</span>
+        <span className="text-sm" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {fmtCurrency(row.glBalance)}
+        </span>
       ),
     },
     {
@@ -64,7 +66,9 @@ export default function AccountReconciliationPage() {
       header: "Sub-Ledger",
       align: "right" as const,
       render: (row: any) => (
-        <span className="text-sm">{fmtCurrency(row.subLedgerBalance)}</span>
+        <span className="text-sm" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {fmtCurrency(row.subLedgerBalance)}
+        </span>
       ),
     },
     {
@@ -102,7 +106,7 @@ export default function AccountReconciliationPage() {
         }
       />
 
-      <div className="ui-grid-auto">
+      <div className="ui-grid-auto" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
         <KPICard
           title="Accounts Matched"
           value={matched}

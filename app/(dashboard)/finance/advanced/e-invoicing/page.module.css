@@ -42,6 +42,7 @@
 .s8 {
   display: block;
   text-align: right;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .s9 {
   display: flex;

@@ -82,13 +82,6 @@ export default function ExceptionQueuePage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Payables</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">Exception Queue</span>
-            </nav>
             <div className="ui-title-section">
               <AlertTriangle className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">AP Match Exception Queue</h1>
@@ -154,7 +147,7 @@ export default function ExceptionQueuePage() {
                     </div>
                     <div className="ui-list-row-meta">
                       <span>PO: {exc.invoiceId.slice(0, 12)}…</span>
-                      <span>
+                      <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         Variance: {Number(exc.variancePercent).toFixed(2)}% ($
                         {Number(exc.varianceAmount).toFixed(2)})
                       </span>

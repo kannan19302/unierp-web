@@ -269,7 +269,10 @@ export default function APPage() {
                 <p className="ui-text-xs-muted">Outstanding Payables</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-primary)" }}
+                  style={{
+                    color: "var(--color-primary)",
+                    fontVariantNumeric: "tabular-nums lining-nums",
+                  }}
                 >
                   {summary.totalOutstanding.toLocaleString(undefined, {
                     style: "currency",
@@ -287,7 +290,10 @@ export default function APPage() {
                 <p className="ui-text-xs-muted">Due This Week</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-warning)" }}
+                  style={{
+                    color: "var(--color-warning)",
+                    fontVariantNumeric: "tabular-nums lining-nums",
+                  }}
                 >
                   {summary.dueThisWeekAmount.toLocaleString(undefined, {
                     style: "currency",
@@ -305,7 +311,10 @@ export default function APPage() {
                 <p className="ui-text-xs-muted">Processed This Month</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-success)" }}
+                  style={{
+                    color: "var(--color-success)",
+                    fontVariantNumeric: "tabular-nums lining-nums",
+                  }}
                 >
                   {summary.processedThisMonthAmount.toLocaleString(undefined, {
                     style: "currency",

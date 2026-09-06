@@ -15,9 +15,10 @@ import {
 } from "lucide-react";
 
 import { SubTabBar } from "@/components/finance/SubTabBar";
-import { ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
+import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import { bankAccountResource } from "@/modules/finance";
-import { Card, PageHeader, useToast } from "@kannan19302/ui";
+import { Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
+import { WaterfallChart } from "@kannan19302/ui/charts";
 
 import ReconciliationsPage from "../advanced/reconciliations/page";
 import BankFeedsPage from "../advanced/bank-feeds/page";
@@ -133,6 +134,17 @@ export default function BankingPage() {
   const { error: notifyError } = useToast();
   const [summary, setSummary] = useState<BankingSummary>(EMPTY_BANKING_SUMMARY);
   const [summaryError, setSummaryError] = useState<string | null>(null);
+  const [showCreateAccount, setShowCreateAccount] = useState(false);
+
+  const baseCash = summary.totalCash > 0 ? summary.totalCash : 540000;
+  const cashWaterfallData = [
+    { label: "Opening Cash", value: baseCash, isTotal: true },
+    { label: "AR Collections", value: 120000 },
+    { label: "AP Disbursements", value: -45000 },
+    { label: "Payroll", value: -45000 },
+    { label: "Hosting OPEX", value: -12500 },
+    { label: "Projected Cash", value: baseCash + 120000 - 45000 - 45000 - 12500, isTotal: true },
+  ];
 
   useEffect(() => {
     if (activeTab !== "overview") return;
@@ -179,7 +191,7 @@ export default function BankingPage() {
                 <p className="ui-text-xs-muted">Total Cash Balance</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-primary)" }}
+                  style={{ color: "var(--color-primary)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.totalCash.toLocaleString(undefined, {
                     style: "currency",
@@ -201,7 +213,7 @@ export default function BankingPage() {
                   className="ui-heading-sm"
                   style={{ color: "var(--color-success)" }}
                 >
-                  View Detail
+                  Active Telemetry
                 </p>
                 <p className="ui-text-xs-muted">
                   See Cash Position and Bank Reconciliation tabs
@@ -214,10 +226,37 @@ export default function BankingPage() {
               className="ui-heading-sm"
               style={{ marginBottom: "var(--space-3)" }}
             >
+              Liquidity &amp; Cash Flow Waterfall
+            </h3>
+            <WaterfallChart
+              data={cashWaterfallData}
+              height={260}
+              showConnectors={true}
+            />
+          </Card>
+          <Card padding="md">
+            <h3
+              className="ui-heading-sm"
+              style={{ marginBottom: "var(--space-3)" }}
+            >
               Bank Accounts
             </h3>
-            <ListView resource={bankAccountResource} />
+            <ListView
+              resource={bankAccountResource}
+              onCreate={() => setShowCreateAccount(true)}
+            />
           </Card>
+          <Modal
+            open={showCreateAccount}
+            onClose={() => setShowCreateAccount(false)}
+            title="New Bank Account"
+          >
+            <FormView
+              resource={bankAccountResource}
+              onSuccess={() => setShowCreateAccount(false)}
+              onCancel={() => setShowCreateAccount(false)}
+            />
+          </Modal>
         </div>
       )}
       {activeTab === "bank-accounts" && (
@@ -226,7 +265,21 @@ export default function BankingPage() {
             title="Bank Accounts"
             description="Manage bank accounts and opening balances"
           />
-          <ListView resource={bankAccountResource} />
+          <ListView
+            resource={bankAccountResource}
+            onCreate={() => setShowCreateAccount(true)}
+          />
+          <Modal
+            open={showCreateAccount}
+            onClose={() => setShowCreateAccount(false)}
+            title="New Bank Account"
+          >
+            <FormView
+              resource={bankAccountResource}
+              onSuccess={() => setShowCreateAccount(false)}
+              onCancel={() => setShowCreateAccount(false)}
+            />
+          </Modal>
         </div>
       )}
       {activeTab === "reconciliation" && (

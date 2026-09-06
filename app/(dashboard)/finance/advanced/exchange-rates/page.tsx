@@ -9,7 +9,10 @@ export default function ExchangeRatesPage() {
   const [showCreate, setShowCreate] = useState(false);
   return (
     <RouteGuard permission="finance.treasury.read">
-      <div className="ui-card">
+      <div
+        className="ui-card"
+        style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+      >
         <PageHeader
           title="Multi-Currency & Exchange Rates"
           description="Manage exchange rates for multi-currency transactions and revaluation."

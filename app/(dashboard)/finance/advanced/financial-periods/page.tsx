@@ -9,7 +9,10 @@ export default function FinancialPeriodsPage() {
   const [showCreate, setShowCreate] = useState(false);
   return (
     <RouteGuard permission="finance.period.read">
-      <div className="ui-card">
+      <div
+        className="ui-card"
+        style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+      >
         <PageHeader
           title="Financial Periods"
           description="Create and review accounting periods used for close management."

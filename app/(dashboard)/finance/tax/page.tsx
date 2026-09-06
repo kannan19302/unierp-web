@@ -154,7 +154,7 @@ export default function TaxPage() {
                 <p className="ui-text-xs-muted">Tax Rates Active</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-success)" }}
+                  style={{ color: "var(--color-success)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.activeRates}
                 </p>

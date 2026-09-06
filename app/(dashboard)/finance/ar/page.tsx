@@ -178,6 +178,8 @@ export default function ARPage() {
   const { error: notifyError } = useToast();
   const [summary, setSummary] = useState<ArSummary>(EMPTY_AR_SUMMARY);
   const [summaryError, setSummaryError] = useState<string | null>(null);
+  const [showCreateInvoice, setShowCreateInvoice] = useState(false);
+  const [invoicesKey, setInvoicesKey] = useState(0);
 
   useEffect(() => {
     if (activeTab !== "overview") return;
@@ -250,7 +252,7 @@ export default function ARPage() {
                 <p className="ui-text-xs-muted">Outstanding Receivables</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-primary)" }}
+                  style={{ color: "var(--color-primary)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.outstandingAr.toLocaleString(undefined, {
                     style: "currency",
@@ -268,7 +270,7 @@ export default function ARPage() {
                 <p className="ui-text-xs-muted">Overdue</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-danger)" }}
+                  style={{ color: "var(--color-danger)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.overdueAmount.toLocaleString(undefined, {
                     style: "currency",
@@ -286,7 +288,7 @@ export default function ARPage() {
                 <p className="ui-text-xs-muted">Collected This Month</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-success)" }}
+                  style={{ color: "var(--color-success)", fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {summary.collectedThisMonth.toLocaleString(undefined, {
                     style: "currency",
@@ -309,14 +311,52 @@ export default function ARPage() {
             >
               Recent Invoices
             </h3>
-            <ListView resource={invoiceResource} />
+            <ListView
+              key={invoicesKey}
+              resource={invoiceResource}
+              onCreate={() => setShowCreateInvoice(true)}
+            />
           </Card>
+          <Modal
+            open={showCreateInvoice}
+            onClose={() => setShowCreateInvoice(false)}
+            title="Create Invoice"
+            size="lg"
+          >
+            <FormView
+              resource={invoiceResource}
+              onSuccess={() => {
+                setShowCreateInvoice(false);
+                setInvoicesKey((k) => k + 1);
+              }}
+              onCancel={() => setShowCreateInvoice(false)}
+            />
+          </Modal>
         </div>
       )}
       {activeTab === "invoices" && (
         <div className="ui-stack-4 ui-animate-in">
           <PageHeader title="Invoices" description="Manage customer invoices" />
-          <ListView resource={invoiceResource} />
+          <ListView
+            key={invoicesKey}
+            resource={invoiceResource}
+            onCreate={() => setShowCreateInvoice(true)}
+          />
+          <Modal
+            open={showCreateInvoice}
+            onClose={() => setShowCreateInvoice(false)}
+            title="Create Invoice"
+            size="lg"
+          >
+            <FormView
+              resource={invoiceResource}
+              onSuccess={() => {
+                setShowCreateInvoice(false);
+                setInvoicesKey((k) => k + 1);
+              }}
+              onCancel={() => setShowCreateInvoice(false)}
+            />
+          </Modal>
         </div>
       )}
       {activeTab === "customers" && (

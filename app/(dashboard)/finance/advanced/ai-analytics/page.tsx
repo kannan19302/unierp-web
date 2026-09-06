@@ -308,15 +308,6 @@ export default function AiAnalyticsPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">
-                AI Financial Analytics
-              </span>
-            </nav>
             <div className="ui-title-section">
               <Brain className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">AI Financial Analytics</h1>
@@ -349,13 +340,15 @@ export default function AiAnalyticsPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Active Scenarios
             </h3>
-            <p className="text-2xl font-bold mt-1">{activeScenarios}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {activeScenarios}
+            </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Unreviewed Anomalies
             </h3>
-            <p className="text-2xl font-bold mt-1 text-red-600">
+            <p className="text-2xl font-bold mt-1 text-red-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {totalAnomalies}
             </p>
           </Card>
@@ -363,7 +356,7 @@ export default function AiAnalyticsPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Pending GL Suggestions
             </h3>
-            <p className="text-2xl font-bold mt-1 text-amber-600">
+            <p className="text-2xl font-bold mt-1 text-amber-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {pendingSuggestions}
             </p>
           </Card>
@@ -636,12 +629,20 @@ export default function AiAnalyticsPage() {
                       {
                         key: "forecastAmount",
                         header: "Forecast",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "actualAmount",
                         header: "Actual",
-                        render: (v: any) => (v !== null ? fmt(Number(v)) : "—"),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {v !== null ? fmt(Number(v)) : "—"}
+                          </span>
+                        ),
                       },
                     ] as ListColumn[]
                   }
@@ -749,7 +750,9 @@ export default function AiAnalyticsPage() {
                         key: "anomaliesFound",
                         header: "Anomalies",
                         render: (v: any) => (
-                          <span className="font-semibold">{String(v)}</span>
+                          <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {String(v)}
+                          </span>
                         ),
                       },
                       {
@@ -794,12 +797,20 @@ export default function AiAnalyticsPage() {
                       {
                         key: "expectedValue",
                         header: "Expected",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "actualValue",
                         header: "Actual",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "deviation",
@@ -807,6 +818,7 @@ export default function AiAnalyticsPage() {
                         render: (v: any) => (
                           <span
                             className={`font-semibold ${Math.abs(Number(v)) > 0.5 ? "text-red-600" : "text-amber-600"}`}
+                            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
                           >
                             {(Number(v) * 100).toFixed(1)}%
                           </span>

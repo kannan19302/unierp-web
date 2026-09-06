@@ -434,18 +434,29 @@ export default function FxRevaluationPage() {
                       {
                         key: "balanceInForeign",
                         header: "Foreign Balance",
-                        render: (v: any) =>
-                          `${String(v)} ${draftRun!.targetCurrency}`,
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {`${String(v)} ${draftRun!.targetCurrency}`}
+                          </span>
+                        ),
                       },
                       {
                         key: "originalAmountBase",
                         header: "Original value (Base)",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "revaluedAmountBase",
                         header: "Revalued value (Base)",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "unrealizedGainLoss",
@@ -455,8 +466,9 @@ export default function FxRevaluationPage() {
                             style={{
                               color:
                                 Number(v) >= 0
-                                  ? "var(--chart-2)"
-                                  : "var(--chart-4)",
+                                  ? "var(--color-success)"
+                                  : "var(--color-danger)",
+                              fontVariantNumeric: "tabular-nums lining-nums",
                             }}
                             className={styles.s14}
                           >

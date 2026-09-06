@@ -239,15 +239,6 @@ export default function WorkingCapitalPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">
-                Working Capital Management
-              </span>
-            </nav>
             <div className="ui-title-section">
               <DollarSign className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Working Capital Management</h1>
@@ -280,19 +271,25 @@ export default function WorkingCapitalPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Total Discount Amount
             </h3>
-            <p className="text-2xl font-bold mt-1">{fmt(totalDiscounted)}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {fmt(totalDiscounted)}
+            </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               SCF Funded Amount
             </h3>
-            <p className="text-2xl font-bold mt-1">{fmt(totalScfFunded)}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {fmt(totalScfFunded)}
+            </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Factored Advances
             </h3>
-            <p className="text-2xl font-bold mt-1">{fmt(totalFactored)}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {fmt(totalFactored)}
+            </p>
           </Card>
         </div>
 
@@ -412,17 +409,29 @@ export default function WorkingCapitalPage() {
                       {
                         key: "invoiceAmount",
                         header: "Invoice",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "discountRate",
                         header: "Rate %",
-                        render: (v: any) => `${Number(v).toFixed(1)}%`,
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {Number(v).toFixed(1)}%
+                          </span>
+                        ),
                       },
                       {
                         key: "discountAmount",
                         header: "Discount",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "status",

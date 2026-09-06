@@ -384,7 +384,7 @@ export default function TaxEnginePage() {
                     key: "rate",
                     header: "Rate (%)",
                     render: (v: any) => (
-                      <span className="font-medium">
+                      <span className="font-medium" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         {Number(v).toFixed(2)}%
                       </span>
                     ),
@@ -393,7 +393,7 @@ export default function TaxEnginePage() {
                     key: "threshold",
                     header: "Threshold ($)",
                     render: (v: any) => (
-                      <span className="ui-text-muted">
+                      <span className="ui-text-muted" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         ${Number(v || 0).toFixed(2)}
                       </span>
                     ),

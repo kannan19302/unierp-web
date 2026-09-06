@@ -178,6 +178,17 @@ export default function RecurringInvoicesPage() {
       ),
     },
     {
+      key: "amount",
+      header: "Amount",
+      render: (row: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(row.entryTemplate?.amount || row.entryTemplate?.lineItems?.[0]?.unitPrice || 0).toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+          })}
+        </span>
+      ),
+    },
+    {
       key: "status",
       header: "Status",
       render: (row: any) => (

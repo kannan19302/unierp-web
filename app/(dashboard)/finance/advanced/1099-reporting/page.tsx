@@ -243,7 +243,7 @@ export default function Form1099ReportingPage() {
       header: "YTD Paid",
       sortable: true,
       render: (v: any) => (
-        <span>
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
           ${v.ytdPaid.toLocaleString("en-US", { minimumFractionDigits: 2 })}
           {v.crossesThreshold && (
             <Badge variant="warning" className="ml-2">
@@ -356,14 +356,20 @@ export default function Form1099ReportingPage() {
       key: "totalAmount",
       header: "Total Amount",
       sortable: true,
-      render: (f: any) =>
-        `$${Number(f.totalAmount).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
+      render: (f: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(f.totalAmount).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        </span>
+      ),
     },
     {
       key: "federalWithholding",
       header: "Withholding",
-      render: (f: any) =>
-        `$${Number(f.federalWithholding).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
+      render: (f: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(f.federalWithholding).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        </span>
+      ),
     },
     {
       key: "status",
@@ -416,13 +422,25 @@ export default function Form1099ReportingPage() {
       sortable: true,
       render: (b: any) => <span className="font-medium">{b.name}</span>,
     },
-    { key: "formCount", header: "Forms", sortable: true },
+    {
+      key: "formCount",
+      header: "Forms",
+      sortable: true,
+      render: (b: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {b.formCount}
+        </span>
+      ),
+    },
     {
       key: "totalAmount",
       header: "Total Amount",
       sortable: true,
-      render: (b: any) =>
-        `$${Number(b.totalAmount).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
+      render: (b: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(b.totalAmount).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        </span>
+      ),
     },
     {
       key: "status",
@@ -505,13 +523,13 @@ export default function Form1099ReportingPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Card className="p-4">
             <p className="text-xs ui-text-muted">Total Forms ({taxYear})</p>
-            <p className="text-2xl font-bold ui-text-primary">
+            <p className="text-2xl font-bold ui-text-primary" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {summary.totalForms}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-xs ui-text-muted">Total Reportable Amount</p>
-            <p className="text-2xl font-bold ui-text-primary">
+            <p className="text-2xl font-bold ui-text-primary" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               $
               {summary.totalAmount.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
@@ -520,13 +538,13 @@ export default function Form1099ReportingPage() {
           </Card>
           <Card className="p-4">
             <p className="text-xs ui-text-muted">Filed</p>
-            <p className="text-2xl font-bold text-green-600">
+            <p className="text-2xl font-bold text-green-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {summary.byStatus.find((s: any) => s.status === "FILED")?.count || 0}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-xs ui-text-muted">E-File Batches</p>
-            <p className="text-2xl font-bold ui-text-primary">
+            <p className="text-2xl font-bold ui-text-primary" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {summary.batchCount}
             </p>
           </Card>

@@ -269,15 +269,6 @@ export default function RiskManagementPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">
-                Financial Risk Management
-              </span>
-            </nav>
             <div className="ui-title-section">
               <ShieldAlert className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Financial Risk Management</h1>
@@ -310,7 +301,7 @@ export default function RiskManagementPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Open Risk Events
             </h3>
-            <p className="text-2xl font-bold mt-1 text-red-600">
+            <p className="text-2xl font-bold mt-1 text-red-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {pendingEvents}
             </p>
           </Card>
@@ -318,7 +309,7 @@ export default function RiskManagementPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Unhedged Exposures
             </h3>
-            <p className="text-2xl font-bold mt-1 text-amber-600">
+            <p className="text-2xl font-bold mt-1 text-amber-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {unhedgedExposures}
             </p>
           </Card>
@@ -326,7 +317,9 @@ export default function RiskManagementPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Total Scorecards
             </h3>
-            <p className="text-2xl font-bold mt-1">{scorecards.length}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {scorecards.length}
+            </p>
           </Card>
         </div>
 
@@ -441,7 +434,9 @@ export default function RiskManagementPage() {
                         key: "score",
                         header: "Score",
                         render: (v: any) => (
-                          <span className="font-semibold">{Number(v)}</span>
+                          <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {Number(v)}
+                          </span>
                         ),
                       },
                       {
@@ -569,7 +564,9 @@ export default function RiskManagementPage() {
                         key: "riskScore",
                         header: "Risk Score",
                         render: (v: any) => (
-                          <span className="font-semibold">{Number(v)}</span>
+                          <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {Number(v)}
+                          </span>
                         ),
                       },
                       {
@@ -626,7 +623,11 @@ export default function RiskManagementPage() {
                     {
                       key: "exposureAmount",
                       header: "Exposure",
-                      render: (v: any) => fmt(Number(v)),
+                      render: (v: any) => (
+                        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                          {fmt(Number(v))}
+                        </span>
+                      ),
                     },
                     {
                       key: "hedged",

@@ -17,9 +17,9 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
-import { ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
+import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import { accountResource, journalResource } from "@/modules/finance";
-import { Card, PageHeader, useToast } from "@kannan19302/ui";
+import { Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
 
 import FinancialPeriodsPage from "../advanced/financial-periods/page";
 import CloseTasksPage from "../advanced/close-tasks/page";
@@ -153,6 +153,8 @@ export default function GLPage() {
   const { error: notifyError } = useToast();
   const [summary, setSummary] = useState<GlSummary>(EMPTY_GL_SUMMARY);
   const [summaryError, setSummaryError] = useState<string | null>(null);
+  const [showCreateAccount, setShowCreateAccount] = useState(false);
+  const [showCreateJournal, setShowCreateJournal] = useState(false);
 
   useEffect(() => {
     if (activeTab !== "overview") return;
@@ -217,7 +219,10 @@ export default function GLPage() {
                 <p className="ui-text-xs-muted">Total Accounts</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-primary)" }}
+                  style={{
+                    color: "var(--color-primary)",
+                    fontVariantNumeric: "tabular-nums lining-nums",
+                  }}
                 >
                   {summary.totalAccounts}
                 </p>
@@ -231,7 +236,10 @@ export default function GLPage() {
                 <p className="ui-text-xs-muted">Journal Entries</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-success)" }}
+                  style={{
+                    color: "var(--color-success)",
+                    fontVariantNumeric: "tabular-nums lining-nums",
+                  }}
                 >
                   {summary.journalCount}
                 </p>
@@ -245,7 +253,10 @@ export default function GLPage() {
                 <p className="ui-text-xs-muted">Open Periods</p>
                 <p
                   className="ui-heading-sm"
-                  style={{ color: "var(--color-warning)" }}
+                  style={{
+                    color: "var(--color-warning)",
+                    fontVariantNumeric: "tabular-nums lining-nums",
+                  }}
                 >
                   {summary.openPeriods}
                 </p>
@@ -283,7 +294,21 @@ export default function GLPage() {
             title="Chart of Accounts"
             description="Manage your full chart of accounts structure"
           />
-          <ListView resource={accountResource} />
+          <ListView
+            resource={accountResource}
+            onCreate={() => setShowCreateAccount(true)}
+          />
+          <Modal
+            open={showCreateAccount}
+            onClose={() => setShowCreateAccount(false)}
+            title="New Account"
+          >
+            <FormView
+              resource={accountResource}
+              onSuccess={() => setShowCreateAccount(false)}
+              onCancel={() => setShowCreateAccount(false)}
+            />
+          </Modal>
         </div>
       )}
       {activeTab === "journal-entries" && (
@@ -292,7 +317,21 @@ export default function GLPage() {
             title="Journal Entries"
             description="Record, approve, and post journal entries to the general ledger"
           />
-          <ListView resource={journalResource} />
+          <ListView
+            resource={journalResource}
+            onCreate={() => setShowCreateJournal(true)}
+          />
+          <Modal
+            open={showCreateJournal}
+            onClose={() => setShowCreateJournal(false)}
+            title="New Journal Entry"
+          >
+            <FormView
+              resource={journalResource}
+              onSuccess={() => setShowCreateJournal(false)}
+              onCancel={() => setShowCreateJournal(false)}
+            />
+          </Modal>
         </div>
       )}
       {activeTab === "financial-periods" && (

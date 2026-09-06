@@ -100,34 +100,36 @@ export default function TaxFilingSummaryPage() {
         {summary && (
           <>
             {/* KPI Cards */}
-            <StatCardRow
-              stats={[
-                {
-                  label: "Total Filings",
-                  value: String(summary.totalFilings),
-                  icon: <FileText size={20} />,
-                  color: "var(--color-primary)",
-                },
-                {
-                  label: "Tax Liability",
-                  value: fmt(summary.totalTaxLiability),
-                  icon: <DollarSign size={20} />,
-                  color: "var(--chart-4)",
-                },
-                {
-                  label: "Tax Paid",
-                  value: fmt(summary.totalTaxPaid),
-                  icon: <CheckCircle2 size={20} />,
-                  color: "var(--chart-2)",
-                },
-                {
-                  label: "Pending Filings",
-                  value: String(summary.pendingFilings),
-                  icon: <AlertCircle size={20} />,
-                  color: "var(--chart-3)",
-                },
-              ]}
-            />
+            <div style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              <StatCardRow
+                stats={[
+                  {
+                    label: "Total Filings",
+                    value: String(summary.totalFilings),
+                    icon: <FileText size={20} />,
+                    color: "var(--color-primary)",
+                  },
+                  {
+                    label: "Tax Liability",
+                    value: fmt(summary.totalTaxLiability),
+                    icon: <DollarSign size={20} />,
+                    color: "var(--chart-4)",
+                  },
+                  {
+                    label: "Tax Paid",
+                    value: fmt(summary.totalTaxPaid),
+                    icon: <CheckCircle2 size={20} />,
+                    color: "var(--chart-2)",
+                  },
+                  {
+                    label: "Pending Filings",
+                    value: String(summary.pendingFilings),
+                    icon: <AlertCircle size={20} />,
+                    color: "var(--chart-3)",
+                  },
+                ]}
+              />
+            </div>
 
             {/* Filings Table */}
             <Card className="ui-card ui-flex-col">

@@ -32,10 +32,12 @@
 
 .s6 {
   color: var(--color-success);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 .s7 {
   color: var(--color-danger);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 .s8 {
@@ -142,6 +144,7 @@
 .kpiValue {
   font-size: var(--text-xl);
   font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums lining-nums;
   margin-top: var(--space-2);
 }
 .kpiIcon {
@@ -150,15 +153,19 @@
 }
 .adjustment {
   color: var(--color-primary);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .adjustmentZero {
   color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .netCash {
   font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .poolBalance {
   font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .cashPositive {
   color: var(--color-success);

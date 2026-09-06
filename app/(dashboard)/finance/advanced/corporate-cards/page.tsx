@@ -47,12 +47,20 @@ export default function CorporateCardsPage() {
     {
       key: "monthlyLimit",
       header: "Monthly Limit",
-      render: (val: any) => `$${Number(val).toLocaleString()}`,
+      render: (val: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(val).toLocaleString()}
+        </span>
+      ),
     },
     {
       key: "currentSpend",
       header: "Current Month Spend",
-      render: (val: any) => `$${Number(val).toLocaleString()}`,
+      render: (val: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(val).toLocaleString()}
+        </span>
+      ),
     },
     {
       key: "status",
@@ -88,7 +96,7 @@ export default function CorporateCardsPage() {
               <p className="ui-text-xs-muted">Total Active Cards</p>
               <p
                 className="ui-heading-sm"
-                style={{ color: "var(--color-primary)" }}
+                style={{ color: "var(--color-primary)", fontVariantNumeric: "tabular-nums lining-nums" }}
               >
                 {cards.length}
               </p>
@@ -104,7 +112,7 @@ export default function CorporateCardsPage() {
               <p className="ui-text-xs-muted">Total Monthly Credit Limit</p>
               <p
                 className="ui-heading-sm"
-                style={{ color: "var(--color-success)" }}
+                style={{ color: "var(--color-success)", fontVariantNumeric: "tabular-nums lining-nums" }}
               >
                 $
                 {cards
@@ -119,7 +127,7 @@ export default function CorporateCardsPage() {
               <p className="ui-text-xs-muted">Current Month Spend</p>
               <p
                 className="ui-heading-sm"
-                style={{ color: "var(--color-warning)" }}
+                style={{ color: "var(--color-warning)", fontVariantNumeric: "tabular-nums lining-nums" }}
               >
                 $
                 {cards

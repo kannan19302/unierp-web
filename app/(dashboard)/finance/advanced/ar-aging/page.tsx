@@ -363,7 +363,13 @@ export default function ARAgingPage() {
                                   key: "amount",
                                   header: "Amount",
                                   render: (v: any) => (
-                                    <span className="font-semibold">
+                                    <span
+                                      className="font-semibold"
+                                      style={{
+                                        fontVariantNumeric:
+                                          "tabular-nums lining-nums",
+                                      }}
+                                    >
                                       {fmt(Number(v))}
                                     </span>
                                   ),

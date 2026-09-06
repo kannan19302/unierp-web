@@ -110,13 +110,6 @@ export default function APMatchRulesPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Payables</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">AP Match Rules</span>
-            </nav>
             <div className="ui-title-section">
               <Settings className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">AP Three-Way Match Rules</h1>
@@ -265,12 +258,28 @@ export default function APMatchRulesPage() {
                   {
                     key: "quantityTolerancePercent",
                     header: "Qty Tolerance",
-                    render: (v: any) => `${Number(v).toFixed(1)}%`,
+                    render: (v: any) => (
+                      <span
+                        style={{
+                          fontVariantNumeric: "tabular-nums lining-nums",
+                        }}
+                      >
+                        {Number(v).toFixed(1)}%
+                      </span>
+                    ),
                   },
                   {
                     key: "priceTolerancePercent",
                     header: "Price Tolerance",
-                    render: (v: any) => `${Number(v).toFixed(1)}%`,
+                    render: (v: any) => (
+                      <span
+                        style={{
+                          fontVariantNumeric: "tabular-nums lining-nums",
+                        }}
+                      >
+                        {Number(v).toFixed(1)}%
+                      </span>
+                    ),
                   },
                   {
                     key: "effectiveDate",

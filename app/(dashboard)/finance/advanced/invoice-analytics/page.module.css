@@ -16,20 +16,24 @@
 }
 .s4 {
   display: block;
+  font-variant-numeric: tabular-nums lining-nums;
   text-align: right;
 }
 .s5 {
   color: var(--color-success);
   display: block;
+  font-variant-numeric: tabular-nums lining-nums;
   text-align: right;
 }
 .s6 {
   color: var(--color-text-secondary);
   display: block;
+  font-variant-numeric: tabular-nums lining-nums;
   text-align: center;
 }
 .s7 {
   display: block;
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-semibold);
   text-align: right;
 }
@@ -51,6 +55,7 @@
 }
 .s11 {
   font-size: var(--text-2xl);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-bold);
   margin-top: var(--space-2);
 }

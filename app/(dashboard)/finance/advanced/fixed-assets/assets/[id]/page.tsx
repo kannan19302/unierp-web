@@ -17,7 +17,7 @@ import {
   User,
   MapPin,
 } from "lucide-react";
-import { Card, Button, ChangeHistory, ProtectedComponent, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
+import { Card, Button, ChangeHistory, ProtectedComponent, ListPageTemplate, type ListColumn, Modal } from "@kannan19302/ui";
 import { apiGet, apiPost } from "@/lib/api";
 
 interface AssetDepreciation {
@@ -98,8 +98,32 @@ export default function FixedAssetDetail() {
 
   // Tabs
   const [activeTab, setActiveTab] = useState<
-    "depreciation" | "transfers" | "maintenance"
+    "depreciation" | "transfers" | "maintenance" | "disposal"
   >("depreciation");
+
+  // Disposal Modal State
+  const [showDisposalModal, setShowDisposalModal] = useState(false);
+  const [disposalForm, setDisposalForm] = useState({
+    disposalDate: new Date().toISOString().split("T")[0],
+    disposalType: "SALE",
+    salePrice: "",
+    reason: "End-of-life asset disposal under ASC 360",
+  });
+  const [disposalSubmitting, setDisposalSubmitting] = useState(false);
+  const [disposalError, setDisposalError] = useState("");
+
+  // Impairment Modal State
+  const [showImpairmentModal, setShowImpairmentModal] = useState(false);
+  const [impairmentForm, setImpairmentForm] = useState({
+    impairmentDate: new Date().toISOString().split("T")[0],
+    recoverableAmount: "",
+    reason: "Fair value reduction / technological obsolescence (IAS 36)",
+  });
+  const [impairmentSubmitting, setImpairmentSubmitting] = useState(false);
+  const [impairmentError, setImpairmentError] = useState("");
+
+  // Disposal & Impairment History
+  const [disposalsHistory, setDisposalsHistory] = useState<any[]>([]);
 
   // Sub-Forms
   const [showTransferForm, setShowTransferForm] = useState(false);
@@ -133,19 +157,62 @@ export default function FixedAssetDetail() {
   const fetchAssetDetails = async () => {
     setLoading(true);
     try {
-      const [assetData, warehousesRes, employeesRes] = await Promise.all([
+      const [assetData, warehousesRes, employeesRes, disposalsRes] = await Promise.all([
         apiGet<FixedAsset>(`/fixed-assets/${id}`),
         apiGet<any>("/inventory/warehouses"),
         apiGet<any>("/hr/employees"),
+        apiGet<any[]>(`/fixed-assets/disposals?assetId=${id}`).catch(() => []),
       ]);
 
       setAsset(assetData);
       setWarehouses(warehousesRes?.data || []);
       setEmployees(employeesRes?.data || []);
+      setDisposalsHistory(Array.isArray(disposalsRes) ? disposalsRes : (disposalsRes as any)?.data || []);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDisposeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setDisposalSubmitting(true);
+    setDisposalError("");
+    try {
+      await apiPost(`/fixed-assets/${id}/dispose`, {
+        disposalDate: disposalForm.disposalDate,
+        disposalType: disposalForm.disposalType,
+        salePrice: disposalForm.salePrice ? parseFloat(disposalForm.salePrice) : undefined,
+        reason: disposalForm.reason,
+        approvedBy: "finance-admin",
+      });
+      setShowDisposalModal(false);
+      fetchAssetDetails();
+    } catch (err: any) {
+      setDisposalError(err.message || "Failed to dispose asset");
+    } finally {
+      setDisposalSubmitting(false);
+    }
+  };
+
+  const handleImpairmentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setImpairmentSubmitting(true);
+    setImpairmentError("");
+    try {
+      await apiPost(`/fixed-assets/${id}/impairment`, {
+        impairmentDate: impairmentForm.impairmentDate,
+        carryingAmount: Number(asset?.currentValue ?? 0),
+        recoverableAmount: parseFloat(impairmentForm.recoverableAmount || "0"),
+        reason: impairmentForm.reason,
+      });
+      setShowImpairmentModal(false);
+      fetchAssetDetails();
+    } catch (err: any) {
+      setImpairmentError(err.message || "Failed to record impairment");
+    } finally {
+      setImpairmentSubmitting(false);
     }
   };
 
@@ -270,6 +337,33 @@ export default function FixedAssetDetail() {
             </p>
           </div>
         </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2">
+          {asset.status === "ACTIVE" && (
+            <>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setShowImpairmentModal(true)}
+              >
+                Record Impairment
+              </Button>
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={() => setShowDisposalModal(true)}
+              >
+                Dispose Asset
+              </Button>
+            </>
+          )}
+          {asset.status === "DISPOSED" && (
+            <span className="px-3 py-1 bg-red-500/10 border border-red-500/30 text-red-700 text-xs font-semibold rounded">
+              Derecognized under ASC 360 / IAS 36
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Asset Valuation Stats */}
@@ -362,6 +456,22 @@ export default function FixedAssetDetail() {
           className={styles.s13}
         >
           Maintenance Logs
+        </button>
+        <button
+          onClick={() => setActiveTab("disposal")}
+          style={{
+            borderBottom:
+              activeTab === "disposal"
+                ? "2px solid var(--color-primary)"
+                : "none",
+            color:
+              activeTab === "disposal"
+                ? "var(--color-primary)"
+                : "var(--color-text-secondary)",
+          }}
+          className={styles.s13}
+        >
+          Disposal &amp; Impairments
         </button>
       </div>
 
@@ -805,13 +915,380 @@ export default function FixedAssetDetail() {
         </div>
       )}
 
+      {/* Disposal & Impairment Tab */}
+      {activeTab === "disposal" && (
+        <div className="ui-stack-4">
+          <div className="ui-flex-between">
+            <h3 className="font-bold">ASC 360 / IAS 36 Derecognition &amp; Valuation Registry</h3>
+            {asset.status === "ACTIVE" && (
+              <div className="flex gap-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setShowImpairmentModal(true)}
+                >
+                  Record Impairment
+                </Button>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => setShowDisposalModal(true)}
+                >
+                  Dispose Asset
+                </Button>
+              </div>
+            )}
+          </div>
+
+          <Card className="p-4">
+            <h4 className="text-xs font-semibold uppercase tracking-wider ui-text-muted mb-3">
+              Historical Disposals &amp; Derecognitions
+            </h4>
+            <ListPageTemplate
+              columns={[
+                {
+                  key: "disposalDate",
+                  header: "Date",
+                  render: (v: any) =>
+                    v ? new Date(String(v)).toLocaleDateString() : "—",
+                },
+                {
+                  key: "disposalType",
+                  header: "Type",
+                  render: (v: any) => (
+                    <span className="px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 dark:bg-gray-800">
+                      {String(v)}
+                    </span>
+                  ),
+                },
+                {
+                  key: "salePrice",
+                  header: "Proceeds",
+                  render: (v: any) => (
+                    <span className={styles.tabularNum}>
+                      {v != null ? `$${Number(v).toFixed(2)}` : "—"}
+                    </span>
+                  ),
+                },
+                {
+                  key: "bookValueAtDisposal",
+                  header: "NBV Derecognized",
+                  render: (v: any) => (
+                    <span className={styles.tabularNum}>
+                      {v != null ? `$${Number(v).toFixed(2)}` : "—"}
+                    </span>
+                  ),
+                },
+                {
+                  key: "gainLoss",
+                  header: "Gain / (Loss)",
+                  render: (v: any) => {
+                    if (v == null) return "—";
+                    const num = Number(v);
+                    const isGain = num >= 0;
+                    return (
+                      <span
+                        className={`${styles.tabularNum} font-semibold ${isGain ? "text-emerald-600" : "text-red-600"}`}
+                      >
+                        {isGain ? `+$${num.toFixed(2)}` : `-$${Math.abs(num).toFixed(2)}`}
+                      </span>
+                    );
+                  },
+                },
+                {
+                  key: "journalId",
+                  header: "GL Journal",
+                  render: (v: any) =>
+                    v ? (
+                      <span className="font-mono text-xs text-blue-600">
+                        {String(v).slice(0, 12)}…
+                      </span>
+                    ) : (
+                      <span className="ui-text-muted text-xs">N/A</span>
+                    ),
+                },
+                {
+                  key: "reason",
+                  header: "Reason / Notes",
+                  render: (v: any) => (
+                    <span className="ui-text-muted text-xs">
+                      {String(v || "—")}
+                    </span>
+                  ),
+                },
+              ]}
+              data={disposalsHistory as unknown as Record<string, unknown>[]}
+              loading={false}
+              emptyTitle="No disposals"
+              emptyDescription="This asset is active and has no derecognition records."
+            />
+          </Card>
+        </div>
+      )}
+
       {/* Change History Timeline */}
       <Card>
         <div className="p-6">
-          <h3 className={styles.s17}>Asset Audit Trail & Edit Timeline</h3>
+          <h3 className={styles.s17}>Asset Audit Trail &amp; Edit Timeline</h3>
           <ChangeHistory entityType="FixedAsset" entityId={id} />
         </div>
       </Card>
+
+      {/* Asset Disposal Modal */}
+      {showDisposalModal && (
+        <Modal
+          open={showDisposalModal}
+          onClose={() => setShowDisposalModal(false)}
+          title={`Dispose Fixed Asset — ${asset.assetCode}`}
+          size="md"
+          footer={
+            <>
+              <Button
+                variant="secondary"
+                onClick={() => setShowDisposalModal(false)}
+                disabled={disposalSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="danger"
+                onClick={handleDisposeSubmit}
+                disabled={disposalSubmitting}
+              >
+                {disposalSubmitting ? "Derecognizing…" : "Confirm Derecognition"}
+              </Button>
+            </>
+          }
+        >
+          <div className="space-y-4">
+            {disposalError && (
+              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded text-sm text-red-600">
+                {disposalError}
+              </div>
+            )}
+            <p className="text-xs ui-text-muted">
+              Derecognize the asset under ASC 360 / IAS 36. This will zero out the net book value, write off accumulated depreciation against cost basis, and automatically post any gain or loss to the general ledger.
+            </p>
+
+            <div className="p-3 bg-[var(--color-surface-subtle)] border border-[var(--color-border)] rounded text-xs grid grid-cols-2 gap-2">
+              <div>
+                <span className="ui-text-muted">Current Carrying Value:</span>
+                <span className={`block font-semibold ${styles.tabularNum}`}>
+                  ${Number(asset.currentValue).toFixed(2)}
+                </span>
+              </div>
+              <div>
+                <span className="ui-text-muted">Original Acquisition Cost:</span>
+                <span className={`block font-semibold ${styles.tabularNum}`}>
+                  ${Number(asset.purchaseValue).toFixed(2)}
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-medium ui-text-primary mb-1">
+                  Disposal Type *
+                </label>
+                <select
+                  className="ui-input w-full text-sm"
+                  value={disposalForm.disposalType}
+                  onChange={(e) =>
+                    setDisposalForm((prev) => ({
+                      ...prev,
+                      disposalType: e.target.value as any,
+                    }))
+                  }
+                >
+                  <option value="SALE">Sale (Third-Party Buyer)</option>
+                  <option value="SCRAP">Scrap / Write-off</option>
+                  <option value="DONATION">Charitable Donation</option>
+                  <option value="THEFT">Casualty / Theft Loss</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium ui-text-primary mb-1">
+                  Disposal / Derecognition Date *
+                </label>
+                <input
+                  type="date"
+                  className="ui-input w-full text-sm"
+                  value={disposalForm.disposalDate}
+                  onChange={(e) =>
+                    setDisposalForm((prev) => ({
+                      ...prev,
+                      disposalDate: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+
+              {disposalForm.disposalType === "SALE" && (
+                <div>
+                  <label className="block text-xs font-medium ui-text-primary mb-1">
+                    Sale Proceeds / Price ($)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    placeholder="0.00"
+                    className="ui-input w-full text-sm"
+                    value={disposalForm.salePrice}
+                    onChange={(e) =>
+                      setDisposalForm((prev) => ({
+                        ...prev,
+                        salePrice: e.target.value,
+                      }))
+                    }
+                  />
+                  {disposalForm.salePrice && (
+                    <p className="text-xs mt-1 ui-text-muted">
+                      Estimated Gain / (Loss):{" "}
+                      <span className={`font-semibold ${styles.tabularNum}`}>
+                        ${(
+                          Number(disposalForm.salePrice) -
+                          Number(asset.currentValue)
+                        ).toFixed(2)}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              )}
+
+              <div>
+                <label className="block text-xs font-medium ui-text-primary mb-1">
+                  Disposal Rationale / Notes
+                </label>
+                <input
+                  type="text"
+                  className="ui-input w-full text-sm"
+                  value={disposalForm.reason}
+                  onChange={(e) =>
+                    setDisposalForm((prev) => ({
+                      ...prev,
+                      reason: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* Asset Impairment Modal */}
+      {showImpairmentModal && (
+        <Modal
+          open={showImpairmentModal}
+          onClose={() => setShowImpairmentModal(false)}
+          title={`Record Asset Impairment (IAS 36 / ASC 360) — ${asset.assetCode}`}
+          size="md"
+          footer={
+            <>
+              <Button
+                variant="secondary"
+                onClick={() => setShowImpairmentModal(false)}
+                disabled={impairmentSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleImpairmentSubmit}
+                disabled={impairmentSubmitting}
+              >
+                {impairmentSubmitting ? "Recording…" : "Post Impairment"}
+              </Button>
+            </>
+          }
+        >
+          <div className="space-y-4">
+            {impairmentError && (
+              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded text-sm text-red-600">
+                {impairmentError}
+              </div>
+            )}
+            <p className="text-xs ui-text-muted">
+              Reduce the asset carrying amount to its recoverable amount (higher of Fair Value less Costs of Disposal and Value in Use). The impairment loss is immediately recognized in profit and loss.
+            </p>
+
+            <div className="p-3 bg-[var(--color-surface-subtle)] border border-[var(--color-border)] rounded text-xs">
+              <span className="ui-text-muted">Current Carrying Amount:</span>
+              <span className={`block font-semibold text-sm ${styles.tabularNum}`}>
+                ${Number(asset.currentValue).toFixed(2)}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-medium ui-text-primary mb-1">
+                  Impairment Assessment Date *
+                </label>
+                <input
+                  type="date"
+                  className="ui-input w-full text-sm"
+                  value={impairmentForm.impairmentDate}
+                  onChange={(e) =>
+                    setImpairmentForm((prev) => ({
+                      ...prev,
+                      impairmentDate: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium ui-text-primary mb-1">
+                  Recoverable Amount ($) *
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  placeholder="e.g. 1500.00"
+                  className="ui-input w-full text-sm"
+                  value={impairmentForm.recoverableAmount}
+                  onChange={(e) =>
+                    setImpairmentForm((prev) => ({
+                      ...prev,
+                      recoverableAmount: e.target.value,
+                    }))
+                  }
+                />
+                {impairmentForm.recoverableAmount && (
+                  <p className="text-xs mt-1 ui-text-muted">
+                    Impairment Loss:{" "}
+                    <span className={`font-semibold text-red-600 ${styles.tabularNum}`}>
+                      ${Math.max(
+                        0,
+                        Number(asset.currentValue) -
+                          Number(impairmentForm.recoverableAmount),
+                      ).toFixed(2)}
+                    </span>
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium ui-text-primary mb-1">
+                  Impairment Indicator / Valuation Rationale
+                </label>
+                <input
+                  type="text"
+                  className="ui-input w-full text-sm"
+                  value={impairmentForm.reason}
+                  onChange={(e) =>
+                    setImpairmentForm((prev) => ({
+                      ...prev,
+                      reason: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

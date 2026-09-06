@@ -205,7 +205,7 @@ export default function BankFeedsConnectionsPage() {
                         <span className="ui-heading-base">{conn.bankName}</span>
                         <span className={styles.s11}>{conn.accountType}</span>
                       </div>
-                      <p className={styles.s12}>
+                      <p className={styles.s12} style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         Account: {conn.accountNumber} • Status:{" "}
                         <span
                           className={`${styles.connectionStatus} ${conn.status === "ACTIVE" ? styles.connectionActive : styles.connectionInactive}`}
@@ -213,7 +213,7 @@ export default function BankFeedsConnectionsPage() {
                           {conn.status}
                         </span>
                       </p>
-                      <p className="ui-text-xs-muted mt-1">
+                      <p className="ui-text-xs-muted mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         Last synced:{" "}
                         {conn.lastSyncedAt
                           ? new Date(conn.lastSyncedAt).toLocaleString()
@@ -244,6 +244,11 @@ export default function BankFeedsConnectionsPage() {
                         </>
                       )}
                     </Button>
+                    <a href={`/finance/advanced/bank-recon`}>
+                      <Button variant="secondary" size="sm">
+                        Reconcile Feed
+                      </Button>
+                    </a>
                     <Button
                       variant="outline"
                       size="sm"

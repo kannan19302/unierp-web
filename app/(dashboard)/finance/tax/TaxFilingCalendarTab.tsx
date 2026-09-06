@@ -43,90 +43,24 @@ export function TaxFilingCalendarTab() {
   const [schedules, setSchedules] = useState<ScheduleItem[]>([]);
   const [reminders, setReminders] = useState<FilingReminder[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchFilingCalendar = async () => {
     setLoading(true);
+    setError(null);
     try {
-      const resData = await client.get<ScheduleItem[]>(
-        "/advanced-finance/tax/filing-calendar",
-      );
-      if (resData) setSchedules(resData);
-      const remData = await client.get<FilingReminder[]>(
-        "/advanced-finance/tax/filing-reminders",
-      );
-      if (remData) setReminders(remData);
-    } catch {
-      setSchedules([
-        {
-          id: "s1",
-          state: "CA",
-          stateName: "California",
-          period: "2026-07",
-          frequency: "MONTHLY",
-          dueDate: "2026-08-30",
-          status: "UPCOMING",
-          estimatedTaxLiability: 14200,
-          penaltyAmount: 0,
-          interestAmount: 0,
-          totalAmountDue: 14200,
-          daysRemaining: 40,
-          isOverdue: false,
-        },
-        {
-          id: "s2",
-          state: "NY",
-          stateName: "New York",
-          period: "2026-Q2",
-          frequency: "QUARTERLY",
-          dueDate: "2026-07-20",
-          status: "DUE_SOON",
-          estimatedTaxLiability: 18500,
-          penaltyAmount: 0,
-          interestAmount: 0,
-          totalAmountDue: 18500,
-          daysRemaining: 2,
-          isOverdue: false,
-        },
-        {
-          id: "s3",
-          state: "TX",
-          stateName: "Texas",
-          period: "2026-06",
-          frequency: "MONTHLY",
-          dueDate: "2026-07-15",
-          status: "OVERDUE",
-          estimatedTaxLiability: 9800,
-          penaltyAmount: 490,
-          interestAmount: 42,
-          totalAmountDue: 10332,
-          daysRemaining: -6,
-          isOverdue: true,
-        },
+      const [resData, remData] = await Promise.all([
+        client.get<ScheduleItem[]>("/advanced-finance/tax/filing-calendar"),
+        client.get<FilingReminder[]>("/advanced-finance/tax/filing-reminders"),
       ]);
-      setReminders([
-        {
-          id: "r1",
-          state: "TX",
-          title: "Texas Sales Tax Return Past Due",
-          message:
-            "PAST DUE: Return was due on 2026-07-15. Estimated penalty: $490",
-          dueDate: "2026-07-15",
-          severity: "CRITICAL",
-          isAcknowledged: false,
-          amountDue: 10332,
-        },
-        {
-          id: "r2",
-          state: "NY",
-          title: "New York Q2 Tax Return Due Soon",
-          message:
-            "Upcoming return due in 2 days on 2026-07-20. Est liability: $18,500",
-          dueDate: "2026-07-20",
-          severity: "HIGH",
-          isAcknowledged: false,
-          amountDue: 18500,
-        },
-      ]);
+      if (Array.isArray(resData)) setSchedules(resData);
+      if (Array.isArray(remData)) setReminders(remData);
+    } catch (err: any) {
+      const msg =
+        err instanceof Error ? err.message : "Failed to load tax filing calendar";
+      setError(msg);
+      setSchedules([]);
+      setReminders([]);
     } finally {
       setLoading(false);
     }
@@ -146,9 +80,7 @@ export function TaxFilingCalendarTab() {
         prev.map((r: any) => (r.id === id ? { ...r, isAcknowledged: true } : r)),
       );
     } catch {
-      setReminders((prev: any) =>
-        prev.map((r: any) => (r.id === id ? { ...r, isAcknowledged: true } : r)),
-      );
+      // Invariant check
     }
   };
 
@@ -159,8 +91,10 @@ export function TaxFilingCalendarTab() {
         {},
       );
       fetchFilingCalendar();
-    } catch {
-      fetchFilingCalendar();
+    } catch (err: any) {
+      const msg =
+        err instanceof Error ? err.message : "Failed to recalculate filing calendar";
+      setError(msg);
     }
   };
 
@@ -183,7 +117,7 @@ export function TaxFilingCalendarTab() {
         <div className="flex items-center gap-2">
           <Calendar className="w-5 h-5 text-primary" />
           <h3 className="text-lg font-semibold">
-            Tax Return Filing Calendar & Penalty Estimator
+            Tax Return Filing Calendar &amp; Penalty Estimator
           </h3>
         </div>
         <Button
@@ -197,6 +131,13 @@ export function TaxFilingCalendarTab() {
           Recalculate Calendar
         </Button>
       </div>
+
+      {error && (
+        <div className="ui-alert ui-alert-danger">
+          <AlertCircle size={16} />
+          <span>{error}</span>
+        </div>
+      )}
 
       {reminders.some(
         (r: any) => !r.isAcknowledged && r.severity === "CRITICAL",
@@ -217,62 +158,81 @@ export function TaxFilingCalendarTab() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {schedules.map((item: any) => (
-          <Card key={item.id} padding="md" className="border">
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-base">
-                {item.stateName} ({item.state})
-              </span>
-              {getStatusBadge(item.status)}
-            </div>
-            <div className="space-y-1 text-xs mb-3 text-muted-foreground">
-              <p>
-                Filing Period:{" "}
-                <span className="font-medium text-foreground">
-                  {item.period}
+      {schedules.length === 0 ? (
+        <Card padding="lg" style={{ textAlign: "center" }}>
+          <p className="ui-text-sm-muted">
+            No tax return filing schedules currently registered. Click &quot;Recalculate Calendar&quot; to synthesize filing deadlines from active nexus jurisdictions.
+          </p>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {schedules.map((item: any) => (
+            <Card key={item.id} padding="md" className="border">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-bold text-base">
+                  {item.stateName} ({item.state})
                 </span>
-              </p>
-              <p>
-                Due Date:{" "}
-                <span className="font-medium text-foreground">
-                  {item.dueDate}
-                </span>
-              </p>
-              <p>
-                Frequency:{" "}
-                <span className="font-medium text-foreground">
-                  {item.frequency}
-                </span>
-              </p>
-            </div>
-            <div className="p-2 rounded bg-muted/30 border text-xs space-y-1">
-              <div className="flex justify-between">
-                <span>Est. Tax Liability:</span>
-                <span className="font-semibold">
-                  ${item.estimatedTaxLiability.toLocaleString()}
-                </span>
+                {getStatusBadge(item.status)}
               </div>
-              {item.penaltyAmount > 0 && (
-                <div className="flex justify-between text-red-500">
-                  <span>Penalty & Interest:</span>
-                  <span className="font-semibold">
-                    +${(item.penaltyAmount + item.interestAmount).toFixed(2)}
+              <div className="space-y-1 text-xs mb-3 text-muted-foreground">
+                <p>
+                  Filing Period:{" "}
+                  <span className="font-medium text-foreground">
+                    {item.period}
+                  </span>
+                </p>
+                <p>
+                  Due Date:{" "}
+                  <span
+                    className="font-medium text-foreground"
+                    style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                  >
+                    {item.dueDate}
+                  </span>
+                </p>
+                <p>
+                  Frequency:{" "}
+                  <span className="font-medium text-foreground">
+                    {item.frequency}
+                  </span>
+                </p>
+              </div>
+              <div className="p-2 rounded bg-muted/30 border text-xs space-y-1">
+                <div className="flex justify-between">
+                  <span>Est. Tax Liability:</span>
+                  <span
+                    className="font-semibold"
+                    style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                  >
+                    ${Number(item.estimatedTaxLiability || 0).toLocaleString()}
                   </span>
                 </div>
-              )}
-              <div className="flex justify-between font-bold border-t pt-1 text-sm text-primary">
-                <span>Total Due:</span>
-                <span>${item.totalAmountDue.toLocaleString()}</span>
+                {item.penaltyAmount > 0 && (
+                  <div className="flex justify-between text-red-500">
+                    <span>Penalty &amp; Interest:</span>
+                    <span
+                      className="font-semibold"
+                      style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                    >
+                      +${(Number(item.penaltyAmount || 0) + Number(item.interestAmount || 0)).toFixed(2)}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between font-bold border-t pt-1 text-sm text-primary">
+                  <span>Total Due:</span>
+                  <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                    ${Number(item.totalAmountDue || 0).toLocaleString()}
+                  </span>
+                </div>
               </div>
-            </div>
-          </Card>
-        ))}
-      </div>
+            </Card>
+          ))}
+        </div>
+      )}
 
       <Card padding="md">
         <h4 className="text-md font-semibold mb-3 flex items-center gap-2">
-          <Clock className="w-4 h-4" /> State Tax Filing Reminders & Alert Queue
+          <Clock className="w-4 h-4" /> State Tax Filing Reminders &amp; Alert Queue
         </h4>
         <DataTable
           data={reminders}
@@ -280,7 +240,16 @@ export function TaxFilingCalendarTab() {
             { key: "state", header: "State", sortable: true },
             { key: "title", header: "Reminder Title" },
             { key: "message", header: "Details" },
-            { key: "dueDate", header: "Due Date", sortable: true },
+            {
+              key: "dueDate",
+              header: "Due Date",
+              sortable: true,
+              render: (row: FilingReminder) => (
+                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                  {row.dueDate}
+                </span>
+              ),
+            },
             {
               key: "severity",
               header: "Severity",

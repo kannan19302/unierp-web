@@ -213,7 +213,12 @@ export default function TaxFilingPage() {
                   key: "periodStart",
                   header: "Period",
                   render: (v: any, row: any) => (
-                    <span className="ui-text-muted">
+                    <span
+                      className="ui-text-muted"
+                      style={{
+                        fontVariantNumeric: "tabular-nums lining-nums",
+                      }}
+                    >
                       {new Date(v as string).toLocaleDateString()} -{" "}
                       {new Date(
                         row["periodEnd"] as string,

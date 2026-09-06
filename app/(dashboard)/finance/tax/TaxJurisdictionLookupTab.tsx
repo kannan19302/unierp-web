@@ -55,12 +55,14 @@ export function TaxJurisdictionLookupTab() {
   );
   const [jurisdictions, setJurisdictions] = useState<JurisdictionItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [lookupError, setLookupError] = useState<string | null>(null);
   const [showOverrideModal, setShowOverrideModal] = useState(false);
   const [overrideState, setOverrideState] = useState("");
   const [overrideThreshold, setOverrideThreshold] = useState("100000");
 
   const handleLookup = async () => {
     setLoading(true);
+    setLookupError(null);
     try {
       const res = await client.post<TaxLookupResult>(
         "/advanced-finance/tax/lookup-rate",
@@ -72,38 +74,13 @@ export function TaxJurisdictionLookupTab() {
         },
       );
       if (res) setLookupResult(res);
-    } catch {
-      const stateRate = state === "CA" ? 6.0 : state === "NY" ? 4.0 : 5.0;
-      const countyRate = 1.25;
-      const cityRate = 1.5;
-      const specRate = 0.75;
-      const effective = stateRate + countyRate + cityRate + specRate;
-      const totalTax = Number(((taxableAmount * effective) / 100).toFixed(2));
-      setLookupResult({
-        country: "US",
-        state,
-        county: "District County",
-        city: "Municipal City",
-        postalCode,
-        taxCategory,
-        taxableAmount,
-        stateRatePct: stateRate,
-        countyRatePct: countyRate,
-        cityRatePct: cityRate,
-        specialDistrictRatePct: specRate,
-        effectiveRatePct: effective,
-        stateTaxAmount: Number(((taxableAmount * stateRate) / 100).toFixed(2)),
-        countyTaxAmount: Number(
-          ((taxableAmount * countyRate) / 100).toFixed(2),
-        ),
-        cityTaxAmount: Number(((taxableAmount * cityRate) / 100).toFixed(2)),
-        specialDistrictTaxAmount: Number(
-          ((taxableAmount * specRate) / 100).toFixed(2),
-        ),
-        totalTaxAmount: totalTax,
-        grandTotal: taxableAmount + totalTax,
-        isOverridden: false,
-      });
+    } catch (err: any) {
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Failed to calculate tax rate for this jurisdiction";
+      setLookupError(msg);
+      setLookupResult(null);
     } finally {
       setLoading(false);
     }
@@ -114,55 +91,9 @@ export function TaxJurisdictionLookupTab() {
       const res = await client.get<JurisdictionItem[]>(
         "/advanced-finance/tax/jurisdictions",
       );
-      if (res) setJurisdictions(res);
+      if (Array.isArray(res)) setJurisdictions(res);
     } catch {
-      setJurisdictions([
-        {
-          id: "j1",
-          country: "US",
-          state: "CA",
-          county: "Los Angeles",
-          city: "Los Angeles",
-          postalCode: "90210",
-          stateRatePct: 6.0,
-          countyRatePct: 1.25,
-          cityRatePct: 1.5,
-          specialDistrictRatePct: 0.75,
-          combinedRatePct: 9.5,
-          hasTenantNexus: true,
-          status: "ACTIVE",
-        },
-        {
-          id: "j2",
-          country: "US",
-          state: "NY",
-          county: "New York",
-          city: "New York City",
-          postalCode: "10001",
-          stateRatePct: 4.0,
-          countyRatePct: 4.5,
-          cityRatePct: 0.0,
-          specialDistrictRatePct: 0.375,
-          combinedRatePct: 8.875,
-          hasTenantNexus: true,
-          status: "ACTIVE",
-        },
-        {
-          id: "j3",
-          country: "US",
-          state: "TX",
-          county: "Harris",
-          city: "Houston",
-          postalCode: "77001",
-          stateRatePct: 6.25,
-          countyRatePct: 1.0,
-          cityRatePct: 1.0,
-          specialDistrictRatePct: 0.0,
-          combinedRatePct: 8.25,
-          hasTenantNexus: false,
-          status: "DEFAULT",
-        },
-      ]);
+      setJurisdictions([]);
     }
   };
 
@@ -261,6 +192,13 @@ export function TaxJurisdictionLookupTab() {
           </div>
         </div>
 
+        {lookupError && (
+          <div className="ui-alert ui-alert-danger mb-4">
+            <Search size={16} />
+            <span>{lookupError}</span>
+          </div>
+        )}
+
         {lookupResult && (
           <div className="p-4 rounded-lg bg-muted/30 border border-border/60">
             <div className="flex items-center justify-between mb-3">
@@ -271,7 +209,10 @@ export function TaxJurisdictionLookupTab() {
               <Badge
                 variant={lookupResult.isOverridden ? "warning" : "success"}
               >
-                Combined Effective Rate: {lookupResult.effectiveRatePct}%
+                Combined Effective Rate:{" "}
+                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                  {lookupResult.effectiveRatePct}%
+                </span>
               </Badge>
             </div>
 
@@ -280,7 +221,10 @@ export function TaxJurisdictionLookupTab() {
                 <p className="text-muted-foreground">
                   State Tax ({lookupResult.stateRatePct}%)
                 </p>
-                <p className="font-bold text-sm">
+                <p
+                  className="font-bold text-sm"
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                >
                   ${lookupResult.stateTaxAmount.toFixed(2)}
                 </p>
               </div>
@@ -288,7 +232,10 @@ export function TaxJurisdictionLookupTab() {
                 <p className="text-muted-foreground">
                   County Tax ({lookupResult.countyRatePct}%)
                 </p>
-                <p className="font-bold text-sm">
+                <p
+                  className="font-bold text-sm"
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                >
                   ${lookupResult.countyTaxAmount.toFixed(2)}
                 </p>
               </div>
@@ -296,7 +243,10 @@ export function TaxJurisdictionLookupTab() {
                 <p className="text-muted-foreground">
                   City Tax ({lookupResult.cityRatePct}%)
                 </p>
-                <p className="font-bold text-sm">
+                <p
+                  className="font-bold text-sm"
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                >
                   ${lookupResult.cityTaxAmount.toFixed(2)}
                 </p>
               </div>
@@ -304,13 +254,19 @@ export function TaxJurisdictionLookupTab() {
                 <p className="text-muted-foreground">
                   Special District ({lookupResult.specialDistrictRatePct}%)
                 </p>
-                <p className="font-bold text-sm">
+                <p
+                  className="font-bold text-sm"
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                >
                   ${lookupResult.specialDistrictTaxAmount.toFixed(2)}
                 </p>
               </div>
               <div className="p-2 border rounded bg-primary/10 border-primary/20">
                 <p className="text-primary font-medium">Total Tax + Grand</p>
-                <p className="font-bold text-sm text-primary">
+                <p
+                  className="font-bold text-sm text-primary"
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                >
                   ${lookupResult.totalTaxAmount.toFixed(2)} / $
                   {lookupResult.grandTotal.toFixed(2)}
                 </p>
@@ -335,7 +291,11 @@ export function TaxJurisdictionLookupTab() {
               key: "combinedRatePct",
               header: "Combined Rate",
               sortable: true,
-              render: (row: JurisdictionItem) => `${row.combinedRatePct}%`,
+              render: (row: JurisdictionItem) => (
+                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                  {row.combinedRatePct}%
+                </span>
+              ),
             },
             {
               key: "hasTenantNexus",

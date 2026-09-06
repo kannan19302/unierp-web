@@ -1,4 +1,17 @@
 .s1 {
   display: block;
   text-align: right;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.tableCellNum {
+  text-align: right;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.resultBox {
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
 }

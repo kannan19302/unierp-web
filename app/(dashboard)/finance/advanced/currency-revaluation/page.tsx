@@ -189,6 +189,7 @@ export default function CurrencyRevaluationPage() {
                 </div>
                 <div
                   className={`text-2xl font-bold mt-2 ${Number(latest.netAdjustment) >= 0 ? "text-green-600" : "text-red-600"}`}
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {latest.baseCurrency} {money(latest.netAdjustment)}
                 </div>
@@ -239,6 +240,7 @@ export default function CurrencyRevaluationPage() {
                     <div className="ui-hstack-4">
                       <span
                         className={`font-semibold ${net >= 0 ? "text-green-600" : "text-red-600"}`}
+                        style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
                       >
                         {net >= 0 ? "+" : ""}
                         {money(r.netAdjustment)}
@@ -272,28 +274,47 @@ export default function CurrencyRevaluationPage() {
                             {
                               key: "foreignAmount",
                               header: "Outstanding",
-                              render: (v: any, row: any) =>
-                                `${String(row.currency)} ${money(Number(v))}`,
+                              render: (v: any, row: any) => (
+                                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                                  {String(row.currency)} {money(Number(v))}
+                                </span>
+                              ),
                             },
                             {
                               key: "bookRate",
                               header: "Book Rate",
-                              render: (v: any) => Number(v).toFixed(4),
+                              render: (v: any) => (
+                                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                                  {Number(v).toFixed(4)}
+                                </span>
+                              ),
                             },
                             {
                               key: "currentRate",
                               header: "Current Rate",
-                              render: (v: any) => Number(v).toFixed(4),
+                              render: (v: any) => (
+                                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                                  {Number(v).toFixed(4)}
+                                </span>
+                              ),
                             },
                             {
                               key: "bookValue",
                               header: "Book Value",
-                              render: (v: any) => money(Number(v)),
+                              render: (v: any) => (
+                                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                                  {money(Number(v))}
+                                </span>
+                              ),
                             },
                             {
                               key: "currentValue",
                               header: "Current Value",
-                              render: (v: any) => money(Number(v)),
+                              render: (v: any) => (
+                                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                                  {money(Number(v))}
+                                </span>
+                              ),
                             },
                             {
                               key: "delta",
@@ -301,6 +322,7 @@ export default function CurrencyRevaluationPage() {
                               render: (v: any) => (
                                 <span
                                   className={`font-semibold ${Number(v) >= 0 ? "text-green-600" : "text-red-600"}`}
+                                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
                                 >
                                   {Number(v) >= 0 ? "+" : ""}
                                   {money(Number(v))}

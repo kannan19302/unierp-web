@@ -754,6 +754,375 @@ export const paymentTermResource = defineResource({
   },
 });
 
+export const fixedAssetResource = defineResource({
+  name: "fixed-assets",
+  labelSingular: "Fixed Asset",
+  labelPlural: "Fixed Assets",
+  endpoint: "/finance/assets",
+  titleField: "name",
+  permissions: {
+    read: "finance.asset.read",
+    create: "finance.asset.create",
+    update: "finance.asset.update",
+    delete: "finance.asset.delete",
+  },
+  status: {
+    field: "status",
+    tones: {
+      ACTIVE: "success",
+      DISPOSED: "danger",
+      FULLY_DEPRECIATED: "neutral",
+      UNDER_MAINTENANCE: "warning",
+    },
+  },
+  fields: [
+    {
+      name: "assetTag",
+      label: "Asset Tag",
+      type: "text",
+      required: true,
+      placeholder: "e.g. FA-2026-001",
+    },
+    {
+      name: "name",
+      label: "Asset Name",
+      type: "text",
+      required: true,
+      placeholder: "e.g. Server Rack Cluster",
+    },
+    {
+      name: "assetClass",
+      label: "Class",
+      type: "select",
+      required: true,
+      options: [
+        { value: "EQUIPMENT", label: "Equipment & Machinery" },
+        { value: "VEHICLES", label: "Vehicles" },
+        { value: "BUILDINGS", label: "Buildings & Real Estate" },
+        { value: "COMPUTER_HARDWARE", label: "Computer Hardware" },
+        { value: "FURNITURE", label: "Furniture & Fixtures" },
+      ],
+    },
+    { name: "purchaseDate", label: "Purchase Date", type: "date", required: true },
+    {
+      name: "cost",
+      label: "Acquisition Cost",
+      type: "currency",
+      required: true,
+      min: 0,
+    },
+    {
+      name: "salvageValue",
+      label: "Salvage Value",
+      type: "currency",
+      defaultValue: 0,
+      min: 0,
+    },
+    {
+      name: "usefulLifeMonths",
+      label: "Useful Life (Months)",
+      type: "number",
+      required: true,
+      defaultValue: 36,
+      min: 1,
+    },
+    {
+      name: "depreciationMethod",
+      label: "Depreciation Method",
+      type: "select",
+      defaultValue: "STRAIGHT_LINE",
+      options: [
+        { value: "STRAIGHT_LINE", label: "Straight Line" },
+        { value: "DECLINING_BALANCE", label: "Double Declining Balance" },
+        { value: "SUM_OF_YEARS", label: "Sum of Years' Digits" },
+      ],
+    },
+    {
+      name: "status",
+      label: "Status",
+      type: "select",
+      defaultValue: "ACTIVE",
+      options: [
+        { value: "ACTIVE", label: "Active" },
+        { value: "UNDER_MAINTENANCE", label: "Under Maintenance" },
+        { value: "FULLY_DEPRECIATED", label: "Fully Depreciated" },
+        { value: "DISPOSED", label: "Disposed" },
+      ],
+    },
+  ],
+  list: {
+    columns: ["assetTag", "name", "assetClass", "purchaseDate", "cost", "status"],
+    searchable: true,
+    pageSize: 15,
+    defaultSort: { field: "purchaseDate", direction: "desc" },
+    filters: ["assetClass", "status"],
+  },
+});
+
+export const financialPeriodResource = defineResource({
+  name: "financial-periods",
+  labelSingular: "Financial Period",
+  labelPlural: "Financial Periods",
+  endpoint: "/finance/financial-periods",
+  titleField: "name",
+  permissions: {
+    read: "finance.period.read",
+    create: "finance.period.create",
+    update: "finance.period.update",
+    delete: "finance.period.delete",
+  },
+  status: {
+    field: "status",
+    tones: {
+      OPEN: "success",
+      CLOSED: "neutral",
+      LOCKED: "danger",
+    },
+  },
+  fields: [
+    {
+      name: "name",
+      label: "Period Name",
+      type: "text",
+      required: true,
+      placeholder: "e.g. 2026-Q1",
+    },
+    {
+      name: "fiscalYear",
+      label: "Fiscal Year",
+      type: "number",
+      required: true,
+      defaultValue: 2026,
+    },
+    { name: "startDate", label: "Start Date", type: "date", required: true },
+    { name: "endDate", label: "End Date", type: "date", required: true },
+    {
+      name: "status",
+      label: "Status",
+      type: "select",
+      defaultValue: "OPEN",
+      options: [
+        { value: "OPEN", label: "Open" },
+        { value: "CLOSED", label: "Closed" },
+        { value: "LOCKED", label: "Locked" },
+      ],
+    },
+  ],
+  list: {
+    columns: ["name", "fiscalYear", "startDate", "endDate", "status"],
+    searchable: true,
+    pageSize: 12,
+    defaultSort: { field: "startDate", direction: "asc" },
+    filters: ["status"],
+  },
+});
+
+export const taxCodeResource = defineResource({
+  name: "tax-codes",
+  labelSingular: "Tax Code",
+  labelPlural: "Tax Codes",
+  endpoint: "/finance/tax/codes",
+  titleField: "name",
+  permissions: {
+    read: "finance.tax.read",
+    create: "finance.tax.create",
+    update: "finance.tax.update",
+    delete: "finance.tax.delete",
+  },
+  fields: [
+    {
+      name: "code",
+      label: "Code",
+      type: "text",
+      required: true,
+      placeholder: "e.g. STANDARD-VAT",
+    },
+    {
+      name: "name",
+      label: "Tax Name",
+      type: "text",
+      required: true,
+      placeholder: "e.g. Standard VAT 20%",
+    },
+    {
+      name: "rate",
+      label: "Tax Rate (%)",
+      type: "number",
+      required: true,
+      defaultValue: 0,
+      min: 0,
+      max: 100,
+    },
+    {
+      name: "jurisdiction",
+      label: "Jurisdiction",
+      type: "text",
+      placeholder: "e.g. US-CA, UK, DE",
+    },
+    {
+      name: "type",
+      label: "Type",
+      type: "select",
+      defaultValue: "SALES",
+      options: [
+        { value: "SALES", label: "Sales Tax" },
+        { value: "VAT", label: "VAT" },
+        { value: "GST", label: "GST" },
+        { value: "WITHHOLDING", label: "Withholding Tax" },
+      ],
+    },
+    { name: "isActive", label: "Active", type: "boolean", defaultValue: true },
+  ],
+  list: {
+    columns: ["code", "name", "rate", "type", "jurisdiction", "isActive"],
+    searchable: true,
+    pageSize: 15,
+    defaultSort: { field: "code", direction: "asc" },
+    filters: ["type"],
+  },
+});
+
+export const paymentBatchResource = defineResource({
+  name: "payment-batches",
+  labelSingular: "Payment Batch",
+  labelPlural: "Payment Batches",
+  endpoint: "/finance/payment-batches",
+  titleField: "batchNumber",
+  permissions: {
+    read: "finance.payment.read",
+    create: "finance.payment.create",
+    update: "finance.payment.update",
+    delete: "finance.payment.delete",
+  },
+  status: {
+    field: "status",
+    tones: {
+      DRAFT: "neutral",
+      PROCESSING: "warning",
+      EXECUTED: "success",
+      FAILED: "danger",
+    },
+  },
+  fields: [
+    {
+      name: "batchNumber",
+      label: "Batch Number",
+      type: "text",
+      readOnly: true,
+      placeholder: "Auto-generated on save",
+    },
+    {
+      name: "paymentMethod",
+      label: "Method",
+      type: "select",
+      defaultValue: "ACH",
+      options: [
+        { value: "ACH", label: "ACH / Direct Deposit" },
+        { value: "WIRE", label: "Wire Transfer" },
+        { value: "CHECK", label: "Check" },
+        { value: "CARD", label: "Virtual Card" },
+      ],
+    },
+    { name: "executionDate", label: "Execution Date", type: "date", required: true },
+    {
+      name: "totalAmount",
+      label: "Total Amount",
+      type: "currency",
+      readOnly: true,
+    },
+    {
+      name: "billCount",
+      label: "Bill Count",
+      type: "number",
+      readOnly: true,
+    },
+    {
+      name: "status",
+      label: "Status",
+      type: "select",
+      defaultValue: "DRAFT",
+      options: [
+        { value: "DRAFT", label: "Draft" },
+        { value: "PROCESSING", label: "Processing" },
+        { value: "EXECUTED", label: "Executed" },
+        { value: "FAILED", label: "Failed" },
+      ],
+    },
+  ],
+  list: {
+    columns: ["batchNumber", "paymentMethod", "executionDate", "totalAmount", "billCount", "status"],
+    searchable: true,
+    pageSize: 10,
+    defaultSort: { field: "executionDate", direction: "desc" },
+    filters: ["status"],
+  },
+});
+
+export const budgetResource = defineResource({
+  name: "budgets",
+  labelSingular: "Budget",
+  labelPlural: "Budgets",
+  endpoint: "/finance/budgets",
+  titleField: "name",
+  permissions: {
+    read: "finance.budget.read",
+    create: "finance.budget.create",
+    update: "finance.budget.update",
+    delete: "finance.budget.delete",
+  },
+  status: {
+    field: "status",
+    tones: {
+      DRAFT: "neutral",
+      ACTIVE: "success",
+      REVISED: "info",
+      ARCHIVED: "neutral",
+    },
+  },
+  fields: [
+    {
+      name: "name",
+      label: "Budget Name",
+      type: "text",
+      required: true,
+      placeholder: "e.g. FY2026 Operating Budget",
+    },
+    {
+      name: "fiscalYear",
+      label: "Fiscal Year",
+      type: "number",
+      required: true,
+      defaultValue: 2026,
+    },
+    {
+      name: "totalAmount",
+      label: "Total Budget",
+      type: "currency",
+      required: true,
+      min: 0,
+    },
+    {
+      name: "status",
+      label: "Status",
+      type: "select",
+      defaultValue: "DRAFT",
+      options: [
+        { value: "DRAFT", label: "Draft" },
+        { value: "ACTIVE", label: "Active" },
+        { value: "REVISED", label: "Revised" },
+        { value: "ARCHIVED", label: "Archived" },
+      ],
+    },
+  ],
+  list: {
+    columns: ["name", "fiscalYear", "totalAmount", "status"],
+    searchable: true,
+    pageSize: 10,
+    defaultSort: { field: "fiscalYear", direction: "desc" },
+    filters: ["status"],
+  },
+});
+
 export const financeModule = defineModule({
   id: "finance",
   title: "Finance",
@@ -762,9 +1131,19 @@ export const financeModule = defineModule({
   resources: [
     invoiceResource,
     paymentResource,
+    creditNoteResource,
+    vendorBillResource,
+    vendorBillPaymentResource,
+    debitNoteResource,
     journalResource,
     accountResource,
     bankAccountResource,
     paymentTermResource,
+    fixedAssetResource,
+    financialPeriodResource,
+    taxCodeResource,
+    paymentBatchResource,
+    budgetResource,
   ],
 });
+

@@ -242,6 +242,7 @@ export default function BankReconMatchingPage() {
                       <div className={styles.s11}>
                         <span
                           className={`${styles.transactionAmount} ${amt > 0 ? styles.amountPositive : styles.amountNegative}`}
+                          style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
                         >
                           {amt > 0 ? "+" : ""}
                           {fmt(amt)}

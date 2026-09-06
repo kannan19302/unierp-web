@@ -22,4 +22,5 @@
 .s5 {
   font-size: var(--text-xl);
   font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums lining-nums;
 }

@@ -6,6 +6,7 @@
 
 .difference {
   font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .differenceBalanced {
   color: var(--color-success);

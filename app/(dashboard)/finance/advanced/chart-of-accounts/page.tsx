@@ -10,7 +10,10 @@ export default function ChartOfAccountsPage() {
 
   return (
     <RouteGuard permission="finance.account.read">
-      <div className="ui-stack-6">
+      <div
+        className="ui-stack-6"
+        style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+      >
         <PageHeader
           title="Chart of Accounts"
           description="Manage general ledger accounts, hierarchy, and financial categories"

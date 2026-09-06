@@ -119,13 +119,6 @@ export default function ScenarioComparisonPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>FP&A</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">Scenario Comparison</span>
-            </nav>
             <div className="ui-title-section">
               <BarChart3 className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Scenario Comparison & Variance</h1>
@@ -209,28 +202,30 @@ export default function ScenarioComparisonPage() {
         {/* Comparison Results Summary */}
         {comparison && (
           <>
-            <StatCardRow
-              stats={[
-                {
-                  label: `Total Baseline (A) — ${comparison.scenarioA.name}`,
-                  value: `$${Number(comparison.summary.totalA).toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
-                  icon: <TrendingUp size={20} />,
-                  color: "#1e40af",
-                },
-                {
-                  label: `Total Comparison (B) — ${comparison.scenarioB.name}`,
-                  value: `$${Number(comparison.summary.totalB).toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
-                  icon: <Layers size={20} />,
-                  color: "#0f766e",
-                },
-                {
-                  label: "Net Scenario Variance",
-                  value: `$${Number(comparison.summary.netVariance).toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
-                  icon: <BarChart3 size={20} />,
-                  color: "var(--color-primary)",
-                },
-              ]}
-            />
+            <div style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              <StatCardRow
+                stats={[
+                  {
+                    label: `Total Baseline (A) — ${comparison.scenarioA.name}`,
+                    value: `$${Number(comparison.summary.totalA).toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
+                    icon: <TrendingUp size={20} />,
+                    color: "var(--color-primary)",
+                  },
+                  {
+                    label: `Total Comparison (B) — ${comparison.scenarioB.name}`,
+                    value: `$${Number(comparison.summary.totalB).toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
+                    icon: <Layers size={20} />,
+                    color: "var(--color-success)",
+                  },
+                  {
+                    label: "Net Scenario Variance",
+                    value: `$${Number(comparison.summary.netVariance).toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
+                    icon: <BarChart3 size={20} />,
+                    color: "var(--color-accent, var(--color-primary))",
+                  },
+                ]}
+              />
+            </div>
 
             {/* Comparison Table */}
             <Card className="ui-list-card">

@@ -6,10 +6,12 @@
 .s2 {
   display: block;
   font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums lining-nums;
   text-align: right;
 }
 .s3 {
   display: block;
   font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums lining-nums;
   text-align: right;
 }

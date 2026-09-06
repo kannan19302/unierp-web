@@ -50,6 +50,7 @@
 }
 .s11 {
   font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .s12 {
   border-radius: 9999px;

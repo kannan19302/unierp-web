@@ -141,7 +141,12 @@ export default function ConsolidationV2Page() {
     if (!groupForm.groupName) return;
     setActionLoading(true);
     try {
-      await client.post("/advanced-finance/consolidation-v2/groups", groupForm);
+      await client.post("/advanced-finance/consolidation-v2/groups", {
+        name: groupForm.groupName,
+        baseCurrency: groupForm.currency,
+        consolidationMethod: "FULL",
+        description: groupForm.parentEntity || "Corporate Consolidation Group",
+      });
       setSuccess("Consolidation group created.");
       setShowGroupForm(false);
       setGroupForm({ groupName: "", parentEntity: "", currency: "USD" });
@@ -170,7 +175,11 @@ export default function ConsolidationV2Page() {
     if (!runForm.groupId || !runForm.period) return;
     setActionLoading(true);
     try {
-      await client.post("/advanced-finance/consolidation-v2/runs", runForm);
+      await client.post("/advanced-finance/consolidation-v2/runs", {
+        groupId: runForm.groupId,
+        periodId: runForm.period,
+        notes: "Automated multi-GAAP consolidation run",
+      });
       setSuccess("Consolidation run executed.");
       setShowRunForm(false);
       setRunForm({ groupId: "", period: "" });
@@ -188,7 +197,14 @@ export default function ConsolidationV2Page() {
     try {
       await client.post(
         "/advanced-finance/consolidation-v2/elimination-rules",
-        elimForm,
+        {
+          name: elimForm.ruleName,
+          ruleType: elimForm.accountType,
+          groupId: groups[0]?.id || "default",
+          sourceAccount: elimForm.fromEntity,
+          targetAccount: elimForm.toEntity,
+          description: "Automated elimination rule",
+        },
       );
       setSuccess("Elimination rule created.");
       setShowElimForm(false);
@@ -240,15 +256,6 @@ export default function ConsolidationV2Page() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">
-                Multi-GAAP Consolidation
-              </span>
-            </nav>
             <div className="ui-title-section">
               <GitMerge className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Multi-GAAP Consolidation</h1>

@@ -143,7 +143,10 @@ export default function BankReconciliationPage() {
                 className={styles.s2}
               />
             </div>
-            <span className="ui-text-xs-muted">
+            <span
+              className="ui-text-xs-muted"
+              style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+            >
               {row.matchedCount}/{row.totalTransactions}
             </span>
           </div>
@@ -249,7 +252,10 @@ export default function BankReconciliationPage() {
           }
         />
 
-        <div className="ui-grid-auto">
+        <div
+          className="ui-grid-auto"
+          style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+        >
           <KPICard
             title="Matched"
             value={fmtCurrency(matchedTotal)}

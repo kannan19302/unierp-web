@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   BarChart3,
   TrendingUp,
@@ -69,6 +69,7 @@ const REPORTS_TABS = [
 ];
 
 export default function FinanceReportsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
 
@@ -88,46 +89,52 @@ export default function FinanceReportsPage() {
               padding="md"
               className="ui-hstack-3"
               style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/finance/reports?tab=balance-sheet");
+              }}
             >
               <Scale size={24} className="ui-text-primary" />
               <div>
                 <h3 className="ui-heading-sm">Balance Sheet</h3>
-                <p className="ui-text-xs-muted">As of Jul 20, 2026</p>
+                <p className="ui-text-xs-muted">Assets, Liabilities & Equity</p>
               </div>
             </Card>
             <Card
               padding="md"
               className="ui-hstack-3"
               style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/finance/reports?tab=profit-loss");
+              }}
             >
               <TrendingUp size={24} className="ui-text-success" />
               <div>
                 <h3 className="ui-heading-sm">Profit & Loss</h3>
-                <p className="ui-text-xs-muted">Q2 2026 vs Q1 2026</p>
+                <p className="ui-text-xs-muted">Revenue & Expenses Statement</p>
               </div>
             </Card>
           </div>
-          <ReportsPage />
+          <ReportsPage initialReport="pnl" />
         </div>
       )}
       {activeTab === "balance-sheet" && (
         <div className="ui-stack-4 ui-animate-in">
-          <ReportsPage />
+          <ReportsPage initialReport="balance-sheet" />
         </div>
       )}
       {activeTab === "profit-loss" && (
         <div className="ui-stack-4 ui-animate-in">
-          <ReportsPage />
+          <ReportsPage initialReport="pnl" />
         </div>
       )}
       {activeTab === "cash-flow" && (
         <div className="ui-stack-4 ui-animate-in">
-          <ReportsPage />
+          <ReportsPage initialReport="cash-flow" />
         </div>
       )}
       {activeTab === "trial-balance" && (
         <div className="ui-stack-4 ui-animate-in">
-          <ReportsPage />
+          <ReportsPage initialReport="trial-balance" />
         </div>
       )}
       {activeTab === "financial-ratios" && (
@@ -137,7 +144,7 @@ export default function FinanceReportsPage() {
       )}
       {activeTab === "custom-reports" && (
         <div className="ui-stack-4 ui-animate-in">
-          <ReportsPage />
+          <ReportsPage initialReport="pnl" />
         </div>
       )}
     </RouteGuard>

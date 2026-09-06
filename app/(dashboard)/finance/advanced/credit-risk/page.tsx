@@ -49,7 +49,7 @@ const RISK_COLORS: Record<string, { bg: string; color: string }> = {
   LOW: { bg: "rgba(34,197,94,0.1)", color: "var(--color-success-hover)" },
   MEDIUM: { bg: "rgba(245,158,11,0.1)", color: "var(--color-warning-hover)" },
   HIGH: { bg: "rgba(239,68,68,0.1)", color: "var(--color-danger-hover)" },
-  CRITICAL: { bg: "rgba(127,29,29,0.12)", color: "#7f1d1d" },
+  CRITICAL: { bg: "rgba(127,29,29,0.12)", color: "var(--color-danger-active, var(--color-danger-hover))" },
 };
 
 export default function CreditRiskPage() {
@@ -295,13 +295,24 @@ export default function CreditRiskPage() {
                     key: "creditLimit",
                     header: "Credit Limit",
                     render: (v: any) =>
-                      v !== null && v !== undefined ? fmt(Number(v)) : "—",
+                      v !== null && v !== undefined ? (
+                        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                          {fmt(Number(v))}
+                        </span>
+                      ) : (
+                        "—"
+                      ),
                   },
                   {
                     key: "outstanding",
                     header: "Outstanding",
                     render: (v: any) => (
-                      <span className="font-semibold">{fmt(Number(v))}</span>
+                      <span
+                        className="font-semibold"
+                        style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                      >
+                        {fmt(Number(v))}
+                      </span>
                     ),
                   },
                   {

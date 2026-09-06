@@ -8,6 +8,9 @@ import {
   ShieldCheck,
   Loader2,
   AlertTriangle,
+  Layers,
+  CheckCircle2,
+  RefreshCw,
 } from "lucide-react";
 import { Card, Button, ListPageTemplate, type ListColumn, useToast } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
@@ -35,12 +38,50 @@ interface TreasuryTransaction {
   status: string;
 }
 
+interface CashPool {
+  id: string;
+  name: string;
+  poolType: string;
+  targetBalance: number | string;
+  headerAccountId: string;
+  isActive: boolean;
+}
+
+interface SweepSimulation {
+  poolId: string;
+  poolName: string;
+  poolType: string;
+  targetBalance: number;
+  headerAccountId: string;
+  headerAccountName: string;
+  currentHeaderBalance: number;
+  projectedHeaderBalance: number;
+  totalSweptUp: number;
+  totalFundedDown: number;
+  netMobilized: number;
+  participants: Array<{
+    bankAccountId: string;
+    bankName: string;
+    accountNumber: string;
+    currentBalance: number;
+    targetBalance: number;
+    variance: number;
+    action: "SWEEP_TO_HEADER" | "FUND_FROM_HEADER" | "SQUARE";
+    transferAmount: number;
+  }>;
+}
+
 export default function TreasuryPage() {
   const client = useApiClient();
   const { error: notifyError } = useToast();
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [transactions, setTransactions] = useState<TreasuryTransaction[]>([]);
   const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
+  const [cashPools, setCashPools] = useState<CashPool[]>([]);
+  const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
+  const [sweepSim, setSweepSim] = useState<SweepSimulation | null>(null);
+  const [simLoading, setSimLoading] = useState(false);
+  const [executingSweep, setExecutingSweep] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -65,16 +106,23 @@ export default function TreasuryPage() {
 
   const fetchData = async () => {
     try {
-      const [portRes, transRes, bankRes] = await Promise.all([
+      const [portRes, transRes, bankRes, poolsRes] = await Promise.all([
         client.get<Portfolio[]>("/advanced-finance/investment-portfolios"),
         client.get<TreasuryTransaction[]>(
           "/advanced-finance/treasury-transactions",
         ),
         client.get<BankAccount[]>("/advanced-finance/bank-accounts"),
+        client.get<CashPool[]>("/advanced-finance/cash-pools").catch(() => []),
       ]);
-      setPortfolios(portRes);
-      setTransactions(transRes);
-      setBankAccounts(bankRes);
+      setPortfolios(portRes || []);
+      setTransactions(transRes || []);
+      setBankAccounts(bankRes || []);
+      const pools = Array.isArray(poolsRes) ? poolsRes : [];
+      setCashPools(pools);
+      if (pools.length > 0 && !selectedPoolId) {
+        setSelectedPoolId(pools[0].id);
+        runSimulation(pools[0].id);
+      }
       setLoadError(null);
     } catch (err) {
       const message =
@@ -83,6 +131,33 @@ export default function TreasuryPage() {
       notifyError("Failed to load treasury data", message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const runSimulation = async (poolId: string) => {
+    setSimLoading(true);
+    try {
+      const res = await client.get<SweepSimulation>(
+        `/advanced-finance/cash-pools/${poolId}/simulate-sweep`,
+      );
+      setSweepSim(res);
+    } catch {
+      setSweepSim(null);
+    } finally {
+      setSimLoading(false);
+    }
+  };
+
+  const handleExecuteSweep = async (poolId: string) => {
+    setExecutingSweep(true);
+    try {
+      await client.post(`/advanced-finance/cash-pools/${poolId}/sweep`, {});
+      await fetchData();
+      await runSimulation(poolId);
+    } catch (err: any) {
+      notifyError("Failed to execute sweep", err?.message);
+    } finally {
+      setExecutingSweep(false);
     }
   };
 
@@ -141,6 +216,15 @@ export default function TreasuryPage() {
       );
     }
   };
+
+  const totalInvestments = portfolios.reduce(
+    (sum, p) => sum + Number(p.currentValue || 0),
+    0,
+  );
+  const totalOperatingCash = transactions
+    .filter((t) => t.status === "SETTLED" || t.status === "POSTED")
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+  const totalCashPosition = totalOperatingCash + totalInvestments;
 
   if (loading)
     return (
@@ -413,7 +497,7 @@ export default function TreasuryPage() {
                     key: "yieldRate",
                     header: "Yield Rate",
                     render: (v: any) => (
-                      <span className="font-medium">
+                      <span className="font-medium" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         +{Number(v).toFixed(2)}%
                       </span>
                     ),
@@ -422,7 +506,7 @@ export default function TreasuryPage() {
                     key: "currentValue",
                     header: "Current Value",
                     render: (v: any) => (
-                      <span className={styles.s5}>
+                      <span className={styles.s5} style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         ${Number(v).toLocaleString()}
                       </span>
                     ),
@@ -438,6 +522,191 @@ export default function TreasuryPage() {
                   />
                 );
               })()}
+            </Card>
+
+            {/* ZBA Cash Concentration Simulator */}
+            <Card className="border-primary/20">
+              <div className={styles.s2}>
+                <div className="ui-flex-between w-full">
+                  <div className="ui-hstack-3">
+                    <div className={`p-2.5 bg-indigo-100 dark:bg-indigo-900/30 ${styles.s3}`}>
+                      <Layers className={`text-indigo-700 dark:text-indigo-400 ${styles.s4}`} />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">Zero-Balance Account (ZBA) Cash Concentration</h3>
+                      <p className="ui-text-xs-muted">
+                        Simulate multi-subsidiary liquidity pooling and execute automated concentration sweeps.
+                      </p>
+                    </div>
+                  </div>
+                  {cashPools.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <select
+                        className="ui-input py-1 px-2 text-xs"
+                        value={selectedPoolId || ""}
+                        onChange={(e) => {
+                          setSelectedPoolId(e.target.value);
+                          runSimulation(e.target.value);
+                        }}
+                      >
+                        {cashPools.map((p) => (
+                          <option key={p.id} value={p.id}>
+                            {p.name} ({p.poolType})
+                          </option>
+                        ))}
+                      </select>
+                      {selectedPoolId && (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => runSimulation(selectedPoolId)}
+                          disabled={simLoading}
+                        >
+                          <RefreshCw size={12} className={simLoading ? "animate-spin" : ""} />
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="p-4">
+                {simLoading ? (
+                  <div className="ui-flex-center py-8">
+                    <Loader2 size={24} className="animate-spin text-[var(--color-brand)]" />
+                  </div>
+                ) : !sweepSim ? (
+                  <div className="text-center py-6 text-[var(--color-text-secondary)]">
+                    <Layers size={32} className="mx-auto mb-2 opacity-40" />
+                    <p className="text-sm font-medium">No Cash Pool Selected or Available</p>
+                    <p className="text-xs mt-1">Configure cash pools in Bank Setup to enable automated concentration sweeps.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {/* Header summary */}
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 rounded border border-[var(--color-border)] bg-[var(--color-surface-subtle)]">
+                      <div>
+                        <span className="ui-text-xs-muted">Concentration Header</span>
+                        <p className="font-semibold text-xs text-[var(--color-text-primary)]">
+                          {sweepSim.headerAccountName}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="ui-text-xs-muted">Current Balance</span>
+                        <p
+                          className="font-semibold text-xs text-[var(--color-text-primary)]"
+                          style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                        >
+                          ${sweepSim.currentHeaderBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="ui-text-xs-muted">Net Mobilized</span>
+                        <p
+                          className={`font-semibold text-xs ${sweepSim.netMobilized >= 0 ? "text-green-600" : "text-yellow-600"}`}
+                          style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                        >
+                          {sweepSim.netMobilized >= 0 ? "+" : ""}${sweepSim.netMobilized.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
+                      </div>
+                      <div>
+                        <span className="ui-text-xs-muted">Projected Post-Sweep</span>
+                        <p
+                          className="font-bold text-xs text-[var(--color-brand)]"
+                          style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                        >
+                          ${sweepSim.projectedHeaderBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Participant Accounts Table */}
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="border-b border-[var(--color-border)] text-left text-[var(--color-text-secondary)]">
+                            <th className="pb-2">Participant Account</th>
+                            <th className="pb-2 text-right">Live Balance</th>
+                            <th className="pb-2 text-right">Target Threshold</th>
+                            <th className="pb-2 text-center">Action</th>
+                            <th className="pb-2 text-right">Transfer Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[var(--color-border)]">
+                          {sweepSim.participants.length === 0 ? (
+                            <tr>
+                              <td colSpan={5} className="py-4 text-center text-[var(--color-text-secondary)]">
+                                No participant accounts linked to this cash pool.
+                              </td>
+                            </tr>
+                          ) : (
+                            sweepSim.participants.map((p) => (
+                              <tr key={p.bankAccountId}>
+                                <td className="py-2">
+                                  <span className="font-medium text-[var(--color-text-primary)]">{p.bankName}</span>
+                                  <span className="ui-text-xs-muted ml-2 font-mono">···{p.accountNumber.slice(-4)}</span>
+                                </td>
+                                <td
+                                  className="py-2 text-right text-[var(--color-text-secondary)]"
+                                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                                >
+                                  ${p.currentBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                </td>
+                                <td
+                                  className="py-2 text-right text-[var(--color-text-secondary)]"
+                                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                                >
+                                  ${p.targetBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                </td>
+                                <td className="py-2 text-center">
+                                  <span
+                                    className={`ui-badge ${
+                                      p.action === "SWEEP_TO_HEADER"
+                                        ? "ui-badge-green"
+                                        : p.action === "FUND_FROM_HEADER"
+                                          ? "ui-badge-yellow"
+                                          : "ui-badge-gray"
+                                    }`}
+                                  >
+                                    {p.action === "SWEEP_TO_HEADER"
+                                      ? "Sweep Up"
+                                      : p.action === "FUND_FROM_HEADER"
+                                        ? "Fund Down"
+                                        : "Square"}
+                                  </span>
+                                </td>
+                                <td
+                                  className="py-2 text-right font-semibold text-[var(--color-text-primary)]"
+                                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                                >
+                                  ${p.transferAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                                </td>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {sweepSim.participants.length > 0 && (
+                      <div className="flex justify-end pt-2">
+                        <Button
+                          size="sm"
+                          onClick={() => handleExecuteSweep(sweepSim.poolId)}
+                          disabled={executingSweep || sweepSim.totalSweptUp === 0}
+                        >
+                          {executingSweep ? (
+                            <Loader2 size={14} className="animate-spin mr-1" />
+                          ) : (
+                            <CheckCircle2 size={14} className="mr-1" />
+                          )}
+                          Execute Concentration Sweep
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
             </Card>
 
             <Card className="border-primary/20">
@@ -475,8 +744,11 @@ export default function TreasuryPage() {
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold">
-                            ${Number(tx.amount).toLocaleString()}
+                          <p
+                            className="font-bold"
+                            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                          >
+                            ${Number(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                           </p>
                           <p className={styles.s9}>{tx.status}</p>
                         </div>
@@ -493,7 +765,12 @@ export default function TreasuryPage() {
             <Card className={styles.s10}>
               <div className={styles.s11}>
                 <h3 className={styles.s12}>Total Cash Position</h3>
-                <p className={styles.s13}>$0.00</p>
+                <p
+                  className={styles.s13}
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                >
+                  ${totalCashPosition.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                </p>
                 <div className={styles.s14}>
                   <ShieldCheck className="h-4 w-4 text-green-500" />
                   Sufficient liquidity for next 30 days
@@ -503,7 +780,12 @@ export default function TreasuryPage() {
                 <div>
                   <div className={styles.s15}>
                     <span className="ui-text-muted">Operating Cash</span>
-                    <span className="font-medium">$0.00</span>
+                    <span
+                      className="font-medium"
+                      style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                    >
+                      ${totalOperatingCash.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    </span>
                   </div>
                   <div className={styles.s16}>
                     <div className={styles.s17}></div>
@@ -512,7 +794,12 @@ export default function TreasuryPage() {
                 <div>
                   <div className={styles.s15}>
                     <span className="ui-text-muted">Short-term Inv.</span>
-                    <span className="font-medium">$0.00</span>
+                    <span
+                      className="font-medium"
+                      style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                    >
+                      ${totalInvestments.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    </span>
                   </div>
                   <div className={styles.s16}>
                     <div className={styles.s17}></div>

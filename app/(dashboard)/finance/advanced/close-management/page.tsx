@@ -240,15 +240,6 @@ export default function CloseManagementPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">
-                Advanced Close Management
-              </span>
-            </nav>
             <div className="ui-title-section">
               <ClipboardList className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Advanced Close Management</h1>
@@ -277,7 +268,10 @@ export default function CloseManagementPage() {
         )}
 
         {analytics && (
-          <div className="ui-grid-3 mb-4">
+          <div
+            className="ui-grid-3 mb-4"
+            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+          >
             <Card className="ui-card p-4">
               <h3 className="text-xs text-gray-500 uppercase font-semibold">
                 Avg Close Days
@@ -816,7 +810,10 @@ export default function CloseManagementPage() {
                   analytics...
                 </div>
               ) : analytics ? (
-                <div className="ui-grid-3">
+                <div
+                  className="ui-grid-3"
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                >
                   <div className="p-4 bg-blue-50 rounded-lg text-center">
                     <p className="text-3xl font-bold text-blue-700">
                       {analytics.avgCloseDays.toFixed(1)}

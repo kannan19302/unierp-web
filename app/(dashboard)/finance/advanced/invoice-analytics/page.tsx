@@ -122,34 +122,36 @@ export default function InvoiceAnalyticsPage() {
         {data && (
           <>
             {/* KPI Dashboard */}
-            <StatCardRow
-              stats={[
-                {
-                  label: "Total Invoiced",
-                  value: fmt(data.totalInvoiced),
-                  icon: <DollarSign size={20} />,
-                  color: "var(--color-primary)",
-                },
-                {
-                  label: "Total Collected",
-                  value: fmt(data.totalCollected),
-                  icon: <CheckCircle2 size={20} />,
-                  color: "var(--chart-2)",
-                },
-                {
-                  label: "Collection Rate",
-                  value: `${collectedRatio.toFixed(1)}%`,
-                  icon: <TrendingUp size={20} />,
-                  color: "var(--chart-3)",
-                },
-                {
-                  label: "Avg Days to Pay",
-                  value: `${data.avgDaysToPay} days`,
-                  icon: <Clock size={20} />,
-                  color: "var(--color-primary)",
-                },
-              ]}
-            />
+            <div style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              <StatCardRow
+                stats={[
+                  {
+                    label: "Total Invoiced",
+                    value: fmt(data.totalInvoiced),
+                    icon: <DollarSign size={20} />,
+                    color: "var(--color-primary)",
+                  },
+                  {
+                    label: "Total Collected",
+                    value: fmt(data.totalCollected),
+                    icon: <CheckCircle2 size={20} />,
+                    color: "var(--chart-2)",
+                  },
+                  {
+                    label: "Collection Rate",
+                    value: `${collectedRatio.toFixed(1)}%`,
+                    icon: <TrendingUp size={20} />,
+                    color: "var(--chart-3)",
+                  },
+                  {
+                    label: "Avg Days to Pay",
+                    value: `${data.avgDaysToPay} days`,
+                    icon: <Clock size={20} />,
+                    color: "var(--color-primary)",
+                  },
+                ]}
+              />
+            </div>
 
             <div className={`ui-grid-2 ${styles.s2}`}>
               {/* Monthly Trend Table */}

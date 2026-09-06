@@ -268,13 +268,6 @@ export default function CloseTasksPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Close Process</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">Continuous Close</span>
-            </nav>
             <div className="ui-title-section">
               <ClipboardList className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Continuous Close Automation</h1>
@@ -327,10 +320,10 @@ export default function CloseTasksPage() {
                 Checklist Progress
               </h3>
               <div className="flex items-end gap-2 mt-2">
-                <span className="text-3xl font-bold">
+                <span className="text-3xl font-bold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                   {stats.completionPercent}%
                 </span>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-500" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                   ({tasks.filter((t: any) => t.status === "DONE").length} of{" "}
                   {stats.totalTasks} complete)
                 </span>
@@ -350,6 +343,7 @@ export default function CloseTasksPage() {
               <div className="flex items-end justify-between mt-2">
                 <span
                   className={`text-3xl font-bold ${stats.overdueTasks > 0 ? "text-red-600" : "text-green-600"}`}
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {stats.overdueTasks}
                 </span>
@@ -367,6 +361,7 @@ export default function CloseTasksPage() {
               <div className="flex items-end justify-between mt-2">
                 <span
                   className={`text-3xl font-bold ${stats.criticalFlags > 0 ? "text-red-600" : "text-amber-600"}`}
+                  style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
                 >
                   {stats.openVarianceFlags}
                 </span>
@@ -703,12 +698,28 @@ export default function CloseTasksPage() {
                       {
                         key: "priorAmount",
                         header: "Prior Bal",
-                        render: (v: any) => `$${Number(v).toLocaleString()}`,
+                        render: (v: any) => (
+                          <span
+                            style={{
+                              fontVariantNumeric: "tabular-nums lining-nums",
+                            }}
+                          >
+                            ${Number(v).toLocaleString()}
+                          </span>
+                        ),
                       },
                       {
                         key: "currentAmount",
                         header: "Current Bal",
-                        render: (v: any) => `$${Number(v).toLocaleString()}`,
+                        render: (v: any) => (
+                          <span
+                            style={{
+                              fontVariantNumeric: "tabular-nums lining-nums",
+                            }}
+                          >
+                            ${Number(v).toLocaleString()}
+                          </span>
+                        ),
                       },
                       {
                         key: "varianceAmount",
@@ -716,6 +727,9 @@ export default function CloseTasksPage() {
                         render: (v: any) => (
                           <span
                             className={`font-semibold ${Number(v) < 0 ? "text-red-600" : "text-green-600"}`}
+                            style={{
+                              fontVariantNumeric: "tabular-nums lining-nums",
+                            }}
                           >
                             ${Number(v).toLocaleString()}
                           </span>
@@ -725,7 +739,12 @@ export default function CloseTasksPage() {
                         key: "variancePercent",
                         header: "Deviation (%)",
                         render: (v: any) => (
-                          <span className="font-semibold text-red-600">
+                          <span
+                            className="font-semibold text-red-600"
+                            style={{
+                              fontVariantNumeric: "tabular-nums lining-nums",
+                            }}
+                          >
                             {Number(v).toFixed(1)}%
                           </span>
                         ),

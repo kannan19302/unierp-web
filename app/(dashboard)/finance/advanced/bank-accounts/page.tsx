@@ -10,7 +10,10 @@ export default function BankAccountsPage() {
 
   return (
     <RouteGuard permission="finance.bankaccount.read">
-      <div className="ui-stack-6">
+      <div
+        className="ui-stack-6"
+        style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+      >
         <PageHeader
           title="Bank Accounts"
           description="Manage treasury, bank accounts, and corporate cash ledger"

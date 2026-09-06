@@ -91,12 +91,14 @@
   font-size: var(--text-sm);
   font-weight: bold;
   margin-top: var(--space-1);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .balanceDueValue {
   font-size: var(--text-sm);
   font-weight: bold;
   margin-top: var(--space-1);
   color: var(--color-primary);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .tabsRow {
   display: flex;
@@ -147,6 +149,7 @@
   padding: var(--space-3) var(--space-2);
   text-align: right;
   font-weight: bold;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .totalsPanel {
   display: flex;
@@ -155,6 +158,7 @@
   align-items: flex-end;
   margin-top: var(--space-4);
   padding-right: var(--space-4);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .totalsPanel strong {
   color: var(--color-text);
@@ -165,6 +169,7 @@
   border-top: 1px solid var(--color-border);
   padding-top: var(--space-2);
   margin-top: var(--space-1);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .infoCard {
   display: flex;
@@ -201,6 +206,7 @@
 .infoListItemValue {
   font-size: var(--text-sm);
   font-weight: bold;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .matchBanner {
   padding: var(--space-4);

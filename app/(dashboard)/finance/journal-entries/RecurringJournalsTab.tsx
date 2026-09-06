@@ -47,55 +47,37 @@ export function RecurringJournalsTab() {
   );
   const [lines, setLines] = useState<JournalLine[]>([
     {
-      accountId: "acc-6000",
-      accountCode: "6000",
-      accountName: "Rent Expense",
-      debit: 2500,
+      accountId: "",
+      accountCode: "1000",
+      accountName: "Operating Account",
+      debit: 0,
       credit: 0,
-      description: "Monthly office rent",
+      description: "",
     },
     {
-      accountId: "acc-1000",
-      accountCode: "1000",
-      accountName: "Operating Cash",
+      accountId: "",
+      accountCode: "6000",
+      accountName: "Operating Expense",
       debit: 0,
-      credit: 2500,
-      description: "Monthly office rent",
+      credit: 0,
+      description: "",
     },
   ]);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchTemplates = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await client.get<RecurringTemplate[]>(
         "/advanced-finance/recurring-journals/templates",
       );
-      if (data) setTemplates(data);
-    } catch {
-      setTemplates([
-        {
-          id: "rj-1",
-          name: "Monthly Office Rent",
-          frequency: "MONTHLY",
-          status: "ACTIVE",
-          nextRunDate: "2026-08-01",
-          lastRunDate: "2026-07-01",
-          linesCount: 2,
-          totalAmount: 2500,
-          isBalanced: true,
-        },
-        {
-          id: "rj-2",
-          name: "Quarterly Equipment Amortization",
-          frequency: "QUARTERLY",
-          status: "ACTIVE",
-          nextRunDate: "2026-10-01",
-          lastRunDate: "2026-07-01",
-          linesCount: 2,
-          totalAmount: 4800,
-          isBalanced: true,
-        },
-      ]);
+      if (Array.isArray(data)) setTemplates(data);
+    } catch (err: any) {
+      const msg =
+        err instanceof Error ? err.message : "Failed to load recurring templates";
+      setError(msg);
+      setTemplates([]);
     } finally {
       setLoading(false);
     }
@@ -182,12 +164,23 @@ export function RecurringJournalsTab() {
         </div>
       </div>
 
+      {error && (
+        <div className="ui-alert ui-alert-danger mb-4">
+          <span>{error}</span>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card padding="md">
           <p className="text-xs text-muted-foreground">
             Active Recurring Templates
           </p>
-          <p className="text-2xl font-bold text-primary">{templates.length}</p>
+          <p
+            className="text-2xl font-bold text-primary"
+            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+          >
+            {templates.length}
+          </p>
           <p className="text-xs text-muted-foreground mt-1">
             Automated GL schedule entries
           </p>
@@ -196,8 +189,11 @@ export function RecurringJournalsTab() {
           <p className="text-xs text-muted-foreground">
             Next Scheduled Execution
           </p>
-          <p className="text-2xl font-bold text-amber-500">
-            {templates.find((t: any) => t.nextRunDate)?.nextRunDate || "2026-08-01"}
+          <p
+            className="text-2xl font-bold text-amber-500"
+            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+          >
+            {templates.find((t: any) => t.nextRunDate)?.nextRunDate || "—"}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
             Auto-post enabled
@@ -207,10 +203,13 @@ export function RecurringJournalsTab() {
           <p className="text-xs text-muted-foreground">
             Monthly Automated Volume
           </p>
-          <p className="text-2xl font-bold text-emerald-500">
+          <p
+            className="text-2xl font-bold text-emerald-500"
+            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+          >
             $
             {templates
-              .reduce((acc: any, t: any) => acc + t.totalAmount, 0)
+              .reduce((acc: any, t: any) => acc + (Number(t.totalAmount) || 0), 0)
               .toLocaleString()}
           </p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -232,10 +231,22 @@ export function RecurringJournalsTab() {
               key: "totalAmount",
               header: "Amount ($)",
               sortable: true,
-              render: (row: RecurringTemplate) =>
-                `$${row.totalAmount.toLocaleString()}`,
+              render: (row: RecurringTemplate) => (
+                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                  ${Number(row.totalAmount || 0).toLocaleString()}
+                </span>
+              ),
             },
-            { key: "nextRunDate", header: "Next Run Date", sortable: true },
+            {
+              key: "nextRunDate",
+              header: "Next Run Date",
+              sortable: true,
+              render: (row: RecurringTemplate) => (
+                <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                  {row.nextRunDate || "—"}
+                </span>
+              ),
+            },
             { key: "lastRunDate", header: "Last Run Date" },
             {
               key: "isBalanced",

@@ -1,0 +1,37 @@
+.tabularNum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.tableCellNum {
+  text-align: right;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.sliderContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sliderTrack {
+  width: 100%;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.scenarioChip {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.scenarioChipActive {
+  border-color: var(--color-primary);
+  background: var(--color-surface-elevated);
+  color: var(--color-primary);
+}

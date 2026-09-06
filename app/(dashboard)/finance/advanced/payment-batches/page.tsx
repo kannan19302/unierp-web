@@ -12,6 +12,10 @@ import {
   CheckCircle,
   Clock,
   AlertTriangle,
+  FileCode,
+  ShieldCheck,
+  Copy,
+  Check,
 } from "lucide-react";
 import { Card, Button, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
@@ -37,6 +41,15 @@ interface PaymentBatch {
   submittedAt: string | null;
   lines: PaymentBatchLine[];
   _count?: { lines: number };
+}
+
+interface IsoModalData {
+  xml: string;
+  sha256Hash: string;
+  messageId: string;
+  controlSum: number;
+  paymentCount: number;
+  filename: string;
 }
 
 const STATUS_ICON: Record<string, React.ReactNode> = {
@@ -75,6 +88,11 @@ export default function PaymentBatchesPage() {
     amount: "",
     scheduledPaymentDate: new Date().toISOString().slice(0, 10),
   });
+
+  const [isoModalData, setIsoModalData] = useState<IsoModalData | null>(null);
+  const [isoLoading, setIsoLoading] = useState(false);
+  const [copiedHash, setCopiedHash] = useState(false);
+  const [copiedXml, setCopiedXml] = useState(false);
 
   const fetchBatches = useCallback(async () => {
     setLoading(true);
@@ -187,6 +205,31 @@ export default function PaymentBatchesPage() {
     URL.revokeObjectURL(url);
   };
 
+  const exportIso20022 = async (batchId: string) => {
+    setIsoLoading(true);
+    setError("");
+    try {
+      const data = await client.get<IsoModalData>(
+        `/advanced-finance/payables/payment-batches/${batchId}/export-iso20022`,
+      );
+      setIsoModalData(data);
+    } catch {
+      setError("Failed to generate ISO 20022 pain.001 XML");
+    } finally {
+      setIsoLoading(false);
+    }
+  };
+
+  const downloadIsoXml = (xml: string, filename: string) => {
+    const blob = new Blob([xml], { type: "application/xml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const totalDraft = batches
     .filter((b: any) => b.status === "DRAFT" || b.status === "READY")
     .reduce((sum: any, b: any) => sum + Number(b.totalAmount), 0);
@@ -196,13 +239,6 @@ export default function PaymentBatchesPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Payables</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">Payment Batches</span>
-            </nav>
             <div className="ui-title-section">
               <CreditCard className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">Vendor Payment Runs</h1>
@@ -244,7 +280,7 @@ export default function PaymentBatchesPage() {
             <div className="ui-stat-label">Draft</div>
           </Card>
           <Card className="ui-stat-card">
-            <div className="ui-stat-value">
+            <div className="ui-stat-value" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               $
               {totalDraft.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -368,7 +404,7 @@ export default function PaymentBatchesPage() {
                     </div>
                     <div className="ui-list-row-meta">
                       <span>{batch.paymentMethod}</span>
-                      <span className="font-semibold">
+                      <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                         {batch.currency}{" "}
                         {Number(batch.totalAmount).toLocaleString(undefined, {
                           minimumFractionDigits: 2,
@@ -429,6 +465,18 @@ export default function PaymentBatchesPage() {
                     }
                   >
                     <Download size={14} className="mr-1" /> Export
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => exportIso20022(selectedBatch.id)}
+                    disabled={isoLoading}
+                  >
+                    {isoLoading ? (
+                      <Loader2 size={14} className="animate-spin mr-1" />
+                    ) : (
+                      <FileCode size={14} className="mr-1" />
+                    )}
+                    ISO 20022 XML
                   </Button>
                 </div>
               </div>
@@ -508,7 +556,7 @@ export default function PaymentBatchesPage() {
                       key: "amount",
                       header: "Amount",
                       render: (v: any) => (
-                        <span className="font-semibold">
+                        <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                           $
                           {Number(v).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
@@ -560,6 +608,119 @@ export default function PaymentBatchesPage() {
             </Card>
           )}
         </div>
+        {isoModalData && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div
+              className="border border-[var(--color-border)] rounded-lg shadow-xl max-w-3xl w-full flex flex-col max-h-[90vh] overflow-hidden"
+              style={{ backgroundColor: "var(--color-surface)" }}
+            >
+              <div className="flex items-center justify-between p-4 border-b border-[var(--color-border)]">
+                <div className="flex items-center gap-2">
+                  <FileCode size={18} className="text-[var(--color-brand)]" />
+                  <div>
+                    <h3 className="font-semibold text-base text-[var(--color-text-primary)]">
+                      ISO 20022 pain.001.001.03 XML Export
+                    </h3>
+                    <p className="text-xs text-[var(--color-text-secondary)]">
+                      Customer Credit Transfer Initiation • {isoModalData.filename}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] text-lg px-2"
+                  onClick={() => setIsoModalData(null)}
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="p-4 space-y-4 overflow-y-auto flex-1">
+                <div className="grid grid-cols-3 gap-3 p-3 bg-[var(--color-surface-subtle)] border border-[var(--color-border)] rounded">
+                  <div>
+                    <div className="text-xs text-[var(--color-text-secondary)]">Message ID</div>
+                    <div className="font-mono text-xs font-semibold text-[var(--color-text-primary)]">
+                      {isoModalData.messageId}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[var(--color-text-secondary)]">Control Sum</div>
+                    <div
+                      className="font-mono text-xs font-semibold text-[var(--color-text-primary)]"
+                      style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                    >
+                      ${Number(isoModalData.controlSum).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-[var(--color-text-secondary)]">Payment Count</div>
+                    <div
+                      className="font-mono text-xs font-semibold text-[var(--color-text-primary)]"
+                      style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                    >
+                      {isoModalData.paymentCount} transaction(s)
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-[var(--color-surface-subtle)] border border-[var(--color-border)] rounded flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck size={16} className="text-green-500" />
+                    <div>
+                      <div className="text-xs font-semibold text-[var(--color-text-primary)]">
+                        SHA-256 Integrity Hash (Tamper-Proof Checksum)
+                      </div>
+                      <div className="font-mono text-xs text-[var(--color-text-secondary)] break-all select-all">
+                        {isoModalData.sha256Hash}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="p-1.5 hover:bg-[var(--color-border)] rounded text-xs flex items-center gap-1 text-[var(--color-text-secondary)]"
+                    onClick={() => {
+                      navigator.clipboard.writeText(isoModalData.sha256Hash);
+                      setCopiedHash(true);
+                      setTimeout(() => setCopiedHash(false), 2000);
+                    }}
+                  >
+                    {copiedHash ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                    <span className="text-xs">{copiedHash ? "Copied" : "Copy"}</span>
+                  </button>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-semibold text-[var(--color-text-secondary)]">
+                      pain.001.001.03 XML Payload
+                    </span>
+                    <button
+                      className="text-xs text-[var(--color-brand)] flex items-center gap-1 hover:underline"
+                      onClick={() => {
+                        navigator.clipboard.writeText(isoModalData.xml);
+                        setCopiedXml(true);
+                        setTimeout(() => setCopiedXml(false), 2000);
+                      }}
+                    >
+                      {copiedXml ? <Check size={12} className="text-green-500" /> : <Copy size={12} />}
+                      {copiedXml ? "Copied XML" : "Copy XML"}
+                    </button>
+                  </div>
+                  <pre className="p-3 rounded border border-[var(--color-border)] bg-[var(--color-surface-sunken)] font-mono text-xs text-[var(--color-text-primary)] max-h-60 overflow-y-auto whitespace-pre-wrap">
+                    {isoModalData.xml}
+                  </pre>
+                </div>
+              </div>
+
+              <div className="p-4 border-t border-[var(--color-border)] flex items-center justify-end gap-2">
+                <Button variant="secondary" onClick={() => setIsoModalData(null)}>
+                  Close
+                </Button>
+                <Button onClick={() => downloadIsoXml(isoModalData.xml, isoModalData.filename)}>
+                  <Download size={14} className="mr-1" /> Download {isoModalData.filename}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </RouteGuard>
   );

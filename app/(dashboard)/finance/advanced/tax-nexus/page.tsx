@@ -178,27 +178,41 @@ export default function EconomicNexusMonitoringPage() {
       key: "totalRevenue",
       header: "TTM Revenue",
       sortable: true,
-      render: (s: any) =>
-        `$${Number(s.totalRevenue).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
+      render: (s: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(s.totalRevenue).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        </span>
+      ),
     },
     {
       key: "revenueThreshold",
       header: "Threshold",
-      render: (s: any) => `$${Number(s.revenueThreshold).toLocaleString("en-US")}`,
+      render: (s: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          ${Number(s.revenueThreshold).toLocaleString("en-US")}
+        </span>
+      ),
     },
     {
       key: "revenuePct",
       header: "% of Threshold",
       sortable: true,
-      render: (s: any) => `${Number(s.revenuePct).toFixed(1)}%`,
+      render: (s: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {Number(s.revenuePct).toFixed(1)}%
+        </span>
+      ),
     },
     {
       key: "transactionCount",
       header: "Transactions",
-      render: (s: any) =>
-        s.transactionThreshold
-          ? `${s.transactionCount} / ${s.transactionThreshold}`
-          : String(s.transactionCount),
+      render: (s: any) => (
+        <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+          {s.transactionThreshold
+            ? `${s.transactionCount} / ${s.transactionThreshold}`
+            : String(s.transactionCount)}
+        </span>
+      ),
     },
     {
       key: "status",
@@ -326,31 +340,31 @@ export default function EconomicNexusMonitoringPage() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <Card className="p-4">
             <p className="text-xs ui-text-muted">States Monitored</p>
-            <p className="text-2xl font-bold ui-text-primary">
+            <p className="text-2xl font-bold ui-text-primary" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {dashboard.totalStatesMonitored}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-xs ui-text-muted">Exceeded (Action Needed)</p>
-            <p className="text-2xl font-bold text-red-600">
+            <p className="text-2xl font-bold text-red-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {dashboard.exceededCount}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-xs ui-text-muted">Approaching</p>
-            <p className="text-2xl font-bold text-amber-600">
+            <p className="text-2xl font-bold text-amber-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {dashboard.approachingCount}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-xs ui-text-muted">Registered</p>
-            <p className="text-2xl font-bold text-green-600">
+            <p className="text-2xl font-bold text-green-600" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {dashboard.registeredCount}
             </p>
           </Card>
           <Card className="p-4">
             <p className="text-xs ui-text-muted">TTM Revenue Tracked</p>
-            <p className="text-2xl font-bold ui-text-primary">
+            <p className="text-2xl font-bold ui-text-primary" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               $
               {dashboard.totalRevenue.toLocaleString("en-US", {
                 minimumFractionDigits: 0,

@@ -375,7 +375,10 @@ export default function AllocationsPage() {
                               {cc && ` (CC: ${cc.name})`}
                               {dept && ` (Dept: ${dept.name})`}
                             </span>
-                            <span className="font-semibold">
+                            <span
+                              className="font-semibold"
+                              style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                            >
                               {rule.allocationType === "STATIC_PCT"
                                 ? `${t.percentage}%`
                                 : "Dynamic Ratio"}
@@ -456,7 +459,10 @@ export default function AllocationsPage() {
                   key: "allocatedAmount",
                   header: "Allocated Amount",
                   render: (v: any) => (
-                    <span className="font-semibold">
+                    <span
+                      className="font-semibold"
+                      style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                    >
                       $
                       {Number(v).toLocaleString("en-US", {
                         minimumFractionDigits: 2,

@@ -102,52 +102,15 @@ export default function InvoiceDetailPage() {
           setMatchReport(null);
         }
       }
-    } catch {
-      setError("Could not load data. Please try again.");
-
-      setInvoice({
-        id: invoiceId,
-        invoiceNumber: "INV-2026-001",
-        status: "PARTIALLY_PAID",
-        issueDate: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
-        dueDate: new Date(Date.now() + 15 * 24 * 3600 * 1000).toISOString(),
-        customerId: "cust-1",
-        customerName: "Acme Corp",
-        subtotal: 10000,
-        taxAmount: 1000,
-        discountAmount: 500,
-        totalAmount: 10500,
-        paidAmount: 5000,
-        currency: "USD",
-        notes: "Net 30 payment terms.",
-        purchaseOrderId: "po-1",
-        lineItems: [
-          {
-            id: "li-1",
-            description: "Consulting Services - Q3",
-            quantity: 40,
-            unitPrice: 200,
-            totalAmount: 8000,
-          },
-          {
-            id: "li-2",
-            description: "Software License - Annual",
-            quantity: 2,
-            unitPrice: 1000,
-            totalAmount: 2000,
-          },
-        ],
-      });
-
-      setPayments([
-        {
-          id: "pay-1",
-          amount: 5000,
-          method: "Bank Transfer",
-          paidAt: new Date(Date.now() - 10 * 24 * 3600 * 1000).toISOString(),
-          reference: "TRX-001",
-        },
-      ]);
+    } catch (err: any) {
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Could not load invoice data. Please verify the invoice ID.";
+      setError(msg);
+      setInvoice(null);
+      setPayments([]);
+      setMatchReport(null);
     } finally {
       setLoading(false);
     }

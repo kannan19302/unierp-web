@@ -63,6 +63,7 @@
 }
 .s14 {
   color: var(--color-primary);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-medium);
 }
 .s15 {
@@ -120,12 +121,14 @@
 }
 .s23 {
   color: var(--color-primary);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-semibold);
 }
 .s24 {
   border-top: 2px solid var(--color-border);
   display: flex;
   font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums lining-nums;
   font-weight: var(--weight-bold);
   justify-content: space-between;
   margin-top: var(--space-1);

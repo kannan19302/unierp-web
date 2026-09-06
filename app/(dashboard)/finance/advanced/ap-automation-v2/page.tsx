@@ -149,9 +149,12 @@ export default function ApAutomationV2Page() {
     setActionLoading(true);
     try {
       await client.post("/advanced-finance/ap-automation/capture-batches", {
-        ...batchForm,
-        invoiceCount: parseInt(batchForm.invoiceCount),
+        batchNumber: batchForm.batchName,
+        source: "MANUAL_UPLOAD",
+        documentCount: parseInt(batchForm.invoiceCount) || 1,
         totalAmount: parseFloat(batchForm.totalAmount || "0"),
+        currency: "USD",
+        notes: "Automated AP capture batch",
       });
       setSuccess("Capture batch created.");
       setShowBatchForm(false);
@@ -195,9 +198,13 @@ export default function ApAutomationV2Page() {
     setActionLoading(true);
     try {
       await client.post("/advanced-finance/ap-automation/match-rules", {
-        ...matchRuleForm,
-        tolerance: parseFloat(matchRuleForm.tolerance),
-        priority: parseInt(matchRuleForm.priority),
+        name: matchRuleForm.ruleName,
+        description: "Automated invoice 3-way matching rule",
+        matchType: matchRuleForm.matchType,
+        matchCriteria: { field: "unitPrice", tolerancePct: parseFloat(matchRuleForm.tolerance) || 5 },
+        tolerancePercent: parseFloat(matchRuleForm.tolerance) || 5,
+        priority: parseInt(matchRuleForm.priority) || 1,
+        isActive: true,
       });
       setSuccess("Match rule created.");
       setShowMatchRuleForm(false);
@@ -219,9 +226,14 @@ export default function ApAutomationV2Page() {
     if (!approvalRuleForm.ruleName) return;
     setActionLoading(true);
     try {
-      await client.post("/advanced-finance/ap-automation/approval-rules", {
-        ...approvalRuleForm,
-        threshold: parseFloat(approvalRuleForm.threshold),
+      await client.post("/advanced-finance/ap-automation/approval-routing-rules", {
+        name: approvalRuleForm.ruleName,
+        description: "Invoice threshold approval rule",
+        triggerEvent: "INVOICE_SUBMITTED",
+        conditions: { condition: approvalRuleForm.condition, threshold: parseFloat(approvalRuleForm.threshold) || 10000 },
+        approverIds: [approvalRuleForm.approver || "finance-approver"],
+        priority: 1,
+        isActive: true,
       });
       setSuccess("Approval rule created.");
       setShowApprovalRuleForm(false);
@@ -258,7 +270,7 @@ export default function ApAutomationV2Page() {
         `/advanced-finance/ap-automation/payment-optimizations/${id}/execute`,
         {},
       );
-      setSuccess("Optimization executed.");
+      setSuccess("Payment optimization executed.");
       fetchData();
     } catch {
       setError("Failed to execute optimization.");
@@ -275,13 +287,6 @@ export default function ApAutomationV2Page() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">AP Automation</span>
-            </nav>
             <div className="ui-title-section">
               <ShoppingCart className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">AP Automation</h1>

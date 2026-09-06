@@ -309,15 +309,6 @@ export default function EsgAccountingPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">
-                ESG & Sustainability Accounting
-              </span>
-            </nav>
             <div className="ui-title-section">
               <Leaf className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">ESG & Sustainability Accounting</h1>
@@ -350,19 +341,23 @@ export default function EsgAccountingPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Total Emissions (tCO2e)
             </h3>
-            <p className="text-2xl font-bold mt-1">{fmtNum(totalEmissions)}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {fmtNum(totalEmissions)}
+            </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Offset Credits
             </h3>
-            <p className="text-2xl font-bold mt-1">{fmtNum(totalOffsets)}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {fmtNum(totalOffsets)}
+            </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Active Targets
             </h3>
-            <p className="text-2xl font-bold mt-1">
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
               {targets.filter((t: any) => t.status === "ACTIVE").length}
             </p>
           </Card>
@@ -517,7 +512,10 @@ export default function EsgAccountingPage() {
                         key: "tons",
                         header: "tCO2e",
                         render: (v: any) => (
-                          <span className="font-semibold">
+                          <span
+                            className="font-semibold"
+                            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                          >
                             {fmtNum(Number(v))}
                           </span>
                         ),
@@ -570,7 +568,11 @@ export default function EsgAccountingPage() {
                       {
                         key: "credits",
                         header: "Credits",
-                        render: (v: any) => fmtNum(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmtNum(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "vintage",
@@ -802,7 +804,11 @@ export default function EsgAccountingPage() {
                       {
                         key: "targetValue",
                         header: "Target",
-                        render: (v: any) => fmtNum(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmtNum(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "category",
@@ -845,7 +851,10 @@ export default function EsgAccountingPage() {
                         key: "value",
                         header: "Value",
                         render: (v: any) => (
-                          <span className="font-semibold">
+                          <span
+                            className="font-semibold"
+                            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+                          >
                             {fmtNum(Number(v))}
                           </span>
                         ),
@@ -1182,12 +1191,20 @@ export default function EsgAccountingPage() {
                       {
                         key: "baselineValue",
                         header: "Baseline",
-                        render: (v: any) => fmtNum(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmtNum(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "targetValue",
                         header: "Target",
-                        render: (v: any) => fmtNum(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmtNum(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "category",

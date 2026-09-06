@@ -142,10 +142,15 @@ function KpiCard({
         <div className="flex items-baseline gap-1">
           <span
             className="text-2xl font-bold ui-truncate"
-            style={{ color: "var(--color-text)", letterSpacing: "-0.02em" }}
+            style={{
+              color: "var(--color-text)",
+              letterSpacing: "-0.02em",
+              fontVariantNumeric: "tabular-nums lining-nums",
+            }}
           >
             {value}
           </span>
+
           {trend === "up" && (
             <ArrowUpRight size={14} className="ui-text-success" />
           )}

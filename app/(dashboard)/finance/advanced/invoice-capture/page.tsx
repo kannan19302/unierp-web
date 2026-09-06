@@ -604,7 +604,12 @@ export default function InvoiceCapturePage() {
                     key: "totalAmount",
                     header: "Total Amount",
                     render: (v: any, row: any) => (
-                      <span className="font-semibold text-gray-900">
+                      <span
+                        className="font-semibold text-gray-900"
+                        style={{
+                          fontVariantNumeric: "tabular-nums lining-nums",
+                        }}
+                      >
                         {v
                           ? `$${Number(v).toLocaleString(undefined, { minimumFractionDigits: 2 })}`
                           : "N/A"}{" "}
@@ -631,7 +636,12 @@ export default function InvoiceCapturePage() {
                               style={{ width: `${confidenceNum}%` }}
                             ></div>
                           </div>
-                          <span className="font-semibold text-gray-700 text-[10px]">
+                          <span
+                            className="font-semibold text-gray-700 text-[10px]"
+                            style={{
+                              fontVariantNumeric: "tabular-nums lining-nums",
+                            }}
+                          >
                             {confidenceNum.toFixed(0)}%
                           </span>
                         </div>
@@ -963,7 +973,13 @@ export default function InvoiceCapturePage() {
                               <span className="text-gray-400 font-medium block">
                                 Line Total
                               </span>
-                              <span className="font-bold text-gray-800 block mt-1.5">
+                              <span
+                                className="font-bold text-gray-800 block mt-1.5"
+                                style={{
+                                  fontVariantNumeric:
+                                    "tabular-nums lining-nums",
+                                }}
+                              >
                                 ${(line.quantity * line.unitPrice).toFixed(2)}
                               </span>
                             </div>

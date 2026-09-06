@@ -1,6 +1,7 @@
 "use client";
 import styles from "./page.module.css";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   BarChart3,
   PieChart,
@@ -74,13 +75,38 @@ const reportMeta: Record<
   },
 };
 
-export default function AdvancedReportsPage() {
+export default function AdvancedReportsPage({
+  initialReport,
+}: {
+  initialReport?: ReportType;
+} = {}) {
   const client = useApiClient();
+  const searchParams = useSearchParams();
+  const paramTab = searchParams?.get("tab");
+  const resolvedInitial: ReportType =
+    initialReport ??
+    (paramTab === "balance-sheet"
+      ? "balance-sheet"
+      : paramTab === "profit-loss" || paramTab === "pnl"
+        ? "pnl"
+        : paramTab === "cash-flow"
+          ? "cash-flow"
+          : paramTab === "trial-balance"
+            ? "trial-balance"
+            : paramTab === "aging"
+              ? "aging"
+              : "pnl");
   const { error: notifyError } = useToast();
-  const [activeReport, setActiveReport] = useState<ReportType>("pnl");
+  const [activeReport, setActiveReport] = useState<ReportType>(resolvedInitial);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reportData, setReportData] = useState<ReportResponse | null>(null);
+
+  useEffect(() => {
+    if (initialReport && initialReport !== activeReport) {
+      setActiveReport(initialReport);
+    }
+  }, [initialReport]);
 
   // Date/Filter state
   const [startDate, setStartDate] = useState("2026-01-01");
@@ -94,7 +120,7 @@ export default function AdvancedReportsPage() {
   const [booksError, setBooksError] = useState<string | null>(null);
 
   // Fetch accounting books for filtering
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchBooks = async () => {
       try {
         setBooks(
@@ -134,7 +160,7 @@ export default function AdvancedReportsPage() {
     }
   }, [activeReport, startDate, endDate, asOfDate, agingType, bookId]);
 
-  const generateReport = async () => {
+  const generateReport = useCallback(async () => {
     setLoading(true);
     setError(null);
     setReportData(null);
@@ -151,7 +177,12 @@ export default function AdvancedReportsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [buildUrl, client]);
+
+  useEffect(() => {
+    generateReport();
+  }, [generateReport]);
+
 
   const handleExportCSV = () => {
     if (!reportData) return;

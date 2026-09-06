@@ -269,15 +269,6 @@ export default function TaxProvisioningPage() {
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
-            <nav className="ui-breadcrumb">
-              <span>Finance</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span>Advanced</span>
-              <span className="ui-breadcrumb-sep">/</span>
-              <span className="ui-breadcrumb-current">
-                ASC 740 Tax Provisioning
-              </span>
-            </nav>
             <div className="ui-title-section">
               <Calculator className="ui-title-icon" size={20} />
               <h1 className="ui-page-title">ASC 740 Tax Provisioning</h1>
@@ -310,19 +301,25 @@ export default function TaxProvisioningPage() {
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Total Provision
             </h3>
-            <p className="text-2xl font-bold mt-1">{fmt(totalProvision)}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {fmt(totalProvision)}
+            </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Deferred Schedules
             </h3>
-            <p className="text-2xl font-bold mt-1">{schedules.length}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {schedules.length}
+            </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
               Uncertain Positions
             </h3>
-            <p className="text-2xl font-bold mt-1">{positions.length}</p>
+            <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+              {positions.length}
+            </p>
           </Card>
         </div>
 
@@ -452,7 +449,11 @@ export default function TaxProvisioningPage() {
                       {
                         key: "totalProvision",
                         header: "Provision",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "status",
@@ -612,18 +613,26 @@ export default function TaxProvisioningPage() {
                       {
                         key: "temporaryDifference",
                         header: "Temp Difference",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "taxRate",
                         header: "Rate %",
-                        render: (v: any) => `${Number(v).toFixed(1)}%`,
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {Number(v).toFixed(1)}%
+                          </span>
+                        ),
                       },
                       {
                         key: "deferredTax",
                         header: "Deferred Tax",
                         render: (v: any) => (
-                          <span className="font-semibold">
+                          <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                             {fmt(Number(v))}
                           </span>
                         ),
@@ -764,12 +773,20 @@ export default function TaxProvisioningPage() {
                       {
                         key: "exposureAmount",
                         header: "Exposure",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "probabilityOfSuccess",
                         header: "Success %",
-                        render: (v: any) => `${Number(v)}%`,
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {Number(v)}%
+                          </span>
+                        ),
                       },
                       {
                         key: "status",
@@ -912,13 +929,17 @@ export default function TaxProvisioningPage() {
                       {
                         key: "deferredTaxAsset",
                         header: "DTA",
-                        render: (v: any) => fmt(Number(v)),
+                        render: (v: any) => (
+                          <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                            {fmt(Number(v))}
+                          </span>
+                        ),
                       },
                       {
                         key: "allowanceAmount",
                         header: "Allowance",
                         render: (v: any) => (
-                          <span className="font-semibold">
+                          <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                             {fmt(Number(v))}
                           </span>
                         ),
