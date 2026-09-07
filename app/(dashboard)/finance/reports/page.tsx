@@ -10,11 +10,18 @@ import {
   FileText,
 } from "lucide-react";
 
+import dynamic from "next/dynamic";
 import { RouteGuard } from "@kannan19302/framework";
-import { Card } from "@kannan19302/ui";
+import { Card, Spinner, Button } from "@kannan19302/ui";
 
-import ReportsPage from "../advanced/reports/page";
-import FinancialRatiosPage from "../advanced/financial-ratios/page";
+const ReportsPage = dynamic(() => import("../advanced/reports/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const FinancialRatiosPage = dynamic(() => import("../advanced/financial-ratios/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 
 const REPORTS_TABS = [
   {
@@ -77,12 +84,44 @@ export default function FinanceReportsPage() {
     <RouteGuard permission="finance.report.read">
       {activeTab === "overview" && (
         <div className="ui-stack-4 ui-animate-in">
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">Financial Reports &amp; Statements Hub</h2>
+              <p className="ui-text-xs-muted">
+                Standardized GAAP/IFRS financial statements, real-time trial balance, and operational financial ratios
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/reports?tab=cash-flow")}
+              >
+                Cash Flow
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/reports?tab=financial-ratios")}
+              >
+                Financial Ratios
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => router.push("/finance/reports?tab=profit-loss")}
+              >
+                P&amp;L Statement
+              </Button>
+            </div>
+          </div>
+
           <div
-            className="ui-grid-2"
+            className="ui-grid-4"
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "var(--space-4)",
+              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gap: "var(--space-3)",
             }}
           >
             <Card
@@ -93,10 +132,10 @@ export default function FinanceReportsPage() {
                 router.push("/finance/reports?tab=balance-sheet");
               }}
             >
-              <Scale size={24} className="ui-text-primary" />
+              <Scale size={24} style={{ color: "var(--color-primary)", flexShrink: 0 }} />
               <div>
                 <h3 className="ui-heading-sm">Balance Sheet</h3>
-                <p className="ui-text-xs-muted">Assets, Liabilities & Equity</p>
+                <p className="ui-text-xs-muted">Assets, Liabilities &amp; Equity</p>
               </div>
             </Card>
             <Card
@@ -107,10 +146,38 @@ export default function FinanceReportsPage() {
                 router.push("/finance/reports?tab=profit-loss");
               }}
             >
-              <TrendingUp size={24} className="ui-text-success" />
+              <TrendingUp size={24} style={{ color: "var(--color-success)", flexShrink: 0 }} />
               <div>
-                <h3 className="ui-heading-sm">Profit & Loss</h3>
-                <p className="ui-text-xs-muted">Revenue & Expenses Statement</p>
+                <h3 className="ui-heading-sm">Profit &amp; Loss</h3>
+                <p className="ui-text-xs-muted">Revenue &amp; Expenses</p>
+              </div>
+            </Card>
+            <Card
+              padding="md"
+              className="ui-hstack-3"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/finance/reports?tab=cash-flow");
+              }}
+            >
+              <Activity size={24} style={{ color: "var(--color-warning)", flexShrink: 0 }} />
+              <div>
+                <h3 className="ui-heading-sm">Cash Flow</h3>
+                <p className="ui-text-xs-muted">Operating, Investing &amp; Financing</p>
+              </div>
+            </Card>
+            <Card
+              padding="md"
+              className="ui-hstack-3"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/finance/reports?tab=financial-ratios");
+              }}
+            >
+              <BarChart3 size={24} style={{ color: "var(--color-brand)", flexShrink: 0 }} />
+              <div>
+                <h3 className="ui-heading-sm">Financial Ratios</h3>
+                <p className="ui-text-xs-muted">Liquidity, Solvency &amp; Margins</p>
               </div>
             </Card>
           </div>

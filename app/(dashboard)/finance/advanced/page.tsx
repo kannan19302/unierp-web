@@ -300,15 +300,15 @@ const groups = [
         desc: "Close tasks, SLAs, calendar, escalation rules, and period analytics",
       },
       {
-        href: "/finance/advanced/consolidation-v2",
+        href: "/finance/advanced/consolidation",
         label: "Multi-GAAP Consolidation",
         icon: <PieChart size={18} />,
         desc: "Consolidation groups, runs, elimination rules, and minority interest",
       },
       {
         href: "/finance/advanced/risk-management",
-        label: "Risk Management",
         icon: <ShieldQuestion size={18} />,
+        label: "Risk Management",
         desc: "Credit scorecards, vendor risk, market exposures, and operational risk events",
       },
       {
@@ -324,8 +324,8 @@ const groups = [
         desc: "Provision runs, deferred tax schedules, uncertain positions, and valuation allowances",
       },
       {
-        href: "/finance/advanced/ap-automation-v2",
-        label: "AP Automation V2",
+        href: "/finance/advanced/ap-automation",
+        label: "AP Automation",
         icon: <ShoppingCart size={18} />,
         desc: "Invoice capture, match rules, approval routing, and payment rail optimization",
       },

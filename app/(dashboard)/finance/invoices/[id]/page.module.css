@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
+  min-height: calc(var(--space-12) * 4);
 }
 .notFound {
   display: flex;
@@ -201,7 +201,7 @@
 .infoListItemLabel {
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
-  min-width: 100px;
+  min-width: var(--space-24);
 }
 .infoListItemValue {
   font-size: var(--text-sm);

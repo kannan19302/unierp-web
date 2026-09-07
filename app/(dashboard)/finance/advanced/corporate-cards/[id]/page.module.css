@@ -10,7 +10,7 @@
   transition: width 0.3s ease;
 }
 .s3 {
-  border-left: 3px solid var(--color-danger);
+  border-left: var(--scope-edge-width) solid var(--color-danger);
 }
 .s4 {
   align-items: center;

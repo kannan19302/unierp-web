@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "@kannan19302/shared/auth-client/react";
 import {
   FileText,
   Users,
@@ -12,6 +13,7 @@ import {
   FileSpreadsheet,
   Receipt,
   AlertTriangle,
+  Plus,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
 import { FormView, ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
@@ -21,16 +23,41 @@ import {
   creditNoteResource,
 } from "@/modules/finance";
 import { customerResource } from "@/modules/crm";
-import { Button, Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
+import dynamic from "next/dynamic";
+import { Button, Card, Modal, PageHeader, useToast, Spinner } from "@kannan19302/ui";
 
-import ArAgingPage from "../advanced/ar-aging/page";
-import ArAutomationPage from "../advanced/ar-automation/page";
-import CustomerStatementPage from "../advanced/customer-statement/page";
-import InvoiceAnalyticsPage from "../advanced/invoice-analytics/page";
-import CreditRiskPage from "../advanced/credit-risk/page";
-import AccountReconciliationPage from "../advanced/account-reconciliation/page";
-import SubscriptionsPage from "../advanced/subscriptions/page";
-import RevenueSchedulesPage from "../advanced/revenue-schedules/page";
+const ArAgingPage = dynamic(() => import("../advanced/ar-aging/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ArAutomationPage = dynamic(() => import("../advanced/ar-automation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CustomerStatementPage = dynamic(() => import("../advanced/customer-statement/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const InvoiceAnalyticsPage = dynamic(() => import("../advanced/invoice-analytics/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CreditRiskPage = dynamic(() => import("../advanced/credit-risk/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const AccountReconciliationPage = dynamic(() => import("../advanced/account-reconciliation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const SubscriptionsPage = dynamic(() => import("../advanced/subscriptions/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const RevenueSchedulesPage = dynamic(() => import("../advanced/revenue-schedules/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 
 const AR_TABS = [
   {
@@ -171,18 +198,20 @@ function CreditNotesPanel() {
 }
 
 export default function ARPage() {
+  const router = useRouter();
+  const { status: authStatus } = useSession();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const subTab = searchParams.get("subtab");
   const client = useApiClient();
-  const { error: notifyError } = useToast();
+  const { error: notifyError, success: notifySuccess } = useToast();
   const [summary, setSummary] = useState<ArSummary>(EMPTY_AR_SUMMARY);
   const [summaryError, setSummaryError] = useState<string | null>(null);
   const [showCreateInvoice, setShowCreateInvoice] = useState(false);
   const [invoicesKey, setInvoicesKey] = useState(0);
 
   useEffect(() => {
-    if (activeTab !== "overview") return;
+    if (authStatus !== "authenticated" || activeTab !== "overview") return;
     let cancelled = false;
     client
       .get<{
@@ -224,7 +253,7 @@ export default function ARPage() {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, client, notifyError]);
+  }, [authStatus, activeTab, client, notifyError, invoicesKey]);
 
   const momChange =
     summary.collectedLastMonth > 0
@@ -237,6 +266,24 @@ export default function ARPage() {
 
   return (
     <RouteGuard permission="finance.invoice.read">
+      {/* Centralized Invoice Creation Modal */}
+      <Modal
+        open={showCreateInvoice}
+        onClose={() => setShowCreateInvoice(false)}
+        title="Create Invoice"
+        size="lg"
+      >
+        <FormView
+          resource={invoiceResource}
+          onSuccess={() => {
+            setShowCreateInvoice(false);
+            notifySuccess("Invoice created successfully");
+            setInvoicesKey((k) => k + 1);
+          }}
+          onCancel={() => setShowCreateInvoice(false)}
+        />
+      </Modal>
+
       {activeTab === "overview" && (
         <div className="ui-stack-4 ui-animate-in">
           {summaryError && (
@@ -246,8 +293,46 @@ export default function ARPage() {
               {summaryError}
             </div>
           )}
+
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">Accounts Receivable Hub</h2>
+              <p className="ui-text-xs-muted">
+                Invoicing, automated dunning, customer statements, and payment tracking
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/ar?tab=aging-analysis")}
+              >
+                Aging Analysis
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/ar?tab=payments")}
+              >
+                Record Payment
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowCreateInvoice(true)}
+              >
+                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+                New Invoice
+              </Button>
+            </div>
+          </div>
+
           <div className="ui-grid-3">
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/ar?tab=invoices")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Outstanding Receivables</p>
                 <p
@@ -261,11 +346,15 @@ export default function ARPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  Across {summary.totalInvoices} invoices
+                  Across {summary.totalInvoices} invoices · Click to view
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/ar?tab=aging-analysis")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Overdue</p>
                 <p
@@ -279,11 +368,15 @@ export default function ARPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  {summary.overdueInvoices} invoices past due
+                  {summary.overdueInvoices} invoices past due · Click for aging
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/ar?tab=payments")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Collected This Month</p>
                 <p
@@ -299,39 +392,28 @@ export default function ARPage() {
                 <p className="ui-text-xs-muted">
                   {momChange === null
                     ? "No data for last month"
-                    : `${momChange >= 0 ? "+" : ""}${momChange}% vs last month`}
+                    : `${momChange >= 0 ? "+" : ""}${momChange}% vs last month · Click to view`}
                 </p>
               </div>
             </Card>
           </div>
           <Card padding="md">
-            <h3
-              className="ui-heading-sm"
-              style={{ marginBottom: "var(--space-3)" }}
-            >
-              Recent Invoices
-            </h3>
+            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
+              <h3 className="ui-heading-sm">Recent Invoices</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/finance/ar?tab=invoices")}
+              >
+                View all invoices
+              </Button>
+            </div>
             <ListView
               key={invoicesKey}
               resource={invoiceResource}
               onCreate={() => setShowCreateInvoice(true)}
             />
           </Card>
-          <Modal
-            open={showCreateInvoice}
-            onClose={() => setShowCreateInvoice(false)}
-            title="Create Invoice"
-            size="lg"
-          >
-            <FormView
-              resource={invoiceResource}
-              onSuccess={() => {
-                setShowCreateInvoice(false);
-                setInvoicesKey((k) => k + 1);
-              }}
-              onCancel={() => setShowCreateInvoice(false)}
-            />
-          </Modal>
         </div>
       )}
       {activeTab === "invoices" && (
@@ -342,21 +424,6 @@ export default function ARPage() {
             resource={invoiceResource}
             onCreate={() => setShowCreateInvoice(true)}
           />
-          <Modal
-            open={showCreateInvoice}
-            onClose={() => setShowCreateInvoice(false)}
-            title="Create Invoice"
-            size="lg"
-          >
-            <FormView
-              resource={invoiceResource}
-              onSuccess={() => {
-                setShowCreateInvoice(false);
-                setInvoicesKey((k) => k + 1);
-              }}
-              onCancel={() => setShowCreateInvoice(false)}
-            />
-          </Modal>
         </div>
       )}
       {activeTab === "customers" && (

@@ -9,8 +9,8 @@ import { GoodsReceiptPage } from "../pages/goods-receipt.page";
 import { GLJournalPage } from "../pages/gl-journal.page";
 import { InventoryPage } from "../pages/inventory.page";
 
-const ADMIN_EMAIL = process.env.E2E_EMAIL || "admin@kannan19302.dev";
-const ADMIN_PASSWORD = process.env.E2E_PASSWORD || "admin123";
+const ADMIN_EMAIL = process.env.E2E_EMAIL || "test.agent@unierp.com";
+const ADMIN_PASSWORD = process.env.E2E_PASSWORD || "TestAgent123!";
 
 type JourneyFixtures = {
   loginPage: LoginPage;

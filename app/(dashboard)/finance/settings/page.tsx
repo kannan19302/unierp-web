@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Settings,
   DollarSign,
@@ -10,98 +10,170 @@ import {
   Link2,
   Database,
 } from "lucide-react";
+import { SettingsShell, type SettingsItem } from "@kannan19302/ui/shell";
+import dynamic from "next/dynamic";
 import { SubTabBar } from "@/components/finance/SubTabBar";
 import { FinanceDemoDataCard } from "@/components/finance/FinanceDemoDataCard";
-import { Card } from "@kannan19302/ui";
+import { FinanceSettingsForm } from "@/components/finance/settings/FinanceSettingsForm";
+import { Button, Card, Spinner } from "@kannan19302/ui";
 
-import FinancialPeriodsPage from "../advanced/financial-periods/page";
-import ExchangeRatesPage from "../advanced/exchange-rates/page";
-import RecurringInvoicesPage from "../advanced/recurring/page";
-import FxRevaluationPage from "../advanced/fx-revaluation/page";
-import CurrencyRevaluationPage from "../advanced/currency-revaluation/page";
-import CloseTasksPage from "../advanced/close-tasks/page";
-import ConsolidationPage from "../advanced/consolidation/page";
+const FinancialPeriodsPage = dynamic(() => import("../advanced/financial-periods/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ExchangeRatesPage = dynamic(() => import("../advanced/exchange-rates/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const RecurringInvoicesPage = dynamic(() => import("../advanced/recurring/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const FxRevaluationPage = dynamic(() => import("../advanced/fx-revaluation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CurrencyRevaluationPage = dynamic(() => import("../advanced/currency-revaluation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CloseTasksPage = dynamic(() => import("../advanced/close-tasks/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ConsolidationPage = dynamic(() => import("../advanced/consolidation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 
-const SETTINGS_TABS = [
+const SETTINGS_ITEMS: SettingsItem[] = [
   {
     id: "overview",
     label: "Overview",
     href: "/finance/settings",
-    icon: Settings,
-    description: "Finance settings overview",
-  },
-  {
-    id: "demo-data",
-    label: "Demo Data",
-    href: "/finance/settings?tab=demo-data",
-    icon: Database,
-    description: "Load or unload Finance module sample data",
+    group: "General Accounting",
+    keywords: ["summary", "finance", "quickstart", "hub"],
   },
   {
     id: "accounting",
-    label: "Accounting Settings",
+    label: "Accounting Configuration",
     href: "/finance/settings?tab=accounting",
-    icon: Settings,
-    description: "General accounting configuration",
+    group: "General Accounting",
+    keywords: ["general", "gl", "ledger", "periods", "calendar", "posting"],
   },
   {
     id: "currencies",
-    label: "Currencies",
+    label: "Currencies & Exchange Rates",
     href: "/finance/settings?tab=currencies",
-    icon: DollarSign,
-    description: "Currency and exchange rate settings",
+    group: "General Accounting",
+    keywords: ["fx", "exchange", "multi-currency", "revaluation", "rates", "forex"],
   },
   {
     id: "fiscal-years",
-    label: "Fiscal Years",
+    label: "Fiscal Years & Close",
     href: "/finance/settings?tab=fiscal-years",
-    icon: Calendar,
-    description: "Fiscal year and period settings",
+    group: "General Accounting",
+    keywords: ["period", "close", "month-end", "year-end", "consolidation", "calendar"],
   },
   {
     id: "approval-rules",
     label: "Approval Rules",
     href: "/finance/settings?tab=approval-rules",
-    icon: ShieldCheck,
-    description: "Finance approval workflows",
+    group: "Rules & Automation",
+    keywords: ["approvals", "limits", "authorization", "workflows", "governance"],
   },
   {
     id: "automation",
-    label: "Automation",
+    label: "Automation & Recurring",
     href: "/finance/settings?tab=automation",
-    icon: Zap,
-    description: "Recurring invoice automation",
+    group: "Rules & Automation",
+    keywords: ["recurring", "schedules", "cron", "invoices", "automation"],
   },
   {
     id: "integrations",
-    label: "Integrations",
+    label: "External Integrations",
     href: "/finance/settings?tab=integrations",
-    icon: Link2,
-    description: "External integrations",
+    group: "Rules & Automation",
+    keywords: ["banks", "integrations", "plaid", "yodlee", "rates", "feeds"],
+  },
+  {
+    id: "demo-data",
+    label: "Demo & Seed Data",
+    href: "/finance/settings?tab=demo-data",
+    group: "Environment",
+    keywords: ["seed", "demo", "fixtures", "reset", "sample", "sandbox"],
   },
 ];
 
 export default function FinanceSettingsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const subTab = searchParams.get("subtab");
 
   return (
-    <div className="ui-stack-6">
-      <SubTabBar tabs={SETTINGS_TABS} />
+    <SettingsShell
+      items={SETTINGS_ITEMS}
+      activeId={activeTab}
+      searchLabel="Search finance configuration…"
+      density="compact"
+    >
       {activeTab === "overview" && (
         <div className="ui-stack-4 ui-animate-in">
-          <div className="ui-grid-3" style={{ marginTop: 0 }}>
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md" style={{ marginBottom: "var(--space-1)" }}>
+                Finance &amp; Accounting Configuration
+              </h2>
+              <p className="ui-text-xs-muted">
+                Configure accounting standards, multi-currency ledger preferences, fiscal calendars, and automation rules.
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/settings?tab=currencies")}
+              >
+                Currencies &amp; FX
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/settings?tab=fiscal-years")}
+              >
+                Fiscal Years
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => router.push("/finance/settings?tab=accounting")}
+              >
+                Accounting Standards
+              </Button>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gap: "var(--space-4)",
+              gridTemplateColumns: "repeat(auto-fill, minmax(var(--panel-width), 1fr))",
+            }}
+          >
             <Card
               padding="lg"
               className="ui-hstack-3"
               style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/finance/settings?tab=accounting");
+              }}
             >
               <Settings size={24} className="ui-text-primary" />
               <div>
                 <h3 className="ui-heading-sm">Accounting Settings</h3>
                 <p className="ui-text-xs-muted">
-                  Default currency, numbering, GL config
+                  Default currency, numbering sequences, GL posting rules
                 </p>
               </div>
             </Card>
@@ -109,12 +181,15 @@ export default function FinanceSettingsPage() {
               padding="lg"
               className="ui-hstack-3"
               style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/finance/settings?tab=currencies");
+              }}
             >
               <DollarSign size={24} className="ui-text-success" />
               <div>
                 <h3 className="ui-heading-sm">Currencies</h3>
                 <p className="ui-text-xs-muted">
-                  Base currency, exchange rates
+                  Base currency, active exchange rate pairs, revaluation
                 </p>
               </div>
             </Card>
@@ -122,27 +197,38 @@ export default function FinanceSettingsPage() {
               padding="lg"
               className="ui-hstack-3"
               style={{ cursor: "pointer" }}
+              onClick={() => {
+                router.push("/finance/settings?tab=fiscal-years");
+              }}
             >
               <Calendar size={24} className="ui-text-warning" />
               <div>
                 <h3 className="ui-heading-sm">Fiscal Years</h3>
-                <p className="ui-text-xs-muted">Periods, close dates</p>
+                <p className="ui-text-xs-muted">
+                  Period dates, close management, consolidation books
+                </p>
               </div>
             </Card>
           </div>
+
+          <FinanceSettingsForm />
+
           <FinanceDemoDataCard />
         </div>
       )}
+
       {activeTab === "demo-data" && (
         <div className="ui-stack-4 ui-animate-in">
           <FinanceDemoDataCard />
         </div>
       )}
+
       {activeTab === "accounting" && (
         <div className="ui-stack-4 ui-animate-in">
-          <FinancialPeriodsPage />
+          <FinanceSettingsForm />
         </div>
       )}
+
       {activeTab === "currencies" && (
         <div className="ui-stack-4 ui-animate-in">
           <SubTabBar
@@ -175,6 +261,7 @@ export default function FinanceSettingsPage() {
           </div>
         </div>
       )}
+
       {activeTab === "fiscal-years" && (
         <div className="ui-stack-4 ui-animate-in">
           <SubTabBar
@@ -207,21 +294,24 @@ export default function FinanceSettingsPage() {
           </div>
         </div>
       )}
+
       {activeTab === "approval-rules" && (
         <div className="ui-stack-4 ui-animate-in">
-          <CloseTasksPage />
+          <FinanceSettingsForm />
         </div>
       )}
+
       {activeTab === "automation" && (
         <div className="ui-stack-4 ui-animate-in">
           <RecurringInvoicesPage />
         </div>
       )}
+
       {activeTab === "integrations" && (
         <div className="ui-stack-4 ui-animate-in">
           <ExchangeRatesPage />
         </div>
       )}
-    </div>
+    </SettingsShell>
   );
 }

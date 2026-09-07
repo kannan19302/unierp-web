@@ -8,7 +8,7 @@
   margin-top: var(--space-2);
 }
 .s3 {
-  max-height: 400px;
+  max-height: calc(var(--space-12) * 8);
   overflow-x: auto;
 }
 .s4 {

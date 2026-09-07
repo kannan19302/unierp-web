@@ -32,7 +32,7 @@
   align-items: center;
   display: flex;
   flex: 1;
-  min-width: 250px;
+  min-width: var(--tile-min);
   position: relative;
 }
 .s8 {
@@ -46,10 +46,10 @@
   width: 100%;
 }
 .s10 {
-  width: 200px;
+  width: var(--tile-min-dense);
 }
 .s11 {
-  width: 150px;
+  width: calc(var(--space-12) * 3);
 }
 .s12 {
   color: var(--color-primary);

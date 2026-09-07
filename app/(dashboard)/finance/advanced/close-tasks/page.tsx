@@ -280,7 +280,7 @@ export default function CloseTasksPage() {
 
           <div className="ui-page-actions flex items-center gap-2">
             <select
-              className="ui-input min-w-[200px]"
+              className="ui-input min-w-[12rem]"
               value={selectedPeriodId}
               onChange={(e: any) => setSelectedPeriodId(e.target.value)}
             >

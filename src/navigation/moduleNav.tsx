@@ -62,6 +62,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   ShoppingCart,
+  Sliders,
   Smartphone,
   Smile,
   Star,
@@ -186,20 +187,51 @@ export const getAppSpecificNavigation = (
       title: "Finance & Accounting",
       icon: CreditCard,
       items: [
-        { name: "Dashboard", href: "/finance", icon: Home },
-        { name: "General Ledger", href: "/finance/gl", icon: BookOpen },
-        { name: "Accounts Receivable", href: "/finance/ar", icon: FileText },
-        { name: "Accounts Payable", href: "/finance/ap", icon: Building2 },
-        { name: "Banking", href: "/finance/banking", icon: Wallet },
-        { name: "Assets", href: "/finance/assets", icon: Building2 },
-        { name: "Tax", href: "/finance/tax", icon: Calculator },
         {
-          name: "Budget & Planning",
-          href: "/finance/budget-planning",
-          icon: PieChart,
+          name: "Executive & Core",
+          isHeader: true,
+          items: [
+            { name: "Executive Dashboard", href: "/finance", icon: Home },
+          ],
         },
-        { name: "Reports", href: "/finance/reports", icon: BarChart3 },
-        { name: "Settings", href: "/finance/settings", icon: Settings },
+        {
+          name: "Ledger & Treasury",
+          isHeader: true,
+          items: [
+            { name: "General Ledger", href: "/finance/gl", icon: BookOpen },
+            { name: "Banking & Cash", href: "/finance/banking", icon: Wallet },
+            { name: "Fixed Assets", href: "/finance/assets", icon: Building2 },
+          ],
+        },
+        {
+          name: "Operations (AR / AP)",
+          isHeader: true,
+          items: [
+            { name: "Accounts Receivable", href: "/finance/ar", icon: FileText },
+            { name: "Accounts Payable", href: "/finance/ap", icon: Building2 },
+          ],
+        },
+        {
+          name: "Compliance & FP&A",
+          isHeader: true,
+          items: [
+            { name: "Tax & Compliance", href: "/finance/tax", icon: Calculator },
+            {
+              name: "Budget & Planning",
+              href: "/finance/budget-planning",
+              icon: PieChart,
+            },
+            { name: "Financial Reports", href: "/finance/reports", icon: BarChart3 },
+          ],
+        },
+        {
+          name: "Administration",
+          isHeader: true,
+          items: [
+            { name: "Advanced Finance", href: "/finance/advanced", icon: Sliders },
+            { name: "Financial Settings", href: "/finance/settings", icon: Settings },
+          ],
+        },
       ],
     };
   }

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "@kannan19302/shared/auth-client/react";
 import {
   FileText,
   Building2,
@@ -12,6 +13,7 @@ import {
   GitCompare,
   AlertTriangle,
   ShieldCheck,
+  Plus,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
 import { FormView, ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
@@ -21,16 +23,41 @@ import {
   vendorBillResource,
 } from "@/modules/finance";
 import { vendorResource } from "@/modules/crm";
-import { Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
+import dynamic from "next/dynamic";
+import { Button, Card, Modal, PageHeader, useToast, Spinner } from "@kannan19302/ui";
 
-import PaymentBatchesPage from "../advanced/payment-batches/page";
-import PaymentTermsPage from "../advanced/payment-terms/page";
-import ExpensePoliciesPage from "../advanced/expense-policies/page";
-import ExpenseReportsPage from "../advanced/expense-reports/page";
-import InvoiceCapturePage from "../advanced/invoice-capture/page";
-import ApAutomationPage from "../advanced/ap-automation/page";
-import ApMatchRulesPage from "../advanced/ap-match-rules/page";
-import ExceptionQueuePage from "../advanced/exception-queue/page";
+const PaymentBatchesPage = dynamic(() => import("../advanced/payment-batches/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const PaymentTermsPage = dynamic(() => import("../advanced/payment-terms/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ExpensePoliciesPage = dynamic(() => import("../advanced/expense-policies/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ExpenseReportsPage = dynamic(() => import("../advanced/expense-reports/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const InvoiceCapturePage = dynamic(() => import("../advanced/invoice-capture/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ApAutomationPage = dynamic(() => import("../advanced/ap-automation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ApMatchRulesPage = dynamic(() => import("../advanced/ap-match-rules/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ExceptionQueuePage = dynamic(() => import("../advanced/exception-queue/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 
 const AP_TABS = [
   {
@@ -171,6 +198,8 @@ const EMPTY_AP_SUMMARY: ApSummary = {
 };
 
 export default function APPage() {
+  const router = useRouter();
+  const { status: authStatus } = useSession();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const subTab = searchParams.get("subtab");
@@ -178,9 +207,11 @@ export default function APPage() {
   const { success, error: notifySummaryError } = useToast();
   const [summary, setSummary] = useState<ApSummary>(EMPTY_AP_SUMMARY);
   const [summaryError, setSummaryError] = useState<string | null>(null);
+  const [showCreateBill, setShowCreateBill] = useState(false);
+  const [billsKey, setBillsKey] = useState(0);
 
   useEffect(() => {
-    if (activeTab !== "overview") return;
+    if (authStatus !== "authenticated" || activeTab !== "overview") return;
     let cancelled = false;
     Promise.all([
       client.get<{ total: number; totalOutstanding: number }>(
@@ -195,7 +226,9 @@ export default function APPage() {
     ])
       .then(([stats, billsResult]: any) => {
         if (cancelled) return;
-        const bills = billsResult.data ?? [];
+        const bills = Array.isArray(billsResult)
+          ? billsResult
+          : billsResult?.data ?? [];
         const now = new Date();
         const weekOut = new Date(now.getTime() + 7 * 86400000);
         const thisMonth = now.getMonth();
@@ -247,13 +280,28 @@ export default function APPage() {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, client, notifySummaryError]);
-
-  const [showCreateBill, setShowCreateBill] = useState(false);
-  const [billsKey, setBillsKey] = useState(0);
+  }, [authStatus, activeTab, client, notifySummaryError, billsKey]);
 
   return (
     <RouteGuard permission="finance.payables.read">
+      {/* Centralized Vendor Bill Creation Modal */}
+      <Modal
+        open={showCreateBill}
+        onClose={() => setShowCreateBill(false)}
+        title="Create Vendor Bill"
+        size="lg"
+      >
+        <FormView
+          resource={vendorBillResource}
+          onSuccess={() => {
+            setShowCreateBill(false);
+            success("Vendor bill created");
+            setBillsKey((k: any) => k + 1);
+          }}
+          onCancel={() => setShowCreateBill(false)}
+        />
+      </Modal>
+
       {activeTab === "overview" && (
         <div className="ui-stack-4 ui-animate-in">
           {summaryError && (
@@ -263,8 +311,46 @@ export default function APPage() {
               {summaryError}
             </div>
           )}
+
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">Accounts Payable Hub</h2>
+              <p className="ui-text-xs-muted">
+                Vendor bills, three-way matching, approval workflows, and payment runs
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/ap?tab=vendors")}
+              >
+                Vendors
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/ap?tab=payment-batches")}
+              >
+                Payment Batches
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowCreateBill(true)}
+              >
+                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+                New Bill
+              </Button>
+            </div>
+          </div>
+
           <div className="ui-grid-3">
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/ap?tab=bills")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Outstanding Payables</p>
                 <p
@@ -281,11 +367,15 @@ export default function APPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  Across {summary.totalBills} bills
+                  Across {summary.totalBills} bills · Click to view
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/ap?tab=bills")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Due This Week</p>
                 <p
@@ -302,11 +392,15 @@ export default function APPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  {summary.dueThisWeekCount} bills due
+                  {summary.dueThisWeekCount} bills due · Click to schedule
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/ap?tab=payments")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Processed This Month</p>
                 <p
@@ -323,19 +417,27 @@ export default function APPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  {summary.processedThisMonthCount} bills paid
+                  {summary.processedThisMonthCount} bills paid · Click for payments
                 </p>
               </div>
             </Card>
           </div>
           <Card padding="md">
-            <h3
-              className="ui-heading-sm"
-              style={{ marginBottom: "var(--space-3)" }}
-            >
-              Vendor Bills
-            </h3>
-            <ListView resource={vendorBillResource} />
+            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
+              <h3 className="ui-heading-sm">Vendor Bills</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/finance/ap?tab=bills")}
+              >
+                View all bills
+              </Button>
+            </div>
+            <ListView
+              key={`ap-b-${billsKey}`}
+              resource={vendorBillResource}
+              onCreate={() => setShowCreateBill(true)}
+            />
           </Card>
         </div>
       )}
@@ -350,22 +452,6 @@ export default function APPage() {
             resource={vendorBillResource}
             onCreate={() => setShowCreateBill(true)}
           />
-          <Modal
-            open={showCreateBill}
-            onClose={() => setShowCreateBill(false)}
-            title="Create Vendor Bill"
-            size="lg"
-          >
-            <FormView
-              resource={vendorBillResource}
-              onSuccess={() => {
-                setShowCreateBill(false);
-                success("Vendor bill created");
-                setBillsKey((k: any) => k + 1);
-              }}
-              onCancel={() => setShowCreateBill(false)}
-            />
-          </Modal>
         </div>
       )}
       {activeTab === "vendors" && (

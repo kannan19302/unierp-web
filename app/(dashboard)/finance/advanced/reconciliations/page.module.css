@@ -2,8 +2,8 @@
   background: var(--color-bg-sunken);
   border-radius: var(--radius-full);
   flex: 1;
-  height: 6px;
-  max-width: 120px;
+  height: var(--status-dot-size);
+  max-width: calc(var(--space-12) * 2.5);
   overflow: hidden;
 }
 .s2 {

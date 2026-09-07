@@ -190,29 +190,29 @@ export function RecurringJournalsTab() {
             Next Scheduled Execution
           </p>
           <p
-            className="text-2xl font-bold text-amber-500"
-            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+            className="text-2xl font-bold"
+            style={{ color: "var(--color-warning)", fontVariantNumeric: "tabular-nums lining-nums" }}
           >
             {templates.find((t: any) => t.nextRunDate)?.nextRunDate || "—"}
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="ui-text-xs-muted mt-1">
             Auto-post enabled
           </p>
         </Card>
         <Card padding="md">
-          <p className="text-xs text-muted-foreground">
+          <p className="ui-text-xs-muted">
             Monthly Automated Volume
           </p>
           <p
-            className="text-2xl font-bold text-emerald-500"
-            style={{ fontVariantNumeric: "tabular-nums lining-nums" }}
+            className="text-2xl font-bold"
+            style={{ color: "var(--color-success)", fontVariantNumeric: "tabular-nums lining-nums" }}
           >
             $
             {templates
               .reduce((acc: any, t: any) => acc + (Number(t.totalAmount) || 0), 0)
               .toLocaleString()}
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="ui-text-xs-muted mt-1">
             Balanced debits/credits
           </p>
         </Card>
@@ -368,11 +368,11 @@ export function RecurringJournalsTab() {
                 Total Credits: <strong>${totalCredit.toFixed(2)}</strong>
               </span>
               {isBalanced ? (
-                <span className="text-emerald-600 font-semibold flex items-center gap-1">
+                <span className="font-semibold flex items-center gap-1" style={{ color: "var(--color-success)" }}>
                   <CheckCircle2 className="w-4 h-4" /> Entry Balanced
                 </span>
               ) : (
-                <span className="text-red-500 font-semibold flex items-center gap-1">
+                <span className="font-semibold flex items-center gap-1" style={{ color: "var(--color-danger)" }}>
                   <AlertTriangle className="w-4 h-4" /> Out of Balance ($
                   {Math.abs(totalDebit - totalCredit).toFixed(2)})
                 </span>

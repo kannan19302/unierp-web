@@ -72,7 +72,7 @@
   margin-bottom: var(--space-1);
 }
 .s16 {
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   overflow: hidden;
   width: 100%;
 }

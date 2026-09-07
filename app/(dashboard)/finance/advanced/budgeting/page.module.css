@@ -108,7 +108,7 @@
 .s18 {
   text-transform: uppercase;
   text-align: center;
-  font-size: 11px;
+  font-size: var(--text-xs);
   padding: var(--space-4) 0;
   color: var(--color-text-tertiary);
 }
@@ -126,12 +126,12 @@
 }
 
 .s21 {
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: bold;
 }
 
 .s22 {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--color-text-secondary);
 }
 
@@ -152,7 +152,7 @@
 .s25 {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 
 .s26 {
@@ -180,7 +180,7 @@
 
 .s31 {
   padding: var(--space-3);
-  width: 140px;
+  width: calc(var(--space-12) * 3);
 }
 
 .s32 {
@@ -252,7 +252,7 @@
 .s43 {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 
 .s44 {
@@ -361,13 +361,13 @@
 }
 
 .s65 {
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--color-text-secondary);
   margin-bottom: var(--space-1);
 }
 
 .s66 {
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: bold;
 }
 
@@ -375,7 +375,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 13px;
+  font-size: var(--text-sm);
   cursor: pointer;
 }
 
@@ -383,7 +383,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 13px;
+  font-size: var(--text-sm);
   cursor: pointer;
 }
 
@@ -391,7 +391,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 13px;
+  font-size: var(--text-sm);
   cursor: pointer;
 }
 
@@ -406,7 +406,7 @@
 }
 
 .s72 {
-  font-size: 13px;
+  font-size: var(--text-sm);
   margin: 0;
 }
 
@@ -435,7 +435,7 @@
   background: var(--color-danger-light);
   color: var(--color-danger);
   border-radius: var(--radius-md);
-  font-size: 13px;
+  font-size: var(--text-sm);
   align-items: center;
 }
 
@@ -446,7 +446,7 @@
   background: var(--color-success-light);
   color: var(--color-success);
   border-radius: var(--radius-md);
-  font-size: 13px;
+  font-size: var(--text-sm);
   align-items: center;
 }
 

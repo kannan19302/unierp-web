@@ -2,7 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, PageHeader, Button, StatusBadge } from "@kannan19302/ui";
+import { Card, PageHeader, Button, StatusBadge, Badge } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
   RefreshCw,
@@ -17,6 +17,10 @@ import {
   CreditCard,
   Link2,
   Info,
+  FileText,
+  UploadCloud,
+  CheckCircle,
+  X,
 } from "lucide-react";
 
 interface BankAccount {
@@ -42,12 +46,87 @@ export default function BankFeedsConnectionsPage() {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  // Form State
   const [selectedBank, setSelectedBank] = useState("Chase Bank");
   const [accountNumber, setAccountNumber] = useState("");
   const [accountType, setAccountType] = useState("CHECKING");
   const [targetBankAccountId, setTargetBankAccountId] = useState("");
   const [syncingConnId, setSyncingConnId] = useState<string | null>(null);
+
+  // Bank Statement Parser State
+  const [showStatementModal, setShowStatementModal] = useState(false);
+  const [statementConnectionId, setStatementConnectionId] = useState("");
+  const [statementFormat, setStatementFormat] = useState<"MT940" | "CAMT053">("MT940");
+  const [statementRawContent, setStatementRawContent] = useState("");
+  const [parsedStatement, setParsedStatement] = useState<any | null>(null);
+  const [isParsing, setIsParsing] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
+  const [importResult, setImportResult] = useState<any | null>(null);
+  const [statementError, setStatementError] = useState<string | null>(null);
+
+  const handleParseStatement = async () => {
+    if (!statementRawContent.trim()) {
+      setStatementError("Please paste or upload statement content.");
+      return;
+    }
+    setIsParsing(true);
+    setStatementError(null);
+    try {
+      const res = await client.post<any>("/advanced-finance/bank-statements/parse", {
+        rawContent: statementRawContent,
+        format: statementFormat,
+      });
+      setParsedStatement(res);
+    } catch (err: any) {
+      setStatementError(err?.message || "Failed to parse bank statement file.");
+    } finally {
+      setIsParsing(false);
+    }
+  };
+
+  const handleImportStatement = async () => {
+    if (!statementConnectionId) {
+      setStatementError("Please select a target bank connection to import into.");
+      return;
+    }
+    if (!statementRawContent.trim()) {
+      setStatementError("Statement content cannot be empty.");
+      return;
+    }
+    setIsImporting(true);
+    setStatementError(null);
+    try {
+      const res = await client.post<any>("/advanced-finance/bank-statements/import", {
+        connectionId: statementConnectionId,
+        rawContent: statementRawContent,
+        format: statementFormat,
+      });
+      setImportResult(res);
+      fetchConnections();
+    } catch (err: any) {
+      setStatementError(err?.message || "Failed to import statement into bank feed.");
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.name.endsWith(".xml") || file.name.endsWith(".camt")) {
+      setStatementFormat("CAMT053");
+    } else {
+      setStatementFormat("MT940");
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      setStatementRawContent(content || "");
+      setParsedStatement(null);
+      setImportResult(null);
+      setStatementError(null);
+    };
+    reader.readAsText(file);
+  };
 
   const fetchConnections = useCallback(async () => {
     try {
@@ -158,6 +237,10 @@ export default function BankFeedsConnectionsPage() {
             <Button variant="outline" onClick={loadData}>
               <RefreshCw size={16} className="mr-2" />
               Refresh
+            </Button>
+            <Button variant="outline" onClick={() => setShowStatementModal(true)}>
+              <FileText size={16} className="mr-2" />
+              Import Statement (MT940 / CAMT.053)
             </Button>
             <Button variant="primary" onClick={() => setShowAddModal(true)}>
               <Plus size={16} className="mr-2" />
@@ -360,6 +443,242 @@ export default function BankFeedsConnectionsPage() {
                   </Button>
                 </div>
               </form>
+            </Card>
+          </div>
+        )}
+
+        {/* Bank Statement Upload & Parser Modal */}
+        {showStatementModal && (
+          <div className={styles.s17}>
+            <Card className={styles.statementModal}>
+              <div className={styles.s19}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                  <FileText size={20} style={{ color: "var(--color-primary)" }} />
+                  <div>
+                    <h3 className="ui-heading-sm">Import Bank Statement</h3>
+                    <p className="ui-text-xs-muted">
+                      Ingest SWIFT MT940 (.sta/.txt) or ISO 20022 CAMT.053 (.xml) bank statements
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowStatementModal(false);
+                    setParsedStatement(null);
+                    setImportResult(null);
+                    setStatementError(null);
+                  }}
+                  className="ui-btn-icon"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div style={{ padding: "var(--space-5)" }} className="ui-stack-4">
+                {statementError && (
+                  <div className="ui-alert ui-alert-danger">
+                    <AlertCircle size={16} />
+                    {statementError}
+                  </div>
+                )}
+
+                {importResult && (
+                  <div className="ui-alert ui-alert-success">
+                    <CheckCircle size={16} />
+                    <span>
+                      <strong>Import Successful!</strong> {importResult.importedCount} new transactions imported,{" "}
+                      {importResult.duplicateCount} duplicates skipped.
+                    </span>
+                  </div>
+                )}
+
+                <div className="ui-grid-2" style={{ gap: "var(--space-4)" }}>
+                  <div>
+                    <label className="ui-label">Target Bank Connection *</label>
+                    <select
+                      className="ui-input w-full"
+                      value={statementConnectionId}
+                      onChange={(e) => setStatementConnectionId(e.target.value)}
+                      required
+                    >
+                      <option value="">-- Select Target Connection --</option>
+                      {connections.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.bankName} — {c.accountNumber} ({c.accountType})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="ui-label">Statement Format Standard</label>
+                    <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-1)" }}>
+                      <Button
+                        variant={statementFormat === "MT940" ? "primary" : "outline"}
+                        size="sm"
+                        type="button"
+                        onClick={() => setStatementFormat("MT940")}
+                      >
+                        SWIFT MT940
+                      </Button>
+                      <Button
+                        variant={statementFormat === "CAMT053" ? "primary" : "outline"}
+                        size="sm"
+                        type="button"
+                        onClick={() => setStatementFormat("CAMT053")}
+                      >
+                        ISO 20022 CAMT.053
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* File Drop Area */}
+                <div>
+                  <label className="ui-label">Upload Statement File or Paste Content</label>
+                  <label className={styles.uploadArea} style={{ display: "block" }}>
+                    <input
+                      type="file"
+                      accept=".txt,.sta,.940,.xml,.camt"
+                      onChange={handleFileUpload}
+                      style={{ display: "none" }}
+                    />
+                    <UploadCloud size={28} style={{ margin: "0 auto var(--space-2)", color: "var(--color-primary)" }} />
+                    <p style={{ fontWeight: "var(--weight-medium)" }}>
+                      Click to choose file, or drag and drop here
+                    </p>
+                    <p className="ui-text-xs-muted" style={{ marginTop: "var(--space-1)" }}>
+                      Supports SWIFT MT940 (.sta, .txt, .940) & ISO 20022 CAMT.053 (.xml)
+                    </p>
+                  </label>
+                </div>
+
+                <div>
+                  <textarea
+                    rows={4}
+                    className="ui-input w-full"
+                    placeholder="Or paste raw statement text / XML here..."
+                    value={statementRawContent}
+                    onChange={(e) => {
+                      setStatementRawContent(e.target.value);
+                      setParsedStatement(null);
+                      setImportResult(null);
+                    }}
+                    style={{ fontFamily: "monospace", fontSize: "var(--text-xs)" }}
+                  />
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={handleParseStatement}
+                    disabled={isParsing || !statementRawContent.trim()}
+                  >
+                    {isParsing ? <Loader2 size={14} className="animate-spin mr-2" /> : <FileText size={14} className="mr-2" />}
+                    Parse & Validate Statement
+                  </Button>
+
+                  {parsedStatement && (
+                    <Button
+                      variant="primary"
+                      type="button"
+                      onClick={handleImportStatement}
+                      disabled={isImporting || !statementConnectionId}
+                    >
+                      {isImporting ? <Loader2 size={14} className="animate-spin mr-2" /> : <CheckCircle2 size={14} className="mr-2" />}
+                      Ingest {parsedStatement.transactions.length} Transactions
+                    </Button>
+                  )}
+                </div>
+
+                {/* Parsed Summary Preview */}
+                {parsedStatement && (
+                  <div className="ui-stack-3" style={{ borderTop: "1px solid var(--color-border)", paddingTop: "var(--space-4)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <h4 className="ui-heading-xs">Parsed Statement Summary</h4>
+                      <Badge variant="success">Format: {parsedStatement.format}</Badge>
+                    </div>
+
+                    <div className={styles.summaryGrid}>
+                      <div className={styles.summaryCard}>
+                        <p className="ui-text-xs-muted">Opening Balance</p>
+                        <p className="ui-heading-sm" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                          {parsedStatement.currency} {parsedStatement.openingBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
+                        <p className="ui-text-xs-muted">
+                          {new Date(parsedStatement.openingBalanceDate).toLocaleDateString()}
+                        </p>
+                      </div>
+
+                      <div className={styles.summaryCard}>
+                        <p className="ui-text-xs-muted">Closing Balance</p>
+                        <p className="ui-heading-sm" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                          {parsedStatement.currency} {parsedStatement.closingBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
+                        <p className="ui-text-xs-muted">
+                          {new Date(parsedStatement.closingBalanceDate).toLocaleDateString()}
+                        </p>
+                      </div>
+
+                      <div className={styles.summaryCard}>
+                        <p className="ui-text-xs-muted">Total Inflows (Credits)</p>
+                        <p className="ui-heading-sm" style={{ color: "var(--color-success)", fontVariantNumeric: "tabular-nums lining-nums" }}>
+                          +{parsedStatement.currency} {parsedStatement.totalCredit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
+                        <p className="ui-text-xs-muted">
+                          {parsedStatement.transactions.filter((t: any) => !t.isDebit).length} inflows
+                        </p>
+                      </div>
+
+                      <div className={styles.summaryCard}>
+                        <p className="ui-text-xs-muted">Total Outflows (Debits)</p>
+                        <p className="ui-heading-sm" style={{ color: "var(--color-danger)", fontVariantNumeric: "tabular-nums lining-nums" }}>
+                          -{parsedStatement.currency} {parsedStatement.totalDebit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
+                        <p className="ui-text-xs-muted">
+                          {parsedStatement.transactions.filter((t: any) => t.isDebit).length} outflows
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Preview Table */}
+                    <div className={styles.previewTableWrapper}>
+                      <table className="ui-table" style={{ width: "100%", fontSize: "var(--text-xs)" }}>
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Reference</th>
+                            <th style={{ textAlign: "right" }}>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {parsedStatement.transactions.map((tx: any, idx: number) => (
+                            <tr key={idx}>
+                              <td style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                                {new Date(tx.date).toLocaleDateString()}
+                              </td>
+                              <td>{tx.description}</td>
+                              <td>{tx.reference || tx.bankReference || "—"}</td>
+                              <td
+                                style={{
+                                  textAlign: "right",
+                                  fontVariantNumeric: "tabular-nums lining-nums",
+                                  color: tx.amount >= 0 ? "var(--color-success)" : "var(--color-danger)",
+                                }}
+                              >
+                                {tx.amount >= 0 ? `+${tx.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}` : tx.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </div>
             </Card>
           </div>
         )}

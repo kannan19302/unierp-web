@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   BookOpen,
   FileSliders,
@@ -15,22 +15,54 @@ import {
   GitBranch,
   Building2,
   AlertTriangle,
+  Plus,
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
+import dynamic from "next/dynamic";
 import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import { accountResource, journalResource } from "@/modules/finance";
-import { Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
+import { Card, Modal, PageHeader, useToast, Spinner, Button } from "@kannan19302/ui";
 
-import FinancialPeriodsPage from "../advanced/financial-periods/page";
-import CloseTasksPage from "../advanced/close-tasks/page";
-import RecurringInvoicesPage from "../advanced/recurring/page";
-import ExchangeRatesPage from "../advanced/exchange-rates/page";
-import FxRevaluationPage from "../advanced/fx-revaluation/page";
-import RevenueRecognitionPage from "../advanced/revenue-schedules/page";
-import AllocationsPage from "../advanced/allocations/page";
-import AccountingBooksPage from "../advanced/accounting-books/page";
-import ConsolidationPage from "../advanced/consolidation/page";
-import { RecurringJournalsTab } from "../journal-entries/RecurringJournalsTab";
+const FinancialPeriodsPage = dynamic(() => import("../advanced/financial-periods/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CloseTasksPage = dynamic(() => import("../advanced/close-tasks/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const RecurringInvoicesPage = dynamic(() => import("../advanced/recurring/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ExchangeRatesPage = dynamic(() => import("../advanced/exchange-rates/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const FxRevaluationPage = dynamic(() => import("../advanced/fx-revaluation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const RevenueRecognitionPage = dynamic(() => import("../advanced/revenue-schedules/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const AllocationsPage = dynamic(() => import("../advanced/allocations/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const AccountingBooksPage = dynamic(() => import("../advanced/accounting-books/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ConsolidationPage = dynamic(() => import("../advanced/consolidation/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const RecurringJournalsTab = dynamic(() => import("../journal-entries/RecurringJournalsTab").then((m) => m.RecurringJournalsTab), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 
 const GL_TABS = [
   {
@@ -146,15 +178,17 @@ const EMPTY_GL_SUMMARY: GlSummary = {
 };
 
 export default function GLPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const subTab = searchParams.get("subtab");
   const client = useApiClient();
-  const { error: notifyError } = useToast();
+  const { error: notifyError, success: notifySuccess } = useToast();
   const [summary, setSummary] = useState<GlSummary>(EMPTY_GL_SUMMARY);
   const [summaryError, setSummaryError] = useState<string | null>(null);
   const [showCreateAccount, setShowCreateAccount] = useState(false);
   const [showCreateJournal, setShowCreateJournal] = useState(false);
+  const [glKey, setGlKey] = useState(0);
 
   useEffect(() => {
     if (activeTab !== "overview") return;
@@ -200,10 +234,44 @@ export default function GLPage() {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, client, notifyError]);
+  }, [activeTab, client, notifyError, glKey]);
 
   return (
     <RouteGuard permission="finance.journal.read">
+      {/* Global Modals accessible across Overview and dedicated tabs */}
+      <Modal
+        open={showCreateAccount}
+        onClose={() => setShowCreateAccount(false)}
+        title="New Account"
+      >
+        <FormView
+          resource={accountResource}
+          onSuccess={() => {
+            setShowCreateAccount(false);
+            notifySuccess("Account created successfully");
+            setGlKey((k) => k + 1);
+          }}
+          onCancel={() => setShowCreateAccount(false)}
+        />
+      </Modal>
+
+      <Modal
+        open={showCreateJournal}
+        onClose={() => setShowCreateJournal(false)}
+        title="New Journal Entry"
+        size="lg"
+      >
+        <FormView
+          resource={journalResource}
+          onSuccess={() => {
+            setShowCreateJournal(false);
+            notifySuccess("Journal entry recorded successfully");
+            setGlKey((k) => k + 1);
+          }}
+          onCancel={() => setShowCreateJournal(false)}
+        />
+      </Modal>
+
       {activeTab === "overview" && (
         <div className="ui-stack-6 ui-animate-in">
           {summaryError && (
@@ -213,8 +281,40 @@ export default function GLPage() {
               {summaryError}
             </div>
           )}
+
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">General Ledger Hub</h2>
+              <p className="ui-text-xs-muted">
+                Chart of accounts, balanced journal entries, and financial period workflows
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowCreateAccount(true)}
+              >
+                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+                New Account
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowCreateJournal(true)}
+              >
+                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+                New Journal Entry
+              </Button>
+            </div>
+          </div>
+
           <div className="ui-grid-3">
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/gl?tab=chart-of-accounts")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Total Accounts</p>
                 <p
@@ -227,11 +327,15 @@ export default function GLPage() {
                   {summary.totalAccounts}
                 </p>
                 <p className="ui-text-xs-muted">
-                  Across {summary.accountCategories} categories
+                  Across {summary.accountCategories} categories · Click to view
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/gl?tab=journal-entries")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Journal Entries</p>
                 <p
@@ -244,11 +348,15 @@ export default function GLPage() {
                   {summary.journalCount}
                 </p>
                 <p className="ui-text-xs-muted">
-                  {summary.pendingApproval} pending approval
+                  {summary.pendingApproval} pending approval · Click to view
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/gl?tab=financial-periods")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Open Periods</p>
                 <p
@@ -263,28 +371,44 @@ export default function GLPage() {
                 <p className="ui-text-xs-muted">
                   {summary.nextCloseDate
                     ? `Next close: ${new Date(summary.nextCloseDate).toLocaleDateString()}`
-                    : "No open periods"}
+                    : "No open periods"} · Click to view
                 </p>
               </div>
             </Card>
           </div>
           <Card padding="lg">
-            <h3
-              className="ui-heading-sm"
-              style={{ marginBottom: "var(--space-3)" }}
-            >
-              Recent Journal Entries
-            </h3>
-            <ListView resource={journalResource} />
+            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
+              <h3 className="ui-heading-sm">Recent Journal Entries</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/finance/gl?tab=journal-entries")}
+              >
+                View all journals
+              </Button>
+            </div>
+            <ListView
+              key={`gl-j-${glKey}`}
+              resource={journalResource}
+              onCreate={() => setShowCreateJournal(true)}
+            />
           </Card>
           <Card padding="lg">
-            <h3
-              className="ui-heading-sm"
-              style={{ marginBottom: "var(--space-3)" }}
-            >
-              Chart of Accounts Summary
-            </h3>
-            <ListView resource={accountResource} />
+            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
+              <h3 className="ui-heading-sm">Chart of Accounts Summary</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/finance/gl?tab=chart-of-accounts")}
+              >
+                View full chart
+              </Button>
+            </div>
+            <ListView
+              key={`gl-a-${glKey}`}
+              resource={accountResource}
+              onCreate={() => setShowCreateAccount(true)}
+            />
           </Card>
         </div>
       )}
@@ -295,20 +419,10 @@ export default function GLPage() {
             description="Manage your full chart of accounts structure"
           />
           <ListView
+            key={`coa-${glKey}`}
             resource={accountResource}
             onCreate={() => setShowCreateAccount(true)}
           />
-          <Modal
-            open={showCreateAccount}
-            onClose={() => setShowCreateAccount(false)}
-            title="New Account"
-          >
-            <FormView
-              resource={accountResource}
-              onSuccess={() => setShowCreateAccount(false)}
-              onCancel={() => setShowCreateAccount(false)}
-            />
-          </Modal>
         </div>
       )}
       {activeTab === "journal-entries" && (
@@ -318,20 +432,10 @@ export default function GLPage() {
             description="Record, approve, and post journal entries to the general ledger"
           />
           <ListView
+            key={`je-${glKey}`}
             resource={journalResource}
             onCreate={() => setShowCreateJournal(true)}
           />
-          <Modal
-            open={showCreateJournal}
-            onClose={() => setShowCreateJournal(false)}
-            title="New Journal Entry"
-          >
-            <FormView
-              resource={journalResource}
-              onSuccess={() => setShowCreateJournal(false)}
-              onCancel={() => setShowCreateJournal(false)}
-            />
-          </Modal>
         </div>
       )}
       {activeTab === "financial-periods" && (

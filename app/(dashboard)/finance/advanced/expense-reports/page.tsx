@@ -303,7 +303,7 @@ export default function ExpenseManagementPage() {
       key: "actions",
       header: "",
       align: "right" as const,
-      width: "220px",
+      width: "var(--tile-min-dense)",
       render: (row: any) => (
         <div className={styles.s3}>
           {row.status === "DRAFT" && (

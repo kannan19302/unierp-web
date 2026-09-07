@@ -655,11 +655,13 @@ export default function DashboardLayout({
     );
   }
 
+  const isFinance = pathname.startsWith("/finance");
+
   return (
     <PermissionProvider>
       <div suppressHydrationWarning className={styles.s2}>
         {/* Sidebar Component */}
-        {!hideSidebar && (
+        {!hideSidebar && !isFinance && (
           <AppSidebar
             collapsed={collapsed}
             setCollapsed={setCollapsed}
@@ -672,41 +674,43 @@ export default function DashboardLayout({
         {/* Main Workspace Section */}
         <div className={styles.s3}>
           {/* Header Component */}
-          <AppHeader
-            collapsed={collapsed}
-            setCollapsed={setCollapsed}
-            theme={theme}
-            currentTenant={currentTenant}
-            tenants={tenants.length > 0 ? tenants : [currentTenant]}
-            handleTenantSwitch={handleTenantSwitch}
-            user={user}
-            presenceColor={presenceColor}
-            handleLogout={handleLogout}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            searchOpen={searchOpen}
-            setSearchOpen={setSearchOpen}
-            appsDropdownOpen={appsDropdownOpen}
-            setAppsDropdownOpen={setAppsDropdownOpen}
-            tenantDropdownOpen={tenantDropdownOpen}
-            setTenantDropdownOpen={setTenantDropdownOpen}
-            userDropdownOpen={userDropdownOpen}
-            setUserDropdownOpen={setUserDropdownOpen}
-            cmdPaletteOpen={cmdPaletteOpen}
-            setCmdPaletteOpen={setCmdPaletteOpen}
-            isAppsLanding={isAppsLanding}
-            switcherItems={switcherItems}
-            expandedFolders={expandedFolders}
-            setExpandedFolders={setExpandedFolders}
-            appsDropdownRef={appsDropdownRef}
-            tenantDropdownRef={tenantDropdownRef}
-            userDropdownRef={userDropdownRef}
-            searchDropdownRef={searchDropdownRef}
-            GLOBAL_SEARCH_ITEMS={visibleSearchItems}
-          />
+          {!isFinance && (
+            <AppHeader
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              theme={theme}
+              currentTenant={currentTenant}
+              tenants={tenants.length > 0 ? tenants : [currentTenant]}
+              handleTenantSwitch={handleTenantSwitch}
+              user={user}
+              presenceColor={presenceColor}
+              handleLogout={handleLogout}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              searchOpen={searchOpen}
+              setSearchOpen={setSearchOpen}
+              appsDropdownOpen={appsDropdownOpen}
+              setAppsDropdownOpen={setAppsDropdownOpen}
+              tenantDropdownOpen={tenantDropdownOpen}
+              setTenantDropdownOpen={setTenantDropdownOpen}
+              userDropdownOpen={userDropdownOpen}
+              setUserDropdownOpen={setUserDropdownOpen}
+              cmdPaletteOpen={cmdPaletteOpen}
+              setCmdPaletteOpen={setCmdPaletteOpen}
+              isAppsLanding={isAppsLanding}
+              switcherItems={switcherItems}
+              expandedFolders={expandedFolders}
+              setExpandedFolders={setExpandedFolders}
+              appsDropdownRef={appsDropdownRef}
+              tenantDropdownRef={tenantDropdownRef}
+              userDropdownRef={userDropdownRef}
+              searchDropdownRef={searchDropdownRef}
+              GLOBAL_SEARCH_ITEMS={visibleSearchItems}
+            />
+          )}
 
           {/* Strata Operational Context Bar */}
-          {!isAppsSection && !pathname.startsWith("/builder") && pathSegments.length > 0 && ContextBar && (
+          {!isFinance && !isAppsSection && !pathname.startsWith("/builder") && pathSegments.length > 0 && ContextBar && (
             <ContextBar
               segments={[currentTenant?.name || "UniERP", ...pathSegments.map(formatSegment)]}
               scope="app"
@@ -718,7 +722,7 @@ export default function DashboardLayout({
             id="main-content"
             role="main"
             style={{
-              padding: pathname.startsWith("/builder")
+              padding: isFinance || pathname.startsWith("/builder")
                 ? "0"
                 : isAppsSection
                   ? "var(--space-2) var(--space-5)"
@@ -728,7 +732,7 @@ export default function DashboardLayout({
           >
             <div
               style={{
-                maxWidth: pathname.startsWith("/builder")
+                maxWidth: isFinance || pathname.startsWith("/builder")
                   ? "100%"
                   : isAppsSection
                     ? "100%"

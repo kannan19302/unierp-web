@@ -90,7 +90,7 @@
 
 .s13 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--tile-min-dense), 1fr));
   gap: var(--space-4);
 }
 
@@ -231,7 +231,7 @@
 
 .s30 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--panel-width), 1fr));
   gap: var(--space-4);
 }
 

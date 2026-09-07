@@ -36,8 +36,8 @@
 }
 .s8 {
   font-size: var(--text-sm);
-  height: 34px;
-  padding-left: 28px;
+  height: var(--space-8);
+  padding-left: calc(var(--space-6) + var(--space-1));
 }
 .s9 {
   cursor: pointer;
@@ -53,7 +53,7 @@
   font-variant-numeric: tabular-nums lining-nums;
 }
 .s12 {
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   display: inline-block;
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
@@ -81,7 +81,7 @@
 }
 .s16 {
   flex-shrink: 0;
-  width: 380px;
+  width: var(--auth-card-max-width);
 }
 .s17 {
   align-items: center;

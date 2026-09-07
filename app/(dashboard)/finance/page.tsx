@@ -1,904 +1,480 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Card, Modal, PageHeader, Button, Spinner, useToast } from "@kannan19302/ui";
-import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
-import { DashboardChart } from "@kannan19302/ui/charts";
-import { invoiceResource } from "@/modules/finance";
-import { MultiPageDashboard } from "@/components/dashboard/MultiPageDashboard";
 import {
-  FileText,
-  TrendingUp,
-  DollarSign,
-  BookOpen,
-  Building2,
-  Wallet,
-  Calculator,
-  PieChart,
-  BarChart3,
-  Plus,
-  ArrowRight,
-  ShieldCheck,
-  Activity,
-  Layers,
-  ArrowUpRight,
-  ArrowDownRight,
-  RefreshCw,
-  CheckCircle2,
+  ExternalLink,
   AlertCircle,
+  AlertTriangle,
+  Clock,
+  CheckCircle2,
+  TrendingUp,
+  TrendingDown,
+  ArrowUpRight,
 } from "lucide-react";
+import styles from "./page.module.css";
 
-// ─── Types ─────────────────────────────────────────────────────────────────
-interface DashboardKPIs {
-  totalRevenueYtd: number;
-  totalRevenue: number;
-  outstandingAr: number;
-  pendingAp: number;
-  netCashBalance: number;
-  totalInvoices: number;
-  paidInvoices: number;
-  overdueInvoices: number;
-  paymentRate: number;
-  bankAccounts: number;
-}
+// Sparkline SVG component for KPI cards
+function Sparkline({ data, strokeColor = "var(--color-primary, #2563eb)" }: { data: number[]; strokeColor?: string }) {
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const width = 80;
+  const height = 30;
 
-interface DashboardCharts {
-  revenueTrend: Array<{ month: string; revenue: number; invoices: number }>;
-  statusDistribution: Array<{ name: string; value: number; amount: number }>;
-  arAgingChart: Array<{ bucket: string; amount: number }>;
-  topCustomers: Array<{ name: string; revenue: number; invoices: number }>;
-  paymentMethodChart: Array<{ name: string; value: number }>;
-  cashFlowTrend: Array<{ month: string; inflows: number; outflows: number }>;
-  accountTypeChart: Array<{ name: string; value: number }>;
-}
+  const points = data
+    .map((val, i) => {
+      const x = (i / (data.length - 1)) * width;
+      const y = height - ((val - min) / range) * (height - 6) - 3;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(" ");
 
-interface DashboardData {
-  kpis: DashboardKPIs;
-  charts: DashboardCharts;
-}
-
-interface ComplianceSummary {
-  periodName: string | null;
-  closePct: number | null;
-  bankAccountCount: number | null;
-  icEliminationsRun: boolean | null;
-}
-
-const EMPTY_COMPLIANCE: ComplianceSummary = {
-  periodName: null,
-  closePct: null,
-  bankAccountCount: null,
-  icEliminationsRun: null,
-};
-
-const EMPTY_KPIS: DashboardKPIs = {
-  totalRevenueYtd: 0,
-  totalRevenue: 0,
-  outstandingAr: 0,
-  pendingAp: 0,
-  netCashBalance: 0,
-  totalInvoices: 0,
-  paidInvoices: 0,
-  overdueInvoices: 0,
-  paymentRate: 0,
-  bankAccounts: 0,
-};
-
-const EMPTY_CHARTS: DashboardCharts = {
-  revenueTrend: [],
-  statusDistribution: [],
-  arAgingChart: [],
-  topCustomers: [],
-  paymentMethodChart: [],
-  cashFlowTrend: [],
-  accountTypeChart: [],
-};
-
-// ─── Format helpers ────────────────────────────────────────────────────────
-function fmt(n: number, compact = true) {
-  if (compact && n >= 1_000_000) return `$${(n / 1_000_000).toFixed(2)}M`;
-  if (compact && n >= 1_000) return `$${(n / 1_000).toFixed(1)}k`;
-  return `$${n.toLocaleString()}`;
-}
-
-// ─── Rich KPI Card ─────────────────────────────────────────────────────────
-function KpiCard({
-  label,
-  value,
-  sub,
-  icon: Icon,
-  color,
-  trend,
-}: {
-  label: string;
-  value: string;
-  sub?: string;
-  icon: React.ComponentType<{ size?: number }>;
-  color: string;
-  trend?: "up" | "down" | "neutral";
-}) {
   return (
-    <Card padding="md">
-      <div className="ui-stack-1">
-        <div className="ui-flex-between">
-          <span className="ui-text-xs-muted font-medium ui-truncate">
-            {label}
-          </span>
-          <div
-            className="ui-flex-center"
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: "var(--radius-md)",
-              background: `${color}18`,
-              color,
-              flexShrink: 0,
-            }}
-          >
-            <Icon size={15} />
-          </div>
-        </div>
-        <div className="flex items-baseline gap-1">
-          <span
-            className="text-2xl font-bold ui-truncate"
-            style={{
-              color: "var(--color-text)",
-              letterSpacing: "-0.02em",
-              fontVariantNumeric: "tabular-nums lining-nums",
-            }}
-          >
-            {value}
-          </span>
-
-          {trend === "up" && (
-            <ArrowUpRight size={14} className="ui-text-success" />
-          )}
-          {trend === "down" && (
-            <ArrowDownRight size={14} className="ui-text-danger" />
-          )}
-        </div>
-        {sub && <p className="ui-text-xs-tertiary ui-truncate m-0">{sub}</p>}
-      </div>
-    </Card>
-  );
-}
-
-// ─── Sub-module Nav Card ────────────────────────────────────────────────────
-function NavCard({
-  title,
-  desc,
-  icon: Icon,
-  color,
-  onClick,
-}: {
-  title: string;
-  desc: string;
-  icon: React.ComponentType<{ size?: number }>;
-  color: string;
-  onClick: () => void;
-}) {
-  return (
-    <Card
-      padding="sm"
-      className="cursor-pointer transition-all"
-      onClick={onClick}
-    >
-      <div className="ui-hstack-2">
-        <div
-          className="ui-flex-center"
-          style={{
-            width: 30,
-            height: 30,
-            borderRadius: "var(--radius-md)",
-            background: `${color}15`,
-            color,
-            flexShrink: 0,
-          }}
-        >
-          <Icon size={16} />
-        </div>
-        <div style={{ minWidth: 0, flex: 1 }}>
-          <h4 className="text-xs font-semibold ui-truncate m-0">{title}</h4>
-          <p className="ui-text-micro ui-truncate m-0">{desc}</p>
-        </div>
-        <ArrowRight
-          size={13}
-          className="ui-text-tertiary"
-          style={{ flexShrink: 0 }}
+    <div className={styles.sparklineWrap}>
+      <svg viewBox={`0 0 ${width} ${height}`} className={styles.sparklineSvg} preserveAspectRatio="none">
+        <polyline
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          points={points}
         />
-      </div>
-    </Card>
+      </svg>
+    </div>
   );
 }
 
-// ─── Main Component ────────────────────────────────────────────────────────
-export default function FinanceDashboardPage() {
+export default function FinanceOverviewPage() {
   const router = useRouter();
-  const client = useApiClient();
-  const { success, error: notifyError } = useToast();
+  const [period, setPeriod] = useState("jan-aug-2026");
 
-  const [showCreate, setShowCreate] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [dataError, setDataError] = useState<string | null>(null);
-  const [data, setData] = useState<DashboardData>({
-    kpis: EMPTY_KPIS,
-    charts: EMPTY_CHARTS,
-  });
-  const [compliance, setCompliance] =
-    useState<ComplianceSummary>(EMPTY_COMPLIANCE);
+  // Trend data points for Jan–Aug 2026
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
+  const revenueTrend = [3.62, 3.78, 3.95, 4.12, 4.28, 4.46, 4.22, 4.82];
+  const expenseTrend = [2.31, 2.41, 2.47, 2.56, 2.63, 2.71, 2.68, 2.90];
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await client.get<DashboardData>("/finance/dashboard");
-      if (res) {
-        setData(res);
-        setDataError(null);
-      }
-    } catch (err) {
-      // Distinct error state — never let a fetch failure render as "$0 / no
-      // activity". Previously-loaded KPIs/charts are preserved (not blanked).
-      const message =
-        err instanceof Error ? err.message : "Failed to load dashboard data";
-      setDataError(message);
-    } finally {
-      setLoading(false);
-    }
-  }, [client]);
-
-  const fetchCompliance = useCallback(async () => {
-    try {
-      const periodsRes = await client.get<{
-        data: Array<{ id: string; name: string; status: string }>;
-      }>("/finance/close/financial-periods");
-      const openPeriod = periodsRes?.data?.find((p: any) => p.status === "OPEN");
-
-      let closePct: number | null = null;
-      if (openPeriod) {
-        const dash = await client
-          .get<{
-            totalTasks: number;
-            completionPercent: number;
-          }>(
-            `/advanced-finance/close-tasks/dashboard?periodId=${openPeriod.id}`,
-          )
-          .catch(() => null);
-        if (dash && dash.totalTasks > 0) {
-          closePct = Math.round(dash.completionPercent);
-        }
-      }
-
-      const bankAccounts = await client
-        .list<{
-          id: string;
-        }>("/advanced-finance/bank-accounts", { pageSize: 1 })
-        .catch(() => null);
-
-      const icRuns = await client
-        .get<
-          Array<{ status: string }>
-        >("/advanced-finance/intercompany/elimination-runs")
-        .catch(() => null);
-
-      setCompliance({
-        periodName: openPeriod?.name ?? null,
-        closePct,
-        bankAccountCount: bankAccounts?.total ?? null,
-        icEliminationsRun: Array.isArray(icRuns) ? icRuns.length > 0 : null,
-      });
-    } catch {
-      // Leave as empty/unknown — never show fabricated compliance status
-    }
-  }, [client]);
-
-  useEffect(() => {
-    fetchData();
-    fetchCompliance();
-  }, [fetchData, fetchCompliance]);
-
-  const { kpis, charts } = data;
-
-  const QUICK_LINKS = [
-    {
-      title: "General Ledger",
-      href: "/finance/gl",
-      icon: BookOpen,
-      desc: "Chart of Accounts & Journals",
-      color: "var(--color-primary)",
-    },
-    {
-      title: "Accounts Receivable",
-      href: "/finance/ar",
-      icon: FileText,
-      desc: "Invoices, Collections & Aging",
-      color: "var(--color-success)",
-    },
-    {
-      title: "Accounts Payable",
-      href: "/finance/ap",
-      icon: Building2,
-      desc: "Vendor Bills & Payments",
-      color: "var(--color-warning)",
-    },
-    {
-      title: "Banking & Cash",
-      href: "/finance/banking",
-      icon: Wallet,
-      desc: "Bank Accounts & Liquidity",
-      color: "var(--chart-10)",
-    },
-    {
-      title: "Tax & Compliance",
-      href: "/finance/tax",
-      icon: Calculator,
-      desc: "Tax Rules & Return Filings",
-      color: "var(--chart-8)",
-    },
-    {
-      title: "Budget & FP&A",
-      href: "/finance/budget-planning",
-      icon: PieChart,
-      desc: "Budgets & Forecasting",
-      color: "var(--chart-5)",
-    },
-    {
-      title: "Fixed Assets",
-      href: "/finance/assets",
-      icon: Layers,
-      desc: "Asset Registry & Depreciation",
-      color: "var(--color-info)",
-    },
-    {
-      title: "Financial Reports",
-      href: "/finance/reports",
-      icon: BarChart3,
-      desc: "P&L, Balance Sheet, Cash Flow",
-      color: "var(--chart-3)",
-    },
+  // Accounts receivable aging data
+  const agingBuckets = [
+    { label: "Current (0–30 days)", amount: "682,550", pct: 81, widthPct: 81 },
+    { label: "1–30 days", amount: "78,600", pct: 9, widthPct: 15 },
+    { label: "31–60 days", amount: "45,300", pct: 5, widthPct: 10 },
+    { label: "61–90 days", amount: "22,100", pct: 3, widthPct: 6 },
+    { label: "90+ days", amount: "14,350", pct: 2, widthPct: 4 },
   ];
 
-  // ── Page 1: Executive Overview (Prominent Charts height=185px, 100% Fit) ───
-  const Page1 = (
-    <div className="ui-stack-3">
-      {/* 4 KPI Cards */}
-      <div className="ui-grid-4 gap-3">
-        <KpiCard
-          label="Revenue YTD"
-          value={fmt(kpis.totalRevenueYtd)}
-          sub="Paid invoices this fiscal year"
-          icon={TrendingUp}
-          color="var(--color-primary)"
-          trend="up"
-        />
-        <KpiCard
-          label="Net Cash Position"
-          value={fmt(kpis.netCashBalance)}
-          sub={`Across ${kpis.bankAccounts || "—"} bank accounts`}
-          icon={Wallet}
-          color="var(--chart-10)"
-          trend="neutral"
-        />
-        <KpiCard
-          label="Outstanding AR"
-          value={fmt(kpis.outstandingAr)}
-          sub={`${kpis.overdueInvoices} overdue invoices`}
-          icon={FileText}
-          color="var(--color-warning)"
-          trend={kpis.overdueInvoices > 0 ? "down" : "neutral"}
-        />
-        <KpiCard
-          label="Invoice Payment Rate"
-          value={`${kpis.paymentRate}%`}
-          sub={`${kpis.paidInvoices} of ${kpis.totalInvoices} invoices paid`}
-          icon={CheckCircle2}
-          color="var(--color-success)"
-          trend={kpis.paymentRate >= 70 ? "up" : "down"}
-        />
-      </div>
-
-      {/* 2 Prominent Charts side by side (Height 185px) */}
-      <div className="grid gap-3" style={{ gridTemplateColumns: "2fr 1fr" }}>
-        <DashboardChart
-          title="Monthly Revenue Trend"
-          subtitle="Invoice value issued per month over 12 months"
-          data={charts.revenueTrend}
-          config={{
-            xAxisKey: "month",
-            series: [
-              {
-                dataKey: "revenue",
-                name: "Revenue ($)",
-                color: "var(--color-primary)",
-              },
-            ],
-          }}
-          defaultChartType="area"
-          allowedChartTypes={["area", "bar", "line"]}
-          height={185}
-          loading={loading}
-        />
-        <DashboardChart
-          title="Invoice Status Distribution"
-          subtitle="Count by status across all invoices"
-          data={charts.statusDistribution}
-          config={{
-            series: [],
-            valueKey: "value",
-            nameKey: "name",
-          }}
-          defaultChartType="donut"
-          allowedChartTypes={["donut", "pie", "bar"]}
-          height={185}
-          loading={loading}
-        />
-      </div>
-    </div>
-  );
-
-  // ── Page 2: Receivables & Customer Analytics (Height 175px, 100% Fit) ──────
-  const Page2 = (
-    <div className="ui-stack-3">
-      {/* 2 Charts side by side */}
-      <div className="ui-grid-2 gap-3">
-        <DashboardChart
-          title="AR Aging Analysis"
-          subtitle="Outstanding receivable amounts by aging bucket"
-          data={charts.arAgingChart}
-          config={{
-            xAxisKey: "bucket",
-            series: [
-              {
-                dataKey: "amount",
-                name: "Outstanding ($)",
-                color: "var(--color-warning)",
-              },
-            ],
-          }}
-          defaultChartType="bar"
-          allowedChartTypes={["bar", "line", "area"]}
-          height={175}
-          loading={loading}
-        />
-        <DashboardChart
-          title="Payment Method Distribution"
-          subtitle="How customers pay their invoices"
-          data={charts.paymentMethodChart}
-          config={{
-            series: [],
-            valueKey: "value",
-            nameKey: "name",
-          }}
-          defaultChartType="donut"
-          allowedChartTypes={["donut", "pie", "bar"]}
-          height={175}
-          loading={loading}
-        />
-      </div>
-
-      {/* Top Customers Chart */}
-      <DashboardChart
-        title="Top Customers by Revenue"
-        subtitle="Highest-value customers over 12 months"
-        data={charts.topCustomers}
-        config={{
-          xAxisKey: "name",
-          series: [
-            {
-              dataKey: "revenue",
-              name: "Revenue ($)",
-              color: "var(--color-primary)",
-              type: "bar",
-            },
-            {
-              dataKey: "invoices",
-              name: "Invoice Count",
-              color: "var(--color-success)",
-              type: "line",
-            },
-          ],
-        }}
-        defaultChartType="composed"
-        allowedChartTypes={["composed", "bar", "line"]}
-        height={175}
-        loading={loading}
-      />
-    </div>
-  );
-
-  // ── Page 3: Cash Flow & Budget Analytics (Height 175px, 100% Fit) ──────────
-  const Page3 = (
-    <div className="ui-stack-3">
-      {/* Cash Flow Chart */}
-      <DashboardChart
-        title="Monthly Cash Flow"
-        subtitle="Payment inflows vs estimated outflows over 12 months"
-        data={charts.cashFlowTrend}
-        config={{
-          xAxisKey: "month",
-          series: [
-            {
-              dataKey: "inflows",
-              name: "Inflows ($)",
-              color: "var(--color-success)",
-              type: "area",
-            },
-            {
-              dataKey: "outflows",
-              name: "Outflows ($)",
-              color: "var(--color-danger)",
-              type: "area",
-            },
-          ],
-        }}
-        defaultChartType="area"
-        allowedChartTypes={["area", "line", "bar", "composed"]}
-        height={175}
-        loading={loading}
-      />
-
-      {/* 2 Charts side by side */}
-      <div className="grid gap-3" style={{ gridTemplateColumns: "1fr 2fr" }}>
-        <DashboardChart
-          title="GL Account Distribution"
-          subtitle="Active accounts by type"
-          data={charts.accountTypeChart}
-          config={{
-            series: [],
-            valueKey: "value",
-            nameKey: "name",
-          }}
-          defaultChartType="donut"
-          allowedChartTypes={["donut", "pie", "bar"]}
-          height={175}
-          loading={loading}
-        />
-        <DashboardChart
-          title="Revenue & Invoice Volume Trend"
-          subtitle="Monthly revenue value and invoice count"
-          data={charts.revenueTrend}
-          config={{
-            xAxisKey: "month",
-            series: [
-              {
-                dataKey: "revenue",
-                name: "Revenue ($)",
-                color: "var(--color-primary)",
-                type: "bar",
-              },
-              {
-                dataKey: "invoices",
-                name: "Invoice Count",
-                color: "var(--chart-5)",
-                type: "line",
-              },
-            ],
-          }}
-          defaultChartType="composed"
-          allowedChartTypes={["composed", "stacked-bar", "bar", "line"]}
-          height={175}
-          loading={loading}
-        />
-      </div>
-    </div>
-  );
-
-  // ── Page 4: Operations & Compliance (100% Fit) ───────────────────────────
-  const Page4 = (
-    <div className="ui-stack-3">
-      {/* Compliance & Health Ratios */}
-      <div className="ui-grid-2 gap-3">
-        <Card padding="md">
-          <div className="ui-stack-2">
-            <div className="ui-flex-between">
-              <h3 className="text-xs font-semibold m-0 flex items-center gap-1">
-                <ShieldCheck size={15} className="ui-text-success" />
-                Period Close & Compliance
-              </h3>
-              <span className="ui-text-xs-tertiary">FY 2026</span>
-            </div>
-            {[
-              {
-                label: compliance.periodName
-                  ? `${compliance.periodName} Period Close`
-                  : "Financial Period Close",
-                status:
-                  compliance.periodName === null
-                    ? "No open period"
-                    : compliance.closePct === null
-                      ? "No checklist yet"
-                      : compliance.closePct >= 100
-                        ? "Complete"
-                        : `In Progress (${compliance.closePct}%)`,
-                variant:
-                  compliance.closePct !== null && compliance.closePct >= 100
-                    ? "success"
-                    : "warning",
-              },
-              {
-                label: "Bank Accounts",
-                status:
-                  compliance.bankAccountCount === null
-                    ? "Unknown"
-                    : compliance.bankAccountCount === 0
-                      ? "None configured"
-                      : `${compliance.bankAccountCount} configured`,
-                variant: compliance.bankAccountCount ? "success" : "info",
-              },
-              {
-                label: "Sales Tax & VAT Filing",
-                status: "Not yet tracked",
-                variant: "info",
-              },
-              {
-                label: "Intercompany Eliminations",
-                status:
-                  compliance.icEliminationsRun === null
-                    ? "Unknown"
-                    : compliance.icEliminationsRun
-                      ? "Run this period"
-                      : "Not run",
-                variant: compliance.icEliminationsRun ? "success" : "neutral",
-              },
-            ].map((item: any) => (
-              <div
-                key={item.label}
-                className="ui-flex-between border-b"
-                style={{ padding: "3px 0" }}
-              >
-                <span className="text-xs">{item.label}</span>
-                <span
-                  className={`ui-badge ui-badge-${item.variant}`}
-                  style={{ fontSize: "10px", padding: "1px 6px" }}
-                >
-                  {item.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        <Card padding="md">
-          <div className="ui-stack-2">
-            <h3 className="text-xs font-semibold m-0 flex items-center gap-1">
-              <Activity size={15} className="ui-text-primary" />
-              Financial Health Ratios
-            </h3>
-            {[
-              {
-                label: "Payment Collection Rate",
-                value: `${kpis.paymentRate}%`,
-                pct: kpis.paymentRate,
-                color: "var(--color-success)",
-              },
-              {
-                label: "AR Turnover Efficiency",
-                value: kpis.outstandingAr > 0 ? "Active" : "N/A",
-                pct: kpis.outstandingAr > 0 ? 60 : 0,
-                color: "var(--color-primary)",
-              },
-              {
-                label: "Cash Coverage Ratio",
-                value:
-                  kpis.netCashBalance > 0 ? fmt(kpis.netCashBalance) : "N/A",
-                pct: Math.min(100, (kpis.netCashBalance / 10_000_000) * 100),
-                color: "var(--chart-10)",
-              },
-              {
-                label: "Overdue Invoice Exposure",
-                value: `${kpis.overdueInvoices} invoices`,
-                pct:
-                  kpis.totalInvoices > 0
-                    ? Math.max(
-                        0,
-                        100 - (kpis.overdueInvoices / kpis.totalInvoices) * 100,
-                      )
-                    : 100,
-                color:
-                  kpis.overdueInvoices > 0
-                    ? "var(--color-danger)"
-                    : "var(--color-success)",
-              },
-            ].map((item: any) => (
-              <div
-                key={item.label}
-                style={{ display: "flex", flexDirection: "column", gap: "2px" }}
-              >
-                <div className="ui-flex-between text-xs">
-                  <span className="ui-text-muted">{item.label}</span>
-                  <span className="font-semibold">{item.value}</span>
-                </div>
-                <div
-                  style={{
-                    height: 4,
-                    background: "var(--color-bg-sunken)",
-                    borderRadius: 2,
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: `${Math.max(2, item.pct)}%`,
-                      background: item.color,
-                      height: "100%",
-                      borderRadius: 2,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </div>
-
-      {/* Workspaces Hub */}
-      <div className="ui-stack-1">
-        <h3 className="text-xs font-semibold m-0">Finance Workspaces</h3>
-        <div className="ui-grid-4 gap-2">
-          {QUICK_LINKS.map((link: any) => (
-            <NavCard
-              key={link.title}
-              title={link.title}
-              desc={link.desc}
-              icon={link.icon}
-              color={link.color}
-              onClick={() => router.push(link.href)}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  // ── Page 5: Active Invoices Ledger (100% Fit) ─────────────────────────────
-  const Page5 = (
-    <Card padding="md">
-      <div className="ui-stack-2">
-        <div className="ui-flex-between">
-          <div>
-            <h3 className="text-xs font-semibold m-0">
-              Active Invoices & Receivables
-            </h3>
-          </div>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => router.push("/finance/ar")}
-          >
-            View All AR →
-          </Button>
-        </div>
-        <ListView
-          resource={invoiceResource}
-          onRowClick={(row: any) => router.push(`/finance/invoices/${row.id}`)}
-          onCreate={() => setShowCreate(true)}
-        />
-      </div>
-    </Card>
-  );
-
-  // ── Dashboard pages config ───────────────────────────────────────────────
-  const pages = [
-    {
-      id: "overview",
-      title: "Executive Overview",
-      subtitle: "Live KPIs, revenue trend, and invoice status distribution",
-      content: Page1,
-    },
-    {
-      id: "receivables",
-      title: "Receivables & Customers",
-      subtitle:
-        "AR aging analysis, payment methods, and top customer breakdown",
-      content: Page2,
-    },
-    {
-      id: "cashflow",
-      title: "Cash Flow & Budget",
-      subtitle:
-        "Monthly cash flow trends, GL account distribution, and revenue volume",
-      content: Page3,
-    },
-    {
-      id: "operations",
-      title: "Compliance & Workspaces",
-      subtitle: "Period close compliance, health ratios, and workspace hub",
-      content: Page4,
-    },
-    {
-      id: "invoices",
-      title: "Active Invoices Ledger",
-      subtitle: "Search and manage active customer invoice records",
-      content: Page5,
-    },
+  // Month-end close checklist tasks
+  const closeTasks = [
+    { task: "Post all recurring journals", owner: "AB", status: "Complete", due: "Aug 31, 2026", done: true },
+    { task: "Reconcile bank accounts", owner: "CD", status: "Complete", due: "Aug 31, 2026", done: true },
+    { task: "Review and approve AP accruals", owner: "EF", status: "Complete", due: "Aug 31, 2026", done: true },
+    { task: "Review and approve AR adjustments", owner: "GH", status: "Complete", due: "Aug 31, 2026", done: true },
+    { task: "Validate intercompany balances", owner: "IJ", status: "Complete", due: "Sep 1, 2026", done: true },
+    { task: "Review tax provision", owner: "KL", status: "In progress", due: "Sep 2, 2026", done: false },
   ];
 
   return (
-    <RouteGuard permission="finance.invoice.read">
-      <div className="ui-stack-2 ui-animate-in">
-        {/* Compact PageHeader — Single "+ New Invoice" Button */}
-        <PageHeader
-          title={
-            <div className="flex items-center gap-2 text-[var(--color-success)]">
-              <div className="p-2 bg-[var(--color-success-light)] rounded-lg">
-                <DollarSign size={20} />
-              </div>
-              <span className="text-[var(--color-text)]">
-                Finance & Accounting
-              </span>
-            </div>
-          }
-          description="Executive dashboard — revenue, cash flow, receivables, compliance, and module workspaces."
-          actions={
-            <div className="ui-hstack-2">
-              <Button
-                variant="secondary"
-                onClick={fetchData}
-                disabled={loading}
-                size="sm"
-              >
-                <RefreshCw
-                  size={13}
-                  className={loading ? "animate-spin" : ""}
-                />
-                {loading ? "Loading…" : "Refresh"}
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => setShowCreate(true)}
-                size="sm"
-              >
-                <Plus size={13} /> New Invoice
-              </Button>
-            </div>
-          }
-        />
+    <div className={styles.pageRoot}>
+      {/* 1. Page Header */}
+      <div className={styles.pageHeader}>
+        <div className={styles.headerTitleGroup}>
+          <h1 className={styles.pageTitle}>Finance overview</h1>
+          <p className={styles.pageSubtitle}>Monitor performance, exceptions, and close progress.</p>
+        </div>
 
-        {dataError && (
-          <div className="ui-alert ui-alert-danger">
-            <AlertCircle size={16} />
-            Failed to refresh dashboard KPIs — showing last known values.{" "}
-            {dataError}
+        <div className={styles.headerActions}>
+          <div className={styles.metaInfo}>
+            <span>Demo data</span>
+            <span className={styles.metaSep}>|</span>
+            <span>Updated 09:42 UTC</span>
+            <span className={styles.metaSep}>|</span>
+            <Link href="/finance/reports" className={styles.viewSourceLink}>
+              <span>View source</span>
+              <ExternalLink size={12} aria-hidden />
+            </Link>
           </div>
-        )}
 
-        {loading && (
-          <div className="flex justify-center p-6">
-            <Spinner size="md" />
-          </div>
-        )}
-
-        {/* Multi-Page Dashboard */}
-        {!loading && (
-          <MultiPageDashboard
-            pages={pages}
-            defaultPageId="overview"
-            navActions={
-              <span className="ui-text-xs-tertiary">
-                Use ← → keys to navigate
-              </span>
-            }
-          />
-        )}
-
-        {/* Create Invoice Modal */}
-        <Modal
-          open={showCreate}
-          onClose={() => setShowCreate(false)}
-          title="Create New Invoice"
-          size="lg"
-        >
-          <FormView
-            resource={invoiceResource}
-            onSuccess={() => {
-              setShowCreate(false);
-              success("Invoice created successfully");
-              fetchData();
-            }}
-            onCancel={() => setShowCreate(false)}
-          />
-        </Modal>
+          <button
+            type="button"
+            className={styles.btnPrimary}
+            onClick={() => router.push("/finance/advanced/close-tasks")}
+          >
+            Review close
+          </button>
+        </div>
       </div>
-    </RouteGuard>
+
+      {/* 2. Top 4 KPI Cards */}
+      <div className={styles.kpiGrid}>
+        {/* Card 1: Revenue */}
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiTop}>
+            <span className={styles.kpiLabel}>Revenue</span>
+            <span className={styles.kpiCurrency}>USD</span>
+          </div>
+          <div className={styles.kpiBody}>
+            <div className={styles.kpiValueGroup}>
+              <div className={styles.kpiValue}>4.82M</div>
+              <div className={styles.kpiDelta}>
+                <span className={styles.deltaPositive}>↑ +14.2%</span>
+                <span>vs Jul 2026 (4.22M)</span>
+              </div>
+            </div>
+            <Sparkline data={[4.1, 4.2, 4.35, 4.3, 4.45, 4.22, 4.6, 4.82]} />
+          </div>
+        </div>
+
+        {/* Card 2: Operating Cash Flow */}
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiTop}>
+            <span className={styles.kpiLabel}>Operating cash flow</span>
+            <span className={styles.kpiCurrency}>USD</span>
+          </div>
+          <div className={styles.kpiBody}>
+            <div className={styles.kpiValueGroup}>
+              <div className={styles.kpiValue}>1.24M</div>
+              <div className={styles.kpiDelta}>
+                <span className={styles.deltaPositive}>↑ +5.1%</span>
+                <span>vs Jul 2026 (1.18M)</span>
+              </div>
+            </div>
+            <Sparkline data={[1.1, 1.15, 1.12, 1.18, 1.15, 1.18, 1.2, 1.24]} />
+          </div>
+        </div>
+
+        {/* Card 3: EBITDA Margin */}
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiTop}>
+            <span className={styles.kpiLabel}>EBITDA margin</span>
+          </div>
+          <div className={styles.kpiBody}>
+            <div className={styles.kpiValueGroup}>
+              <div className={styles.kpiValue}>28.4%</div>
+              <div className={styles.kpiDelta}>
+                <span className={styles.deltaPositive}>↑ +0.8 pp</span>
+                <span>vs Jul 2026 (27.6%)</span>
+              </div>
+            </div>
+            <Sparkline data={[26.5, 27.0, 27.2, 27.5, 28.0, 27.6, 28.1, 28.4]} />
+          </div>
+        </div>
+
+        {/* Card 4: Days Sales Outstanding */}
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiTop}>
+            <span className={styles.kpiLabel}>Days sales outstanding (DSO)</span>
+          </div>
+          <div className={styles.kpiBody}>
+            <div className={styles.kpiValueGroup}>
+              <div className={styles.kpiValue}>34 days</div>
+              <div className={styles.kpiDelta}>
+                <span className={styles.deltaPositive}>↓ -2 days</span>
+                <span>vs Jul 2026 (36 days)</span>
+              </div>
+            </div>
+            <Sparkline data={[38, 37, 37, 36, 36, 36, 35, 34]} />
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Mid Grid: Trend (60%) + Exceptions (40%) */}
+      <div className={styles.midGrid}>
+        {/* Trend Chart Card */}
+        <div className={styles.card}>
+          <div className={styles.cardHeader}>
+            <h2 className={styles.cardTitle}>Revenue and operating expenses trend</h2>
+            <div className={styles.cardControls}>
+              <select
+                className={styles.selectPeriod}
+                value={period}
+                onChange={(e) => setPeriod(e.target.value)}
+              >
+                <option value="jan-aug-2026">Jan–Aug 2026</option>
+                <option value="q1-q2-2026">Q1–Q2 2026</option>
+                <option value="fy-2025">FY 2025</option>
+              </select>
+              <Link href="/finance/reports" className={styles.linkButton}>
+                View report
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.chartContainer}>
+            <p className={styles.chartSubtitle}>USD millions</p>
+            {/* SVG Dual-Line Trend Chart */}
+            <svg viewBox="0 0 600 200" className={styles.trendSvg}>
+              {/* Grid Lines */}
+              {[0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0].map((val) => {
+                const y = 170 - (val / 6.0) * 150;
+                return (
+                  <g key={val}>
+                    <line x1="45" y1={y} x2="580" y2={y} stroke="var(--color-border)" strokeWidth="1" strokeDasharray="3 3" />
+                    <text x="38" y={y + 3} textAnchor="end" fontSize="10" fill="var(--color-text-tertiary)" fontFamily="var(--font-mono)">
+                      {val === 0 ? "0" : `${val.toFixed(1)}M`}
+                    </text>
+                  </g>
+                );
+              })}
+
+              {/* X Axis Labels */}
+              {months.map((m, i) => {
+                const x = 75 + i * 70;
+                return (
+                  <text key={m} x={x} y="190" textAnchor="middle" fontSize="11" fill="var(--color-text-secondary)" fontFamily="var(--font-sans)">
+                    {m}
+                  </text>
+                );
+              })}
+
+              {/* Operating Expenses Line (Orange) */}
+              <polyline
+                fill="none"
+                stroke="var(--chart-2, #ea580c)"
+                strokeWidth="2.5"
+                points={expenseTrend
+                  .map((val, i) => `${75 + i * 70},${(170 - (val / 6.0) * 150).toFixed(1)}`)
+                  .join(" ")}
+              />
+              {expenseTrend.map((val, i) => {
+                const x = 75 + i * 70;
+                const y = 170 - (val / 6.0) * 150;
+                return (
+                  <g key={`exp-${i}`}>
+                    <circle cx={x} cy={y} r="3.5" fill="var(--chart-2, #ea580c)" />
+                    <text x={x} y={y + 14} textAnchor="middle" fontSize="9.5" fill="var(--color-text-secondary)" fontFamily="var(--font-mono)">
+                      {val.toFixed(2)}
+                    </text>
+                  </g>
+                );
+              })}
+
+              {/* Revenue Line (Blue) */}
+              <polyline
+                fill="none"
+                stroke="var(--color-primary, #2563eb)"
+                strokeWidth="2.5"
+                points={revenueTrend
+                  .map((val, i) => `${75 + i * 70},${(170 - (val / 6.0) * 150).toFixed(1)}`)
+                  .join(" ")}
+              />
+              {revenueTrend.map((val, i) => {
+                const x = 75 + i * 70;
+                const y = 170 - (val / 6.0) * 150;
+                return (
+                  <g key={`rev-${i}`}>
+                    <circle cx={x} cy={y} r="3.5" fill="var(--color-primary, #2563eb)" />
+                    <text x={x} y={y - 8} textAnchor="middle" fontSize="9.5" fill="var(--color-text)" fontWeight="600" fontFamily="var(--font-mono)">
+                      {val.toFixed(2)}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Legend */}
+            <div className={styles.chartLegend}>
+              <div className={styles.legendItem}>
+                <span className={styles.legendDotRevenue} />
+                <span>Revenue</span>
+              </div>
+              <div className={styles.legendItem}>
+                <span className={styles.legendDotExpenses} />
+                <span>Operating expenses</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Exceptions Card */}
+        <div className={styles.card}>
+          <div className={styles.cardHeader}>
+            <div className={styles.cardTitleWrap}>
+              <h2 className={styles.cardTitle}>Exceptions</h2>
+              <span className={styles.badgeAttention}>3 need attention</span>
+            </div>
+          </div>
+
+          <table className={styles.dataTable} aria-label="Financial Exceptions">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Details</th>
+                <th>Impact (USD)</th>
+                <th>Count</th>
+                <th>Oldest</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div className={styles.typeCell}>
+                    <AlertCircle size={14} className={styles.typeIconDanger} />
+                    <span>Overdue receivables</span>
+                  </div>
+                </td>
+                <td>Invoices past due</td>
+                <td className={styles.amountCell}>$118,450</td>
+                <td className={styles.numCell}>26</td>
+                <td className={styles.dateCell}>Aug 2, 2026</td>
+                <td>
+                  <Link href="/finance/ar" className={styles.actionLink}>
+                    Review
+                  </Link>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className={styles.typeCell}>
+                    <AlertTriangle size={14} className={styles.typeIconWarning} />
+                    <span>Unmatched transactions</span>
+                  </div>
+                </td>
+                <td>Bank / GL not matched</td>
+                <td className={styles.amountCell}>$64,780</td>
+                <td className={styles.numCell}>18</td>
+                <td className={styles.dateCell}>Aug 28, 2026</td>
+                <td>
+                  <Link href="/finance/banking" className={styles.actionLink}>
+                    Review
+                  </Link>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div className={styles.typeCell}>
+                    <Clock size={14} className={styles.typeIconNeutral} />
+                    <span>Journals awaiting approval</span>
+                  </div>
+                </td>
+                <td>Pending manager approval</td>
+                <td className={styles.amountCell}>$154,320</td>
+                <td className={styles.numCell}>12</td>
+                <td className={styles.dateCell}>Aug 29, 2026</td>
+                <td>
+                  <Link href="/finance/journal-entries" className={styles.actionLink}>
+                    Review
+                  </Link>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <Link href="/finance/ap" className={styles.cardFooterLink}>
+            View all exceptions
+          </Link>
+        </div>
+      </div>
+
+      {/* 4. Bottom Grid: AR Aging (50%) + Month-End Close Progress (50%) */}
+      <div className={styles.bottomGrid}>
+        {/* Accounts Receivable Aging */}
+        <div className={styles.card}>
+          <div className={styles.cardHeader}>
+            <div className={styles.cardTitleWrap}>
+              <h2 className={styles.cardTitle}>Accounts receivable aging</h2>
+            </div>
+            <span className={styles.kpiCurrency}>USD</span>
+          </div>
+
+          <table className={styles.dataTable} aria-label="Accounts Receivable Aging">
+            <thead>
+              <tr>
+                <th>Aging bucket</th>
+                <th style={{ width: "9rem" }} />
+                <th style={{ textAlign: "right" }}>Outstanding</th>
+                <th style={{ textAlign: "right" }}>% of total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {agingBuckets.map((b) => (
+                <tr key={b.label}>
+                  <td>{b.label}</td>
+                  <td>
+                    <div className={styles.agingBarTrack}>
+                      <div className={styles.agingBarFill} style={{ width: `${b.widthPct}%` }} />
+                    </div>
+                  </td>
+                  <td className={styles.amountCell} style={{ textAlign: "right" }}>
+                    {b.amount}
+                  </td>
+                  <td className={styles.numCell} style={{ textAlign: "right" }}>
+                    {b.pct}%
+                  </td>
+                </tr>
+              ))}
+              <tr className={styles.totalRow}>
+                <td>Total</td>
+                <td />
+                <td className={styles.amountCell} style={{ textAlign: "right" }}>
+                  842,900
+                </td>
+                <td className={styles.numCell} style={{ textAlign: "right" }}>
+                  100%
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        {/* Month-End Close Progress */}
+        <div className={styles.card}>
+          <div className={styles.cardHeader}>
+            <h2 className={styles.cardTitle}>Month-end close progress</h2>
+            <div className={styles.progressSummary}>
+              <CheckCircle2 size={15} />
+              <span>8 of 10 tasks complete</span>
+            </div>
+          </div>
+
+          <table className={styles.dataTable} aria-label="Month-End Close Checklist">
+            <thead>
+              <tr>
+                <th>Recent tasks</th>
+                <th>Owner</th>
+                <th>Status</th>
+                <th>Due date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {closeTasks.map((t) => (
+                <tr key={t.task}>
+                  <td>
+                    <div className={styles.typeCell}>
+                      {t.done ? (
+                        <CheckCircle2 size={14} className={styles.checkCircleDone} />
+                      ) : (
+                        <Clock size={14} className={styles.checkCirclePending} />
+                      )}
+                      <span>{t.task}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span className={styles.avatarBadge}>{t.owner}</span>
+                  </td>
+                  <td>
+                    <span className={t.done ? styles.statusComplete : styles.statusInProgress}>
+                      {t.status}
+                    </span>
+                  </td>
+                  <td className={styles.dateCell}>{t.due}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <Link href="/finance/advanced/close-tasks" className={styles.cardFooterLink}>
+            View all tasks
+          </Link>
+        </div>
+      </div>
+
+      {/* 5. Page Footer */}
+      <footer className={styles.pageFooter}>
+        <span>Demo data • Updated 09:42 UTC by Finance Manager</span>
+      </footer>
+    </div>
   );
 }

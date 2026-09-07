@@ -22,6 +22,8 @@ export {
   switcherFolders,
   KERNEL_APP_IDS,
 } from "./registry";
+export { ALL_APPLICATION_PAGES } from "./allPagesIndex";
+export type { NavigationSearchItem } from "./allPagesIndex";
 
 /** Resolve the sidebar navigation for the active route. */
 export function getModuleNav(pathname: string): ModuleNav {

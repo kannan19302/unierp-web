@@ -12,8 +12,8 @@ import { test, expect, Page } from "@playwright/test";
  *   pnpm --filter @kannan19302/web test:e2e -- smoke
  */
 
-const ADMIN_EMAIL = process.env.E2E_EMAIL || "admin@kannan19302.dev";
-const ADMIN_PASSWORD = process.env.E2E_PASSWORD || "admin123";
+const ADMIN_EMAIL = process.env.E2E_EMAIL || "test.agent@unierp.com";
+const ADMIN_PASSWORD = process.env.E2E_PASSWORD || "TestAgent123!";
 
 // One representative page per major module surface. Add a route here whenever a
 // new module ships — this list is the binding definition of "the app boots".

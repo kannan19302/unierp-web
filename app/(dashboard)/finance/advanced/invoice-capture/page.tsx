@@ -509,12 +509,12 @@ export default function InvoiceCapturePage() {
                       <span className="text-xs font-semibold text-gray-800 line-clamp-1">
                         {item.name}
                       </span>
-                      <span className="text-[10px] text-gray-400 mt-1 block">
+                      <span className="text-xs text-gray-400 mt-1 block">
                         Simulated raw PDF text stream
                       </span>
                     </div>
                   </div>
-                  <div className="mt-4 flex justify-between items-center text-[10px] text-indigo-600 font-medium">
+                  <div className="mt-4 flex justify-between items-center text-xs text-indigo-600 font-medium">
                     Trigger Scan Extraction
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
@@ -581,7 +581,7 @@ export default function InvoiceCapturePage() {
                     key: "fileName",
                     header: "File Name",
                     render: (v: any) => (
-                      <span className="font-medium text-gray-900 max-w-[200px] truncate block">
+                      <span className="font-medium text-gray-900 max-w-xs truncate block">
                         {String(v)}
                       </span>
                     ),
@@ -594,7 +594,7 @@ export default function InvoiceCapturePage() {
                         <span className="block text-gray-800 font-medium">
                           {String(v || "Unknown Vendor")}
                         </span>
-                        <span className="text-[10px] text-gray-400">
+                        <span className="text-xs text-gray-400">
                           {String(row.invoiceNumber || "No invoice number")}
                         </span>
                       </div>
@@ -637,7 +637,7 @@ export default function InvoiceCapturePage() {
                             ></div>
                           </div>
                           <span
-                            className="font-semibold text-gray-700 text-[10px]"
+                            className="font-semibold text-gray-700 text-xs"
                             style={{
                               fontVariantNumeric: "tabular-nums lining-nums",
                             }}
@@ -662,7 +662,7 @@ export default function InvoiceCapturePage() {
                               : "bg-gray-50 text-gray-600 border-gray-200";
                       return (
                         <span
-                          className={`px-2 py-0.5 rounded border text-[10px] font-semibold ${statusClass}`}
+                          className={`px-2 py-0.5 rounded border text-xs font-semibold ${statusClass}`}
                         >
                           {String(v)}
                         </span>
@@ -713,13 +713,16 @@ export default function InvoiceCapturePage() {
                 Document Review Workspace
               </h3>
               {selectedCapture && (
-                <span className="text-[10px] font-mono text-gray-400">
+                <span className="text-xs font-mono text-gray-400">
                   ID: {selectedCapture.id.slice(0, 8)}
                 </span>
               )}
             </div>
 
-            <div className="p-6 flex-grow overflow-y-auto space-y-6 max-h-[600px]">
+            <div
+              className="p-6 flex-grow overflow-y-auto space-y-6"
+              style={{ maxHeight: "var(--form-measure)" }}
+            >
               {!selectedCapture ? (
                 <div className="text-center py-20 text-gray-400 text-xs">
                   Select an invoice from the queue list to load the workspace,
@@ -894,7 +897,7 @@ export default function InvoiceCapturePage() {
                         <Button
                           variant="outline"
                           onClick={handleAddLine}
-                          className="p-1 border border-gray-200 text-indigo-600 hover:bg-indigo-50 text-[10px] flex items-center gap-1 font-medium"
+                          className="p-1 border border-gray-200 text-indigo-600 hover:bg-indigo-50 text-xs flex items-center gap-1 font-medium"
                         >
                           <Plus className="w-3 h-3" />
                           Add Line
@@ -931,7 +934,7 @@ export default function InvoiceCapturePage() {
                             )}
                           </div>
 
-                          <div className="grid grid-cols-3 gap-3 text-[11px]">
+                          <div className="grid grid-cols-3 gap-3 text-xs">
                             <div className="space-y-0.5">
                               <span className="text-gray-400 font-medium">
                                 Qty
@@ -987,10 +990,10 @@ export default function InvoiceCapturePage() {
 
                           {/* Suggested GL Account Select box */}
                           <div className="space-y-1 text-xs pt-1 border-t border-gray-100">
-                            <label className="text-[10px] text-gray-500 font-medium flex items-center justify-between">
+                            <label className="text-xs text-gray-500 font-medium flex items-center justify-between">
                               <span>Suggest Auto-Coded GL Account</span>
                               {!line.suggestedAccountId && (
-                                <span className="text-[10px] text-red-500 font-semibold flex items-center gap-0.5">
+                                <span className="text-xs text-red-500 font-semibold flex items-center gap-0.5">
                                   <AlertCircle className="w-3 h-3" /> Required
                                 </span>
                               )}
@@ -1024,7 +1027,7 @@ export default function InvoiceCapturePage() {
                       <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-50 pb-1">
                         Raw Extracted OCR Payload
                       </h4>
-                      <pre className="p-3 border border-gray-200 rounded-lg text-[10px] text-gray-600 bg-gray-50/50 max-h-40 overflow-y-auto font-mono whitespace-pre-wrap">
+                      <pre className="p-3 border border-gray-200 rounded-lg text-xs text-gray-600 bg-gray-50/50 max-h-40 overflow-y-auto font-mono whitespace-pre-wrap">
                         {selectedCapture.rawText}
                       </pre>
                     </div>

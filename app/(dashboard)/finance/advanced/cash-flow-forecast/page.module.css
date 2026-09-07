@@ -6,8 +6,8 @@
 }
 
 .s2 {
-  width: 220px;
-  height: 38px;
+  width: var(--tile-min-dense);
+  height: calc(var(--space-9) + var(--space-half));
   margin: 0;
 }
 
@@ -94,7 +94,7 @@
 }
 
 .s16 {
-  width: 450px;
+  width: var(--filter-max-width);
   background: var(--color-surface-primary);
   box-shadow: var(--shadow-xl);
 }
@@ -128,7 +128,7 @@
 }
 
 .s20 {
-  width: 450px;
+  width: var(--filter-max-width);
   background: var(--color-surface-primary);
   box-shadow: var(--shadow-xl);
 }

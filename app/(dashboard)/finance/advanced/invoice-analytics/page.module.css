@@ -1,7 +1,7 @@
 .s1 {
-  height: 38px;
+  height: calc(var(--space-9) + var(--space-half));
   margin: 0;
-  width: 150px;
+  width: calc(var(--space-12) * 3);
 }
 .s2 {
   align-items: start;
@@ -46,7 +46,7 @@
 .s9 {
   border-radius: var(--radius-lg);
   flex: 1;
-  min-width: 200px;
+  min-width: var(--tile-min-dense);
   padding: var(--space-4);
 }
 .s10 {

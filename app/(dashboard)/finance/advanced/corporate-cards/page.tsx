@@ -77,7 +77,7 @@ export default function CorporateCardsPage() {
 
   if (loading) {
     return (
-      <div className="ui-flex-center" style={{ minHeight: "300px" }}>
+      <div className="ui-flex-center" style={{ minHeight: "calc(var(--space-12) * 6)" }}>
         <Loader2
           className="ui-spin"
           size={32}
@@ -147,7 +147,7 @@ export default function CorporateCardsPage() {
             data={cards}
             actions={
               <Button variant="primary">
-                <CreditCard size={14} style={{ marginRight: "6px" }} /> + Issue
+                <CreditCard size={14} style={{ marginRight: "var(--space-1-5)" }} /> + Issue
                 New Card
               </Button>
             }

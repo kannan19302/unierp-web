@@ -223,7 +223,7 @@ export default function BankReconciliationPage() {
       key: "actions",
       header: "",
       align: "right" as const,
-      width: "100px",
+      width: "var(--space-24)",
       render: (row: any) =>
         !row.reconciled ? (
           <Button variant="outline" onClick={() => handleMatch(row)}>

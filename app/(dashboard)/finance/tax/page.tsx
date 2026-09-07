@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "@kannan19302/shared/auth-client/react";
 import {
   Calculator,
   FileText,
@@ -12,14 +13,33 @@ import {
 } from "lucide-react";
 import { SubTabBar } from "@/components/finance/SubTabBar";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
-import { Card, useToast } from "@kannan19302/ui";
+import dynamic from "next/dynamic";
+import { Button, Card, useToast, Spinner } from "@kannan19302/ui";
 
-import TaxEnginePage from "../advanced/tax-engine/page";
-import TaxFilingPage from "../advanced/tax-filing/page";
-import TaxFilingSummaryPage from "../advanced/tax-filing-summary/page";
-import Form1099Page from "../advanced/1099-reporting/page";
-import TaxNexusPage from "../advanced/tax-nexus/page";
-import AuditLogsPage from "../advanced/audit-logs/page";
+const TaxEnginePage = dynamic(() => import("../advanced/tax-engine/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const TaxFilingPage = dynamic(() => import("../advanced/tax-filing/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const TaxFilingSummaryPage = dynamic(() => import("../advanced/tax-filing-summary/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const Form1099Page = dynamic(() => import("../advanced/1099-reporting/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const TaxNexusPage = dynamic(() => import("../advanced/tax-nexus/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const AuditLogsPage = dynamic(() => import("../advanced/audit-logs/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 import { TaxJurisdictionLookupTab } from "./TaxJurisdictionLookupTab";
 import { TaxFilingCalendarTab } from "./TaxFilingCalendarTab";
 
@@ -101,6 +121,8 @@ interface TaxSummary {
 const EMPTY_TAX_SUMMARY: TaxSummary = { activeRates: 0, jurisdictionCount: 0 };
 
 export default function TaxPage() {
+  const router = useRouter();
+  const { status: authStatus } = useSession();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const subTab = searchParams.get("subtab");
@@ -110,13 +132,13 @@ export default function TaxPage() {
   const [summaryError, setSummaryError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (activeTab !== "overview") return;
+    if (authStatus !== "authenticated" || activeTab !== "overview") return;
     let cancelled = false;
     client
       .list<{ jurisdiction?: string }>("/finance/tax-rates", { pageSize: 500 })
       .then((res: any) => {
         if (cancelled) return;
-        const rates = res.data ?? [];
+        const rates = Array.isArray(res) ? res : (res?.data ?? []);
         setSummary({
           activeRates: res.total ?? rates.length,
           jurisdictionCount: new Set(
@@ -135,7 +157,7 @@ export default function TaxPage() {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, client, notifyError]);
+  }, [authStatus, activeTab, client, notifyError]);
 
   return (
     <RouteGuard permission="finance.tax.read">
@@ -148,8 +170,45 @@ export default function TaxPage() {
               {summaryError}
             </div>
           )}
+
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">Tax &amp; Statutory Compliance Hub</h2>
+              <p className="ui-text-xs-muted">
+                Multi-jurisdiction rate tables, real-time calculation engine, and automated VAT / GST / 1099 filing schedules
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/tax?tab=calendar")}
+              >
+                Filing Calendar
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/tax?tab=tax-engine")}
+              >
+                Tax Engine
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => router.push("/finance/tax?tab=jurisdictions")}
+              >
+                Rate Tables
+              </Button>
+            </div>
+          </div>
+
           <div className="ui-grid-2">
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/tax?tab=jurisdictions")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Tax Rates Active</p>
                 <p
@@ -159,21 +218,25 @@ export default function TaxPage() {
                   {summary.activeRates}
                 </p>
                 <p className="ui-text-xs-muted">
-                  Across {summary.jurisdictionCount} jurisdictions
+                  Across {summary.jurisdictionCount} jurisdictions · Click for lookup
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/tax?tab=calendar")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Filing Calendar</p>
                 <p
                   className="ui-heading-sm"
                   style={{ color: "var(--color-warning)" }}
                 >
-                  View Detail
+                  Filing Timeline
                 </p>
                 <p className="ui-text-xs-muted">
-                  See Filing Calendar and Tax Filing tabs
+                  View upcoming deadlines and reminders · Click to view
                 </p>
               </div>
             </Card>

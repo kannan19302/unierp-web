@@ -8,20 +8,50 @@ registerModule({
   dashboardRoute: "/finance",
   settingsRoute: "/finance/settings",
   nav: [
-    { label: "Dashboard", href: "/finance", icon: "Home" },
-    { label: "General Ledger", href: "/finance/gl", icon: "BookOpen" },
-    { label: "Accounts Receivable", href: "/finance/ar", icon: "FileText" },
-    { label: "Accounts Payable", href: "/finance/ap", icon: "Building2" },
-    { label: "Banking", href: "/finance/banking", icon: "Wallet" },
-    { label: "Assets", href: "/finance/assets", icon: "Building2" },
-    { label: "Tax", href: "/finance/tax", icon: "Calculator" },
     {
-      label: "Budget & Planning",
-      href: "/finance/budget-planning",
-      icon: "PieChart",
+      label: "Executive & Core",
+      isHeader: true,
+      items: [
+        { label: "Executive Dashboard", href: "/finance", icon: "Home" },
+      ],
     },
-    { label: "Reports", href: "/finance/reports", icon: "BarChart3" },
-    { label: "Advanced Finance", href: "/finance/advanced", icon: "Sliders" },
-    { label: "Settings", href: "/finance/settings", icon: "Settings" },
+    {
+      label: "Ledger & Treasury",
+      isHeader: true,
+      items: [
+        { label: "General Ledger", href: "/finance/gl", icon: "BookOpen" },
+        { label: "Banking & Cash", href: "/finance/banking", icon: "Wallet" },
+        { label: "Fixed Assets", href: "/finance/assets", icon: "Building2" },
+      ],
+    },
+    {
+      label: "Operations (AR / AP)",
+      isHeader: true,
+      items: [
+        { label: "Accounts Receivable", href: "/finance/ar", icon: "FileText" },
+        { label: "Accounts Payable", href: "/finance/ap", icon: "Building2" },
+      ],
+    },
+    {
+      label: "Compliance & FP&A",
+      isHeader: true,
+      items: [
+        { label: "Tax & Compliance", href: "/finance/tax", icon: "Calculator" },
+        {
+          label: "Budget & Planning",
+          href: "/finance/budget-planning",
+          icon: "PieChart",
+        },
+        { label: "Financial Reports", href: "/finance/reports", icon: "BarChart3" },
+      ],
+    },
+    {
+      label: "Administration",
+      isHeader: true,
+      items: [
+        { label: "Advanced Finance", href: "/finance/advanced", icon: "Sliders" },
+        { label: "Financial Settings", href: "/finance/settings", icon: "Settings" },
+      ],
+    },
   ],
 });

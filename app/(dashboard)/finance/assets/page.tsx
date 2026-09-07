@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "@kannan19302/shared/auth-client/react";
 import {
   Building2,
   FileText,
@@ -9,12 +10,19 @@ import {
   Trash2,
   AlertTriangle,
 } from "lucide-react";
+import dynamic from "next/dynamic";
+import { Button, Card, useToast, Spinner } from "@kannan19302/ui";
 import { RouteGuard } from "@kannan19302/framework";
-import { Card, useToast } from "@kannan19302/ui";
 import { apiGet } from "@/lib/api";
 
-import FixedAssetsPage from "../advanced/fixed-assets/page";
-import LeasesPage from "../advanced/leases/page";
+const FixedAssetsPage = dynamic(() => import("../advanced/fixed-assets/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const LeasesPage = dynamic(() => import("../advanced/leases/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 
 interface AssetsSummary {
   totalValue: number;
@@ -69,6 +77,8 @@ const ASSETS_TABS = [
 ];
 
 export default function AssetsPage() {
+  const router = useRouter();
+  const { status: authStatus } = useSession();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const { error: notifyError } = useToast();
@@ -76,7 +86,7 @@ export default function AssetsPage() {
   const [summaryError, setSummaryError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (activeTab !== "overview") return;
+    if (authStatus !== "authenticated" || activeTab !== "overview") return;
     let cancelled = false;
     Promise.all([
       apiGet<
@@ -88,8 +98,9 @@ export default function AssetsPage() {
     ])
       .then(([assets, leaseSummary]: any) => {
         if (cancelled) return;
-        const activeAssets = assets.filter((a: any) => a.status === "ACTIVE");
-        const totalValue = assets.reduce(
+        const assetList = Array.isArray(assets) ? assets : (assets?.data ?? []);
+        const activeAssets = assetList.filter((a: any) => a.status === "ACTIVE");
+        const totalValue = assetList.reduce(
           (s: any, a: any) => s + Number(a.currentValue || 0),
           0,
         );
@@ -100,7 +111,7 @@ export default function AssetsPage() {
         }, 0);
         setSummary({
           totalValue,
-          assetCount: assets.length,
+          assetCount: assetList.length,
           monthlyDepreciation,
           activeLeases: leaseSummary?.activeLeases ?? 0,
         });
@@ -116,7 +127,7 @@ export default function AssetsPage() {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, notifyError]);
+  }, [authStatus, activeTab, notifyError]);
 
   return (
     <RouteGuard permission="finance.assets.read">
@@ -129,8 +140,45 @@ export default function AssetsPage() {
               {summaryError}
             </div>
           )}
+
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">Fixed Assets &amp; Leases Hub</h2>
+              <p className="ui-text-xs-muted">
+                Capital asset register, depreciation computation, and ASC 842 / IFRS 16 lease management
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/assets?tab=lease-accounting")}
+              >
+                Lease Accounting
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/assets?tab=depreciation")}
+              >
+                Depreciation Run
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => router.push("/finance/assets?tab=fixed-assets")}
+              >
+                Asset Register
+              </Button>
+            </div>
+          </div>
+
           <div className="ui-grid-3">
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/assets?tab=fixed-assets")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Total Asset Value</p>
                 <p
@@ -144,11 +192,15 @@ export default function AssetsPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  {summary.assetCount} assets registered
+                  {summary.assetCount} assets registered · Click to view
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/assets?tab=depreciation")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Monthly Depreciation</p>
                 <p
@@ -161,10 +213,14 @@ export default function AssetsPage() {
                     maximumFractionDigits: 0,
                   })}
                 </p>
-                <p className="ui-text-xs-muted">Straight-line method</p>
+                <p className="ui-text-xs-muted">Straight-line method · Click for runs</p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/assets?tab=lease-accounting")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Active Leases</p>
                 <p
@@ -173,7 +229,7 @@ export default function AssetsPage() {
                 >
                   {summary.activeLeases}
                 </p>
-                <p className="ui-text-xs-muted">ASC 842 / IFRS 16</p>
+                <p className="ui-text-xs-muted">ASC 842 / IFRS 16 · Click to manage</p>
               </div>
             </Card>
           </div>

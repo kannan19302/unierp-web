@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 import {
   PieChart,
@@ -96,6 +96,7 @@ const EMPTY_BUDGET_SUMMARY: BudgetSummary = {
 };
 
 export default function BudgetPlanningPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const subTab = searchParams.get("subtab");
@@ -230,8 +231,45 @@ export default function BudgetPlanningPage() {
               {summaryError}
             </div>
           )}
+
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">Budget &amp; FP&amp;A Hub</h2>
+              <p className="ui-text-xs-muted">
+                Strategic capital allocation, driver sensitivity shocks, scenario comparison, and variance analysis
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/budget-planning?tab=scenario-planning")}
+              >
+                Scenario Planning
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/budget-planning?tab=sensitivity")}
+              >
+                Driver Sensitivity
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => router.push("/finance/budget-planning?tab=budgets")}
+              >
+                Manage Budgets
+              </Button>
+            </div>
+          </div>
+
           <div className="ui-grid-3">
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/budget-planning?tab=budgets")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Total Budget</p>
                 <p
@@ -245,11 +283,15 @@ export default function BudgetPlanningPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  Across {summary.activeBudgets} active budgets
+                  Across {summary.activeBudgets} active budgets · Click to manage
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/budget-planning?tab=variance-analysis")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">YTD Variance</p>
                 <p
@@ -271,11 +313,15 @@ export default function BudgetPlanningPage() {
                     currency: "USD",
                     maximumFractionDigits: 0,
                   })}{" "}
-                  spent
+                  spent · Click for variance
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/budget-planning?tab=forecasts")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Active Budgets</p>
                 <p
@@ -285,7 +331,7 @@ export default function BudgetPlanningPage() {
                   {summary.activeBudgets}
                 </p>
                 <p className="ui-text-xs-muted">
-                  See Scenario Planning tab for forecasts
+                  See Scenario Planning tab · Click for forecast
                 </p>
               </div>
             </Card>

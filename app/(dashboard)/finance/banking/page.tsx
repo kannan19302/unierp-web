@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "@kannan19302/shared/auth-client/react";
 import {
   Wallet,
   GitCompare,
@@ -12,22 +13,101 @@ import {
   CreditCard,
   Download,
   AlertTriangle,
+  Plus,
 } from "lucide-react";
 
 import { SubTabBar } from "@/components/finance/SubTabBar";
 import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
 import { bankAccountResource } from "@/modules/finance";
-import { Card, Modal, PageHeader, useToast } from "@kannan19302/ui";
-import { WaterfallChart } from "@kannan19302/ui/charts";
+import dynamic from "next/dynamic";
+import { Button, Card, Modal, PageHeader, useToast, Spinner } from "@kannan19302/ui";
+import * as Charts from "@kannan19302/ui/charts";
 
-import ReconciliationsPage from "../advanced/reconciliations/page";
-import BankFeedsPage from "../advanced/bank-feeds/page";
-import BankReconPage from "../advanced/bank-recon/page";
-import CashPositionPage from "../advanced/cash-position/page";
-import CashFlowForecastPage from "../advanced/cash-flow-forecast/page";
-import ReportsPage from "../advanced/reports/page";
-import TreasuryPage from "../advanced/treasury/page";
-import CorporateCardsPage from "../advanced/corporate-cards/page";
+interface WaterfallDataPoint {
+  label: string;
+  value: number;
+  isTotal?: boolean;
+}
+
+function FallbackWaterfallChart({
+  data,
+  height = 260,
+}: {
+  data: WaterfallDataPoint[];
+  height?: number;
+  showConnectors?: boolean;
+}) {
+  const maxAbs = Math.max(...data.map((d) => Math.abs(d.value)), 1);
+
+  return (
+    <div style={{ height, display: "flex", alignItems: "flex-end", gap: "var(--space-3)", padding: "var(--space-3) 0", overflowX: "auto" }}>
+      {data.map((d, i) => {
+        const barHeight = Math.max((Math.abs(d.value) / maxAbs) * (height - 60), 4);
+        const color = d.isTotal
+          ? "var(--color-brand)"
+          : d.value >= 0
+          ? "var(--color-success)"
+          : "var(--color-danger)";
+        return (
+          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 72, flex: 1 }}>
+            <span style={{ fontSize: "var(--text-xs)", fontWeight: 600, color, marginBottom: "var(--space-1)" }}>
+              {d.value >= 0 ? "+" : ""}{d.value.toLocaleString()}
+            </span>
+            <div
+              style={{
+                width: "100%",
+                maxWidth: 48,
+                height: barHeight,
+                background: color,
+                borderRadius: "var(--radius-sm)",
+                opacity: d.isTotal ? 1 : 0.85,
+              }}
+              title={`${d.label}: ${d.value}`}
+            />
+            <span style={{ fontSize: "var(--text-xs)", color: "var(--color-text-muted)", marginTop: "var(--space-1)", textAlign: "center" }}>
+              {d.label}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+const WaterfallChart = (Charts as any).WaterfallChart || FallbackWaterfallChart;
+
+const ReconciliationsPage = dynamic(() => import("../advanced/reconciliations/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const BankFeedsPage = dynamic(() => import("../advanced/bank-feeds/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const BankReconPage = dynamic(() => import("../advanced/bank-recon/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CashPositionPage = dynamic(() => import("../advanced/cash-position/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CashFlowForecastPage = dynamic(() => import("../advanced/cash-flow-forecast/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const ReportsPage = dynamic(() => import("../advanced/reports/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const TreasuryPage = dynamic(() => import("../advanced/treasury/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
+const CorporateCardsPage = dynamic(() => import("../advanced/corporate-cards/page"), {
+  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
+  ssr: false,
+});
 
 const BANKING_TABS = [
   {
@@ -127,27 +207,26 @@ interface BankingSummary {
 const EMPTY_BANKING_SUMMARY: BankingSummary = { totalCash: 0, accountCount: 0 };
 
 export default function BankingPage() {
+  const router = useRouter();
+  const { status: authStatus } = useSession();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "overview";
   const subTab = searchParams.get("subtab");
   const client = useApiClient();
-  const { error: notifyError } = useToast();
+  const { error: notifyError, success: notifySuccess } = useToast();
   const [summary, setSummary] = useState<BankingSummary>(EMPTY_BANKING_SUMMARY);
   const [summaryError, setSummaryError] = useState<string | null>(null);
   const [showCreateAccount, setShowCreateAccount] = useState(false);
+  const [accountKey, setAccountKey] = useState(0);
 
-  const baseCash = summary.totalCash > 0 ? summary.totalCash : 540000;
+  const baseCash = summary.totalCash;
   const cashWaterfallData = [
     { label: "Opening Cash", value: baseCash, isTotal: true },
-    { label: "AR Collections", value: 120000 },
-    { label: "AP Disbursements", value: -45000 },
-    { label: "Payroll", value: -45000 },
-    { label: "Hosting OPEX", value: -12500 },
-    { label: "Projected Cash", value: baseCash + 120000 - 45000 - 45000 - 12500, isTotal: true },
+    { label: "Projected Cash", value: baseCash, isTotal: true },
   ];
 
   useEffect(() => {
-    if (activeTab !== "overview") return;
+    if (authStatus !== "authenticated" || activeTab !== "overview") return;
     let cancelled = false;
     client
       .list<{ balance: number }>("/advanced-finance/bank-accounts", {
@@ -155,7 +234,7 @@ export default function BankingPage() {
       })
       .then((res: any) => {
         if (cancelled) return;
-        const accounts = res.data ?? [];
+        const accounts = Array.isArray(res) ? res : (res?.data ?? []);
         setSummary({
           totalCash: accounts.reduce((s: any, a: any) => s + Number(a.balance || 0), 0),
           accountCount: res.total ?? accounts.length,
@@ -172,10 +251,27 @@ export default function BankingPage() {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, client, notifyError]);
+  }, [authStatus, activeTab, client, notifyError, accountKey]);
 
   return (
     <RouteGuard permission="finance.bank-account.read">
+      {/* Centralized Bank Account Creation Modal */}
+      <Modal
+        open={showCreateAccount}
+        onClose={() => setShowCreateAccount(false)}
+        title="New Bank Account"
+      >
+        <FormView
+          resource={bankAccountResource}
+          onSuccess={() => {
+            setShowCreateAccount(false);
+            notifySuccess("Bank account connected successfully");
+            setAccountKey((k) => k + 1);
+          }}
+          onCancel={() => setShowCreateAccount(false)}
+        />
+      </Modal>
+
       {activeTab === "overview" && (
         <div className="ui-stack-4 ui-animate-in">
           {summaryError && (
@@ -185,8 +281,46 @@ export default function BankingPage() {
               {summaryError}
             </div>
           )}
+
+          <div className="ui-flex-between ui-items-center">
+            <div>
+              <h2 className="ui-heading-md">Banking & Treasury Hub</h2>
+              <p className="ui-text-xs-muted">
+                Real-time cash balances, multi-bank feeds, auto-reconciliation, and liquidity forecasting
+              </p>
+            </div>
+            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/banking?tab=reconciliation")}
+              >
+                Reconciliation
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/finance/banking?tab=cash-position&subtab=forecast")}
+              >
+                Cash Forecast
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowCreateAccount(true)}
+              >
+                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
+                Connect Account
+              </Button>
+            </div>
+          </div>
+
           <div className="ui-grid-2">
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/banking?tab=bank-accounts")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">Total Cash Balance</p>
                 <p
@@ -200,11 +334,15 @@ export default function BankingPage() {
                   })}
                 </p>
                 <p className="ui-text-xs-muted">
-                  Across {summary.accountCount} accounts
+                  Across {summary.accountCount} accounts · Click to view
                 </p>
               </div>
             </Card>
-            <Card padding="md">
+            <Card
+              padding="md"
+              style={{ cursor: "pointer" }}
+              onClick={() => router.push("/finance/banking?tab=cash-position")}
+            >
               <div className="ui-stack-2">
                 <p className="ui-text-xs-muted">
                   Cash Flow Forecast &amp; Reconciliation
@@ -216,7 +354,7 @@ export default function BankingPage() {
                   Active Telemetry
                 </p>
                 <p className="ui-text-xs-muted">
-                  See Cash Position and Bank Reconciliation tabs
+                  See Cash Position and Bank Reconciliation tabs · Click to open
                 </p>
               </div>
             </Card>
@@ -235,28 +373,22 @@ export default function BankingPage() {
             />
           </Card>
           <Card padding="md">
-            <h3
-              className="ui-heading-sm"
-              style={{ marginBottom: "var(--space-3)" }}
-            >
-              Bank Accounts
-            </h3>
+            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
+              <h3 className="ui-heading-sm">Bank Accounts</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/finance/banking?tab=bank-accounts")}
+              >
+                View all accounts
+              </Button>
+            </div>
             <ListView
+              key={`bank-acc-${accountKey}`}
               resource={bankAccountResource}
               onCreate={() => setShowCreateAccount(true)}
             />
           </Card>
-          <Modal
-            open={showCreateAccount}
-            onClose={() => setShowCreateAccount(false)}
-            title="New Bank Account"
-          >
-            <FormView
-              resource={bankAccountResource}
-              onSuccess={() => setShowCreateAccount(false)}
-              onCancel={() => setShowCreateAccount(false)}
-            />
-          </Modal>
         </div>
       )}
       {activeTab === "bank-accounts" && (
@@ -266,20 +398,10 @@ export default function BankingPage() {
             description="Manage bank accounts and opening balances"
           />
           <ListView
+            key={`ba-list-${accountKey}`}
             resource={bankAccountResource}
             onCreate={() => setShowCreateAccount(true)}
           />
-          <Modal
-            open={showCreateAccount}
-            onClose={() => setShowCreateAccount(false)}
-            title="New Bank Account"
-          >
-            <FormView
-              resource={bankAccountResource}
-              onSuccess={() => setShowCreateAccount(false)}
-              onCancel={() => setShowCreateAccount(false)}
-            />
-          </Modal>
         </div>
       )}
       {activeTab === "reconciliation" && (

@@ -82,7 +82,7 @@
   width: var(--space-5);
 }
 .s15 {
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   font-size: var(--text-xs);
   padding-inline: var(--space-2);
 }

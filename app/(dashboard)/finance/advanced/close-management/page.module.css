@@ -36,8 +36,8 @@
 }
 .s8 {
   font-size: var(--text-sm);
-  height: 34px;
-  padding-left: 28px;
+  height: var(--space-8);
+  padding-left: calc(var(--space-6) + var(--space-1));
 }
 .s9 {
   cursor: pointer;
@@ -47,7 +47,7 @@
   font-weight: var(--weight-semibold);
 }
 .s11 {
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   display: inline-block;
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);

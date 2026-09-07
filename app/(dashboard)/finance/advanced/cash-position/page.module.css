@@ -1,6 +1,6 @@
 .s1 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(var(--tile-min-dense), 1fr));
   gap: var(--space-4);
 }
 

@@ -2,7 +2,7 @@
   background: var(--color-bg-sunken);
   border-radius: var(--radius-full);
   flex: 1;
-  height: 6px;
+  height: var(--status-dot-size);
   overflow: hidden;
 }
 .s2 {
