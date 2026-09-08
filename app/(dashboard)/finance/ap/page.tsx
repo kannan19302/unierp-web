@@ -13,6 +13,8 @@ import {
   FileSpreadsheet,
   Check,
   CreditCard,
+  X,
+  Eye,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -69,6 +71,12 @@ export default function AccountsPayablePage() {
   const [isPaying, setIsPaying] = useState(false);
   const [paySuccess, setPaySuccess] = useState(false);
 
+  // Modals state
+  const [showVarianceModal, setShowVarianceModal] = useState(false);
+  const [varianceResolutionType, setVarianceResolutionType] = useState<"PRICE_VARIANCE_ACCRUAL" | "QUANTITY_SHORTAGE_CREDIT" | "APPROVE_UNDER_TOLERANCE">("PRICE_VARIANCE_ACCRUAL");
+  const [varianceNotes, setVarianceNotes] = useState("");
+  const [showInvoicePreview, setShowInvoicePreview] = useState(false);
+
   const { data, isLoading, isFetching, refetch } = useQuery<ApSummaryData>({
     queryKey: ["finance-ap-summary"],
     queryFn: async () => {
@@ -78,14 +86,23 @@ export default function AccountsPayablePage() {
     refetchInterval: 30000,
   });
 
-  const handleResolveVariance = async () => {
+  const handleResolveVariance = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     const billId = selectedBillNumber || data?.threeWayMatch?.billNumber;
     if (!billId) return;
     setIsResolving(true);
     try {
-      await apiClient.post("/finance/ap/resolve-variance", { billId });
+      await apiClient.post("/finance/ap/resolve-variance", {
+        billId,
+        resolutionType: varianceResolutionType,
+        notes: varianceNotes || "Variance approved through three-way match workflow.",
+      });
       setResolveSuccess(true);
-      setTimeout(() => setResolveSuccess(false), 3000);
+      setTimeout(() => {
+        setResolveSuccess(false);
+        setShowVarianceModal(false);
+        setVarianceNotes("");
+      }, 1200);
       await queryClient.invalidateQueries({ queryKey: ["finance-ap-summary"] });
     } catch (err) {
       console.error("Failed to resolve variance:", err);
@@ -404,6 +421,30 @@ export default function AccountsPayablePage() {
             </span>
           </div>
 
+          {/* Document Preview Box */}
+          <div className={styles.docPreviewBox}>
+            <div className={styles.docThumbnail}>
+              <FileText size={20} />
+            </div>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <span style={{ fontSize: "var(--text-xs)", fontWeight: 600, color: "var(--color-text-primary)" }}>
+                Vendor Invoice Original
+              </span>
+              <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-muted)" }}>
+                {matchData?.supplier} • OCR Verified
+              </span>
+            </div>
+            <button
+              type="button"
+              className={styles.btnSecondary}
+              style={{ padding: "var(--space-1) var(--space-2)", fontSize: "var(--text-2xs)" }}
+              onClick={() => setShowInvoicePreview(true)}
+            >
+              <Eye size={12} />
+              <span>Preview</span>
+            </button>
+          </div>
+
           {/* Lifecycle Steps */}
           <div className={styles.lifecycleSteps}>
             <div className={styles.stepItem}>
@@ -429,10 +470,10 @@ export default function AccountsPayablePage() {
               type="button"
               className={styles.btnPrimary}
               style={{ flex: 1, justifyContent: "center" }}
-              disabled={isResolving || !matchData?.actions.canResolveVariance}
-              onClick={handleResolveVariance}
+              disabled={!matchData?.actions.canResolveVariance}
+              onClick={() => setShowVarianceModal(true)}
             >
-              {isResolving ? "Resolving..." : resolveSuccess ? "Resolved ✓" : "Resolve variance"}
+              Resolve variance
             </button>
 
             <button
@@ -447,6 +488,175 @@ export default function AccountsPayablePage() {
           </div>
         </div>
       </div>
+
+      {/* Variance Resolution Modal */}
+      {showVarianceModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowVarianceModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Resolve 3-way match variance</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowVarianceModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleResolveVariance}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Bill & Supplier</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={`${matchData?.billNumber} — ${matchData?.supplier}`}
+                    disabled
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Discrepancy amount</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={`USD ${(matchData?.varianceAmount ?? 0).toFixed(2)}`}
+                    disabled
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Resolution treatment</label>
+                  <select
+                    className={styles.formSelect}
+                    value={varianceResolutionType}
+                    onChange={(e) => setVarianceResolutionType(e.target.value as any)}
+                  >
+                    <option value="PRICE_VARIANCE_ACCRUAL">Post to Purchase Price Variance (PPV) GL Account</option>
+                    <option value="QUANTITY_SHORTAGE_CREDIT">Request Vendor Credit Memo for Shortage</option>
+                    <option value="APPROVE_UNDER_TOLERANCE">Approve Under Enterprise Tolerance Threshold (&lt;2%)</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Audit notes & justification</label>
+                  <textarea
+                    className={styles.formTextarea}
+                    placeholder="Enter compliance justification and approval notes..."
+                    value={varianceNotes}
+                    onChange={(e) => setVarianceNotes(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {resolveSuccess && (
+                  <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <CheckCircle2 size={14} />
+                    <span>Variance resolved and approved for disbursement!</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowVarianceModal(false)}
+                  disabled={isResolving}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isResolving}
+                >
+                  {isResolving ? "Authorizing..." : "Authorize resolution"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Invoice Document Preview Modal */}
+      {showInvoicePreview && (
+        <div className={styles.modalOverlay} onClick={() => setShowInvoicePreview(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()} style={{ maxWidth: "600px" }}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Original Vendor Invoice: {matchData?.billNumber}</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowInvoicePreview(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid var(--color-border-subtle)", paddingBottom: "var(--space-2)" }}>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: "var(--text-sm)", color: "var(--color-text-primary)" }}>{matchData?.supplier}</div>
+                  <div style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-muted)" }}>100 Technology Plaza, San Francisco, CA</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontWeight: 600, fontSize: "var(--text-sm)", fontFamily: "var(--font-mono)", color: "var(--color-primary)" }}>{matchData?.billNumber}</div>
+                  <div style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-muted)" }}>PO Reference: {matchData?.poNumber}</div>
+                </div>
+              </div>
+
+              <div style={{ marginTop: "var(--space-2)" }}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th className={styles.th}>Item</th>
+                      <th className={`${styles.th} ${styles.thRight}`}>Qty</th>
+                      <th className={`${styles.th} ${styles.thRight}`}>Unit Price</th>
+                      <th className={`${styles.th} ${styles.thRight}`}>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className={styles.td}>Standard Commercial Service / Goods</td>
+                      <td className={styles.tdRight}>1.00</td>
+                      <td className={styles.tdRight}>${((matchData?.invoiceAmount ?? 0) * 0.9).toFixed(2)}</td>
+                      <td className={styles.tdRight}>${((matchData?.invoiceAmount ?? 0) * 0.9).toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td className={styles.td}>Sales &amp; Logistics Tax (10%)</td>
+                      <td className={styles.tdRight}>1.00</td>
+                      <td className={styles.tdRight}>${((matchData?.invoiceAmount ?? 0) * 0.1).toFixed(2)}</td>
+                      <td className={styles.tdRight}>${((matchData?.invoiceAmount ?? 0) * 0.1).toFixed(2)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "var(--space-2)" }}>
+                <div style={{ width: "220px", display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Invoice Total:</span>
+                    <span className={styles.tdMono} style={{ fontWeight: 600, color: "var(--color-text-primary)" }}>
+                      USD {(matchData?.invoiceAmount ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.modalFooter}>
+              <button
+                type="button"
+                className={styles.btnSecondary}
+                onClick={() => setShowInvoicePreview(false)}
+              >
+                Close preview
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

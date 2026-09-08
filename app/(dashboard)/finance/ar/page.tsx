@@ -13,6 +13,7 @@ import {
   AlertTriangle,
   CreditCard,
   FileSpreadsheet,
+  X,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -67,6 +68,14 @@ export default function AccountsReceivablePage() {
   const [isRecordingPayment, setIsRecordingPayment] = useState(false);
   const [paySuccess, setPaySuccess] = useState(false);
 
+  // Follow-up modal state
+  const [showFollowUpModal, setShowFollowUpModal] = useState(false);
+  const [followUpAction, setFollowUpAction] = useState<"SEND_DUNNING_NOTICE" | "SCHEDULE_CALL" | "OFFER_PAYMENT_PLAN" | "ESCALATE_DISPUTE" | "DISPUTE_INVESTIGATION">("SEND_DUNNING_NOTICE");
+  const [promisedDate, setPromisedDate] = useState("2026-09-15");
+  const [followUpNotes, setFollowUpNotes] = useState("");
+  const [isSubmittingFollowUp, setIsSubmittingFollowUp] = useState(false);
+  const [followUpSuccess, setFollowUpSuccess] = useState(false);
+
   const { data, isLoading, isFetching, refetch } = useQuery<ArSummaryData>({
     queryKey: ["finance-ar-summary"],
     queryFn: async () => {
@@ -96,6 +105,35 @@ export default function AccountsReceivablePage() {
       console.error("Failed to record payment:", err);
     } finally {
       setIsRecordingPayment(false);
+    }
+  };
+
+  const handleSaveFollowUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const invoiceNumber = selectedInvoiceNumber || data?.inspector?.invoiceNumber;
+    if (!invoiceNumber) return;
+    const targetRow = (data?.invoices || []).find((i) => i.invoiceNumber === invoiceNumber);
+    if (!targetRow) return;
+
+    setIsSubmittingFollowUp(true);
+    try {
+      await apiClient.post("/finance/ar/follow-up", {
+        invoiceId: targetRow.id,
+        action: followUpAction,
+        promisedPaymentDate: promisedDate,
+        notes: followUpNotes || "Follow-up logged by collections specialist.",
+      });
+      setFollowUpSuccess(true);
+      setTimeout(() => {
+        setFollowUpSuccess(false);
+        setShowFollowUpModal(false);
+        setFollowUpNotes("");
+      }, 1200);
+      await queryClient.invalidateQueries({ queryKey: ["finance-ar-summary"] });
+    } catch (err) {
+      console.error("Failed to record follow up:", err);
+    } finally {
+      setIsSubmittingFollowUp(false);
     }
   };
 
@@ -460,15 +498,111 @@ export default function AccountsReceivablePage() {
               <CreditCard size={13} />
               <span>{isRecordingPayment ? "Recording..." : paySuccess ? "Recorded ✓" : "Record payment"}</span>
             </button>
-            <Link
-              href="/crm/activity-capture"
+            <button
+              type="button"
               className={styles.btnSecondary}
+              onClick={() => setShowFollowUpModal(true)}
+              disabled={!activeInspector}
             >
-              Follow-up
-            </Link>
+              Review follow-up
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Review Follow-Up Modal */}
+      {showFollowUpModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowFollowUpModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Collections follow-up: {activeInspector?.invoiceNumber}</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowFollowUpModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleSaveFollowUp}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Customer</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={activeInspector?.customer || ""}
+                    disabled
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Action type</label>
+                  <select
+                    className={styles.formSelect}
+                    value={followUpAction}
+                    onChange={(e) => setFollowUpAction(e.target.value as any)}
+                  >
+                    <option value="SEND_DUNNING_NOTICE">Send Dunning Notice (Email)</option>
+                    <option value="SCHEDULE_CALL">Schedule Collections Call</option>
+                    <option value="OFFER_PAYMENT_PLAN">Offer Restructured Payment Plan</option>
+                    <option value="ESCALATE_DISPUTE">Escalate to Legal/Recovery</option>
+                    <option value="DISPUTE_INVESTIGATION">Dispute Investigation</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Promised payment date</label>
+                  <input
+                    type="date"
+                    className={styles.formInput}
+                    value={promisedDate}
+                    onChange={(e) => setPromisedDate(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Follow-up notes & agreement</label>
+                  <textarea
+                    className={styles.formTextarea}
+                    placeholder="Document conversation notes, payment commitment, contact details..."
+                    value={followUpNotes}
+                    onChange={(e) => setFollowUpNotes(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {followUpSuccess && (
+                  <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <CheckCircle2 size={14} />
+                    <span>Follow-up action logged & timeline updated successfully!</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowFollowUpModal(false)}
+                  disabled={isSubmittingFollowUp}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isSubmittingFollowUp}
+                >
+                  {isSubmittingFollowUp ? "Saving..." : "Record follow-up"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

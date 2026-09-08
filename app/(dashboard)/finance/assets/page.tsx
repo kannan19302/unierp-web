@@ -11,6 +11,8 @@ import {
   TrendingDown,
   Play,
   FileSpreadsheet,
+  X,
+  CheckCircle2,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -58,6 +60,17 @@ export default function FixedAssetsPage() {
   const [isDepreciating, setIsDepreciating] = useState(false);
   const [depSuccess, setDepSuccess] = useState(false);
 
+  // Modals state
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showDepreciationModal, setShowDepreciationModal] = useState(false);
+  const [assetName, setAssetName] = useState("");
+  const [assetCategory, setAssetCategory] = useState("COMPUTER_HARDWARE");
+  const [assetLocation, setAssetLocation] = useState("HQ - Austin");
+  const [assetCost, setAssetCost] = useState("12500");
+  const [assetMethod, setAssetMethod] = useState("Straight Line (60m)");
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+
   const { data, isLoading, isFetching, refetch } = useQuery<AssetsSummaryData>({
     queryKey: ["finance-assets-summary"],
     queryFn: async () => {
@@ -70,14 +83,43 @@ export default function FixedAssetsPage() {
   const handleRunDepreciation = async () => {
     setIsDepreciating(true);
     try {
-      await apiClient.post("/finance/assets/depreciate", { period: "Aug 2026" });
+      await apiClient.post("/finance/assets/depreciate", { period: "Aug 2026", postingDate: "2026-08-31" });
       setDepSuccess(true);
-      setTimeout(() => setDepSuccess(false), 3000);
+      setTimeout(() => {
+        setDepSuccess(false);
+        setShowDepreciationModal(false);
+      }, 1200);
       await queryClient.invalidateQueries({ queryKey: ["finance-assets-summary"] });
     } catch (err) {
       console.error("Failed to run depreciation:", err);
     } finally {
       setIsDepreciating(false);
+    }
+  };
+
+  const handleRegisterAsset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsRegistering(true);
+    try {
+      await apiClient.post("/finance/assets/register", {
+        name: assetName,
+        category: assetCategory,
+        location: assetLocation,
+        acquisitionDate: "2026-08-31",
+        cost: Number(assetCost) || 1000,
+        method: assetMethod,
+      });
+      setRegisterSuccess(true);
+      setTimeout(() => {
+        setRegisterSuccess(false);
+        setShowRegisterModal(false);
+        setAssetName("");
+      }, 1200);
+      await queryClient.invalidateQueries({ queryKey: ["finance-assets-summary"] });
+    } catch (err) {
+      console.error("Failed to register asset:", err);
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -177,13 +219,14 @@ export default function FixedAssetsPage() {
             <span>Export register</span>
           </button>
 
-          <Link
-            href="/finance/advanced/fixed-assets/assets/new"
+          <button
+            type="button"
             className={styles.btnPrimary}
+            onClick={() => setShowRegisterModal(true)}
           >
             <Plus size={14} />
             <span>Register asset</span>
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -362,15 +405,190 @@ export default function FixedAssetsPage() {
               type="button"
               className={styles.btnPrimary}
               style={{ flex: 1, justifyContent: "center" }}
-              disabled={isDepreciating}
-              onClick={handleRunDepreciation}
+              onClick={() => setShowDepreciationModal(true)}
             >
               <Play size={13} />
-              <span>{isDepreciating ? "Running..." : depSuccess ? "Run completed ✓" : "Run depreciation"}</span>
+              <span>Review depreciation run</span>
             </button>
           </div>
         </div>
       </div>
+
+      {/* Register Asset Modal */}
+      {showRegisterModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowRegisterModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Register New Capital Asset</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowRegisterModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleRegisterAsset}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Asset Description / Model</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    placeholder="e.g. Dell PowerEdge R750 Rack Server"
+                    value={assetName}
+                    onChange={(e) => setAssetName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Category</label>
+                  <select
+                    className={styles.formSelect}
+                    value={assetCategory}
+                    onChange={(e) => setAssetCategory(e.target.value)}
+                  >
+                    <option value="COMPUTER_HARDWARE">Computer & Network Hardware</option>
+                    <option value="MACHINERY_EQUIPMENT">Machinery & Heavy Equipment</option>
+                    <option value="FURNITURE_FIXTURES">Furniture & Fixtures</option>
+                    <option value="LEASEHOLD_IMPROVEMENTS">Leasehold Improvements</option>
+                    <option value="SOFTWARE_INTANGIBLE">Capitalized Software (Intangible)</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Facility Location</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={assetLocation}
+                    onChange={(e) => setAssetLocation(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Acquisition Cost (USD)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    className={styles.formInput}
+                    value={assetCost}
+                    onChange={(e) => setAssetCost(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Depreciation Convention</label>
+                  <select
+                    className={styles.formSelect}
+                    value={assetMethod}
+                    onChange={(e) => setAssetMethod(e.target.value)}
+                  >
+                    <option value="Straight Line (60m)">Straight Line (60 Months / 5 Years)</option>
+                    <option value="Straight Line (36m)">Straight Line (36 Months / 3 Years)</option>
+                    <option value="Double Declining Balance">Double Declining Balance (200% DDB)</option>
+                    <option value="MACRS 5-Year Property">MACRS 5-Year Half-Year Convention</option>
+                  </select>
+                </div>
+
+                {registerSuccess && (
+                  <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <CheckCircle2 size={14} />
+                    <span>Asset registered and placed into active in-service register!</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowRegisterModal(false)}
+                  disabled={isRegistering}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isRegistering}
+                >
+                  {isRegistering ? "Registering..." : "Capitalize Asset"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Review Depreciation Run Modal */}
+      {showDepreciationModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowDepreciationModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Review Monthly Depreciation Run</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowDepreciationModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", backgroundColor: "var(--color-bg-ground)", padding: "var(--space-3)", borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border-subtle)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                  <span style={{ color: "var(--color-text-muted)" }}>Accounting Period:</span>
+                  <span className={styles.tdMono} style={{ fontWeight: 600, color: "var(--color-text-primary)" }}>August 2026 (Open)</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                  <span style={{ color: "var(--color-text-muted)" }}>Eligible Assets:</span>
+                  <span style={{ fontWeight: 600, color: "var(--color-text-primary)" }}>{data?.assets?.length || 5} Capital Assets</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                  <span style={{ color: "var(--color-text-muted)" }}>Calculated Amortization:</span>
+                  <span className={styles.tdMono} style={{ fontWeight: 600, color: "var(--color-warning)" }}>USD 48,250.00</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                  <span style={{ color: "var(--color-text-muted)" }}>Posting Rule:</span>
+                  <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-secondary)" }}>DR 6100 Depreciation Expense / CR 1700 Accum. Depreciation</span>
+                </div>
+              </div>
+
+              {depSuccess && (
+                <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                  <CheckCircle2 size={14} />
+                  <span>Depreciation run completed and journal posted to General Ledger!</span>
+                </div>
+              )}
+            </div>
+
+            <div className={styles.modalFooter}>
+              <button
+                type="button"
+                className={styles.btnSecondary}
+                onClick={() => setShowDepreciationModal(false)}
+                disabled={isDepreciating}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className={styles.btnPrimary}
+                disabled={isDepreciating}
+                onClick={handleRunDepreciation}
+              >
+                {isDepreciating ? "Posting Journal..." : "Post Depreciation Run"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   Check,
   TrendingUp,
   FileSpreadsheet,
+  X,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -67,6 +68,14 @@ export default function BankingTreasuryPage() {
   const [isMatching, setIsMatching] = useState(false);
   const [matchSuccess, setMatchSuccess] = useState(false);
 
+  // Import Statement Modal State
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importAccountId, setImportAccountId] = useState("acc-001");
+  const [importFormat, setImportFormat] = useState<"OFX" | "QIF" | "CSV" | "CAMT_053">("CSV");
+  const [importFilename, setImportFilename] = useState("august_2026_bank_stmt.csv");
+  const [isImporting, setIsImporting] = useState(false);
+  const [importSuccess, setImportSuccess] = useState(false);
+
   const { data, isLoading, isFetching, refetch } = useQuery<BankingSummaryData>({
     queryKey: ["finance-banking-summary"],
     queryFn: async () => {
@@ -89,6 +98,30 @@ export default function BankingTreasuryPage() {
       console.error("Failed to reconcile bank transaction:", err);
     } finally {
       setIsMatching(false);
+    }
+  };
+
+  const handleImportStatement = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsImporting(true);
+    try {
+      await apiClient.post("/finance/banking/import-statement", {
+        accountId: importAccountId,
+        format: importFormat,
+        statementDate: "2026-08-31",
+        filename: importFilename || "statement_import.csv",
+        transactionsCount: 14,
+      });
+      setImportSuccess(true);
+      setTimeout(() => {
+        setImportSuccess(false);
+        setShowImportModal(false);
+      }, 1200);
+      await queryClient.invalidateQueries({ queryKey: ["finance-banking-summary"] });
+    } catch (err) {
+      console.error("Failed to import bank statement:", err);
+    } finally {
+      setIsImporting(false);
     }
   };
 
@@ -149,13 +182,14 @@ export default function BankingTreasuryPage() {
             </button>
           </div>
 
-          <Link
-            href="/finance/advanced/bank-feeds"
+          <button
+            type="button"
             className={styles.btnSecondary}
+            onClick={() => setShowImportModal(true)}
           >
             <Upload size={14} />
             <span>Import statement</span>
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -401,6 +435,103 @@ export default function BankingTreasuryPage() {
           </svg>
         </div>
       </div>
+
+      {/* Import Statement Modal */}
+      {showImportModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowImportModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Import Electronic Bank Statement</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowImportModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleImportStatement}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Target Bank Account</label>
+                  <select
+                    className={styles.formSelect}
+                    value={importAccountId}
+                    onChange={(e) => setImportAccountId(e.target.value)}
+                  >
+                    {accounts.map((acc) => (
+                      <option key={acc.id} value={acc.id}>
+                        {acc.name} ({acc.numberMask}) — {acc.currency}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Statement format</label>
+                  <select
+                    className={styles.formSelect}
+                    value={importFormat}
+                    onChange={(e) => setImportFormat(e.target.value as any)}
+                  >
+                    <option value="CSV">Comma Separated Values (CSV / Excel)</option>
+                    <option value="OFX">Open Financial Exchange (OFX / QFX)</option>
+                    <option value="QIF">Quicken Interchange Format (QIF)</option>
+                    <option value="CAMT_053">ISO 20022 XML (CAMT.053 Enterprise)</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>File specification</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={importFilename}
+                    onChange={(e) => setImportFilename(e.target.value)}
+                    placeholder="Enter statement file identifier..."
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Statement cut-off date</label>
+                  <input
+                    type="date"
+                    className={styles.formInput}
+                    defaultValue="2026-08-31"
+                  />
+                </div>
+
+                {importSuccess && (
+                  <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <CheckCircle2 size={14} />
+                    <span>Statement ingested and staged for automated reconciliation!</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowImportModal(false)}
+                  disabled={isImporting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isImporting}
+                >
+                  {isImporting ? "Processing feed..." : "Ingest & Reconcile"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

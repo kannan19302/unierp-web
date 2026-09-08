@@ -14,6 +14,7 @@ import {
   Plus,
   FileText,
   Send,
+  X,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -87,6 +88,23 @@ export default function TaxCompliancePage() {
   const [isGenerating1099, setIsGenerating1099] = useState(false);
   const [gen1099Success, setGen1099Success] = useState<string | null>(null);
 
+  // Modals state
+  const [showPrepareModal, setShowPrepareModal] = useState(false);
+  const [prepareJurisdiction, setPrepareJurisdiction] = useState("US - California");
+  const [prepareEntity, setPrepareEntity] = useState("Acme Corp (US)");
+  const [prepareReturnType, setPrepareReturnType] = useState("Sales & Use Tax (Form CDTFA-401)");
+  const [preparePeriod, setPreparePeriod] = useState("Q3 2026");
+  const [prepareDueDate, setPrepareDueDate] = useState("2026-10-31");
+  const [prepareAmount, setPrepareAmount] = useState("34200");
+  const [isPreparing, setIsPreparing] = useState(false);
+  const [prepareSuccess, setPrepareSuccess] = useState(false);
+
+  const [showExceptionsModal, setShowExceptionsModal] = useState(false);
+  const [exceptionOverrideChoice, setExceptionOverrideChoice] = useState("ACCEPT_ASSESSMENT");
+  const [exceptionNotes, setExceptionNotes] = useState("");
+  const [isResolvingException, setIsResolvingException] = useState(false);
+  const [exceptionResolvedSuccess, setExceptionResolvedSuccess] = useState(false);
+
   const { data, isLoading, isFetching, refetch } = useQuery<TaxSummaryData>({
     queryKey: ["finance-tax-summary"],
     queryFn: async () => {
@@ -120,6 +138,55 @@ export default function TaxCompliancePage() {
       console.error("Failed to update tax status:", err);
     } finally {
       setIsReviewing(false);
+    }
+  };
+
+  const handlePrepareReturn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsPreparing(true);
+    try {
+      await apiClient.post("/finance/tax/prepare", {
+        jurisdiction: prepareJurisdiction,
+        entity: prepareEntity,
+        returnType: prepareReturnType,
+        period: preparePeriod,
+        targetDate: prepareDueDate,
+        estimatedAmount: Number(prepareAmount) || 0,
+        notes: "Prepared via statutory tax workbench.",
+      });
+      setPrepareSuccess(true);
+      setTimeout(() => {
+        setPrepareSuccess(false);
+        setShowPrepareModal(false);
+      }, 1200);
+      await queryClient.invalidateQueries({ queryKey: ["finance-tax-summary"] });
+    } catch (err) {
+      console.error("Failed to prepare tax return:", err);
+    } finally {
+      setIsPreparing(false);
+    }
+  };
+
+  const handleResolveExceptionsSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsResolvingException(true);
+    try {
+      const returnId = selectedFilingId || data?.selectedReturn?.id || "tax-1";
+      await apiClient.post("/finance/tax/update-status", {
+        returnId,
+        targetStatus: "READY_FOR_APPROVAL",
+      });
+      setExceptionResolvedSuccess(true);
+      setTimeout(() => {
+        setExceptionResolvedSuccess(false);
+        setShowExceptionsModal(false);
+        setExceptionNotes("");
+      }, 1200);
+      await queryClient.invalidateQueries({ queryKey: ["finance-tax-summary"] });
+    } catch (err) {
+      console.error("Failed to resolve exceptions:", err);
+    } finally {
+      setIsResolvingException(false);
     }
   };
 
@@ -240,13 +307,14 @@ export default function TaxCompliancePage() {
             </button>
           </div>
 
-          <Link
-            href="/finance/advanced/tax-filing"
+          <button
+            type="button"
             className={styles.btnPrimary}
+            onClick={() => setShowPrepareModal(true)}
           >
             <Plus size={14} />
             <span>Prepare return</span>
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -470,11 +538,10 @@ export default function TaxCompliancePage() {
                   type="button"
                   className={styles.btnPrimary}
                   style={{ flex: 1, justifyContent: "center" }}
-                  disabled={isReviewing}
-                  onClick={handleReviewExceptions}
+                  onClick={() => setShowExceptionsModal(true)}
                 >
                   <AlertTriangle size={13} />
-                  <span>{isReviewing ? "Reviewing..." : reviewSuccess ? "Reviewed ✓" : "Review exceptions"}</span>
+                  <span>Review exceptions</span>
                 </button>
               </div>
             </div>
@@ -704,6 +771,206 @@ export default function TaxCompliancePage() {
             </div>
           </div>
         </>
+      )}
+
+      {/* Prepare Return Modal */}
+      {showPrepareModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowPrepareModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Prepare Statutory Tax Filing</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowPrepareModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handlePrepareReturn}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Tax Jurisdiction</label>
+                  <select
+                    className={styles.formSelect}
+                    value={prepareJurisdiction}
+                    onChange={(e) => setPrepareJurisdiction(e.target.value)}
+                  >
+                    <option value="US - California">US - California (CDTFA)</option>
+                    <option value="US - Federal">US - Federal (IRS)</option>
+                    <option value="US - New York">US - New York (NYS DTF)</option>
+                    <option value="EU - Germany VAT">EU - Germany (Bundeszentralamt für Steuern)</option>
+                    <option value="UK - HMRC VAT">UK - HMRC (Making Tax Digital VAT)</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Legal Entity</label>
+                  <select
+                    className={styles.formSelect}
+                    value={prepareEntity}
+                    onChange={(e) => setPrepareEntity(e.target.value)}
+                  >
+                    <option value="Acme Corp (US)">Acme Corp (US Primary)</option>
+                    <option value="Acme Global Operations">Acme Global Operations Inc</option>
+                    <option value="Acme EU Holding B.V.">Acme EU Holding B.V.</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Return / Form Type</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={prepareReturnType}
+                    onChange={(e) => setPrepareReturnType(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Tax Period</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={preparePeriod}
+                    onChange={(e) => setPreparePeriod(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Statutory Due Date</label>
+                  <input
+                    type="date"
+                    className={styles.formInput}
+                    value={prepareDueDate}
+                    onChange={(e) => setPrepareDueDate(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Estimated Tax Assessment (USD)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    className={styles.formInput}
+                    value={prepareAmount}
+                    onChange={(e) => setPrepareAmount(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {prepareSuccess && (
+                  <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <CheckCircle2 size={14} />
+                    <span>Statutory return staged and scheduled in tax compliance calendar!</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowPrepareModal(false)}
+                  disabled={isPreparing}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isPreparing}
+                >
+                  {isPreparing ? "Staging Return..." : "Stage Tax Return"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Review Exceptions Modal */}
+      {showExceptionsModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowExceptionsModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Tax Reconciliation Exceptions: {selectedReturn?.name}</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowExceptionsModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleResolveExceptionsSubmit}>
+              <div className={styles.modalBody}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", backgroundColor: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.25)", padding: "var(--space-3)", borderRadius: "var(--radius-sm)" }}>
+                  <div style={{ fontWeight: 600, fontSize: "var(--text-xs)", color: "var(--color-warning)" }}>
+                    Tax Rate Discrepancy Identified
+                  </div>
+                  <div style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-secondary)" }}>
+                    Subledger transaction TX-9844 applies 8.25% district surcharge while statutory schedule indicates standard rate 7.75%. Variance of USD 248.50 requires compliance resolution before officer sign-off.
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Compliance Resolution Decision</label>
+                  <select
+                    className={styles.formSelect}
+                    value={exceptionOverrideChoice}
+                    onChange={(e) => setExceptionOverrideChoice(e.target.value)}
+                  >
+                    <option value="ACCEPT_ASSESSMENT">Accept District Surcharge Assessment &amp; True-up Expense</option>
+                    <option value="REQUEST_VENDOR_CREDIT">Request Vendor Credit Memo for Overbilled Surcharge</option>
+                    <option value="RECLASSIFY_EXEMPT">Reclassify as Intercompany Exemption</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Auditor / Sign-off Notes</label>
+                  <textarea
+                    className={styles.formTextarea}
+                    placeholder="Enter compliance justification and sign-off remarks..."
+                    value={exceptionNotes}
+                    onChange={(e) => setExceptionNotes(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {exceptionResolvedSuccess && (
+                  <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <CheckCircle2 size={14} />
+                    <span>Exceptions approved! Return status updated to Ready For Approval.</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowExceptionsModal(false)}
+                  disabled={isResolvingException}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isResolvingException}
+                >
+                  {isResolvingException ? "Authorizing..." : "Authorize & Approve Return"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );

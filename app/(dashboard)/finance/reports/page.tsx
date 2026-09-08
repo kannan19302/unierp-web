@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   RefreshCw,
@@ -11,6 +11,8 @@ import {
   FileSpreadsheet,
   Clock,
   ExternalLink,
+  X,
+  CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
 import { useApiClient } from "@kannan19302/framework";
@@ -42,6 +44,15 @@ interface ReportsPnlData {
 export default function FinancialReportsPage() {
   const apiClient = useApiClient();
 
+  // Export Modal State
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [exportReportType, setExportReportType] = useState<"PROFIT_AND_LOSS" | "BALANCE_SHEET" | "CASH_FLOW_STATEMENT" | "TRIAL_BALANCE">("PROFIT_AND_LOSS");
+  const [exportFormat, setExportFormat] = useState<"PDF" | "XLSX" | "CSV">("PDF");
+  const [exportPeriod, setExportPeriod] = useState("Aug 2026");
+  const [includeAuditFootnotes, setIncludeAuditFootnotes] = useState(true);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportSuccess, setExportSuccess] = useState(false);
+
   const { data, isLoading, isFetching, refetch } = useQuery<ReportsPnlData>({
     queryKey: ["finance-reports-pnl"],
     queryFn: async () => {
@@ -53,23 +64,45 @@ export default function FinancialReportsPage() {
 
   const lineItems = data?.lineItems || [];
 
-  const handleExportCsv = () => {
-    const headers = ["Line Item", "Aug 2026 (USD)", "Jul 2026 (USD)", "Change (USD)"];
-    const rows = lineItems.map((r) => [
-      `"${r.lineItem}"`,
-      r.aug2026.toFixed(2),
-      r.jul2026.toFixed(2),
-      r.change.toFixed(2),
-    ]);
-    const csvContent = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", `pnl-statement-${Date.now().toString().slice(-6)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleExportStatement = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsExporting(true);
+    try {
+      await apiClient.post("/finance/reports/export", {
+        reportType: exportReportType,
+        format: exportFormat,
+        period: exportPeriod,
+        includeAuditFootnotes,
+      });
+
+      // Also trigger file download on client
+      const headers = ["Line Item", "Aug 2026 (USD)", "Jul 2026 (USD)", "Change (USD)"];
+      const rows = lineItems.map((r) => [
+        `"${r.lineItem}"`,
+        r.aug2026.toFixed(2),
+        r.jul2026.toFixed(2),
+        r.change.toFixed(2),
+      ]);
+      const csvContent = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `${exportReportType.toLowerCase()}-${exportPeriod.toLowerCase().replace(/\s+/g, "_")}.${exportFormat.toLowerCase()}`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setExportSuccess(true);
+      setTimeout(() => {
+        setExportSuccess(false);
+        setShowExportModal(false);
+      }, 1200);
+    } catch (err) {
+      console.error("Failed to export financial report:", err);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const inspector = data?.inspector;
@@ -111,7 +144,7 @@ export default function FinancialReportsPage() {
           <button
             type="button"
             className={styles.btnPrimary}
-            onClick={handleExportCsv}
+            onClick={() => setShowExportModal(true)}
             disabled={lineItems.length === 0}
           >
             <Download size={14} />
@@ -255,6 +288,103 @@ export default function FinancialReportsPage() {
           </div>
         </div>
       </div>
+
+      {/* Export Report Modal */}
+      {showExportModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowExportModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Export Financial Statement</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowExportModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleExportStatement}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Statement / Report Type</label>
+                  <select
+                    className={styles.formSelect}
+                    value={exportReportType}
+                    onChange={(e) => setExportReportType(e.target.value as any)}
+                  >
+                    <option value="PROFIT_AND_LOSS">Income Statement (Profit &amp; Loss)</option>
+                    <option value="BALANCE_SHEET">Statement of Financial Position (Balance Sheet)</option>
+                    <option value="CASH_FLOW_STATEMENT">Statement of Cash Flows (Indirect Method)</option>
+                    <option value="TRIAL_BALANCE">General Ledger Trial Balance</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Export Format</label>
+                  <select
+                    className={styles.formSelect}
+                    value={exportFormat}
+                    onChange={(e) => setExportFormat(e.target.value as any)}
+                  >
+                    <option value="PDF">Formatted Adobe PDF (Audit Board Package)</option>
+                    <option value="XLSX">Microsoft Excel (.xlsx with formula lineage)</option>
+                    <option value="CSV">Comma-Separated Values (CSV raw data)</option>
+                  </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Reporting Period</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={exportPeriod}
+                    onChange={(e) => setExportPeriod(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-1)" }}>
+                  <input
+                    type="checkbox"
+                    id="includeFootnotes"
+                    checked={includeAuditFootnotes}
+                    onChange={(e) => setIncludeAuditFootnotes(e.target.checked)}
+                  />
+                  <label htmlFor="includeFootnotes" style={{ fontSize: "var(--text-xs)", color: "var(--color-text-secondary)", cursor: "pointer" }}>
+                    Include statutory disclosure footnotes and GL account lineage
+                  </label>
+                </div>
+
+                {exportSuccess && (
+                  <div style={{ color: "var(--color-success)", fontSize: "var(--text-xs)", display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                    <CheckCircle2 size={14} />
+                    <span>Financial statement generated and downloaded successfully!</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowExportModal(false)}
+                  disabled={isExporting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isExporting}
+                >
+                  {isExporting ? "Generating..." : "Download Report"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
