@@ -148,14 +148,18 @@ export default function BankReconMatchingPage() {
 
   const handleIgnore = async () => {
     if (!selectedTx) return;
+    setMatchingActionLoading(true);
+    setMatchResultMsg(null);
     try {
       await client.post(
         `/advanced-finance/bank-feeds/transactions/${selectedTx.id}/ignore`,
       );
-      alert("Transaction ignored.");
-      fetchTransactions();
-    } catch (e) {
-      console.error(e);
+      setMatchResultMsg({ type: "success", text: "Transaction ignored." });
+      await fetchTransactions();
+    } catch {
+      setMatchResultMsg({ type: "error", text: "Unable to ignore the transaction." });
+    } finally {
+      setMatchingActionLoading(false);
     }
   };
 

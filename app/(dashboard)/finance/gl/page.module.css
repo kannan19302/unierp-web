@@ -22,17 +22,17 @@
 }
 
 .title {
-  font-size: var(--font-size-2xl);
+  font-size: var(--text-2xl, var(--font-size-2xl));
   font-weight: 600;
   color: var(--color-text-primary);
-  margin: 0;
+  margin: var(--space-0);
   line-height: var(--line-height-tight);
 }
 
 .subtitle {
-  font-size: var(--font-size-sm);
+  font-size: var(--text-xs);
   color: var(--color-text-muted);
-  margin: 0;
+  margin: var(--space-0);
 }
 
 .headerRight {
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: var(--font-size-xs);
+  font-size: var(--text-xs);
   color: var(--color-text-secondary);
   background-color: var(--color-bg-elevated);
   padding: var(--space-1) var(--space-2);
@@ -97,9 +97,14 @@
   border: none;
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
-  font-size: var(--font-size-xs);
+  font-size: var(--text-xs);
   font-weight: 500;
   cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btnPrimary:hover {
+  opacity: 0.9;
 }
 
 .btnSecondary {
@@ -111,63 +116,26 @@
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
-  font-size: var(--font-size-xs);
+  font-size: var(--text-xs);
   font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-/* Scenario Switcher Bar */
-.scenarioBar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-
-.scenarioSegmented {
-  display: flex;
+.btnSecondary:hover {
   background-color: var(--color-bg-sunken);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 2px;
-  gap: 2px;
-}
-
-.scenarioTab {
-  background: none;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.scenarioTabActive {
-  background-color: var(--color-bg-elevated);
-  color: var(--color-primary);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  font-weight: 600;
-}
-
-.draftStatusText {
-  font-size: var(--text-2xs);
-  color: var(--color-text-muted);
 }
 
 /* KPI Strip */
 .kpiStrip {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-3);
 }
 
 @media (max-width: 1024px) {
   .kpiStrip {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -182,7 +150,7 @@
 }
 
 .kpiLabel {
-  font-size: var(--font-size-xs);
+  font-size: var(--text-xs);
   color: var(--color-text-muted);
   font-weight: 500;
   text-transform: uppercase;
@@ -196,10 +164,31 @@
 }
 
 .kpiValue {
-  font-size: var(--font-size-xl);
+  font-size: var(--text-xl);
   font-weight: 600;
   color: var(--color-text-primary);
   font-family: var(--font-mono);
+}
+
+.kpiBadgeSuccess {
+  font-size: var(--text-xs);
+  color: var(--color-success);
+  background-color: rgba(16, 185, 129, 0.1);
+  padding: var(--space-half) var(--space-1);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-half);
+}
+
+.kpiBadgeWarning {
+  font-size: var(--text-xs);
+  color: var(--color-warning);
+  background-color: rgba(245, 158, 11, 0.1);
+  padding: var(--space-half) var(--space-1);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
 }
 
 /* Split Workspace */
@@ -216,6 +205,7 @@
   }
 }
 
+/* Ledger Table Panel */
 .tablePanel {
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border-subtle);
@@ -232,9 +222,27 @@
 }
 
 .panelTitle {
-  font-size: var(--font-size-sm);
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-text-primary);
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-bg-ground);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+}
+
+.searchInput {
+  border: none;
+  background: none;
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+  outline: none;
 }
 
 .tableWrap {
@@ -244,7 +252,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--font-size-xs);
+  font-size: var(--text-xs);
   text-align: left;
 }
 
@@ -262,13 +270,17 @@
 }
 
 .tr {
+  cursor: pointer;
+  transition: background-color 0.1s ease;
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
-.trTotal {
-  border-top: 2px solid var(--color-border-subtle);
+.tr:hover {
   background-color: var(--color-bg-sunken);
-  font-weight: 600;
+}
+
+.trSelected {
+  background-color: rgba(37, 99, 235, 0.06);
 }
 
 .td {
@@ -277,22 +289,36 @@
   white-space: nowrap;
 }
 
+.tdMono {
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+}
+
 .tdRight {
   text-align: right;
   font-family: var(--font-mono);
 }
 
-.varianceUnfavorable {
-  color: var(--color-danger);
+.badgeDraft {
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-half) var(--space-1);
+  font-size: var(--text-2xs);
   font-weight: 600;
 }
 
-.varianceFavorable {
+.badgePosted {
+  background-color: rgba(16, 185, 129, 0.1);
   color: var(--color-success);
+  border-radius: var(--radius-sm);
+  padding: var(--space-half) var(--space-1);
+  font-size: var(--text-2xs);
   font-weight: 600;
 }
 
-/* Driver Inspector */
+/* Inspector Panel */
 .inspectorPanel {
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border-subtle);
@@ -312,33 +338,62 @@
 }
 
 .inspectorTitle {
-  font-size: var(--font-size-sm);
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-text-primary);
 }
 
-.driverGroup {
+.inspectorId {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.inspectorField {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-half);
 }
 
-.driverLabelRow {
+.inspectorFieldLabel {
+  font-size: var(--text-2xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.inspectorFieldValue {
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+}
+
+.linesContainer {
+  background-color: var(--color-bg-ground);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
   display: flex;
-  justify-content: space-between;
-  font-size: var(--font-size-xs);
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
-.driverValue {
+.lineRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+}
+
+.lineAccount {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.lineAmount {
   font-family: var(--font-mono);
   font-weight: 600;
-  color: var(--color-primary);
-}
-
-.slider {
-  width: 100%;
-  accent-color: var(--color-primary);
-  cursor: pointer;
 }
 
 .inspectorActions {
@@ -346,66 +401,6 @@
   gap: var(--space-2);
   padding-top: var(--space-2);
   border-top: 1px solid var(--color-border-subtle);
-}
-
-/* Forecast Trend Section */
-.trendSection {
-  background-color: var(--color-bg-elevated);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.trendHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.trendTitle {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-.chartContainer {
-  height: 10rem;
-  width: 100%;
-}
-
-.chartSvg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.legendRow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  font-size: var(--text-2xs);
-  color: var(--color-text-secondary);
-}
-
-.legendItem {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.lineActual {
-  width: var(--space-4);
-  height: var(--space-0-5);
-  background-color: var(--color-primary);
-}
-
-.lineForecast {
-  width: var(--space-4);
-  height: var(--space-0-5);
-  border-top: 1px dashed var(--color-warning);
 }
 
 .skeleton {

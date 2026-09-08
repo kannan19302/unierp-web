@@ -460,3 +460,140 @@
   border-top: 1px solid var(--color-border);
   margin-top: var(--space-2);
 }
+
+/* Refresh Icon Button */
+.refreshBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+.refreshBtn:hover {
+  background: var(--color-bg-hover, #f3f4f6);
+  color: var(--color-text);
+  border-color: var(--color-border-hover, #9ca3af);
+}
+
+.refreshSpin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty & Error State Banners */
+.banner {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.bannerContent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bannerTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--color-text);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.bannerDesc {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.bannerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: var(--space-1-5) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium, 500);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+.btnSecondary:hover {
+  background: var(--color-bg-hover, #f3f4f6);
+  border-color: var(--color-border-hover, #9ca3af);
+}
+
+/* Skeleton Shimmer Loading Styles */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 25%,
+    var(--color-bg-hover, #f3f4f6) 50%,
+    var(--color-border) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonText {
+  height: 1rem;
+  width: 60%;
+  margin-bottom: var(--space-1);
+}
+
+.skeletonValue {
+  height: 1.75rem;
+  width: 50%;
+  margin-bottom: var(--space-1);
+}
+
+.skeletonChart {
+  height: 12.5rem;
+  width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.skeletonRow {
+  height: 2rem;
+  width: 100%;
+  margin-bottom: var(--space-2);
+}

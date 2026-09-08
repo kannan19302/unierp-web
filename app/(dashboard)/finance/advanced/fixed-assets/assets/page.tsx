@@ -1,6 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Building2,
@@ -35,6 +36,7 @@ interface FixedAssetCategory {
 }
 
 export default function FixedAssetRegistry() {
+  const router = useRouter();
   const [assets, setAssets] = useState<FixedAsset[]>([]);
   const [categories, setCategories] = useState<FixedAssetCategory[]>([]);
   const [loading, setLoading] = useState(true);
@@ -106,12 +108,10 @@ export default function FixedAssetRegistry() {
             </p>
           </div>
         </div>
-        <Link href="/finance/advanced/fixed-assets/assets/new" passHref>
-          <Button>
-            <Plus className={styles.s5} />
-            Register Asset
-          </Button>
-        </Link>
+        <Button onClick={() => router.push("/finance/advanced/fixed-assets/assets/new")}>
+          <Plus className={styles.s5} />
+          Register Asset
+        </Button>
       </div>
 
       {/* Search & Filters Card */}

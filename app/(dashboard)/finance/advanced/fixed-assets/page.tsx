@@ -1,6 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Building2,
@@ -50,6 +51,7 @@ interface GLAccount {
 }
 
 export default function FixedAssetsDashboard() {
+  const router = useRouter();
   const [assets, setAssets] = useState<FixedAsset[]>([]);
   const [categories, setCategories] = useState<FixedAssetCategory[]>([]);
   const [accounts, setAccounts] = useState<GLAccount[]>([]);
@@ -226,12 +228,10 @@ export default function FixedAssetsDashboard() {
             <Settings className={styles.s4} />
             Add Category
           </Button>
-          <Link href="/finance/advanced/fixed-assets/assets/new" passHref>
-            <Button>
-              <Plus className={styles.s4} />
-              Register Asset
-            </Button>
-          </Link>
+          <Button onClick={() => router.push("/finance/advanced/fixed-assets/assets/new")}>
+            <Plus className={styles.s4} />
+            Register Asset
+          </Button>
         </div>
       </div>
 

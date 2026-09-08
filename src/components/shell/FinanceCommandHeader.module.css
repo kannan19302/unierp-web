@@ -195,7 +195,7 @@
   font-size: var(--text-2xs, 0.5625rem);
   font-weight: var(--weight-bold, 700);
   background: var(--color-primary, #2563eb);
-  color: #ffffff;
+  color: var(--color-text-inverse, #ffffff);
   border-radius: var(--radius-full);
   padding: 0 0.25rem;
   line-height: 1;

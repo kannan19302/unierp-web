@@ -2,6 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import {
   Settings,
   ShieldCheck,
@@ -37,6 +38,7 @@ interface APRun {
 }
 
 export default function APAutomationPage() {
+  const router = useRouter();
   const client = useApiClient();
   const [schedules, setSchedules] = useState<APSchedule[]>([]);
   const [runs, setRuns] = useState<APRun[]>([]);
@@ -129,32 +131,6 @@ export default function APAutomationPage() {
     }
   };
 
-  const handleRunMatchingEngine = async () => {
-    // Manually run/create a sample payment schedule using first vendor
-    if (vendors.length === 0) {
-      alert("Please add a vendor first to run the matching engine.");
-      return;
-    }
-    try {
-      const sampleVendor = vendors[0] as { id: string; name: string };
-      const payload = {
-        vendorId: sampleVendor.id,
-        amount: Math.floor(Math.random() * 5000) + 500,
-        dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(),
-        status: "PENDING",
-      };
-
-      await client.post("/advanced-finance/payment-schedules", payload);
-      alert(
-        "Matching engine completed. Generated a verified payment schedule for: " +
-          sampleVendor.name,
-      );
-      fetchData();
-    } catch {
-      alert("Unable to run the matching engine.");
-    }
-  };
-
   if (loading)
     return (
       <div className="p-8 ui-flex-center">
@@ -177,7 +153,7 @@ export default function APAutomationPage() {
               <RefreshCw className="mr-2" />
               Refresh Data
             </Button>
-            <Button onClick={() => alert("Rules configuration updated.")}>
+            <Button onClick={() => router.push("/finance/advanced/ap-match-rules")}>
               <Settings className="mr-2" />
               Configure AP Rules
             </Button>
@@ -408,9 +384,9 @@ export default function APAutomationPage() {
               <Button
                 variant="outline"
                 className="w-full"
-                onClick={handleRunMatchingEngine}
+                onClick={() => router.push("/finance/advanced/ap-match-rules")}
               >
-                Run Matching Engine <ArrowRight className={styles.s12} />
+                Configure matching rules <ArrowRight className={styles.s12} />
               </Button>
             </div>
           </Card>

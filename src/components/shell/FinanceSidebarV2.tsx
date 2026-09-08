@@ -387,6 +387,26 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
                       </div>
                     </Link>
                   )}
+                  {isItemMatch("FX Revaluation") && (
+                    <Link
+                      href="/finance/fx-revaluation"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/fx-revaluation") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>FX revaluation</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Intercompany") && (
+                    <Link
+                      href="/finance/intercompany"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/intercompany") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Intercompany eliminations</span>
+                      </div>
+                    </Link>
+                  )}
                 </div>
               )}
             </div>

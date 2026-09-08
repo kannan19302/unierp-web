@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { CreditCard, Loader2 } from "lucide-react";
 import { Card, Button, ListPageTemplate, type ListColumn } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
@@ -16,6 +17,7 @@ interface CorporateCardItem {
 }
 
 export default function CorporateCardsPage() {
+  const router = useRouter();
   const client = useApiClient();
   const [cards, setCards] = useState<CorporateCardItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -146,7 +148,10 @@ export default function CorporateCardsPage() {
             columns={columns}
             data={cards}
             actions={
-              <Button variant="primary">
+              <Button
+                variant="primary"
+                onClick={() => router.push("/finance/advanced/expense-policies?tab=cards&create=1")}
+              >
                 <CreditCard size={14} style={{ marginRight: "var(--space-1-5)" }} /> + Issue
                 New Card
               </Button>

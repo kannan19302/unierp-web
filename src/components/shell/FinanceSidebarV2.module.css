@@ -262,7 +262,7 @@
   background: var(--color-primary-light, #eff6ff);
   color: var(--color-primary, #2563eb);
   font-weight: var(--weight-medium, 500);
-  border-left: 3px solid var(--color-primary, #2563eb);
+  border-left: 0.1875rem solid var(--color-primary, #2563eb);
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -432,7 +432,7 @@
   right: 0.125rem;
   font-size: var(--text-2xs, 0.5625rem);
   background: var(--color-primary, #2563eb);
-  color: #ffffff;
+  color: var(--color-text-inverse, #ffffff);
   border-radius: var(--radius-full);
   padding: 0 0.25rem;
   line-height: 1;

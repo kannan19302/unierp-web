@@ -14,20 +14,36 @@ const nextConfig = {
   devIndicators: {
     position: 'bottom-right',
   },
+  onDemandEntries: {
+    // Keep compiled pages in memory for 1 hour (default was 15s)
+    maxInactiveAge: 60 * 60 * 1000,
+    // Buffer up to 100 compiled pages simultaneously without disposing them (default was 2)
+    pagesBufferLength: 100,
+  },
   // Force webpack to poll for file changes instead of relying on inotify,
   // which doesn't fire reliably on Docker Desktop bind mounts (Windows).
   // Polling is already set via WATCHPACK_POLLING=1000 in the Docker env,
   // but this explicit config ensures it works even if that env var is absent.
   webpack: (config, { dev }) => {
     if (dev) {
-      // Always poll in dev — inotify is unreliable on Docker Desktop bind
-      // mounts over WSL2's 9P bridge. Poll every 1 s; 300 ms debounce.
-      config.watchOptions = {
-        ...(config.watchOptions || {}),
-        poll: 1000,
-        aggregateTimeout: 300,
-        ignored: /node_modules/,
-      };
+      // Only poll inside Docker Desktop bind mounts where inotify is unreliable.
+      // On Windows native host, file events (ReadDirectoryChangesW) are instantaneous;
+      // forcing 1000ms polling stats tens of thousands of files across D:\UniERP every second,
+      // causing massive CPU/disk thrashing and 20-80s route compilation times.
+      const isDocker = process.env.DOCKER_CONTAINER || process.env.WATCHPACK_POLLING;
+      if (isDocker) {
+        config.watchOptions = {
+          ...(config.watchOptions || {}),
+          poll: 1000,
+          aggregateTimeout: 300,
+          ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**', '**/dist/**'],
+        };
+      } else {
+        config.watchOptions = {
+          ...(config.watchOptions || {}),
+          ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**', '**/dist/**'],
+        };
+      }
     }
     return config;
   },
@@ -75,8 +91,10 @@ const nextConfig = {
     // `next build` prerendering across dozens of unrelated dashboard pages
     // (and on the built-in /_error /500 page, which shares the root layout's
     // provider tree). optimizePackageImports is meant for large third-party
-    // barrel packages like lucide-react — leave local workspace packages to
-    // serverExternalPackages.
+    staleTimes: {
+      dynamic: 30,
+      static: 180,
+    },
     optimizePackageImports: ['lucide-react'],
   },
   async rewrites() {

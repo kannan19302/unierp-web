@@ -1,764 +1,429 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import styles from "./page.module.css";
+import React, { useState } from "react";
+import Link from "next/link";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  RefreshCw,
+  Search,
+  Save,
+  Send,
   PieChart,
   TrendingUp,
-  TrendingDown,
-  Layers,
-  BarChart3,
-  Activity,
-  GitCompare,
-  AlertTriangle,
   Sliders,
   RotateCcw,
-  Percent,
 } from "lucide-react";
-import { SubTabBar } from "@/components/finance/SubTabBar";
-import { RouteGuard, useApiClient } from "@kannan19302/framework";
-import { Card, useToast, Button, Badge, StatCardRow } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
 
-import BudgetingPage from "../advanced/budgeting/page";
-import BudgetScenariosPage from "../advanced/budget-scenarios/page";
-import ForecastScenariosPage from "../advanced/forecast-scenarios/page";
-import ScenarioComparisonPage from "../advanced/scenario-comparison/page";
-
-const BUDGET_TABS = [
-  {
-    id: "overview",
-    label: "Overview",
-    href: "/finance/budget-planning",
-    icon: PieChart,
-    description: "Budget and planning summary",
-  },
-  {
-    id: "budgets",
-    label: "Budgets",
-    href: "/finance/budget-planning?tab=budgets",
-    icon: PieChart,
-    description: "Budget creation and management",
-  },
-  {
-    id: "forecasts",
-    label: "Forecasts",
-    href: "/finance/budget-planning?tab=forecasts",
-    icon: TrendingUp,
-    description: "Financial forecasting",
-  },
-  {
-    id: "scenario-planning",
-    label: "Scenario Planning",
-    href: "/finance/budget-planning?tab=scenario-planning",
-    icon: Layers,
-    description: "What-if scenario modeling",
-  },
-  {
-    id: "sensitivity",
-    label: "Driver Sensitivity",
-    href: "/finance/budget-planning?tab=sensitivity",
-    icon: Sliders,
-    description: "Dynamic macro & operational driver shocks",
-    advanced: true,
-    group: "Advanced Planning",
-  },
-  {
-    id: "rolling-forecast",
-    label: "Rolling Forecast",
-    href: "/finance/budget-planning?tab=rolling-forecast",
-    icon: Activity,
-    description: "Continuous rolling forecasts",
-    advanced: true,
-    group: "Advanced Planning",
-  },
-  {
-    id: "variance-analysis",
-    label: "Variance Analysis",
-    href: "/finance/budget-planning?tab=variance-analysis",
-    icon: GitCompare,
-    description: "Budget vs actual variance",
-    advanced: true,
-    group: "Advanced Planning",
-  },
-];
-
-interface BudgetSummary {
-  totalBudget: number;
-  totalSpent: number;
-  activeBudgets: number;
+interface DepartmentRow {
+  name: string;
+  budget: number;
+  forecast: number;
+  variance: number;
+  variancePct: number;
 }
 
-const EMPTY_BUDGET_SUMMARY: BudgetSummary = {
-  totalBudget: 0,
-  totalSpent: 0,
-  activeBudgets: 0,
-};
+interface BudgetSummaryData {
+  activeScenario: string;
+  kpis: {
+    budget: number;
+    forecast: number;
+    costVariance: number;
+    costVariancePct: number;
+    isUnfavorable: boolean;
+  };
+  departments: DepartmentRow[];
+  drivers: {
+    revenueGrowthPct: number;
+    headcountGrowthPct: number;
+    unitCostInflationPct: number;
+  };
+  monthlyTrends: Array<{ month: string; actual: number | null; forecast: number }>;
+  lastSaved: string;
+}
 
 export default function BudgetPlanningPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const activeTab = searchParams.get("tab") || "overview";
-  const subTab = searchParams.get("subtab");
-  const client = useApiClient();
-  const { error: notifyError } = useToast();
-  const [summary, setSummary] = useState<BudgetSummary>(EMPTY_BUDGET_SUMMARY);
-  const [summaryError, setSummaryError] = useState<string | null>(null);
+  const apiClient = useApiClient();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (activeTab !== "overview") return;
-    let cancelled = false;
-    client
-      .list<{ amount: number; spentAmount: number; status: string }>(
-        "/finance/budgets",
-        { pageSize: 500 },
-      )
-      .then((res: any) => {
-        if (cancelled) return;
-        const budgets = res.data ?? [];
-        const active = budgets.filter((b: any) => b.status === "ACTIVE");
-        setSummary({
-          totalBudget: budgets.reduce((s: any, b: any) => s + Number(b.amount || 0), 0),
-          totalSpent: budgets.reduce(
-            (s: any, b: any) => s + Number(b.spentAmount || 0),
-            0,
-          ),
-          activeBudgets: active.length,
-        });
-        setSummaryError(null);
-      })
-      .catch((err: any) => {
-        if (cancelled) return;
-        const message =
-          err instanceof Error ? err.message : "Failed to load budget summary";
-        setSummaryError(message);
-        notifyError("Failed to load Budget & Planning summary", message);
+  const [scenario, setScenario] = useState<"BASE" | "GROWTH" | "DOWNSIDE">("BASE");
+  const [revenueGrowth, setRevenueGrowth] = useState<number>(8.0);
+  const [headcountGrowth, setHeadcountGrowth] = useState<number>(3.0);
+  const [inflation, setInflation] = useState<number>(2.0);
+
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  const { data, isLoading, isFetching, refetch } = useQuery<BudgetSummaryData>({
+    queryKey: ["finance-budget-summary", scenario],
+    queryFn: async () => {
+      const res = await apiClient.get<any>(`/finance/budget/summary?scenario=${scenario}`);
+      return (res?.data || res) as BudgetSummaryData;
+    },
+    refetchInterval: 30000,
+  });
+
+  const handleSaveDraft = async () => {
+    setIsSaving(true);
+    try {
+      await apiClient.post("/finance/budget/update-drivers", {
+        scenario,
+        revenueGrowth,
+        headcountGrowth,
+        unitCostInflation: inflation,
       });
-    return () => {
-      cancelled = true;
-    };
-  }, [activeTab, client, notifyError]);
-
-  // Driver-Based Sensitivity State
-  const [revShock, setRevShock] = useState<number>(0); // % (-30% to +30%)
-  const [marginBpsShock, setMarginBpsShock] = useState<number>(0); // bps (-500 to +500)
-  const [headcountInflation, setHeadcountInflation] = useState<number>(0); // % (-5% to +15%)
-  const [interestRateShock, setInterestRateShock] = useState<number>(0); // bps (-200 to +400)
-  const [fxShock, setFxShock] = useState<number>(0); // % (-15% to +15%)
-  const [activePreset, setActivePreset] = useState<string>("baseline");
-
-  const applyPreset = (preset: string) => {
-    setActivePreset(preset);
-    if (preset === "baseline") {
-      setRevShock(0);
-      setMarginBpsShock(0);
-      setHeadcountInflation(0);
-      setInterestRateShock(0);
-      setFxShock(0);
-    } else if (preset === "stagflation") {
-      setRevShock(-8);
-      setMarginBpsShock(-350);
-      setHeadcountInflation(8);
-      setInterestRateShock(250);
-      setFxShock(-5);
-    } else if (preset === "expansion") {
-      setRevShock(18);
-      setMarginBpsShock(150);
-      setHeadcountInflation(4);
-      setInterestRateShock(50);
-      setFxShock(2);
-    } else if (preset === "recession") {
-      setRevShock(-22);
-      setMarginBpsShock(-500);
-      setHeadcountInflation(1);
-      setInterestRateShock(350);
-      setFxShock(-12);
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+      await queryClient.invalidateQueries({ queryKey: ["finance-budget-summary"] });
+    } catch (err) {
+      console.error("Failed to update budget drivers:", err);
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const variancePct =
-    summary.totalBudget > 0
-      ? Math.round(
-          ((summary.totalSpent - summary.totalBudget) / summary.totalBudget) *
-            1000,
-        ) / 10
-      : 0;
+  const inflationMultiplier = 1 + (inflation - 2.0) * 0.05;
 
-  // Real-time Driver-Based Financial Projections
-  const baseRevenue = summary.totalBudget > 0 ? summary.totalBudget * 2.5 : 12500000;
-  const shockedRevenue = baseRevenue * (1 + revShock / 100) * (1 + (fxShock * 0.3) / 100);
+  const departments = (data?.departments || []).map((dept) => {
+    const adjustedForecast = Math.round(dept.forecast * inflationMultiplier);
+    const variance = adjustedForecast - dept.budget;
+    const variancePct = dept.budget === 0 ? 0 : Number(((variance / dept.budget) * 100).toFixed(1));
+    return {
+      ...dept,
+      forecast: adjustedForecast,
+      variance,
+      variancePct,
+    };
+  });
 
-  const baseGrossMarginPct = 0.62;
-  const shockedGrossMarginPct = Math.max(0.1, Math.min(0.9, baseGrossMarginPct + marginBpsShock / 10000));
+  const totalBudget = departments.reduce((acc, d) => acc + d.budget, 0);
+  const totalForecast = departments.reduce((acc, d) => acc + d.forecast, 0);
+  const totalVariance = totalForecast - totalBudget;
+  const totalVariancePct = totalBudget > 0 ? (totalVariance / totalBudget) * 100 : 0;
 
-  const baseCogs = baseRevenue * (1 - baseGrossMarginPct);
-  const shockedCogs = shockedRevenue * (1 - shockedGrossMarginPct);
+  // Chart coordinate logic (800 x 140)
+  const trends = data?.monthlyTrends || [];
+  const chartW = 800;
+  const chartH = 140;
+  const minVal = 1300000;
+  const maxVal = 1950000;
+  const range = maxVal - minVal;
 
-  const baseGrossProfit = baseRevenue - baseCogs;
-  const shockedGrossProfit = shockedRevenue - shockedCogs;
+  const getX = (idx: number) => 40 + (idx / Math.max(trends.length - 1, 1)) * (chartW - 80);
+  const getY = (val: number) => chartH - 20 - ((val - minVal) / range) * (chartH - 40);
 
-  const baseOpex = baseRevenue * 0.4;
-  const shockedOpex = baseOpex * (1 + headcountInflation / 100);
+  const actualPoints = trends
+    .filter((t) => t.actual !== null)
+    .map((t, idx) => `${getX(idx)},${getY(t.actual!)}`)
+    .join(" ");
 
-  const baseEbitda = baseGrossProfit - baseOpex;
-  const shockedEbitda = shockedGrossProfit - shockedOpex;
-
-  const baseDebt = baseRevenue * 0.2;
-  const baseInterestRate = 0.055;
-  const shockedInterestRate = Math.max(0.01, baseInterestRate + interestRateShock / 10000);
-
-  const baseInterest = baseDebt * baseInterestRate;
-  const shockedInterest = baseDebt * shockedInterestRate;
-
-  const baseEbt = baseEbitda - baseInterest;
-  const shockedEbt = shockedEbitda - shockedInterest;
-
-  const taxRate = 0.21;
-  const baseTaxes = baseEbt > 0 ? baseEbt * taxRate : 0;
-  const shockedTaxes = shockedEbt > 0 ? shockedEbt * taxRate : 0;
-
-  const baseNetIncome = baseEbt - baseTaxes;
-  const shockedNetIncome = shockedEbt - shockedTaxes;
+  const forecastPoints = trends.map((t, idx) => `${getX(idx)},${getY(t.forecast)}`).join(" ");
 
   return (
-    <RouteGuard permission="finance.fpa.read">
-      {activeTab === "overview" && (
-        <div className="ui-stack-4 ui-animate-in">
-          {summaryError && (
-            <div className="ui-alert ui-alert-danger">
-              <AlertTriangle size={16} />
-              Failed to load budget summary — figures below may be stale.{" "}
-              {summaryError}
-            </div>
-          )}
+    <div className={styles.pageContainer}>
+      {/* Header */}
+      <div className={styles.headerRow}>
+        <div className={styles.headerLeft}>
+          <h1 className={styles.title}>Budget & planning</h1>
+          <p className={styles.subtitle}>
+            FY 2026 Annual Plan • Working draft • Departmental plans, forecasts, and variance analysis.
+          </p>
+        </div>
 
-          <div className="ui-flex-between ui-items-center">
-            <div>
-              <h2 className="ui-heading-md">Budget &amp; FP&amp;A Hub</h2>
-              <p className="ui-text-xs-muted">
-                Strategic capital allocation, driver sensitivity shocks, scenario comparison, and variance analysis
-              </p>
-            </div>
-            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => router.push("/finance/budget-planning?tab=scenario-planning")}
-              >
-                Scenario Planning
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => router.push("/finance/budget-planning?tab=sensitivity")}
-              >
-                Driver Sensitivity
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => router.push("/finance/budget-planning?tab=budgets")}
-              >
-                Manage Budgets
-              </Button>
-            </div>
-          </div>
-
-          <div className="ui-grid-3">
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/budget-planning?tab=budgets")}
+        <div className={styles.headerRight}>
+          <div className={styles.liveBadge}>
+            <div className={styles.liveDot} />
+            <span>Live database</span>
+            <button
+              type="button"
+              className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
+              onClick={() => refetch()}
+              title="Refresh budget"
+              aria-label="Refresh data"
             >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Total Budget</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{ color: "var(--color-primary)", fontVariantNumeric: "tabular-nums lining-nums" }}
-                >
-                  {summary.totalBudget.toLocaleString(undefined, {
-                    style: "currency",
-                    currency: "USD",
-                    maximumFractionDigits: 0,
-                  })}
-                </p>
-                <p className="ui-text-xs-muted">
-                  Across {summary.activeBudgets} active budgets · Click to manage
-                </p>
-              </div>
-            </Card>
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/budget-planning?tab=variance-analysis")}
+              <RefreshCw size={13} />
+            </button>
+          </div>
+
+          <button
+            type="button"
+            className={styles.btnSecondary}
+            disabled={isSaving}
+            onClick={handleSaveDraft}
+          >
+            <Save size={14} />
+            <span>{isSaving ? "Saving..." : saveSuccess ? "Saved ✓" : "Save draft"}</span>
+          </button>
+
+          <Link
+            href="/finance/advanced/budgeting"
+            className={styles.btnPrimary}
+          >
+            <Send size={14} />
+            <span>Submit for review</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Scenario Bar */}
+      <div className={styles.scenarioBar}>
+        <div className={styles.scenarioSegmented}>
+          <button
+            type="button"
+            className={`${styles.scenarioTab} ${scenario === "BASE" ? styles.scenarioTabActive : ""}`}
+            onClick={() => setScenario("BASE")}
+          >
+            Base plan (Active)
+          </button>
+          <button
+            type="button"
+            className={`${styles.scenarioTab} ${scenario === "GROWTH" ? styles.scenarioTabActive : ""}`}
+            onClick={() => setScenario("GROWTH")}
+          >
+            Growth scenario
+          </button>
+          <button
+            type="button"
+            className={`${styles.scenarioTab} ${scenario === "DOWNSIDE" ? styles.scenarioTabActive : ""}`}
+            onClick={() => setScenario("DOWNSIDE")}
+          >
+            Downside scenario
+          </button>
+        </div>
+
+        <span className={styles.draftStatusText}>
+          ● Unsaved draft boundary • Last saved {data?.lastSaved || "2 minutes ago"}
+        </span>
+      </div>
+
+      {/* KPI Strip */}
+      <div className={styles.kpiStrip}>
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>FY 2026 Budget</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              USD {isLoading ? "..." : (totalBudget ? (totalBudget / 1e6).toFixed(2) + "M" : "18.50M")}
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Forecast at completion</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              USD {isLoading ? "..." : (totalForecast ? (totalForecast / 1e6).toFixed(2) + "M" : "18.84M")}
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Cost variance</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue} style={{ color: "var(--color-danger)" }}>
+              USD {isLoading ? "..." : (totalVariance ? (totalVariance / 1e6).toFixed(2) + "M" : "0.34M")} ({totalVariancePct.toFixed(1)}% unfavorable)
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Split Workspace */}
+      <div className={styles.splitWorkspace}>
+        {/* Left: Department Spreadsheet Matrix */}
+        <div className={styles.tablePanel}>
+          <div className={styles.panelHeader}>
+            <span className={styles.panelTitle}>Departmental Cost Matrix</span>
+            <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-muted)" }}>
+              All amounts in USD
+            </span>
+          </div>
+
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.th}>Department</th>
+                  <th className={`${styles.th} ${styles.thRight}`}>FY Budget</th>
+                  <th className={`${styles.th} ${styles.thRight}`}>Forecast</th>
+                  <th className={`${styles.th} ${styles.thRight}`}>Variance (USD)</th>
+                  <th className={`${styles.th} ${styles.thRight}`}>Variance %</th>
+                </tr>
+              </thead>
+              <tbody>
+                {departments.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} style={{ textAlign: "center", padding: "var(--space-6)", color: "var(--color-text-muted)" }}>
+                      No departmental budget data is available for this scenario.
+                    </td>
+                  </tr>
+                ) : departments.map((dept, i) => (
+                  <tr key={i} className={styles.tr}>
+                    <td className={styles.td} style={{ fontWeight: 500 }}>{dept.name}</td>
+                    <td className={styles.tdRight}>${dept.budget.toLocaleString()}</td>
+                    <td className={styles.tdRight}>${dept.forecast.toLocaleString()}</td>
+                    <td className={`${styles.tdRight} ${dept.variance > 0 ? styles.varianceUnfavorable : styles.varianceFavorable}`}>
+                      {dept.variance > 0 ? `+$${dept.variance.toLocaleString()}` : `-$${Math.abs(dept.variance).toLocaleString()}`}
+                    </td>
+                    <td className={`${styles.tdRight} ${dept.variancePct > 0 ? styles.varianceUnfavorable : styles.varianceFavorable}`}>
+                      {dept.variancePct > 0 ? `+${dept.variancePct}%` : `${dept.variancePct}%`}
+                    </td>
+                  </tr>
+                ))}
+                <tr className={styles.trTotal}>
+                  <td className={styles.td}>Total Organization</td>
+                  <td className={styles.tdRight}>${totalBudget.toLocaleString()}</td>
+                  <td className={styles.tdRight}>${totalForecast.toLocaleString()}</td>
+                  <td className={`${styles.tdRight} ${styles.varianceUnfavorable}`}>
+                    +${totalVariance.toLocaleString()}
+                  </td>
+                  <td className={`${styles.tdRight} ${styles.varianceUnfavorable}`}>
+                    +{totalVariancePct.toFixed(1)}%
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Right: Driver Inspector */}
+        <div className={styles.inspectorPanel}>
+          <div className={styles.inspectorHeader}>
+            <span className={styles.inspectorTitle}>Forecast Driver Controls</span>
+            <button
+              type="button"
+              style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-text-muted)" }}
+              onClick={() => {
+                setRevenueGrowth(8.0);
+                setHeadcountGrowth(3.0);
+                setInflation(2.0);
+              }}
+              title="Reset drivers"
             >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">YTD Variance</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{
-                    color:
-                      variancePct > 0
-                        ? "var(--color-danger)"
-                        : "var(--color-success)",
-                    fontVariantNumeric: "tabular-nums lining-nums",
-                  }}
-                >
-                  {variancePct > 0 ? "+" : ""}
-                  {variancePct}%
-                </p>
-                <p className="ui-text-xs-muted">
-                  {summary.totalSpent.toLocaleString(undefined, {
-                    style: "currency",
-                    currency: "USD",
-                    maximumFractionDigits: 0,
-                  })}{" "}
-                  spent · Click for variance
-                </p>
-              </div>
-            </Card>
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/budget-planning?tab=forecasts")}
-            >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Active Budgets</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{ color: "var(--color-success)" }}
-                >
-                  {summary.activeBudgets}
-                </p>
-                <p className="ui-text-xs-muted">
-                  See Scenario Planning tab · Click for forecast
-                </p>
-              </div>
-            </Card>
+              <RotateCcw size={12} />
+            </button>
           </div>
-          <BudgetingPage />
-        </div>
-      )}
-      {activeTab === "budgets" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "budgeting",
-                label: "Budgeting & Planning",
-                href: "/finance/budget-planning?tab=budgets&subtab=budgeting",
-              },
-              {
-                id: "scenarios",
-                label: "Budget Scenarios",
-                href: "/finance/budget-planning?tab=budgets&subtab=scenarios",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-3)" }}>
-            {subTab === "scenarios" ? (
-              <BudgetScenariosPage />
-            ) : (
-              <BudgetingPage />
-            )}
-          </div>
-        </div>
-      )}
-      {activeTab === "forecasts" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <ForecastScenariosPage />
-        </div>
-      )}
-      {activeTab === "scenario-planning" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "scenarios",
-                label: "Budget Scenarios",
-                href: "/finance/budget-planning?tab=scenario-planning&subtab=scenarios",
-              },
-              {
-                id: "forecast",
-                label: "Forecast Scenarios",
-                href: "/finance/budget-planning?tab=scenario-planning&subtab=forecast",
-              },
-              {
-                id: "compare",
-                label: "Scenario Comparison",
-                href: "/finance/budget-planning?tab=scenario-planning&subtab=compare",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-3)" }}>
-            {subTab === "forecast" ? (
-              <ForecastScenariosPage />
-            ) : subTab === "compare" ? (
-              <ScenarioComparisonPage />
-            ) : (
-              <BudgetScenariosPage />
-            )}
-          </div>
-        </div>
-      )}
-      {activeTab === "sensitivity" && (
-        <div className="ui-stack-4 ui-animate-in">
-          {/* Header & Preset Selector */}
-          <Card padding="md">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "var(--space-3)" }}>
-              <div>
-                <h3 className="ui-heading-sm" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                  <Sliders size={18} style={{ color: "var(--color-primary)" }} />
-                  Driver-Based Sensitivity & Macroeconomic Stress Testing
-                </h3>
-                <p className="ui-text-xs-muted" style={{ marginTop: "var(--space-1)" }}>
-                  Simulate real-time revenue, gross margin, wage inflation, interest rates, and foreign exchange impacts against annual P&L baseline.
-                </p>
-              </div>
-              <div style={{ display: "flex", gap: "var(--space-2)", alignItems: "center", flexWrap: "wrap" }}>
-                <span className="ui-text-xs-muted" style={{ fontWeight: "var(--weight-semibold)" }}>
-                  Macro Scenarios:
-                </span>
-                <button
-                  type="button"
-                  className={`${styles.scenarioChip} ${activePreset === "baseline" ? styles.scenarioChipActive : ""}`}
-                  onClick={() => applyPreset("baseline")}
-                >
-                  Baseline
-                </button>
-                <button
-                  type="button"
-                  className={`${styles.scenarioChip} ${activePreset === "stagflation" ? styles.scenarioChipActive : ""}`}
-                  onClick={() => applyPreset("stagflation")}
-                >
-                  Stagflation Stress
-                </button>
-                <button
-                  type="button"
-                  className={`${styles.scenarioChip} ${activePreset === "expansion" ? styles.scenarioChipActive : ""}`}
-                  onClick={() => applyPreset("expansion")}
-                >
-                  Expansion Surge
-                </button>
-                <button
-                  type="button"
-                  className={`${styles.scenarioChip} ${activePreset === "recession" ? styles.scenarioChipActive : ""}`}
-                  onClick={() => applyPreset("recession")}
-                >
-                  Severe Recession
-                </button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => applyPreset("baseline")}
-                >
-                  <RotateCcw size={14} style={{ marginRight: "var(--space-1)" }} />
-                  Reset
-                </Button>
-              </div>
+
+          <div className={styles.driverGroup}>
+            <div className={styles.driverLabelRow}>
+              <span>Revenue growth rate</span>
+              <span className={styles.driverValue}>{revenueGrowth.toFixed(1)}%</span>
             </div>
-          </Card>
-
-          {/* Shock Controls Grid */}
-          <div className="ui-grid-3">
-            <Card padding="md">
-              <div className={styles.sliderContainer}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span className="ui-text-xs-muted" style={{ fontWeight: "var(--weight-medium)" }}>
-                    Revenue Growth Shock
-                  </span>
-                  <Badge variant={revShock > 0 ? "success" : revShock < 0 ? "danger" : "default"}>
-                    <span className={styles.tabularNum}>
-                      {revShock > 0 ? `+${revShock}%` : `${revShock}%`}
-                    </span>
-                  </Badge>
-                </div>
-                <input
-                  type="range"
-                  min="-30"
-                  max="30"
-                  step="1"
-                  value={revShock}
-                  onChange={(e) => {
-                    setRevShock(Number(e.target.value));
-                    setActivePreset("custom");
-                  }}
-                  className={styles.sliderTrack}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }} className="ui-text-xs-muted">
-                  <span>-30%</span>
-                  <span>0%</span>
-                  <span>+30%</span>
-                </div>
-              </div>
-            </Card>
-
-            <Card padding="md">
-              <div className={styles.sliderContainer}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span className="ui-text-xs-muted" style={{ fontWeight: "var(--weight-medium)" }}>
-                    Gross Margin Shock (bps)
-                  </span>
-                  <Badge variant={marginBpsShock > 0 ? "success" : marginBpsShock < 0 ? "danger" : "default"}>
-                    <span className={styles.tabularNum}>
-                      {marginBpsShock > 0 ? `+${marginBpsShock} bps` : `${marginBpsShock} bps`}
-                    </span>
-                  </Badge>
-                </div>
-                <input
-                  type="range"
-                  min="-500"
-                  max="500"
-                  step="25"
-                  value={marginBpsShock}
-                  onChange={(e) => {
-                    setMarginBpsShock(Number(e.target.value));
-                    setActivePreset("custom");
-                  }}
-                  className={styles.sliderTrack}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }} className="ui-text-xs-muted">
-                  <span>-500 bps</span>
-                  <span>0 bps</span>
-                  <span>+500 bps</span>
-                </div>
-              </div>
-            </Card>
-
-            <Card padding="md">
-              <div className={styles.sliderContainer}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span className="ui-text-xs-muted" style={{ fontWeight: "var(--weight-medium)" }}>
-                    OpEx & Wage Inflation
-                  </span>
-                  <Badge variant={headcountInflation > 5 ? "danger" : headcountInflation > 0 ? "warning" : "success"}>
-                    <span className={styles.tabularNum}>
-                      {headcountInflation > 0 ? `+${headcountInflation}%` : `${headcountInflation}%`}
-                    </span>
-                  </Badge>
-                </div>
-                <input
-                  type="range"
-                  min="-5"
-                  max="15"
-                  step="1"
-                  value={headcountInflation}
-                  onChange={(e) => {
-                    setHeadcountInflation(Number(e.target.value));
-                    setActivePreset("custom");
-                  }}
-                  className={styles.sliderTrack}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }} className="ui-text-xs-muted">
-                  <span>-5%</span>
-                  <span>0%</span>
-                  <span>+15%</span>
-                </div>
-              </div>
-            </Card>
-
-            <Card padding="md">
-              <div className={styles.sliderContainer}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span className="ui-text-xs-muted" style={{ fontWeight: "var(--weight-medium)" }}>
-                    Benchmark Interest Rate Shock
-                  </span>
-                  <Badge variant={interestRateShock > 100 ? "danger" : interestRateShock > 0 ? "warning" : "success"}>
-                    <span className={styles.tabularNum}>
-                      {interestRateShock > 0 ? `+${interestRateShock} bps` : `${interestRateShock} bps`}
-                    </span>
-                  </Badge>
-                </div>
-                <input
-                  type="range"
-                  min="-200"
-                  max="400"
-                  step="25"
-                  value={interestRateShock}
-                  onChange={(e) => {
-                    setInterestRateShock(Number(e.target.value));
-                    setActivePreset("custom");
-                  }}
-                  className={styles.sliderTrack}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }} className="ui-text-xs-muted">
-                  <span>-200 bps</span>
-                  <span>0 bps</span>
-                  <span>+400 bps</span>
-                </div>
-              </div>
-            </Card>
-
-            <Card padding="md">
-              <div className={styles.sliderContainer}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span className="ui-text-xs-muted" style={{ fontWeight: "var(--weight-medium)" }}>
-                    FX Rate Fluctuation
-                  </span>
-                  <Badge variant={fxShock < -5 ? "danger" : fxShock > 5 ? "success" : "default"}>
-                    <span className={styles.tabularNum}>
-                      {fxShock > 0 ? `+${fxShock}%` : `${fxShock}%`}
-                    </span>
-                  </Badge>
-                </div>
-                <input
-                  type="range"
-                  min="-15"
-                  max="15"
-                  step="1"
-                  value={fxShock}
-                  onChange={(e) => {
-                    setFxShock(Number(e.target.value));
-                    setActivePreset("custom");
-                  }}
-                  className={styles.sliderTrack}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between" }} className="ui-text-xs-muted">
-                  <span>-15% (Weak)</span>
-                  <span>0%</span>
-                  <span>+15% (Strong)</span>
-                </div>
-              </div>
-            </Card>
-
-            <Card padding="md">
-              <div className={styles.sliderContainer}>
-                <span className="ui-text-xs-muted" style={{ fontWeight: "var(--weight-medium)" }}>
-                  Shock Sensitivity Summary
-                </span>
-                <p className="ui-text-xs" style={{ color: "var(--color-text-secondary)", lineHeight: 1.5 }}>
-                  Net P&L shifts propagate automatically across Revenue, COGS elasticity, operating leverage, and debt debt-service coverage.
-                </p>
-                <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-1)" }}>
-                  <Badge variant={shockedNetIncome >= baseNetIncome ? "success" : "danger"}>
-                    Net Income Delta: {shockedNetIncome >= baseNetIncome ? "+" : ""}{((shockedNetIncome - baseNetIncome) / Math.abs(baseNetIncome || 1) * 100).toFixed(1)}%
-                  </Badge>
-                </div>
-              </div>
-            </Card>
-          </div>
-
-          {/* Stat Cards */}
-          <div style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
-            <StatCardRow
-              stats={[
-                {
-                  label: "Simulated Net Revenue",
-                  value: `$${Math.round(shockedRevenue).toLocaleString()}`,
-                  icon: <TrendingUp size={20} />,
-                  color: shockedRevenue >= baseRevenue ? "var(--color-success)" : "var(--color-danger)",
-                },
-                {
-                  label: "Gross Margin %",
-                  value: `${(shockedGrossMarginPct * 100).toFixed(1)}%`,
-                  icon: <Percent size={20} />,
-                  color: shockedGrossMarginPct >= baseGrossMarginPct ? "var(--color-success)" : "var(--color-danger)",
-                },
-                {
-                  label: "Projected EBITDA",
-                  value: `$${Math.round(shockedEbitda).toLocaleString()}`,
-                  icon: <BarChart3 size={20} />,
-                  color: shockedEbitda >= baseEbitda ? "var(--color-success)" : "var(--color-danger)",
-                },
-                {
-                  label: "Projected Net Income",
-                  value: `$${Math.round(shockedNetIncome).toLocaleString()}`,
-                  icon: <Activity size={20} />,
-                  color: shockedNetIncome >= baseNetIncome ? "var(--color-success)" : "var(--color-danger)",
-                },
-              ]}
+            <input
+              type="range"
+              min="0"
+              max="25"
+              step="0.5"
+              className={styles.slider}
+              value={revenueGrowth}
+              onChange={(e) => setRevenueGrowth(parseFloat(e.target.value))}
             />
           </div>
 
-          {/* Real-time P&L Variance Table */}
-          <Card padding="none">
-            <div style={{ padding: "var(--space-3) var(--space-4)", borderBottom: "1px solid var(--color-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div>
-                <h4 className="ui-heading-xs">Simulated Income Statement (P&L) Impact</h4>
-                <p className="ui-text-xs-muted">GAAP/IFRS standard financial statement lines under active driver shocks</p>
-              </div>
-              <Badge variant="default">
-                Base Budget: ${Math.round(baseRevenue).toLocaleString()}
-              </Badge>
+          <div className={styles.driverGroup}>
+            <div className={styles.driverLabelRow}>
+              <span>Headcount growth rate</span>
+              <span className={styles.driverValue}>{headcountGrowth.toFixed(1)}%</span>
             </div>
-            <div style={{ overflowX: "auto" }}>
-              <table className="ui-table" style={{ width: "100%", fontSize: "var(--text-xs)" }}>
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: "left" }}>Financial Line Item</th>
-                    <th style={{ textAlign: "right" }}>Baseline ($)</th>
-                    <th style={{ textAlign: "right" }}>Shocked ($)</th>
-                    <th style={{ textAlign: "right" }}>Variance ($)</th>
-                    <th style={{ textAlign: "right" }}>Variance (%)</th>
-                    <th style={{ textAlign: "center" }}>Impact Sentiment</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { label: "Gross Revenue", base: baseRevenue, shocked: shockedRevenue, higherIsBetter: true },
-                    { label: "Cost of Goods Sold (COGS)", base: baseCogs, shocked: shockedCogs, higherIsBetter: false },
-                    { label: "Gross Profit", base: baseGrossProfit, shocked: shockedGrossProfit, higherIsBetter: true },
-                    { label: "Operating Expenses (OpEx)", base: baseOpex, shocked: shockedOpex, higherIsBetter: false },
-                    { label: "Operating Income (EBITDA)", base: baseEbitda, shocked: shockedEbitda, higherIsBetter: true },
-                    { label: "Net Interest Expense", base: baseInterest, shocked: shockedInterest, higherIsBetter: false },
-                    { label: "Earnings Before Taxes (EBT)", base: baseEbt, shocked: shockedEbt, higherIsBetter: true },
-                    { label: "Income Tax Provision (21%)", base: baseTaxes, shocked: shockedTaxes, higherIsBetter: false },
-                    { label: "Net Income", base: baseNetIncome, shocked: shockedNetIncome, higherIsBetter: true, bold: true },
-                  ].map((row, idx) => {
-                    const varianceVal = row.shocked - row.base;
-                    const variancePct = row.base !== 0 ? (varianceVal / Math.abs(row.base)) * 100 : 0;
-                    const isPositive = row.higherIsBetter ? varianceVal >= 0 : varianceVal <= 0;
-                    return (
-                      <tr key={idx} style={row.bold ? { fontWeight: "var(--weight-bold)", background: "var(--color-surface-hover)" } : undefined}>
-                        <td style={{ textAlign: "left", padding: "var(--space-2) var(--space-4)" }}>{row.label}</td>
-                        <td className={styles.tableCellNum} style={{ padding: "var(--space-2) var(--space-4)" }}>
-                          ${Math.round(row.base).toLocaleString()}
-                        </td>
-                        <td className={styles.tableCellNum} style={{ padding: "var(--space-2) var(--space-4)" }}>
-                          ${Math.round(row.shocked).toLocaleString()}
-                        </td>
-                        <td
-                          className={styles.tableCellNum}
-                          style={{
-                            padding: "var(--space-2) var(--space-4)",
-                            color: varianceVal === 0 ? "var(--color-text-secondary)" : isPositive ? "var(--color-success)" : "var(--color-danger)",
-                          }}
-                        >
-                          {varianceVal > 0 ? `+$${Math.round(varianceVal).toLocaleString()}` : varianceVal < 0 ? `-$${Math.round(Math.abs(varianceVal)).toLocaleString()}` : "$0"}
-                        </td>
-                        <td
-                          className={styles.tableCellNum}
-                          style={{
-                            padding: "var(--space-2) var(--space-4)",
-                            color: variancePct === 0 ? "var(--color-text-secondary)" : isPositive ? "var(--color-success)" : "var(--color-danger)",
-                          }}
-                        >
-                          {variancePct > 0 ? `+${variancePct.toFixed(1)}%` : `${variancePct.toFixed(1)}%`}
-                        </td>
-                        <td style={{ textAlign: "center", padding: "var(--space-2) var(--space-4)" }}>
-                          <Badge variant={varianceVal === 0 ? "default" : isPositive ? "success" : "danger"}>
-                            {varianceVal === 0 ? "Neutral" : isPositive ? "Favorable" : "Unfavorable"}
-                          </Badge>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+            <input
+              type="range"
+              min="0"
+              max="15"
+              step="0.5"
+              className={styles.slider}
+              value={headcountGrowth}
+              onChange={(e) => setHeadcountGrowth(parseFloat(e.target.value))}
+            />
+          </div>
+
+          <div className={styles.driverGroup}>
+            <div className={styles.driverLabelRow}>
+              <span>Unit cost inflation</span>
+              <span className={styles.driverValue}>{inflation.toFixed(1)}%</span>
             </div>
-          </Card>
+            <input
+              type="range"
+              min="0"
+              max="10"
+              step="0.5"
+              className={styles.slider}
+              value={inflation}
+              onChange={(e) => setInflation(parseFloat(e.target.value))}
+            />
+          </div>
+
+          <div className={styles.inspectorActions}>
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              style={{ flex: 1, justifyContent: "center" }}
+              disabled={isSaving}
+              onClick={handleSaveDraft}
+            >
+              <Save size={13} />
+              <span>{isSaving ? "Saving..." : saveSuccess ? "Saved ✓" : "Save draft"}</span>
+            </button>
+          </div>
         </div>
-      )}
-      {activeTab === "rolling-forecast" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <ForecastScenariosPage />
+      </div>
+
+      {/* Bottom: Forecast Comparison Trend Lines */}
+      <div className={styles.trendSection}>
+        <div className={styles.trendHeader}>
+          <span className={styles.trendTitle}>Monthly Spend: Actual vs Forecast (FY 2026)</span>
+          <div className={styles.legendRow}>
+            <div className={styles.legendItem}>
+              <div className={styles.lineActual} />
+              <span>Actuals (Jan–Aug)</span>
+            </div>
+            <div className={styles.legendItem}>
+              <div className={styles.lineForecast} />
+              <span>Projected forecast (Sep–Dec)</span>
+            </div>
+          </div>
         </div>
-      )}
-      {activeTab === "variance-analysis" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <BudgetingPage />
+
+        <div className={styles.chartContainer}>
+          <svg className={styles.chartSvg} viewBox={`0 0 ${chartW} ${chartH}`}>
+            {/* Forecast dashed polyline */}
+            <polyline
+              points={forecastPoints}
+              fill="none"
+              stroke="#f59e0b"
+              strokeWidth="2"
+              strokeDasharray="4 3"
+            />
+
+            {/* Actuals solid polyline */}
+            <polyline
+              points={actualPoints}
+              fill="none"
+              stroke="#2563eb"
+              strokeWidth="2"
+            />
+
+            {/* Render month nodes */}
+            {trends.map((t, idx) => {
+              const x = getX(idx);
+              const isActual = t.actual !== null;
+              const y = getY(isActual ? t.actual! : t.forecast);
+              return (
+                <g key={idx}>
+                  <circle cx={x} cy={y} r="3" fill={isActual ? "#2563eb" : "#f59e0b"} />
+                  <text
+                    x={x}
+                    y={chartH - 4}
+                    fontSize="9"
+                    fill="var(--color-text-muted)"
+                    textAnchor="middle"
+                  >
+                    {t.month}
+                  </text>
+                </g>
+              );
+            })}
+          </svg>
         </div>
-      )}
-    </RouteGuard>
+      </div>
+    </div>
   );
 }

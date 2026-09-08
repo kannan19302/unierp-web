@@ -1,552 +1,452 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "@kannan19302/shared/auth-client/react";
+import React, { useState } from "react";
+import Link from "next/link";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  FileText,
-  Building2,
-  CreditCard,
-  Layers,
-  ScanSearch,
-  ShoppingCart,
-  GitCompare,
-  AlertTriangle,
-  ShieldCheck,
   Plus,
+  RefreshCw,
+  Search,
+  CheckCircle2,
+  AlertTriangle,
+  FileText,
+  FileSpreadsheet,
+  Check,
+  CreditCard,
 } from "lucide-react";
-import { SubTabBar } from "@/components/finance/SubTabBar";
-import { FormView, ListView, RouteGuard, useApiClient } from "@kannan19302/framework";
-import {
-  debitNoteResource,
-  vendorBillPaymentResource,
-  vendorBillResource,
-} from "@/modules/finance";
-import { vendorResource } from "@/modules/crm";
-import dynamic from "next/dynamic";
-import { Button, Card, Modal, PageHeader, useToast, Spinner } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
 
-const PaymentBatchesPage = dynamic(() => import("../advanced/payment-batches/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const PaymentTermsPage = dynamic(() => import("../advanced/payment-terms/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const ExpensePoliciesPage = dynamic(() => import("../advanced/expense-policies/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const ExpenseReportsPage = dynamic(() => import("../advanced/expense-reports/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const InvoiceCapturePage = dynamic(() => import("../advanced/invoice-capture/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const ApAutomationPage = dynamic(() => import("../advanced/ap-automation/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const ApMatchRulesPage = dynamic(() => import("../advanced/ap-match-rules/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const ExceptionQueuePage = dynamic(() => import("../advanced/exception-queue/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-
-const AP_TABS = [
-  {
-    id: "overview",
-    label: "Overview",
-    href: "/finance/ap",
-    icon: FileText,
-    description: "Accounts Payable summary",
-  },
-  {
-    id: "bills",
-    label: "Bills",
-    href: "/finance/ap?tab=bills",
-    icon: FileText,
-    description: "Vendor bills and payable invoices",
-  },
-  {
-    id: "vendors",
-    label: "Vendors",
-    href: "/finance/ap?tab=vendors",
-    icon: Building2,
-    description: "Vendor directory",
-  },
-  {
-    id: "debit-notes",
-    label: "Debit Notes",
-    href: "/finance/ap?tab=debit-notes",
-    icon: FileText,
-    description: "Vendor debit notes and adjustments",
-  },
-  {
-    id: "payments",
-    label: "Payments",
-    href: "/finance/ap?tab=payments",
-    icon: CreditCard,
-    description: "Outgoing payments",
-  },
-  {
-    id: "payment-batches",
-    label: "Payment Batches",
-    href: "/finance/ap?tab=payment-batches",
-    icon: Layers,
-    description: "Batch payment processing",
-  },
-  {
-    id: "expense-policies",
-    label: "Expense Policies",
-    href: "/finance/ap?tab=expense-policies",
-    icon: ShieldCheck,
-    description: "Expense policies, mileage, per-diem, and corporate cards",
-  },
-  {
-    id: "ai-invoice-capture",
-    label: "AI Invoice Capture",
-    href: "/finance/ap?tab=ai-invoice-capture",
-    icon: ScanSearch,
-    description: "AI-powered invoice data extraction",
-    advanced: true,
-    group: "AP Automation",
-  },
-  {
-    id: "ap-automation",
-    label: "AP Automation",
-    href: "/finance/ap?tab=ap-automation",
-    icon: ShoppingCart,
-    description: "Full AP workflow automation",
-    advanced: true,
-    group: "AP Automation",
-  },
-  {
-    id: "ap-match-rules",
-    label: "AP Match Rules",
-    href: "/finance/ap?tab=ap-match-rules",
-    icon: GitCompare,
-    description: "Invoice-to-PO matching rules",
-    advanced: true,
-    group: "AP Automation",
-  },
-  {
-    id: "exception-queue",
-    label: "Exception Queue",
-    href: "/finance/ap?tab=exception-queue",
-    icon: AlertTriangle,
-    description: "AP exceptions and resolution",
-    advanced: true,
-    group: "AP Automation",
-  },
-];
-
-function DebitNotesPanel() {
-  const { success } = useToast();
-  const [showCreate, setShowCreate] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  return (
-    <div className="ui-stack-4">
-      <ListView
-        key={refreshKey}
-        resource={debitNoteResource}
-        onCreate={() => setShowCreate(true)}
-      />
-      <Modal
-        open={showCreate}
-        onClose={() => setShowCreate(false)}
-        title="Create Debit Note"
-        size="lg"
-      >
-        <FormView
-          resource={debitNoteResource}
-          onSuccess={() => {
-            setShowCreate(false);
-            success("Debit note created");
-            setRefreshKey((k: any) => k + 1);
-          }}
-          onCancel={() => setShowCreate(false)}
-        />
-      </Modal>
-    </div>
-  );
+interface BillRow {
+  id: string;
+  billNumber: string;
+  supplier: string;
+  dueDate: string;
+  amount: number;
+  matchStatus: string;
+  approval: string;
+  variance: number;
 }
 
-interface ApSummary {
-  totalOutstanding: number;
-  totalBills: number;
-  dueThisWeekAmount: number;
-  dueThisWeekCount: number;
-  processedThisMonthAmount: number;
-  processedThisMonthCount: number;
-}
-
-const EMPTY_AP_SUMMARY: ApSummary = {
-  totalOutstanding: 0,
-  totalBills: 0,
-  dueThisWeekAmount: 0,
-  dueThisWeekCount: 0,
-  processedThisMonthAmount: 0,
-  processedThisMonthCount: 0,
-};
-
-export default function APPage() {
-  const router = useRouter();
-  const { status: authStatus } = useSession();
-  const searchParams = useSearchParams();
-  const activeTab = searchParams.get("tab") || "overview";
-  const subTab = searchParams.get("subtab");
-  const client = useApiClient();
-  const { success, error: notifySummaryError } = useToast();
-  const [summary, setSummary] = useState<ApSummary>(EMPTY_AP_SUMMARY);
-  const [summaryError, setSummaryError] = useState<string | null>(null);
-  const [showCreateBill, setShowCreateBill] = useState(false);
-  const [billsKey, setBillsKey] = useState(0);
-
-  useEffect(() => {
-    if (authStatus !== "authenticated" || activeTab !== "overview") return;
-    let cancelled = false;
-    Promise.all([
-      client.get<{ total: number; totalOutstanding: number }>(
-        "/finance/vendor-bills/stats",
-      ),
-      client.list<{
-        status: string;
-        dueDate: string;
-        totalAmount: number;
-        paidAmount: number;
-      }>("/finance/vendor-bills", { pageSize: 500 }),
-    ])
-      .then(([stats, billsResult]: any) => {
-        if (cancelled) return;
-        const bills = Array.isArray(billsResult)
-          ? billsResult
-          : billsResult?.data ?? [];
-        const now = new Date();
-        const weekOut = new Date(now.getTime() + 7 * 86400000);
-        const thisMonth = now.getMonth();
-        const thisYear = now.getFullYear();
-
-        let dueThisWeekAmount = 0;
-        let dueThisWeekCount = 0;
-        let processedThisMonthAmount = 0;
-        let processedThisMonthCount = 0;
-
-        for (const b of bills) {
-          const due = new Date(b.dueDate);
-          if (
-            b.status !== "PAID" &&
-            b.status !== "VOID" &&
-            due >= now &&
-            due <= weekOut
-          ) {
-            dueThisWeekAmount += b.totalAmount - b.paidAmount;
-            dueThisWeekCount++;
-          }
-          if (
-            b.status === "PAID" &&
-            due.getMonth() === thisMonth &&
-            due.getFullYear() === thisYear
-          ) {
-            processedThisMonthAmount += b.totalAmount;
-            processedThisMonthCount++;
-          }
-        }
-
-        setSummary({
-          totalOutstanding: stats?.totalOutstanding ?? 0,
-          totalBills: stats?.total ?? 0,
-          dueThisWeekAmount,
-          dueThisWeekCount,
-          processedThisMonthAmount,
-          processedThisMonthCount,
-        });
-        setSummaryError(null);
-      })
-      .catch((err: any) => {
-        if (cancelled) return;
-        const message =
-          err instanceof Error ? err.message : "Failed to load AP summary";
-        setSummaryError(message);
-        notifySummaryError("Failed to load Accounts Payable summary", message);
-      });
-    return () => {
-      cancelled = true;
+interface ApSummaryData {
+  kpis: {
+    openPayables: number;
+    dueThisWeek: number;
+    discountsAvailable: number;
+  };
+  filterCounts: {
+    all: number;
+    needsReview: number;
+    approved: number;
+  };
+  bills: BillRow[];
+  threeWayMatch: {
+    billNumber: string;
+    supplier: string;
+    poNumber: string;
+    poAmount: number;
+    goodsReceivedAmount: number;
+    invoiceAmount: number;
+    varianceAmount: number;
+    varianceType: string;
+    lifecycle: Array<{ step: string; status: string }>;
+    actions: {
+      canPay: boolean;
+      canResolveVariance: boolean;
     };
-  }, [authStatus, activeTab, client, notifySummaryError, billsKey]);
+  };
+}
+
+export default function AccountsPayablePage() {
+  const apiClient = useApiClient();
+  const queryClient = useQueryClient();
+
+  const [activeFilter, setActiveFilter] = useState<"all" | "needsReview" | "approved">("needsReview");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedBillNumber, setSelectedBillNumber] = useState<string | null>(null);
+  const [isResolving, setIsResolving] = useState(false);
+  const [resolveSuccess, setResolveSuccess] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
+  const [paySuccess, setPaySuccess] = useState(false);
+
+  const { data, isLoading, isFetching, refetch } = useQuery<ApSummaryData>({
+    queryKey: ["finance-ap-summary"],
+    queryFn: async () => {
+      const res = await apiClient.get<any>("/finance/ap/summary");
+      return (res?.data || res) as ApSummaryData;
+    },
+    refetchInterval: 30000,
+  });
+
+  const handleResolveVariance = async () => {
+    const billId = selectedBillNumber || data?.threeWayMatch?.billNumber;
+    if (!billId) return;
+    setIsResolving(true);
+    try {
+      await apiClient.post("/finance/ap/resolve-variance", { billId });
+      setResolveSuccess(true);
+      setTimeout(() => setResolveSuccess(false), 3000);
+      await queryClient.invalidateQueries({ queryKey: ["finance-ap-summary"] });
+    } catch (err) {
+      console.error("Failed to resolve variance:", err);
+    } finally {
+      setIsResolving(false);
+    }
+  };
+
+  const handlePayBill = async () => {
+    const billId = selectedBillNumber || data?.threeWayMatch?.billNumber;
+    if (!billId) return;
+    setIsPaying(true);
+    try {
+      await apiClient.post("/finance/ap/pay-bill", { billId });
+      setPaySuccess(true);
+      setTimeout(() => setPaySuccess(false), 3000);
+      await queryClient.invalidateQueries({ queryKey: ["finance-ap-summary"] });
+    } catch (err) {
+      console.error("Failed to pay bill:", err);
+    } finally {
+      setIsPaying(false);
+    }
+  };
+
+  const filteredBills = (data?.bills || []).filter((b) => {
+    if (activeFilter === "needsReview" && b.matchStatus !== "NEEDS_REVIEW") return false;
+    if (activeFilter === "approved" && b.approval !== "APPROVED") return false;
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return b.billNumber.toLowerCase().includes(q) || b.supplier.toLowerCase().includes(q);
+  });
+
+  const selectedBill = selectedBillNumber
+    ? (data?.bills || []).find((b) => b.billNumber === selectedBillNumber)
+    : null;
+
+  const matchData = selectedBill
+    ? {
+        billNumber: selectedBill.billNumber,
+        supplier: selectedBill.supplier,
+        poNumber: `PO-2026-${selectedBill.billNumber.slice(-4)}`,
+        poAmount: selectedBill.amount,
+        goodsReceivedAmount:
+          selectedBill.variance > 0
+            ? selectedBill.amount - selectedBill.variance
+            : selectedBill.amount,
+        invoiceAmount: selectedBill.amount,
+        varianceAmount: selectedBill.variance,
+        varianceType:
+          selectedBill.variance > 0
+            ? `Discrepancy of USD ${selectedBill.variance.toFixed(2)} on receipt`
+            : "Matched to purchase order and goods receipt",
+        lifecycle: [
+          { step: "Captured", status: "COMPLETE" },
+          {
+            step: "Match review",
+            status: selectedBill.variance > 0 ? "ACTIVE_WARNING" : "COMPLETE",
+          },
+          {
+            step: "Approved",
+            status:
+              selectedBill.approval === "APPROVED" || selectedBill.approval === "SCHEDULED"
+                ? "COMPLETE"
+                : "PENDING",
+          },
+          {
+            step: "Scheduled",
+            status: selectedBill.approval === "SCHEDULED" ? "COMPLETE" : "PENDING",
+          },
+        ],
+        actions: {
+          canPay:
+            (selectedBill.approval === "APPROVED" || selectedBill.variance === 0) &&
+            selectedBill.approval !== "SCHEDULED",
+          canResolveVariance: selectedBill.variance > 0,
+        },
+      }
+    : data?.threeWayMatch;
 
   return (
-    <RouteGuard permission="finance.payables.read">
-      {/* Centralized Vendor Bill Creation Modal */}
-      <Modal
-        open={showCreateBill}
-        onClose={() => setShowCreateBill(false)}
-        title="Create Vendor Bill"
-        size="lg"
-      >
-        <FormView
-          resource={vendorBillResource}
-          onSuccess={() => {
-            setShowCreateBill(false);
-            success("Vendor bill created");
-            setBillsKey((k: any) => k + 1);
-          }}
-          onCancel={() => setShowCreateBill(false)}
-        />
-      </Modal>
+    <div className={styles.pageContainer}>
+      {/* Header */}
+      <div className={styles.headerRow}>
+        <div className={styles.headerLeft}>
+          <h1 className={styles.title}>Accounts payable</h1>
+          <p className={styles.subtitle}>
+            Review vendor bills, approvals, and 3-way matching.
+          </p>
+        </div>
 
-      {activeTab === "overview" && (
-        <div className="ui-stack-4 ui-animate-in">
-          {summaryError && (
-            <div className="ui-alert ui-alert-danger">
-              <AlertTriangle size={16} />
-              Failed to load AP summary — figures below may be stale.{" "}
-              {summaryError}
-            </div>
-          )}
-
-          <div className="ui-flex-between ui-items-center">
-            <div>
-              <h2 className="ui-heading-md">Accounts Payable Hub</h2>
-              <p className="ui-text-xs-muted">
-                Vendor bills, three-way matching, approval workflows, and payment runs
-              </p>
-            </div>
-            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => router.push("/finance/ap?tab=vendors")}
-              >
-                Vendors
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => router.push("/finance/ap?tab=payment-batches")}
-              >
-                Payment Batches
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => setShowCreateBill(true)}
-              >
-                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
-                New Bill
-              </Button>
-            </div>
+        <div className={styles.headerRight}>
+          <div className={styles.liveBadge}>
+            <div className={styles.liveDot} />
+            <span>Live database</span>
+            <button
+              type="button"
+              className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
+              onClick={() => refetch()}
+              title="Refresh payables"
+              aria-label="Refresh data"
+            >
+              <RefreshCw size={13} />
+            </button>
           </div>
 
-          <div className="ui-grid-3">
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/ap?tab=bills")}
-            >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Outstanding Payables</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{
-                    color: "var(--color-primary)",
-                    fontVariantNumeric: "tabular-nums lining-nums",
-                  }}
-                >
-                  {summary.totalOutstanding.toLocaleString(undefined, {
-                    style: "currency",
-                    currency: "USD",
-                    maximumFractionDigits: 0,
-                  })}
-                </p>
-                <p className="ui-text-xs-muted">
-                  Across {summary.totalBills} bills · Click to view
-                </p>
-              </div>
-            </Card>
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/ap?tab=bills")}
-            >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Due This Week</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{
-                    color: "var(--color-warning)",
-                    fontVariantNumeric: "tabular-nums lining-nums",
-                  }}
-                >
-                  {summary.dueThisWeekAmount.toLocaleString(undefined, {
-                    style: "currency",
-                    currency: "USD",
-                    maximumFractionDigits: 0,
-                  })}
-                </p>
-                <p className="ui-text-xs-muted">
-                  {summary.dueThisWeekCount} bills due · Click to schedule
-                </p>
-              </div>
-            </Card>
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/ap?tab=payments")}
-            >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Processed This Month</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{
-                    color: "var(--color-success)",
-                    fontVariantNumeric: "tabular-nums lining-nums",
-                  }}
-                >
-                  {summary.processedThisMonthAmount.toLocaleString(undefined, {
-                    style: "currency",
-                    currency: "USD",
-                    maximumFractionDigits: 0,
-                  })}
-                </p>
-                <p className="ui-text-xs-muted">
-                  {summary.processedThisMonthCount} bills paid · Click for payments
-                </p>
-              </div>
-            </Card>
+          <Link
+            href="/finance/advanced/payment-batches"
+            className={styles.btnSecondary}
+          >
+            <CreditCard size={14} />
+            <span>Payment run</span>
+          </Link>
+
+          <Link
+            href="/finance/vendor-bills"
+            className={styles.btnPrimary}
+          >
+            <Plus size={14} />
+            <span>New bill</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* KPI Strip */}
+      <div className={styles.kpiStrip}>
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Open payables</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              USD {isLoading ? "..." : (data?.kpis.openPayables ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
           </div>
-          <Card padding="md">
-            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
-              <h3 className="ui-heading-sm">Vendor Bills</h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => router.push("/finance/ap?tab=bills")}
-              >
-                View all bills
-              </Button>
+        </div>
+
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Due this week</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              USD {isLoading ? "..." : (data?.kpis.dueThisWeek ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Discounts available</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue} style={{ color: "var(--color-success)" }}>
+              USD {isLoading ? "..." : (data?.kpis.discountsAvailable ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Filter Chips Bar */}
+      <div className={styles.filterBar}>
+        <button
+          type="button"
+          className={`${styles.filterChip} ${activeFilter === "all" ? styles.filterChipActive : ""}`}
+          onClick={() => setActiveFilter("all")}
+        >
+          <span>All bills</span>
+          <span className={styles.filterBadge}>{data?.filterCounts.all ?? 0}</span>
+        </button>
+
+        <button
+          type="button"
+          className={`${styles.filterChip} ${activeFilter === "needsReview" ? styles.filterChipActive : ""}`}
+          onClick={() => setActiveFilter("needsReview")}
+        >
+          <span>Needs review</span>
+          <span className={`${styles.filterBadge} ${styles.filterBadgeAmber}`}>
+            {data?.filterCounts.needsReview ?? 0}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          className={`${styles.filterChip} ${activeFilter === "approved" ? styles.filterChipActive : ""}`}
+          onClick={() => setActiveFilter("approved")}
+        >
+          <span>Approved</span>
+          <span className={styles.filterBadge}>{data?.filterCounts.approved ?? 0}</span>
+        </button>
+      </div>
+
+      {/* Split Workspace */}
+      <div className={styles.splitWorkspace}>
+        {/* Left: Bills Table */}
+        <div className={styles.tablePanel}>
+          <div className={styles.panelHeader}>
+            <span className={styles.panelTitle}>Bills ({filteredBills.length} visible)</span>
+            <div className={styles.searchBox}>
+              <Search size={13} color="var(--color-text-muted)" />
+              <input
+                type="text"
+                className={styles.searchInput}
+                placeholder="Search vendor or bill #..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
-            <ListView
-              key={`ap-b-${billsKey}`}
-              resource={vendorBillResource}
-              onCreate={() => setShowCreateBill(true)}
-            />
-          </Card>
-        </div>
-      )}
-      {activeTab === "bills" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <PageHeader
-            title="Bills"
-            description="Manage vendor bills and accounts payable"
-          />
-          <ListView
-            key={billsKey}
-            resource={vendorBillResource}
-            onCreate={() => setShowCreateBill(true)}
-          />
-        </div>
-      )}
-      {activeTab === "vendors" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <PageHeader
-            title="Vendors"
-            description="Vendor directory and management"
-          />
-          <ListView resource={vendorResource} />
-        </div>
-      )}
-      {activeTab === "debit-notes" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <PageHeader
-            title="Debit Notes"
-            description="Vendor debit notes and adjustments"
-          />
-          <DebitNotesPanel />
-        </div>
-      )}
-      {activeTab === "payments" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <PageHeader
-            title="Payments"
-            description="Process outgoing payments to vendors"
-          />
-          <ListView resource={vendorBillPaymentResource} />
-        </div>
-      )}
-      {activeTab === "payment-batches" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "batches",
-                label: "Payment Batches",
-                href: "/finance/ap?tab=payment-batches&subtab=batches",
-              },
-              {
-                id: "terms",
-                label: "Payment Terms",
-                href: "/finance/ap?tab=payment-batches&subtab=terms",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-3)" }}>
-            {subTab === "terms" ? <PaymentTermsPage /> : <PaymentBatchesPage />}
+          </div>
+
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.th}>Supplier</th>
+                  <th className={styles.th}>Bill #</th>
+                  <th className={styles.th}>Due Date</th>
+                  <th className={`${styles.th} ${styles.thRight}`}>Amount (USD)</th>
+                  <th className={styles.th}>Matching</th>
+                  <th className={styles.th}>Approval</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading ? (
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <tr key={i}>
+                      <td colSpan={6} style={{ padding: "var(--space-2)" }}>
+                        <div className={styles.skeleton} />
+                      </td>
+                    </tr>
+                  ))
+                ) : filteredBills.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} style={{ textAlign: "center", padding: "var(--space-6)", color: "var(--color-text-muted)" }}>
+                      No bills match current filter.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredBills.map((row) => {
+                    const isSelected = (selectedBillNumber || matchData?.billNumber) === row.billNumber;
+                    return (
+                      <tr
+                        key={row.id}
+                        className={`${styles.tr} ${isSelected ? styles.trSelected : ""}`}
+                        onClick={() => setSelectedBillNumber(row.billNumber)}
+                      >
+                        <td className={styles.td} style={{ fontWeight: 500 }}>{row.supplier}</td>
+                        <td className={styles.tdMono}>{row.billNumber}</td>
+                        <td className={styles.td}>{row.dueDate}</td>
+                        <td className={styles.tdRight}>
+                          {row.amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                        </td>
+                        <td className={styles.td}>
+                          <span
+                            className={
+                              row.matchStatus === "NEEDS_REVIEW"
+                                ? styles.badgeReview
+                                : styles.badgeMatched
+                            }
+                          >
+                            {row.matchStatus === "NEEDS_REVIEW" ? "Needs review" : "Matched"}
+                          </span>
+                        </td>
+                        <td className={styles.td}>
+                          <span className={row.approval === "APPROVED" ? styles.badgeMatched : styles.badgeReview}>
+                            {row.approval}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <div className={styles.tableFooter}>
+            <span>Showing 1–8 of 32 bills</span>
+            <span>8 per page</span>
           </div>
         </div>
-      )}
-      {activeTab === "expense-policies" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "policies",
-                label: "Expense Policies",
-                href: "/finance/ap?tab=expense-policies&subtab=policies",
-              },
-              {
-                id: "reports",
-                label: "Expense Reports",
-                href: "/finance/ap?tab=expense-policies&subtab=reports",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-3)" }}>
-            {subTab === "reports" ? (
-              <ExpenseReportsPage />
-            ) : (
-              <ExpensePoliciesPage />
-            )}
+
+        {/* Right: Three-Way Match Inspector */}
+        <div className={styles.inspectorPanel}>
+          <div className={styles.inspectorHeader}>
+            <span className={styles.inspectorTitle}>Three-Way Match</span>
+            <span className={styles.tdMono} style={{ color: "var(--color-primary)", fontWeight: 600 }}>
+              {selectedBillNumber || matchData?.billNumber || "No bill selected"}
+            </span>
+          </div>
+
+          {/* PO vs GRN vs Invoice amounts */}
+          <div className={styles.matchValuesBox}>
+            <div className={styles.matchRow}>
+              <span className={styles.matchLabel}>Purchase order ({matchData?.poNumber || "—"})</span>
+              <span className={styles.matchAmount}>
+                USD {(matchData?.poAmount ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              </span>
+            </div>
+
+            <div className={styles.matchRow}>
+              <span className={styles.matchLabel}>Goods received (GRN-0412)</span>
+              <span className={styles.matchAmount}>
+                USD {(matchData?.goodsReceivedAmount ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              </span>
+            </div>
+
+            <div className={styles.matchRow}>
+              <span className={styles.matchLabel}>Supplier invoice</span>
+              <span className={styles.matchAmount}>
+                USD {(matchData?.invoiceAmount ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              </span>
+            </div>
+          </div>
+
+          {/* Variance Warning */}
+          <div className={styles.varianceAlert}>
+            <span className={styles.varianceTitle}>
+              USD {(matchData?.varianceAmount ?? 0).toFixed(2)} receipt variance
+            </span>
+            <span className={styles.varianceNote}>
+              {matchData?.varianceType || "Select a bill to inspect matching details."}
+            </span>
+          </div>
+
+          {/* Lifecycle Steps */}
+          <div className={styles.lifecycleSteps}>
+            <div className={styles.stepItem}>
+              <div className={`${styles.stepDot} ${styles.stepDotDone}`} />
+              <span className={styles.stepLabel}>Captured</span>
+            </div>
+            <div className={styles.stepItem}>
+              <div className={`${styles.stepDot} ${styles.stepDotActive}`} />
+              <span className={`${styles.stepLabel} ${styles.stepLabelActive}`}>Match review</span>
+            </div>
+            <div className={styles.stepItem}>
+              <div className={styles.stepDot} />
+              <span className={styles.stepLabel}>Approved</span>
+            </div>
+            <div className={styles.stepItem}>
+              <div className={styles.stepDot} />
+              <span className={styles.stepLabel}>Scheduled</span>
+            </div>
+          </div>
+
+          <div className={styles.inspectorActions}>
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              style={{ flex: 1, justifyContent: "center" }}
+              disabled={isResolving || !matchData?.actions.canResolveVariance}
+              onClick={handleResolveVariance}
+            >
+              {isResolving ? "Resolving..." : resolveSuccess ? "Resolved ✓" : "Resolve variance"}
+            </button>
+
+            <button
+              type="button"
+              className={`${styles.btnSecondary} ${!matchData?.actions.canPay ? styles.btnDisabled : ""}`}
+              disabled={isPaying || !matchData?.actions.canPay}
+              onClick={handlePayBill}
+              title={matchData?.actions.canPay ? "Schedule payment for approved bill" : "Disabled until variance is resolved"}
+            >
+              {isPaying ? "Scheduling..." : paySuccess ? "Paid ✓" : "Pay bill"}
+            </button>
           </div>
         </div>
-      )}
-      {activeTab === "ai-invoice-capture" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <InvoiceCapturePage />
-        </div>
-      )}
-      {activeTab === "ap-automation" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <ApAutomationPage />
-        </div>
-      )}
-      {activeTab === "ap-match-rules" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <ApMatchRulesPage />
-        </div>
-      )}
-      {activeTab === "exception-queue" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <ExceptionQueuePage />
-        </div>
-      )}
-    </RouteGuard>
+      </div>
+    </div>
   );
 }

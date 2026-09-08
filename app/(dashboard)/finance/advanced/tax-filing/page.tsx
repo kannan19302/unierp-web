@@ -9,7 +9,7 @@ import {
   Loader2,
   AlertTriangle,
 } from "lucide-react";
-import { Card, Button, ListPageTemplate, type ListColumn, useToast } from "@kannan19302/ui";
+import { Card, Button, ListPageTemplate, Modal, type ListColumn, useToast } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
 
 interface TaxFiling {
@@ -26,6 +26,7 @@ export default function TaxFilingPage() {
   const [filings, setFilings] = useState<TaxFiling[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [selectedFiling, setSelectedFiling] = useState<TaxFiling | null>(null);
 
   const [showFilingForm, setShowFilingForm] = useState(false);
   const [filingData, setFilingData] = useState({
@@ -252,7 +253,7 @@ export default function TaxFilingPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => alert(JSON.stringify(row, null, 2))}
+                        onClick={() => setSelectedFiling(row as TaxFiling)}
                       >
                         View Payload
                       </Button>
@@ -273,6 +274,21 @@ export default function TaxFilingPage() {
             })()}
           </div>
         </Card>
+
+        <Modal
+          open={selectedFiling !== null}
+          onClose={() => setSelectedFiling(null)}
+          title="Tax filing payload"
+        >
+          {selectedFiling && (
+            <dl className="ui-stack-3">
+              <div><dt className="ui-text-sm-muted">Return type</dt><dd>{selectedFiling.filingType}</dd></div>
+              <div><dt className="ui-text-sm-muted">Period</dt><dd>{selectedFiling.periodStart} – {selectedFiling.periodEnd}</dd></div>
+              <div><dt className="ui-text-sm-muted">Status</dt><dd>{selectedFiling.status}</dd></div>
+              <div><dt className="ui-text-sm-muted">Filing ID</dt><dd>{selectedFiling.id}</dd></div>
+            </dl>
+          )}
+        </Modal>
       </div>
     </RouteGuard>
   );

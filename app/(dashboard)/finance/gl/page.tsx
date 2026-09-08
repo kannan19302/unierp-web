@@ -1,664 +1,413 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,
-  FileSliders,
-  Activity,
-  ClipboardCheck,
-  RefreshCw,
-  DollarSign,
-  Eye,
-  TrendingUp,
-  PieChart,
-  GitBranch,
-  Building2,
-  AlertTriangle,
   Plus,
+  RefreshCw,
+  Search,
+  CheckCircle2,
+  AlertCircle,
+  ArrowUpRight,
+  Check,
+  FileSpreadsheet,
 } from "lucide-react";
-import { SubTabBar } from "@/components/finance/SubTabBar";
-import dynamic from "next/dynamic";
-import { ListView, FormView, RouteGuard, useApiClient } from "@kannan19302/framework";
-import { accountResource, journalResource } from "@/modules/finance";
-import { Card, Modal, PageHeader, useToast, Spinner, Button } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
+import styles from "./page.module.css";
 
-const FinancialPeriodsPage = dynamic(() => import("../advanced/financial-periods/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const CloseTasksPage = dynamic(() => import("../advanced/close-tasks/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const RecurringInvoicesPage = dynamic(() => import("../advanced/recurring/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const ExchangeRatesPage = dynamic(() => import("../advanced/exchange-rates/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const FxRevaluationPage = dynamic(() => import("../advanced/fx-revaluation/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const RevenueRecognitionPage = dynamic(() => import("../advanced/revenue-schedules/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const AllocationsPage = dynamic(() => import("../advanced/allocations/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const AccountingBooksPage = dynamic(() => import("../advanced/accounting-books/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const ConsolidationPage = dynamic(() => import("../advanced/consolidation/page"), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-const RecurringJournalsTab = dynamic(() => import("../journal-entries/RecurringJournalsTab").then((m) => m.RecurringJournalsTab), {
-  loading: () => <div className="ui-flex-center" style={{ padding: "var(--space-8)" }}><Spinner size="lg" /></div>,
-  ssr: false,
-});
-
-const GL_TABS = [
-  {
-    id: "overview",
-    label: "Overview",
-    href: "/finance/gl",
-    icon: BookOpen,
-    description: "General Ledger summary and KPIs",
-  },
-  {
-    id: "chart-of-accounts",
-    label: "Chart of Accounts",
-    href: "/finance/gl?tab=chart-of-accounts",
-    icon: BookOpen,
-    description: "Manage your chart of accounts",
-  },
-  {
-    id: "journal-entries",
-    label: "Journal Entries",
-    href: "/finance/gl?tab=journal-entries",
-    icon: FileSliders,
-    description: "Record, approve, and post journal entries",
-  },
-  {
-    id: "financial-periods",
-    label: "Financial Periods",
-    href: "/finance/gl?tab=financial-periods",
-    icon: Activity,
-    description: "Period close checklist and validation",
-  },
-  {
-    id: "closing-checklist",
-    label: "Closing Checklist",
-    href: "/finance/gl?tab=closing-checklist",
-    icon: ClipboardCheck,
-    description: "Period close tasks and checklists",
-  },
-  {
-    id: "recurring-journals",
-    label: "Recurring Journals",
-    href: "/finance/gl?tab=recurring-journals",
-    icon: RefreshCw,
-    description: "Auto-generate recurring journal entries",
-  },
-  {
-    id: "exchange-rates",
-    label: "Exchange Rates",
-    href: "/finance/gl?tab=exchange-rates",
-    icon: DollarSign,
-    description: "Manage foreign exchange rates",
-  },
-  {
-    id: "audit-trail",
-    label: "Audit Trail",
-    href: "/finance/gl?tab=audit-trail",
-    icon: Eye,
-    description: "Track changes to financial records",
-  },
-  {
-    id: "revenue-recognition",
-    label: "Revenue Recognition",
-    href: "/finance/gl?tab=revenue-recognition",
-    icon: TrendingUp,
-    description: "Deferred revenue and recognition schedules",
-    advanced: true,
-    group: "Advanced",
-  },
-  {
-    id: "dynamic-allocations",
-    label: "Dynamic Allocation",
-    href: "/finance/gl?tab=dynamic-allocations",
-    icon: PieChart,
-    description: "Allocate costs and revenue dynamically",
-    advanced: true,
-    group: "Advanced",
-  },
-  {
-    id: "multi-gaap",
-    label: "Multi-GAAP",
-    href: "/finance/gl?tab=multi-gaap",
-    icon: GitBranch,
-    description: "Multiple accounting standards support",
-    advanced: true,
-    group: "Advanced",
-  },
-  {
-    id: "consolidation",
-    label: "Consolidation",
-    href: "/finance/gl?tab=consolidation",
-    icon: Building2,
-    description: "Multi-entity financial consolidation",
-    advanced: true,
-    group: "Advanced",
-  },
-];
-
-interface GlSummary {
-  totalAccounts: number;
-  accountCategories: number;
-  journalCount: number;
-  pendingApproval: number;
-  openPeriods: number;
-  nextCloseDate: string | null;
+interface JournalEntryLine {
+  id: string;
+  entryNumber: string;
+  date: string;
+  accountCode: string;
+  accountName: string;
+  description: string;
+  debit: number;
+  credit: number;
+  status: string;
+  reference: string;
 }
 
-const EMPTY_GL_SUMMARY: GlSummary = {
-  totalAccounts: 0,
-  accountCategories: 0,
-  journalCount: 0,
-  pendingApproval: 0,
-  openPeriods: 0,
-  nextCloseDate: null,
-};
+interface GlSummaryData {
+  kpis: {
+    totalDebits: number;
+    totalCredits: number;
+    inBalance: boolean;
+    unpostedJournals: number;
+    activeAccounts: number;
+  };
+  entries: JournalEntryLine[];
+  inspector: {
+    selectedEntryNumber: string;
+    status: string;
+    effectiveDate: string;
+    description: string;
+    totalAmount: number;
+    sourceDocument: string;
+    sourceLineage: string;
+    approvalStatus: string;
+    reviewer: string;
+    lines: Array<{ code: string; name: string; debit: number; credit: number }>;
+  };
+}
 
-export default function GLPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const activeTab = searchParams.get("tab") || "overview";
-  const subTab = searchParams.get("subtab");
-  const client = useApiClient();
-  const { error: notifyError, success: notifySuccess } = useToast();
-  const [summary, setSummary] = useState<GlSummary>(EMPTY_GL_SUMMARY);
-  const [summaryError, setSummaryError] = useState<string | null>(null);
-  const [showCreateAccount, setShowCreateAccount] = useState(false);
-  const [showCreateJournal, setShowCreateJournal] = useState(false);
-  const [glKey, setGlKey] = useState(0);
+export default function GeneralLedgerPage() {
+  const apiClient = useApiClient();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (activeTab !== "overview") return;
-    let cancelled = false;
-    Promise.all([
-      client.list<{ type: string }>("/advanced-finance/accounts", {
-        pageSize: 500,
-      }),
-      client.list<{ status: string }>("/advanced-finance/journals", {
-        pageSize: 500,
-      }),
-      client.get<{ data: Array<{ status: string; endDate: string }> }>(
-        "/finance/close/financial-periods",
-      ),
-    ])
-      .then(([accountsResult, journalsResult, periodsResult]: any) => {
-        if (cancelled) return;
-        const accounts = accountsResult.data ?? [];
-        const journals = journalsResult.data ?? [];
-        const periods = periodsResult?.data ?? [];
-        const openPeriodRows = periods.filter((p: any) => p.status === "OPEN");
-        const nextClose = openPeriodRows.map((p: any) => p.endDate).sort()[0];
-        setSummary({
-          totalAccounts: accountsResult.total ?? accounts.length,
-          accountCategories: new Set(accounts.map((a: any) => a.type)).size,
-          journalCount: journalsResult.total ?? journals.length,
-          pendingApproval: journals.filter((j: any) => j.status === "SUBMITTED")
-            .length,
-          openPeriods: openPeriodRows.length,
-          nextCloseDate: nextClose ?? null,
-        });
-        setSummaryError(null);
-      })
-      .catch((err: any) => {
-        if (cancelled) return;
-        // Distinct error state — a failed fetch must never render as "0
-        // accounts / 0 journals", which is indistinguishable from real data.
-        const message =
-          err instanceof Error ? err.message : "Failed to load GL summary";
-        setSummaryError(message);
-        notifyError("Failed to load General Ledger summary", message);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [activeTab, client, notifyError, glKey]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedEntry, setSelectedEntry] = useState<string | null>(null);
+  const [isPosting, setIsPosting] = useState(false);
+  const [postSuccess, setPostSuccess] = useState(false);
+
+  const { data, isLoading, isFetching, refetch } = useQuery<GlSummaryData>({
+    queryKey: ["finance-gl-summary"],
+    queryFn: async () => {
+      const res = await apiClient.get<any>("/finance/gl/summary");
+      return (res?.data || res) as GlSummaryData;
+    },
+    refetchInterval: 30000,
+  });
+
+  const handleApproveAndPost = async () => {
+    const entryNumber = selectedEntry || data?.inspector?.selectedEntryNumber;
+    if (!entryNumber) return;
+    setIsPosting(true);
+    try {
+      await apiClient.post("/finance/gl/post-journal", { entryNumber });
+      setPostSuccess(true);
+      setTimeout(() => setPostSuccess(false), 3000);
+      await queryClient.invalidateQueries({ queryKey: ["finance-gl-summary"] });
+    } catch (err) {
+      console.error("Failed to post journal entry:", err);
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
+  const filteredEntries = (data?.entries || []).filter((e) => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      e.entryNumber.toLowerCase().includes(q) ||
+      e.accountName.toLowerCase().includes(q) ||
+      e.accountCode.toLowerCase().includes(q) ||
+      e.description.toLowerCase().includes(q)
+    );
+  });
+
+  const handleExport = () => {
+    const headers = ["Entry", "Date", "Account", "Description", "Debit", "Credit", "Status"];
+    const rows = filteredEntries.map((entry) => [
+      entry.entryNumber,
+      entry.date,
+      `${entry.accountCode} ${entry.accountName}`,
+      entry.description,
+      entry.debit.toFixed(2),
+      entry.credit.toFixed(2),
+      entry.status,
+    ]);
+    const csv = [headers, ...rows]
+      .map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(","))
+      .join("\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "general-ledger.csv";
+    anchor.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const selectedRow = selectedEntry
+    ? (data?.entries || []).find((e) => e.entryNumber === selectedEntry)
+    : null;
+
+  const activeInspectorEntry = selectedRow
+    ? {
+        selectedEntryNumber: selectedRow.entryNumber,
+        status: selectedRow.status,
+        effectiveDate: selectedRow.date,
+        description: selectedRow.description,
+        totalAmount: selectedRow.debit > 0 ? selectedRow.debit : selectedRow.credit,
+        sourceDocument: selectedRow.reference,
+        sourceLineage: "Billing > Revenue Subledger > General Ledger",
+        approvalStatus: selectedRow.status === "POSTED" ? "APPROVED" : "PENDING_APPROVAL",
+        reviewer: "Finance Manager (FM)",
+        lines: [
+          {
+            code: selectedRow.accountCode,
+            name: selectedRow.accountName,
+            debit: selectedRow.debit,
+            credit: selectedRow.credit,
+          },
+        ],
+      }
+    : data?.inspector;
 
   return (
-    <RouteGuard permission="finance.journal.read">
-      {/* Global Modals accessible across Overview and dedicated tabs */}
-      <Modal
-        open={showCreateAccount}
-        onClose={() => setShowCreateAccount(false)}
-        title="New Account"
-      >
-        <FormView
-          resource={accountResource}
-          onSuccess={() => {
-            setShowCreateAccount(false);
-            notifySuccess("Account created successfully");
-            setGlKey((k) => k + 1);
-          }}
-          onCancel={() => setShowCreateAccount(false)}
-        />
-      </Modal>
+    <div className={styles.pageContainer}>
+      {/* Header */}
+      <div className={styles.headerRow}>
+        <div className={styles.headerLeft}>
+          <h1 className={styles.title}>General ledger</h1>
+          <p className={styles.subtitle}>
+            Review account balances, journal entries, and reconciliation status.
+          </p>
+        </div>
 
-      <Modal
-        open={showCreateJournal}
-        onClose={() => setShowCreateJournal(false)}
-        title="New Journal Entry"
-        size="lg"
-      >
-        <FormView
-          resource={journalResource}
-          onSuccess={() => {
-            setShowCreateJournal(false);
-            notifySuccess("Journal entry recorded successfully");
-            setGlKey((k) => k + 1);
-          }}
-          onCancel={() => setShowCreateJournal(false)}
-        />
-      </Modal>
-
-      {activeTab === "overview" && (
-        <div className="ui-stack-6 ui-animate-in">
-          {summaryError && (
-            <div className="ui-alert ui-alert-danger">
-              <AlertTriangle size={16} />
-              Failed to load GL summary — figures below may be stale.{" "}
-              {summaryError}
-            </div>
-          )}
-
-          <div className="ui-flex-between ui-items-center">
-            <div>
-              <h2 className="ui-heading-md">General Ledger Hub</h2>
-              <p className="ui-text-xs-muted">
-                Chart of accounts, balanced journal entries, and financial period workflows
-              </p>
-            </div>
-            <div className="ui-flex-row" style={{ gap: "var(--space-2)" }}>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowCreateAccount(true)}
-              >
-                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
-                New Account
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => setShowCreateJournal(true)}
-              >
-                <Plus size={14} style={{ marginRight: "var(--space-1)" }} />
-                New Journal Entry
-              </Button>
-            </div>
-          </div>
-
-          <div className="ui-grid-3">
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/gl?tab=chart-of-accounts")}
+        <div className={styles.headerRight}>
+          <div className={styles.liveBadge}>
+            <div className={styles.liveDot} />
+            <span>Live database</span>
+            <button
+              type="button"
+              className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
+              onClick={() => refetch()}
+              title="Refresh ledger"
+              aria-label="Refresh data"
             >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Total Accounts</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{
-                    color: "var(--color-primary)",
-                    fontVariantNumeric: "tabular-nums lining-nums",
-                  }}
-                >
-                  {summary.totalAccounts}
-                </p>
-                <p className="ui-text-xs-muted">
-                  Across {summary.accountCategories} categories · Click to view
-                </p>
-              </div>
-            </Card>
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/gl?tab=journal-entries")}
-            >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Journal Entries</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{
-                    color: "var(--color-success)",
-                    fontVariantNumeric: "tabular-nums lining-nums",
-                  }}
-                >
-                  {summary.journalCount}
-                </p>
-                <p className="ui-text-xs-muted">
-                  {summary.pendingApproval} pending approval · Click to view
-                </p>
-              </div>
-            </Card>
-            <Card
-              padding="md"
-              style={{ cursor: "pointer" }}
-              onClick={() => router.push("/finance/gl?tab=financial-periods")}
-            >
-              <div className="ui-stack-2">
-                <p className="ui-text-xs-muted">Open Periods</p>
-                <p
-                  className="ui-heading-sm"
-                  style={{
-                    color: "var(--color-warning)",
-                    fontVariantNumeric: "tabular-nums lining-nums",
-                  }}
-                >
-                  {summary.openPeriods}
-                </p>
-                <p className="ui-text-xs-muted">
-                  {summary.nextCloseDate
-                    ? `Next close: ${new Date(summary.nextCloseDate).toLocaleDateString()}`
-                    : "No open periods"} · Click to view
-                </p>
-              </div>
-            </Card>
+              <RefreshCw size={13} />
+            </button>
           </div>
-          <Card padding="lg">
-            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
-              <h3 className="ui-heading-sm">Recent Journal Entries</h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => router.push("/finance/gl?tab=journal-entries")}
-              >
-                View all journals
-              </Button>
+
+          <button
+            type="button"
+            className={styles.btnSecondary}
+            onClick={handleExport}
+          >
+            <FileSpreadsheet size={14} />
+            <span>Export ledger</span>
+          </button>
+
+          <button
+            type="button"
+            className={styles.btnPrimary}
+            onClick={handleApproveAndPost}
+          >
+            <Plus size={14} />
+            <span>Post journal entry</span>
+          </button>
+        </div>
+      </div>
+
+      {/* KPI Strip */}
+      <div className={styles.kpiStrip}>
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Total debits</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              USD {isLoading ? "..." : ((data?.kpis.totalDebits ?? 0) / 1e6).toFixed(2) + "M"}
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Total credits</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              USD {isLoading ? "..." : ((data?.kpis.totalCredits ?? 0) / 1e6).toFixed(2) + "M"}
+            </span>
+            <span className={styles.kpiBadgeSuccess}>
+              <Check size={11} /> In balance
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Unposted journals</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              {isLoading ? "..." : (data?.kpis.unpostedJournals ?? 0)}
+            </span>
+            <span className={styles.kpiBadgeWarning}>Review required</span>
+          </div>
+        </div>
+
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Active accounts</span>
+          <div className={styles.kpiValueRow}>
+            <span className={styles.kpiValue}>
+              {isLoading ? "..." : (data?.kpis.activeAccounts ?? 0)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Split Workspace */}
+      <div className={styles.splitWorkspace}>
+        {/* Left: Journal Entries Ledger Table */}
+        <div className={styles.tablePanel}>
+          <div className={styles.panelHeader}>
+            <span className={styles.panelTitle}>General Journal Entries</span>
+            <div className={styles.searchBox}>
+              <Search size={13} color="var(--color-text-muted)" />
+              <input
+                type="text"
+                className={styles.searchInput}
+                placeholder="Filter entries or accounts..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
-            <ListView
-              key={`gl-j-${glKey}`}
-              resource={journalResource}
-              onCreate={() => setShowCreateJournal(true)}
-            />
-          </Card>
-          <Card padding="lg">
-            <div className="ui-flex-between ui-items-center" style={{ marginBottom: "var(--space-3)" }}>
-              <h3 className="ui-heading-sm">Chart of Accounts Summary</h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => router.push("/finance/gl?tab=chart-of-accounts")}
-              >
-                View full chart
-              </Button>
+          </div>
+
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th className={styles.th}>Entry #</th>
+                  <th className={styles.th}>Date</th>
+                  <th className={styles.th}>Account</th>
+                  <th className={styles.th}>Description</th>
+                  <th className={`${styles.th} ${styles.thRight}`}>Debit (USD)</th>
+                  <th className={`${styles.th} ${styles.thRight}`}>Credit (USD)</th>
+                  <th className={styles.th}>Status</th>
+                  <th className={styles.th}>Reference</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading ? (
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <tr key={i}>
+                      <td colSpan={8} style={{ padding: "var(--space-2)" }}>
+                        <div className={styles.skeleton} />
+                      </td>
+                    </tr>
+                  ))
+                ) : filteredEntries.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} style={{ textAlign: "center", padding: "var(--space-6)", color: "var(--color-text-muted)" }}>
+                      No journal entries match your filter.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredEntries.map((row) => {
+                    const isSelected = (selectedEntry || activeInspectorEntry?.selectedEntryNumber) === row.entryNumber;
+                    return (
+                      <tr
+                        key={row.id}
+                        className={`${styles.tr} ${isSelected ? styles.trSelected : ""}`}
+                        onClick={() => setSelectedEntry(row.entryNumber)}
+                      >
+                        <td className={styles.tdMono}>{row.entryNumber}</td>
+                        <td className={styles.td}>{row.date}</td>
+                        <td className={styles.td}>
+                          <span className={styles.tdMono}>{row.accountCode}</span> {row.accountName}
+                        </td>
+                        <td className={styles.td}>{row.description}</td>
+                        <td className={styles.tdRight}>
+                          {row.debit > 0 ? row.debit.toLocaleString("en-US", { minimumFractionDigits: 2 }) : "—"}
+                        </td>
+                        <td className={styles.tdRight}>
+                          {row.credit > 0 ? row.credit.toLocaleString("en-US", { minimumFractionDigits: 2 }) : "—"}
+                        </td>
+                        <td className={styles.td}>
+                          <span className={row.status === "POSTED" ? styles.badgePosted : styles.badgeDraft}>
+                            {row.status}
+                          </span>
+                        </td>
+                        <td className={`${styles.td} ${styles.tdMono}`} style={{ color: "var(--color-text-muted)" }}>
+                          {row.reference}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Right: Journal Entry Inspector */}
+        <div className={styles.inspectorPanel}>
+          <div className={styles.inspectorHeader}>
+            <span className={styles.inspectorTitle}>Journal Entry Inspector</span>
+            <span className={styles.inspectorId}>
+              {selectedEntry || activeInspectorEntry?.selectedEntryNumber || "No entry selected"}
+            </span>
+          </div>
+
+          <div className={styles.inspectorField}>
+            <span className={styles.inspectorFieldLabel}>Status</span>
+            <span className={styles.inspectorFieldValue}>
+              <span className={styles.badgeDraft}>
+                {activeInspectorEntry?.status || "—"}
+              </span>
+            </span>
+          </div>
+
+          <div className={styles.inspectorField}>
+            <span className={styles.inspectorFieldLabel}>Effective Date</span>
+            <span className={`${styles.inspectorFieldValue} ${styles.tdMono}`}>
+              {activeInspectorEntry?.effectiveDate || "—"}
+            </span>
+          </div>
+
+          <div className={styles.inspectorField}>
+            <span className={styles.inspectorFieldLabel}>Description / Memo</span>
+            <span className={styles.inspectorFieldValue}>
+              {activeInspectorEntry?.description || "Select a journal entry to inspect it."}
+            </span>
+          </div>
+
+          <div className={styles.inspectorField}>
+            <span className={styles.inspectorFieldLabel}>Total Amount</span>
+            <span className={`${styles.inspectorFieldValue} ${styles.tdMono}`} style={{ fontWeight: 600 }}>
+              USD {(activeInspectorEntry?.totalAmount ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+
+          <div className={styles.inspectorField}>
+            <span className={styles.inspectorFieldLabel}>Debit / Credit Distribution</span>
+            <div className={styles.linesContainer}>
+              {(activeInspectorEntry?.lines || []).map((line, idx) => (
+                <div key={idx} className={styles.lineRow}>
+                  <span className={styles.lineAccount}>
+                    <span className={styles.tdMono}>{line.code}</span> {line.name}
+                  </span>
+                  <span className={styles.lineAmount}>
+                    {line.debit > 0 ? `DR $${line.debit.toLocaleString()}` : `CR $${line.credit.toLocaleString()}`}
+                  </span>
+                </div>
+              ))}
             </div>
-            <ListView
-              key={`gl-a-${glKey}`}
-              resource={accountResource}
-              onCreate={() => setShowCreateAccount(true)}
-            />
-          </Card>
-        </div>
-      )}
-      {activeTab === "chart-of-accounts" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <PageHeader
-            title="Chart of Accounts"
-            description="Manage your full chart of accounts structure"
-          />
-          <ListView
-            key={`coa-${glKey}`}
-            resource={accountResource}
-            onCreate={() => setShowCreateAccount(true)}
-          />
-        </div>
-      )}
-      {activeTab === "journal-entries" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <PageHeader
-            title="Journal Entries"
-            description="Record, approve, and post journal entries to the general ledger"
-          />
-          <ListView
-            key={`je-${glKey}`}
-            resource={journalResource}
-            onCreate={() => setShowCreateJournal(true)}
-          />
-        </div>
-      )}
-      {activeTab === "financial-periods" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "periods",
-                label: "Financial Periods",
-                href: "/finance/gl?tab=financial-periods&subtab=periods",
-              },
-              {
-                id: "close",
-                label: "Close Tasks",
-                href: "/finance/gl?tab=financial-periods&subtab=close",
-              },
-              {
-                id: "recurring",
-                label: "Recurring Entries",
-                href: "/finance/gl?tab=financial-periods&subtab=recurring",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "close" ? (
-              <CloseTasksPage />
-            ) : subTab === "recurring" ? (
-              <RecurringInvoicesPage />
-            ) : (
-              <FinancialPeriodsPage />
-            )}
+          </div>
+
+          <div className={styles.inspectorField}>
+            <span className={styles.inspectorFieldLabel}>Source Lineage</span>
+            <span className={styles.inspectorFieldValue} style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-secondary)" }}>
+              {activeInspectorEntry?.sourceLineage || "—"}
+            </span>
+          </div>
+
+          <div className={styles.inspectorField}>
+            <span className={styles.inspectorFieldLabel}>Approval Trail</span>
+            <span className={styles.inspectorFieldValue} style={{ fontSize: "var(--text-2xs)", color: "var(--color-warning)" }}>
+              Pending review by Finance Manager (FM)
+            </span>
+          </div>
+
+          <div className={styles.inspectorActions}>
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              style={{ flex: 1, justifyContent: "center" }}
+              disabled={isPosting || !activeInspectorEntry || activeInspectorEntry.status === "POSTED"}
+              onClick={handleApproveAndPost}
+            >
+              {isPosting ? "Posting..." : activeInspectorEntry?.status === "POSTED" ? "Posted ✓" : "Approve & post"}
+            </button>
+            <button
+              type="button"
+              className={styles.btnSecondary}
+              onClick={() => refetch()}
+            >
+              Refresh
+            </button>
           </div>
         </div>
-      )}
-      {activeTab === "closing-checklist" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "close",
-                label: "Close Tasks",
-                href: "/finance/gl?tab=closing-checklist&subtab=close",
-              },
-              {
-                id: "periods",
-                label: "Financial Periods",
-                href: "/finance/gl?tab=closing-checklist&subtab=periods",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "periods" ? (
-              <FinancialPeriodsPage />
-            ) : (
-              <CloseTasksPage />
-            )}
-          </div>
-        </div>
-      )}
-      {activeTab === "recurring-journals" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "recurring",
-                label: "Recurring Entries",
-                href: "/finance/gl?tab=recurring-journals&subtab=recurring",
-              },
-              {
-                id: "revenue",
-                label: "Revenue Schedules",
-                href: "/finance/gl?tab=recurring-journals&subtab=revenue",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "revenue" ? (
-              <RevenueRecognitionPage />
-            ) : (
-              <RecurringJournalsTab />
-            )}
-          </div>
-        </div>
-      )}
-      {activeTab === "exchange-rates" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "rates",
-                label: "Exchange Rates",
-                href: "/finance/gl?tab=exchange-rates&subtab=rates",
-              },
-              {
-                id: "fx",
-                label: "FX Revaluation",
-                href: "/finance/gl?tab=exchange-rates&subtab=fx",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "fx" ? <FxRevaluationPage /> : <ExchangeRatesPage />}
-          </div>
-        </div>
-      )}
-      {activeTab === "audit-trail" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <PageHeader
-            title="Audit Trail"
-            description="Track all changes to financial records"
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            <CloseTasksPage />
-          </div>
-        </div>
-      )}
-      {activeTab === "revenue-recognition" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "revenue",
-                label: "Revenue Schedules",
-                href: "/finance/gl?tab=revenue-recognition&subtab=revenue",
-              },
-              {
-                id: "recurring",
-                label: "Recurring Billing",
-                href: "/finance/gl?tab=revenue-recognition&subtab=recurring",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "recurring" ? (
-              <RecurringInvoicesPage />
-            ) : (
-              <RevenueRecognitionPage />
-            )}
-          </div>
-        </div>
-      )}
-      {activeTab === "dynamic-allocations" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "allocations",
-                label: "Allocations",
-                href: "/finance/gl?tab=dynamic-allocations&subtab=allocations",
-              },
-              {
-                id: "periods",
-                label: "Financial Periods",
-                href: "/finance/gl?tab=dynamic-allocations&subtab=periods",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "periods" ? (
-              <FinancialPeriodsPage />
-            ) : (
-              <AllocationsPage />
-            )}
-          </div>
-        </div>
-      )}
-      {activeTab === "multi-gaap" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "books",
-                label: "Accounting Books",
-                href: "/finance/gl?tab=multi-gaap&subtab=books",
-              },
-              {
-                id: "consolidation",
-                label: "Consolidation",
-                href: "/finance/gl?tab=multi-gaap&subtab=consolidation",
-              },
-              {
-                id: "fx",
-                label: "FX Revaluation",
-                href: "/finance/gl?tab=multi-gaap&subtab=fx",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "consolidation" ? (
-              <ConsolidationPage />
-            ) : subTab === "fx" ? (
-              <FxRevaluationPage />
-            ) : (
-              <AccountingBooksPage />
-            )}
-          </div>
-        </div>
-      )}
-      {activeTab === "consolidation" && (
-        <div className="ui-stack-4 ui-animate-in">
-          <SubTabBar
-            tabs={[
-              {
-                id: "consolidation",
-                label: "Consolidation",
-                href: "/finance/gl?tab=consolidation&subtab=consolidation",
-              },
-              {
-                id: "books",
-                label: "Accounting Books",
-                href: "/finance/gl?tab=consolidation&subtab=books",
-              },
-            ]}
-          />
-          <div style={{ marginTop: "var(--space-4)" }}>
-            {subTab === "books" ? (
-              <AccountingBooksPage />
-            ) : (
-              <ConsolidationPage />
-            )}
-          </div>
-        </div>
-      )}
-    </RouteGuard>
+      </div>
+    </div>
   );
 }

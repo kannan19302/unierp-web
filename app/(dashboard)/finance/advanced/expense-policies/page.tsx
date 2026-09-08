@@ -1,6 +1,7 @@
 "use client";
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { PageHeader, Card, Button, Badge, DataTable, type Column, Modal, TextField, FormField, Select, Tabs } from "@kannan19302/ui";
 import {
@@ -54,8 +55,9 @@ interface CardTransaction {
 }
 
 export default function ExpensePoliciesPage() {
+  const searchParams = useSearchParams();
   const client = useApiClient();
-  const [tab, setTab] = useState("policies");
+  const [tab, setTab] = useState(() => searchParams.get("tab") || "policies");
   const [policies, setPolicies] = useState<Policy[]>([]);
   const [mileageRates, setMileageRates] = useState<MileageRate[]>([]);
   const [perDiemRates, setPerDiemRates] = useState<PerDiemRate[]>([]);
@@ -79,6 +81,13 @@ export default function ExpensePoliciesPage() {
   const [cEmployeeId, setCEmployeeId] = useState("");
   const [cProvider, setCProvider] = useState("VISA");
   const [cLast4, setCLast4] = useState("");
+
+  useEffect(() => {
+    if (searchParams.get("tab") === "cards" && searchParams.get("create") === "1") {
+      setTab("cards");
+      setCardModal(true);
+    }
+  }, [searchParams]);
 
   const load = useCallback(async () => {
     try {

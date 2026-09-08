@@ -112,6 +112,70 @@ export const FinanceShellV2: FC<FinanceShellV2Props> = ({ children }) => {
       scope: "UK Operations",
       closable: true,
     },
+    {
+      id: "tab-payables",
+      title: "Payables",
+      icon: <FileText size={14} />,
+      href: "/finance/ap",
+      scope: "US Operations",
+      closable: true,
+    },
+    {
+      id: "tab-assets",
+      title: "Fixed assets",
+      icon: <Building2 size={14} />,
+      href: "/finance/assets",
+      scope: "US Operations",
+      closable: true,
+    },
+    {
+      id: "tab-tax",
+      title: "Tax & compliance",
+      icon: <Globe size={14} />,
+      href: "/finance/tax",
+      scope: "ALL ENTITIES",
+      closable: true,
+    },
+    {
+      id: "tab-budget",
+      title: "Budget & planning",
+      icon: <BarChart3 size={14} />,
+      href: "/finance/budget-planning",
+      scope: "US Operations",
+      closable: true,
+    },
+    {
+      id: "tab-reports",
+      title: "Financial reports",
+      icon: <FileText size={14} />,
+      href: "/finance/reports",
+      scope: "US Operations",
+      closable: true,
+    },
+    {
+      id: "tab-fx",
+      title: "FX Revaluation",
+      icon: <Globe size={14} />,
+      href: "/finance/fx-revaluation",
+      scope: "ALL ENTITIES",
+      closable: true,
+    },
+    {
+      id: "tab-intercompany",
+      title: "Intercompany",
+      icon: <Building2 size={14} />,
+      href: "/finance/intercompany",
+      scope: "ALL ENTITIES",
+      closable: true,
+    },
+    {
+      id: "tab-settings",
+      title: "Finance settings",
+      icon: <Clock size={14} />,
+      href: "/finance/settings",
+      scope: "US Operations",
+      closable: true,
+    },
   ]);
 
   // Compute active tab ID from current pathname
@@ -120,12 +184,22 @@ export const FinanceShellV2: FC<FinanceShellV2Props> = ({ children }) => {
     if (pathname.startsWith("/finance/gl")) return "tab-gl";
     if (pathname.startsWith("/finance/journal-entries")) return "tab-je-draft";
     if (pathname.startsWith("/finance/ar")) return "tab-inv-0821";
+    if (pathname.startsWith("/finance/ap")) return "tab-payables";
     if (pathname.startsWith("/finance/banking")) return "tab-cash-forecast";
+    if (pathname.startsWith("/finance/assets")) return "tab-assets";
+    if (pathname.startsWith("/finance/tax")) return "tab-tax";
+    if (pathname.startsWith("/finance/budget-planning")) return "tab-budget";
+    if (pathname.startsWith("/finance/reports")) return "tab-reports";
+    if (pathname.startsWith("/finance/fx-revaluation")) return "tab-fx";
+    if (pathname.startsWith("/finance/intercompany")) return "tab-intercompany";
+    if (pathname.startsWith("/finance/settings")) return "tab-settings";
     return "tab-overview";
   }, [pathname]);
 
   const handleTabChange = (tabId: string) => {
-    const targetTab = tabs.find((t) => t.id === tabId);
+    const targetTab = tabs.find(
+      (t) => t.id === tabId || `tab-${t.id}` === tabId || t.id === `tab-${tabId}`
+    );
     if (targetTab && targetTab.href) {
       router.push(targetTab.href);
     }
@@ -134,6 +208,21 @@ export const FinanceShellV2: FC<FinanceShellV2Props> = ({ children }) => {
   const handleTabClose = (tabId: string) => {
     setTabs((current) => current.filter((t) => t.id !== tabId));
   };
+
+  // Proactively prefetch all finance tab routes in background idle time
+  // so tab switching is instantaneous (<100ms) without on-demand compile delays.
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const timer = setTimeout(() => {
+        tabs.forEach((tab) => {
+          if (tab.href && tab.href.startsWith("/finance")) {
+            router.prefetch(tab.href);
+          }
+        });
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [tabs, router]);
 
   const handleNewTab = () => {
     router.push("/finance/gl");

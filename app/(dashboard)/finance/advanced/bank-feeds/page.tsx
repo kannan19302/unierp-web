@@ -2,6 +2,7 @@
 
 import styles from "./page.module.css";
 import React, { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { Card, PageHeader, Button, StatusBadge, Badge } from "@kannan19302/ui";
 import { RouteGuard, useApiClient } from "@kannan19302/framework";
 import {
@@ -40,6 +41,7 @@ interface BankConnection {
 }
 
 export default function BankFeedsConnectionsPage() {
+  const router = useRouter();
   const client = useApiClient();
   const [connections, setConnections] = useState<BankConnection[]>([]);
   const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
@@ -162,17 +164,16 @@ export default function BankFeedsConnectionsPage() {
 
   const handleAddConnection = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!targetBankAccountId) {
-      alert("Please select a target ERP Bank Account");
+    if (!targetBankAccountId || !accountNumber.trim()) {
+      alert("Select an ERP bank account and enter the external account number.");
       return;
     }
     try {
       await client.post("/advanced-finance/bank-feeds/connections", {
         bankName: selectedBank,
-        accountNumber: accountNumber || "•••• 5543",
+        accountNumber: accountNumber.trim(),
         accountType,
         bankAccountId: targetBankAccountId,
-        credentialsHash: "feed-token-" + Math.random().toString(36).substring(2),
       });
       setShowAddModal(false);
       setAccountNumber("");
@@ -327,11 +328,13 @@ export default function BankFeedsConnectionsPage() {
                         </>
                       )}
                     </Button>
-                    <a href={`/finance/advanced/bank-recon`}>
-                      <Button variant="secondary" size="sm">
-                        Reconcile Feed
-                      </Button>
-                    </a>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => router.push("/finance/advanced/bank-recon")}
+                    >
+                      Reconcile Feed
+                    </Button>
                     <Button
                       variant="outline"
                       size="sm"

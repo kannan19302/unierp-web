@@ -3,37 +3,158 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { useApiClient } from "@kannan19302/framework";
 import {
   ExternalLink,
   AlertCircle,
   AlertTriangle,
   Clock,
   CheckCircle2,
-  TrendingUp,
-  TrendingDown,
-  ArrowUpRight,
+  RefreshCw,
+  Database,
+  ArrowRight,
 } from "lucide-react";
 import styles from "./page.module.css";
 
+interface DashboardTelemetry {
+  kpis: {
+    totalRevenueYtd: number;
+    totalRevenue: number;
+    outstandingAr: number;
+    pendingAp: number;
+    netCashBalance: number;
+    totalInvoices: number;
+    paidInvoices: number;
+    overdueInvoices: number;
+    paymentRate: number;
+    bankAccounts: number;
+    revenue?: {
+      value: number;
+      currency: string;
+      deltaPct: number;
+      priorValue: number;
+      priorLabel: string;
+      sparkline: number[];
+    };
+    operatingCashFlow?: {
+      value: number;
+      currency: string;
+      deltaPct: number;
+      priorValue: number;
+      priorLabel: string;
+      sparkline: number[];
+    };
+    ebitdaMargin?: {
+      value: number;
+      deltaPp: number;
+      priorValue: number;
+      priorLabel: string;
+      sparkline: number[];
+    };
+    dso?: {
+      value: number;
+      deltaDays: number;
+      priorValue: number;
+      priorLabel: string;
+      sparkline: number[];
+    };
+  };
+  charts: {
+    revenueTrend: Array<{
+      month: string;
+      revenue: number;
+      expenses: number;
+      invoices: number;
+    }>;
+    statusDistribution: Array<{ name: string; value: number; amount: number }>;
+    arAgingChart: Array<{ bucket: string; amount: number }>;
+    arAgingSummary?: {
+      total: number;
+      currency: string;
+      buckets: Array<{
+        bucket: string;
+        label: string;
+        amount: number;
+        pct: number;
+        widthPct: number;
+        count: number;
+      }>;
+    };
+  };
+  exceptions?: {
+    totalAttentionCount: number;
+    overdueReceivables: {
+      count: number;
+      impact: number;
+      oldest: string | null;
+      details: string;
+      actionUrl: string;
+    };
+    unmatchedTransactions: {
+      count: number;
+      impact: number;
+      oldest: string | null;
+      details: string;
+      actionUrl: string;
+    };
+    pendingJournals: {
+      count: number;
+      impact: number;
+      oldest: string | null;
+      details: string;
+      actionUrl: string;
+    };
+  };
+  monthEndClose?: {
+    periodName: string;
+    tasksCompleted: number;
+    tasksTotal: number;
+    tasks: Array<{
+      id: string;
+      task: string;
+      owner: string;
+      status: string;
+      due: string;
+      done: boolean;
+    }>;
+  };
+}
+
 // Sparkline SVG component for KPI cards
-function Sparkline({ data, strokeColor = "var(--color-primary, #2563eb)" }: { data: number[]; strokeColor?: string }) {
+function Sparkline({
+  data,
+  strokeColor = "var(--color-primary, #2563eb)",
+}: {
+  data?: number[];
+  strokeColor?: string;
+}) {
+  if (!data || data.length < 2) {
+    return <div className={styles.sparklineWrap} />;
+  }
+
   const min = Math.min(...data);
   const max = Math.max(...data);
-  const range = max - min || 1;
+  const range = max - min || (max === 0 ? 1 : Math.abs(max) * 0.1);
   const width = 80;
   const height = 30;
 
   const points = data
     .map((val, i) => {
       const x = (i / (data.length - 1)) * width;
-      const y = height - ((val - min) / range) * (height - 6) - 3;
+      const y = height - ((val - min) / range) * (height - 8) - 4;
       return `${x.toFixed(1)},${y.toFixed(1)}`;
     })
     .join(" ");
 
   return (
     <div className={styles.sparklineWrap}>
-      <svg viewBox={`0 0 ${width} ${height}`} className={styles.sparklineSvg} preserveAspectRatio="none">
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className={styles.sparklineSvg}
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
         <polyline
           fill="none"
           stroke={strokeColor}
@@ -47,33 +168,130 @@ function Sparkline({ data, strokeColor = "var(--color-primary, #2563eb)" }: { da
   );
 }
 
+// Formatting helpers
+function fmtCompact(val: number): string {
+  if (Math.abs(val) >= 1_000_000) {
+    return `${(val / 1_000_000).toFixed(2)}M`;
+  }
+  if (Math.abs(val) >= 1_000) {
+    return `${(val / 1_000).toFixed(1)}k`;
+  }
+  return val.toLocaleString("en-US", { maximumFractionDigits: 0 });
+}
+
+function fmtAmount(val: number): string {
+  return Number(val).toLocaleString("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+}
+
 export default function FinanceOverviewPage() {
   const router = useRouter();
+  const client = useApiClient();
   const [period, setPeriod] = useState("jan-aug-2026");
 
-  // Trend data points for Jan–Aug 2026
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
-  const revenueTrend = [3.62, 3.78, 3.95, 4.12, 4.28, 4.46, 4.22, 4.82];
-  const expenseTrend = [2.31, 2.41, 2.47, 2.56, 2.63, 2.71, 2.68, 2.90];
+  // Fetch real-time dashboard data with periodic 30s background polling
+  const { data, isLoading, isError, error, refetch, isFetching, dataUpdatedAt } =
+    useQuery<DashboardTelemetry>({
+      queryKey: ["finance", "dashboard", period],
+      queryFn: async () => {
+        const res = await client.get<DashboardTelemetry>("/finance/dashboard");
+        return res;
+      },
+      refetchInterval: 30000,
+      staleTime: 15000,
+    });
 
-  // Accounts receivable aging data
-  const agingBuckets = [
-    { label: "Current (0–30 days)", amount: "682,550", pct: 81, widthPct: 81 },
-    { label: "1–30 days", amount: "78,600", pct: 9, widthPct: 15 },
-    { label: "31–60 days", amount: "45,300", pct: 5, widthPct: 10 },
-    { label: "61–90 days", amount: "22,100", pct: 3, widthPct: 6 },
-    { label: "90+ days", amount: "14,350", pct: 2, widthPct: 4 },
+  // Relative updated timestamp
+  const updatedTimeStr = dataUpdatedAt
+    ? new Date(dataUpdatedAt).toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZoneName: "short",
+      })
+    : "Just now";
+
+  // Check if data has zero financial records
+  const hasZeroData =
+    !isLoading &&
+    !isError &&
+    data &&
+    (data.kpis?.totalInvoices === 0 || !data.kpis?.totalInvoices) &&
+    (data.kpis?.totalRevenue === 0 || !data.kpis?.totalRevenue);
+
+  // 1. Sparkline arrays and metric numbers
+  const revKpi = data?.kpis?.revenue;
+  const cfKpi = data?.kpis?.operatingCashFlow;
+  const ebitdaKpi = data?.kpis?.ebitdaMargin;
+  const dsoKpi = data?.kpis?.dso;
+
+  // 2. Trend dataset & scaling
+  const trendData = data?.charts?.revenueTrend || [];
+  const trendMonths =
+    trendData.length > 0
+      ? trendData.map((d) => d.month)
+      : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
+  const revValues =
+    trendData.length > 0
+      ? trendData.map((d) => d.revenue / 1_000_000)
+      : [0, 0, 0, 0, 0, 0, 0, 0];
+  const expValues =
+    trendData.length > 0
+      ? trendData.map((d) => d.expenses / 1_000_000)
+      : [0, 0, 0, 0, 0, 0, 0, 0];
+
+  const maxTrendVal = Math.max(...revValues, ...expValues, 1.0);
+  const chartMaxY = Math.ceil(maxTrendVal * 1.25);
+  const gridSteps = [
+    0,
+    Number(((chartMaxY / 5) * 1).toFixed(1)),
+    Number(((chartMaxY / 5) * 2).toFixed(1)),
+    Number(((chartMaxY / 5) * 3).toFixed(1)),
+    Number(((chartMaxY / 5) * 4).toFixed(1)),
+    chartMaxY,
   ];
 
-  // Month-end close checklist tasks
-  const closeTasks = [
-    { task: "Post all recurring journals", owner: "AB", status: "Complete", due: "Aug 31, 2026", done: true },
-    { task: "Reconcile bank accounts", owner: "CD", status: "Complete", due: "Aug 31, 2026", done: true },
-    { task: "Review and approve AP accruals", owner: "EF", status: "Complete", due: "Aug 31, 2026", done: true },
-    { task: "Review and approve AR adjustments", owner: "GH", status: "Complete", due: "Aug 31, 2026", done: true },
-    { task: "Validate intercompany balances", owner: "IJ", status: "Complete", due: "Sep 1, 2026", done: true },
-    { task: "Review tax provision", owner: "KL", status: "In progress", due: "Sep 2, 2026", done: false },
+  // 3. AR aging buckets
+  const agingBuckets = data?.charts?.arAgingSummary?.buckets || [
+    { label: "Current (0–30 days)", bucket: "CURRENT", amount: 0, pct: 0, widthPct: 0, count: 0 },
+    { label: "1–30 days", bucket: "1_30", amount: 0, pct: 0, widthPct: 0, count: 0 },
+    { label: "31–60 days", bucket: "31_60", amount: 0, pct: 0, widthPct: 0, count: 0 },
+    { label: "61–90 days", bucket: "61_90", amount: 0, pct: 0, widthPct: 0, count: 0 },
+    { label: "90+ days", bucket: "OVER_90", amount: 0, pct: 0, widthPct: 0, count: 0 },
   ];
+  const totalArAmount = data?.charts?.arAgingSummary?.total || 0;
+
+  // 4. Exceptions feed
+  const exceptions = data?.exceptions;
+  const overdueExc = exceptions?.overdueReceivables || {
+    count: 0,
+    impact: 0,
+    oldest: null,
+    details: "Invoices past due",
+    actionUrl: "/finance/ar",
+  };
+  const unmatchedExc = exceptions?.unmatchedTransactions || {
+    count: 0,
+    impact: 0,
+    oldest: null,
+    details: "Bank / GL not matched",
+    actionUrl: "/finance/banking",
+  };
+  const pendingJournalsExc = exceptions?.pendingJournals || {
+    count: 0,
+    impact: 0,
+    oldest: null,
+    details: "Pending manager approval",
+    actionUrl: "/finance/gl",
+  };
+  const attentionCount = exceptions?.totalAttentionCount || 0;
+
+  // 5. Month-end close checklist
+  const closeSection = data?.monthEndClose;
+  const closeTasks = closeSection?.tasks || [];
+  const tasksCompleted = closeSection?.tasksCompleted || 0;
+  const tasksTotal = closeSection?.tasksTotal || 0;
 
   return (
     <div className={styles.pageRoot}>
@@ -81,14 +299,30 @@ export default function FinanceOverviewPage() {
       <div className={styles.pageHeader}>
         <div className={styles.headerTitleGroup}>
           <h1 className={styles.pageTitle}>Finance overview</h1>
-          <p className={styles.pageSubtitle}>Monitor performance, exceptions, and close progress.</p>
+          <p className={styles.pageSubtitle}>
+            Monitor performance, exceptions, and close progress.
+          </p>
         </div>
 
         <div className={styles.headerActions}>
           <div className={styles.metaInfo}>
-            <span>Demo data</span>
+            <span>{data ? "Live database" : "No finance data"}</span>
             <span className={styles.metaSep}>|</span>
-            <span>Updated 09:42 UTC</span>
+            <span>Updated {updatedTimeStr}</span>
+            <span className={styles.metaSep}>|</span>
+            <button
+              type="button"
+              className={styles.refreshBtn}
+              onClick={() => refetch()}
+              title="Refresh real-time telemetry"
+              aria-label="Refresh telemetry data"
+            >
+              <RefreshCw
+                size={13}
+                className={isFetching ? styles.refreshSpin : undefined}
+                aria-hidden="true"
+              />
+            </button>
             <span className={styles.metaSep}>|</span>
             <Link href="/finance/reports" className={styles.viewSourceLink}>
               <span>View source</span>
@@ -106,6 +340,48 @@ export default function FinanceOverviewPage() {
         </div>
       </div>
 
+      {/* Error State Banner */}
+      {isError && (
+        <div className={styles.banner} role="alert">
+          <div className={styles.bannerContent}>
+            <AlertCircle size={20} className={styles.typeIconDanger} />
+            <div>
+              <h3 className={styles.bannerTitle}>Unable to connect to live finance telemetry</h3>
+              <p className={styles.bannerDesc}>
+                {error instanceof Error ? error.message : "The backend service is currently unreachable."}
+              </p>
+            </div>
+          </div>
+          <button type="button" className={styles.btnSecondary} onClick={() => refetch()}>
+            Retry
+          </button>
+        </div>
+      )}
+
+      {/* Zero Data Onboarding Banner */}
+      {hasZeroData && (
+        <div className={styles.banner}>
+          <div className={styles.bannerContent}>
+            <Database size={20} className={styles.typeIconWarning} />
+            <div>
+              <h3 className={styles.bannerTitle}>No financial transactions recorded yet</h3>
+              <p className={styles.bannerDesc}>
+                Create the first invoice or import real opening data to begin reporting.
+              </p>
+            </div>
+          </div>
+          <div className={styles.bannerActions}>
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              onClick={() => router.push("/finance/invoices")}
+            >
+              Create invoice
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 2. Top 4 KPI Cards */}
       <div className={styles.kpiGrid}>
         {/* Card 1: Revenue */}
@@ -115,14 +391,34 @@ export default function FinanceOverviewPage() {
             <span className={styles.kpiCurrency}>USD</span>
           </div>
           <div className={styles.kpiBody}>
-            <div className={styles.kpiValueGroup}>
-              <div className={styles.kpiValue}>4.82M</div>
-              <div className={styles.kpiDelta}>
-                <span className={styles.deltaPositive}>↑ +14.2%</span>
-                <span>vs Jul 2026 (4.22M)</span>
+            {isLoading ? (
+              <div>
+                <div className={`${styles.skeleton} ${styles.skeletonValue}`} />
+                <div className={`${styles.skeleton} ${styles.skeletonText}`} />
               </div>
-            </div>
-            <Sparkline data={[4.1, 4.2, 4.35, 4.3, 4.45, 4.22, 4.6, 4.82]} />
+            ) : (
+              <div className={styles.kpiValueGroup}>
+                <div className={styles.kpiValue}>
+                  {revKpi ? fmtCompact(revKpi.value) : "0.00"}
+                </div>
+                <div className={styles.kpiDelta}>
+                  <span
+                    className={
+                      (revKpi?.deltaPct ?? 0) >= 0
+                        ? styles.deltaPositive
+                        : styles.deltaNegative
+                    }
+                  >
+                    {(revKpi?.deltaPct ?? 0) >= 0 ? "↑ +" : "↓ "}
+                    {revKpi?.deltaPct ?? 0}%
+                  </span>
+                  <span>
+                    vs {revKpi?.priorLabel || "prior month"} ({fmtCompact(revKpi?.priorValue ?? 0)})
+                  </span>
+                </div>
+              </div>
+            )}
+            <Sparkline data={revKpi?.sparkline} />
           </div>
         </div>
 
@@ -133,14 +429,34 @@ export default function FinanceOverviewPage() {
             <span className={styles.kpiCurrency}>USD</span>
           </div>
           <div className={styles.kpiBody}>
-            <div className={styles.kpiValueGroup}>
-              <div className={styles.kpiValue}>1.24M</div>
-              <div className={styles.kpiDelta}>
-                <span className={styles.deltaPositive}>↑ +5.1%</span>
-                <span>vs Jul 2026 (1.18M)</span>
+            {isLoading ? (
+              <div>
+                <div className={`${styles.skeleton} ${styles.skeletonValue}`} />
+                <div className={`${styles.skeleton} ${styles.skeletonText}`} />
               </div>
-            </div>
-            <Sparkline data={[1.1, 1.15, 1.12, 1.18, 1.15, 1.18, 1.2, 1.24]} />
+            ) : (
+              <div className={styles.kpiValueGroup}>
+                <div className={styles.kpiValue}>
+                  {cfKpi ? fmtCompact(cfKpi.value) : "0.00"}
+                </div>
+                <div className={styles.kpiDelta}>
+                  <span
+                    className={
+                      (cfKpi?.deltaPct ?? 0) >= 0
+                        ? styles.deltaPositive
+                        : styles.deltaNegative
+                    }
+                  >
+                    {(cfKpi?.deltaPct ?? 0) >= 0 ? "↑ +" : "↓ "}
+                    {cfKpi?.deltaPct ?? 0}%
+                  </span>
+                  <span>
+                    vs {cfKpi?.priorLabel || "prior month"} ({fmtCompact(cfKpi?.priorValue ?? 0)})
+                  </span>
+                </div>
+              </div>
+            )}
+            <Sparkline data={cfKpi?.sparkline} />
           </div>
         </div>
 
@@ -150,14 +466,34 @@ export default function FinanceOverviewPage() {
             <span className={styles.kpiLabel}>EBITDA margin</span>
           </div>
           <div className={styles.kpiBody}>
-            <div className={styles.kpiValueGroup}>
-              <div className={styles.kpiValue}>28.4%</div>
-              <div className={styles.kpiDelta}>
-                <span className={styles.deltaPositive}>↑ +0.8 pp</span>
-                <span>vs Jul 2026 (27.6%)</span>
+            {isLoading ? (
+              <div>
+                <div className={`${styles.skeleton} ${styles.skeletonValue}`} />
+                <div className={`${styles.skeleton} ${styles.skeletonText}`} />
               </div>
-            </div>
-            <Sparkline data={[26.5, 27.0, 27.2, 27.5, 28.0, 27.6, 28.1, 28.4]} />
+            ) : (
+              <div className={styles.kpiValueGroup}>
+                <div className={styles.kpiValue}>
+                  {ebitdaKpi ? `${ebitdaKpi.value}%` : "0.0%"}
+                </div>
+                <div className={styles.kpiDelta}>
+                  <span
+                    className={
+                      (ebitdaKpi?.deltaPp ?? 0) >= 0
+                        ? styles.deltaPositive
+                        : styles.deltaNegative
+                    }
+                  >
+                    {(ebitdaKpi?.deltaPp ?? 0) >= 0 ? "↑ +" : "↓ "}
+                    {ebitdaKpi?.deltaPp ?? 0} pp
+                  </span>
+                  <span>
+                    vs {ebitdaKpi?.priorLabel || "prior month"} ({ebitdaKpi?.priorValue ?? 0}%)
+                  </span>
+                </div>
+              </div>
+            )}
+            <Sparkline data={ebitdaKpi?.sparkline} />
           </div>
         </div>
 
@@ -167,14 +503,34 @@ export default function FinanceOverviewPage() {
             <span className={styles.kpiLabel}>Days sales outstanding (DSO)</span>
           </div>
           <div className={styles.kpiBody}>
-            <div className={styles.kpiValueGroup}>
-              <div className={styles.kpiValue}>34 days</div>
-              <div className={styles.kpiDelta}>
-                <span className={styles.deltaPositive}>↓ -2 days</span>
-                <span>vs Jul 2026 (36 days)</span>
+            {isLoading ? (
+              <div>
+                <div className={`${styles.skeleton} ${styles.skeletonValue}`} />
+                <div className={`${styles.skeleton} ${styles.skeletonText}`} />
               </div>
-            </div>
-            <Sparkline data={[38, 37, 37, 36, 36, 36, 35, 34]} />
+            ) : (
+              <div className={styles.kpiValueGroup}>
+                <div className={styles.kpiValue}>
+                  {dsoKpi ? `${dsoKpi.value} days` : "0 days"}
+                </div>
+                <div className={styles.kpiDelta}>
+                  <span
+                    className={
+                      (dsoKpi?.deltaDays ?? 0) <= 0
+                        ? styles.deltaPositive
+                        : styles.deltaNegative
+                    }
+                  >
+                    {(dsoKpi?.deltaDays ?? 0) <= 0 ? "↓ " : "↑ +"}
+                    {dsoKpi?.deltaDays ?? 0} days
+                  </span>
+                  <span>
+                    vs {dsoKpi?.priorLabel || "prior month"} ({dsoKpi?.priorValue ?? 0} days)
+                  </span>
+                </div>
+              </div>
+            )}
+            <Sparkline data={dsoKpi?.sparkline} />
           </div>
         </div>
       </div>
@@ -190,6 +546,7 @@ export default function FinanceOverviewPage() {
                 className={styles.selectPeriod}
                 value={period}
                 onChange={(e) => setPeriod(e.target.value)}
+                aria-label="Select reporting period"
               >
                 <option value="jan-aug-2026">Jan–Aug 2026</option>
                 <option value="q1-q2-2026">Q1–Q2 2026</option>
@@ -203,75 +560,128 @@ export default function FinanceOverviewPage() {
 
           <div className={styles.chartContainer}>
             <p className={styles.chartSubtitle}>USD millions</p>
-            {/* SVG Dual-Line Trend Chart */}
-            <svg viewBox="0 0 600 200" className={styles.trendSvg}>
-              {/* Grid Lines */}
-              {[0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0].map((val) => {
-                const y = 170 - (val / 6.0) * 150;
-                return (
-                  <g key={val}>
-                    <line x1="45" y1={y} x2="580" y2={y} stroke="var(--color-border)" strokeWidth="1" strokeDasharray="3 3" />
-                    <text x="38" y={y + 3} textAnchor="end" fontSize="10" fill="var(--color-text-tertiary)" fontFamily="var(--font-mono)">
-                      {val === 0 ? "0" : `${val.toFixed(1)}M`}
-                    </text>
-                  </g>
-                );
-              })}
 
-              {/* X Axis Labels */}
-              {months.map((m, i) => {
-                const x = 75 + i * 70;
-                return (
-                  <text key={m} x={x} y="190" textAnchor="middle" fontSize="11" fill="var(--color-text-secondary)" fontFamily="var(--font-sans)">
-                    {m}
-                  </text>
-                );
-              })}
+            {isLoading ? (
+              <div className={`${styles.skeleton} ${styles.skeletonChart}`} />
+            ) : (
+              <svg
+                viewBox="0 0 600 200"
+                className={styles.trendSvg}
+                role="img"
+                aria-label="Monthly Revenue and Expenses dual line chart"
+              >
+                {/* Grid Lines */}
+                {gridSteps.map((val, i) => {
+                  const y = 170 - (val / (chartMaxY || 1)) * 150;
+                  return (
+                    <g key={`grid-line-${val}-${i}`}>
+                      <line
+                        x1="45"
+                        y1={y}
+                        x2="580"
+                        y2={y}
+                        stroke="var(--color-border)"
+                        strokeWidth="1"
+                        strokeDasharray="3 3"
+                      />
+                      <text
+                        x="38"
+                        y={y + 3}
+                        textAnchor="end"
+                        fontSize="10"
+                        fill="var(--color-text-tertiary)"
+                        fontFamily="var(--font-mono)"
+                      >
+                        {val === 0 ? "0" : `${val.toFixed(1)}M`}
+                      </text>
+                    </g>
+                  );
+                })}
 
-              {/* Operating Expenses Line (Orange) */}
-              <polyline
-                fill="none"
-                stroke="var(--chart-2, #ea580c)"
-                strokeWidth="2.5"
-                points={expenseTrend
-                  .map((val, i) => `${75 + i * 70},${(170 - (val / 6.0) * 150).toFixed(1)}`)
-                  .join(" ")}
-              />
-              {expenseTrend.map((val, i) => {
-                const x = 75 + i * 70;
-                const y = 170 - (val / 6.0) * 150;
-                return (
-                  <g key={`exp-${i}`}>
-                    <circle cx={x} cy={y} r="3.5" fill="var(--chart-2, #ea580c)" />
-                    <text x={x} y={y + 14} textAnchor="middle" fontSize="9.5" fill="var(--color-text-secondary)" fontFamily="var(--font-mono)">
-                      {val.toFixed(2)}
+                {/* X Axis Month Labels */}
+                {trendMonths.map((m, i) => {
+                  const x = 75 + i * 70;
+                  return (
+                    <text
+                      key={`month-label-${m}-${i}`}
+                      x={x}
+                      y="190"
+                      textAnchor="middle"
+                      fontSize="11"
+                      fill="var(--color-text-secondary)"
+                      fontFamily="var(--font-sans)"
+                    >
+                      {m}
                     </text>
-                  </g>
-                );
-              })}
+                  );
+                })}
 
-              {/* Revenue Line (Blue) */}
-              <polyline
-                fill="none"
-                stroke="var(--color-primary, #2563eb)"
-                strokeWidth="2.5"
-                points={revenueTrend
-                  .map((val, i) => `${75 + i * 70},${(170 - (val / 6.0) * 150).toFixed(1)}`)
-                  .join(" ")}
-              />
-              {revenueTrend.map((val, i) => {
-                const x = 75 + i * 70;
-                const y = 170 - (val / 6.0) * 150;
-                return (
-                  <g key={`rev-${i}`}>
-                    <circle cx={x} cy={y} r="3.5" fill="var(--color-primary, #2563eb)" />
-                    <text x={x} y={y - 8} textAnchor="middle" fontSize="9.5" fill="var(--color-text)" fontWeight="600" fontFamily="var(--font-mono)">
-                      {val.toFixed(2)}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
+                {/* Operating Expenses Line (Orange) */}
+                <polyline
+                  fill="none"
+                  stroke="var(--chart-2, #ea580c)"
+                  strokeWidth="2.5"
+                  points={expValues
+                    .map(
+                      (val, i) =>
+                        `${75 + i * 70},${(170 - (val / (chartMaxY || 1)) * 150).toFixed(1)}`,
+                    )
+                    .join(" ")}
+                />
+                {expValues.map((val, i) => {
+                  const x = 75 + i * 70;
+                  const y = 170 - (val / (chartMaxY || 1)) * 150;
+                  return (
+                    <g key={`exp-${i}`}>
+                      <circle cx={x} cy={y} r="3.5" fill="var(--chart-2, #ea580c)" />
+                      <text
+                        x={x}
+                        y={y + 14}
+                        textAnchor="middle"
+                        fontSize="9.5"
+                        fill="var(--color-text-secondary)"
+                        fontFamily="var(--font-mono)"
+                      >
+                        {val.toFixed(2)}
+                      </text>
+                    </g>
+                  );
+                })}
+
+                {/* Revenue Line (Blue) */}
+                <polyline
+                  fill="none"
+                  stroke="var(--color-primary, #2563eb)"
+                  strokeWidth="2.5"
+                  points={revValues
+                    .map(
+                      (val, i) =>
+                        `${75 + i * 70},${(170 - (val / (chartMaxY || 1)) * 150).toFixed(1)}`,
+                    )
+                    .join(" ")}
+                />
+                {revValues.map((val, i) => {
+                  const x = 75 + i * 70;
+                  const y = 170 - (val / (chartMaxY || 1)) * 150;
+                  return (
+                    <g key={`rev-${i}`}>
+                      <circle cx={x} cy={y} r="3.5" fill="var(--color-primary, #2563eb)" />
+                      <text
+                        x={x}
+                        y={y - 8}
+                        textAnchor="middle"
+                        fontSize="9.5"
+                        fill="var(--color-text)"
+                        fontWeight="600"
+                        fontFamily="var(--font-mono)"
+                      >
+                        {val.toFixed(2)}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
+            )}
 
             {/* Legend */}
             <div className={styles.chartLegend}>
@@ -287,12 +697,14 @@ export default function FinanceOverviewPage() {
           </div>
         </div>
 
-        {/* Exceptions Card */}
+        {/* Exceptions Triage Card */}
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <div className={styles.cardTitleWrap}>
               <h2 className={styles.cardTitle}>Exceptions</h2>
-              <span className={styles.badgeAttention}>3 need attention</span>
+              <span className={styles.badgeAttention}>
+                {attentionCount} need attention
+              </span>
             </div>
           </div>
 
@@ -308,62 +720,86 @@ export default function FinanceOverviewPage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div className={styles.typeCell}>
-                    <AlertCircle size={14} className={styles.typeIconDanger} />
-                    <span>Overdue receivables</span>
-                  </div>
-                </td>
-                <td>Invoices past due</td>
-                <td className={styles.amountCell}>$118,450</td>
-                <td className={styles.numCell}>26</td>
-                <td className={styles.dateCell}>Aug 2, 2026</td>
-                <td>
-                  <Link href="/finance/ar" className={styles.actionLink}>
-                    Review
-                  </Link>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.typeCell}>
-                    <AlertTriangle size={14} className={styles.typeIconWarning} />
-                    <span>Unmatched transactions</span>
-                  </div>
-                </td>
-                <td>Bank / GL not matched</td>
-                <td className={styles.amountCell}>$64,780</td>
-                <td className={styles.numCell}>18</td>
-                <td className={styles.dateCell}>Aug 28, 2026</td>
-                <td>
-                  <Link href="/finance/banking" className={styles.actionLink}>
-                    Review
-                  </Link>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className={styles.typeCell}>
-                    <Clock size={14} className={styles.typeIconNeutral} />
-                    <span>Journals awaiting approval</span>
-                  </div>
-                </td>
-                <td>Pending manager approval</td>
-                <td className={styles.amountCell}>$154,320</td>
-                <td className={styles.numCell}>12</td>
-                <td className={styles.dateCell}>Aug 29, 2026</td>
-                <td>
-                  <Link href="/finance/journal-entries" className={styles.actionLink}>
-                    Review
-                  </Link>
-                </td>
-              </tr>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={6}>
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
+                  </td>
+                </tr>
+              ) : (
+                <>
+                  <tr>
+                    <td>
+                      <div className={styles.typeCell}>
+                        <AlertCircle size={14} className={styles.typeIconDanger} />
+                        <span>Overdue receivables</span>
+                      </div>
+                    </td>
+                    <td>{overdueExc.details}</td>
+                    <td className={styles.amountCell}>
+                      ${fmtAmount(overdueExc.impact)}
+                    </td>
+                    <td className={styles.numCell}>{overdueExc.count}</td>
+                    <td className={styles.dateCell}>{overdueExc.oldest || "—"}</td>
+                    <td>
+                      <Link href={overdueExc.actionUrl} className={styles.actionLink}>
+                        Review
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className={styles.typeCell}>
+                        <AlertTriangle size={14} className={styles.typeIconWarning} />
+                        <span>Unmatched transactions</span>
+                      </div>
+                    </td>
+                    <td>{unmatchedExc.details}</td>
+                    <td className={styles.amountCell}>
+                      ${fmtAmount(unmatchedExc.impact)}
+                    </td>
+                    <td className={styles.numCell}>{unmatchedExc.count}</td>
+                    <td className={styles.dateCell}>{unmatchedExc.oldest || "—"}</td>
+                    <td>
+                      <Link href={unmatchedExc.actionUrl} className={styles.actionLink}>
+                        Review
+                      </Link>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className={styles.typeCell}>
+                        <Clock size={14} className={styles.typeIconNeutral} />
+                        <span>Journals awaiting approval</span>
+                      </div>
+                    </td>
+                    <td>{pendingJournalsExc.details}</td>
+                    <td className={styles.amountCell}>
+                      ${fmtAmount(pendingJournalsExc.impact)}
+                    </td>
+                    <td className={styles.numCell}>{pendingJournalsExc.count}</td>
+                    <td className={styles.dateCell}>
+                      {pendingJournalsExc.oldest || "—"}
+                    </td>
+                    <td>
+                      <Link
+                        href={pendingJournalsExc.actionUrl}
+                        className={styles.actionLink}
+                      >
+                        Review
+                      </Link>
+                    </td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
 
-          <Link href="/finance/ap" className={styles.cardFooterLink}>
-            View all exceptions
+          <Link href="/finance/invoices?status=OVERDUE" className={styles.cardFooterLink}>
+            <span>View all exceptions</span>
+            <ArrowRight size={13} aria-hidden="true" />
           </Link>
         </div>
       </div>
@@ -389,32 +825,47 @@ export default function FinanceOverviewPage() {
               </tr>
             </thead>
             <tbody>
-              {agingBuckets.map((b) => (
-                <tr key={b.label}>
-                  <td>{b.label}</td>
-                  <td>
-                    <div className={styles.agingBarTrack}>
-                      <div className={styles.agingBarFill} style={{ width: `${b.widthPct}%` }} />
-                    </div>
-                  </td>
-                  <td className={styles.amountCell} style={{ textAlign: "right" }}>
-                    {b.amount}
-                  </td>
-                  <td className={styles.numCell} style={{ textAlign: "right" }}>
-                    {b.pct}%
+              {isLoading ? (
+                <tr>
+                  <td colSpan={4}>
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
                   </td>
                 </tr>
-              ))}
-              <tr className={styles.totalRow}>
-                <td>Total</td>
-                <td />
-                <td className={styles.amountCell} style={{ textAlign: "right" }}>
-                  842,900
-                </td>
-                <td className={styles.numCell} style={{ textAlign: "right" }}>
-                  100%
-                </td>
-              </tr>
+              ) : (
+                <>
+                  {agingBuckets.map((b) => (
+                    <tr key={b.bucket}>
+                      <td>{b.label}</td>
+                      <td>
+                        <div className={styles.agingBarTrack}>
+                          <div
+                            className={styles.agingBarFill}
+                            style={{ width: `${b.widthPct}%` }}
+                          />
+                        </div>
+                      </td>
+                      <td className={styles.amountCell} style={{ textAlign: "right" }}>
+                        {fmtAmount(b.amount)}
+                      </td>
+                      <td className={styles.numCell} style={{ textAlign: "right" }}>
+                        {b.pct}%
+                      </td>
+                    </tr>
+                  ))}
+                  <tr className={styles.totalRow}>
+                    <td>Total</td>
+                    <td />
+                    <td className={styles.amountCell} style={{ textAlign: "right" }}>
+                      {fmtAmount(totalArAmount)}
+                    </td>
+                    <td className={styles.numCell} style={{ textAlign: "right" }}>
+                      100%
+                    </td>
+                  </tr>
+                </>
+              )}
             </tbody>
           </table>
         </div>
@@ -425,7 +876,9 @@ export default function FinanceOverviewPage() {
             <h2 className={styles.cardTitle}>Month-end close progress</h2>
             <div className={styles.progressSummary}>
               <CheckCircle2 size={15} />
-              <span>8 of 10 tasks complete</span>
+              <span>
+                {tasksCompleted} of {tasksTotal} tasks complete
+              </span>
             </div>
           </div>
 
@@ -439,41 +892,66 @@ export default function FinanceOverviewPage() {
               </tr>
             </thead>
             <tbody>
-              {closeTasks.map((t) => (
-                <tr key={t.task}>
-                  <td>
-                    <div className={styles.typeCell}>
-                      {t.done ? (
-                        <CheckCircle2 size={14} className={styles.checkCircleDone} />
-                      ) : (
-                        <Clock size={14} className={styles.checkCirclePending} />
-                      )}
-                      <span>{t.task}</span>
-                    </div>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={4}>
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
+                    <div className={`${styles.skeleton} ${styles.skeletonRow}`} />
                   </td>
-                  <td>
-                    <span className={styles.avatarBadge}>{t.owner}</span>
-                  </td>
-                  <td>
-                    <span className={t.done ? styles.statusComplete : styles.statusInProgress}>
-                      {t.status}
+                </tr>
+              ) : closeTasks.length === 0 ? (
+                <tr>
+                  <td colSpan={4} style={{ textAlign: "center", padding: "var(--space-4)" }}>
+                    <span style={{ color: "var(--color-text-secondary)", fontSize: "var(--text-xs)" }}>
+                      No active close checklist tasks for this period.
                     </span>
                   </td>
-                  <td className={styles.dateCell}>{t.due}</td>
                 </tr>
-              ))}
+              ) : (
+                closeTasks.map((t) => (
+                  <tr key={t.id || t.task}>
+                    <td>
+                      <div className={styles.typeCell}>
+                        {t.done ? (
+                          <CheckCircle2 size={14} className={styles.checkCircleDone} />
+                        ) : (
+                          <Clock size={14} className={styles.checkCirclePending} />
+                        )}
+                        <span>{t.task}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span className={styles.avatarBadge}>{t.owner}</span>
+                    </td>
+                    <td>
+                      <span
+                        className={
+                          t.done ? styles.statusComplete : styles.statusInProgress
+                        }
+                      >
+                        {t.status}
+                      </span>
+                    </td>
+                    <td className={styles.dateCell}>{t.due}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
 
           <Link href="/finance/advanced/close-tasks" className={styles.cardFooterLink}>
-            View all tasks
+            <span>View all tasks</span>
+            <ArrowRight size={13} aria-hidden="true" />
           </Link>
         </div>
       </div>
 
       {/* 5. Page Footer */}
       <footer className={styles.pageFooter}>
-        <span>Demo data • Updated 09:42 UTC by Finance Manager</span>
+        <span>
+          {data ? "Live database" : "No finance data"} • Updated {updatedTimeStr}
+        </span>
       </footer>
     </div>
   );

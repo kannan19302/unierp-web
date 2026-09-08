@@ -402,117 +402,110 @@ export default function DashboardLayout({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const sessionLoadedRef = React.useRef(false);
+  const prevSegmentRef = React.useRef<string>("");
+  const installedListRef = React.useRef<string[]>([]);
+
   useEffect(() => {
     let mounted = true;
+    const activeSegment = pathname.split("/")[1];
+
     const loadSession = async () => {
       try {
-        const profile = await client.get<{
-          id: string;
-          firstName: string;
-          lastName: string;
-          email: string;
-          avatar?: string;
-          tenant?: { name: string; slug: string };
-        }>("/auth/me");
-        if (!mounted) return;
-        setUser(profile);
-        if (profile.tenant) setCurrentTenant(profile.tenant);
-        setIsLoading(false);
+        if (!sessionLoadedRef.current) {
+          const profile = await client.get<{
+            id: string;
+            firstName: string;
+            lastName: string;
+            email: string;
+            avatar?: string;
+            tenant?: { name: string; slug: string };
+          }>("/auth/me");
+          if (!mounted) return;
+          setUser(profile);
+          if (profile.tenant) setCurrentTenant(profile.tenant);
+          setIsLoading(false);
+          sessionLoadedRef.current = true;
 
-        client
-          .get<any>("/saas/subscription")
-          .then((sub: any) => {
-            if (mounted) setSubscription(sub);
-          })
-          .catch(() => {});
+          client
+            .get<any>("/saas/subscription")
+            .then((sub: any) => {
+              if (mounted) setSubscription(sub);
+            })
+            .catch(() => {});
 
-        client
-          .get<
-            Array<{ userId: string; presence: string; visibility?: string }>
-          >("/communication/presence")
-          .then((rows: any) => {
-            if (!mounted) return;
-            const mine = rows.find((r: any) => r.userId === profile.id);
-            setPresenceColor(
-              mine
-                ? (PRESENCE_COLORS[mine.presence] ?? PRESENCE_COLORS.INACTIVE)
-                : PRESENCE_COLORS.ACTIVE,
-            );
-          })
-          .catch(() => {});
+          client
+            .get<
+              Array<{ userId: string; presence: string; visibility?: string }>
+            >("/communication/presence")
+            .then((rows: any) => {
+              if (!mounted) return;
+              const mine = rows.find((r: any) => r.userId === profile.id);
+              setPresenceColor(
+                mine
+                  ? (PRESENCE_COLORS[mine.presence] ?? PRESENCE_COLORS.INACTIVE)
+                  : PRESENCE_COLORS.ACTIVE,
+              );
+            })
+            .catch(() => {});
 
-        client
-          .get<Array<{ id: string; name: string; slug: string }>>(
-            "/auth/tenants",
-          )
-          .then((list: any) => {
-            if (mounted && Array.isArray(list)) setTenants(list);
-          })
-          .catch(() => {});
-
-        const installedList = await client.get<string[]>(
-          "/saas/installed-apps",
-        );
-        if (!mounted) return;
-        setInstalledApps(installedList);
-        const activeSegment = pathname.split("/")[1];
-        // Segment -> slug map is sourced from the API (single source of truth in
-        // apps/api/src/common/app-slug-map.ts) instead of being hardcoded here.
-        // Fall back to a static copy if the fetch hasn't resolved yet / fails, so
-        // route gating behavior is unaffected on first paint.
-        let segmentToSlug: Record<string, string> = {
-          education: "education",
-          "real-estate": "real-estate",
-          "field-service": "field-service",
-          finance: "finance",
-          hr: "hr",
-          crm: "crm",
-          inventory: "inventory",
-          procurement: "procurement",
-          sales: "sales",
-          "supply-chain": "supply-chain",
-          projects: "projects",
-          manufacturing: "manufacturing",
-          analytics: "analytics",
-          drive: "drive",
-          storage: "drive",
-          connect: "communication",
-          communication: "communication",
-          pos: "pos",
-          builder: "builder",
-          ecommerce: "ecommerce",
-          ai: "ai",
-          documents: "documents",
-          workflow: "workflow",
-        };
-        try {
-          const slugMap = await client.get<{
-            gatedModules?: { slug: string; segments: string[] }[];
-            industryAppSlugs?: string[];
-          }>("/admin/marketplace/slug-map");
-          if (mounted && slugMap) {
-            const fetched: Record<string, string> = {};
-            for (const slug of slugMap.industryAppSlugs || [])
-              fetched[slug] = slug;
-            for (const m of slugMap.gatedModules || [])
-              for (const seg of m.segments) fetched[seg] = m.slug;
-            if (Object.keys(fetched).length) segmentToSlug = fetched;
-          }
-        } catch {
-          // keep the static fallback above
+          client
+            .get<Array<{ id: string; name: string; slug: string }>>(
+              "/auth/tenants",
+            )
+            .then((list: any) => {
+              if (mounted && Array.isArray(list)) setTenants(list);
+            })
+            .catch(() => {});
         }
-        const guardedSlug = activeSegment
-          ? segmentToSlug[activeSegment]
-          : undefined;
-        if (guardedSlug && !installedList.includes(guardedSlug))
-          router.push("/apps");
 
-        client
-          .get<{ loaded?: boolean }>("/admin/demo/status")
-          .then((data: any) => {
-            if (mounted && data?.loaded) setDemoDataLoaded(true);
-          })
-          .catch(() => {});
+        // Only evaluate module gating when the top-level segment changes (e.g. switching from /finance to /inventory),
+        // completely skipping this expensive round-trip when switching tabs within the same module.
+        if (prevSegmentRef.current !== activeSegment) {
+          prevSegmentRef.current = activeSegment;
+
+          if (installedListRef.current.length === 0) {
+            const installedList = await client.get<string[]>(
+              "/saas/installed-apps",
+            );
+            if (!mounted) return;
+            installedListRef.current = installedList;
+            setInstalledApps(installedList);
+          }
+
+          let segmentToSlug: Record<string, string> = {
+            education: "education",
+            "real-estate": "real-estate",
+            "field-service": "field-service",
+            finance: "finance",
+            hr: "hr",
+            crm: "crm",
+            inventory: "inventory",
+            procurement: "procurement",
+            sales: "sales",
+            "supply-chain": "supply-chain",
+            projects: "projects",
+            manufacturing: "manufacturing",
+            analytics: "analytics",
+            drive: "drive",
+            storage: "drive",
+            connect: "communication",
+            communication: "communication",
+            pos: "pos",
+            builder: "builder",
+            ecommerce: "ecommerce",
+            ai: "ai",
+            documents: "documents",
+            workflow: "workflow",
+          };
+
+          const guardedSlug = activeSegment
+            ? segmentToSlug[activeSegment]
+            : undefined;
+          if (guardedSlug && !installedListRef.current.includes(guardedSlug)) {
+            router.push("/apps");
+          }
+        }
       } catch (err) {
         if (mounted) {
           setIsLoading(false);
