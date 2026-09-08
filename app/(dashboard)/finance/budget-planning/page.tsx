@@ -388,7 +388,7 @@ export default function BudgetPlanningPage() {
             <polyline
               points={forecastPoints}
               fill="none"
-              stroke="#f59e0b"
+              stroke="var(--color-warning)"
               strokeWidth="2"
               strokeDasharray="4 3"
             />
@@ -397,7 +397,7 @@ export default function BudgetPlanningPage() {
             <polyline
               points={actualPoints}
               fill="none"
-              stroke="#2563eb"
+              stroke="var(--color-primary)"
               strokeWidth="2"
             />
 
@@ -408,7 +408,7 @@ export default function BudgetPlanningPage() {
               const y = getY(isActual ? t.actual! : t.forecast);
               return (
                 <g key={idx}>
-                  <circle cx={x} cy={y} r="3" fill={isActual ? "#2563eb" : "#f59e0b"} />
+                  <circle cx={x} cy={y} r="3" fill={isActual ? "var(--color-primary)" : "var(--color-warning)"} />
                   <text
                     x={x}
                     y={chartH - 4}

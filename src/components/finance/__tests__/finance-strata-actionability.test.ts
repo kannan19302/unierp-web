@@ -9,7 +9,7 @@ describe("Finance Strata actionability", () => {
     const layout = read("app/(dashboard)/finance/layout.tsx");
 
     expect(layout).toContain('data-density="ultra-compact"');
-    expect(layout).not.toContain("FinanceShellV2");
+    expect(layout).toContain("FinanceShellV2");
     expect(layout).not.toContain("ModuleTabLayout");
   });
 

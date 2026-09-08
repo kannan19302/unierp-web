@@ -209,8 +209,8 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
 
             {isItemMatch("Month-end close") && (
               <Link
-                href="/finance"
-                className={`${styles.navItem} ${pathname === "/finance" && false ? styles.navItemActive : ""}`}
+                href="/finance/advanced/close-tasks"
+                className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/close-tasks") ? styles.navItemActive : ""}`}
               >
                 <div className={styles.navItemLeft}>
                   <Star size={15} className={styles.navItemIcon} />
@@ -221,8 +221,8 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
 
             {isItemMatch("My approvals") && (
               <Link
-                href="/finance/ap"
-                className={`${styles.navItem} ${pathname.startsWith("/finance/ap") && false ? styles.navItemActive : ""}`}
+                href="/finance/ap?filter=needs-review"
+                className={`${styles.navItem} ${pathname.startsWith("/finance/ap") ? styles.navItemActive : ""}`}
               >
                 <div className={styles.navItemLeft}>
                   <CheckSquare size={15} className={styles.navItemIcon} />
@@ -278,8 +278,8 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
                   )}
                   {isItemMatch("Chart of accounts") && (
                     <Link
-                      href="/finance/gl"
-                      className={`${styles.navItem}`}
+                      href="/finance/advanced/chart-of-accounts"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/chart-of-accounts") ? styles.navItemActive : ""}`}
                     >
                       <div className={styles.navItemLeft}>
                         <span>Chart of accounts</span>

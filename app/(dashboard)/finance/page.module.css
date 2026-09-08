@@ -68,8 +68,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-1-5);
-  background: var(--color-primary, #2563eb);
-  color: var(--color-text-inverse, #ffffff);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
   border: 1px solid var(--color-primary);
   padding: var(--space-1-5) var(--space-3);
   border-radius: var(--radius-sm);
@@ -80,7 +80,7 @@
 }
 
 .btnPrimary:hover {
-  background: var(--color-primary-hover, #1d4ed8);
+  background: var(--color-primary-hover);
 }
 
 /* Top 4 KPI Cards Grid */
@@ -152,12 +152,12 @@
 }
 
 .deltaPositive {
-  color: var(--color-success, #16a34a);
+  color: var(--color-success);
   font-weight: var(--weight-medium, 500);
 }
 
 .deltaNeutral {
-  color: var(--color-primary, #2563eb);
+  color: var(--color-primary);
   font-weight: var(--weight-medium, 500);
 }
 
@@ -214,8 +214,8 @@
   font-size: var(--text-2xs, 0.625rem);
   font-weight: var(--weight-semibold, 600);
   padding: var(--space-half) var(--space-1-5);
-  background: var(--color-danger-light, #fee2e2);
-  color: var(--color-danger-text, #dc2626);
+  background: var(--color-danger-light);
+  color: var(--color-danger-text);
   border-radius: var(--radius-xs);
   line-height: var(--leading-none, 1);
 }
@@ -285,14 +285,14 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: var(--radius-full);
-  background: var(--color-primary, #2563eb);
+  background: var(--color-primary);
 }
 
 .legendDotExpenses {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: var(--radius-full);
-  background: var(--chart-2, #ea580c);
+  background: var(--chart-2);
 }
 
 /* Exceptions Table */
@@ -326,15 +326,15 @@
 }
 
 .typeIconDanger {
-  color: var(--color-danger, #dc2626);
+  color: var(--color-danger);
 }
 
 .typeIconWarning {
-  color: var(--color-warning, #f59e0b);
+  color: var(--color-warning);
 }
 
 .typeIconNeutral {
-  color: var(--color-primary, #2563eb);
+  color: var(--color-primary);
 }
 
 .amountCell {
@@ -396,7 +396,7 @@
 
 .agingBarFill {
   height: 100%;
-  background: var(--color-primary, #2563eb);
+  background: var(--color-primary);
   border-radius: var(--radius-full);
 }
 
@@ -413,16 +413,16 @@
   align-items: center;
   gap: var(--space-1-5);
   font-size: var(--text-xs);
-  color: var(--color-success, #16a34a);
+  color: var(--color-success);
   font-weight: var(--weight-medium, 500);
 }
 
 .checkCircleDone {
-  color: var(--color-success, #16a34a);
+  color: var(--color-success);
 }
 
 .checkCirclePending {
-  color: var(--color-warning, #f59e0b);
+  color: var(--color-warning);
 }
 
 .avatarBadge {
@@ -432,19 +432,19 @@
   width: 1.375rem;
   height: 1.375rem;
   border-radius: var(--radius-full);
-  background: var(--color-primary-light, #eff6ff);
-  color: var(--color-primary, #2563eb);
+  background: var(--color-primary-light, var(--color-primary-subtle));
+  color: var(--color-primary);
   font-size: var(--text-2xs, 0.625rem);
   font-weight: var(--weight-semibold, 600);
 }
 
 .statusComplete {
-  color: var(--color-success, #16a34a);
+  color: var(--color-success);
   font-weight: var(--weight-medium, 500);
 }
 
 .statusInProgress {
-  color: var(--color-warning, #d97706);
+  color: var(--color-warning);
   font-weight: var(--weight-medium, 500);
 }
 
@@ -476,9 +476,9 @@
 }
 
 .refreshBtn:hover {
-  background: var(--color-bg-hover, #f3f4f6);
+  background: var(--color-bg-hover);
   color: var(--color-text);
-  border-color: var(--color-border-hover, #9ca3af);
+  border-color: var(--color-border-hover);
 }
 
 .refreshSpin {
@@ -548,8 +548,8 @@
 }
 
 .btnSecondary:hover {
-  background: var(--color-bg-hover, #f3f4f6);
-  border-color: var(--color-border-hover, #9ca3af);
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
 }
 
 /* Skeleton Shimmer Loading Styles */
@@ -557,7 +557,7 @@
   background: linear-gradient(
     90deg,
     var(--color-border) 25%,
-    var(--color-bg-hover, #f3f4f6) 50%,
+    var(--color-bg-hover) 50%,
     var(--color-border) 75%
   );
   background-size: 200% 100%;

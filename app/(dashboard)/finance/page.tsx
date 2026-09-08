@@ -124,7 +124,7 @@ interface DashboardTelemetry {
 // Sparkline SVG component for KPI cards
 function Sparkline({
   data,
-  strokeColor = "var(--color-primary, #2563eb)",
+  strokeColor = "var(--color-primary)",
 }: {
   data?: number[];
   strokeColor?: string;
@@ -619,7 +619,7 @@ export default function FinanceOverviewPage() {
                 {/* Operating Expenses Line (Orange) */}
                 <polyline
                   fill="none"
-                  stroke="var(--chart-2, #ea580c)"
+                  stroke="var(--chart-2)"
                   strokeWidth="2.5"
                   points={expValues
                     .map(
@@ -633,7 +633,7 @@ export default function FinanceOverviewPage() {
                   const y = 170 - (val / (chartMaxY || 1)) * 150;
                   return (
                     <g key={`exp-${i}`}>
-                      <circle cx={x} cy={y} r="3.5" fill="var(--chart-2, #ea580c)" />
+                      <circle cx={x} cy={y} r="3.5" fill="var(--chart-2)" />
                       <text
                         x={x}
                         y={y + 14}
@@ -651,7 +651,7 @@ export default function FinanceOverviewPage() {
                 {/* Revenue Line (Blue) */}
                 <polyline
                   fill="none"
-                  stroke="var(--color-primary, #2563eb)"
+                  stroke="var(--color-primary)"
                   strokeWidth="2.5"
                   points={revValues
                     .map(
@@ -665,7 +665,7 @@ export default function FinanceOverviewPage() {
                   const y = 170 - (val / (chartMaxY || 1)) * 150;
                   return (
                     <g key={`rev-${i}`}>
-                      <circle cx={x} cy={y} r="3.5" fill="var(--color-primary, #2563eb)" />
+                      <circle cx={x} cy={y} r="3.5" fill="var(--color-primary)" />
                       <text
                         x={x}
                         y={y - 8}

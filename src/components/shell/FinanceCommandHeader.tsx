@@ -9,6 +9,7 @@ import {
   Bell,
   HelpCircle,
   Plus,
+  Sparkles,
   FileText,
   CreditCard,
   Building2,
@@ -118,6 +119,16 @@ export const FinanceCommandHeader: FC<FinanceCommandHeaderProps> = ({
             </div>
           )}
         </div>
+
+        {/* AI Copilot Toggle */}
+        <button
+          type="button"
+          className={styles.iconBtn}
+          title="Toggle AI Finance Copilot (Ctrl+J)"
+          aria-label="AI Copilot"
+        >
+          <Sparkles size={16} aria-hidden />
+        </button>
 
         {/* Notifications */}
         <button

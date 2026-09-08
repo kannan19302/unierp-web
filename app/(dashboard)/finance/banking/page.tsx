@@ -374,7 +374,7 @@ export default function BankingTreasuryPage() {
             <polyline
               points={forecastPolyline}
               fill="none"
-              stroke="#2563eb"
+              stroke="var(--color-primary)"
               strokeWidth="2"
               strokeDasharray="4 3"
             />
@@ -385,7 +385,7 @@ export default function BankingTreasuryPage() {
               const y = getY(pt.forecast);
               return (
                 <g key={idx}>
-                  <circle cx={x} cy={y} r="3" fill="#2563eb" />
+                  <circle cx={x} cy={y} r="3" fill="var(--color-primary)" />
                   <text
                     x={x}
                     y={chartH - 4}
