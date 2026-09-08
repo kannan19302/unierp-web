@@ -1,9 +1,7 @@
 "use client";
 
-import styles from "./page.module.css";
-import React from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Card, PageHeader, StatusBadge } from "@kannan19302/ui";
 import {
   BarChart3,
   PieChart,
@@ -18,7 +16,6 @@ import {
   Eye,
   GitCompare,
   RefreshCw,
-  FolderOpen,
   ChevronRight,
   CreditCard,
   FileSliders,
@@ -30,356 +27,591 @@ import {
   Link2,
   ShieldCheck,
   Handshake,
-  Target,
   Brain,
   Zap,
   TrendingDown,
-  ServerCrash,
   ShieldQuestion,
+  Search,
+  Layers,
+  Sparkles,
+  Percent,
+  Landmark,
+  FileSpreadsheet,
+  CheckCircle2,
+  Coins,
 } from "lucide-react";
+import styles from "./page.module.css";
 
-const groups = [
+interface FinanceModuleDef {
+  href: string;
+  label: string;
+  category: "CORE" | "TREASURY" | "TAX" | "PLANNING" | "OPERATIONS" | "GOVERNANCE" | "AI";
+  desc: string;
+  icon: React.ReactNode;
+}
+
+const ALL_FINANCE_MODULES: FinanceModuleDef[] = [
+  // Core Accounting
   {
-    title: "Core Accounting",
-    description:
-      "General ledger, chart of accounts, journal entries, and period management",
-    icon: <CreditCard size={20} />,
-    modules: [
-      {
-        href: "/finance/advanced/chart-of-accounts",
-        label: "Chart of Accounts",
-        icon: <CreditCard size={18} />,
-        desc: "Manage your chart of accounts, account types, and GL structure",
-      },
-      {
-        href: "/finance/advanced/journal-entries",
-        label: "Journal Entries",
-        icon: <FileSliders size={18} />,
-        desc: "Record, approve, and post journal entries to the general ledger",
-      },
-      {
-        href: "/finance/advanced/financial-periods",
-        label: "Financial Periods",
-        icon: <Activity size={18} />,
-        desc: "Period close checklist, validation checks, and opening/closing balances",
-      },
-      {
-        href: "/finance/advanced/fixed-assets",
-        label: "Fixed Assets",
-        icon: <Building2 size={18} />,
-        desc: "Asset register, depreciation runs, and disposal management",
-      },
-      {
-        href: "/finance/advanced/recurring",
-        label: "Recurring Invoices",
-        icon: <RefreshCw size={18} />,
-        desc: "Auto-generate recurring invoices based on schedules",
-      },
-      {
-        href: "/finance/advanced/revenue-schedules",
-        label: "Revenue Recognition",
-        icon: <TrendingUp size={18} />,
-        desc: "Deferred revenue and recognition schedules",
-      },
-    ],
+    href: "/finance/advanced/chart-of-accounts",
+    label: "Chart of Accounts",
+    category: "CORE",
+    desc: "Manage general ledger accounts, hierarchy, financial categories, and numbering",
+    icon: <CreditCard size={18} />,
   },
   {
-    title: "Payables & Treasury",
-    description:
-      "Bank accounts, AP/AR automation, treasury management, and cash flow",
-    icon: <Wallet size={20} />,
-    modules: [
-      {
-        href: "/finance/advanced/bank-accounts",
-        label: "Bank Accounts",
-        icon: <Wallet size={18} />,
-        desc: "Manage bank accounts, opening balances, and reconciliation setup",
-      },
-      {
-        href: "/finance/advanced/ap-automation",
-        label: "AP Automation",
-        icon: <ShoppingCart size={18} />,
-        desc: "Accounts payable workflow, invoice matching, and payment runs",
-      },
-      {
-        href: "/finance/advanced/ar-automation",
-        label: "AR Automation & Dunning",
-        icon: <ClipboardList size={18} />,
-        desc: "Dunning levels, automated reminders, fee escalation, and collection cadences",
-      },
-      {
-        href: "/finance/advanced/ar-aging",
-        label: "AR Aging Report",
-        icon: <BarChart3 size={18} />,
-        desc: "Receivables by aging bucket: Current, 1–30, 31–60, 61–90, 90+ days",
-      },
-      {
-        href: "/finance/advanced/customer-statement",
-        label: "Customer Statement",
-        icon: <FileText size={18} />,
-        desc: "Full invoice/payment ledger per customer for any period",
-      },
-      {
-        href: "/finance/advanced/credit-risk",
-        label: "Credit Risk Management",
-        icon: <ShieldAlert size={18} />,
-        desc: "Credit limits, holds, risk ratings, and utilization monitoring",
-      },
-      {
-        href: "/finance/advanced/payment-terms",
-        label: "Payment Terms Templates",
-        icon: <Calendar size={18} />,
-        desc: "Configure credit and discount term templates (Net 30, Net 60, 2/10 Net 30)",
-      },
-      {
-        href: "/finance/advanced/invoice-analytics",
-        label: "Invoice Analytics",
-        icon: <TrendingUp size={18} />,
-        desc: "Track sales trends, collection velocities, and payment behaviors",
-      },
-      {
-        href: "/finance/advanced/bank-feeds",
-        label: "Bank Feeds & Connections",
-        icon: <Link2 size={18} />,
-        desc: "Connect direct external bank statement feeds using Plaid/OAuth",
-      },
-      {
-        href: "/finance/advanced/bank-recon",
-        label: "Bank Statement Auto-Match",
-        icon: <GitCompare size={18} />,
-        desc: "Match Statement transfers to General Ledger entries automatically",
-      },
-      {
-        href: "/finance/advanced/treasury",
-        label: "Treasury & Investments",
-        icon: <BarChart3 size={18} />,
-        desc: "Treasury operations, investment tracking, and liquidity management",
-      },
-      {
-        href: "/finance/advanced/reconciliations",
-        label: "Bank Reconciliation",
-        icon: <GitCompare size={18} />,
-        desc: "Statement import, auto-matching, and reconciliation reports",
-      },
-      {
-        href: "/finance/advanced/expense-reports",
-        label: "Expense Management",
-        icon: <Receipt size={18} />,
-        desc: "Employee expense reports, OCR receipt capture, approvals, and reimbursements",
-      },
-      {
-        href: "/finance/advanced/expense-policies",
-        label: "Expense Policies & Rates",
-        icon: <ShieldCheck size={18} />,
-        desc: "Category spending limits, mileage/per-diem rates, corporate card feeds",
-      },
-      {
-        href: "/finance/advanced/cash-position",
-        label: "Cash Position",
-        icon: <DollarSign size={18} />,
-        desc: "Real-time cash position and projected cash flow",
-      },
-      {
-        href: "/finance/advanced/cash-flow-forecast",
-        label: "Cash Flow Forecast",
-        icon: <Activity size={18} />,
-        desc: "3-month rolling cash flow forecast",
-      },
-    ],
+    href: "/finance/advanced/journal-entries",
+    label: "Journal Entries Ledger",
+    category: "CORE",
+    desc: "Record, approve, and post double-entry vouchers to general ledger",
+    icon: <FileSliders size={18} />,
   },
   {
-    title: "Tax & Compliance",
-    description:
-      "Tax computation, filing, audit trails, and account reconciliation",
-    icon: <ShieldAlert size={20} />,
-    modules: [
-      {
-        href: "/finance/advanced/tax-engine",
-        label: "Tax Engine",
-        icon: <Calculator size={18} />,
-        desc: "Tax rules, components, and auto-computation engine",
-      },
-      {
-        href: "/finance/advanced/tax-filing",
-        label: "Tax Filing",
-        icon: <FileText size={18} />,
-        desc: "Auto-compute VAT/GST returns from transactions",
-      },
-      {
-        href: "/finance/advanced/tax-filing-summary",
-        label: "Tax Filing Summary",
-        icon: <ShieldAlert size={18} />,
-        desc: "Computed tax return liabilities and compliance filings dashboard",
-      },
-      {
-        href: "/finance/advanced/audit-logs",
-        label: "Finance Audit Trail",
-        icon: <Eye size={18} />,
-        desc: "Track changes to financial records and compliance logs",
-      },
-      {
-        href: "/finance/advanced/account-reconciliation",
-        label: "Account Reconciliation",
-        icon: <GitCompare size={18} />,
-        desc: "Sub-ledger to GL matching and account validation",
-      },
-    ],
+    href: "/finance/advanced/accounting-books",
+    label: "Multi-Book Accounting",
+    category: "CORE",
+    desc: "Parallel ledgers for local statutory, IFRS, US GAAP, and tax books",
+    icon: <Layers size={18} />,
   },
   {
-    title: "Planning & Reporting",
-    description:
-      "Budgeting, financial reports, multi-currency, and consolidated statements",
-    icon: <PieChart size={20} />,
-    modules: [
-      {
-        href: "/finance/advanced/budgeting",
-        label: "Budgeting & Planning",
-        icon: <FileText size={18} />,
-        desc: "Compare budgets with actuals, variance analysis",
-      },
-      {
-        href: "/finance/advanced/reports",
-        label: "Financial Reports",
-        icon: <FolderOpen size={18} />,
-        desc: "P&L, Balance Sheet, Cash Flow, Trial Balance",
-      },
-      {
-        href: "/finance/advanced/exchange-rates",
-        label: "Multi-Currency",
-        icon: <DollarSign size={18} />,
-        desc: "Exchange rates, currency conversion, revaluation",
-      },
-      {
-        href: "/finance/advanced/financial-ratios",
-        label: "Financial Ratios",
-        icon: <Scale size={18} />,
-        desc: "Current ratio, ROI, debt-to-equity analysis",
-      },
-      {
-        href: "/finance/advanced/consolidation",
-        label: "Consolidation",
-        icon: <PieChart size={18} />,
-        desc: "Multi-entity consolidated financial statements",
-      },
-      {
-        href: "/finance/advanced/intercompany/netting",
-        label: "Intercompany Netting Match",
-        icon: <Link2 size={18} />,
-        desc: "Map internal receivables (AR) and payables (AP) transactions",
-      },
-      {
-        href: "/finance/advanced/intercompany/eliminations",
-        label: "Intercompany Eliminations Ledger",
-        icon: <Scale size={18} />,
-        desc: "Consolidated elimination entry postings and compliance logs",
-      },
-      {
-        href: "/finance/advanced/fx-revaluation",
-        label: "FX Currency Revaluation",
-        icon: <DollarSign size={18} />,
-        desc: "Revalue foreign accounts at period-end and post unrealized gain/loss entries",
-      },
-    ],
+    href: "/finance/advanced/financial-periods",
+    label: "Financial Periods",
+    category: "CORE",
+    desc: "Fiscal calendar, period locking, year-end roll, and open/close controls",
+    icon: <Calendar size={18} />,
   },
   {
-    title: "New: Advanced Financial Operations",
-    description:
-      "Working capital, close management, consolidation, risk, ESG, tax provisioning, AP automation, and AI analytics",
-    icon: <Zap size={20} />,
-    modules: [
-      {
-        href: "/finance/advanced/working-capital",
-        label: "Working Capital",
-        icon: <Handshake size={18} />,
-        desc: "Dynamic discounts, SCF programs, and invoice factoring",
-      },
-      {
-        href: "/finance/advanced/close-management",
-        label: "Close Management",
-        icon: <ClipboardList size={18} />,
-        desc: "Close tasks, SLAs, calendar, escalation rules, and period analytics",
-      },
-      {
-        href: "/finance/advanced/consolidation",
-        label: "Multi-GAAP Consolidation",
-        icon: <PieChart size={18} />,
-        desc: "Consolidation groups, runs, elimination rules, and minority interest",
-      },
-      {
-        href: "/finance/advanced/risk-management",
-        icon: <ShieldQuestion size={18} />,
-        label: "Risk Management",
-        desc: "Credit scorecards, vendor risk, market exposures, and operational risk events",
-      },
-      {
-        href: "/finance/advanced/esg-accounting",
-        label: "ESG & Sustainability",
-        icon: <TrendingDown size={18} />,
-        desc: "Emissions tracking, offset credits, ESG KPIs, reports, and sustainability targets",
-      },
-      {
-        href: "/finance/advanced/tax-provisioning",
-        label: "ASC 740 Tax Provisioning",
-        icon: <Calculator size={18} />,
-        desc: "Provision runs, deferred tax schedules, uncertain positions, and valuation allowances",
-      },
-      {
-        href: "/finance/advanced/ap-automation",
-        label: "AP Automation",
-        icon: <ShoppingCart size={18} />,
-        desc: "Invoice capture, match rules, approval routing, and payment rail optimization",
-      },
-      {
-        href: "/finance/advanced/ai-analytics",
-        label: "AI Financial Analytics",
-        icon: <Brain size={18} />,
-        desc: "Forecast scenarios, anomaly detection, GL coding suggestions, and NLP query log",
-      },
-    ],
+    href: "/finance/advanced/close-tasks",
+    label: "Close Task Checklist",
+    category: "CORE",
+    desc: "Subledger closing checklists, sign-offs, dependencies, and SLAs",
+    icon: <ClipboardList size={18} />,
+  },
+  {
+    href: "/finance/advanced/close-management",
+    label: "Period Close Management",
+    category: "CORE",
+    desc: "Variance threshold triage, task assignments, and period analytics",
+    icon: <CheckCircle2 size={18} />,
+  },
+  {
+    href: "/finance/advanced/fixed-assets",
+    label: "Fixed Asset Register",
+    category: "CORE",
+    desc: "Asset lifecycle, capitalization, maintenance schedules, and impairment",
+    icon: <Building2 size={18} />,
+  },
+  {
+    href: "/finance/advanced/allocations",
+    label: "Cost Allocations Engine",
+    category: "CORE",
+    desc: "Dynamic statistical distributions, headcount, and square footage weights",
+    icon: <Percent size={18} />,
+  },
+  {
+    href: "/finance/advanced/recurring",
+    label: "Recurring Transactions",
+    category: "CORE",
+    desc: "Automated recurring journal templates and auto-post schedules",
+    icon: <RefreshCw size={18} />,
+  },
+
+  // Payables & Receivables
+  {
+    href: "/finance/advanced/ar-aging",
+    label: "AR Aging Analysis",
+    category: "OPERATIONS",
+    desc: "Receivables aging buckets: Current, 1–30, 31–60, 61–90, 90+ days",
+    icon: <BarChart3 size={18} />,
+  },
+  {
+    href: "/finance/advanced/ar-automation",
+    label: "Collections & Dunning",
+    category: "OPERATIONS",
+    desc: "Automated dunning cadences, collection emails, and late fee escalation",
+    icon: <ClipboardList size={18} />,
+  },
+  {
+    href: "/finance/advanced/credit-risk",
+    label: "Credit Risk Limits",
+    category: "OPERATIONS",
+    desc: "Customer credit limits, exposure monitoring, and automated credit holds",
+    icon: <ShieldAlert size={18} />,
+  },
+  {
+    href: "/finance/advanced/customer-statement",
+    label: "Customer Statements",
+    category: "OPERATIONS",
+    desc: "Detailed customer subledger statement generation and billing history",
+    icon: <FileText size={18} />,
+  },
+  {
+    href: "/finance/advanced/invoice-analytics",
+    label: "Invoice Analytics",
+    category: "OPERATIONS",
+    desc: "Billing trend forecasting, payment velocities, and dispute root cause analysis",
+    icon: <TrendingUp size={18} />,
+  },
+  {
+    href: "/finance/advanced/payment-terms",
+    label: "Payment Terms & Discounts",
+    category: "OPERATIONS",
+    desc: "Credit terms configuration (Net 30, 2/10 Net 30) and early settlement discounts",
+    icon: <Calendar size={18} />,
+  },
+  {
+    href: "/finance/advanced/ap-automation",
+    label: "AP Workflow Automation",
+    category: "OPERATIONS",
+    desc: "Vendor bill approvals, 3-way matching rules, and exception routing",
+    icon: <ShoppingCart size={18} />,
+  },
+  {
+    href: "/finance/advanced/ap-match-rules",
+    label: "3-Way Match Rules",
+    category: "OPERATIONS",
+    desc: "PO vs Receipt vs Invoice tolerance thresholds and PPV accounting rules",
+    icon: <GitCompare size={18} />,
+  },
+  {
+    href: "/finance/advanced/invoice-capture",
+    label: "OCR Invoice Capture",
+    category: "OPERATIONS",
+    desc: "AI optical character recognition, digital PDF parsing, and header/line ingestion",
+    icon: <FileSpreadsheet size={18} />,
+  },
+  {
+    href: "/finance/advanced/payment-batches",
+    label: "Payment Run Batches",
+    category: "OPERATIONS",
+    desc: "ACH, Wire, SEPA, and check payment batch generation and approval workflows",
+    icon: <CreditCard size={18} />,
+  },
+  {
+    href: "/finance/advanced/e-invoicing",
+    label: "Global E-Invoicing",
+    category: "OPERATIONS",
+    desc: "PEPPOL, Factur-X, ZUGFeRD, and KSA ZATCA compliant invoice transmission",
+    icon: <Zap size={18} />,
+  },
+
+  // Revenue & Subscriptions
+  {
+    href: "/finance/advanced/revenue-schedules",
+    label: "Revenue Recognition (ASC 606)",
+    category: "OPERATIONS",
+    desc: "Contract performance obligations, deferred revenue waterfalls, and milestones",
+    icon: <TrendingUp size={18} />,
+  },
+  {
+    href: "/finance/advanced/subscriptions",
+    label: "Subscription Billing & ARR",
+    category: "OPERATIONS",
+    desc: "Recurring subscription plans, usage metering, MRR/ARR analytics, and churn",
+    icon: <RepeatIcon size={18} />,
+  },
+  {
+    href: "/finance/advanced/leases",
+    label: "Lease Accounting (ASC 842)",
+    category: "OPERATIONS",
+    desc: "Right-of-use asset schedules, lease liabilities, and monthly amortization",
+    icon: <Building2 size={18} />,
+  },
+
+  // Treasury & Liquidity
+  {
+    href: "/finance/advanced/bank-accounts",
+    label: "Bank Account Master",
+    category: "TREASURY",
+    desc: "Corporate bank accounts, signatory controls, and routing numbers",
+    icon: <Wallet size={18} />,
+  },
+  {
+    href: "/finance/advanced/bank-feeds",
+    label: "Direct Bank Feeds",
+    category: "TREASURY",
+    desc: "Live OAuth banking feeds via Plaid, Finicity, and Open Banking APIs",
+    icon: <Link2 size={18} />,
+  },
+  {
+    href: "/finance/advanced/bank-recon",
+    label: "Bank Auto-Reconciliation",
+    category: "TREASURY",
+    desc: "Algorithmic 99.4% confidence statement line to general ledger matching",
+    icon: <GitCompare size={18} />,
+  },
+  {
+    href: "/finance/advanced/reconciliations",
+    label: "Reconciliation Reporting",
+    category: "TREASURY",
+    desc: "Monthly bank reconciliation statement certificates and audit evidence",
+    icon: <FileText size={18} />,
+  },
+  {
+    href: "/finance/advanced/cash-position",
+    label: "Daily Cash Position",
+    category: "TREASURY",
+    desc: "Aggregated available liquidity across all global corporate accounts",
+    icon: <DollarSign size={18} />,
+  },
+  {
+    href: "/finance/advanced/cash-flow-forecast",
+    label: "13-Week Cash Forecast",
+    category: "TREASURY",
+    desc: "Direct method predictive liquidity modeling and variance analysis",
+    icon: <Activity size={18} />,
+  },
+  {
+    href: "/finance/advanced/treasury",
+    label: "Treasury Management",
+    category: "TREASURY",
+    desc: "Concentration accounts, zero-balance account (ZBA) sweeps, and cash pooling",
+    icon: <Landmark size={18} />,
+  },
+  {
+    href: "/finance/advanced/working-capital",
+    label: "Working Capital Optimization",
+    category: "TREASURY",
+    desc: "Cash conversion cycle (CCC), dynamic discounting, and supply chain finance",
+    icon: <Handshake size={18} />,
+  },
+  {
+    href: "/finance/advanced/corporate-cards",
+    label: "Corporate Card Feeds",
+    category: "TREASURY",
+    desc: "Commercial card feed integration, spend policies, and real-time expense triage",
+    icon: <CreditCard size={18} />,
+  },
+  {
+    href: "/finance/advanced/financial-instruments",
+    label: "Derivatives & Hedging",
+    category: "TREASURY",
+    desc: "FX forwards, cross-currency swaps, mark-to-market valuations, and hedge accounting",
+    icon: <Coins size={18} />,
+  },
+
+  // Tax & Compliance
+  {
+    href: "/finance/advanced/tax-engine",
+    label: "Tax Engine & Rules",
+    category: "TAX",
+    desc: "Multi-jurisdiction sales tax, VAT, GST calculation matrices, and rates",
+    icon: <Calculator size={18} />,
+  },
+  {
+    href: "/finance/advanced/tax-filing",
+    label: "Tax Filing Preparation",
+    category: "TAX",
+    desc: "Automated VAT return computation, sales tax schedules, and proof packets",
+    icon: <FileCheckIcon size={18} />,
+  },
+  {
+    href: "/finance/advanced/tax-filing-summary",
+    label: "Statutory Tax Summary",
+    category: "TAX",
+    desc: "Accrued tax liabilities by jurisdiction and upcoming compliance calendar",
+    icon: <ShieldAlert size={18} />,
+  },
+  {
+    href: "/finance/advanced/tax-nexus",
+    label: "Economic Nexus Monitor",
+    category: "TAX",
+    desc: "Wayfair sales and transaction threshold tracking across all US states",
+    icon: <Link2 size={18} />,
+  },
+  {
+    href: "/finance/advanced/tax-provisioning",
+    label: "ASC 740 Tax Provision",
+    category: "TAX",
+    desc: "Current and deferred income tax provision, valuation allowances, and ETR",
+    icon: <Calculator size={18} />,
+  },
+  {
+    href: "/finance/advanced/1099-reporting",
+    label: "IRS Form 1099 Vendor Compliance",
+    category: "TAX",
+    desc: "1099-NEC & 1099-MISC thresholds, W-9 validation, and IRS FIRE file output",
+    icon: <FileText size={18} />,
+  },
+
+  // Planning & Reporting
+  {
+    href: "/finance/advanced/budgeting",
+    label: "Driver-Based Budgeting",
+    category: "PLANNING",
+    desc: "Departmental budgets, bottom-up forecasts, variance reporting, and reallocations",
+    icon: <FileText size={18} />,
+  },
+  {
+    href: "/finance/advanced/budget-scenarios",
+    label: "Budget Scenarios",
+    category: "PLANNING",
+    desc: "Scenario modeling: Base Case, Upside Growth, and Downside Liquidity stress tests",
+    icon: <Sparkles size={18} />,
+  },
+  {
+    href: "/finance/advanced/forecast-scenarios",
+    label: "Rolling Forecasts (xP&A)",
+    category: "PLANNING",
+    desc: "Continuous 18-month financial and operational planning models",
+    icon: <TrendingUp size={18} />,
+  },
+  {
+    href: "/finance/advanced/scenario-comparison",
+    label: "Scenario Comparison Matrix",
+    category: "PLANNING",
+    desc: "Side-by-side P&L, balance sheet, and margin impact across scenarios",
+    icon: <GitCompare size={18} />,
+  },
+  {
+    href: "/finance/advanced/reports",
+    label: "Financial Statements Suite",
+    category: "PLANNING",
+    desc: "Comparative P&L, Balance Sheet, Cash Flows, Trial Balance, and schedules",
+    icon: <FileSpreadsheet size={18} />,
+  },
+  {
+    href: "/finance/advanced/financial-ratios",
+    label: "Financial Ratios & Health",
+    category: "PLANNING",
+    desc: "Liquidity, leverage, profitability, and efficiency covenants benchmarks",
+    icon: <Scale size={18} />,
+  },
+  {
+    href: "/finance/advanced/exchange-rates",
+    label: "Foreign Exchange Rates",
+    category: "PLANNING",
+    desc: "Central bank daily spot rates, month-end closing, and period-average FX",
+    icon: <DollarSign size={18} />,
+  },
+  {
+    href: "/finance/advanced/fx-revaluation",
+    label: "FX Balance Revaluation",
+    category: "PLANNING",
+    desc: "IAS 21 / ASC 830 foreign denominated asset/liability revaluation vouchers",
+    icon: <Coins size={18} />,
+  },
+  {
+    href: "/finance/advanced/currency-revaluation",
+    label: "Currency Revaluation Setup",
+    category: "PLANNING",
+    desc: "Unrealized gain/loss gain accounts and auto-reversal parameters",
+    icon: <RefreshCw size={18} />,
+  },
+
+  // Governance, Intercompany & ESG
+  {
+    href: "/finance/advanced/consolidation",
+    label: "Multi-GAAP Consolidation",
+    category: "GOVERNANCE",
+    desc: "Global group consolidation, currency translation reserves, and minority interest",
+    icon: <PieChart size={18} />,
+  },
+  {
+    href: "/finance/advanced/intercompany",
+    label: "Intercompany Hub",
+    category: "GOVERNANCE",
+    desc: "Bilateral entity balances, cross-border invoicing, and transfer pricing",
+    icon: <Handshake size={18} />,
+  },
+  {
+    href: "/finance/advanced/risk-management",
+    label: "Enterprise Financial Risk",
+    category: "GOVERNANCE",
+    desc: "Credit risk scorecards, market exposure VaR, and operational loss registers",
+    icon: <ShieldQuestion size={18} />,
+  },
+  {
+    href: "/finance/advanced/esg-accounting",
+    label: "ESG & Carbon Accounting",
+    category: "GOVERNANCE",
+    desc: "Scope 1/2/3 GHG emissions, carbon tax ledger, green bonds, and ESG metrics",
+    icon: <TrendingDown size={18} />,
+  },
+  {
+    href: "/finance/advanced/audit-logs",
+    label: "Immutable Audit Trail",
+    category: "GOVERNANCE",
+    desc: "Tamper-evident change logs, SOX 404 access records, and policy overrides",
+    icon: <Eye size={18} />,
+  },
+  {
+    href: "/finance/advanced/account-reconciliation",
+    label: "Subledger Reconciliation",
+    category: "GOVERNANCE",
+    desc: "Automated variance checks between AR/AP/Inventory and General Ledger control accounts",
+    icon: <GitCompare size={18} />,
+  },
+  {
+    href: "/finance/advanced/exception-queue",
+    label: "Finance Exception Queue",
+    category: "GOVERNANCE",
+    desc: "Unposted entries, posting errors, failed automated batches, and reconciliation drift",
+    icon: <ShieldAlert size={18} />,
+  },
+  {
+    href: "/finance/advanced/expense-reports",
+    label: "Employee Expense Reports",
+    category: "GOVERNANCE",
+    desc: "Receipt audits, per diem calculations, manager approvals, and reimbursement runs",
+    icon: <Receipt size={18} />,
+  },
+  {
+    href: "/finance/advanced/expense-policies",
+    label: "Expense Policy Controls",
+    category: "GOVERNANCE",
+    desc: "Category spending ceilings, receipt thresholds, and non-reimbursable exclusions",
+    icon: <ShieldCheck size={18} />,
+  },
+
+  // AI Intelligence
+  {
+    href: "/finance/advanced/ai-analytics",
+    label: "AI Financial Intelligence",
+    category: "AI",
+    desc: "Autonomous anomaly detection, GL account predictive coding, and natural language copilot",
+    icon: <Brain size={18} />,
   },
 ];
 
-export default function AdvancedFinancePage() {
+function RepeatIcon({ size }: { size: number }) {
+  return <RefreshCw size={size} />;
+}
+
+function FileCheckIcon({ size }: { size: number }) {
+  return <FileText size={size} />;
+}
+
+export default function AdvancedFinanceWorkspaceHub() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
+
+  const categories = [
+    { id: "ALL", label: "All Modules" },
+    { id: "CORE", label: "Core Accounting" },
+    { id: "TREASURY", label: "Payables & Treasury" },
+    { id: "TAX", label: "Tax & Compliance" },
+    { id: "PLANNING", label: "Planning & Reporting" },
+    { id: "OPERATIONS", label: "Revenue & Billing" },
+    { id: "GOVERNANCE", label: "Governance & ESG" },
+    { id: "AI", label: "AI Financial Intelligence" },
+  ];
+
+  const filteredModules = useMemo(() => {
+    return ALL_FINANCE_MODULES.filter((mod) => {
+      if (selectedCategory !== "ALL" && mod.category !== selectedCategory) return false;
+      if (!searchQuery) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        mod.label.toLowerCase().includes(q) ||
+        mod.desc.toLowerCase().includes(q) ||
+        mod.href.toLowerCase().includes(q)
+      );
+    });
+  }, [searchQuery, selectedCategory]);
+
   return (
-    <div className="ui-stack-6 ui-animate-in">
-      <PageHeader
-        title="Advanced Finance"
-        description="Financial operations, analytics, and compliance tools"
-      />
-
-      {groups.map((group: any) => (
-        <div key={group.title} className="ui-stack-3">
-          <div className={styles.s1}>
-            <div className="ui-text-primary">{group.icon}</div>
-            <div>
-              <h2 className={styles.s2}>{group.title}</h2>
-              <p className="ui-text-xs-muted m-0">{group.description}</p>
-            </div>
-          </div>
-
-          <div className="ui-grid-3">
-            {group.modules.map((mod: any) => (
-              <Link key={mod.href} href={mod.href} className={styles.s3}>
-                <Card
-                  padding="md"
-                  className={`hover:shadow-md transition-all hover:border-primary/30 ${styles.s4}`}
-                >
-                  <div className={styles.s5}>
-                    <div className={styles.s6}>{mod.icon}</div>
-                    <div className={styles.s7}>
-                      <div className={styles.s8}>
-                        <h3 className={styles.s9}>{mod.label}</h3>
-                      </div>
-                      <p className={styles.s10}>{mod.desc}</p>
-                    </div>
-                    <ChevronRight size={16} className={styles.s11} />
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
+    <div className={styles.pageContainer}>
+      {/* Header */}
+      <div className={styles.headerRow}>
+        <div className={styles.headerLeft}>
+          <h1 className={styles.title}>Enterprise Finance Workspace Hub</h1>
+          <p className={styles.subtitle}>
+            Comprehensive operational suites, high-density Strata floorplans, and direct ledger integration.
+          </p>
         </div>
-      ))}
+
+        <div className={styles.liveBadge}>
+          <div className={styles.liveDot} />
+          <span>58 Modules Connected • Live RLS Isolated</span>
+        </div>
+      </div>
+
+      {/* KPI Strip */}
+      <div className={styles.kpiStrip}>
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Total Modules</span>
+          <span className={styles.kpiValue}>58 Workspaces</span>
+        </div>
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Backend Endpoints</span>
+          <span className={styles.kpiValue}>1,747 APIs Connected</span>
+        </div>
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Security &amp; Isolation</span>
+          <span className={styles.kpiValue}>PostgreSQL RLS 100%</span>
+        </div>
+        <div className={styles.kpiCard}>
+          <span className={styles.kpiLabel}>Audit Compliance</span>
+          <span className={styles.kpiValue}>SOX 404 / IFRS / GAAP</span>
+        </div>
+      </div>
+
+      {/* Controls Bar: Search & Category Pills */}
+      <div className={styles.controlsBar}>
+        <div className={styles.searchBox}>
+          <Search size={15} color="var(--color-text-secondary)" />
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder="Search across all 58 finance modules by name, keyword, or workflow..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        <div className={styles.categoryPills}>
+          {categories.map((cat) => {
+            const count =
+              cat.id === "ALL"
+                ? ALL_FINANCE_MODULES.length
+                : ALL_FINANCE_MODULES.filter((m) => m.category === cat.id).length;
+            const isActive = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                className={`${styles.pillBtn} ${isActive ? styles.pillBtnActive : ""}`}
+                onClick={() => setSelectedCategory(cat.id)}
+              >
+                <span>{cat.label}</span>
+                <span className={styles.pillCount}>({count})</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Modules Grid */}
+      <div className={styles.modulesGrid}>
+        {filteredModules.map((mod) => (
+          <Link key={mod.href} href={mod.href} className={styles.moduleCard}>
+            <div className={styles.cardLeft}>
+              <div className={styles.cardIcon}>{mod.icon}</div>
+              <div className={styles.cardMeta}>
+                <span className={styles.cardLabel}>{mod.label}</span>
+                <p className={styles.cardDesc}>{mod.desc}</p>
+                <span className={styles.cardBadge}>
+                  {mod.category === "CORE"
+                    ? "Accounting"
+                    : mod.category === "TREASURY"
+                    ? "Treasury"
+                    : mod.category === "TAX"
+                    ? "Tax & Statutory"
+                    : mod.category === "PLANNING"
+                    ? "FP&A Planning"
+                    : mod.category === "OPERATIONS"
+                    ? "Billing / Ops"
+                    : mod.category === "GOVERNANCE"
+                    ? "Governance & ESG"
+                    : "AI Intelligence"}
+                </span>
+              </div>
+            </div>
+            <ChevronRight size={15} className={styles.cardArrow} />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

@@ -27,6 +27,11 @@ import {
   ShoppingCart,
   BarChart3,
   Sliders,
+  TrendingUp,
+  Landmark,
+  ShieldCheck,
+  Brain,
+  Layers,
 } from "lucide-react";
 import styles from "./FinanceSidebarV2.module.css";
 
@@ -52,6 +57,10 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
   const [cashOpen, setCashOpen] = useState(true);
   const [planningOpen, setPlanningOpen] = useState(false);
   const [taxAssetsOpen, setTaxAssetsOpen] = useState(false);
+  const [revenueOpen, setRevenueOpen] = useState(false);
+  const [treasuryOpen, setTreasuryOpen] = useState(false);
+  const [governanceOpen, setGovernanceOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -450,6 +459,230 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
                 </div>
               )}
             </div>
+
+            {/* Revenue & Contracts Group */}
+            <div className={styles.expandableGroup}>
+              <button
+                type="button"
+                className={styles.groupItemHeader}
+                onClick={() => setRevenueOpen(!revenueOpen)}
+              >
+                <div className={styles.navItemLeft}>
+                  <TrendingUp size={15} className={styles.navItemIcon} />
+                  <span>Revenue & contracts</span>
+                </div>
+                {revenueOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+              </button>
+
+              {revenueOpen && (
+                <div className={styles.subItemsContainer}>
+                  {isItemMatch("Revenue recognition") && (
+                    <Link
+                      href="/finance/advanced/revenue-schedules"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/revenue-schedules") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Revenue recognition (ASC 606)</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Subscriptions & ARR") && (
+                    <Link
+                      href="/finance/advanced/subscriptions"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/subscriptions") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Subscriptions & ARR</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("E-Invoicing") && (
+                    <Link
+                      href="/finance/advanced/e-invoicing"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/e-invoicing") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>E-Invoicing (PEPPOL)</span>
+                      </div>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Treasury & Liquidity Group */}
+            <div className={styles.expandableGroup}>
+              <button
+                type="button"
+                className={styles.groupItemHeader}
+                onClick={() => setTreasuryOpen(!treasuryOpen)}
+              >
+                <div className={styles.navItemLeft}>
+                  <Landmark size={15} className={styles.navItemIcon} />
+                  <span>Treasury & liquidity</span>
+                </div>
+                {treasuryOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+              </button>
+
+              {treasuryOpen && (
+                <div className={styles.subItemsContainer}>
+                  {isItemMatch("Cash flow forecast") && (
+                    <Link
+                      href="/finance/advanced/cash-flow-forecast"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/cash-flow-forecast") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Cash flow forecast</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Working capital") && (
+                    <Link
+                      href="/finance/advanced/working-capital"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/working-capital") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Working capital & SCF</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Treasury operations") && (
+                    <Link
+                      href="/finance/advanced/treasury"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/treasury") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Treasury operations</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Financial instruments") && (
+                    <Link
+                      href="/finance/advanced/financial-instruments"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/financial-instruments") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Financial instruments</span>
+                      </div>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Governance, Risk & ESG Group */}
+            <div className={styles.expandableGroup}>
+              <button
+                type="button"
+                className={styles.groupItemHeader}
+                onClick={() => setGovernanceOpen(!governanceOpen)}
+              >
+                <div className={styles.navItemLeft}>
+                  <ShieldCheck size={15} className={styles.navItemIcon} />
+                  <span>Governance & ESG</span>
+                </div>
+                {governanceOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+              </button>
+
+              {governanceOpen && (
+                <div className={styles.subItemsContainer}>
+                  {isItemMatch("ESG & carbon") && (
+                    <Link
+                      href="/finance/advanced/esg-accounting"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/esg-accounting") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>ESG & carbon accounting</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Risk management") && (
+                    <Link
+                      href="/finance/advanced/risk-management"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/risk-management") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Risk management</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Consolidation") && (
+                    <Link
+                      href="/finance/advanced/consolidation"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/consolidation") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Multi-GAAP consolidation</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Tax provisioning") && (
+                    <Link
+                      href="/finance/advanced/tax-provisioning"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/tax-provisioning") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>ASC 740 tax provisioning</span>
+                      </div>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* AI Intelligence Group */}
+            <div className={styles.expandableGroup}>
+              <button
+                type="button"
+                className={styles.groupItemHeader}
+                onClick={() => setAiOpen(!aiOpen)}
+              >
+                <div className={styles.navItemLeft}>
+                  <Brain size={15} className={styles.navItemIcon} />
+                  <span>AI financial intelligence</span>
+                </div>
+                {aiOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+              </button>
+
+              {aiOpen && (
+                <div className={styles.subItemsContainer}>
+                  {isItemMatch("AI financial analytics") && (
+                    <Link
+                      href="/finance/advanced/ai-analytics"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/ai-analytics") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>AI financial analytics</span>
+                      </div>
+                    </Link>
+                  )}
+                  {isItemMatch("Financial ratios") && (
+                    <Link
+                      href="/finance/advanced/financial-ratios"
+                      className={`${styles.navItem} ${pathname.startsWith("/finance/advanced/financial-ratios") ? styles.navItemActive : ""}`}
+                    >
+                      <div className={styles.navItemLeft}>
+                        <span>Financial ratios & health</span>
+                      </div>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* All Enterprise Modules Link */}
+            {isItemMatch("All modules") && (
+              <Link
+                href="/finance/advanced"
+                className={`${styles.navItem} ${pathname === "/finance/advanced" ? styles.navItemActive : ""}`}
+              >
+                <div className={styles.navItemLeft}>
+                  <Layers size={15} className={styles.navItemIcon} />
+                  <span>All enterprise modules</span>
+                </div>
+                <span className={`${styles.navBadge} ${styles.navBadgeBlue}`}>58</span>
+              </Link>
+            )}
           </div>
         </nav>
       ) : (
@@ -510,6 +743,46 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
             title="Fixed assets"
           >
             <Building2 size={18} />
+          </Link>
+
+          <Link
+            href="/finance/advanced/revenue-schedules"
+            className={`${styles.collapsedItem} ${pathname.startsWith("/finance/advanced/revenue-schedules") ? styles.collapsedItemActive : ""}`}
+            title="Revenue recognition (ASC 606)"
+          >
+            <TrendingUp size={18} />
+          </Link>
+
+          <Link
+            href="/finance/advanced/treasury"
+            className={`${styles.collapsedItem} ${pathname.startsWith("/finance/advanced/treasury") ? styles.collapsedItemActive : ""}`}
+            title="Treasury & liquidity"
+          >
+            <Landmark size={18} />
+          </Link>
+
+          <Link
+            href="/finance/advanced/esg-accounting"
+            className={`${styles.collapsedItem} ${pathname.startsWith("/finance/advanced/esg-accounting") ? styles.collapsedItemActive : ""}`}
+            title="Governance & ESG"
+          >
+            <ShieldCheck size={18} />
+          </Link>
+
+          <Link
+            href="/finance/advanced/ai-analytics"
+            className={`${styles.collapsedItem} ${pathname.startsWith("/finance/advanced/ai-analytics") ? styles.collapsedItemActive : ""}`}
+            title="AI financial intelligence"
+          >
+            <Brain size={18} />
+          </Link>
+
+          <Link
+            href="/finance/advanced"
+            className={`${styles.collapsedItem} ${pathname === "/finance/advanced" ? styles.collapsedItemActive : ""}`}
+            title="All enterprise modules (58)"
+          >
+            <Layers size={18} />
           </Link>
         </nav>
       )}
