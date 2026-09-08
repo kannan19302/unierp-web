@@ -11,6 +11,7 @@ import {
   TrendingUp,
   TrendingDown,
   ArrowRight,
+  X,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -63,6 +64,9 @@ export default function FxRevaluationPage() {
 
   const [selectedExposureId, setSelectedExposureId] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState(false);
+  const [showRunModal, setShowRunModal] = useState(false);
+  const [revalPeriod, setRevalPeriod] = useState("2026-08");
+  const [autoReverseNextPeriod, setAutoReverseNextPeriod] = useState(true);
   const [revalSuccess, setRevalSuccess] = useState<{
     journalNumber: string;
     netGainLoss: number;
@@ -80,7 +84,8 @@ export default function FxRevaluationPage() {
   const exposures = data?.exposures || [];
   const selectedExposure = exposures.find((e) => e.id === selectedExposureId) || exposures[0];
 
-  const handleRunRevaluation = async () => {
+  const handleRunRevaluation = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setIsRunning(true);
     try {
       const spotRateMap: Record<string, number> = {};
@@ -90,8 +95,8 @@ export default function FxRevaluationPage() {
       });
 
       const res = await apiClient.post<any>("/finance/fx-revaluation/run", {
-        period: data?.period || "2026-08",
-        autoReverse: true,
+        period: revalPeriod || data?.period || "2026-08",
+        autoReverse: autoReverseNextPeriod,
         rates: spotRateMap,
       });
 
@@ -101,6 +106,7 @@ export default function FxRevaluationPage() {
         netGainLoss: resData?.unrealizedGainLossTotal ?? data?.kpis?.netUnrealizedGainLoss ?? 18430,
       });
 
+      setShowRunModal(false);
       await queryClient.invalidateQueries({ queryKey: ["finance-fx-summary"] });
       setTimeout(() => setRevalSuccess(null), 8000);
     } catch (err) {
@@ -146,11 +152,11 @@ export default function FxRevaluationPage() {
           <button
             type="button"
             className={styles.btnPrimary}
-            onClick={handleRunRevaluation}
+            onClick={() => setShowRunModal(true)}
             disabled={isRunning || isLoading}
           >
             <Coins size={14} />
-            <span>{isRunning ? "Executing Revaluation..." : "Run Month-End FX Revaluation"}</span>
+            <span>Run Month-End FX Revaluation</span>
           </button>
         </div>
       </div>
@@ -415,16 +421,111 @@ export default function FxRevaluationPage() {
               <button
                 type="button"
                 className={styles.btnPrimary}
-                onClick={handleRunRevaluation}
+                onClick={() => setShowRunModal(true)}
                 disabled={isRunning}
               >
                 <FileCheck size={14} />
-                <span>{isRunning ? "Posting to GL..." : "Execute Revaluation Entry"}</span>
+                <span>Execute Revaluation Entry</span>
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Month-End FX Revaluation Modal */}
+      {showRunModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowRunModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Execute Month-End FX Translation &amp; Revaluation</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowRunModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleRunRevaluation}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Accounting Period</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={revalPeriod}
+                    onChange={(e) => setRevalPeriod(e.target.value)}
+                    placeholder="YYYY-MM"
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Revaluation Rates in Effect</label>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-2)", backgroundColor: "var(--color-bg-ground)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border-subtle)", fontSize: "var(--text-2xs)" }}>
+                    {data?.spotRates?.map((s) => (
+                      <div key={s.pair} style={{ display: "flex", justifyContent: "space-between" }}>
+                        <span style={{ color: "var(--color-text-muted)" }}>{s.pair}:</span>
+                        <span className={styles.monoCell}>{s.spotRate.toFixed(4)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)", backgroundColor: "var(--color-bg-ground)", padding: "var(--space-3)", borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border-subtle)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Total Exposure Revalued:</span>
+                    <span className={styles.monoCell} style={{ fontWeight: 600 }}>
+                      {formatCurrency(data?.kpis?.totalForeignExposure ?? 2754240)}
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Net Unrealized Impact:</span>
+                    <span className={`${styles.monoCell} ${styles.gainColor}`} style={{ fontWeight: 600 }}>
+                      +{formatCurrency(data?.kpis?.netUnrealizedGainLoss ?? 18430)}
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Target GL Account:</span>
+                    <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-secondary)" }}>8040 - Unrealized FX G/L</span>
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-1)" }}>
+                  <input
+                    type="checkbox"
+                    id="autoReverse"
+                    checked={autoReverseNextPeriod}
+                    onChange={(e) => setAutoReverseNextPeriod(e.target.checked)}
+                  />
+                  <label htmlFor="autoReverse" style={{ fontSize: "var(--text-xs)", color: "var(--color-text-secondary)", cursor: "pointer" }}>
+                    Schedule automated reversing journal entry on Day 1 of next period (IAS 21 / ASC 830)
+                  </label>
+                </div>
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowRunModal(false)}
+                  disabled={isRunning}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isRunning}
+                >
+                  {isRunning ? "Posting Journal..." : "Post Revaluation Entry"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -12,6 +12,8 @@ import {
   ArrowUpRight,
   Check,
   FileSpreadsheet,
+  X,
+  Trash2,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -52,6 +54,14 @@ interface GlSummaryData {
   };
 }
 
+interface FormLineItem {
+  accountCode: string;
+  accountName: string;
+  description: string;
+  debit: number;
+  credit: number;
+}
+
 export default function GeneralLedgerPage() {
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
@@ -60,6 +70,19 @@ export default function GeneralLedgerPage() {
   const [selectedEntry, setSelectedEntry] = useState<string | null>(null);
   const [isPosting, setIsPosting] = useState(false);
   const [postSuccess, setPostSuccess] = useState(false);
+
+  // New Journal Entry Modal State
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [createDate, setCreateDate] = useState(new Date().toISOString().slice(0, 10));
+  const [createRef, setCreateRef] = useState("");
+  const [createDescription, setCreateDescription] = useState("");
+  const [postImmediately, setPostImmediately] = useState(true);
+  const [createLines, setCreateLines] = useState<FormLineItem[]>([
+    { accountCode: "1010", accountName: "Operating Cash", description: "Voucher debit line", debit: 12500, credit: 0 },
+    { accountCode: "4010", accountName: "Subscription Revenue", description: "Voucher credit line", debit: 0, credit: 12500 },
+  ]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   const { data, isLoading, isFetching, refetch } = useQuery<GlSummaryData>({
     queryKey: ["finance-gl-summary"],
@@ -83,6 +106,40 @@ export default function GeneralLedgerPage() {
       console.error("Failed to post journal entry:", err);
     } finally {
       setIsPosting(false);
+    }
+  };
+
+  const totalModalDebit = createLines.reduce((acc, curr) => acc + Number(curr.debit || 0), 0);
+  const totalModalCredit = createLines.reduce((acc, curr) => acc + Number(curr.credit || 0), 0);
+  const modalDifference = Math.abs(totalModalDebit - totalModalCredit);
+  const isModalBalanced = modalDifference < 0.01 && totalModalDebit > 0;
+
+  const handleCreateJournalSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isModalBalanced) {
+      setCreateError(`Journal voucher is out of balance by $${modalDifference.toFixed(2)}. Total debits must equal credits.`);
+      return;
+    }
+    setIsSubmitting(true);
+    setCreateError(null);
+    try {
+      await apiClient.post("/finance/gl/create-journal", {
+        date: createDate,
+        reference: createRef || undefined,
+        description: createDescription || "Manual general ledger journal voucher",
+        postImmediately,
+        lines: createLines,
+      });
+      setShowCreateModal(false);
+      setPostSuccess(true);
+      setTimeout(() => setPostSuccess(false), 3000);
+      await queryClient.invalidateQueries({ queryKey: ["finance-gl-summary"] });
+      setCreateDescription("");
+      setCreateRef("");
+    } catch (err: any) {
+      setCreateError(err?.message || "Failed to post journal voucher.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -183,7 +240,7 @@ export default function GeneralLedgerPage() {
           <button
             type="button"
             className={styles.btnPrimary}
-            onClick={handleApproveAndPost}
+            onClick={() => setShowCreateModal(true)}
           >
             <Plus size={14} />
             <span>Post journal entry</span>
@@ -408,6 +465,222 @@ export default function GeneralLedgerPage() {
           </div>
         </div>
       </div>
+
+      {/* MODAL: Create & Post Journal Entry */}
+      {showCreateModal && (
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modalDialog}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.panelTitle} style={{ fontSize: "var(--text-base)" }}>Create & Post Journal Entry</h2>
+              <button
+                type="button"
+                className={styles.modalCloseBtn}
+                onClick={() => setShowCreateModal(false)}
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateJournalSubmit}>
+              <div className={styles.modalBody}>
+                {createError && (
+                  <div className={styles.balanceCheckStrip} style={{ borderColor: "var(--color-danger)", color: "var(--color-danger)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                      <AlertCircle size={15} />
+                      <span>{createError}</span>
+                    </div>
+                  </div>
+                )}
+
+                <div className={styles.formGrid}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Effective Date</label>
+                    <input
+                      type="date"
+                      className={styles.formInput}
+                      value={createDate}
+                      onChange={(e) => setCreateDate(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Reference / Voucher #</label>
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      placeholder="e.g. JE-2026-0845 or ADJ-001"
+                      value={createRef}
+                      onChange={(e) => setCreateRef(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Description / Memo</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    placeholder="Enter journal description..."
+                    value={createDescription}
+                    onChange={(e) => setCreateDescription(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Line Items Section */}
+                <div className={styles.linesSection}>
+                  <div className={styles.linesHeader}>
+                    <span className={styles.formLabel} style={{ fontWeight: 600 }}>
+                      General Ledger Distribution Lines
+                    </span>
+                    <button
+                      type="button"
+                      className={styles.btnSecondary}
+                      style={{ padding: "2px 8px", fontSize: "var(--text-2xs)" }}
+                      onClick={() =>
+                        setCreateLines([
+                          ...createLines,
+                          { accountCode: "6010", accountName: "Operating Expense", description: "", debit: 0, credit: 0 },
+                        ])
+                      }
+                    >
+                      <Plus size={12} /> Add line
+                    </button>
+                  </div>
+
+                  <table className={styles.linesTable}>
+                    <thead>
+                      <tr>
+                        <th style={{ width: "25%" }}>Account Code</th>
+                        <th style={{ width: "35%" }}>Account Name</th>
+                        <th style={{ width: "18%" }}>Debit ($)</th>
+                        <th style={{ width: "18%" }}>Credit ($)</th>
+                        <th style={{ width: "4%" }}></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {createLines.map((line, idx) => (
+                        <tr key={idx}>
+                          <td>
+                            <input
+                              type="text"
+                              className={styles.formInput}
+                              value={line.accountCode}
+                              onChange={(e) => {
+                                const next = [...createLines];
+                                next[idx].accountCode = e.target.value;
+                                setCreateLines(next);
+                              }}
+                              placeholder="1010"
+                              required
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                              className={styles.formInput}
+                              value={line.accountName}
+                              onChange={(e) => {
+                                const next = [...createLines];
+                                next[idx].accountName = e.target.value;
+                                setCreateLines(next);
+                              }}
+                              placeholder="Account title"
+                              required
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              step="0.01"
+                              className={styles.formInput}
+                              value={line.debit || ""}
+                              onChange={(e) => {
+                                const next = [...createLines];
+                                next[idx].debit = parseFloat(e.target.value) || 0;
+                                setCreateLines(next);
+                              }}
+                              placeholder="0.00"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              step="0.01"
+                              className={styles.formInput}
+                              value={line.credit || ""}
+                              onChange={(e) => {
+                                const next = [...createLines];
+                                next[idx].credit = parseFloat(e.target.value) || 0;
+                                setCreateLines(next);
+                              }}
+                              placeholder="0.00"
+                            />
+                          </td>
+                          <td>
+                            {createLines.length > 2 && (
+                              <button
+                                type="button"
+                                onClick={() => setCreateLines(createLines.filter((_, i) => i !== idx))}
+                                style={{ background: "transparent", border: "none", color: "var(--color-danger)", cursor: "pointer" }}
+                              >
+                                <Trash2 size={13} />
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  {/* Balance Check Strip */}
+                  <div className={styles.balanceCheckStrip}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                      {isModalBalanced ? (
+                        <>
+                          <CheckCircle2 size={16} color="var(--color-success)" />
+                          <span style={{ color: "var(--color-success)", fontWeight: 500 }}>
+                            In balance (IAS 1 / US GAAP)
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <AlertCircle size={16} color="var(--color-warning)" />
+                          <span style={{ color: "var(--color-warning)", fontWeight: 500 }}>
+                            Out of balance: ${modalDifference.toFixed(2)}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className={styles.balanceAmounts}>
+                      <span>Debits: ${totalModalDebit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
+                      <span>Credits: ${totalModalCredit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowCreateModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isSubmitting || !isModalBalanced}
+                >
+                  {isSubmitting ? "Posting..." : "Post to General Ledger"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

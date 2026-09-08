@@ -307,6 +307,13 @@ export default function TaxCompliancePage() {
             </button>
           </div>
 
+          <Link
+            href="/finance/advanced/tax-filing"
+            className={styles.btnSecondary}
+          >
+            <span>Tax filing register</span>
+          </Link>
+
           <button
             type="button"
             className={styles.btnPrimary}

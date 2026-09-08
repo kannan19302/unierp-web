@@ -219,6 +219,13 @@ export default function FixedAssetsPage() {
             <span>Export register</span>
           </button>
 
+          <Link
+            href="/finance/advanced/fixed-assets/assets/new"
+            className={styles.btnSecondary}
+          >
+            <span>Advanced register</span>
+          </Link>
+
           <button
             type="button"
             className={styles.btnPrimary}

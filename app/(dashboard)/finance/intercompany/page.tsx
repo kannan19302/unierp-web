@@ -10,6 +10,7 @@ import {
   FileCheck,
   ArrowRightLeft,
   Scale,
+  X,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
 import styles from "./page.module.css";
@@ -48,6 +49,9 @@ export default function IntercompanyPage() {
 
   const [selectedPairId, setSelectedPairId] = useState<string | null>(null);
   const [isEliminating, setIsEliminating] = useState(false);
+  const [showElimModal, setShowElimModal] = useState(false);
+  const [elimPeriod, setElimPeriod] = useState("Aug 2026");
+  const [elimScope, setElimScope] = useState<"ALL_BALANCED_PAIRS" | "SELECTED_PAIR_ONLY">("ALL_BALANCED_PAIRS");
   const [elimSuccess, setElimSuccess] = useState<{
     voucherNumber: string;
     totalEliminated: number;
@@ -65,12 +69,13 @@ export default function IntercompanyPage() {
   const eliminations = data?.eliminations || [];
   const selectedPair = eliminations.find((p) => p.id === selectedPairId) || eliminations[0];
 
-  const handleRunEliminations = async () => {
+  const handleRunEliminations = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setIsEliminating(true);
     try {
       const res = await apiClient.post<any>("/finance/intercompany/eliminate", {
-        period: data?.period || "Aug 2026",
-        pairId: selectedPair?.id || "ic-1",
+        period: elimPeriod || data?.period || "Aug 2026",
+        pairId: elimScope === "SELECTED_PAIR_ONLY" ? selectedPair?.id || "ic-1" : undefined,
       });
 
       const resData = res?.data || res;
@@ -79,6 +84,7 @@ export default function IntercompanyPage() {
         totalEliminated: resData?.totalEliminated ?? data?.kpis?.totalBilateralVolume ?? 1450000,
       });
 
+      setShowElimModal(false);
       await queryClient.invalidateQueries({ queryKey: ["finance-intercompany-summary"] });
       setTimeout(() => setElimSuccess(null), 8000);
     } catch (err) {
@@ -124,11 +130,11 @@ export default function IntercompanyPage() {
           <button
             type="button"
             className={styles.btnPrimary}
-            onClick={handleRunEliminations}
+            onClick={() => setShowElimModal(true)}
             disabled={isEliminating || isLoading}
           >
             <Scale size={14} />
-            <span>{isEliminating ? "Executing Eliminations..." : "Run Bilateral Eliminations"}</span>
+            <span>Run Bilateral Eliminations</span>
           </button>
         </div>
       </div>
@@ -337,16 +343,103 @@ export default function IntercompanyPage() {
               <button
                 type="button"
                 className={styles.btnPrimary}
-                onClick={handleRunEliminations}
+                onClick={() => setShowElimModal(true)}
                 disabled={isEliminating}
               >
                 <FileCheck size={14} />
-                <span>{isEliminating ? "Posting Voucher..." : "Post Elimination Voucher"}</span>
+                <span>Post Elimination Voucher</span>
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Bilateral Elimination Modal */}
+      {showElimModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowElimModal(false)}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>Authorize Consolidated Bilateral Elimination</h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowElimModal(false)}
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <form onSubmit={handleRunEliminations}>
+              <div className={styles.modalBody}>
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Consolidation Period</label>
+                  <input
+                    type="text"
+                    className={styles.formInput}
+                    value={elimPeriod}
+                    onChange={(e) => setElimPeriod(e.target.value)}
+                    placeholder="e.g. Aug 2026"
+                    required
+                  />
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label className={styles.formLabel}>Elimination Scope</label>
+                  <select
+                    className={styles.formSelect}
+                    value={elimScope}
+                    onChange={(e) => setElimScope(e.target.value as any)}
+                  >
+                    <option value="ALL_BALANCED_PAIRS">All Reconciled &amp; Balanced Entity Pairs (Global)</option>
+                    <option value="SELECTED_PAIR_ONLY">Selected Pair Only ({selectedPair?.ruleType || "Due-To / Due-From"})</option>
+                  </select>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)", backgroundColor: "var(--color-bg-ground)", padding: "var(--space-3)", borderRadius: "var(--radius-sm)", border: "1px solid var(--color-border-subtle)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Entities In Scope:</span>
+                    <span style={{ fontWeight: 600 }}>USA, UK, Germany, India</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Gross Elimination Volume:</span>
+                    <span className={styles.monoCell} style={{ fontWeight: 600 }}>
+                      {formatCurrency(data?.kpis?.totalBilateralVolume ?? 1450000)}
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Reconciliation Variance:</span>
+                    <span className={`${styles.monoCell} ${styles.balancedColor}`} style={{ fontWeight: 600 }}>
+                      USD 0.00 (Zero-Discrepancy)
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
+                    <span style={{ color: "var(--color-text-muted)" }}>Accounting Standard:</span>
+                    <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-secondary)" }}>IFRS 10 / ASC 810 Consolidation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.modalFooter}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={() => setShowElimModal(false)}
+                  disabled={isEliminating}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={isEliminating}
+                >
+                  {isEliminating ? "Authorizing..." : "Authorize & Post Elimination"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
