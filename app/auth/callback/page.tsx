@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createOidcClient } from "@/lib/oidc-config";
+import { Spinner } from "@kannan19302/ui";
 
 /**
  * The OIDC callback for unierp-tenant-apps. Same pattern as the Global Platform
@@ -30,7 +31,7 @@ export default function CallbackPage() {
           });
         }
 
-        window.location.assign(returnTo || "/");
+        window.location.assign(returnTo || "/apps");
       } catch (err) {
         setError(err instanceof Error ? err.message : "Sign-in failed");
       }
@@ -39,16 +40,52 @@ export default function CallbackPage() {
 
   if (error) {
     return (
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", flexDirection: "column", gap: 16 }}>
-        <p>Sign-in failed: {error}</p>
-        <button onClick={() => window.location.assign("/")}>Try again</button>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          flexDirection: "column",
+          gap: 16,
+        }}
+        suppressHydrationWarning
+      >
+        <p style={{ color: "var(--color-text-danger, #ef4444)" }}>Sign-in failed: {error}</p>
+        <button
+          onClick={() => window.location.assign("/")}
+          style={{
+            padding: "8px 16px",
+            borderRadius: "6px",
+            background: "var(--color-primary, #6366f1)",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Try again
+        </button>
       </div>
     );
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-      <p>Completing sign-in…</p>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        flexDirection: "column",
+        gap: 12,
+        background: "var(--color-bg-sunken, #f9fafb)",
+      }}
+      suppressHydrationWarning
+    >
+      <Spinner size="lg" />
+      <p style={{ color: "var(--color-text-secondary, #6b7280)", fontSize: "0.9375rem" }}>
+        Completing sign-in…
+      </p>
     </div>
   );
 }

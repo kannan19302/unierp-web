@@ -719,7 +719,7 @@ export default function JournalEntriesWorkspacePage() {
                     <button
                       type="button"
                       className={styles.btnSecondary}
-                      style={{ padding: "2px 8px", fontSize: "var(--text-2xs)" }}
+                      style={{ padding: "var(--space-half) var(--space-2)", fontSize: "var(--text-2xs)" }}
                       onClick={() =>
                         setCreateLines([
                           ...createLines,

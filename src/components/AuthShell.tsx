@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { UniErpAuthProvider, RequireSession } from "@kannan19302/shared/auth-client/react";
 import { oidcConfig } from "@/lib/oidc-config";
 import type { TokenSet } from "@kannan19302/shared/auth-client";
@@ -29,13 +30,23 @@ async function restoreSession(): Promise<TokenSet | null> {
 }
 
 export function AuthShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isAuthOrPublic =
+    pathname?.startsWith("/auth") ||
+    pathname?.startsWith("/login") ||
+    pathname?.startsWith("/register") ||
+    pathname?.startsWith("/reset-password") ||
+    pathname?.startsWith("/verify-email") ||
+    pathname?.startsWith("/terms") ||
+    pathname?.startsWith("/privacy");
+
   return (
     <UniErpAuthProvider
       config={oidcConfig}
       restoreSession={restoreSession}
       defaultPostLogoutRedirectUri="http://localhost:4000/"
     >
-      <RequireSession>{children}</RequireSession>
+      {isAuthOrPublic ? children : <RequireSession>{children}</RequireSession>}
     </UniErpAuthProvider>
   );
 }

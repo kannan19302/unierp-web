@@ -583,7 +583,7 @@ export default function AccountsPayablePage() {
       {/* Invoice Document Preview Modal */}
       {showInvoicePreview && (
         <div className={styles.modalOverlay} onClick={() => setShowInvoicePreview(false)}>
-          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()} style={{ maxWidth: "600px" }}>
+          <div className={styles.modalDialog} onClick={(e) => e.stopPropagation()} style={{ maxWidth: "calc(var(--content-max-width) * 0.5)" }}>
             <div className={styles.modalHeader}>
               <h2 className={styles.modalTitle}>Original Vendor Invoice: {matchData?.billNumber}</h2>
               <button
@@ -635,7 +635,7 @@ export default function AccountsPayablePage() {
               </div>
 
               <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "var(--space-2)" }}>
-                <div style={{ width: "220px", display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
+                <div style={{ width: "var(--panel-width)", display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
                     <span style={{ color: "var(--color-text-muted)" }}>Invoice Total:</span>
                     <span className={styles.tdMono} style={{ fontWeight: 600, color: "var(--color-text-primary)" }}>

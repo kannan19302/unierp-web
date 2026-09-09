@@ -34,6 +34,7 @@ import {
   Layers,
 } from "lucide-react";
 import styles from "./FinanceSidebarV2.module.css";
+import { ALL_FINANCE_MODULES } from "@/navigation/finance-workspaces";
 
 export interface FinanceSidebarV2Props {
   collapsed: boolean;
@@ -192,6 +193,7 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
             <input
               type="text"
               placeholder="Find in Finance"
+              aria-label="Find in Finance"
               className={styles.searchInput}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -200,6 +202,7 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
+                aria-label="Clear Finance search"
                 style={{ border: "none", background: "transparent", cursor: "pointer", padding: 0 }}
               >
                 <X size={12} />
@@ -212,6 +215,26 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
       {/* Scrollable Nav Body */}
       {!collapsed ? (
         <nav className={styles.navBody}>
+          {cleanQuery && (
+            <div className={styles.sectionGroup} aria-label="Finance workspace search results">
+              <div className={styles.sectionHeader}>Matching workspaces</div>
+              {ALL_FINANCE_MODULES.filter((workspace) =>
+                `${workspace.label} ${workspace.desc}`.toLowerCase().includes(cleanQuery),
+              ).map((workspace) => (
+                <Link
+                  key={workspace.href}
+                  href={workspace.href}
+                  aria-current={pathname === workspace.href ? "page" : undefined}
+                  className={`${styles.navItem} ${pathname === workspace.href ? styles.navItemActive : ""}`}
+                >
+                  <span className={styles.navItemLeft}>{workspace.label}</span>
+                </Link>
+              ))}
+              {!ALL_FINANCE_MODULES.some((workspace) =>
+                `${workspace.label} ${workspace.desc}`.toLowerCase().includes(cleanQuery),
+              ) && <p role="status">No matching workspaces.</p>}
+            </div>
+          )}
           {/* FAVORITES Section */}
           <div className={styles.sectionGroup}>
             <div className={styles.sectionHeader}>Favorites</div>
@@ -237,7 +260,6 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
                   <CheckSquare size={15} className={styles.navItemIcon} />
                   <span>My approvals</span>
                 </div>
-                <span className={`${styles.navBadge} ${styles.navBadgeBlue}`}>8</span>
               </Link>
             )}
           </div>
@@ -680,7 +702,7 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
                   <Layers size={15} className={styles.navItemIcon} />
                   <span>All enterprise modules</span>
                 </div>
-                <span className={`${styles.navBadge} ${styles.navBadgeBlue}`}>58</span>
+                <span className={`${styles.navBadge} ${styles.navBadgeBlue}`}>{ALL_FINANCE_MODULES.length}</span>
               </Link>
             )}
           </div>
@@ -780,7 +802,7 @@ export const FinanceSidebarV2: FC<FinanceSidebarV2Props> = ({
           <Link
             href="/finance/advanced"
             className={`${styles.collapsedItem} ${pathname === "/finance/advanced" ? styles.collapsedItemActive : ""}`}
-            title="All enterprise modules (58)"
+            title="All Finance workspaces"
           >
             <Layers size={18} />
           </Link>

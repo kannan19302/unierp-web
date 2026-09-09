@@ -1,0 +1,8 @@
+{
+  "POST /advanced-finance/close-management/slas": {
+    "classification": "COMPATIBILITY_ALIAS",
+    "canonicalRoute": "POST /advanced-finance/close-management/sla-policies",
+    "uiRoute": "/finance/advanced/close-management?subtab=tasks",
+    "reason": "The legacy hour-based request is adapted to the canonical reusable-policy command exposed by the close-management policy form."
+  }
+}

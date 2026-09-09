@@ -89,7 +89,7 @@ export function TaxJurisdictionLookupTab() {
   const fetchJurisdictions = async () => {
     try {
       const res = await client.get<JurisdictionItem[]>(
-        "/advanced-finance/tax/jurisdictions",
+        "/advanced-finance/tax/jurisdiction-overrides",
       );
       if (Array.isArray(res)) setJurisdictions(res);
     } catch {
@@ -105,7 +105,7 @@ export function TaxJurisdictionLookupTab() {
   const handleCreateOverride = async () => {
     if (!overrideState) return;
     try {
-      await client.post("/advanced-finance/tax/jurisdictions", {
+      await client.post("/advanced-finance/tax/jurisdiction-overrides", {
         state: overrideState,
         revenueThreshold: Number(overrideThreshold),
       });

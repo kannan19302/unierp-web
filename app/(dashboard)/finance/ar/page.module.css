@@ -499,7 +499,7 @@
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 480px;
+  max-width: calc(var(--content-max-width) * 0.4);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -593,6 +593,6 @@
 }
 
 .formTextarea {
-  min-height: 72px;
+  min-height: var(--space-16);
   resize: vertical;
 }
