@@ -55,16 +55,31 @@ const clients = [...walk(path.join(root, 'tenant-apps/app')), ...walk(path.join(
 const patterns = [];
 const calls = [];
 const imports = new Map();
+let stringConstants = new Map();
 const literal = node => {
   if (!node) return undefined;
   if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
-  if (ts.isTemplateExpression(node)) return node.head.text + node.templateSpans.map(s => ':param' + s.literal.text).join('');
+  if (ts.isIdentifier(node)) return stringConstants.get(node.text);
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
+    const left = literal(node.left); const right = literal(node.right);
+    return left !== undefined && right !== undefined ? left + right : undefined;
+  }
+  if (ts.isTemplateExpression(node)) return node.head.text + node.templateSpans.map(s => (literal(s.expression) ?? ':param') + s.literal.text).join('');
   return undefined;
 };
 const normalize = value => value.split('?')[0].replace(/:[^/]+/g, ':param');
 const financePath = value => value && /^\/(advanced-finance|finance)(\/|$)/.test(value);
 for (const file of clients) {
   const source = parse(file);
+  stringConstants = new Map();
+  for (const statement of source.statements) {
+    if (!ts.isVariableStatement(statement)) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (!ts.isIdentifier(declaration.name)) continue;
+      const value = literal(declaration.initializer);
+      if (value !== undefined) stringConstants.set(declaration.name.text, value);
+    }
+  }
   const dependencies = [];
   for (const statement of source.statements) {
     if ((!ts.isImportDeclaration(statement) && !ts.isExportDeclaration(statement)) || !statement.moduleSpecifier) continue;
@@ -85,6 +100,15 @@ for (const file of clients) {
       if (['GET', 'LIST', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(verb) && financePath(url)) {
         calls.push({ verb: verb === 'LIST' ? 'GET' : verb, path: normalize(url), source: relative(file),
           line: source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1, kind: 'explicit-client-call' });
+      }
+    }
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+      const helperVerbs = { apiGet: 'GET', apiPost: 'POST', apiPut: 'PUT', apiPatch: 'PATCH', apiDelete: 'DELETE' };
+      const verb = helperVerbs[node.expression.text];
+      const url = literal(node.arguments[0]);
+      if (verb && financePath(url)) {
+        calls.push({ verb, path: normalize(url), source: relative(file),
+          line: source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1, kind: 'function-client-call' });
       }
     }
     if (ts.isCallExpression(node) && node.expression.getText(source) === 'defineResource' && node.arguments[0] && ts.isObjectLiteralExpression(node.arguments[0])) {
@@ -143,7 +167,7 @@ const report = {
     [...modules, ...controllers, ...clients, classificationsPath].sort()
       .map(p => relative(p) + '\n' + fs.readFileSync(p, 'utf8')).join('\n'),
   ).digest('hex'),
-  limitations: 'Source evidence only. uiCandidates includes navigation strings and is not integration coverage. consumerCandidates matches HTTP verbs plus literal/template URLs or defineResource permission capabilities (framework/src/data.ts). pageCandidates follows local import/export files, not symbol usage or rendered actions; shared barrels may overapproximate reachability. Dynamic expressions, SDK calls and runtime behavior require review. Finance module registration is not application boot proof.',
+  limitations: 'Source evidence only. uiCandidates includes navigation strings and is not integration coverage. consumerCandidates matches HTTP verbs plus literal/template URLs used by object clients, standard apiGet/apiPost/apiPut/apiPatch/apiDelete helpers, or defineResource permission capabilities (framework/src/data.ts). pageCandidates follows local import/export files, not symbol usage or rendered actions; shared barrels may overapproximate reachability. Aliased helpers, dynamic expressions, SDK calls and runtime behavior require review. Finance module registration is not application boot proof.',
   summary: { declarations: endpoints.length, uniqueMethodPaths: Object.keys(grouped).length, duplicateMethodPaths: duplicates.length,
     endpointsWithReferenceCandidates: endpoints.filter(e => e.uiCandidates.length).length,
     endpointsWithMethodMatchedConsumers: endpoints.filter(e => e.consumerCandidates.length).length,

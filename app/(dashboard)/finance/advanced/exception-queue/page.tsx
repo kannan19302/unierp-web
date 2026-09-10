@@ -44,11 +44,10 @@ export default function ExceptionQueuePage() {
   const fetchExceptions = useCallback(async () => {
     setLoading(true);
     try {
-      setExceptions(
-        await client.get<APMatchException[]>(
-          `/advanced-finance/payables/exceptions${statusFilter ? `?status=${statusFilter}` : ""}`,
-        ),
-      );
+      const url = statusFilter
+        ? `/advanced-finance/payables/exceptions?status=${statusFilter}`
+        : "/advanced-finance/payables/exceptions";
+      setExceptions(await client.get<APMatchException[]>(url));
     } catch {
       /* network error */
     } finally {
@@ -63,10 +62,17 @@ export default function ExceptionQueuePage() {
   const handleAction = async (id: string, action: "approve" | "reject") => {
     setActioningId(id);
     try {
-      await client.post(
-        `/advanced-finance/payables/exceptions/${id}/${action}`,
-        { notes: noteMap[id] || undefined },
-      );
+      if (action === "approve") {
+        await client.post(
+          `/advanced-finance/payables/exceptions/${id}/approve`,
+          { notes: noteMap[id] || undefined },
+        );
+      } else {
+        await client.post(
+          `/advanced-finance/payables/exceptions/${id}/reject`,
+          { notes: noteMap[id] || undefined },
+        );
+      }
       fetchExceptions();
     } catch {
       /* error */

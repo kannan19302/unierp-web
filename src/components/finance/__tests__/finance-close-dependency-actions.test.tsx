@@ -264,4 +264,32 @@ describe("Close dependency removal UI boundary", () => {
     }));
     randomUUID.mockRestore();
   });
+
+  it("assigns manual SLA deadlines to a period-scoped task", async () => {
+    api.get.mockImplementation((url: string) => {
+      if (url === "/advanced-finance/close-management/task-dependencies") return Promise.resolve([]);
+      if (url === "/advanced-finance/financial-periods") return Promise.resolve([{ id: "period-a", name: "September" }]);
+      if (url.includes("/advanced-finance/close-management/sla-policies")) return Promise.resolve({ items: [], total: 0, page: 1, limit: 100, totalPages: 0 });
+      if (url.includes("/advanced-finance/close-tasks?")) return Promise.resolve([{ id: "task/a", name: "Review journal" }]);
+      return Promise.resolve([]);
+    });
+    api.post.mockResolvedValue({ id: "sla-manual-1" });
+    const randomUUID = vi.spyOn(crypto, "randomUUID").mockReturnValue("00000000-0000-4000-8000-000000000002");
+    render(<CloseManagementPage />);
+    fireEvent.click(await screen.findByRole("button", { name: "Assign SLA" }));
+    fireEvent.change(await screen.findByLabelText("Financial period"), { target: { value: "period-a" } });
+    fireEvent.change(await screen.findByLabelText("Close task"), { target: { value: "task/a" } });
+    fireEvent.change(screen.getByLabelText("Assignment mode"), { target: { value: "MANUAL" } });
+    fireEvent.change(screen.getByLabelText("Starts at (local time)"), { target: { value: "2026-09-09T09:00" } });
+    fireEvent.change(screen.getByLabelText("Response deadline (local, optional)"), { target: { value: "2026-09-09T12:00" } });
+    fireEvent.change(screen.getByLabelText("Resolution deadline (local)"), { target: { value: "2026-09-10T17:00" } });
+    fireEvent.change(screen.getByLabelText("Priority"), { target: { value: "CRITICAL" } });
+    fireEvent.click(screen.getAllByRole("button", { name: "Assign SLA" }).at(-1)!);
+    await screen.findByText("Task SLA assigned.");
+    expect(api.post).toHaveBeenCalledWith("/advanced-finance/close-management/task-slas", expect.objectContaining({
+      mode: "MANUAL", taskId: "task/a", priority: "CRITICAL",
+      idempotencyKey: "00000000-0000-4000-8000-000000000002",
+    }));
+    randomUUID.mockRestore();
+  });
 });

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Card, Button, Badge, DataTable, ProtectedComponent, type Column } from "@kannan19302/ui";
 import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
-import { apiGet, apiPost, apiPatch } from "@/lib/api";
+import { apiDelete, apiGet, apiPost, apiPatch } from "@/lib/api";
 
 interface Threshold {
   id: string;
@@ -87,6 +87,10 @@ export default function EconomicNexusMonitoringPage() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [detail, setDetail] = useState<unknown>(null);
+  const [showThresholdForm, setShowThresholdForm] = useState(false);
+  const [editingThresholdId, setEditingThresholdId] = useState("");
+  const [thresholdForm, setThresholdForm] = useState({ state: "", revenueThreshold: "", transactionThreshold: "", measurementPeriod: "PREVIOUS_12_MONTHS" });
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -162,6 +166,48 @@ export default function EconomicNexusMonitoringPage() {
     }
   };
 
+  const handleSaveThreshold = async () => {
+    const payload = {
+      revenueThreshold: Number(thresholdForm.revenueThreshold),
+      transactionThreshold: thresholdForm.transactionThreshold ? Number(thresholdForm.transactionThreshold) : null,
+      measurementPeriod: thresholdForm.measurementPeriod,
+    };
+    try {
+      if (editingThresholdId) await apiPatch(`/advanced-finance/tax/nexus/thresholds/${editingThresholdId}`, payload);
+      else await apiPost("/advanced-finance/tax/nexus/thresholds", { ...payload, state: thresholdForm.state.toUpperCase() });
+      setShowThresholdForm(false); setEditingThresholdId("");
+      setThresholdForm({ state: "", revenueThreshold: "", transactionThreshold: "", measurementPeriod: "PREVIOUS_12_MONTHS" });
+      await loadData();
+    } catch (err) { setError(errorMessage(err, "Failed to save the nexus threshold.")); }
+  };
+
+  const handleEditThreshold = (threshold: Threshold) => {
+    setThresholdForm({ state: threshold.state, revenueThreshold: String(threshold.revenueThreshold), transactionThreshold: threshold.transactionThreshold == null ? "" : String(threshold.transactionThreshold), measurementPeriod: threshold.measurementPeriod });
+    setEditingThresholdId(threshold.id); setShowThresholdForm(true);
+  };
+
+  const handleDeleteThreshold = async (id: string) => {
+    if (!window.confirm("Retire this tenant nexus threshold?")) return;
+    try { await apiDelete(`/advanced-finance/tax/nexus/thresholds/${id}`); await loadData(); }
+    catch (err) { setError(errorMessage(err, "Failed to delete the nexus threshold.")); }
+  };
+
+  const handleViewHistory = async (state: string) => {
+    try { setDetail(await apiGet(`/advanced-finance/tax/nexus/monitor/${encodeURIComponent(state)}/history`)); }
+    catch (err) { setError(errorMessage(err, "Failed to load nexus monitoring history.")); }
+  };
+
+  const handleViewRegistration = async (id: string) => {
+    try { setDetail(await apiGet(`/advanced-finance/tax/nexus/registrations/${id}`)); }
+    catch (err) { setError(errorMessage(err, "Failed to load the nexus registration.")); }
+  };
+
+  const handleDeleteRegistration = async (id: string) => {
+    if (!window.confirm("Mark this nexus registration as deregistered?")) return;
+    try { await apiDelete(`/advanced-finance/tax/nexus/registrations/${id}`); await loadData(); }
+    catch (err) { setError(errorMessage(err, "Failed to delete the nexus registration.")); }
+  };
+
   const snapshotColumns: Column<Snapshot>[] = [
     {
       key: "state",
@@ -226,10 +272,10 @@ export default function EconomicNexusMonitoringPage() {
       key: "actions",
       header: "Actions",
       align: "right",
-      render: (s: any) =>
-        s.status !== "REGISTERED" &&
-        (s.status === "EXCEEDED" || s.status === "APPROACHING") ? (
-          <Button
+      render: (s: any) => (
+        <div className="flex gap-2 justify-end">
+          <Button variant="secondary" size="sm" onClick={(event: any) => { event.stopPropagation(); handleViewHistory(s.state); }}>History</Button>
+        {s.status !== "REGISTERED" && (s.status === "EXCEEDED" || s.status === "APPROACHING") && <Button
             variant="primary"
             size="sm"
             className="flex items-center gap-1 inline-flex"
@@ -239,8 +285,9 @@ export default function EconomicNexusMonitoringPage() {
             }}
           >
             <ShieldCheck size={12} /> Mark Registered
-          </Button>
-        ) : null,
+          </Button>}
+        </div>
+      ),
     },
   ];
 
@@ -267,6 +314,7 @@ export default function EconomicNexusMonitoringPage() {
         </Badge>
       ),
     },
+    { key: "actions", header: "Actions", align: "right", render: (threshold: any) => <div className="flex gap-2 justify-end"><Button variant="secondary" size="sm" onClick={() => handleEditThreshold(threshold)}>Edit</Button><Button variant="secondary" size="sm" onClick={() => handleDeleteThreshold(threshold.id)}>Retire</Button></div> },
   ];
 
   const registrationColumns: Column<Registration>[] = [
@@ -294,6 +342,7 @@ export default function EconomicNexusMonitoringPage() {
       render: (r: any) =>
         r.effectiveDate ? new Date(r.effectiveDate).toLocaleDateString() : "—",
     },
+    { key: "actions", header: "Actions", align: "right", render: (registration: any) => <div className="flex gap-2 justify-end"><Button variant="secondary" size="sm" onClick={() => handleViewRegistration(registration.id)}>View</Button>{registration.status !== "DEREGISTERED" && <Button variant="secondary" size="sm" onClick={() => handleDeleteRegistration(registration.id)}>Deregister</Button>}</div> },
   ];
 
   return (
@@ -334,6 +383,110 @@ export default function EconomicNexusMonitoringPage() {
           <AlertCircle size={16} />
           <span>{error}</span>
         </div>
+      )}
+
+      {detail != null && (
+        <Card className="p-4 border shadow-sm">
+          <div className="flex justify-between items-center gap-4 mb-3 border-b pb-2">
+            <h2 className="font-semibold text-base">
+              {Array.isArray(detail) ? "Historical Monitoring Snapshots" : "Nexus Registration Details"}
+            </h2>
+            <Button variant="secondary" size="sm" onClick={() => setDetail(null)}>
+              Close
+            </Button>
+          </div>
+          {Array.isArray(detail) ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b text-left text-xs ui-text-muted">
+                    <th className="pb-2">State</th>
+                    <th className="pb-2">Computed At</th>
+                    <th className="pb-2 text-right">Revenue</th>
+                    <th className="pb-2 text-right">Transactions</th>
+                    <th className="pb-2 text-right">% of Threshold</th>
+                    <th className="pb-2 text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {(detail as Snapshot[]).map((s, idx) => (
+                    <tr key={s.id || idx} className="hover:bg-gray-50/50">
+                      <td className="py-2 font-medium">{s.state}</td>
+                      <td className="py-2 ui-text-muted">
+                        {s.computedAt ? new Date(s.computedAt).toLocaleString() : "—"}
+                      </td>
+                      <td className="py-2 text-right font-mono">
+                        ${Number(s.totalRevenue || 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                      </td>
+                      <td className="py-2 text-right font-mono">
+                        {s.transactionThreshold
+                          ? `${s.transactionCount} / ${s.transactionThreshold}`
+                          : String(s.transactionCount || 0)}
+                      </td>
+                      <td className="py-2 text-right font-mono">
+                        {Number(s.revenuePct || 0).toFixed(1)}%
+                      </td>
+                      <td className="py-2 text-center">
+                        <Badge variant={statusVariant[s.status] || "default"}>{s.status}</Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : typeof detail === "object" ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span className="text-xs ui-text-muted block">State</span>
+                <span className="font-semibold">{(detail as any).state || "—"}</span>
+              </div>
+              <div>
+                <span className="text-xs ui-text-muted block">Status</span>
+                <Badge variant={statusVariant[(detail as any).status] || "default"}>
+                  {(detail as any).status || "—"}
+                </Badge>
+              </div>
+              <div>
+                <span className="text-xs ui-text-muted block">Registration #</span>
+                <span className="font-mono">{(detail as any).registrationNumber || "—"}</span>
+              </div>
+              <div>
+                <span className="text-xs ui-text-muted block">Filing Frequency</span>
+                <span>{(detail as any).filingFrequency || "—"}</span>
+              </div>
+              <div>
+                <span className="text-xs ui-text-muted block">Effective Date</span>
+                <span>
+                  {(detail as any).effectiveDate
+                    ? new Date((detail as any).effectiveDate).toLocaleDateString()
+                    : "—"}
+                </span>
+              </div>
+              <div>
+                <span className="text-xs ui-text-muted block">Registered At</span>
+                <span>
+                  {(detail as any).registeredAt
+                    ? new Date((detail as any).registeredAt).toLocaleDateString()
+                    : "—"}
+                </span>
+              </div>
+              <div>
+                <span className="text-xs ui-text-muted block">Next Filing Due</span>
+                <span>
+                  {(detail as any).nextFilingDueDate
+                    ? new Date((detail as any).nextFilingDueDate).toLocaleDateString()
+                    : "—"}
+                </span>
+              </div>
+              <div>
+                <span className="text-xs ui-text-muted block">Notes</span>
+                <span className="text-xs">{(detail as any).notes || "—"}</span>
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm ui-text-muted">No details available.</p>
+          )}
+        </Card>
       )}
 
       {dashboard && (
@@ -398,6 +551,24 @@ export default function EconomicNexusMonitoringPage() {
           ] as SubTab[]
         }
       />
+
+      {activeTab === "thresholds" && (
+        <ProtectedComponent permission="finance.tax-nexus.manage">
+          <div className="space-y-3">
+            <Button variant="primary" size="sm" onClick={() => { setEditingThresholdId(""); setShowThresholdForm((visible) => !visible); }}>Create threshold</Button>
+            {showThresholdForm && <Card className="p-4">
+              <h2 className="font-semibold mb-3">{editingThresholdId ? "Edit" : "Create"} nexus threshold</h2>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <label className="text-sm">State code<input aria-label="State code" className="ui-input block mt-1" maxLength={2} disabled={Boolean(editingThresholdId)} value={thresholdForm.state} onChange={(event) => setThresholdForm({ ...thresholdForm, state: event.target.value })} /></label>
+                <label className="text-sm">Revenue threshold<input aria-label="Revenue threshold" className="ui-input block mt-1" type="number" min="0" value={thresholdForm.revenueThreshold} onChange={(event) => setThresholdForm({ ...thresholdForm, revenueThreshold: event.target.value })} /></label>
+                <label className="text-sm">Transaction threshold<input aria-label="Transaction threshold" className="ui-input block mt-1" type="number" min="0" value={thresholdForm.transactionThreshold} onChange={(event) => setThresholdForm({ ...thresholdForm, transactionThreshold: event.target.value })} /></label>
+                <label className="text-sm">Measurement period<input aria-label="Measurement period" className="ui-input block mt-1" value={thresholdForm.measurementPeriod} onChange={(event) => setThresholdForm({ ...thresholdForm, measurementPeriod: event.target.value })} /></label>
+              </div>
+              <div className="flex gap-2 mt-3"><Button variant="primary" size="sm" disabled={!thresholdForm.state || !thresholdForm.revenueThreshold} onClick={handleSaveThreshold}>Save threshold</Button><Button variant="secondary" size="sm" onClick={() => setShowThresholdForm(false)}>Cancel</Button></div>
+            </Card>}
+          </div>
+        </ProtectedComponent>
+      )}
 
       {activeTab === "monitor" ? (
         <DataTable

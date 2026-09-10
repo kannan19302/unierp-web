@@ -158,10 +158,10 @@ export default function FixedAssetDetail() {
     setLoading(true);
     try {
       const [assetData, warehousesRes, employeesRes, disposalsRes] = await Promise.all([
-        apiGet<FixedAsset>(`/fixed-assets/${id}`),
+        apiGet<FixedAsset>(`/advanced-finance/fixed-assets/${id}`),
         apiGet<any>("/inventory/warehouses"),
         apiGet<any>("/hr/employees"),
-        apiGet<any[]>(`/fixed-assets/disposals?assetId=${id}`).catch(() => []),
+        apiGet<any[]>(`/advanced-finance/fixed-assets/disposals?assetId=${id}`).catch(() => []),
       ]);
 
       setAsset(assetData);
@@ -180,7 +180,8 @@ export default function FixedAssetDetail() {
     setDisposalSubmitting(true);
     setDisposalError("");
     try {
-      await apiPost(`/fixed-assets/${id}/dispose`, {
+      await apiPost(`/advanced-finance/fixed-assets/disposals`, {
+        assetId: id,
         disposalDate: disposalForm.disposalDate,
         disposalType: disposalForm.disposalType,
         salePrice: disposalForm.salePrice ? parseFloat(disposalForm.salePrice) : undefined,
@@ -201,7 +202,8 @@ export default function FixedAssetDetail() {
     setImpairmentSubmitting(true);
     setImpairmentError("");
     try {
-      await apiPost(`/fixed-assets/${id}/impairment`, {
+      await apiPost(`/advanced-finance/fixed-assets/impairments`, {
+        assetId: id,
         impairmentDate: impairmentForm.impairmentDate,
         carryingAmount: Number(asset?.currentValue ?? 0),
         recoverableAmount: parseFloat(impairmentForm.recoverableAmount || "0"),
@@ -226,7 +228,7 @@ export default function FixedAssetDetail() {
         reason: transferFormData.reason || null,
       };
 
-      await apiPost(`/fixed-assets/${id}/transfer`, payload);
+      await apiPost(`/advanced-finance/fixed-assets/transfers`, { assetId: id, ...payload });
       setShowTransferForm(false);
       setTransferFormData({
         transferDate: new Date().toISOString().split("T")[0],
@@ -255,7 +257,7 @@ export default function FixedAssetDetail() {
         nextMaintenanceDate: maintenanceFormData.nextMaintenanceDate || null,
       };
 
-      await apiPost(`/fixed-assets/${id}/maintenance`, payload);
+      await apiPost(`/advanced-finance/fixed-assets/maintenance`, { assetId: id, ...payload });
       setShowMaintenanceForm(false);
       setMaintenanceFormData({
         maintenanceDate: new Date().toISOString().split("T")[0],
@@ -274,7 +276,7 @@ export default function FixedAssetDetail() {
   const handleRunSingleDepreciation = async () => {
     setDepRunning(true);
     try {
-      await apiPost(`/fixed-assets/${id}/depreciate`, {
+      await apiPost(`/advanced-finance/fixed-assets/depreciation/run`, { assetId: id,
         periodName: depPeriod,
       });
       fetchAssetDetails();

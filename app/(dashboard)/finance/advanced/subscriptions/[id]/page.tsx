@@ -96,7 +96,7 @@ export default function SubscriptionDetailPage() {
   const loadSub = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await apiGet<SubscriptionDetails>(`/subscriptions/${id}`);
+      const data = await apiGet<SubscriptionDetails>(`/advanced-finance/subscriptions/${id}`);
       setSub(data);
     } catch (err) {
       console.error("Failed to load subscription", err);
@@ -112,7 +112,7 @@ export default function SubscriptionDetailPage() {
   const handlePause = async () => {
     if (!sub) return;
     try {
-      await apiPost(`/subscriptions/${sub.id}/pause`);
+      await apiPost(`/advanced-finance/subscriptions/${sub.id}/pause`);
       loadSub();
     } catch (err: any) {
       alert(err.message);
@@ -122,7 +122,7 @@ export default function SubscriptionDetailPage() {
   const handleResume = async () => {
     if (!sub) return;
     try {
-      await apiPost(`/subscriptions/${sub.id}/resume`);
+      await apiPost(`/advanced-finance/subscriptions/${sub.id}/resume`);
       loadSub();
     } catch (err: any) {
       alert(err.message);
@@ -136,7 +136,7 @@ export default function SubscriptionDetailPage() {
     )
       return;
     try {
-      await apiPost(`/subscriptions/${sub.id}/cancel?immediate=true`);
+      await apiPost(`/advanced-finance/subscriptions/${sub.id}/cancel`);
       loadSub();
     } catch (err: any) {
       alert(err.message);
@@ -152,7 +152,7 @@ export default function SubscriptionDetailPage() {
     }
     setRecordingUsage(true);
     try {
-      await apiPost(`/subscriptions/${sub.id}/usage`, {
+      await apiPost(`/advanced-finance/subscriptions/${sub.id}/usage`, {
         ...usageForm,
         quantity: Number(usageForm.quantity),
         unitAmount: Number(usageForm.unitAmount),

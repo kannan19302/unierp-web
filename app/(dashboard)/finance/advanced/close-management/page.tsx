@@ -957,7 +957,7 @@ export default function CloseManagementPage() {
                       <select id="assignment-policy" className="ui-input" value={assignmentForm.policyVersionId}
                         onChange={(e) => setAssignmentForm({ ...assignmentForm, policyVersionId: e.target.value })}>
                         <option value="">Choose a policy</option>
-                        {slaPolicies.filter((policy) => policy.status === "ACTIVE").map((policy) => {
+                        {(slaPolicies || []).filter((policy) => policy.status === "ACTIVE").map((policy) => {
                           const version = policy.versions[0];
                           return version ? <option key={version.id} value={version.id}>{version.name} · v{version.version}</option> : null;
                         })}

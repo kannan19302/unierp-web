@@ -31,7 +31,7 @@ export function AppFrameworkProvider({ children }: { children: ReactNode }) {
         getTenantId: () => claims?.tenantId ?? null,
       }}
       modules={registeredModules}
-      createQueryClient={false}
+      createQueryClient={true}
     >
       {children}
     </FrameworkProvider>

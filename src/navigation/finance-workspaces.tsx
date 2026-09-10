@@ -102,6 +102,13 @@ export const ALL_FINANCE_MODULES: FinanceModuleDef[] = [
     icon: <Building2 size={18} />,
   },
   {
+    href: "/finance/advanced/asset-operations",
+    label: "Asset Accounting Operations",
+    category: "CORE",
+    desc: "Insurance, impairment, capital projects, revaluation, disposal, depreciation, and audit evidence",
+    icon: <Building2 size={18} />,
+  },
+  {
     href: "/finance/advanced/allocations",
     label: "Cost Allocations Engine",
     category: "CORE",
@@ -299,6 +306,13 @@ export const ALL_FINANCE_MODULES: FinanceModuleDef[] = [
     icon: <Calculator size={18} />,
   },
   {
+    href: "/finance/advanced/tax-operations",
+    label: "Advanced Tax Operations",
+    category: "TAX",
+    desc: "Jurisdiction versions, exemption certificates, VAT reconciliation, withholding, and amended filings",
+    icon: <Landmark size={18} />,
+  },
+  {
     href: "/finance/advanced/tax-filing",
     label: "Tax Filing Preparation",
     category: "TAX",
@@ -481,4 +495,3 @@ function RepeatIcon({ size }: { size: number }) {
 function FileCheckIcon({ size }: { size: number }) {
   return <FileText size={size} />;
 }
-

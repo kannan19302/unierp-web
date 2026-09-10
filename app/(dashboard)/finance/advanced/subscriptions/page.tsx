@@ -74,9 +74,9 @@ export default function SubscriptionsListPage() {
 
       const [res, met] = await Promise.all([
         apiGet<{ data: Subscription[]; meta: { totalPages: number } }>(
-          `/subscriptions?${params}`,
+          `/advanced-finance/subscriptions?${params}`,
         ),
-        apiGet<Metrics>("/subscriptions/metrics"),
+        apiGet<Metrics>("/advanced-finance/subscriptions/analytics/mrr"),
       ]);
 
       setSubs(res.data ?? []);
@@ -96,11 +96,12 @@ export default function SubscriptionsListPage() {
   const handleRunBilling = async () => {
     setRunningBilling(true);
     try {
-      const res = await apiPost<{ processed: number; billed: number }>(
-        "/subscriptions/billing/run",
+      const res = await apiPost<{ processed?: number; billed?: number }>(
+        "/advanced-finance/subscriptions/bill-batch",
+        { ids: [] },
       );
       alert(
-        `Billing run completed. Processed: ${res.processed}, Billed: ${res.billed}`,
+        `Billing run completed. Processed: ${res.processed ?? 0}, Billed: ${res.billed ?? 0}`,
       );
       loadData();
     } catch (err: any) {
@@ -112,7 +113,7 @@ export default function SubscriptionsListPage() {
 
   const handlePause = async (id: string) => {
     try {
-      await apiPost(`/subscriptions/${id}/pause`);
+      await apiPost(`/advanced-finance/subscriptions/${id}/pause`);
       setConfirmPauseId(null);
       loadData();
     } catch (err: any) {
@@ -122,7 +123,7 @@ export default function SubscriptionsListPage() {
 
   const handleResume = async (id: string) => {
     try {
-      await apiPost(`/subscriptions/${id}/resume`);
+      await apiPost(`/advanced-finance/subscriptions/${id}/resume`);
       setConfirmResumeId(null);
       loadData();
     } catch (err: any) {
@@ -132,7 +133,7 @@ export default function SubscriptionsListPage() {
 
   const handleCancel = async (id: string) => {
     try {
-      await apiPost(`/subscriptions/${id}/cancel?immediate=true`);
+      await apiPost(`/advanced-finance/subscriptions/${id}/cancel`);
       setConfirmCancelId(null);
       loadData();
     } catch (err: any) {

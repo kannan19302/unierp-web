@@ -8,7 +8,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  height: 32px;
+  height: var(--space-8);
   padding: 0 var(--space-3);
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border);
@@ -25,7 +25,7 @@
 .pill:hover {
   border-color: var(--color-primary);
   background: var(--color-surface-hover, var(--color-bg-sunken));
-  transform: translateY(-0.5px);
+  transform: translateY(calc(var(--space-1) * -0.125));
   box-shadow: var(--shadow-sm);
 }
 
@@ -36,8 +36,8 @@
 
 .gaugeWrapper {
   position: relative;
-  width: 18px;
-  height: 18px;
+  width: var(--space-4-5, 1.125rem);
+  height: var(--space-4-5, 1.125rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,7 +90,7 @@
   position: absolute;
   top: calc(100% + var(--space-2));
   right: 0;
-  width: 320px;
+  width: var(--panel-width-sm, 20rem);
   max-width: calc(100vw - var(--space-8));
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);

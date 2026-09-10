@@ -55,10 +55,10 @@ export default function CallbackPage() {
         <button
           onClick={() => window.location.assign("/")}
           style={{
-            padding: "8px 16px",
-            borderRadius: "6px",
+            padding: "var(--space-2) var(--space-4)",
+            borderRadius: "var(--radius-md)",
             background: "var(--color-primary, #6366f1)",
-            color: "#fff",
+            color: "var(--color-primary-contrast, #fff)",
             border: "none",
             cursor: "pointer",
           }}

@@ -88,8 +88,8 @@ export default function FixedAssetsDashboard() {
     setError(null);
     try {
       const [assetsData, categoriesData, accountsData] = await Promise.all([
-        apiGet<FixedAsset[]>("/fixed-assets"),
-        apiGet<FixedAssetCategory[]>("/fixed-assets/categories"),
+        apiGet<FixedAsset[]>("/advanced-finance/fixed-assets"),
+        apiGet<FixedAssetCategory[]>("/advanced-finance/fixed-assets/categories"),
         apiGet<GLAccount[]>("/advanced-finance/accounts"),
       ]);
 
@@ -122,7 +122,7 @@ export default function FixedAssetsDashboard() {
         expenseAccountId: categoryFormData.expenseAccountId || null,
       };
 
-      await apiPost("/fixed-assets/categories", payload);
+      await apiPost("/advanced-finance/fixed-assets/categories", payload);
       setShowCategoryModal(false);
       setCategoryFormData({
         name: "",
@@ -167,7 +167,8 @@ export default function FixedAssetsDashboard() {
 
     for (const asset of activeAssets) {
       try {
-        await apiPost(`/fixed-assets/${asset.id}/depreciate`, {
+        await apiPost(`/advanced-finance/fixed-assets/depreciation/run`, {
+          assetId: asset.id,
           periodName: depPeriod,
         });
         successCount++;

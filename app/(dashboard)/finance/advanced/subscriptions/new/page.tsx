@@ -83,7 +83,7 @@ export default function NewSubscriptionPage() {
         })),
       };
 
-      await apiPost("/subscriptions", payload);
+      await apiPost("/advanced-finance/subscriptions", payload);
       alert("Subscription created successfully.");
       router.push("/finance/advanced/subscriptions");
     } catch (err: any) {

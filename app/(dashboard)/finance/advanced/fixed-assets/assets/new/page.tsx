@@ -71,7 +71,7 @@ export default function RegisterFixedAsset() {
     try {
       const [categoriesData, accountsData, warehousesRes, employeesRes] =
         await Promise.all([
-          apiGet<FixedAssetCategory[]>("/fixed-assets/categories"),
+          apiGet<FixedAssetCategory[]>("/advanced-finance/fixed-assets/categories"),
           apiGet<GLAccount[]>("/advanced-finance/accounts"),
           apiGet<any>("/inventory/warehouses"),
           apiGet<any>("/hr/employees"),
@@ -129,7 +129,7 @@ export default function RegisterFixedAsset() {
         custodianId: formData.custodianId || null,
       };
 
-      await apiPost("/fixed-assets", payload);
+      await apiPost("/advanced-finance/fixed-assets", payload);
       router.push("/finance/advanced/fixed-assets");
     } catch (err: any) {
       setError(err.message || "Failed to register the fixed asset.");

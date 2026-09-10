@@ -223,7 +223,7 @@ export default function FixedAssetsPage() {
             href="/finance/advanced/fixed-assets/assets/new"
             className={styles.btnSecondary}
           >
-            <span>Advanced register</span>
+            <span>Register asset</span>
           </Link>
 
           <button
@@ -232,7 +232,7 @@ export default function FixedAssetsPage() {
             onClick={() => setShowRegisterModal(true)}
           >
             <Plus size={14} />
-            <span>Register asset</span>
+            <span>Quick add</span>
           </button>
         </div>
       </div>

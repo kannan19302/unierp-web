@@ -186,7 +186,7 @@ export default function BankingTreasuryPage() {
             href="/finance/advanced/bank-feeds"
             className={styles.btnSecondary}
           >
-            <span>Bank feeds</span>
+            <span>Import statement</span>
           </Link>
 
           <button
@@ -195,7 +195,7 @@ export default function BankingTreasuryPage() {
             onClick={() => setShowImportModal(true)}
           >
             <Upload size={14} />
-            <span>Import statement</span>
+            <span>Quick upload</span>
           </button>
         </div>
       </div>

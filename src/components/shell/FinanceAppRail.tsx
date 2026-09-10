@@ -29,7 +29,7 @@ export const FinanceAppRail: FC<FinanceAppRailProps> = ({
   onOpenUserMenu,
 }) => {
   return (
-    <aside className={styles.rail} aria-label="Primary App Rail">
+    <nav className={styles.rail} aria-label="Primary App Rail">
       {/* Top Section: Mark & Apps */}
       <div className={styles.topSection}>
         {/* Layered UniERP Logo Mark */}
@@ -110,6 +110,6 @@ export const FinanceAppRail: FC<FinanceAppRailProps> = ({
           {userInitials}
         </button>
       </div>
-    </aside>
+    </nav>
   );
 };

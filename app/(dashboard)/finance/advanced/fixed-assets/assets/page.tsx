@@ -54,8 +54,8 @@ export default function FixedAssetRegistry() {
     setLoading(true);
     try {
       const [assetsData, categoriesData] = await Promise.all([
-        apiGet<FixedAsset[]>("/fixed-assets"),
-        apiGet<FixedAssetCategory[]>("/fixed-assets/categories"),
+        apiGet<FixedAsset[]>("/advanced-finance/fixed-assets"),
+        apiGet<FixedAssetCategory[]>("/advanced-finance/fixed-assets/categories"),
       ]);
       setAssets(assetsData || []);
       setCategories(categoriesData || []);

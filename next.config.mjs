@@ -25,25 +25,20 @@ const nextConfig = {
   // Polling is already set via WATCHPACK_POLLING=1000 in the Docker env,
   // but this explicit config ensures it works even if that env var is absent.
   webpack: (config, { dev }) => {
+
+
     if (dev) {
       // Only poll inside Docker Desktop bind mounts where inotify is unreliable.
       // On Windows native host, file events (ReadDirectoryChangesW) are instantaneous;
       // forcing 1000ms polling stats tens of thousands of files across D:\UniERP every second,
       // causing massive CPU/disk thrashing and 20-80s route compilation times.
-      const isDocker = process.env.DOCKER_CONTAINER || process.env.WATCHPACK_POLLING;
-      if (isDocker) {
-        config.watchOptions = {
-          ...(config.watchOptions || {}),
-          poll: 1000,
-          aggregateTimeout: 300,
-          ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**', '**/dist/**'],
-        };
-      } else {
-        config.watchOptions = {
-          ...(config.watchOptions || {}),
-          ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**', '**/dist/**'],
-        };
-      }
+      const isDocker = Boolean(process.env.DOCKER_CONTAINER || process.env.WATCHPACK_POLLING);
+      config.watchOptions = {
+        ...(config.watchOptions || {}),
+        aggregateTimeout: 200,
+        ...(isDocker ? { poll: 1000 } : {}),
+        ignored: /[\\/](node_modules|\.git|\.next|dist|\.turbo|coverage|test-results|playwright-report|\.stryker-tmp)[\\/]/,
+      };
     }
     return config;
   },

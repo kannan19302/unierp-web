@@ -21,40 +21,57 @@ import { SubTabBar, type SubTab } from "@kannan19302/ui/layout";
 
 interface ProvisionRun {
   id: string;
-  runName: string;
+  fiscalYear: number;
   period: string;
-  jurisdiction: string;
-  totalProvision: number;
+  totalTaxProvision: number | null;
   status: string;
-  startedAt: string;
+  createdAt: string;
 }
 
 interface DeferredSchedule {
   id: string;
-  accountName: string;
+  accountId: string;
   temporaryDifference: number;
   taxRate: number;
-  deferredTax: number;
-  classification: string;
-  period: string;
+  deferredTaxAsset: number | null;
+  deferredTaxLiability: number | null;
+  categorization: string | null;
 }
 
 interface UncertainPosition {
   id: string;
   positionName: string;
-  taxAuthority: string;
-  exposureAmount: number;
-  probabilityOfSuccess: number;
+  jurisdiction: string;
+  description: string;
+  taxAmountAtRisk: number;
+  probabilityOfLoss: number;
   status: string;
 }
 
 interface ValuationAllowance {
   id: string;
-  entityName: string;
-  deferredTaxAsset: number;
+  jurisdiction: string;
   allowanceAmount: number;
-  rationale: string;
-  period: string;
+  assessmentType: string;
+  conclusion: string | null;
+}
+
+interface ProvisionDetail {
+  id: string;
+  jurisdiction: string;
+  taxableIncome: number;
+  taxRate: number;
+  currentTaxAmount: number;
+  netTaxPayable: number | null;
+  filingStatus: string;
+}
+
+interface ProvisionDashboard {
+  totalRuns: number;
+  postedRuns: number;
+  totalProvisionPosted: number;
+  netDeferredTax: number;
+  uncertainReserveTotal: number;
 }
 
 const fmt = (n: number) =>
@@ -71,10 +88,21 @@ export default function TaxProvisioningPage() {
   const [schedules, setSchedules] = useState<DeferredSchedule[]>([]);
   const [positions, setPositions] = useState<UncertainPosition[]>([]);
   const [allowances, setAllowances] = useState<ValuationAllowance[]>([]);
+  const [details, setDetails] = useState<ProvisionDetail[]>([]);
+  const [dashboard, setDashboard] = useState<ProvisionDashboard | null>(null);
+  const [reconciliation, setReconciliation] = useState<Record<string, unknown> | null>(null);
+  const [inspectedRecord, setInspectedRecord] = useState<Record<string, unknown> | null>(null);
+  const [positionActionAmount, setPositionActionAmount] = useState("");
+  const [editingRunId, setEditingRunId] = useState("");
+  const [editingDetailId, setEditingDetailId] = useState("");
+  const [editingScheduleId, setEditingScheduleId] = useState("");
+  const [editingPositionId, setEditingPositionId] = useState("");
+  const [editingAllowanceId, setEditingAllowanceId] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
+  const [selectedRunId, setSelectedRunId] = useState("");
 
   const [showRunForm, setShowRunForm] = useState(false);
   const [showScheduleForm, setShowScheduleForm] = useState(false);
@@ -82,29 +110,31 @@ export default function TaxProvisioningPage() {
   const [showAllowanceForm, setShowAllowanceForm] = useState(false);
 
   const [runForm, setRunForm] = useState({
-    runName: "",
+    fiscalYear: String(new Date().getFullYear()),
     period: "",
-    jurisdiction: "US_Federal",
+    pretaxIncome: "",
+    statutoryRate: "21",
   });
   const [scheduleForm, setScheduleForm] = useState({
-    accountName: "",
+    accountId: "",
     temporaryDifference: "",
     taxRate: "21",
-    classification: "LIABILITY",
-    period: "",
+    categorization: "",
   });
   const [positionForm, setPositionForm] = useState({
     positionName: "",
-    taxAuthority: "",
-    exposureAmount: "",
-    probabilityOfSuccess: "50",
+    jurisdiction: "",
+    description: "",
+    taxAmountAtRisk: "",
+    probabilityOfLoss: "50",
   });
   const [allowanceForm, setAllowanceForm] = useState({
-    entityName: "",
-    deferredTaxAsset: "",
-    rationale: "",
-    period: "",
+    jurisdiction: "",
+    allowanceAmount: "",
+    assessmentType: "MORE_LIKELY_THAN_NOT",
+    conclusion: "",
   });
+  const [detailForm, setDetailForm] = useState({ jurisdiction: "", taxableIncome: "", taxRate: "21" });
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -112,19 +142,20 @@ export default function TaxProvisioningPage() {
     try {
       const [r, s, p, a] = await Promise.all([
         client.get<ProvisionRun[]>(
-          "/advanced-finance/tax-provision/provision-runs",
+          "/advanced-finance/tax-provisioning/provision-runs",
         ),
         client.get<DeferredSchedule[]>(
-          "/advanced-finance/tax-provision/deferred-schedules",
+          "/advanced-finance/tax-provisioning/deferred-tax-schedules",
         ),
         client.get<UncertainPosition[]>(
-          "/advanced-finance/tax-provision/uncertain-positions",
+          "/advanced-finance/tax-provisioning/uncertain-tax-positions",
         ),
         client.get<ValuationAllowance[]>(
-          "/advanced-finance/tax-provision/valuation-allowances",
+          "/advanced-finance/tax-provisioning/valuation-allowances",
         ),
       ]);
       setRuns(r);
+      setSelectedRunId((current) => current || r[0]?.id || "");
       setSchedules(s);
       setPositions(p);
       setAllowances(a);
@@ -139,17 +170,36 @@ export default function TaxProvisioningPage() {
     fetchData();
   }, [fetchData]);
 
+  useEffect(() => {
+    if (!selectedRunId) { setDetails([]); return; }
+    client.get<ProvisionDetail[]>(`/advanced-finance/tax-provisioning/provision-details?runId=${encodeURIComponent(selectedRunId)}`)
+      .then(setDetails).catch(() => setError("Failed to load provision details."));
+  }, [client, selectedRunId]);
+
+  useEffect(() => {
+    client.get<ProvisionDashboard>(`/advanced-finance/tax-provisioning/dashboard?fiscalYear=${new Date().getFullYear()}`)
+      .then(setDashboard).catch(() => setError("Failed to load the tax provision dashboard."));
+  }, [client]);
+
   const handleCreateRun = async () => {
-    if (!runForm.runName || !runForm.period) return;
+    if (!runForm.fiscalYear || !runForm.period) return;
     setActionLoading(true);
     try {
-      await client.post(
-        "/advanced-finance/tax-provision/provision-runs",
-        runForm,
-      );
-      setSuccess("Provision run created.");
+      const payload = {
+          fiscalYear: Number(runForm.fiscalYear),
+          period: runForm.period,
+          pretaxIncome: runForm.pretaxIncome ? Number(runForm.pretaxIncome) : undefined,
+          statutoryRate: runForm.statutoryRate ? Number(runForm.statutoryRate) : undefined,
+        };
+      if (editingRunId) {
+        await client.patch(`/advanced-finance/tax-provisioning/provision-runs/${editingRunId}`, { pretaxIncome: payload.pretaxIncome, statutoryRate: payload.statutoryRate });
+      } else {
+        await client.post("/advanced-finance/tax-provisioning/provision-runs", payload);
+      }
+      setSuccess(editingRunId ? "Provision run updated." : "Provision run created.");
+      setEditingRunId("");
       setShowRunForm(false);
-      setRunForm({ runName: "", period: "", jurisdiction: "US_Federal" });
+      setRunForm({ fiscalYear: String(new Date().getFullYear()), period: "", pretaxIncome: "", statutoryRate: "21" });
       fetchData();
     } catch {
       setError("Failed to create provision run.");
@@ -161,7 +211,7 @@ export default function TaxProvisioningPage() {
   const handleComputeProvision = async (id: string) => {
     try {
       await client.post(
-        `/advanced-finance/tax-provision/provision-runs/${id}/compute`,
+        `/advanced-finance/tax-provisioning/provision-runs/${id}/compute`,
         {},
       );
       setSuccess("Provision computed.");
@@ -171,23 +221,58 @@ export default function TaxProvisioningPage() {
     }
   };
 
+  const handleEditRun = async (id: string) => {
+    try {
+      const run = await client.get<ProvisionRun & { pretaxIncome?: number; statutoryRate?: number }>(`/advanced-finance/tax-provisioning/provision-runs/${id}`);
+      setRunForm({ fiscalYear: String(run.fiscalYear), period: run.period, pretaxIncome: String(run.pretaxIncome ?? ""), statutoryRate: String(run.statutoryRate ?? "") });
+      setEditingRunId(id); setShowRunForm(true);
+    } catch { setError("Failed to load the provision run."); }
+  };
+
+  const handleReviewProvision = async (id: string) => {
+    try {
+      await client.post(`/advanced-finance/tax-provisioning/provision-runs/${id}/review`, {});
+      setSuccess("Provision reviewed.");
+      fetchData();
+    } catch { setError("Failed to review provision."); }
+  };
+
+  const handlePostProvision = async (id: string) => {
+    try {
+      await client.post(`/advanced-finance/tax-provisioning/provision-runs/${id}/post`, {});
+      setSuccess("Provision posted.");
+      fetchData();
+    } catch { setError("Failed to post provision."); }
+  };
+
+  const handleDeleteRun = async (id: string) => {
+    try {
+      await client.delete(`/advanced-finance/tax-provisioning/provision-runs/${id}`);
+      setSuccess("Draft provision deleted.");
+      fetchData();
+    } catch { setError("Only an unused draft provision can be deleted."); }
+  };
+
   const handleCreateSchedule = async () => {
-    if (!scheduleForm.accountName) return;
+    if (!selectedRunId || !scheduleForm.accountId) return;
     setActionLoading(true);
     try {
-      await client.post("/advanced-finance/tax-provision/deferred-schedules", {
+      const payload = {
+        runId: selectedRunId,
         ...scheduleForm,
         temporaryDifference: parseFloat(scheduleForm.temporaryDifference),
         taxRate: parseFloat(scheduleForm.taxRate),
-      });
-      setSuccess("Deferred schedule created.");
+      };
+      if (editingScheduleId) await client.patch(`/advanced-finance/tax-provisioning/deferred-tax-schedules/${editingScheduleId}`, { temporaryDifference: payload.temporaryDifference, taxRate: payload.taxRate, categorization: payload.categorization });
+      else await client.post("/advanced-finance/tax-provisioning/deferred-tax-schedules", payload);
+      setSuccess(editingScheduleId ? "Deferred schedule updated." : "Deferred schedule created.");
+      setEditingScheduleId("");
       setShowScheduleForm(false);
       setScheduleForm({
-        accountName: "",
+        accountId: "",
         temporaryDifference: "",
         taxRate: "21",
-        classification: "LIABILITY",
-        period: "",
+        categorization: "",
       });
       fetchData();
     } catch {
@@ -197,11 +282,89 @@ export default function TaxProvisioningPage() {
     }
   };
 
+  const handleEditSchedule = async (id: string) => {
+    try { const row = await client.get<DeferredSchedule>(`/advanced-finance/tax-provisioning/deferred-tax-schedules/${id}`); setScheduleForm({ accountId: row.accountId, temporaryDifference: String(row.temporaryDifference), taxRate: String(row.taxRate), categorization: row.categorization ?? "" }); setEditingScheduleId(id); setShowScheduleForm(true); }
+    catch { setError("Failed to load the deferred-tax schedule."); }
+  };
+
+  const handleViewSchedule = async (id: string) => {
+    try { setInspectedRecord(await client.get<Record<string, unknown>>(`/advanced-finance/tax-provisioning/deferred-tax-schedules/${id}`)); }
+    catch { setError("Failed to load the deferred-tax schedule."); }
+  };
+
+  const handleRecomputeSchedule = async (id: string) => {
+    try { await client.post(`/advanced-finance/tax-provisioning/deferred-tax-schedules/${id}/compute`, {}); setSuccess("Deferred tax recalculated."); fetchData(); }
+    catch { setError("Failed to recalculate deferred tax."); }
+  };
+
+  const handleDeleteSchedule = async (id: string) => {
+    if (!window.confirm("Delete this draft deferred-tax schedule?")) return;
+    try { await client.delete(`/advanced-finance/tax-provisioning/deferred-tax-schedules/${id}`); setSuccess("Deferred-tax schedule deleted."); fetchData(); }
+    catch { setError("Failed to delete the deferred-tax schedule."); }
+  };
+
+  const handleCreateDetail = async () => {
+    if (!selectedRunId || !detailForm.jurisdiction || !detailForm.taxableIncome) return;
+    setActionLoading(true);
+    try {
+      const payload = {
+        runId: selectedRunId, jurisdiction: detailForm.jurisdiction,
+        taxableIncome: Number(detailForm.taxableIncome), taxRate: Number(detailForm.taxRate),
+      };
+      if (editingDetailId) await client.patch(`/advanced-finance/tax-provisioning/provision-details/${editingDetailId}`, { taxableIncome: payload.taxableIncome, taxRate: payload.taxRate });
+      else await client.post("/advanced-finance/tax-provisioning/provision-details", payload);
+      setEditingDetailId("");
+      setDetailForm({ jurisdiction: "", taxableIncome: "", taxRate: "21" });
+      setSuccess("Provision detail created.");
+      const next = await client.get<ProvisionDetail[]>(`/advanced-finance/tax-provisioning/provision-details?runId=${encodeURIComponent(selectedRunId)}`);
+      setDetails(next);
+    } catch { setError("Failed to create provision detail."); }
+    finally { setActionLoading(false); }
+  };
+
+  const handleEditDetail = async (id: string) => {
+    try { const row = await client.get<ProvisionDetail>(`/advanced-finance/tax-provisioning/provision-details/${id}`); setDetailForm({ jurisdiction: row.jurisdiction, taxableIncome: String(row.taxableIncome), taxRate: String(row.taxRate) }); setEditingDetailId(id); }
+    catch { setError("Failed to load the provision detail."); }
+  };
+
+  const handleComputeDetail = async (id: string) => {
+    try {
+      await client.post(`/advanced-finance/tax-provisioning/provision-details/${id}/compute`, {});
+      setSuccess("Provision detail recalculated.");
+    } catch { setError("Failed to recalculate provision detail."); }
+  };
+
+  const handleDeleteDetail = async (id: string) => {
+    try {
+      await client.delete(`/advanced-finance/tax-provisioning/provision-details/${id}`);
+      setDetails((items) => items.filter((item) => item.id !== id));
+      setSuccess("Provision detail deleted.");
+    } catch { setError("Failed to delete provision detail."); }
+  };
+
+  const handleViewDetail = async (id: string) => {
+    try {
+      const record = await client.get<Record<string, unknown>>(`/advanced-finance/tax-provisioning/provision-details/${id}`);
+      setInspectedRecord(record);
+    } catch {
+      setError("Failed to load provision detail.");
+    }
+  };
+
+  const handleReconcile = async () => {
+    if (!selectedRunId) return;
+    try {
+      const result = await client.post<Record<string, unknown>>("/advanced-finance/tax-provisioning/effective-rate-reconciliation", { runId: selectedRunId });
+      setReconciliation(result);
+      setSuccess("Effective tax rate reconciled.");
+    } catch { setError("Failed to reconcile the effective tax rate."); }
+  };
+
   const handleEvaluatePosition = async (id: string) => {
     try {
       await client.post(
-        `/advanced-finance/tax-provision/uncertain-positions/${id}/evaluate`,
-        {},
+        `/advanced-finance/tax-provisioning/uncertain-tax-positions/${id}/evaluate`,
+        { probabilityOfLoss: Number(positionForm.probabilityOfLoss) },
       );
       setSuccess("Uncertain position evaluated.");
       fetchData();
@@ -211,21 +374,26 @@ export default function TaxProvisioningPage() {
   };
 
   const handleCreatePosition = async () => {
-    if (!positionForm.positionName) return;
+    if (!selectedRunId || !positionForm.positionName || !positionForm.jurisdiction || !positionForm.description) return;
     setActionLoading(true);
     try {
-      await client.post("/advanced-finance/tax-provision/uncertain-positions", {
+      const payload = {
+        runId: selectedRunId,
         ...positionForm,
-        exposureAmount: parseFloat(positionForm.exposureAmount),
-        probabilityOfSuccess: parseFloat(positionForm.probabilityOfSuccess),
-      });
-      setSuccess("Uncertain position created.");
+        taxAmountAtRisk: parseFloat(positionForm.taxAmountAtRisk),
+        probabilityOfLoss: parseFloat(positionForm.probabilityOfLoss),
+      };
+      if (editingPositionId) await client.patch(`/advanced-finance/tax-provisioning/uncertain-tax-positions/${editingPositionId}`, { positionName: payload.positionName, jurisdiction: payload.jurisdiction, description: payload.description, taxAmountAtRisk: payload.taxAmountAtRisk, probabilityOfLoss: payload.probabilityOfLoss });
+      else await client.post("/advanced-finance/tax-provisioning/uncertain-tax-positions", payload);
+      setSuccess(editingPositionId ? "Uncertain position updated." : "Uncertain position created.");
+      setEditingPositionId("");
       setShowPositionForm(false);
       setPositionForm({
         positionName: "",
-        taxAuthority: "",
-        exposureAmount: "",
-        probabilityOfSuccess: "50",
+        jurisdiction: "",
+        description: "",
+        taxAmountAtRisk: "",
+        probabilityOfLoss: "50",
       });
       fetchData();
     } catch {
@@ -235,24 +403,53 @@ export default function TaxProvisioningPage() {
     }
   };
 
+  const handleEditPosition = async (id: string) => {
+    try { const row = await client.get<UncertainPosition>(`/advanced-finance/tax-provisioning/uncertain-tax-positions/${id}`); setPositionForm({ positionName: row.positionName, jurisdiction: row.jurisdiction, description: row.description, taxAmountAtRisk: String(row.taxAmountAtRisk), probabilityOfLoss: String(row.probabilityOfLoss) }); setEditingPositionId(id); setShowPositionForm(true); }
+    catch { setError("Failed to load the uncertain tax position."); }
+  };
+
+  const handleViewPosition = async (id: string) => {
+    try { setInspectedRecord(await client.get<Record<string, unknown>>(`/advanced-finance/tax-provisioning/uncertain-tax-positions/${id}`)); }
+    catch { setError("Failed to load the uncertain tax position."); }
+  };
+
+  const handleReservePosition = async (id: string) => {
+    if (!positionActionAmount) return;
+    try { await client.post(`/advanced-finance/tax-provisioning/uncertain-tax-positions/${id}/reserve`, { reserveAmount: Number(positionActionAmount) }); setSuccess("Reserve recorded."); fetchData(); }
+    catch { setError("Failed to record the reserve."); }
+  };
+
+  const handleSettlePosition = async (id: string) => {
+    if (!positionActionAmount) return;
+    try { await client.post(`/advanced-finance/tax-provisioning/uncertain-tax-positions/${id}/settle`, { settlementAmount: Number(positionActionAmount) }); setSuccess("Position settled."); fetchData(); }
+    catch { setError("Failed to settle the position."); }
+  };
+
+  const handleDeletePosition = async (id: string) => {
+    if (!window.confirm("Delete this draft uncertain tax position?")) return;
+    try { await client.delete(`/advanced-finance/tax-provisioning/uncertain-tax-positions/${id}`); setSuccess("Uncertain tax position deleted."); fetchData(); }
+    catch { setError("Failed to delete the uncertain tax position."); }
+  };
+
   const handleAssessAllowance = async () => {
-    if (!allowanceForm.entityName) return;
+    if (!selectedRunId || !allowanceForm.jurisdiction || !allowanceForm.allowanceAmount) return;
     setActionLoading(true);
     try {
-      await client.post(
-        "/advanced-finance/tax-provision/valuation-allowances",
-        {
+      const payload = {
+          runId: selectedRunId,
           ...allowanceForm,
-          deferredTaxAsset: parseFloat(allowanceForm.deferredTaxAsset),
-        },
-      );
-      setSuccess("Valuation allowance assessed.");
+          allowanceAmount: parseFloat(allowanceForm.allowanceAmount),
+        };
+      if (editingAllowanceId) await client.patch(`/advanced-finance/tax-provisioning/valuation-allowances/${editingAllowanceId}`, { allowanceAmount: payload.allowanceAmount, assessmentType: payload.assessmentType, conclusion: payload.conclusion });
+      else await client.post("/advanced-finance/tax-provisioning/valuation-allowances", payload);
+      setSuccess(editingAllowanceId ? "Valuation allowance updated." : "Valuation allowance assessed.");
+      setEditingAllowanceId("");
       setShowAllowanceForm(false);
       setAllowanceForm({
-        entityName: "",
-        deferredTaxAsset: "",
-        rationale: "",
-        period: "",
+        jurisdiction: "",
+        allowanceAmount: "",
+        assessmentType: "MORE_LIKELY_THAN_NOT",
+        conclusion: "",
       });
       fetchData();
     } catch {
@@ -262,10 +459,31 @@ export default function TaxProvisioningPage() {
     }
   };
 
-  const totalProvision = runs.reduce((s: any, r: any) => s + r.totalProvision, 0);
+  const handleEditAllowance = async (id: string) => {
+    try { const row = await client.get<ValuationAllowance>(`/advanced-finance/tax-provisioning/valuation-allowances/${id}`); setAllowanceForm({ jurisdiction: row.jurisdiction, allowanceAmount: String(row.allowanceAmount), assessmentType: row.assessmentType, conclusion: row.conclusion ?? "" }); setEditingAllowanceId(id); setShowAllowanceForm(true); }
+    catch { setError("Failed to load the valuation allowance."); }
+  };
+
+  const handleViewAllowance = async (id: string) => {
+    try { setInspectedRecord(await client.get<Record<string, unknown>>(`/advanced-finance/tax-provisioning/valuation-allowances/${id}`)); }
+    catch { setError("Failed to load the valuation allowance."); }
+  };
+
+  const handleReviewAllowance = async (id: string) => {
+    try { await client.post(`/advanced-finance/tax-provisioning/valuation-allowances/${id}/assess`, {}); setSuccess("Valuation allowance reviewed."); fetchData(); }
+    catch { setError("Failed to review the valuation allowance."); }
+  };
+
+  const handleDeleteAllowance = async (id: string) => {
+    if (!window.confirm("Delete this draft valuation allowance?")) return;
+    try { await client.delete(`/advanced-finance/tax-provisioning/valuation-allowances/${id}`); setSuccess("Valuation allowance deleted."); fetchData(); }
+    catch { setError("Failed to delete the valuation allowance."); }
+  };
+
+  const totalProvision = runs.reduce((sum, run) => sum + Number(run.totalTaxProvision || 0), 0);
 
   return (
-    <RouteGuard permission="finance.tax.read">
+    <RouteGuard permission="finance.tax-provision.read">
       <div className="ui-page-container">
         <div className="ui-page-head">
           <div className="ui-page-head-content">
@@ -302,23 +520,23 @@ export default function TaxProvisioningPage() {
               Total Provision
             </h3>
             <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
-              {fmt(totalProvision)}
+              {fmt(dashboard?.totalProvisionPosted ?? totalProvision)}
             </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
-              Deferred Schedules
+              Provision Runs
             </h3>
             <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
-              {schedules.length}
+              {dashboard?.totalRuns ?? runs.length}
             </p>
           </Card>
           <Card className="ui-card p-4">
             <h3 className="text-xs text-gray-500 uppercase font-semibold">
-              Uncertain Positions
+              Uncertain Tax Reserve
             </h3>
             <p className="text-2xl font-bold mt-1" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
-              {positions.length}
+              {dashboard ? fmt(dashboard.uncertainReserveTotal) : "—"}
             </p>
           </Card>
         </div>
@@ -332,6 +550,12 @@ export default function TaxProvisioningPage() {
                   label: "Provision Runs",
                   href: "/finance/advanced/tax-provisioning?subtab=runs",
                   icon: Play,
+                },
+                {
+                  id: "details",
+                  label: "Jurisdiction Details",
+                  href: "/finance/advanced/tax-provisioning?subtab=details",
+                  icon: DollarSign,
                 },
                 {
                   id: "deferred",
@@ -356,6 +580,125 @@ export default function TaxProvisioningPage() {
           />
         </div>
 
+        {activeTab !== "runs" && (
+          <Card className="ui-form-card mb-4">
+            <div className="flex flex-col sm:flex-row gap-4 items-end justify-between">
+              <div className="ui-form-group flex-1">
+                <label className="ui-label" htmlFor="tax-provision-run">Provision run</label>
+                <select
+                  id="tax-provision-run"
+                  className="ui-input"
+                  value={selectedRunId}
+                  onChange={(event) => setSelectedRunId(event.target.value)}
+                >
+                  <option value="">Select a provision run</option>
+                  {runs.map((run) => (
+                    <option key={run.id} value={run.id}>{run.fiscalYear} · {run.period}</option>
+                  ))}
+                </select>
+              </div>
+              <Button variant="outline" onClick={handleReconcile} disabled={!selectedRunId}>
+                Reconcile effective rate
+              </Button>
+            </div>
+
+            {reconciliation && (
+              <div className="mt-4 pt-4 border-t border-gray-100" aria-live="polite">
+                <div className="flex justify-between items-center mb-3">
+                  <h4 className="text-sm font-semibold text-gray-800">Effective Rate Reconciliation</h4>
+                  <span className="text-xs text-gray-500 font-medium">Run ID: {String(reconciliation.runId ?? selectedRunId)}</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                  <div className="bg-gray-50 p-3 rounded border border-gray-100">
+                    <span className="text-xs text-gray-500 block">Effective Tax Rate</span>
+                    <span className="text-lg font-bold text-gray-900" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                      {String(reconciliation.effectiveTaxRate ?? "—")}%
+                    </span>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded border border-gray-100">
+                    <span className="text-xs text-gray-500 block">Statutory Rate</span>
+                    <span className="text-lg font-bold text-gray-700" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                      {String(reconciliation.statutoryRate ?? "—")}%
+                    </span>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded border border-gray-100">
+                    <span className="text-xs text-gray-500 block">Rate Difference</span>
+                    <span className="text-lg font-bold text-blue-700" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                      {Number(reconciliation.rateDifference || 0) >= 0 ? "+" : ""}
+                      {String(reconciliation.rateDifference ?? "0")}%
+                    </span>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded border border-gray-100">
+                    <span className="text-xs text-gray-500 block">Total Provision</span>
+                    <span className="text-lg font-bold text-gray-900" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                      {fmt(Number(reconciliation.totalTaxProvision ?? 0))}
+                    </span>
+                  </div>
+                </div>
+
+                {Array.isArray(reconciliation.reconciliationItems) && (reconciliation.reconciliationItems as Array<{ item: string; rate: number; taxEffect: number }>).length > 0 && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs text-left text-gray-600 border border-gray-100 rounded">
+                      <thead className="bg-gray-50 uppercase text-2xs font-semibold text-gray-500">
+                        <tr>
+                          <th className="px-3 py-2">Reconciliation Component</th>
+                          <th className="px-3 py-2 text-right">Effective Rate (%)</th>
+                          <th className="px-3 py-2 text-right">Tax Effect Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100">
+                        {(reconciliation.reconciliationItems as Array<{ item: string; rate: number; taxEffect: number }>).map((item, idx) => (
+                          <tr key={idx} className="hover:bg-gray-50/50">
+                            <td className="px-3 py-2 font-medium text-gray-800">{item.item}</td>
+                            <td className="px-3 py-2 text-right" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                              {Number(item.rate).toFixed(2)}%
+                            </td>
+                            <td className="px-3 py-2 text-right font-medium" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                              {fmt(Number(item.taxEffect))}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )}
+          </Card>
+        )}
+        {inspectedRecord && (
+          <Card className="ui-card p-4 mb-4 border border-blue-100 bg-blue-50/10">
+            <div className="flex justify-between items-center gap-4 mb-3">
+              <div className="flex items-center gap-2">
+                <FileText size={18} className="text-blue-600" />
+                <h3 className="font-semibold text-sm text-gray-900">Record Inspection</h3>
+                {inspectedRecord.id ? (
+                  <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono">
+                    {String(inspectedRecord.id)}
+                  </span>
+                ) : null}
+              </div>
+              <Button variant="outline" onClick={() => setInspectedRecord(null)}>Close</Button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 bg-white p-3 rounded-md border border-gray-100">
+              {Object.entries(inspectedRecord).map(([key, val]) => (
+                <div key={key} className="p-2 rounded bg-gray-50/80 border border-gray-100/80">
+                  <span className="text-2xs uppercase tracking-wider text-gray-500 font-semibold block">{key}</span>
+                  <span className="text-xs text-gray-800 font-medium break-all mt-0.5 block" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
+                    {val === null || val === undefined
+                      ? "—"
+                      : typeof val === "object"
+                        ? JSON.stringify(val)
+                        : typeof val === "boolean"
+                          ? val ? "Yes" : "No"
+                          : String(val)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
         {activeTab === "runs" && (
           <>
             <div className="flex justify-between items-center mb-4">
@@ -368,18 +711,21 @@ export default function TaxProvisioningPage() {
                 <h3 className="ui-form-title">New Provision Run</h3>
                 <div className="ui-form-grid">
                   <div className="ui-form-group">
-                    <label className="ui-label">Run Name</label>
+                    <label className="ui-label" htmlFor="provision-fiscal-year">Fiscal Year</label>
                     <input
+                      id="provision-fiscal-year"
                       className="ui-input"
-                      value={runForm.runName}
+                      type="number"
+                      value={runForm.fiscalYear}
                       onChange={(e: any) =>
-                        setRunForm({ ...runForm, runName: e.target.value })
+                        setRunForm({ ...runForm, fiscalYear: e.target.value })
                       }
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Period</label>
+                    <label className="ui-label" htmlFor="provision-period">Period</label>
                     <input
+                      id="provision-period"
                       className="ui-input"
                       placeholder="e.g. 2026-Q2"
                       value={runForm.period}
@@ -389,19 +735,23 @@ export default function TaxProvisioningPage() {
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Jurisdiction</label>
-                    <select
+                    <label className="ui-label" htmlFor="provision-pretax-income">Pretax Income</label>
+                    <input
+                      id="provision-pretax-income"
                       className="ui-input"
-                      value={runForm.jurisdiction}
+                      type="number"
+                      value={runForm.pretaxIncome}
                       onChange={(e: any) =>
-                        setRunForm({ ...runForm, jurisdiction: e.target.value })
+                        setRunForm({ ...runForm, pretaxIncome: e.target.value })
                       }
-                    >
-                      <option value="US_Federal">US Federal</option>
-                      <option value="US_State">US State</option>
-                      <option value="International">International</option>
-                      <option value="Multi">Multi-Jurisdiction</option>
-                    </select>
+                    />
+                  </div>
+                  <div className="ui-form-group">
+                    <label className="ui-label" htmlFor="provision-statutory-rate">Statutory Rate (%)</label>
+                    <input id="provision-statutory-rate" className="ui-input" type="number" min="0" max="100" step="0.01"
+                      value={runForm.statutoryRate}
+                      onChange={(e: any) => setRunForm({ ...runForm, statutoryRate: e.target.value })}
+                    />
                   </div>
                 </div>
                 <div className="ui-form-actions">
@@ -409,7 +759,7 @@ export default function TaxProvisioningPage() {
                     {actionLoading ? (
                       <Loader2 size={16} className="animate-spin mr-1" />
                     ) : null}{" "}
-                    Create
+                    {editingRunId ? "Save" : "Create"}
                   </Button>
                   <Button
                     variant="secondary"
@@ -430,8 +780,8 @@ export default function TaxProvisioningPage() {
                   columns={
                     [
                       {
-                        key: "runName",
-                        header: "Run",
+                        key: "fiscalYear",
+                        header: "Fiscal Year",
                         render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
@@ -442,12 +792,12 @@ export default function TaxProvisioningPage() {
                         render: (v: any) => String(v),
                       },
                       {
-                        key: "jurisdiction",
-                        header: "Jurisdiction",
-                        render: (v: any) => String(v).replace(/_/g, " "),
+                        key: "createdAt",
+                        header: "Created",
+                        render: (v: any) => new Date(String(v)).toLocaleDateString(),
                       },
                       {
-                        key: "totalProvision",
+                        key: "totalTaxProvision",
                         header: "Provision",
                         render: (v: any) => (
                           <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
@@ -469,15 +819,20 @@ export default function TaxProvisioningPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v: any, row: any) =>
-                          row.status === "DRAFT" && (
-                            <button
+                        render: (v: any, row: any) => (
+                          <div className="flex gap-2 flex-wrap">
+                            {row.status !== "POSTED" && <button onClick={() => handleEditRun(String(v))} className="text-xs bg-gray-50 px-2 py-1 rounded">Edit</button>}
+                            {row.status === "DRAFT" && <button
                               onClick={() => handleComputeProvision(String(v))}
                               className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded hover:bg-blue-100"
                             >
                               Compute Provision
-                            </button>
-                          ),
+                            </button>}
+                            {row.status === "COMPUTED" && <button onClick={() => handleReviewProvision(String(v))} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">Review</button>}
+                            {row.status === "REVIEWED" && <button onClick={() => handlePostProvision(String(v))} className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded">Post</button>}
+                            {row.status === "DRAFT" && <button onClick={() => handleDeleteRun(String(v))} className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded">Delete</button>}
+                          </div>
+                        ),
                       },
                     ] as ListColumn[]
                   }
@@ -487,6 +842,30 @@ export default function TaxProvisioningPage() {
                   emptyDescription="Create your first ASC 740 provision run."
                 />
               )}
+            </Card>
+          </>
+        )}
+
+        {activeTab === "details" && (
+          <>
+            <Card className="ui-form-card mb-4">
+              <h3 className="ui-form-title">Jurisdiction provision detail</h3>
+              <div className="ui-form-grid">
+                <div className="ui-form-group"><label className="ui-label">Jurisdiction</label><input className="ui-input" value={detailForm.jurisdiction} onChange={(event) => setDetailForm({ ...detailForm, jurisdiction: event.target.value })} /></div>
+                <div className="ui-form-group"><label className="ui-label">Taxable income</label><input className="ui-input" type="number" value={detailForm.taxableIncome} onChange={(event) => setDetailForm({ ...detailForm, taxableIncome: event.target.value })} /></div>
+                <div className="ui-form-group"><label className="ui-label">Tax rate (%)</label><input className="ui-input" type="number" min="0" max="100" step="0.01" value={detailForm.taxRate} onChange={(event) => setDetailForm({ ...detailForm, taxRate: event.target.value })} /></div>
+              </div>
+              <div className="ui-form-actions"><Button onClick={handleCreateDetail} disabled={actionLoading || !selectedRunId}>{editingDetailId ? "Save detail" : "Create detail"}</Button></div>
+            </Card>
+            <Card className="ui-list-card">
+              <ListPageTemplate columns={[
+                { key: "jurisdiction", header: "Jurisdiction" },
+                { key: "taxableIncome", header: "Taxable income", render: (value: any) => fmt(Number(value)) },
+                { key: "taxRate", header: "Rate", render: (value: any) => `${Number(value)}%` },
+                { key: "currentTaxAmount", header: "Current tax", render: (value: any) => fmt(Number(value)) },
+                { key: "filingStatus", header: "Filing status" },
+                { key: "id", header: "Actions", render: (value: any) => <div className="flex gap-2"><button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleViewDetail(String(value))}>View</button><button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleEditDetail(String(value))}>Edit</button><button className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded" onClick={() => handleComputeDetail(String(value))}>Recalculate</button><button className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded" onClick={() => handleDeleteDetail(String(value))}>Delete</button></div> },
+              ] as ListColumn[]} data={details as unknown as Record<string, unknown>[]} loading={false} emptyTitle="No jurisdiction details" emptyDescription="Select a run and add its jurisdiction tax details." />
             </Card>
           </>
         )}
@@ -503,14 +882,14 @@ export default function TaxProvisioningPage() {
                 <h3 className="ui-form-title">New Deferred Tax Schedule</h3>
                 <div className="ui-form-grid">
                   <div className="ui-form-group">
-                    <label className="ui-label">Account Name</label>
+                    <label className="ui-label">Account ID</label>
                     <input
                       className="ui-input"
-                      value={scheduleForm.accountName}
+                      value={scheduleForm.accountId}
                       onChange={(e: any) =>
                         setScheduleForm({
                           ...scheduleForm,
-                          accountName: e.target.value,
+                          accountId: e.target.value,
                         })
                       }
                     />
@@ -545,31 +924,14 @@ export default function TaxProvisioningPage() {
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Classification</label>
-                    <select
-                      className="ui-input"
-                      value={scheduleForm.classification}
-                      onChange={(e: any) =>
-                        setScheduleForm({
-                          ...scheduleForm,
-                          classification: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="LIABILITY">Deferred Tax Liability</option>
-                      <option value="ASSET">Deferred Tax Asset</option>
-                    </select>
-                  </div>
-                  <div className="ui-form-group">
-                    <label className="ui-label">Period</label>
+                    <label className="ui-label">Category</label>
                     <input
                       className="ui-input"
-                      placeholder="e.g. 2026-Q2"
-                      value={scheduleForm.period}
+                      value={scheduleForm.categorization}
                       onChange={(e: any) =>
                         setScheduleForm({
                           ...scheduleForm,
-                          period: e.target.value,
+                          categorization: e.target.value,
                         })
                       }
                     />
@@ -583,7 +945,7 @@ export default function TaxProvisioningPage() {
                     {actionLoading ? (
                       <Loader2 size={16} className="animate-spin mr-1" />
                     ) : null}{" "}
-                    Create
+                    {editingScheduleId ? "Save" : "Create"}
                   </Button>
                   <Button
                     variant="secondary"
@@ -604,7 +966,7 @@ export default function TaxProvisioningPage() {
                   columns={
                     [
                       {
-                        key: "accountName",
+                        key: "accountId",
                         header: "Account",
                         render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
@@ -629,7 +991,7 @@ export default function TaxProvisioningPage() {
                         ),
                       },
                       {
-                        key: "deferredTax",
+                        key: "deferredTaxLiability",
                         header: "Deferred Tax",
                         render: (v: any) => (
                           <span className="font-semibold" style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
@@ -638,16 +1000,17 @@ export default function TaxProvisioningPage() {
                         ),
                       },
                       {
-                        key: "classification",
+                        key: "categorization",
                         header: "Type",
                         render: (v: any) => (
                           <span
-                            className={`text-xs px-2 py-0.5 rounded-full font-medium ${v === "LIABILITY" ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
+                            className="text-xs px-2 py-0.5 rounded-full font-medium bg-gray-100 text-gray-700"
                           >
                             {String(v)}
                           </span>
                         ),
                       },
+                      { key: "id", header: "Actions", render: (value: any) => <div className="flex gap-2 flex-wrap"><button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleViewSchedule(String(value))}>View</button><button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleEditSchedule(String(value))}>Edit</button><button className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded" onClick={() => handleRecomputeSchedule(String(value))}>Recalculate</button><button className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded" onClick={() => handleDeleteSchedule(String(value))}>Delete</button></div> },
                     ] as ListColumn[]
                   }
                   data={schedules as unknown as Record<string, unknown>[]}
@@ -666,6 +1029,7 @@ export default function TaxProvisioningPage() {
               <Button onClick={() => setShowPositionForm(!showPositionForm)}>
                 <Plus size={16} className="mr-1" /> Create Uncertain Position
               </Button>
+              <div className="ui-form-group"><label className="ui-label" htmlFor="position-action-amount">Reserve or settlement amount</label><input id="position-action-amount" className="ui-input" type="number" min="0" value={positionActionAmount} onChange={(event) => setPositionActionAmount(event.target.value)} /></div>
             </div>
             {showPositionForm && (
               <Card className="ui-form-card mb-4">
@@ -685,48 +1049,54 @@ export default function TaxProvisioningPage() {
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Tax Authority</label>
+                    <label className="ui-label">Jurisdiction</label>
                     <input
                       className="ui-input"
-                      value={positionForm.taxAuthority}
+                      value={positionForm.jurisdiction}
                       onChange={(e: any) =>
                         setPositionForm({
                           ...positionForm,
-                          taxAuthority: e.target.value,
+                          jurisdiction: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Exposure Amount ($)</label>
+                    <label className="ui-label">Tax Amount at Risk</label>
                     <input
                       className="ui-input"
                       type="number"
-                      value={positionForm.exposureAmount}
+                      value={positionForm.taxAmountAtRisk}
                       onChange={(e: any) =>
                         setPositionForm({
                           ...positionForm,
-                          exposureAmount: e.target.value,
+                          taxAmountAtRisk: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="ui-form-group">
                     <label className="ui-label">
-                      Probability of Success (%)
+                      Probability of Loss (%)
                     </label>
                     <input
                       className="ui-input"
                       type="number"
                       min="0"
                       max="100"
-                      value={positionForm.probabilityOfSuccess}
+                      value={positionForm.probabilityOfLoss}
                       onChange={(e: any) =>
                         setPositionForm({
                           ...positionForm,
-                          probabilityOfSuccess: e.target.value,
+                          probabilityOfLoss: e.target.value,
                         })
                       }
+                    />
+                  </div>
+                  <div className="ui-form-group">
+                    <label className="ui-label">Description</label>
+                    <input className="ui-input" value={positionForm.description}
+                      onChange={(e: any) => setPositionForm({ ...positionForm, description: e.target.value })}
                     />
                   </div>
                 </div>
@@ -738,7 +1108,7 @@ export default function TaxProvisioningPage() {
                     {actionLoading ? (
                       <Loader2 size={16} className="animate-spin mr-1" />
                     ) : null}{" "}
-                    Create
+                    {editingPositionId ? "Save" : "Create"}
                   </Button>
                   <Button
                     variant="secondary"
@@ -766,12 +1136,12 @@ export default function TaxProvisioningPage() {
                         ),
                       },
                       {
-                        key: "taxAuthority",
-                        header: "Authority",
+                        key: "jurisdiction",
+                        header: "Jurisdiction",
                         render: (v: any) => String(v),
                       },
                       {
-                        key: "exposureAmount",
+                        key: "taxAmountAtRisk",
                         header: "Exposure",
                         render: (v: any) => (
                           <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
@@ -780,8 +1150,8 @@ export default function TaxProvisioningPage() {
                         ),
                       },
                       {
-                        key: "probabilityOfSuccess",
-                        header: "Success %",
+                        key: "probabilityOfLoss",
+                        header: "Loss %",
                         render: (v: any) => (
                           <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
                             {Number(v)}%
@@ -802,15 +1172,21 @@ export default function TaxProvisioningPage() {
                       {
                         key: "id",
                         header: "Actions",
-                        render: (v: any, row: any) =>
-                          row.status !== "EVALUATED" && (
-                            <button
+                        render: (v: any, row: any) => (
+                          <div className="flex gap-2 flex-wrap">
+                            <button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleViewPosition(String(v))}>View</button>
+                            {row.status !== "SETTLED" && <button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleEditPosition(String(v))}>Edit</button>}
+                          {row.status !== "SETTLED" && <button
                               onClick={() => handleEvaluatePosition(String(v))}
                               className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded hover:bg-blue-100"
                             >
                               Evaluate
-                            </button>
-                          ),
+                            </button>}
+                            {row.status !== "SETTLED" && <button className="text-xs bg-yellow-50 text-yellow-700 px-2 py-1 rounded" onClick={() => handleReservePosition(String(v))}>Reserve</button>}
+                            {row.status !== "SETTLED" && <button className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded" onClick={() => handleSettlePosition(String(v))}>Settle</button>}
+                            {row.status === "IDENTIFIED" && <button className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded" onClick={() => handleDeletePosition(String(v))}>Delete</button>}
+                          </div>
+                        ),
                       },
                     ] as ListColumn[]
                   }
@@ -836,59 +1212,58 @@ export default function TaxProvisioningPage() {
                 <h3 className="ui-form-title">Assess Valuation Allowance</h3>
                 <div className="ui-form-grid">
                   <div className="ui-form-group">
-                    <label className="ui-label">Entity Name</label>
+                    <label className="ui-label">Jurisdiction</label>
                     <input
                       className="ui-input"
-                      value={allowanceForm.entityName}
+                      value={allowanceForm.jurisdiction}
                       onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
-                          entityName: e.target.value,
+                          jurisdiction: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Deferred Tax Asset ($)</label>
+                    <label className="ui-label">Allowance Amount</label>
                     <input
                       className="ui-input"
                       type="number"
-                      value={allowanceForm.deferredTaxAsset}
+                      value={allowanceForm.allowanceAmount}
                       onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
-                          deferredTaxAsset: e.target.value,
+                          allowanceAmount: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Rationale</label>
+                    <label className="ui-label">Conclusion</label>
                     <input
                       className="ui-input"
                       placeholder="Why partial allowance?"
-                      value={allowanceForm.rationale}
+                      value={allowanceForm.conclusion}
                       onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
-                          rationale: e.target.value,
+                          conclusion: e.target.value,
                         })
                       }
                     />
                   </div>
                   <div className="ui-form-group">
-                    <label className="ui-label">Period</label>
-                    <input
+                    <label className="ui-label">Assessment Type</label>
+                    <select
                       className="ui-input"
-                      placeholder="e.g. 2026-Q2"
-                      value={allowanceForm.period}
+                      value={allowanceForm.assessmentType}
                       onChange={(e: any) =>
                         setAllowanceForm({
                           ...allowanceForm,
-                          period: e.target.value,
+                          assessmentType: e.target.value,
                         })
                       }
-                    />
+                    ><option value="MORE_LIKELY_THAN_NOT">More likely than not</option><option value="FULL">Full</option><option value="PARTIAL">Partial</option></select>
                   </div>
                 </div>
                 <div className="ui-form-actions">
@@ -899,7 +1274,7 @@ export default function TaxProvisioningPage() {
                     {actionLoading ? (
                       <Loader2 size={16} className="animate-spin mr-1" />
                     ) : null}{" "}
-                    Assess
+                    {editingAllowanceId ? "Save" : "Assess"}
                   </Button>
                   <Button
                     variant="secondary"
@@ -920,18 +1295,18 @@ export default function TaxProvisioningPage() {
                   columns={
                     [
                       {
-                        key: "entityName",
-                        header: "Entity",
+                        key: "jurisdiction",
+                        header: "Jurisdiction",
                         render: (v: any) => (
                           <span className="font-medium">{String(v)}</span>
                         ),
                       },
                       {
-                        key: "deferredTaxAsset",
-                        header: "DTA",
+                        key: "assessmentType",
+                        header: "Assessment",
                         render: (v: any) => (
                           <span style={{ fontVariantNumeric: "tabular-nums lining-nums" }}>
-                            {fmt(Number(v))}
+                            {String(v).replace(/_/g, " ")}
                           </span>
                         ),
                       },
@@ -945,15 +1320,16 @@ export default function TaxProvisioningPage() {
                         ),
                       },
                       {
-                        key: "rationale",
-                        header: "Rationale",
+                        key: "conclusion",
+                        header: "Conclusion",
                         render: (v: any) => String(v) || "—",
                       },
                       {
-                        key: "period",
-                        header: "Period",
+                        key: "status",
+                        header: "Status",
                         render: (v: any) => String(v),
                       },
+                      { key: "id", header: "Actions", render: (value: any, row: any) => <div className="flex gap-2 flex-wrap"><button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleViewAllowance(String(value))}>View</button>{row.status === "DRAFT" && <button className="text-xs bg-gray-50 px-2 py-1 rounded" onClick={() => handleEditAllowance(String(value))}>Edit</button>}{row.status === "DRAFT" && <button className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded" onClick={() => handleReviewAllowance(String(value))}>Review</button>}{row.status === "DRAFT" && <button className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded" onClick={() => handleDeleteAllowance(String(value))}>Delete</button>}</div> },
                     ] as ListColumn[]
                   }
                   data={allowances as unknown as Record<string, unknown>[]}
