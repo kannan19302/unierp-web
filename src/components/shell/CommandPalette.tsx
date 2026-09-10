@@ -65,15 +65,33 @@ export function CommandPalette({
   const [entityHits, setEntityHits] = useState<SearchHit[]>([]);
   const [searching, setSearching] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const selectedItemRef = useRef<HTMLButtonElement>(null);
+  // Track the element that triggered the palette so we can restore focus on close
+  const triggerRef = useRef<Element | null>(null);
 
   useEffect(() => {
     if (isOpen) {
+      // Capture the current active element to restore on close
+      triggerRef.current = document.activeElement;
       setTimeout(() => inputRef.current?.focus(), 50);
       setQuery("");
       setSelectedIdx(0);
       setEntityHits([]);
+    } else {
+      // Restore focus to the triggering element
+      if (triggerRef.current && "focus" in triggerRef.current) {
+        (triggerRef.current as HTMLElement).focus();
+      }
     }
   }, [isOpen]);
+
+  // Scroll selected item into view on arrow navigation
+  useEffect(() => {
+    if (selectedItemRef.current) {
+      selectedItemRef.current.scrollIntoView({ block: "nearest" });
+    }
+  }, [selectedIdx]);
 
   // Static index: apps, every nav page of every app, and shell actions.
   const staticItems = useMemo<PaletteItem[]>(() => {
@@ -224,23 +242,63 @@ export function CommandPalette({
       e.preventDefault();
       const target = flatItems[selectedIdx];
       if (target) activate(target);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      onClose();
     }
   };
 
   if (!isOpen) return null;
 
+  // Announcement text for screen readers
+  const announcementText =
+    flatItems.length > 0
+      ? `${flatItems.length} result${flatItems.length === 1 ? "" : "s"}`
+      : q.length >= 2
+        ? "No results"
+        : "";
+
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modalCard} onClick={(e: any) => e.stopPropagation()}>
+    <div
+      className={styles.overlay}
+      onClick={onClose}
+      aria-hidden="false"
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command palette — search apps, pages, records and actions"
+        className={styles.modalCard}
+        onClick={(e: any) => e.stopPropagation()}
+      >
+        {/* Screen-reader live region for result count */}
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className={styles.srOnly}
+        >
+          {announcementText}
+        </div>
+
         {/* Search header input */}
         <div className={styles.searchHeader}>
           <Search
             size={18}
             style={{ color: "var(--color-text-tertiary)", flexShrink: 0 }}
+            aria-hidden
           />
           <input
             ref={inputRef}
+            id="cmd-palette-input"
             type="text"
+            role="combobox"
+            aria-expanded={flatItems.length > 0}
+            aria-autocomplete="list"
+            aria-controls="cmd-palette-results"
+            aria-activedescendant={
+              flatItems[selectedIdx] ? `cmd-item-${flatItems[selectedIdx].key}` : undefined
+            }
             placeholder="Search apps, pages, records, actions…"
             value={query}
             onChange={(e: any) => {
@@ -254,13 +312,20 @@ export function CommandPalette({
             <Zap
               size={14}
               style={{ color: "var(--color-text-tertiary)", flexShrink: 0 }}
+              aria-hidden
             />
           )}
-          <kbd className={styles.kbd}>ESC</kbd>
+          <kbd className={styles.kbd} aria-hidden>ESC</kbd>
         </div>
 
         {/* Results Area */}
-        <div className={styles.resultsArea}>
+        <div
+          id="cmd-palette-results"
+          ref={listRef}
+          className={styles.resultsArea}
+          role="listbox"
+          aria-label="Command palette results"
+        >
           {flatItems.length === 0 ? (
             <div className={styles.noResults}>
               {q.length >= 2
@@ -269,18 +334,8 @@ export function CommandPalette({
             </div>
           ) : (
             grouped.map(({ group, items }: any) => (
-              <div key={group}>
-                <div
-                  style={{
-                    padding: "var(--space-1) var(--space-3)",
-                    fontSize: "var(--text-2xs, 10px)",
-                    fontWeight: 600,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    color:
-                      "var(--color-text-tertiary, var(--color-text-secondary))",
-                  }}
-                >
+              <div key={group} role="group" aria-label={group}>
+                <div className={styles.groupLabel} aria-hidden>
                   {group}
                 </div>
                 {items.map(({ item, idx }: any) => {
@@ -290,6 +345,10 @@ export function CommandPalette({
                   return (
                     <button
                       key={item.key}
+                      id={`cmd-item-${item.key}`}
+                      role="option"
+                      aria-selected={isActive}
+                      ref={isActive ? selectedItemRef : undefined}
                       onClick={() => activate(item)}
                       className={btnClass}
                       onMouseEnter={() => setSelectedIdx(idx)}
@@ -303,22 +362,17 @@ export function CommandPalette({
                               : "var(--color-text-secondary)",
                           flexShrink: 0,
                         }}
+                        aria-hidden
                       />
                       <div className={styles.resultTextWrapper}>
                         <div className={styles.resultName}>{item.name}</div>
                         {item.subtitle && (
-                          <div
-                            style={{
-                              fontSize: "var(--text-xs)",
-                              color:
-                                "var(--color-text-tertiary, var(--color-text-secondary))",
-                            }}
-                          >
+                          <div className={styles.resultSubtitle}>
                             {item.subtitle}
                           </div>
                         )}
                       </div>
-                      <span className={styles.resultType}>{item.group}</span>
+                      <span className={styles.resultType} aria-hidden>{item.group}</span>
                     </button>
                   );
                 })}
@@ -328,7 +382,7 @@ export function CommandPalette({
         </div>
 
         {/* Footer tips */}
-        <div className={styles.footer}>
+        <div className={styles.footer} aria-hidden>
           <span>
             <kbd className={styles.footerKbd}>↑↓</kbd> navigate
           </span>

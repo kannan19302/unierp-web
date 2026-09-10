@@ -10,10 +10,32 @@ import {
   FileCheck,
   ArrowRightLeft,
   Scale,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  BookOpen,
+  FileSpreadsheet,
   X,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { RowContextMenu } from "@/components/finance/RowContextMenu";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
+
+const exportColumns: ExportColumn[] = [
+  { key: "ruleType", header: "Rule Type", type: "text" },
+  { key: "sourceEntity", header: "Originating Entity", type: "text" },
+  { key: "targetEntity", header: "Counterparty Entity", type: "text" },
+  { key: "description", header: "Description", type: "text" },
+  { key: "currency", header: "Currency", type: "text" },
+  { key: "sourceAmount", header: "Source Leg", type: "currency" },
+  { key: "targetAmount", header: "Target Leg", type: "currency" },
+  { key: "variance", header: "Variance", type: "currency" },
+  { key: "status", header: "Status", type: "text" },
+];
 
 interface IntercompanyPair {
   id: string;
@@ -57,17 +79,62 @@ export default function IntercompanyPage() {
     totalEliminated: number;
   } | null>(null);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<IntercompanySummaryData>({
-    queryKey: ["finance-intercompany-summary"],
+  const scope = useFinanceScope();
+
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery<IntercompanySummaryData>({
+    queryKey: ["finance-intercompany-summary", scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>("/finance/intercompany/summary");
+      const res = await apiClient.get<any>(
+        `/finance/intercompany/summary?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as IntercompanySummaryData;
     },
     refetchInterval: 30000,
   });
 
+  const { openAppTab } = useFinanceTabs();
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    row: IntercompanyPair;
+  } | null>(null);
+  const [sortField, setSortField] = useState<keyof IntercompanyPair>("variance");
+  const [sortAsc, setSortAsc] = useState(false);
+
   const eliminations = data?.eliminations || [];
   const selectedPair = eliminations.find((p) => p.id === selectedPairId) || eliminations[0];
+
+  const handleSort = (field: keyof IntercompanyPair) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(false);
+    }
+  };
+
+  const sortedEliminations = [...eliminations].sort((a, b) => {
+    const valA = a[sortField];
+    const valB = b[sortField];
+    if (typeof valA === "number" && typeof valB === "number") {
+      return sortAsc ? valA - valB : valB - valA;
+    }
+    return sortAsc
+      ? String(valA ?? "").localeCompare(String(valB ?? ""))
+      : String(valB ?? "").localeCompare(String(valA ?? ""));
+  });
+
+  const exportData = sortedEliminations.map((p) => ({
+    ruleType: p.ruleType,
+    sourceEntity: p.sourceEntity,
+    targetEntity: p.targetEntity,
+    description: p.description,
+    currency: p.currency,
+    sourceAmount: p.sourceAmount,
+    targetAmount: p.targetAmount,
+    variance: p.variance,
+    status: p.status,
+  }));
 
   const handleRunEliminations = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -102,6 +169,18 @@ export default function IntercompanyPage() {
     }).format(val || 0);
   };
 
+  if (isError) {
+    return (
+      <div className={styles.pageContainer}>
+        <FinanceErrorState
+          title="Failed to Load Intercompany Balances"
+          error={error}
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageContainer}>
       {/* Header Row */}
@@ -115,7 +194,7 @@ export default function IntercompanyPage() {
         <div className={styles.headerRight}>
           <div className={styles.liveBadge} title="Global consolidation registry active">
             <span className={styles.liveDot} />
-            <span>4 Entities Synced</span>
+            <span>{data?.eliminations?.length ? `${data.eliminations.length} Pairs Synced` : "Consolidation Ready"}</span>
           </div>
           <button
             type="button"
@@ -127,6 +206,13 @@ export default function IntercompanyPage() {
           >
             <RefreshCw size={14} className={isFetching ? styles.refreshSpin : ""} />
           </button>
+          <ExportMenu
+            filename="intercompany-eliminations-matrix"
+            title="Bilateral Intercompany Elimination Matrix"
+            columns={exportColumns}
+            data={exportData}
+            buttonLabel="Export Matrix"
+          />
           <button
             type="button"
             className={styles.btnPrimary}
@@ -145,7 +231,7 @@ export default function IntercompanyPage() {
           <span className={styles.kpiLabel}>Total Bilateral Volume</span>
           <div className={styles.kpiValueRow}>
             <span className={styles.kpiValue}>
-              {formatCurrency(data?.kpis?.totalBilateralVolume ?? 1450000)}
+              {formatCurrency(data?.kpis?.totalBilateralVolume ?? 0)}
             </span>
           </div>
           <span className={styles.kpiSub}>Gross inter-entity transaction volume</span>
@@ -203,17 +289,47 @@ export default function IntercompanyPage() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th className={styles.th}>Rule Type &amp; Description</th>
-                  <th className={styles.th}>Originating Entity</th>
-                  <th className={styles.th}>Counterparty Entity</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Source Leg</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Target Leg</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Variance</th>
+                  <th className={styles.th} onClick={() => handleSort("ruleType")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                      <span>Rule Type &amp; Description</span>
+                      {sortField === "ruleType" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={styles.th} onClick={() => handleSort("sourceEntity")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                      <span>Originating Entity</span>
+                      {sortField === "sourceEntity" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={styles.th} onClick={() => handleSort("targetEntity")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                      <span>Counterparty Entity</span>
+                      {sortField === "targetEntity" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("sourceAmount")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Source Leg</span>
+                      {sortField === "sourceAmount" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("targetAmount")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Target Leg</span>
+                      {sortField === "targetAmount" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("variance")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Variance</span>
+                      {sortField === "variance" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
                   <th className={styles.th}>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {eliminations.map((pair) => {
+                {sortedEliminations.map((pair) => {
                   const isSelected =
                     selectedPair?.id === pair.id ||
                     (!selectedPair && pair === eliminations[0]);
@@ -223,6 +339,10 @@ export default function IntercompanyPage() {
                       key={pair.id}
                       className={`${styles.row} ${isSelected ? styles.rowSelected : ""}`}
                       onClick={() => setSelectedPairId(pair.id)}
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                        setContextMenu({ x: e.clientX, y: e.clientY, row: pair });
+                      }}
                     >
                       <td className={styles.td}>
                         <div className={styles.monoCell}>{pair.ruleType}</div>
@@ -439,6 +559,42 @@ export default function IntercompanyPage() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Row Context Menu */}
+      {contextMenu && (
+        <RowContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          recordId={contextMenu.row.id}
+          recordTitle={`${contextMenu.row.sourceEntity} ↔ ${contextMenu.row.targetEntity}`}
+          recordData={contextMenu.row}
+          onOpenInTab={() => {
+            openAppTab({
+              href: `/finance/journal-entries`,
+              title: "Journal Entries",
+            });
+          }}
+          customActions={[
+            {
+              label: "Inspect Bilateral Accounts",
+              icon: Building2,
+              onClick: () => {
+                setSelectedPairId(contextMenu.row.id);
+              },
+            },
+            {
+              label: "Eliminate This Pair",
+              icon: Scale,
+              onClick: () => {
+                setSelectedPairId(contextMenu.row.id);
+                setElimScope("SELECTED_PAIR_ONLY");
+                setShowElimModal(true);
+              },
+            },
+          ]}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </div>
   );

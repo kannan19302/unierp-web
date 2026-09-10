@@ -51,4 +51,39 @@ describe("Finance Strata actionability", () => {
     expect(read("app/(dashboard)/finance/invoices/page.tsx")).toContain("invoiceResource");
     expect(read("app/(dashboard)/finance/vendor-bills/page.tsx")).toContain("vendorBillResource");
   });
+
+  it("wires right-click context menu on all sidebar navigation links and controls", () => {
+    const sidebar = read("src/components/shell/FinanceSidebarV2.tsx");
+    // All <Link> tags in the sidebar body and collapsed nav must include onContextMenu
+    const linkMatches = [...sidebar.matchAll(/<Link\b([^>]*?)>/g)];
+    expect(linkMatches.length).toBeGreaterThan(20);
+    for (const match of linkMatches) {
+      expect(match[1]).toContain("onContextMenu");
+    }
+    // Period button and footer settings must also support right click
+    expect(sidebar).toContain('onContextMenu={(e) => onNavContextMenu?.("/finance/advanced/close-tasks", "Period Management", e)}');
+    expect(sidebar).toContain('onContextMenu={(e) => onNavContextMenu?.("/finance/settings", "Settings", e)}');
+  });
+
+  it("wires hover-only more options (...) buttons across sidebar navigation options", () => {
+    const sidebar = read("src/components/shell/FinanceSidebarV2.tsx");
+    const css = read("src/components/shell/FinanceSidebarV2.module.css");
+    // renderMoreButton helper must be defined and rendered
+    expect(sidebar).toContain("renderMoreButton");
+    expect(sidebar).toContain("moreBtn");
+    expect(sidebar).toContain("MoreHorizontal");
+
+    // CSS must hide moreBtn by default and reveal on hover or focus
+    expect(css).toContain(".moreBtn");
+    expect(css).toContain("opacity: 0;");
+    expect(css).toContain(".navItem:hover .moreBtn");
+    expect(css).toContain(".groupItemHeader:hover .moreBtn");
+  });
+
+  it("enforces global Inter typography and token styles in app/layout.tsx", () => {
+    const layout = read("app/layout.tsx");
+    expect(layout).toContain('import "@/styles/strata-global.css";');
+    expect(layout).toContain("inter.className");
+    expect(layout).toContain("inter.variable");
+  });
 });

@@ -1,0 +1,202 @@
+/* ── Global Strata Typography & Unified Layout Standards ─────────────── */
+
+/* 1. Global Font Stack & Smoothing across the application */
+:root {
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 2. Inherit typography on form controls and interactive tags */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans);
+  letter-spacing: -0.015em;
+  color: var(--color-text-primary, var(--color-text));
+}
+
+/* ── Universal Strata Page Templates & Component Tokens ────────────── */
+.ui-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.ui-page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.ui-page-head-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ui-title-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ui-title-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.ui-page-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  color: var(--color-text-primary, var(--color-text));
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.ui-page-subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted, var(--color-text-secondary));
+  line-height: var(--leading-normal);
+  margin: 0;
+}
+
+.ui-page-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.ui-input {
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  padding: 0 var(--space-3);
+  font-size: var(--text-xs);
+  font-family: inherit;
+  color: var(--color-text-primary, var(--color-text));
+  background-color: var(--color-bg-surface, var(--color-bg));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--duration-fast, 150ms) ease;
+}
+
+.ui-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.ui-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ui-label {
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.ui-form-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.ui-card {
+  background-color: var(--color-bg-surface, var(--color-bg));
+  border: 1px solid var(--color-border-subtle, var(--color-border));
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.ui-list-card {
+  background-color: var(--color-bg-surface, var(--color-bg));
+  border: 1px solid var(--color-border-subtle, var(--color-border));
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.ui-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
+  gap: var(--space-4);
+}
+
+.ui-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-family: inherit;
+}
+
+.ui-alert-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: var(--color-danger);
+}
+
+.ui-alert-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--color-success);
+}
+
+.ui-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  gap: var(--space-2);
+}
+
+.ui-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  gap: var(--space-2);
+}
+
+.ui-empty-icon {
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}

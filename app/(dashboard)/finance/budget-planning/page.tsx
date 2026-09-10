@@ -12,8 +12,14 @@ import {
   TrendingUp,
   Sliders,
   RotateCcw,
+  FileSpreadsheet,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { RowContextMenu, type ContextMenuAction } from "@/components/finance/RowContextMenu";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
 
 interface DepartmentRow {
@@ -51,14 +57,27 @@ export default function BudgetPlanningPage() {
   const [revenueGrowth, setRevenueGrowth] = useState<number>(8.0);
   const [headcountGrowth, setHeadcountGrowth] = useState<number>(3.0);
   const [inflation, setInflation] = useState<number>(2.0);
+  const [isDirty, setIsDirty] = useState(false);
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<BudgetSummaryData>({
-    queryKey: ["finance-budget-summary", scenario],
+  // Row Context Menu
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    row: DepartmentRow;
+  } | null>(null);
+
+  const { openAppTab } = useFinanceTabs();
+  const scope = useFinanceScope();
+
+  const { data, isLoading, isFetching, error, refetch } = useQuery<BudgetSummaryData>({
+    queryKey: ["finance-budget-summary", scenario, scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>(`/finance/budget/summary?scenario=${scenario}`);
+      const res = await apiClient.get<any>(
+        `/finance/budget/summary?scenario=${scenario}&entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as BudgetSummaryData;
     },
     refetchInterval: 30000,
@@ -74,6 +93,7 @@ export default function BudgetPlanningPage() {
         unitCostInflation: inflation,
       });
       setSaveSuccess(true);
+      setIsDirty(false);
       setTimeout(() => setSaveSuccess(false), 3000);
       await queryClient.invalidateQueries({ queryKey: ["finance-budget-summary"] });
     } catch (err) {
@@ -97,17 +117,33 @@ export default function BudgetPlanningPage() {
     };
   });
 
+  const exportColumns: ExportColumn[] = [
+    { header: "Department", key: "name", type: "text" },
+    { header: "Annual Budget ($)", key: "budget", type: "currency" },
+    { header: "Updated Forecast ($)", key: "forecast", type: "currency" },
+    { header: "Variance ($)", key: "variance", type: "currency" },
+    { header: "Variance (%)", key: "variancePct", type: "number" },
+  ];
+
+  const exportData = departments.map((d) => ({
+    name: d.name,
+    budget: d.budget,
+    forecast: d.forecast,
+    variance: d.variance,
+    variancePct: d.variancePct,
+  }));
+
   const totalBudget = departments.reduce((acc, d) => acc + d.budget, 0);
   const totalForecast = departments.reduce((acc, d) => acc + d.forecast, 0);
   const totalVariance = totalForecast - totalBudget;
-  const totalVariancePct = totalBudget > 0 ? (totalVariance / totalBudget) * 100 : 0;
+  const totalVariancePct = totalBudget === 0 ? 0 : Number(((totalVariance / totalBudget) * 100).toFixed(1));
 
-  // Chart coordinate logic (800 x 140)
   const trends = data?.monthlyTrends || [];
+
   const chartW = 800;
   const chartH = 140;
-  const minVal = 1300000;
-  const maxVal = 1950000;
+  const minVal = 700000;
+  const maxVal = 1000000;
   const range = maxVal - minVal;
 
   const getX = (idx: number) => 40 + (idx / Math.max(trends.length - 1, 1)) * (chartW - 80);
@@ -133,8 +169,25 @@ export default function BudgetPlanningPage() {
 
         <div className={styles.headerRight}>
           <div className={styles.liveBadge}>
-            <div className={styles.liveDot} />
-            <span>Live database</span>
+            <div
+              className={styles.liveDot}
+              style={{
+                background: error
+                  ? "var(--color-danger)"
+                  : isLoading
+                  ? "var(--color-warning)"
+                  : "var(--color-success)",
+              }}
+            />
+            <span>
+              {error
+                ? "Connection error"
+                : isLoading
+                ? "Connecting..."
+                : isFetching
+                ? "Refreshing..."
+                : "Live database"}
+            </span>
             <button
               type="button"
               className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
@@ -146,6 +199,14 @@ export default function BudgetPlanningPage() {
             </button>
           </div>
 
+          <ExportMenu
+            filename="budget-department-variances"
+            title="Annual Budget & Department Variance Plan"
+            columns={exportColumns}
+            data={exportData}
+            buttonLabel="Export budget"
+          />
+
           <button
             type="button"
             className={styles.btnSecondary}
@@ -156,15 +217,29 @@ export default function BudgetPlanningPage() {
             <span>{isSaving ? "Saving..." : saveSuccess ? "Saved ✓" : "Save draft"}</span>
           </button>
 
-          <Link
-            href="/finance/advanced/budgeting"
+          <button
+            type="button"
             className={styles.btnPrimary}
+            onClick={() =>
+              openAppTab({
+                href: "/finance/advanced/budgeting",
+                title: "Budget Scenarios",
+              })
+            }
           >
             <Send size={14} />
             <span>Submit for review</span>
-          </Link>
+          </button>
         </div>
       </div>
+
+      {error && (
+        <FinanceErrorState
+          error={error}
+          onRetry={() => refetch()}
+          moduleName="Budget & Financial Planning"
+        />
+      )}
 
       {/* Scenario Bar */}
       <div className={styles.scenarioBar}>
@@ -193,7 +268,17 @@ export default function BudgetPlanningPage() {
         </div>
 
         <span className={styles.draftStatusText}>
-          ● Unsaved draft boundary • Last saved {data?.lastSaved || "2 minutes ago"}
+          {isDirty ? (
+            <span style={{ color: "var(--color-warning, #f59e0b)", fontWeight: 600 }}>
+              ● Unsaved driver adjustments
+            </span>
+          ) : (
+            <span style={{ color: "var(--color-success, #10b981)" }}>
+              ✓ All driver parameters saved
+            </span>
+          )}
+          {" • Last saved: "}
+          {data?.lastSaved || (saveSuccess ? "Just now" : "Never")}
         </span>
       </div>
 
@@ -203,7 +288,7 @@ export default function BudgetPlanningPage() {
           <span className={styles.kpiLabel}>FY 2026 Budget</span>
           <div className={styles.kpiValueRow}>
             <span className={styles.kpiValue}>
-              USD {isLoading ? "..." : (totalBudget ? (totalBudget / 1e6).toFixed(2) + "M" : "18.50M")}
+              {scope.currency} {isLoading ? "..." : (totalBudget ? (totalBudget / 1e6).toFixed(2) + "M" : "0.00")}
             </span>
           </div>
         </div>
@@ -212,7 +297,7 @@ export default function BudgetPlanningPage() {
           <span className={styles.kpiLabel}>Forecast at completion</span>
           <div className={styles.kpiValueRow}>
             <span className={styles.kpiValue}>
-              USD {isLoading ? "..." : (totalForecast ? (totalForecast / 1e6).toFixed(2) + "M" : "18.84M")}
+              {scope.currency} {isLoading ? "..." : (totalForecast ? (totalForecast / 1e6).toFixed(2) + "M" : "0.00")}
             </span>
           </div>
         </div>
@@ -220,8 +305,8 @@ export default function BudgetPlanningPage() {
         <div className={styles.kpiCard}>
           <span className={styles.kpiLabel}>Cost variance</span>
           <div className={styles.kpiValueRow}>
-            <span className={styles.kpiValue} style={{ color: "var(--color-danger)" }}>
-              USD {isLoading ? "..." : (totalVariance ? (totalVariance / 1e6).toFixed(2) + "M" : "0.34M")} ({totalVariancePct.toFixed(1)}% unfavorable)
+            <span className={styles.kpiValue} style={{ color: totalVariance > 0 ? "var(--color-danger)" : "var(--color-success)" }}>
+              {scope.currency} {isLoading ? "..." : (totalVariance ? (totalVariance / 1e6).toFixed(2) + "M" : "0.00")} ({totalVariancePct.toFixed(1)}% {totalVariance > 0 ? "unfavorable" : "favorable"})
             </span>
           </div>
         </div>
@@ -256,19 +341,32 @@ export default function BudgetPlanningPage() {
                       No departmental budget data is available for this scenario.
                     </td>
                   </tr>
-                ) : departments.map((dept, i) => (
-                  <tr key={i} className={styles.tr}>
-                    <td className={styles.td} style={{ fontWeight: 500 }}>{dept.name}</td>
-                    <td className={styles.tdRight}>${dept.budget.toLocaleString()}</td>
-                    <td className={styles.tdRight}>${dept.forecast.toLocaleString()}</td>
-                    <td className={`${styles.tdRight} ${dept.variance > 0 ? styles.varianceUnfavorable : styles.varianceFavorable}`}>
-                      {dept.variance > 0 ? `+$${dept.variance.toLocaleString()}` : `-$${Math.abs(dept.variance).toLocaleString()}`}
-                    </td>
-                    <td className={`${styles.tdRight} ${dept.variancePct > 0 ? styles.varianceUnfavorable : styles.varianceFavorable}`}>
-                      {dept.variancePct > 0 ? `+${dept.variancePct}%` : `${dept.variancePct}%`}
-                    </td>
-                  </tr>
-                ))}
+                ) : (
+                  departments.map((dept, i) => (
+                    <tr
+                      key={i}
+                      className={styles.tr}
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                        setContextMenu({
+                          x: e.clientX,
+                          y: e.clientY,
+                          row: dept,
+                        });
+                      }}
+                    >
+                      <td className={styles.td} style={{ fontWeight: 500 }}>{dept.name}</td>
+                      <td className={styles.tdRight}>${dept.budget.toLocaleString()}</td>
+                      <td className={styles.tdRight}>${dept.forecast.toLocaleString()}</td>
+                      <td className={`${styles.tdRight} ${dept.variance > 0 ? styles.varianceUnfavorable : styles.varianceFavorable}`}>
+                        {dept.variance > 0 ? `+$${dept.variance.toLocaleString()}` : `-$${Math.abs(dept.variance).toLocaleString()}`}
+                      </td>
+                      <td className={`${styles.tdRight} ${dept.variancePct > 0 ? styles.varianceUnfavorable : styles.varianceFavorable}`}>
+                        {dept.variancePct > 0 ? `+${dept.variancePct}%` : `${dept.variancePct}%`}
+                      </td>
+                    </tr>
+                  ))
+                )}
                 <tr className={styles.trTotal}>
                   <td className={styles.td}>Total Organization</td>
                   <td className={styles.tdRight}>${totalBudget.toLocaleString()}</td>
@@ -315,7 +413,10 @@ export default function BudgetPlanningPage() {
               step="0.5"
               className={styles.slider}
               value={revenueGrowth}
-              onChange={(e) => setRevenueGrowth(parseFloat(e.target.value))}
+              onChange={(e) => {
+                setRevenueGrowth(parseFloat(e.target.value));
+                setIsDirty(true);
+              }}
             />
           </div>
 
@@ -331,7 +432,10 @@ export default function BudgetPlanningPage() {
               step="0.5"
               className={styles.slider}
               value={headcountGrowth}
-              onChange={(e) => setHeadcountGrowth(parseFloat(e.target.value))}
+              onChange={(e) => {
+                setHeadcountGrowth(parseFloat(e.target.value));
+                setIsDirty(true);
+              }}
             />
           </div>
 
@@ -347,7 +451,10 @@ export default function BudgetPlanningPage() {
               step="0.5"
               className={styles.slider}
               value={inflation}
-              onChange={(e) => setInflation(parseFloat(e.target.value))}
+              onChange={(e) => {
+                setInflation(parseFloat(e.target.value));
+                setIsDirty(true);
+              }}
             />
           </div>
 
@@ -424,6 +531,30 @@ export default function BudgetPlanningPage() {
           </svg>
         </div>
       </div>
+
+      {/* Row Context Menu */}
+      {contextMenu && (
+        <RowContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          recordTitle={`${contextMenu.row.name} Department`}
+          recordId={`$${contextMenu.row.forecast.toLocaleString()}`}
+          recordData={contextMenu.row}
+          customActions={[
+            {
+              label: "Explore Department Ledger Lines",
+              icon: Search,
+              onClick: () => {
+                openAppTab({
+                  href: `/finance/gl?search=${encodeURIComponent(contextMenu.row.name)}`,
+                  title: `GL: ${contextMenu.row.name}`,
+                });
+              },
+            },
+          ]}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
     </div>
   );
 }

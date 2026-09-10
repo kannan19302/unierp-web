@@ -15,8 +15,14 @@ import {
   FileText,
   Send,
   X,
+  FileSpreadsheet,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { RowContextMenu, type ContextMenuAction } from "@/components/finance/RowContextMenu";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
 
 interface TaxFilingRow {
@@ -88,14 +94,25 @@ export default function TaxCompliancePage() {
   const [isGenerating1099, setIsGenerating1099] = useState(false);
   const [gen1099Success, setGen1099Success] = useState<string | null>(null);
 
+  // Row Context Menu
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    title: string;
+    id: string;
+    data: Record<string, any>;
+  } | null>(null);
+
+  const { openAppTab } = useFinanceTabs();
+
   // Modals state
   const [showPrepareModal, setShowPrepareModal] = useState(false);
   const [prepareJurisdiction, setPrepareJurisdiction] = useState("US - California");
   const [prepareEntity, setPrepareEntity] = useState("Acme Corp (US)");
   const [prepareReturnType, setPrepareReturnType] = useState("Sales & Use Tax (Form CDTFA-401)");
-  const [preparePeriod, setPreparePeriod] = useState("Q3 2026");
-  const [prepareDueDate, setPrepareDueDate] = useState("2026-10-31");
-  const [prepareAmount, setPrepareAmount] = useState("34200");
+  const [preparePeriod, setPreparePeriod] = useState("");
+  const [prepareDueDate, setPrepareDueDate] = useState("");
+  const [prepareAmount, setPrepareAmount] = useState("");
   const [isPreparing, setIsPreparing] = useState(false);
   const [prepareSuccess, setPrepareSuccess] = useState(false);
 
@@ -105,19 +122,25 @@ export default function TaxCompliancePage() {
   const [isResolvingException, setIsResolvingException] = useState(false);
   const [exceptionResolvedSuccess, setExceptionResolvedSuccess] = useState(false);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<TaxSummaryData>({
-    queryKey: ["finance-tax-summary"],
+  const scope = useFinanceScope();
+
+  const { data, isLoading, isFetching, error, refetch } = useQuery<TaxSummaryData>({
+    queryKey: ["finance-tax-summary", scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>("/finance/tax/summary");
+      const res = await apiClient.get<any>(
+        `/finance/tax/summary?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as TaxSummaryData;
     },
     refetchInterval: 30000,
   });
 
-  const { data: data1099, isLoading: isLoading1099, refetch: refetch1099 } = useQuery<Summary1099Data>({
-    queryKey: ["finance-tax-1099-summary"],
+  const { data: data1099, isLoading: isLoading1099, error: error1099, refetch: refetch1099 } = useQuery<Summary1099Data>({
+    queryKey: ["finance-tax-1099-summary", scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>("/finance/tax/1099-summary");
+      const res = await apiClient.get<any>(
+        `/finance/tax/1099-summary?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as Summary1099Data;
     },
     refetchInterval: 30000,
@@ -151,7 +174,7 @@ export default function TaxCompliancePage() {
         returnType: prepareReturnType,
         period: preparePeriod,
         targetDate: prepareDueDate,
-        estimatedAmount: Number(prepareAmount) || 0,
+        estimatedAmount: Number(prepareAmount) || undefined,
         notes: "Prepared via statutory tax workbench.",
       });
       setPrepareSuccess(true);
@@ -210,6 +233,27 @@ export default function TaxCompliancePage() {
   };
 
   const filings = data?.filings || [];
+  const vendors1099 = data1099?.vendors || [];
+
+  const exportColumnsFilings: ExportColumn[] = [
+    { header: "Jurisdiction", key: "jurisdiction", type: "text" },
+    { header: "Entity", key: "entity", type: "text" },
+    { header: "Return Type", key: "returnType", type: "text" },
+    { header: "Period", key: "period", type: "text" },
+    { header: "Target Date", key: "targetDate", type: "date" },
+    { header: "Owner", key: "owner", type: "text" },
+    { header: "Status", key: "status", type: "text" },
+  ];
+
+  const exportColumns1099: ExportColumn[] = [
+    { header: "Vendor Name", key: "vendorName", type: "text" },
+    { header: "Tax ID (TIN)", key: "taxIdMasked", type: "text" },
+    { header: "Form Type", key: "formType", type: "text" },
+    { header: "Reportable Spend ($)", key: "box1NonemployeeComp", type: "currency" },
+    { header: "Tax Withheld ($)", key: "federalTaxWithheld", type: "currency" },
+    { header: "State", key: "stateCode", type: "text" },
+    { header: "Compliance Status", key: "status", type: "text" },
+  ];
 
   const selectedFilingRow = selectedFilingId
     ? (data?.filings || []).find((f) => f.id === selectedFilingId)
@@ -275,7 +319,6 @@ export default function TaxCompliancePage() {
       }
     : data?.selectedReturn;
 
-  const vendors1099 = data1099?.vendors || [];
   const selectedVendor = vendors1099.find((v) => v.id === selectedVendorId) || vendors1099[0];
 
   return (
@@ -291,8 +334,25 @@ export default function TaxCompliancePage() {
 
         <div className={styles.headerRight}>
           <div className={styles.liveBadge}>
-            <div className={styles.liveDot} />
-            <span>Live database</span>
+            <div
+              className={styles.liveDot}
+              style={{
+                background: error || error1099
+                  ? "var(--color-danger)"
+                  : isLoading || isLoading1099
+                  ? "var(--color-warning)"
+                  : "var(--color-success)",
+              }}
+            />
+            <span>
+              {error || error1099
+                ? "Connection error"
+                : isLoading || isLoading1099
+                ? "Connecting..."
+                : isFetching
+                ? "Refreshing..."
+                : "Live database"}
+            </span>
             <button
               type="button"
               className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
@@ -307,11 +367,27 @@ export default function TaxCompliancePage() {
             </button>
           </div>
 
+          <ExportMenu
+            filename={activeView === "filings" ? "tax-returns-schedule" : "form-1099-vendor-compliance"}
+            title={activeView === "filings" ? "Statutory Tax Returns Schedule" : "IRS Form 1099 Vendor Compliance"}
+            columns={activeView === "filings" ? exportColumnsFilings : exportColumns1099}
+            data={activeView === "filings" ? filings : vendors1099}
+            buttonLabel="Export tax data"
+          />
+
           <Link
             href="/finance/advanced/tax-filing"
             className={styles.btnSecondary}
+            onClick={(e) => {
+              e.preventDefault();
+              openAppTab({
+                href: "/finance/advanced/tax-filing",
+                title: "Tax Filing Workflow",
+              });
+            }}
           >
-            <span>Tax filing register</span>
+            <FileCheck size={14} />
+            <span>Filing workflow</span>
           </Link>
 
           <button
@@ -324,6 +400,17 @@ export default function TaxCompliancePage() {
           </button>
         </div>
       </div>
+
+      {(error || error1099) && (
+        <FinanceErrorState
+          error={error || error1099}
+          onRetry={() => {
+            refetch();
+            refetch1099();
+          }}
+          moduleName="Tax & Statutory Compliance"
+        />
+      )}
 
       {/* Segmented Control Switcher */}
       <div className={styles.segmentedControl}>
@@ -433,6 +520,16 @@ export default function TaxCompliancePage() {
                             key={row.id}
                             className={`${styles.tr} ${isSelected ? styles.trSelected : ""}`}
                             onClick={() => setSelectedFilingId(row.id)}
+                            onContextMenu={(e) => {
+                              e.preventDefault();
+                              setContextMenu({
+                                x: e.clientX,
+                                y: e.clientY,
+                                title: `${row.jurisdiction} — ${row.returnType}`,
+                                id: row.id,
+                                data: row,
+                              });
+                            }}
                           >
                             <td className={styles.td} style={{ fontWeight: 500 }}>{row.jurisdiction}</td>
                             <td className={styles.td}>{row.entity}</td>
@@ -978,6 +1075,32 @@ export default function TaxCompliancePage() {
             </form>
           </div>
         </div>
+      )}
+      {/* Row Context Menu */}
+      {contextMenu && (
+        <RowContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          recordTitle={contextMenu.title}
+          recordId={contextMenu.id}
+          recordData={contextMenu.data}
+          onOpenInTab={() => {
+            openAppTab({
+              href: `/finance/advanced/tax-filing?id=${contextMenu.id}`,
+              title: contextMenu.title,
+            });
+          }}
+          customActions={[
+            {
+              label: "Review Return Checklist",
+              icon: FileCheck,
+              onClick: () => {
+                setSelectedFilingId(contextMenu.id);
+              },
+            },
+          ]}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </div>
   );

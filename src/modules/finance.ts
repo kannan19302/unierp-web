@@ -627,6 +627,7 @@ export const accountResource = defineResource({
         { value: "ASSET", label: "Asset" },
         { value: "LIABILITY", label: "Liability" },
         { value: "EQUITY", label: "Equity" },
+        { value: "REVENUE", label: "Revenue" },
         { value: "INCOME", label: "Income" },
         { value: "EXPENSE", label: "Expense" },
       ],

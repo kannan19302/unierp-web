@@ -13,6 +13,7 @@ import {
   Clock,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
 
 interface SettingsData {
@@ -53,7 +54,7 @@ export default function FinanceSettingsPage() {
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<SettingsData>({
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery<SettingsData>({
     queryKey: ["finance-settings-overview"],
     queryFn: async () => {
       const res = await apiClient.get<any>("/finance/settings/overview");
@@ -129,8 +130,22 @@ export default function FinanceSettingsPage() {
 
         <div className={styles.headerRight}>
           <div className={styles.liveBadge}>
-            <div className={styles.liveDot} />
-            <span>Live database</span>
+            {!isError && data ? (
+              <>
+                <div className={styles.liveDot} />
+                <span>Live database</span>
+              </>
+            ) : isError ? (
+              <>
+                <div className={styles.liveDot} style={{ background: "var(--color-danger, #ef4444)" }} />
+                <span>Connection error</span>
+              </>
+            ) : (
+              <>
+                <div className={styles.liveDot} style={{ background: "var(--color-warning, #f59e0b)" }} />
+                <span>Connecting...</span>
+              </>
+            )}
             <button
               type="button"
               className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
@@ -143,6 +158,14 @@ export default function FinanceSettingsPage() {
           </div>
         </div>
       </div>
+
+      {isError && (
+        <FinanceErrorState
+          error={error}
+          onRetry={() => refetch()}
+          moduleName="Finance Settings"
+        />
+      )}
 
       {saveError && <div role="alert" className={styles.warningBanner}>{saveError}</div>}
 

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { PageHeader, Card, Button, Badge, DataTable, type Column, KPICard } from "@kannan19302/ui";
 import { useApiClient } from "@kannan19302/framework";
 import { GitCompare, CheckCircle, AlertTriangle, FileText } from "lucide-react";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 
 interface ReconciliationItem {
   id: string;
@@ -16,22 +17,30 @@ interface ReconciliationItem {
   status: "MATCHED" | "VARIANCE";
 }
 
-const fmtCurrency = (n: number) =>
-  `$${Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
+const fmtCurrency = (n: number) => {
+  if (n === 0) return "$0.00";
+  const formatted = Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return n < 0 ? `-$${formatted}` : `$${formatted}`;
+};
 
 export default function AccountReconciliationPage() {
   const client = useApiClient();
   const [items, setItems] = useState<ReconciliationItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchReconciliation = () => {
     setLoading(true);
+    setError(null);
     client
       .get<{ items: ReconciliationItem[] }>(
         `/finance/reports/account-reconciliation?asOfDate=${new Date().toISOString()}`,
       )
       .then((res: any) => setItems(res?.items || []))
-      .catch(() => setItems([]))
+      .catch((err) => {
+        setError(err instanceof Error ? err : new Error(String(err)));
+        setItems([]);
+      })
       .finally(() => setLoading(false));
   };
 
@@ -93,6 +102,27 @@ export default function AccountReconciliationPage() {
       ),
     },
   ];
+
+  if (error && !loading) {
+    return (
+      <div className="ui-stack-6">
+        <PageHeader
+          title="Account Reconciliation"
+          description="Match sub-ledger balances to the general ledger and identify variances"
+          actions={
+            <Button variant="primary" onClick={fetchReconciliation}>
+              Run Reconciliation
+            </Button>
+          }
+        />
+        <FinanceErrorState
+          title="Failed to Load Account Reconciliation"
+          error={error}
+          onRetry={fetchReconciliation}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="ui-stack-6">

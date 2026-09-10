@@ -91,7 +91,7 @@ export default function AdvancedTaxOperationsPage() {
     { id: "reconciliations", label: "VAT & Reconciliation", href: "#reconciliations", icon: Percent }, { id: "withholding", label: "Withholding", href: "#withholding", icon: FileCheck }, { id: "amendments", label: "Amended Filings", href: "#amendments", icon: Calculator },
   ];
 
-  return <RouteGuard permission="finance.tax.read"><main className="ui-page-container space-y-4">
+  return <RouteGuard permission="finance.tax.read"><div className="ui-page-container space-y-4">
     <header className="ui-page-head"><div><h1 className="ui-page-title">Advanced Tax Operations</h1><p className="ui-page-subtitle">Versioned jurisdictions, exemptions, VAT reconciliation, withholding certificates, and amended filings.</p></div><Button variant="outline" onClick={load}><RefreshCw size={16} /> Refresh</Button></header>
     {error && <div role="alert" className="ui-alert ui-alert-error">{error}</div>}{success && <div role="status" className="ui-alert ui-alert-success">{success}</div>}
     {dashboard && (
@@ -198,5 +198,5 @@ export default function AdvancedTaxOperationsPage() {
     {tab === "reconciliations" && <ListPageTemplate columns={columns("Reconciliation")} data={reconciliations} loading={loading} emptyTitle="No reconciliations" emptyDescription="Compute a period reconciliation." />}
     {tab === "withholding" && <ListPageTemplate columns={columns("Withholding")} data={withholding} loading={loading} emptyTitle="No withholding certificates" emptyDescription="Create or bulk-generate certificates." />}
     {tab === "amendments" && <ListPageTemplate columns={columns("Amendment")} data={amendments} loading={loading} emptyTitle="No amended filings" emptyDescription="Create an amendment from an original filing." />}
-  </main></RouteGuard>;
+  </div></RouteGuard>;
 }

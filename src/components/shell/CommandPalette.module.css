@@ -24,6 +24,30 @@
   animation: modalSlideUp 0.15s ease-out;
 }
 
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Visually hidden screen-reader live region */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .searchHeader {
   display: flex;
   align-items: center;
@@ -42,7 +66,7 @@
 }
 
 .kbd {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   padding: var(--space-half) var(--space-1-5);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
@@ -54,6 +78,15 @@
   flex: 1;
   overflow-y: auto;
   padding: var(--space-2);
+}
+
+.groupLabel {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary, var(--color-text-secondary));
 }
 
 .noResults {
@@ -68,7 +101,7 @@
   align-items: center;
   gap: var(--space-3);
   width: 100%;
-  padding: var(--space-2.5) var(--space-3);
+  padding: var(--space-2-5) var(--space-3);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -86,6 +119,11 @@
   color: var(--color-text);
 }
 
+.resultBtn:focus-visible {
+  outline: 2px solid var(--color-focus-ring, var(--color-primary));
+  outline-offset: -2px;
+}
+
 .resultTextWrapper {
   flex: 1;
   overflow: hidden;
@@ -99,8 +137,16 @@
   white-space: nowrap;
 }
 
+.resultSubtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary, var(--color-text-secondary));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .resultType {
-  font-size: 10px;
+  font-size: var(--text-2xs);
   color: var(--color-text-tertiary);
   flex-shrink: 0;
 }
@@ -111,7 +157,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--color-text-tertiary);
 }
 

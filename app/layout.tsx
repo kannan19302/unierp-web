@@ -8,6 +8,7 @@ import "@kannan19302/ui/styles";
 // shell/wizard-grid.module.css; without this it renders unstyled. Same pairing
 // provider-admin-os already uses.
 import "@kannan19302/ui/styles.css";
+import "@/styles/strata-global.css";
 // Imported from their subpaths, not the root barrel.
 //
 // The root barrel re-exports these modules with `export *`, and a star
@@ -50,13 +51,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={inter.variable}
+      className={`${inter.variable} ${inter.className}`}
       data-theme="strata"
       data-density="standard"
       data-platform="apps"
       suppressHydrationWarning
     >
-      <body>
+      <body className={inter.className}>
         <ThemeProvider defaultSetting="strata" defaultDensity="standard" defaultPlatform="apps">
           <AuthShell>
             <QueryProvider>

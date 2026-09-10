@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   RefreshCw,
@@ -14,8 +15,16 @@ import {
   TrendingUp,
   FileSpreadsheet,
   X,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { RowContextMenu, type ContextMenuAction } from "@/components/finance/RowContextMenu";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
 
 interface BankAccountItem {
@@ -70,16 +79,41 @@ export default function BankingTreasuryPage() {
 
   // Import Statement Modal State
   const [showImportModal, setShowImportModal] = useState(false);
-  const [importAccountId, setImportAccountId] = useState("acc-001");
+  const [importAccountId, setImportAccountId] = useState("");
   const [importFormat, setImportFormat] = useState<"OFX" | "QIF" | "CSV" | "CAMT_053">("CSV");
-  const [importFilename, setImportFilename] = useState("august_2026_bank_stmt.csv");
+  const [importFilename, setImportFilename] = useState("");
+  const [importStatementDate, setImportStatementDate] = useState("");
   const [isImporting, setIsImporting] = useState(false);
   const [importSuccess, setImportSuccess] = useState(false);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<BankingSummaryData>({
-    queryKey: ["finance-banking-summary"],
+  // Sorting & Row Context Menu
+  const [sortField, setSortField] = useState<keyof ReconciliationItem>("date");
+  const [sortAsc, setSortAsc] = useState(false);
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    row: ReconciliationItem;
+  } | null>(null);
+
+  const { openAppTab } = useFinanceTabs();
+  const scope = useFinanceScope();
+
+  const searchParams = useSearchParams();
+
+  // Support ?action=new deep-linking from global header and command palette
+  useEffect(() => {
+    const action = searchParams.get("action");
+    if (action === "new" || action === "import") {
+      setShowImportModal(true);
+    }
+  }, [searchParams]);
+
+  const { data, isLoading, isFetching, error, refetch } = useQuery<BankingSummaryData>({
+    queryKey: ["finance-banking-summary", scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>("/finance/banking/summary");
+      const res = await apiClient.get<any>(
+        `/finance/banking/summary?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as BankingSummaryData;
     },
     refetchInterval: 30000,
@@ -103,14 +137,14 @@ export default function BankingTreasuryPage() {
 
   const handleImportStatement = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!importAccountId) return;
     setIsImporting(true);
     try {
       await apiClient.post("/finance/banking/import-statement", {
         accountId: importAccountId,
         format: importFormat,
-        statementDate: "2026-08-31",
-        filename: importFilename || "statement_import.csv",
-        transactionsCount: 14,
+        statementDate: importStatementDate || undefined,
+        filename: importFilename || undefined,
       });
       setImportSuccess(true);
       setTimeout(() => {
@@ -124,6 +158,46 @@ export default function BankingTreasuryPage() {
       setIsImporting(false);
     }
   };
+
+  const handleSort = (field: keyof ReconciliationItem) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(true);
+    }
+  };
+
+  const sortedReconRows = [...(data?.reconciliationRows || [])].sort((a, b) => {
+    const valA = a[sortField];
+    const valB = b[sortField];
+    if (typeof valA === "number" && typeof valB === "number") {
+      return sortAsc ? valA - valB : valB - valA;
+    }
+    return sortAsc
+      ? String(valA).localeCompare(String(valB))
+      : String(valB).localeCompare(String(valA));
+  });
+
+  const exportColumns: ExportColumn[] = [
+    { header: "Date", key: "date", type: "date" },
+    { header: "Description", key: "desc", type: "text" },
+    { header: "Bank Amount ($)", key: "bankAmount", type: "currency" },
+    { header: "Ledger Amount ($)", key: "ledgerAmount", type: "currency" },
+    { header: "Difference ($)", key: "diff", type: "currency" },
+    { header: "Confidence (%)", key: "matchConfidence", type: "number" },
+    { header: "Status", key: "status", type: "text" },
+  ];
+
+  const exportData = sortedReconRows.map((r) => ({
+    date: r.date,
+    desc: r.desc,
+    bankAmount: r.bankAmount,
+    ledgerAmount: r.ledgerAmount,
+    diff: r.diff,
+    matchConfidence: r.matchConfidence,
+    status: r.status,
+  }));
 
   const accounts = data?.accounts || [];
 
@@ -169,8 +243,25 @@ export default function BankingTreasuryPage() {
 
         <div className={styles.headerRight}>
           <div className={styles.liveBadge}>
-            <div className={styles.liveDot} />
-            <span>Live database</span>
+            <div
+              className={styles.liveDot}
+              style={{
+                background: error
+                  ? "var(--color-danger)"
+                  : isLoading
+                  ? "var(--color-warning)"
+                  : "var(--color-success)",
+              }}
+            />
+            <span>
+              {error
+                ? "Connection error"
+                : isLoading
+                ? "Connecting..."
+                : isFetching
+                ? "Refreshing..."
+                : "Live database"}
+            </span>
             <button
               type="button"
               className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
@@ -182,9 +273,24 @@ export default function BankingTreasuryPage() {
             </button>
           </div>
 
+          <ExportMenu
+            filename="bank-reconciliations"
+            title="Bank Account Reconciliations Report"
+            columns={exportColumns}
+            data={exportData}
+            buttonLabel="Export banking"
+          />
+
           <Link
             href="/finance/advanced/bank-feeds"
             className={styles.btnSecondary}
+            onClick={(e) => {
+              e.preventDefault();
+              openAppTab({
+                href: "/finance/advanced/bank-feeds",
+                title: "Bank Feeds",
+              });
+            }}
           >
             <span>Import statement</span>
           </Link>
@@ -192,13 +298,26 @@ export default function BankingTreasuryPage() {
           <button
             type="button"
             className={styles.btnPrimary}
-            onClick={() => setShowImportModal(true)}
+            onClick={() => {
+              setImportAccountId(accounts[0]?.id || "");
+              setImportFilename("");
+              setImportStatementDate("");
+              setShowImportModal(true);
+            }}
           >
             <Upload size={14} />
             <span>Quick upload</span>
           </button>
         </div>
       </div>
+
+      {error && (
+        <FinanceErrorState
+          error={error}
+          onRetry={() => refetch()}
+          moduleName="Banking & Treasury Reconciliations"
+        />
+      )}
 
       {/* 3 Bank Account Cards */}
       <div className={styles.accountsRow}>
@@ -242,11 +361,56 @@ export default function BankingTreasuryPage() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th className={styles.th}>Date</th>
-                  <th className={styles.th}>Description</th>
-                  <th className={`${styles.th} ${styles.thRight}`}>Bank Amount</th>
-                  <th className={`${styles.th} ${styles.thRight}`}>Ledger Amount</th>
-                  <th className={styles.th}>Match Status</th>
+                  <th className={styles.th} onClick={() => handleSort("date")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                      <span>Date</span>
+                      {sortField === "date" ? (
+                        sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                      ) : (
+                        <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                      )}
+                    </div>
+                  </th>
+                  <th className={styles.th} onClick={() => handleSort("desc")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                      <span>Description</span>
+                      {sortField === "desc" ? (
+                        sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                      ) : (
+                        <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                      )}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.thRight}`} onClick={() => handleSort("bankAmount")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "0.25rem" }}>
+                      <span>Bank Amount</span>
+                      {sortField === "bankAmount" ? (
+                        sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                      ) : (
+                        <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                      )}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.thRight}`} onClick={() => handleSort("ledgerAmount")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "0.25rem" }}>
+                      <span>Ledger Amount</span>
+                      {sortField === "ledgerAmount" ? (
+                        sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                      ) : (
+                        <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                      )}
+                    </div>
+                  </th>
+                  <th className={styles.th} onClick={() => handleSort("status")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                      <span>Match Status</span>
+                      {sortField === "status" ? (
+                        sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                      ) : (
+                        <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                      )}
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -259,13 +423,21 @@ export default function BankingTreasuryPage() {
                     </tr>
                   ))
                 ) : (
-                  (data?.reconciliationRows || []).map((row) => {
+                  sortedReconRows.map((row) => {
                     const isSelected = (selectedTxId || matchDetail?.bankTransaction.id) === row.id;
                     return (
                       <tr
                         key={row.id}
                         className={`${styles.tr} ${isSelected ? styles.trSelected : ""}`}
                         onClick={() => setSelectedTxId(row.id)}
+                        onContextMenu={(e) => {
+                          e.preventDefault();
+                          setContextMenu({
+                            x: e.clientX,
+                            y: e.clientY,
+                            row,
+                          });
+                        }}
                       >
                         <td className={styles.td}>{row.date}</td>
                         <td className={styles.td}>{row.desc}</td>
@@ -502,11 +674,13 @@ export default function BankingTreasuryPage() {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label className={styles.formLabel}>Statement cut-off date</label>
+                  <label className={styles.formLabel} htmlFor="import-cutoff-date">Statement cut-off date</label>
                   <input
+                    id="import-cutoff-date"
                     type="date"
                     className={styles.formInput}
-                    defaultValue="2026-08-31"
+                    value={importStatementDate}
+                    onChange={(e) => setImportStatementDate(e.target.value)}
                   />
                 </div>
 
@@ -538,6 +712,33 @@ export default function BankingTreasuryPage() {
             </form>
           </div>
         </div>
+      )}
+      {/* Row Context Menu */}
+      {contextMenu && (
+        <RowContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          recordId={contextMenu.row.id}
+          recordTitle={`${contextMenu.row.desc} ($${contextMenu.row.bankAmount.toLocaleString()})`}
+          recordData={contextMenu.row}
+          onOpenInTab={() => {
+            openAppTab({
+              href: `/finance/advanced/bank-recon?tx=${contextMenu.row.id}`,
+              title: "Bank Recon",
+            });
+          }}
+          customActions={[
+            {
+              label: "Confirm Match & Reconcile",
+              icon: Check,
+              onClick: () => {
+                setSelectedTxId(contextMenu.row.id);
+                handleConfirmMatch();
+              },
+            },
+          ]}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </div>
   );

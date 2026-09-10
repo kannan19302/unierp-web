@@ -50,11 +50,17 @@ function getQuickAction(href: string): { title: string; href: string } | null {
   if (href === "/finance/gl") {
     return { title: "New Journal Entry", href: "/finance/gl?action=new" };
   }
-  if (href === "/finance/ar") {
-    return { title: "New Invoice", href: "/finance/ar?action=new" };
+  if (href === "/finance/ar" || href === "/finance/invoices") {
+    return { title: "New Invoice", href: "/finance/invoices?action=new" };
   }
-  if (href === "/finance/ap") {
-    return { title: "New Bill", href: "/finance/ap?action=new" };
+  if (href === "/finance/ap" || href === "/finance/vendor-bills") {
+    return { title: "New Bill", href: "/finance/vendor-bills?action=new" };
+  }
+  if (href === "/finance/assets") {
+    return { title: "New Asset", href: "/finance/assets?action=new" };
+  }
+  if (href === "/finance/banking") {
+    return { title: "Import Feed", href: "/finance/banking?action=new" };
   }
   return null;
 }

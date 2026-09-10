@@ -75,7 +75,7 @@ export default function AssetOperationsPage() {
   const projectColumns: ListColumn[] = [...common, { key: "id", header: "Actions", render: (_: any, row: Row) => buttons(<><Button size="sm" variant="outline" onClick={() => viewProject(row)}>View</Button><Button size="sm" variant="outline" onClick={() => updateProject(row)}>Update</Button><Button size="sm" variant="outline" onClick={() => addProjectCost(row)}>Add cost</Button><Button size="sm" variant="outline" onClick={() => convertProject(row)}>Convert</Button></>) }];
   const disposalColumns: ListColumn[] = [...common, { key: "id", header: "Actions", render: (_: any, row: Row) => <Button size="sm" variant="outline" onClick={() => postDisposal(row)}>Post GL</Button> }];
 
-  return <RouteGuard permission="finance.assets.read"><main className="ui-page-container space-y-4">
+  return <RouteGuard permission="finance.assets.read"><div className="ui-page-container space-y-4">
     <header className="ui-page-head"><div><h1 className="ui-page-title">Asset Accounting Operations</h1><p className="ui-page-subtitle">Insurance, impairment, capital projects, revaluation, disposal, depreciation, and audit evidence.</p></div><Button variant="outline" onClick={load}><RefreshCw size={16} /> Refresh</Button></header>
     {error && <div role="alert" className="ui-alert ui-alert-error">{error}</div>}{success && <div role="status" className="ui-alert ui-alert-success">{success}</div>}
     {detail != null && (
@@ -159,5 +159,5 @@ export default function AssetOperationsPage() {
     {tab === "impairments" && <ListPageTemplate columns={impairmentColumns} data={impairments} loading={loading} emptyTitle="No impairment tests" emptyDescription="Create an impairment test." />}
     {tab === "projects" && <ListPageTemplate columns={projectColumns} data={projects} loading={loading} emptyTitle="No capital projects" emptyDescription="Create a capital project." />}
     {tab === "disposals" && <ListPageTemplate columns={disposalColumns} data={disposals} loading={loading} emptyTitle="No asset disposals" emptyDescription="Create an asset disposal." />}
-  </main></RouteGuard>;
+  </div></RouteGuard>;
 }

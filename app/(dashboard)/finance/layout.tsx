@@ -1,5 +1,6 @@
 import React from "react";
 import { FinanceShellV2 } from "@/components/shell/FinanceShellV2";
+import { FinanceScopeProvider } from "@/components/shell/FinanceScopeContext";
 
 export default function FinanceLayout({
   children,
@@ -8,7 +9,9 @@ export default function FinanceLayout({
 }) {
   return (
     <div data-density="ultra-compact">
-      <FinanceShellV2>{children}</FinanceShellV2>
+      <FinanceScopeProvider>
+        <FinanceShellV2>{children}</FinanceShellV2>
+      </FinanceScopeProvider>
     </div>
   );
 }

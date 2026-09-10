@@ -16,8 +16,15 @@ import {
   FileText,
   X,
   Trash2,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { RowContextMenu, type ContextMenuAction } from "@/components/finance/RowContextMenu";
+import { BatchActionBar, type BatchAction } from "@/components/finance/BatchActionBar";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
 import styles from "./page.module.css";
 import { RecurringJournalsTab } from "./RecurringJournalsTab";
 
@@ -98,6 +105,18 @@ export default function JournalEntriesWorkspacePage() {
   // Direct Approve & Post State
   const [isPosting, setIsPosting] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
+
+  // Sorting & Batch Selection State
+  const [sortField, setSortField] = useState<keyof JournalEntryLine>("date");
+  const [sortAsc, setSortAsc] = useState(false);
+  const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    row: JournalEntryLine;
+  } | null>(null);
+
+  const { openAppTab } = useFinanceTabs();
 
   const { data, isLoading, isFetching, refetch } = useQuery<GlSummaryData>({
     queryKey: ["finance-gl-summary"],
@@ -227,30 +246,99 @@ export default function JournalEntriesWorkspacePage() {
     }
   };
 
-  // Handle Export CSV
-  const handleExport = () => {
-    const headers = ["Entry", "Date", "Account Code", "Account Name", "Description", "Debit", "Credit", "Status", "Reference"];
-    const rows = filteredEntries.map((e) => [
-      e.entryNumber,
-      e.date,
-      e.accountCode,
-      e.accountName,
-      e.description,
-      e.debit.toFixed(2),
-      e.credit.toFixed(2),
-      e.status,
-      e.reference,
-    ]);
-    const csv = [headers, ...rows]
-      .map((row) => row.map((val) => `"${String(val).replaceAll('"', '""')}"`).join(","))
-      .join("\n");
-    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = "journal-entries.csv";
-    anchor.click();
-    URL.revokeObjectURL(url);
+  // Handle Column Sorting
+  const handleSort = (field: keyof JournalEntryLine) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(true);
+    }
   };
+
+  const sortedEntries = [...filteredEntries].sort((a, b) => {
+    const valA = a[sortField];
+    const valB = b[sortField];
+    if (typeof valA === "number" && typeof valB === "number") {
+      return sortAsc ? valA - valB : valB - valA;
+    }
+    return sortAsc
+      ? String(valA).localeCompare(String(valB))
+      : String(valB).localeCompare(String(valA));
+  });
+
+  // Toggle selection
+  const toggleSelectAll = () => {
+    if (selectedRows.size === sortedEntries.length) {
+      setSelectedRows(new Set());
+    } else {
+      setSelectedRows(new Set(sortedEntries.map((e) => e.entryNumber)));
+    }
+  };
+
+  const toggleSelectRow = (entryNumber: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const next = new Set(selectedRows);
+    if (next.has(entryNumber)) {
+      next.delete(entryNumber);
+    } else {
+      next.add(entryNumber);
+    }
+    setSelectedRows(next);
+  };
+
+  // Export Columns Configuration
+  const exportColumns: ExportColumn[] = [
+    { header: "Voucher #", key: "entryNumber", type: "text" },
+    { header: "Date", key: "date", type: "date" },
+    { header: "Account Code", key: "accountCode", type: "text" },
+    { header: "Account Name", key: "accountName", type: "text" },
+    { header: "Description", key: "description", type: "text" },
+    { header: "Debit ($)", key: "debit", type: "currency" },
+    { header: "Credit ($)", key: "credit", type: "currency" },
+    { header: "Status", key: "status", type: "text" },
+    { header: "Reference", key: "reference", type: "text" },
+  ];
+
+  const exportData = sortedEntries.map((e) => ({
+    entryNumber: e.entryNumber,
+    date: e.date,
+    accountCode: e.accountCode,
+    accountName: e.accountName,
+    description: e.description,
+    debit: e.debit,
+    credit: e.credit,
+    status: e.status,
+    reference: e.reference || "—",
+  }));
+
+  // Batch actions
+  const batchActions: BatchAction[] = [
+    {
+      label: "Batch Approve & Post",
+      icon: Check,
+      variant: "primary",
+      onClick: async () => {
+        const count = selectedRows.size;
+        for (const entryNumber of selectedRows) {
+          try {
+            await apiClient.post("/finance/gl/post-journal", { entryNumber });
+          } catch {}
+        }
+        showToast(`${count} journal entries processed for approval and posting.`);
+        setSelectedRows(new Set());
+        await queryClient.invalidateQueries({ queryKey: ["finance-gl-summary"] });
+      },
+    },
+    {
+      label: "Export Selected",
+      icon: FileSpreadsheet,
+      variant: "secondary",
+      onClick: () => {
+        showToast(`Exporting ${selectedRows.size} selected journal vouchers.`);
+      },
+    },
+  ];
 
   return (
     <div className={styles.pageContainer}>
@@ -278,15 +366,13 @@ export default function JournalEntriesWorkspacePage() {
             </button>
           </div>
 
-          <button
-            type="button"
-            className={styles.btnSecondary}
-            onClick={handleExport}
-            title="Export to CSV"
-          >
-            <FileSpreadsheet size={14} />
-            <span>Export CSV</span>
-          </button>
+          <ExportMenu
+            filename="journal-entries"
+            title="General Journal Entries Report"
+            columns={exportColumns}
+            data={exportData}
+            buttonLabel="Export journals"
+          />
 
           <button
             type="button"
@@ -441,32 +527,111 @@ export default function JournalEntriesWorkspacePage() {
                 <table className={styles.table}>
                   <thead>
                     <tr>
-                      <th>Voucher #</th>
-                      <th>Date</th>
-                      <th>Account</th>
+                      <th style={{ width: "2rem", textAlign: "center" }}>
+                        <input
+                          type="checkbox"
+                          checked={selectedRows.size > 0 && selectedRows.size === sortedEntries.length}
+                          onChange={toggleSelectAll}
+                          aria-label="Select all vouchers"
+                        />
+                      </th>
+                      <th onClick={() => handleSort("entryNumber")} style={{ cursor: "pointer" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          <span>Voucher #</span>
+                          {sortField === "entryNumber" ? (
+                            sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                          ) : (
+                            <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                          )}
+                        </div>
+                      </th>
+                      <th onClick={() => handleSort("date")} style={{ cursor: "pointer" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          <span>Date</span>
+                          {sortField === "date" ? (
+                            sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                          ) : (
+                            <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                          )}
+                        </div>
+                      </th>
+                      <th onClick={() => handleSort("accountCode")} style={{ cursor: "pointer" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          <span>Account</span>
+                          {sortField === "accountCode" ? (
+                            sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                          ) : (
+                            <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                          )}
+                        </div>
+                      </th>
                       <th>Description</th>
-                      <th className={styles.textRight}>Debit</th>
-                      <th className={styles.textRight}>Credit</th>
-                      <th>Status</th>
+                      <th className={styles.textRight} onClick={() => handleSort("debit")} style={{ cursor: "pointer" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "0.25rem" }}>
+                          <span>Debit</span>
+                          {sortField === "debit" ? (
+                            sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                          ) : (
+                            <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                          )}
+                        </div>
+                      </th>
+                      <th className={styles.textRight} onClick={() => handleSort("credit")} style={{ cursor: "pointer" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "0.25rem" }}>
+                          <span>Credit</span>
+                          {sortField === "credit" ? (
+                            sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                          ) : (
+                            <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                          )}
+                        </div>
+                      </th>
+                      <th onClick={() => handleSort("status")} style={{ cursor: "pointer" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          <span>Status</span>
+                          {sortField === "status" ? (
+                            sortAsc ? <ArrowUp size={11} /> : <ArrowDown size={11} />
+                          ) : (
+                            <ArrowUpDown size={11} color="var(--color-text-muted)" />
+                          )}
+                        </div>
+                      </th>
                       <th>Reference</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredEntries.map((row, idx) => {
+                    {sortedEntries.map((row, idx) => {
                       const isSelected = row.entryNumber === activeInspector?.selectedEntryNumber;
+                      const isChecked = selectedRows.has(row.entryNumber);
                       return (
                         <tr
                           key={`${row.id || row.entryNumber}-${idx}`}
-                          className={isSelected ? styles.rowSelected : ""}
+                          className={`${isSelected ? styles.rowSelected : ""} ${isChecked ? styles.rowChecked : ""}`}
                           onClick={() => setSelectedEntryNumber(row.entryNumber)}
+                          onContextMenu={(e) => {
+                            e.preventDefault();
+                            setContextMenu({
+                              x: e.clientX,
+                              y: e.clientY,
+                              row,
+                            });
+                          }}
                         >
+                          <td style={{ textAlign: "center" }} onClick={(e) => e.stopPropagation()}>
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={(e) => toggleSelectRow(row.entryNumber, e as any)}
+                              aria-label={`Select voucher ${row.entryNumber}`}
+                            />
+                          </td>
                           <td className={styles.tdMono}>{row.entryNumber}</td>
                           <td className={styles.tdMono}>{row.date}</td>
                           <td>
                             <span className={styles.tdMono}>{row.accountCode}</span>{" "}
                             <span>{row.accountName}</span>
                           </td>
-                          <td style={{ maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis" }}>
+                          <td style={{ maxWidth: "13.75rem", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {row.description}
                           </td>
                           <td className={`${styles.textRight} ${styles.tdMono}`}>
@@ -938,6 +1103,66 @@ export default function JournalEntriesWorkspacePage() {
           </div>
         </div>
       )}
+      {/* Row Context Menu */}
+      {contextMenu && (
+        <RowContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          recordId={contextMenu.row.entryNumber}
+          recordTitle={`${contextMenu.row.accountName} (${contextMenu.row.accountCode})`}
+          recordData={contextMenu.row}
+          onOpenInTab={() => {
+            openAppTab({
+              href: `/finance/journal-entries?entry=${contextMenu.row.entryNumber}`,
+              title: contextMenu.row.entryNumber,
+            });
+            setSelectedEntryNumber(contextMenu.row.entryNumber);
+          }}
+          customActions={[
+            ...(contextMenu.row.status === "DRAFT"
+              ? [
+                  {
+                    label: "Approve & Post Voucher",
+                    icon: Check,
+                    onClick: async () => {
+                      try {
+                        await apiClient.post("/finance/gl/post-journal", {
+                          entryNumber: contextMenu.row.entryNumber,
+                        });
+                        showToast(`Journal ${contextMenu.row.entryNumber} approved and posted.`);
+                        await queryClient.invalidateQueries({ queryKey: ["finance-gl-summary"] });
+                      } catch (err: any) {
+                        showToast(err?.message || "Failed to post voucher.");
+                      }
+                    },
+                  },
+                ]
+              : []),
+            ...(contextMenu.row.status === "POSTED"
+              ? [
+                  {
+                    label: "Reverse Journal Voucher",
+                    icon: RotateCcw,
+                    destructive: true,
+                    onClick: () => {
+                      setSelectedEntryNumber(contextMenu.row.entryNumber);
+                      setShowReverseModal(true);
+                    },
+                  },
+                ]
+              : []),
+          ]}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
+
+      {/* Floating Batch Action Dock */}
+      <BatchActionBar
+        selectedCount={selectedRows.size}
+        itemTypeLabel="journal vouchers"
+        actions={batchActions}
+        onClearSelection={() => setSelectedRows(new Set())}
+      />
     </div>
   );
 }

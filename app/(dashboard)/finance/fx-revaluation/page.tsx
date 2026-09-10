@@ -11,10 +11,32 @@ import {
   TrendingUp,
   TrendingDown,
   ArrowRight,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  BookOpen,
+  Calculator,
   X,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { RowContextMenu } from "@/components/finance/RowContextMenu";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
+
+const exportColumns: ExportColumn[] = [
+  { key: "account", header: "Account", type: "text" },
+  { key: "counterparty", header: "Counterparty / Ref", type: "text" },
+  { key: "currency", header: "Currency", type: "text" },
+  { key: "foreignBalance", header: "Foreign Balance", type: "currency" },
+  { key: "bookValue", header: "Book Value (USD)", type: "currency" },
+  { key: "currentSpotRate", header: "Spot Rate", type: "number" },
+  { key: "revaluedValue", header: "Revalued Value (USD)", type: "currency" },
+  { key: "unrealizedGainLoss", header: "Unrealized Gain/Loss", type: "currency" },
+  { key: "status", header: "Status", type: "text" },
+];
 
 interface SpotRateItem {
   pair: string;
@@ -72,17 +94,62 @@ export default function FxRevaluationPage() {
     netGainLoss: number;
   } | null>(null);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<FxSummaryData>({
-    queryKey: ["finance-fx-summary"],
+  const scope = useFinanceScope();
+
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery<FxSummaryData>({
+    queryKey: ["finance-fx-summary", scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>("/finance/fx-revaluation/summary");
+      const res = await apiClient.get<any>(
+        `/finance/fx-revaluation/summary?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as FxSummaryData;
     },
     refetchInterval: 30000,
   });
 
+  const { openAppTab } = useFinanceTabs();
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    row: ExposureItem;
+  } | null>(null);
+  const [sortField, setSortField] = useState<keyof ExposureItem>("unrealizedGainLoss");
+  const [sortAsc, setSortAsc] = useState(false);
+
   const exposures = data?.exposures || [];
   const selectedExposure = exposures.find((e) => e.id === selectedExposureId) || exposures[0];
+
+  const handleSort = (field: keyof ExposureItem) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(false);
+    }
+  };
+
+  const sortedExposures = [...exposures].sort((a, b) => {
+    const valA = a[sortField];
+    const valB = b[sortField];
+    if (typeof valA === "number" && typeof valB === "number") {
+      return sortAsc ? valA - valB : valB - valA;
+    }
+    return sortAsc
+      ? String(valA).localeCompare(String(valB))
+      : String(valB).localeCompare(String(valA));
+  });
+
+  const exportData = sortedExposures.map((exp) => ({
+    account: exp.account,
+    counterparty: `${exp.counterparty} (${exp.reference})`,
+    currency: exp.currency,
+    foreignBalance: exp.foreignBalance,
+    bookValue: exp.bookValue,
+    currentSpotRate: exp.currentSpotRate,
+    revaluedValue: exp.revaluedValue,
+    unrealizedGainLoss: exp.unrealizedGainLoss,
+    status: exp.status,
+  }));
 
   const handleRunRevaluation = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -124,6 +191,18 @@ export default function FxRevaluationPage() {
     }).format(val || 0);
   };
 
+  if (isError) {
+    return (
+      <div className={styles.pageContainer}>
+        <FinanceErrorState
+          title="Failed to Load FX Revaluation Data"
+          error={error}
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.pageContainer}>
       {/* Header Row */}
@@ -135,9 +214,9 @@ export default function FxRevaluationPage() {
           </p>
         </div>
         <div className={styles.headerRight}>
-          <div className={styles.liveBadge} title="Real-time rates from market feed">
+          <div className={styles.liveBadge} title="Rates from market feed">
             <span className={styles.liveDot} />
-            <span>ECB / Reuters Feed Active</span>
+            <span>{data ? "ECB / Market Feed Connected" : "Feed Standby"}</span>
           </div>
           <button
             type="button"
@@ -149,6 +228,13 @@ export default function FxRevaluationPage() {
           >
             <RefreshCw size={14} className={isFetching ? styles.refreshSpin : ""} />
           </button>
+          <ExportMenu
+            filename="fx-revaluation-schedule"
+            title="Multi-Currency FX Revaluation Schedule"
+            columns={exportColumns}
+            data={exportData}
+            buttonLabel="Export FX Data"
+          />
           <button
             type="button"
             className={styles.btnPrimary}
@@ -250,18 +336,53 @@ export default function FxRevaluationPage() {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th className={styles.th}>Account / Counterparty</th>
-                  <th className={styles.th}>Currency</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Foreign Balance</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Book Value (USD)</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Spot Rate</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Revalued (USD)</th>
-                  <th className={`${styles.th} ${styles.numCell}`}>Unrealized G/L</th>
+                  <th className={styles.th} onClick={() => handleSort("account")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                      <span>Account / Counterparty</span>
+                      {sortField === "account" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={styles.th} onClick={() => handleSort("currency")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
+                      <span>Currency</span>
+                      {sortField === "currency" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("foreignBalance")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Foreign Balance</span>
+                      {sortField === "foreignBalance" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("bookValue")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Book Value (USD)</span>
+                      {sortField === "bookValue" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("currentSpotRate")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Spot Rate</span>
+                      {sortField === "currentSpotRate" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("revaluedValue")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Revalued (USD)</span>
+                      {sortField === "revaluedValue" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
+                  <th className={`${styles.th} ${styles.numCell}`} onClick={() => handleSort("unrealizedGainLoss")} style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+                      <span>Unrealized G/L</span>
+                      {sortField === "unrealizedGainLoss" ? (sortAsc ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} style={{ opacity: 0.4 }} />}
+                    </div>
+                  </th>
                   <th className={styles.th}>Status</th>
                 </tr>
               </thead>
               <tbody>
-                {exposures.map((exp) => {
+                {sortedExposures.map((exp) => {
                   const isSelected =
                     selectedExposure?.id === exp.id ||
                     (!selectedExposure && exp === exposures[0]);
@@ -272,6 +393,10 @@ export default function FxRevaluationPage() {
                       key={exp.id}
                       className={`${styles.row} ${isSelected ? styles.rowSelected : ""}`}
                       onClick={() => setSelectedExposureId(exp.id)}
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                        setContextMenu({ x: e.clientX, y: e.clientY, row: exp });
+                      }}
                     >
                       <td className={styles.td}>
                         <div className={styles.monoCell}>{exp.account}</div>
@@ -525,6 +650,43 @@ export default function FxRevaluationPage() {
             </form>
           </div>
         </div>
+      )}
+
+      {/* Row Context Menu */}
+      {contextMenu && (
+        <RowContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          recordId={contextMenu.row.account}
+          recordTitle={`${contextMenu.row.currency} position: ${contextMenu.row.account}`}
+          recordData={contextMenu.row}
+          onOpenInTab={() => {
+            openAppTab({
+              href: `/finance/advanced/chart-of-accounts`,
+              title: "Chart of Accounts",
+            });
+          }}
+          customActions={[
+            {
+              label: "Inspect Position Details",
+              icon: Calculator,
+              onClick: () => {
+                setSelectedExposureId(contextMenu.row.id);
+              },
+            },
+            {
+              label: "View Exchange Rates",
+              icon: BookOpen,
+              onClick: () => {
+                openAppTab({
+                  href: `/finance/advanced/exchange-rates`,
+                  title: "Exchange Rates",
+                });
+              },
+            },
+          ]}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </div>
   );

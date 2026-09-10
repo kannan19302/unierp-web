@@ -13,9 +13,15 @@ import {
   ExternalLink,
   X,
   CheckCircle2,
+  Search,
 } from "lucide-react";
 import Link from "next/link";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { RowContextMenu, type ContextMenuAction } from "@/components/finance/RowContextMenu";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
 
 interface PnlLineItem {
@@ -53,10 +59,22 @@ export default function FinancialReportsPage() {
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<ReportsPnlData>({
-    queryKey: ["finance-reports-pnl"],
+  // Row Context Menu
+  const [contextMenu, setContextMenu] = useState<{
+    x: number;
+    y: number;
+    row: PnlLineItem;
+  } | null>(null);
+
+  const { openAppTab } = useFinanceTabs();
+  const scope = useFinanceScope();
+
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery<ReportsPnlData>({
+    queryKey: ["finance-reports-pnl", scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>("/finance/reports/pnl?period=2026-08");
+      const res = await apiClient.get<any>(
+        `/finance/reports/pnl?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as ReportsPnlData;
     },
     refetchInterval: 30000,
@@ -64,40 +82,85 @@ export default function FinancialReportsPage() {
 
   const lineItems = data?.lineItems || [];
 
+  const exportColumns: ExportColumn[] = [
+    { header: "Line Item", key: "lineItem", type: "text" },
+    { header: "Aug 2026 ($)", key: "aug2026", type: "currency" },
+    { header: "Jul 2026 ($)", key: "jul2026", type: "currency" },
+    { header: "Variance ($)", key: "change", type: "currency" },
+  ];
+
+  const exportData = lineItems.map((r) => ({
+    lineItem: r.lineItem,
+    aug2026: r.aug2026,
+    jul2026: r.jul2026,
+    change: r.change,
+  }));
+
   const handleExportStatement = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsExporting(true);
     try {
-      await apiClient.post("/finance/reports/export", {
-        reportType: exportReportType,
-        format: exportFormat,
-        period: exportPeriod,
-        includeAuditFootnotes,
-      });
-
-      // Also trigger file download on client
-      const headers = ["Line Item", "Aug 2026 (USD)", "Jul 2026 (USD)", "Change (USD)"];
-      const rows = lineItems.map((r) => [
-        `"${r.lineItem}"`,
-        r.aug2026.toFixed(2),
-        r.jul2026.toFixed(2),
-        r.change.toFixed(2),
-      ]);
-      const csvContent = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", `${exportReportType.toLowerCase()}-${exportPeriod.toLowerCase().replace(/\s+/g, "_")}.${exportFormat.toLowerCase()}`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (exportFormat === "CSV") {
+        const headers = ["Line Item", `${scope.period} (USD)`, "Prior Period (USD)", "Variance (USD)"];
+        const rows = lineItems.map((r) => [
+          `"${r.lineItem.replaceAll('"', '""')}"`,
+          r.aug2026.toFixed(2),
+          r.jul2026.toFixed(2),
+          r.change.toFixed(2),
+        ]);
+        const csvContent = "\uFEFF" + [headers.join(","), ...rows.map((row) => row.join(","))].join("\r\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `${exportReportType.toLowerCase()}-${scope.period.toLowerCase().replace(/\s+/g, "_")}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      } else if (exportFormat === "XLSX") {
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <Worksheet ss:Name="Financial Statement">
+  <Table>
+   <Row>
+    <Cell><Data ss:Type="String">Line Item</Data></Cell>
+    <Cell><Data ss:Type="String">${scope.period} (USD)</Data></Cell>
+    <Cell><Data ss:Type="String">Prior Period (USD)</Data></Cell>
+    <Cell><Data ss:Type="String">Variance (USD)</Data></Cell>
+   </Row>
+   ${lineItems.map(r => `
+   <Row>
+    <Cell><Data ss:Type="String">${r.lineItem}</Data></Cell>
+    <Cell><Data ss:Type="Number">${r.aug2026}</Data></Cell>
+    <Cell><Data ss:Type="Number">${r.jul2026}</Data></Cell>
+    <Cell><Data ss:Type="Number">${r.change}</Data></Cell>
+   </Row>`).join("")}
+  </Table>
+ </Worksheet>
+</Workbook>`;
+        const blob = new Blob([xml], { type: "application/vnd.ms-excel;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `${exportReportType.toLowerCase()}-${scope.period.toLowerCase().replace(/\s+/g, "_")}.xls`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      } else if (exportFormat === "PDF") {
+        window.print();
+      }
 
       setExportSuccess(true);
       setTimeout(() => {
         setExportSuccess(false);
         setShowExportModal(false);
-      }, 1200);
+      }, 1500);
     } catch (err) {
       console.error("Failed to export financial report:", err);
     } finally {
@@ -120,8 +183,22 @@ export default function FinancialReportsPage() {
 
         <div className={styles.headerRight}>
           <div className={styles.liveBadge}>
-            <div className={styles.liveDot} />
-            <span>Live database</span>
+            {!isError && data ? (
+              <>
+                <div className={styles.liveDot} />
+                <span>Live database</span>
+              </>
+            ) : isError ? (
+              <>
+                <div className={styles.liveDot} style={{ background: "var(--color-danger, #ef4444)" }} />
+                <span>Offline / Error</span>
+              </>
+            ) : (
+              <>
+                <div className={styles.liveDot} style={{ background: "var(--color-warning, #f59e0b)" }} />
+                <span>Connecting...</span>
+              </>
+            )}
             <button
               type="button"
               className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
@@ -133,13 +210,27 @@ export default function FinancialReportsPage() {
             </button>
           </div>
 
-          <Link
-            href="/finance/advanced/reports"
+          <ExportMenu
+            filename="financial-statement"
+            title="Financial Statement Report"
+            columns={exportColumns}
+            data={exportData}
+            buttonLabel="Export statement"
+          />
+
+          <button
+            type="button"
             className={styles.btnSecondary}
+            onClick={() =>
+              openAppTab({
+                href: "/finance/advanced/reports",
+                title: "Report Schedules",
+              })
+            }
           >
             <Calendar size={14} />
             <span>Schedule</span>
-          </Link>
+          </button>
 
           <button
             type="button"
@@ -148,7 +239,7 @@ export default function FinancialReportsPage() {
             disabled={lineItems.length === 0}
           >
             <Download size={14} />
-            <span>Export report</span>
+            <span>Custom export</span>
           </button>
         </div>
       </div>
@@ -212,6 +303,14 @@ export default function FinancialReportsPage() {
                     <tr
                       key={i}
                       className={row.isSubtotal ? styles.trSubtotal : styles.tr}
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                        setContextMenu({
+                          x: e.clientX,
+                          y: e.clientY,
+                          row,
+                        });
+                      }}
                     >
                       <td className={styles.td} style={{ paddingLeft: row.isSubtotal ? "var(--space-3)" : "var(--space-5)" }}>
                         {row.lineItem}
@@ -384,6 +483,29 @@ export default function FinancialReportsPage() {
             </form>
           </div>
         </div>
+      )}
+      {/* Row Context Menu */}
+      {contextMenu && (
+        <RowContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          recordTitle={contextMenu.row.lineItem}
+          recordId={`$${contextMenu.row.aug2026.toLocaleString()}`}
+          recordData={contextMenu.row}
+          customActions={[
+            {
+              label: "Drilldown to General Ledger",
+              icon: Search,
+              onClick: () => {
+                openAppTab({
+                  href: `/finance/gl?search=${encodeURIComponent(contextMenu.row.lineItem)}`,
+                  title: `GL: ${contextMenu.row.lineItem}`,
+                });
+              },
+            },
+          ]}
+          onClose={() => setContextMenu(null)}
+        />
       )}
     </div>
   );

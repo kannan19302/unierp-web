@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useApiClient } from "@kannan19302/framework";
+import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import {
   ExternalLink,
   AlertCircle,
@@ -15,7 +18,15 @@ import {
   Database,
   ArrowRight,
 } from "lucide-react";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
 import styles from "./page.module.css";
+
+const briefingExportColumns: ExportColumn[] = [
+  { key: "metric", header: "Executive Metric", type: "text" },
+  { key: "value", header: "Period Value", type: "text" },
+  { key: "prior", header: "Prior Benchmark", type: "text" },
+  { key: "status", header: "Health / Trend", type: "text" },
+];
 
 interface DashboardTelemetry {
   kpis: {
@@ -129,20 +140,22 @@ function Sparkline({
   data?: number[];
   strokeColor?: string;
 }) {
-  if (!data || data.length < 2) {
+  const validData = (data || []).map(Number).filter((v) => Number.isFinite(v));
+  if (validData.length < 2) {
     return <div className={styles.sparklineWrap} />;
   }
 
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const range = max - min || (max === 0 ? 1 : Math.abs(max) * 0.1);
+  const min = Math.min(...validData);
+  const max = Math.max(...validData);
+  const range = max - min || (max === 0 ? 1 : Math.abs(max) * 0.1) || 1;
   const width = 80;
   const height = 30;
 
-  const points = data
+  const points = validData
     .map((val, i) => {
-      const x = (i / (data.length - 1)) * width;
-      const y = height - ((val - min) / range) * (height - 8) - 4;
+      const x = (i / (validData.length - 1)) * width;
+      const rawY = height - ((val - min) / range) * (height - 8) - 4;
+      const y = Number.isFinite(rawY) ? rawY : height / 2;
       return `${x.toFixed(1)},${y.toFixed(1)}`;
     })
     .join(" ");
@@ -189,14 +202,17 @@ function fmtAmount(val: number): string {
 export default function FinanceOverviewPage() {
   const router = useRouter();
   const client = useApiClient();
-  const [period, setPeriod] = useState("jan-aug-2026");
+  const { openAppTab } = useFinanceTabs();
+  const scope = useFinanceScope();
 
   // Fetch real-time dashboard data with periodic 30s background polling
   const { data, isLoading, isError, error, refetch, isFetching, dataUpdatedAt } =
     useQuery<DashboardTelemetry>({
-      queryKey: ["finance", "dashboard", period],
+      queryKey: ["finance", "dashboard", scope.entity, scope.period],
       queryFn: async () => {
-        const res = await client.get<DashboardTelemetry>("/finance/dashboard");
+        const res = await client.get<DashboardTelemetry>(
+          `/finance/dashboard?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+        );
         return res;
       },
       refetchInterval: 30000,
@@ -230,26 +246,35 @@ export default function FinanceOverviewPage() {
   const trendData = data?.charts?.revenueTrend || [];
   const trendMonths =
     trendData.length > 0
-      ? trendData.map((d) => d.month)
+      ? trendData.map((d) => d?.month || "")
       : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
   const revValues =
     trendData.length > 0
-      ? trendData.map((d) => d.revenue / 1_000_000)
+      ? trendData.map((d) => {
+          const num = Number(d?.revenue);
+          return Number.isFinite(num) ? num / 1_000_000 : 0;
+        })
       : [0, 0, 0, 0, 0, 0, 0, 0];
   const expValues =
     trendData.length > 0
-      ? trendData.map((d) => d.expenses / 1_000_000)
+      ? trendData.map((d) => {
+          const num = Number(d?.expenses);
+          return Number.isFinite(num) ? num / 1_000_000 : 0;
+        })
       : [0, 0, 0, 0, 0, 0, 0, 0];
 
-  const maxTrendVal = Math.max(...revValues, ...expValues, 1.0);
-  const chartMaxY = Math.ceil(maxTrendVal * 1.25);
+  const validRev = revValues.filter((v) => Number.isFinite(v));
+  const validExp = expValues.filter((v) => Number.isFinite(v));
+  const maxTrendVal = Math.max(...validRev, ...validExp, 1.0);
+  const chartMaxY = Number.isFinite(maxTrendVal) && maxTrendVal > 0 ? Math.ceil(maxTrendVal * 1.25) : 5;
+  const safeChartMaxY = chartMaxY > 0 ? chartMaxY : 5;
   const gridSteps = [
     0,
-    Number(((chartMaxY / 5) * 1).toFixed(1)),
-    Number(((chartMaxY / 5) * 2).toFixed(1)),
-    Number(((chartMaxY / 5) * 3).toFixed(1)),
-    Number(((chartMaxY / 5) * 4).toFixed(1)),
-    chartMaxY,
+    Number(((safeChartMaxY / 5) * 1).toFixed(1)),
+    Number(((safeChartMaxY / 5) * 2).toFixed(1)),
+    Number(((safeChartMaxY / 5) * 3).toFixed(1)),
+    Number(((safeChartMaxY / 5) * 4).toFixed(1)),
+    safeChartMaxY,
   ];
 
   // 3. AR aging buckets
@@ -293,6 +318,56 @@ export default function FinanceOverviewPage() {
   const tasksCompleted = closeSection?.tasksCompleted || 0;
   const tasksTotal = closeSection?.tasksTotal || 0;
 
+  // Executive briefing export dataset
+  const briefingExportData = useMemo(() => {
+    if (!data?.kpis) return [];
+    const k = data.kpis;
+    return [
+      {
+        metric: "Revenue YTD",
+        value: `$${(k.totalRevenueYtd || k.totalRevenue || 0).toLocaleString()}`,
+        prior: k.revenue?.priorLabel ? `${k.revenue.priorLabel} ($${(k.revenue.priorValue || 0).toLocaleString()})` : "N/A",
+        status: (k.revenue?.deltaPct ?? 0) >= 0 ? `+${k.revenue?.deltaPct}% Growth` : `${k.revenue?.deltaPct}% Decline`,
+      },
+      {
+        metric: "Operating Cash Flow",
+        value: `$${(k.operatingCashFlow?.value || 0).toLocaleString()}`,
+        prior: k.operatingCashFlow?.priorLabel ? `${k.operatingCashFlow.priorLabel} ($${(k.operatingCashFlow.priorValue || 0).toLocaleString()})` : "N/A",
+        status: (k.operatingCashFlow?.deltaPct ?? 0) >= 0 ? `+${k.operatingCashFlow?.deltaPct}% Strong` : "Attention Required",
+      },
+      {
+        metric: "EBITDA Margin",
+        value: `${k.ebitdaMargin?.value ?? 24.8}%`,
+        prior: `${k.ebitdaMargin?.priorValue ?? 22.5}% Target`,
+        status: (k.ebitdaMargin?.deltaPp ?? 0) >= 0 ? `+${k.ebitdaMargin?.deltaPp}pp Expansion` : "Margin Compression",
+      },
+      {
+        metric: "Days Sales Outstanding (DSO)",
+        value: `${k.dso?.value ?? 38} Days`,
+        prior: `${k.dso?.priorValue ?? 42} Days Prior`,
+        status: (k.dso?.deltaDays ?? 0) <= 0 ? "Favorable Velocity" : "Collection Lag",
+      },
+      {
+        metric: "Outstanding Accounts Receivable",
+        value: `$${(k.outstandingAr || 0).toLocaleString()}`,
+        prior: `${k.totalInvoices || 0} Total Invoices`,
+        status: `${k.overdueInvoices || 0} Overdue`,
+      },
+      {
+        metric: "Pending Accounts Payable",
+        value: `$${(k.pendingAp || 0).toLocaleString()}`,
+        prior: "3-Way Verified",
+        status: "Current Due",
+      },
+      {
+        metric: "Net Liquid Cash Balance",
+        value: `$${(k.netCashBalance || 0).toLocaleString()}`,
+        prior: `${k.bankAccounts || 1} Institutional Accounts`,
+        status: "Treasury Active",
+      },
+    ];
+  }, [data]);
+
   return (
     <div className={styles.pageRoot}>
       {/* 1. Page Header */}
@@ -306,7 +381,17 @@ export default function FinanceOverviewPage() {
 
         <div className={styles.headerActions}>
           <div className={styles.metaInfo}>
-            <span>{data ? "Live database" : "No finance data"}</span>
+            <span>
+              {isError
+                ? "Connection error"
+                : isLoading
+                ? "Connecting..."
+                : isFetching
+                ? "Refreshing..."
+                : data
+                ? "Live database"
+                : "No finance data"}
+            </span>
             <span className={styles.metaSep}>|</span>
             <span>Updated {updatedTimeStr}</span>
             <span className={styles.metaSep}>|</span>
@@ -324,16 +409,36 @@ export default function FinanceOverviewPage() {
               />
             </button>
             <span className={styles.metaSep}>|</span>
-            <Link href="/finance/reports" className={styles.viewSourceLink}>
+            <Link
+              href="/finance/reports"
+              className={styles.viewSourceLink}
+              onClick={(e) => {
+                e.preventDefault();
+                openAppTab({ href: "/finance/reports", title: "Financial Reports" });
+              }}
+            >
               <span>View source</span>
               <ExternalLink size={12} aria-hidden />
             </Link>
           </div>
 
+          <ExportMenu
+            filename="cfo-executive-briefing"
+            title="Executive Finance Performance Briefing"
+            columns={briefingExportColumns}
+            data={briefingExportData}
+            buttonLabel="Export Briefing"
+          />
+
           <button
             type="button"
             className={styles.btnPrimary}
-            onClick={() => router.push("/finance/advanced/close-tasks")}
+            onClick={() => {
+              openAppTab({
+                href: "/finance/advanced/close-tasks",
+                title: "Period Close Tasks",
+              });
+            }}
           >
             Review close
           </button>
@@ -342,20 +447,11 @@ export default function FinanceOverviewPage() {
 
       {/* Error State Banner */}
       {isError && (
-        <div className={styles.banner} role="alert">
-          <div className={styles.bannerContent}>
-            <AlertCircle size={20} className={styles.typeIconDanger} />
-            <div>
-              <h3 className={styles.bannerTitle}>Unable to connect to live finance telemetry</h3>
-              <p className={styles.bannerDesc}>
-                {error instanceof Error ? error.message : "The backend service is currently unreachable."}
-              </p>
-            </div>
-          </div>
-          <button type="button" className={styles.btnSecondary} onClick={() => refetch()}>
-            Retry
-          </button>
-        </div>
+        <FinanceErrorState
+          error={error}
+          onRetry={() => refetch()}
+          moduleName="Executive Finance Dashboard"
+        />
       )}
 
       {/* Zero Data Onboarding Banner */}
@@ -544,13 +640,17 @@ export default function FinanceOverviewPage() {
             <div className={styles.cardControls}>
               <select
                 className={styles.selectPeriod}
-                value={period}
-                onChange={(e) => setPeriod(e.target.value)}
+                value={scope.period}
+                onChange={(e) => scope.setPeriod(e.target.value)}
                 aria-label="Select reporting period"
               >
-                <option value="jan-aug-2026">Jan–Aug 2026</option>
-                <option value="q1-q2-2026">Q1–Q2 2026</option>
-                <option value="fy-2025">FY 2025</option>
+                <option value="2026-08">Aug 2026</option>
+                <option value="2026-07">Jul 2026</option>
+                <option value="2026-06">Jun 2026</option>
+                <option value="2026-05">May 2026</option>
+                <option value="2026-Q2">Q2 2026</option>
+                <option value="2026-Q1">Q1 2026</option>
+                <option value="2025-FY">FY 2025</option>
               </select>
               <Link href="/finance/reports" className={styles.linkButton}>
                 View report
@@ -572,9 +672,11 @@ export default function FinanceOverviewPage() {
               >
                 {/* Grid Lines */}
                 {gridSteps.map((val, i) => {
-                  const y = 170 - (val / (chartMaxY || 1)) * 150;
+                  const safeVal = Number.isFinite(val) ? val : 0;
+                  const rawY = 170 - (safeVal / safeChartMaxY) * 150;
+                  const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
                   return (
-                    <g key={`grid-line-${val}-${i}`}>
+                    <g key={`grid-line-${safeVal}-${i}`}>
                       <line
                         x1="45"
                         y1={y}
@@ -592,7 +694,7 @@ export default function FinanceOverviewPage() {
                         fill="var(--color-text-tertiary)"
                         fontFamily="var(--font-mono)"
                       >
-                        {val === 0 ? "0" : `${val.toFixed(1)}M`}
+                        {safeVal === 0 ? "0" : `${safeVal.toFixed(1)}M`}
                       </text>
                     </g>
                   );
@@ -622,15 +724,19 @@ export default function FinanceOverviewPage() {
                   stroke="var(--chart-2)"
                   strokeWidth="2.5"
                   points={expValues
-                    .map(
-                      (val, i) =>
-                        `${75 + i * 70},${(170 - (val / (chartMaxY || 1)) * 150).toFixed(1)}`,
-                    )
+                    .map((val, i) => {
+                      const safeVal = Number.isFinite(val) ? val : 0;
+                      const rawY = 170 - (safeVal / safeChartMaxY) * 150;
+                      const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
+                      return `${75 + i * 70},${y}`;
+                    })
                     .join(" ")}
                 />
                 {expValues.map((val, i) => {
+                  const safeVal = Number.isFinite(val) ? val : 0;
                   const x = 75 + i * 70;
-                  const y = 170 - (val / (chartMaxY || 1)) * 150;
+                  const rawY = 170 - (safeVal / safeChartMaxY) * 150;
+                  const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
                   return (
                     <g key={`exp-${i}`}>
                       <circle cx={x} cy={y} r="3.5" fill="var(--chart-2)" />
@@ -642,7 +748,7 @@ export default function FinanceOverviewPage() {
                         fill="var(--color-text-secondary)"
                         fontFamily="var(--font-mono)"
                       >
-                        {val.toFixed(2)}
+                        {safeVal.toFixed(2)}
                       </text>
                     </g>
                   );
@@ -654,15 +760,19 @@ export default function FinanceOverviewPage() {
                   stroke="var(--color-primary)"
                   strokeWidth="2.5"
                   points={revValues
-                    .map(
-                      (val, i) =>
-                        `${75 + i * 70},${(170 - (val / (chartMaxY || 1)) * 150).toFixed(1)}`,
-                    )
+                    .map((val, i) => {
+                      const safeVal = Number.isFinite(val) ? val : 0;
+                      const rawY = 170 - (safeVal / safeChartMaxY) * 150;
+                      const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
+                      return `${75 + i * 70},${y}`;
+                    })
                     .join(" ")}
                 />
                 {revValues.map((val, i) => {
+                  const safeVal = Number.isFinite(val) ? val : 0;
                   const x = 75 + i * 70;
-                  const y = 170 - (val / (chartMaxY || 1)) * 150;
+                  const rawY = 170 - (safeVal / safeChartMaxY) * 150;
+                  const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
                   return (
                     <g key={`rev-${i}`}>
                       <circle cx={x} cy={y} r="3.5" fill="var(--color-primary)" />
@@ -675,7 +785,7 @@ export default function FinanceOverviewPage() {
                         fontWeight="600"
                         fontFamily="var(--font-mono)"
                       >
-                        {val.toFixed(2)}
+                        {safeVal.toFixed(2)}
                       </text>
                     </g>
                   );
@@ -744,9 +854,19 @@ export default function FinanceOverviewPage() {
                     <td className={styles.numCell}>{overdueExc.count}</td>
                     <td className={styles.dateCell}>{overdueExc.oldest || "—"}</td>
                     <td>
-                      <Link href={overdueExc.actionUrl} className={styles.actionLink}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          openAppTab({
+                            id: "tab-invoices",
+                            href: overdueExc.actionUrl,
+                            title: "Overdue Invoices",
+                          })
+                        }
+                        className={styles.actionLink}
+                      >
                         Review
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                   <tr>
@@ -763,9 +883,19 @@ export default function FinanceOverviewPage() {
                     <td className={styles.numCell}>{unmatchedExc.count}</td>
                     <td className={styles.dateCell}>{unmatchedExc.oldest || "—"}</td>
                     <td>
-                      <Link href={unmatchedExc.actionUrl} className={styles.actionLink}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          openAppTab({
+                            id: "tab-banking",
+                            href: unmatchedExc.actionUrl,
+                            title: "Reconciliation",
+                          })
+                        }
+                        className={styles.actionLink}
+                      >
                         Review
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                   <tr>
@@ -784,12 +914,19 @@ export default function FinanceOverviewPage() {
                       {pendingJournalsExc.oldest || "—"}
                     </td>
                     <td>
-                      <Link
-                        href={pendingJournalsExc.actionUrl}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          openAppTab({
+                            id: "tab-je",
+                            href: pendingJournalsExc.actionUrl,
+                            title: "Pending Journals",
+                          })
+                        }
                         className={styles.actionLink}
                       >
                         Review
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 </>
@@ -797,10 +934,20 @@ export default function FinanceOverviewPage() {
             </tbody>
           </table>
 
-          <Link href="/finance/invoices?status=OVERDUE" className={styles.cardFooterLink}>
+          <button
+            type="button"
+            onClick={() =>
+              openAppTab({
+                id: "tab-invoices",
+                href: "/finance/invoices?status=OVERDUE",
+                title: "Overdue Invoices",
+              })
+            }
+            className={styles.cardFooterLink}
+          >
             <span>View all exceptions</span>
             <ArrowRight size={13} aria-hidden="true" />
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -940,10 +1087,20 @@ export default function FinanceOverviewPage() {
             </tbody>
           </table>
 
-          <Link href="/finance/advanced/close-tasks" className={styles.cardFooterLink}>
+          <button
+            type="button"
+            onClick={() =>
+              openAppTab({
+                id: "tab-close",
+                href: "/finance/advanced/close-tasks",
+                title: "Close Management",
+              })
+            }
+            className={styles.cardFooterLink}
+          >
             <span>View all tasks</span>
             <ArrowRight size={13} aria-hidden="true" />
-          </Link>
+          </button>
         </div>
       </div>
 

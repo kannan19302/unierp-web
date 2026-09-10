@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,
@@ -16,6 +17,9 @@ import {
   Trash2,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
+import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
+import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
 import styles from "./page.module.css";
 
 interface JournalEntryLine {
@@ -51,7 +55,7 @@ interface GlSummaryData {
     approvalStatus: string;
     reviewer: string;
     lines: Array<{ code: string; name: string; debit: number; credit: number }>;
-  };
+  } | null;
 }
 
 interface FormLineItem {
@@ -65,29 +69,39 @@ interface FormLineItem {
 export default function GeneralLedgerPage() {
   const apiClient = useApiClient();
   const queryClient = useQueryClient();
+  const scope = useFinanceScope();
+  const searchParams = useSearchParams();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedEntry, setSelectedEntry] = useState<string | null>(null);
   const [isPosting, setIsPosting] = useState(false);
   const [postSuccess, setPostSuccess] = useState(false);
 
-  // New Journal Entry Modal State
+  // New Journal Entry Modal State — clean blank lines by default (FIN-08)
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  useEffect(() => {
+    if (searchParams?.get("action") === "new") {
+      setShowCreateModal(true);
+    }
+  }, [searchParams]);
   const [createDate, setCreateDate] = useState(new Date().toISOString().slice(0, 10));
   const [createRef, setCreateRef] = useState("");
   const [createDescription, setCreateDescription] = useState("");
-  const [postImmediately, setPostImmediately] = useState(true);
+  const [postImmediately, setPostImmediately] = useState(false);
   const [createLines, setCreateLines] = useState<FormLineItem[]>([
-    { accountCode: "1010", accountName: "Operating Cash", description: "Voucher debit line", debit: 12500, credit: 0 },
-    { accountCode: "4010", accountName: "Subscription Revenue", description: "Voucher credit line", debit: 0, credit: 12500 },
+    { accountCode: "", accountName: "", description: "", debit: 0, credit: 0 },
+    { accountCode: "", accountName: "", description: "", debit: 0, credit: 0 },
   ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
 
-  const { data, isLoading, isFetching, refetch } = useQuery<GlSummaryData>({
-    queryKey: ["finance-gl-summary"],
+  const { data, isLoading, isFetching, isError, error, refetch } = useQuery<GlSummaryData>({
+    queryKey: ["finance-gl-summary", scope.entity, scope.period],
     queryFn: async () => {
-      const res = await apiClient.get<any>("/finance/gl/summary");
+      const res = await apiClient.get<any>(
+        `/finance/gl/summary?entity=${encodeURIComponent(scope.entity)}&period=${encodeURIComponent(scope.period)}`
+      );
       return (res?.data || res) as GlSummaryData;
     },
     refetchInterval: 30000,
@@ -154,27 +168,27 @@ export default function GeneralLedgerPage() {
     );
   });
 
-  const handleExport = () => {
-    const headers = ["Entry", "Date", "Account", "Description", "Debit", "Credit", "Status"];
-    const rows = filteredEntries.map((entry) => [
-      entry.entryNumber,
-      entry.date,
-      `${entry.accountCode} ${entry.accountName}`,
-      entry.description,
-      entry.debit.toFixed(2),
-      entry.credit.toFixed(2),
-      entry.status,
-    ]);
-    const csv = [headers, ...rows]
-      .map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(","))
-      .join("\n");
-    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = "general-ledger.csv";
-    anchor.click();
-    URL.revokeObjectURL(url);
-  };
+  const exportColumns: ExportColumn[] = [
+    { key: "entryNumber", header: "Entry #", type: "text" },
+    { key: "date", header: "Date", type: "date" },
+    { key: "account", header: "Account", type: "text" },
+    { key: "description", header: "Description / Memo", type: "text" },
+    { key: "debit", header: "Debit ($)", type: "currency" },
+    { key: "credit", header: "Credit ($)", type: "currency" },
+    { key: "status", header: "Status", type: "text" },
+    { key: "reference", header: "Reference", type: "text" },
+  ];
+
+  const exportRows = filteredEntries.map((entry) => ({
+    entryNumber: entry.entryNumber,
+    date: entry.date,
+    account: `${entry.accountCode} ${entry.accountName}`,
+    description: entry.description,
+    debit: Number(entry.debit || 0).toFixed(2),
+    credit: Number(entry.credit || 0).toFixed(2),
+    status: entry.status,
+    reference: entry.reference || "N/A",
+  }));
 
   const selectedRow = selectedEntry
     ? (data?.entries || []).find((e) => e.entryNumber === selectedEntry)
@@ -215,8 +229,22 @@ export default function GeneralLedgerPage() {
 
         <div className={styles.headerRight}>
           <div className={styles.liveBadge}>
-            <div className={styles.liveDot} />
-            <span>Live database</span>
+            {!isError && data ? (
+              <>
+                <div className={styles.liveDot} />
+                <span>Live database</span>
+              </>
+            ) : isError ? (
+              <>
+                <div className={styles.liveDot} style={{ background: "var(--color-danger, #ef4444)" }} />
+                <span>Connection error</span>
+              </>
+            ) : (
+              <>
+                <div className={styles.liveDot} style={{ background: "var(--color-warning, #f59e0b)" }} />
+                <span>Connecting...</span>
+              </>
+            )}
             <button
               type="button"
               className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
@@ -228,14 +256,13 @@ export default function GeneralLedgerPage() {
             </button>
           </div>
 
-          <button
-            type="button"
-            className={styles.btnSecondary}
-            onClick={handleExport}
-          >
-            <FileSpreadsheet size={14} />
-            <span>Export ledger</span>
-          </button>
+          <ExportMenu
+            filename="general-ledger"
+            title="General Ledger Report"
+            columns={exportColumns}
+            data={exportRows}
+            buttonLabel="Export ledger"
+          />
 
           <button
             type="button"
@@ -243,10 +270,20 @@ export default function GeneralLedgerPage() {
             onClick={() => setShowCreateModal(true)}
           >
             <Plus size={14} />
-            <span>Post journal entry</span>
+            <span>Create journal entry</span>
           </button>
         </div>
       </div>
+
+      {/* Inline Error State for service or query failure (FIN-01, FIN-13) */}
+      {isError && (
+        <FinanceErrorState
+          error={error}
+          title="General Ledger service unavailable"
+          onRetry={() => refetch()}
+          isRetrying={isFetching}
+        />
+      )}
 
       {/* KPI Strip */}
       <div className={styles.kpiStrip}>
@@ -254,7 +291,11 @@ export default function GeneralLedgerPage() {
           <span className={styles.kpiLabel}>Total debits</span>
           <div className={styles.kpiValueRow}>
             <span className={styles.kpiValue}>
-              USD {isLoading ? "..." : ((data?.kpis.totalDebits ?? 0) / 1e6).toFixed(2) + "M"}
+              {isLoading
+                ? "..."
+                : isError
+                ? "Unavailable"
+                : `USD ${Number(data?.kpis.totalDebits ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
             </span>
           </div>
         </div>
@@ -263,11 +304,17 @@ export default function GeneralLedgerPage() {
           <span className={styles.kpiLabel}>Total credits</span>
           <div className={styles.kpiValueRow}>
             <span className={styles.kpiValue}>
-              USD {isLoading ? "..." : ((data?.kpis.totalCredits ?? 0) / 1e6).toFixed(2) + "M"}
+              {isLoading
+                ? "..."
+                : isError
+                ? "Unavailable"
+                : `USD ${Number(data?.kpis.totalCredits ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
             </span>
-            <span className={styles.kpiBadgeSuccess}>
-              <Check size={11} /> In balance
-            </span>
+            {!isError && data && data.kpis.inBalance && (data.kpis.totalDebits ?? 0) > 0 && (
+              <span className={styles.kpiBadgeSuccess}>
+                <Check size={11} /> In balance
+              </span>
+            )}
           </div>
         </div>
 
@@ -275,9 +322,14 @@ export default function GeneralLedgerPage() {
           <span className={styles.kpiLabel}>Unposted journals</span>
           <div className={styles.kpiValueRow}>
             <span className={styles.kpiValue}>
-              {isLoading ? "..." : (data?.kpis.unpostedJournals ?? 0)}
+              {isLoading ? "..." : isError ? "Unavailable" : (data?.kpis.unpostedJournals ?? 0)}
             </span>
-            <span className={styles.kpiBadgeWarning}>Review required</span>
+            {!isError && data && (data.kpis.unpostedJournals ?? 0) > 0 && (
+              <span className={styles.kpiBadgeWarning}>Review required</span>
+            )}
+            {!isError && data && (data.kpis.unpostedJournals ?? 0) === 0 && (
+              <span className={styles.kpiBadgeSuccess}>Up to date</span>
+            )}
           </div>
         </div>
 

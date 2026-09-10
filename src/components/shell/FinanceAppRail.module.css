@@ -111,3 +111,81 @@
 .avatarButton:hover {
   box-shadow: 0 0 0 2px var(--color-primary);
 }
+
+.brandGlyph {
+  display: block;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast, 150ms ease);
+}
+
+.brandGlyph:hover {
+  transform: scale(1.04);
+}
+
+.draggableWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: grab;
+}
+
+.draggableWrap:active {
+  cursor: grabbing;
+}
+
+.isDragging {
+  opacity: 0.4;
+  transform: scale(0.95);
+}
+
+.contextOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.railContextMenu {
+  position: fixed;
+  z-index: 10000;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-1) 0;
+  min-width: 12rem;
+}
+
+.railMenuTitle {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold, 600);
+  color: var(--color-text-tertiary);
+  padding: var(--space-1) var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.railMenuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1-5) var(--space-3);
+  background: transparent;
+  border: none;
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.railMenuItem:hover {
+  background: var(--color-bg-subtle);
+}
+
+@media (max-width: 768px) {
+  .rail {
+    display: none !important;
+  }
+}
+
