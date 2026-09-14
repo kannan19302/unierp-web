@@ -768,6 +768,8 @@ export default function AccountsReceivablePage() {
             </span>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Aging & Settlement Terms</div>
+
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Aging Status</span>
             <span className={styles.inspectorFieldValue} style={{ display: "flex", alignItems: "center", gap: "var(--space-1)" }}>
@@ -786,12 +788,16 @@ export default function AccountsReceivablePage() {
             </span>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Customer Contact & Communications</div>
+
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Key Contact</span>
             <span className={styles.inspectorFieldValue} style={{ fontSize: "var(--text-2xs)" }}>
               {activeInspector?.contactPerson || "—"} • {activeInspector?.contactEmail || "—"}
             </span>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Dunning Activity Trail</div>
 
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Recent Activity Timeline</span>

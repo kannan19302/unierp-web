@@ -248,7 +248,8 @@
 }
 
 .trSelected {
-  background-color: rgba(37, 99, 235, 0.06);
+  background-color: var(--color-primary-subtle, rgba(37, 99, 235, 0.08)) !important;
+  box-shadow: inset 3px 0 0 0 var(--color-primary);
 }
 
 .td {
@@ -268,12 +269,27 @@
 }
 
 .badgeService {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   background-color: rgba(16, 185, 129, 0.1);
   color: var(--color-success);
-  border-radius: var(--radius-sm);
-  padding: 1px var(--space-1);
-  font-size: var(--text-2xs);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-full, 9999px);
+  padding: 0.125rem var(--space-2);
+  font-size: var(--text-2xs, 0.6875rem);
   font-weight: 600;
+}
+
+.inspectorSectionHeader {
+  font-size: var(--text-2xs, 0.625rem);
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-border-subtle);
+  margin-top: var(--space-1);
 }
 
 /* Inspector */
@@ -303,9 +319,14 @@
 
 .assetIdBadge {
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
+  font-size: var(--text-2xs, 0.6875rem);
   color: var(--color-primary);
+  background: var(--color-primary-subtle, rgba(37, 99, 235, 0.08));
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: var(--radius-sm, 4px);
+  padding: 0.125rem var(--space-2);
   font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .inspectorField {

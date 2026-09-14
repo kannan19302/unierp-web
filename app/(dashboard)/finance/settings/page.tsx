@@ -353,11 +353,11 @@ export default function FinanceSettingsPage() {
         <div className={styles.inspectorPanel}>
           <div className={styles.inspectorHeader}>
             <span className={styles.inspectorTitle}>Policy Context</span>
-            <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-muted)" }}>Governance</span>
+            <span className={styles.voucherPill}>SOC-1 / SOX 404</span>
           </div>
 
           <div className={styles.inspectorField}>
-            <span className={styles.inspectorFieldLabel}>Operating Scope</span>
+            <span className={styles.inspectorFieldLabel}>OPERATING SCOPE &amp; JURISDICTION</span>
             <span className={styles.inspectorFieldValue} style={{ fontWeight: 600 }}>
               {policy?.scope || "Acme Corp / US Operations"}
             </span>

@@ -231,6 +231,29 @@
   font-family: var(--font-mono);
 }
 
+.voucherPill {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs, 0.6875rem);
+  color: var(--color-primary);
+  background: var(--color-primary-subtle, rgba(37, 99, 235, 0.08));
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: var(--radius-sm, 4px);
+  padding: 0.125rem var(--space-2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.inspectorSectionHeader {
+  font-size: var(--text-2xs, 0.625rem);
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-border-subtle);
+  margin-top: var(--space-1);
+}
+
 /* Inspector */
 .inspectorPanel {
   background-color: var(--color-bg-elevated);

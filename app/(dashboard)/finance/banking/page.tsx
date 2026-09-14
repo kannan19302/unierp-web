@@ -485,10 +485,14 @@ export default function BankingTreasuryPage() {
             <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-text-muted)" }}>Auto-triage</span>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Clearance Difference & Tolerance</div>
+
           <div className={styles.diffBox}>
             <span className={styles.diffLabel}>Difference</span>
             <span className={styles.diffAmount}>USD 0.00</span>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Double-Entry Audit Match Sources</div>
 
           <div className={styles.matchedSourcesBox}>
             <div className={styles.sourceItem}>

@@ -509,6 +509,8 @@ export default function FixedAssetsPage() {
             </span>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Carrying Value & Valuation</div>
+
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Cost & Carrying Value</span>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--font-size-xs)" }}>
@@ -517,12 +519,16 @@ export default function FixedAssetsPage() {
             </div>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Depreciation Method & Schedule</div>
+
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Depreciation Profile</span>
             <span className={styles.inspectorFieldValue} style={{ fontSize: "var(--text-2xs)" }}>
               {activeAsset ? `${activeAsset.method} • Monthly: $${activeAsset.monthlyDepreciation.toLocaleString()}` : "Select an asset to inspect its depreciation profile."}
             </span>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Asset Lifecycle Lineage</div>
 
           {/* Lifecycle */}
           <div className={styles.inspectorField}>

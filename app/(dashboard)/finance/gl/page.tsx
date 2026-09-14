@@ -467,6 +467,8 @@ export default function GeneralLedgerPage() {
             </span>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Distribution Summary</div>
+
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Debit / Credit Distribution</span>
             <div className={styles.linesContainer}>
@@ -482,6 +484,8 @@ export default function GeneralLedgerPage() {
               ))}
             </div>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Audit Lineage & Approval</div>
 
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Source Lineage</span>

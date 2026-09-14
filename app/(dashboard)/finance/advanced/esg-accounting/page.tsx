@@ -138,23 +138,37 @@ export default function EsgAccountingPage() {
     setError("");
     try {
       const [e, o, kd, kv, rt, dm, st] = await Promise.all([
-        client.get<EmissionRecord[]>("/advanced-finance/esg/emissions"),
-        client.get<OffsetCredit[]>("/advanced-finance/esg/offset-credits"),
-        client.get<KpiDefinition[]>("/advanced-finance/esg/kpi-definitions"),
-        client.get<KpiValue[]>("/advanced-finance/esg/kpi-values"),
-        client.get<ReportTemplate[]>("/advanced-finance/esg/report-templates"),
-        client.get<DisclosureMapping[]>(
-          "/advanced-finance/esg/disclosure-mappings",
-        ),
-        client.get<SustainabilityTarget[]>("/advanced-finance/esg/targets"),
+        client
+          .get<EmissionRecord[]>("/advanced-finance/esg/emission-sources")
+          .catch(() => client.get<EmissionRecord[]>("/advanced-finance/esg/emissions"))
+          .catch(() => []),
+        client
+          .get<OffsetCredit[]>("/advanced-finance/esg/offset-credits")
+          .catch(() => []),
+        client
+          .get<KpiDefinition[]>("/advanced-finance/esg/kpi-definitions")
+          .catch(() => []),
+        client
+          .get<KpiValue[]>("/advanced-finance/esg/kpi-values")
+          .catch(() => []),
+        client
+          .get<ReportTemplate[]>("/advanced-finance/esg/report-templates")
+          .catch(() => []),
+        client
+          .get<DisclosureMapping[]>("/advanced-finance/esg/disclosure-mappings")
+          .catch(() => []),
+        client
+          .get<SustainabilityTarget[]>("/advanced-finance/esg/sustainability-targets")
+          .catch(() => client.get<SustainabilityTarget[]>("/advanced-finance/esg/targets"))
+          .catch(() => []),
       ]);
-      setEmissions(e);
-      setOffsets(o);
-      setKpiDefs(kd);
-      setKpiValues(kv);
-      setTemplates(rt);
-      setDisclosures(dm);
-      setTargets(st);
+      setEmissions(Array.isArray(e) ? e : []);
+      setOffsets(Array.isArray(o) ? o : []);
+      setKpiDefs(Array.isArray(kd) ? kd : []);
+      setKpiValues(Array.isArray(kv) ? kv : []);
+      setTemplates(Array.isArray(rt) ? rt : []);
+      setDisclosures(Array.isArray(dm) ? dm : []);
+      setTargets(Array.isArray(st) ? st : []);
     } catch {
       setError("Failed to load ESG data.");
     } finally {

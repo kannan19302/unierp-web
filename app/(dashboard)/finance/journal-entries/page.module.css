@@ -205,10 +205,16 @@
   background-color: var(--color-bg-surface);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
   padding: var(--space-3) var(--space-4);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  transition: transform var(--duration-fast, 120ms) ease, box-shadow var(--duration-fast, 120ms) ease;
+}
+
+.kpiCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
 }
 
 .kpiLabel {
@@ -278,6 +284,7 @@
   background-color: var(--color-bg-surface);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -389,6 +396,7 @@
 
 .rowSelected {
   background-color: var(--color-primary-subtle, rgba(37, 99, 235, 0.08)) !important;
+  box-shadow: inset 3px 0 0 0 var(--color-primary);
 }
 
 .table tbody td {
@@ -414,10 +422,10 @@
   font-size: var(--text-2xs);
   font-weight: 500;
   color: var(--color-success);
-  background-color: var(--color-bg-base);
-  border: 1px solid var(--color-border-subtle);
-  padding: 1px var(--space-1-5);
-  border-radius: var(--radius-sm);
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 0.125rem var(--space-2);
+  border-radius: var(--radius-full, 9999px);
 }
 
 .badgeDraft {
@@ -427,10 +435,10 @@
   font-size: var(--text-2xs);
   font-weight: 500;
   color: var(--color-warning);
-  background-color: var(--color-bg-base);
-  border: 1px solid var(--color-border-subtle);
-  padding: 1px var(--space-1-5);
-  border-radius: var(--radius-sm);
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  padding: 0.125rem var(--space-2);
+  border-radius: var(--radius-full, 9999px);
 }
 
 .badgeReversed {
@@ -440,10 +448,10 @@
   font-size: var(--text-2xs);
   font-weight: 500;
   color: var(--color-danger);
-  background-color: var(--color-bg-base);
-  border: 1px solid var(--color-border-subtle);
-  padding: 1px var(--space-1-5);
-  border-radius: var(--radius-sm);
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 0.125rem var(--space-2);
+  border-radius: var(--radius-full, 9999px);
 }
 
 /* Inspector Panel */
@@ -451,6 +459,7 @@
   background-color: var(--color-bg-surface);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -676,8 +685,21 @@
 .balanceAmounts {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
-  font-family: monospace;
+  gap: var(--space-3);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-2xs, 0.6875rem);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.balancePill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.125rem var(--space-2);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  font-weight: 500;
 }
 
 .modalFooter {

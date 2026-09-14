@@ -44,7 +44,11 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
     <UniErpAuthProvider
       config={oidcConfig}
       restoreSession={restoreSession}
-      defaultPostLogoutRedirectUri="http://localhost:4000/"
+      defaultPostLogoutRedirectUri={
+        typeof window !== "undefined"
+          ? `${window.location.origin}/`
+          : "http://localhost:4003/"
+      }
     >
       {isAuthOrPublic ? children : <RequireSession>{children}</RequireSession>}
     </UniErpAuthProvider>

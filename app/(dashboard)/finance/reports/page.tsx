@@ -336,10 +336,12 @@ export default function FinancialReportsPage() {
         <div className={styles.inspectorPanel}>
           <div className={styles.inspectorHeader}>
             <span className={styles.inspectorTitle}>Source & Review Inspector</span>
-            <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-warning)", fontWeight: 600 }}>
+            <span className={styles.voucherPill}>
               {inspector?.status || "DRAFT"}
             </span>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Governance & Approval Trail</div>
 
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Approval Workflow</span>
@@ -347,6 +349,8 @@ export default function FinancialReportsPage() {
               Reviewer approval pending (Finance Director)
             </span>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Audit Lineage & Reconciliation Basis</div>
 
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Source Subledger</span>
@@ -373,6 +377,8 @@ export default function FinancialReportsPage() {
               </span>
             </div>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Statutory Statements Suite</div>
 
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Related Financial Statements</span>

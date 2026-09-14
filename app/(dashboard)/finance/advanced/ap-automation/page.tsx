@@ -47,6 +47,8 @@ export default function APAutomationPage() {
     { id: string; bankName: string; accountNumber: string }[]
   >([]);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Forms visibility
   const [showScheduleForm, setShowScheduleForm] = useState(false);
@@ -83,7 +85,7 @@ export default function APAutomationPage() {
         list<{ id: string; bankName: string; accountNumber: string }>(bankRes),
       );
     } catch {
-      alert("Unable to load accounts payable automation data.");
+      setErrorMessage("Unable to load accounts payable automation data.");
     } finally {
       setLoading(false);
     }
@@ -106,9 +108,11 @@ export default function APAutomationPage() {
       await client.post("/advanced-finance/payment-schedules", payload);
       setShowScheduleForm(false);
       setScheduleData({ vendorId: "", amount: "", dueDate: "" });
+      setErrorMessage(null);
+      setSuccessMessage("Payment schedule created successfully.");
       fetchData();
     } catch {
-      alert("Unable to save the payment schedule.");
+      setErrorMessage("Unable to save the payment schedule.");
     }
   };
 
@@ -125,9 +129,11 @@ export default function APAutomationPage() {
       await client.post("/advanced-finance/payment-runs", payload);
       setShowRunForm(false);
       setRunData({ bankAccountId: "", totalAmount: "", runDate: "" });
+      setErrorMessage(null);
+      setSuccessMessage("Payment run created successfully.");
       fetchData();
     } catch {
-      alert("Unable to create the payment run.");
+      setErrorMessage("Unable to create the payment run.");
     }
   };
 
@@ -159,6 +165,56 @@ export default function APAutomationPage() {
             </Button>
           </div>
         </div>
+
+        {errorMessage && (
+          <div
+            role="alert"
+            style={{
+              padding: "1rem",
+              borderRadius: "0.5rem",
+              backgroundColor: "rgba(239, 68, 68, 0.1)",
+              border: "1px solid rgba(239, 68, 68, 0.3)",
+              color: "#f87171",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <span>{errorMessage}</span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setErrorMessage(null)}
+            >
+              Dismiss
+            </Button>
+          </div>
+        )}
+
+        {successMessage && (
+          <div
+            role="status"
+            style={{
+              padding: "1rem",
+              borderRadius: "0.5rem",
+              backgroundColor: "rgba(34, 197, 94, 0.1)",
+              border: "1px solid rgba(34, 197, 94, 0.3)",
+              color: "#4ade80",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <span>{successMessage}</span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSuccessMessage(null)}
+            >
+              Dismiss
+            </Button>
+          </div>
+        )}
 
         {/* Forms Section */}
         {showScheduleForm && (

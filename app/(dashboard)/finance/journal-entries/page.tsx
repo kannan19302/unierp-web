@@ -1001,8 +1001,12 @@ export default function JournalEntriesWorkspacePage() {
                       )}
                     </div>
                     <div className={styles.balanceAmounts}>
-                      <span>Debits: ${totalModalDebit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
-                      <span>Credits: ${totalModalCredit.toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
+                      <span className={styles.balancePill}>
+                        <strong>DR:</strong> ${totalModalDebit.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                      </span>
+                      <span className={styles.balancePill}>
+                        <strong>CR:</strong> ${totalModalCredit.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -552,10 +552,16 @@ export default function DashboardLayout({
     }
   };
 
-  const isAppsLanding = pathname === "/apps";
+  const isAppsLanding = pathname === "/apps" || pathname === "/home" || pathname === "/setup" || pathname === "/platforms" || pathname === "/account";
   const isAppsSection = pathname.startsWith("/apps");
+  const isHomeSection = pathname === "/home" || pathname.startsWith("/home/");
+  const isSetupSection = pathname === "/setup" || pathname.startsWith("/setup/");
+  const isPlatformsSection = pathname === "/platforms" || pathname.startsWith("/platforms/");
+  const isAccountSection = pathname === "/account" || pathname.startsWith("/account/");
+  const isLandingWorkspace = isAppsSection || isHomeSection || isSetupSection || isPlatformsSection || isAccountSection;
+
   const hideSidebar =
-    isAppsSection ||
+    isLandingWorkspace ||
     pathname === "/profile" ||
     pathname.startsWith("/profile/");
   const appNav =
@@ -567,7 +573,7 @@ export default function DashboardLayout({
 
   const pathSegments = pathname.split("/").filter(Boolean);
   const showBreadcrumbs =
-    !isAppsSection &&
+    !isLandingWorkspace &&
     !pathname.startsWith("/builder") &&
     pathSegments.length > 0;
 
@@ -703,7 +709,7 @@ export default function DashboardLayout({
           )}
 
           {/* Strata Operational Context Bar */}
-          {!isFinance && !isAppsSection && !pathname.startsWith("/builder") && pathSegments.length > 0 && ContextBar && (
+          {!isFinance && !isLandingWorkspace && !pathname.startsWith("/builder") && pathSegments.length > 0 && ContextBar && (
             <ContextBar
               segments={[currentTenant?.name || "UniERP", ...pathSegments.map(formatSegment)]}
               scope="app"
@@ -717,7 +723,7 @@ export default function DashboardLayout({
             style={{
               padding: isFinance || pathname.startsWith("/builder")
                 ? "0"
-                : isAppsSection
+                : isLandingWorkspace
                   ? "var(--space-2) var(--space-5)"
                   : "var(--space-2) var(--space-6)",
             }}
@@ -727,7 +733,7 @@ export default function DashboardLayout({
               style={{
                 maxWidth: isFinance || pathname.startsWith("/builder")
                   ? "100%"
-                  : isAppsSection
+                  : isLandingWorkspace
                     ? "100%"
                     : "var(--content-max-width)",
               }}

@@ -447,7 +447,12 @@ export default function FxRevaluationPage() {
         {/* Inspector Panel */}
         <div className={styles.inspectorPanel}>
           <div className={styles.inspectorHeader}>
-            <h3 className={styles.inspectorTitle}>Revaluation Detail</h3>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-2)" }}>
+              <h3 className={styles.inspectorTitle}>Revaluation Detail</h3>
+              {selectedExposure && (
+                <span className={styles.voucherPill}>{selectedExposure.currency} Exposure</span>
+              )}
+            </div>
             <p className={styles.inspectorSubtitle}>
               {selectedExposure?.account || "Select an account"}
             </p>
@@ -468,7 +473,7 @@ export default function FxRevaluationPage() {
             )}
 
             <div className={styles.inspectorSection}>
-              <h4 className={styles.inspectorSectionTitle}>Position Breakdown</h4>
+              <h4 className={styles.inspectorSectionTitle}>POSITION &amp; VALUATION BREAKDOWN</h4>
               <div className={styles.detailRow}>
                 <span className={styles.detailLabel}>Foreign Currency</span>
                 <span className={styles.detailValue}>{selectedExposure?.currency || "—"}</span>
@@ -523,7 +528,7 @@ export default function FxRevaluationPage() {
             </div>
 
             <div className={styles.inspectorSection}>
-              <h4 className={styles.inspectorSectionTitle}>Accounting Lineage</h4>
+              <h4 className={styles.inspectorSectionTitle}>ACCOUNTING LINEAGE &amp; DISCLOSURE</h4>
               <div className={styles.detailRow}>
                 <span className={styles.detailLabel}>GL Account</span>
                 <span className={styles.detailValue}>8040 - Unrealized FX G/L</span>

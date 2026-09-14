@@ -656,7 +656,7 @@ export function ProfileHoverCard({
                   onClick={() => {
                     setOpen(false);
                     router.push(
-                      isSelf ? "/profile" : `/profile?userId=${data.userId}`,
+                      isSelf ? "/account?tab=personal" : `/profile?userId=${data.userId}`,
                     );
                   }}
                 >
@@ -672,12 +672,7 @@ export function ProfileHoverCard({
                     className={styles.footerBtn}
                     onClick={() => {
                       setOpen(false);
-                      const returnUri = encodeURIComponent(
-                        window.location.origin + "/apps",
-                      );
-                      window.location.assign(
-                        `http://localhost:3005/oidc/account?return_to=${returnUri}`,
-                      );
+                      router.push("/account");
                     }}
                   >
                     <Settings size={14} /> Account Center

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ChevronDown,
@@ -156,17 +157,17 @@ export function AppHeader({
           >
             <Menu size={18} />
           </button>
-          <a href="http://localhost:4000" aria-label="Open Workspace Atlas">
+          <Link href="/home" aria-label="Open UniERP Home">
             <BrandMark compact size="sm" />
-          </a>
+          </Link>
 
           {isAppsLanding ? (
             <nav aria-label="Breadcrumb" className={styles.breadcrumbContainer}>
-              <a href="http://localhost:4000" className={styles.breadcrumbMuted}>
-                Workspace Atlas
-              </a>
+              <Link href="/home" className={styles.breadcrumbMuted}>
+                UniERP Home
+              </Link>
               <span className={styles.breadcrumbSeparator}>›</span>
-              <span className={styles.breadcrumbCurrent}>Apps</span>
+              <span className={styles.breadcrumbCurrent}>Workspace</span>
             </nav>
           ) : (
             <>

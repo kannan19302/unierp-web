@@ -567,7 +567,7 @@ export default function TaxCompliancePage() {
             <div className={styles.inspectorPanel}>
               <div className={styles.inspectorHeader}>
                 <span className={styles.inspectorTitle}>Return Inspector</span>
-                <span style={{ fontSize: "var(--text-2xs)", color: "var(--color-primary)", fontWeight: 600 }}>
+                <span className={styles.voucherPill}>
                   {selectedReturn?.id || "No return selected"}
                 </span>
               </div>
@@ -585,6 +585,8 @@ export default function TaxCompliancePage() {
                   {selectedReturn?.jurisdiction || "—"} • {selectedReturn?.entity || "—"}
                 </span>
               </div>
+
+              <div className={styles.inspectorSectionHeader}>Statutory Filing Lifecycle</div>
 
               {/* Lifecycle */}
               <div className={styles.inspectorField}>
@@ -611,6 +613,8 @@ export default function TaxCompliancePage() {
                   </div>
                 </div>
               </div>
+
+              <div className={styles.inspectorSectionHeader}>Tax Reconciliation Checks</div>
 
               {/* Reconciliation Checks */}
               <div className={styles.inspectorField}>

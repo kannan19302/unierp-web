@@ -151,14 +151,15 @@ function Sparkline({
   const width = 80;
   const height = 30;
 
-  const points = validData
-    .map((val, i) => {
-      const x = (i / (validData.length - 1)) * width;
-      const rawY = height - ((val - min) / range) * (height - 8) - 4;
-      const y = Number.isFinite(rawY) ? rawY : height / 2;
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(" ");
+  const coords = validData.map((val, i) => {
+    const x = (i / (validData.length - 1)) * width;
+    const rawY = height - ((val - min) / range) * (height - 8) - 4;
+    const y = Number.isFinite(rawY) ? rawY : height / 2;
+    return { x, y };
+  });
+
+  const points = coords.map((c) => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
+  const lastPoint = coords[coords.length - 1];
 
   return (
     <div className={styles.sparklineWrap}>
@@ -176,6 +177,23 @@ function Sparkline({
           strokeLinejoin="round"
           points={points}
         />
+        {lastPoint && (
+          <>
+            <circle
+              cx={lastPoint.x.toFixed(1)}
+              cy={lastPoint.y.toFixed(1)}
+              r="3.5"
+              fill={strokeColor}
+              opacity="0.25"
+            />
+            <circle
+              cx={lastPoint.x.toFixed(1)}
+              cy={lastPoint.y.toFixed(1)}
+              r="2"
+              fill={strokeColor}
+            />
+          </>
+        )}
       </svg>
     </div>
   );
@@ -670,6 +688,13 @@ export default function FinanceOverviewPage() {
                 role="img"
                 aria-label="Monthly Revenue and Expenses dual line chart"
               >
+                <defs>
+                  <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.15" />
+                    <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+
                 {/* Grid Lines */}
                 {gridSteps.map((val, i) => {
                   const safeVal = Number.isFinite(val) ? val : 0;
@@ -700,96 +725,108 @@ export default function FinanceOverviewPage() {
                   );
                 })}
 
-                {/* X Axis Month Labels */}
-                {trendMonths.map((m, i) => {
-                  const x = 75 + i * 70;
-                  return (
-                    <text
-                      key={`month-label-${m}-${i}`}
-                      x={x}
-                      y="190"
-                      textAnchor="middle"
-                      fontSize="11"
-                      fill="var(--color-text-secondary)"
-                      fontFamily="var(--font-sans)"
-                    >
-                      {m}
-                    </text>
-                  );
-                })}
+                {/* Dynamic coordinate generator */}
+                {(() => {
+                  const startX = 65;
+                  const endX = 540;
+                  const stepX = trendMonths.length > 1 ? (endX - startX) / (trendMonths.length - 1) : 0;
+                  const getX = (idx: number) => Math.round(startX + idx * stepX);
 
-                {/* Operating Expenses Line (Orange) */}
-                <polyline
-                  fill="none"
-                  stroke="var(--chart-2)"
-                  strokeWidth="2.5"
-                  points={expValues
-                    .map((val, i) => {
-                      const safeVal = Number.isFinite(val) ? val : 0;
-                      const rawY = 170 - (safeVal / safeChartMaxY) * 150;
-                      const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
-                      return `${75 + i * 70},${y}`;
-                    })
-                    .join(" ")}
-                />
-                {expValues.map((val, i) => {
-                  const safeVal = Number.isFinite(val) ? val : 0;
-                  const x = 75 + i * 70;
-                  const rawY = 170 - (safeVal / safeChartMaxY) * 150;
-                  const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
-                  return (
-                    <g key={`exp-${i}`}>
-                      <circle cx={x} cy={y} r="3.5" fill="var(--chart-2)" />
-                      <text
-                        x={x}
-                        y={y + 14}
-                        textAnchor="middle"
-                        fontSize="9.5"
-                        fill="var(--color-text-secondary)"
-                        fontFamily="var(--font-mono)"
-                      >
-                        {safeVal.toFixed(2)}
-                      </text>
-                    </g>
-                  );
-                })}
+                  const revPoints = revValues.map((val, i) => {
+                    const safeVal = Number.isFinite(val) ? val : 0;
+                    const rawY = 170 - (safeVal / safeChartMaxY) * 150;
+                    const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
+                    return { x: getX(i), y, val: safeVal };
+                  });
 
-                {/* Revenue Line (Blue) */}
-                <polyline
-                  fill="none"
-                  stroke="var(--color-primary)"
-                  strokeWidth="2.5"
-                  points={revValues
-                    .map((val, i) => {
-                      const safeVal = Number.isFinite(val) ? val : 0;
-                      const rawY = 170 - (safeVal / safeChartMaxY) * 150;
-                      const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
-                      return `${75 + i * 70},${y}`;
-                    })
-                    .join(" ")}
-                />
-                {revValues.map((val, i) => {
-                  const safeVal = Number.isFinite(val) ? val : 0;
-                  const x = 75 + i * 70;
-                  const rawY = 170 - (safeVal / safeChartMaxY) * 150;
-                  const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
+                  const expPoints = expValues.map((val, i) => {
+                    const safeVal = Number.isFinite(val) ? val : 0;
+                    const rawY = 170 - (safeVal / safeChartMaxY) * 150;
+                    const y = Number.isFinite(rawY) ? Number(rawY.toFixed(1)) : 170;
+                    return { x: getX(i), y, val: safeVal };
+                  });
+
+                  const revPolyline = revPoints.map((p) => `${p.x},${p.y}`).join(" ");
+                  const expPolyline = expPoints.map((p) => `${p.x},${p.y}`).join(" ");
+                  const revArea = revPoints.length > 0
+                    ? `${revPoints[0].x},170 ${revPolyline} ${revPoints[revPoints.length - 1].x},170`
+                    : "";
+
                   return (
-                    <g key={`rev-${i}`}>
-                      <circle cx={x} cy={y} r="3.5" fill="var(--color-primary)" />
-                      <text
-                        x={x}
-                        y={y - 8}
-                        textAnchor="middle"
-                        fontSize="9.5"
-                        fill="var(--color-text)"
-                        fontWeight="600"
-                        fontFamily="var(--font-mono)"
-                      >
-                        {safeVal.toFixed(2)}
-                      </text>
-                    </g>
+                    <>
+                      {/* Revenue gradient area fill */}
+                      {revArea && (
+                        <polygon points={revArea} fill="url(#revGrad)" />
+                      )}
+
+                      {/* X Axis Month Labels */}
+                      {trendMonths.map((m, i) => (
+                        <text
+                          key={`month-label-${m}-${i}`}
+                          x={getX(i)}
+                          y="190"
+                          textAnchor="middle"
+                          fontSize="10"
+                          fill="var(--color-text-secondary)"
+                          fontFamily="var(--font-sans)"
+                        >
+                          {m}
+                        </text>
+                      ))}
+
+                      {/* Operating Expenses Line (Orange) */}
+                      <polyline
+                        fill="none"
+                        stroke="var(--chart-2)"
+                        strokeWidth="2.5"
+                        points={expPolyline}
+                      />
+                      {expPoints.map((p, i) => (
+                        <g key={`exp-${i}`}>
+                          <circle cx={p.x} cy={p.y} r="3" fill="var(--chart-2)" />
+                          {p.val > 0 && (
+                            <text
+                              x={p.x}
+                              y={p.y + 13}
+                              textAnchor="middle"
+                              fontSize="9"
+                              fill="var(--color-text-secondary)"
+                              fontFamily="var(--font-mono)"
+                            >
+                              {p.val.toFixed(2)}
+                            </text>
+                          )}
+                        </g>
+                      ))}
+
+                      {/* Revenue Line (Blue) */}
+                      <polyline
+                        fill="none"
+                        stroke="var(--color-primary)"
+                        strokeWidth="2.5"
+                        points={revPolyline}
+                      />
+                      {revPoints.map((p, i) => (
+                        <g key={`rev-${i}`}>
+                          <circle cx={p.x} cy={p.y} r="3" fill="var(--color-primary)" />
+                          {p.val > 0 && (
+                            <text
+                              x={p.x}
+                              y={p.y - 7}
+                              textAnchor="middle"
+                              fontSize="9"
+                              fill="var(--color-text)"
+                              fontWeight="600"
+                              fontFamily="var(--font-mono)"
+                            >
+                              {p.val.toFixed(2)}
+                            </text>
+                          )}
+                        </g>
+                      ))}
+                    </>
                   );
-                })}
+                })()}
               </svg>
             )}
 
@@ -865,7 +902,8 @@ export default function FinanceOverviewPage() {
                         }
                         className={styles.actionLink}
                       >
-                        Review
+                        <span>Review</span>
+                        <ArrowRight size={12} className={styles.actionLinkIcon} aria-hidden="true" />
                       </button>
                     </td>
                   </tr>
@@ -894,7 +932,8 @@ export default function FinanceOverviewPage() {
                         }
                         className={styles.actionLink}
                       >
-                        Review
+                        <span>Review</span>
+                        <ArrowRight size={12} className={styles.actionLinkIcon} aria-hidden="true" />
                       </button>
                     </td>
                   </tr>
@@ -925,7 +964,8 @@ export default function FinanceOverviewPage() {
                         }
                         className={styles.actionLink}
                       >
-                        Review
+                        <span>Review</span>
+                        <ArrowRight size={12} className={styles.actionLinkIcon} aria-hidden="true" />
                       </button>
                     </td>
                   </tr>

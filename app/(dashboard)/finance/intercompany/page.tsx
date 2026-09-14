@@ -385,7 +385,14 @@ export default function IntercompanyPage() {
         {/* Inspector Panel */}
         <div className={styles.inspectorPanel}>
           <div className={styles.inspectorHeader}>
-            <h3 className={styles.inspectorTitle}>Consolidation Voucher Detail</h3>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-2)" }}>
+              <h3 className={styles.inspectorTitle}>Consolidation Voucher Detail</h3>
+              {selectedPair && (
+                <span className={styles.voucherPill}>
+                  {selectedPair.eliminationVoucher || "BILATERAL-PAIR"}
+                </span>
+              )}
+            </div>
             <p className={styles.inspectorSubtitle}>
               {selectedPair?.description || "Select an intercompany pair"}
             </p>
@@ -406,7 +413,7 @@ export default function IntercompanyPage() {
             )}
 
             <div className={styles.inspectorSection}>
-              <h4 className={styles.inspectorSectionTitle}>Bilateral Pairing</h4>
+              <h4 className={styles.inspectorSectionTitle}>BILATERAL ELIMINATION PAIRING</h4>
               <div className={styles.detailRow}>
                 <span className={styles.detailLabel}>Rule Type</span>
                 <span className={styles.detailValue}>{selectedPair?.ruleType || "—"}</span>
@@ -440,7 +447,7 @@ export default function IntercompanyPage() {
             </div>
 
             <div className={styles.inspectorSection}>
-              <h4 className={styles.inspectorSectionTitle}>Accounting Compliance</h4>
+              <h4 className={styles.inspectorSectionTitle}>ACCOUNTING COMPLIANCE &amp; ELIMINATION LINEAGE</h4>
               <div className={styles.detailRow}>
                 <span className={styles.detailLabel}>Standard</span>
                 <span className={styles.detailValue}>IFRS 10 / ASC 810</span>

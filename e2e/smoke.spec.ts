@@ -18,6 +18,12 @@ const ADMIN_PASSWORD = process.env.E2E_PASSWORD || "TestAgent123!";
 // One representative page per major module surface. Add a route here whenever a
 // new module ships — this list is the binding definition of "the app boots".
 const SMOKE_ROUTES: { path: string; marker?: string }[] = [
+  { path: "/home" },
+  { path: "/setup" },
+  { path: "/platforms" },
+  { path: "/apps" },
+  { path: "/account" },
+  { path: "/profile" },
   { path: "/dashboard" },
   { path: "/finance/invoices" },
   { path: "/finance/advanced/expense-reports" },

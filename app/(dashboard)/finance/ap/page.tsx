@@ -612,7 +612,7 @@ export default function AccountsPayablePage() {
         <div className={styles.inspectorPanel}>
           <div className={styles.inspectorHeader}>
             <span className={styles.inspectorTitle}>Three-Way Match</span>
-            <span className={styles.tdMono} style={{ color: "var(--color-primary)", fontWeight: 600 }}>
+            <span className={styles.voucherPill}>
               {selectedBillNumber || matchData?.billNumber || "No bill selected"}
             </span>
           </div>
@@ -640,6 +640,8 @@ export default function AccountsPayablePage() {
               </span>
             </div>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Matching Tolerances & Residuals</div>
 
           {/* Tolerances & Residuals Breakdown */}
           <div style={{ padding: "var(--space-2)", background: "var(--color-bg-subtle)", borderRadius: "var(--radius-sm)", fontSize: "var(--text-2xs)", display: "flex", flexDirection: "column", gap: "0.25rem", border: "1px solid var(--color-border-subtle)" }}>
@@ -673,6 +675,8 @@ export default function AccountsPayablePage() {
             </span>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Supporting Record & Audit Lineage</div>
+
           {/* Document Preview Box */}
           <div className={styles.docPreviewBox}>
             <div className={styles.docThumbnail}>
@@ -696,6 +700,8 @@ export default function AccountsPayablePage() {
               <span>Preview</span>
             </button>
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Voucher Lifecycle</div>
 
           {/* Lifecycle Steps */}
           <div className={styles.lifecycleSteps}>

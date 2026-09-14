@@ -266,9 +266,29 @@ export default function ApplicationWizardPage() {
         {/* Top Hero Section: Left Title/Subtitle & Right Search Bar */}
         <section className={styles.heroSection}>
           <div className={styles.heroLeft}>
-            <h1 className={styles.launcherTitle}>Select an app to continue</h1>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
+              <h1 className={styles.launcherTitle}>Select an app to continue</h1>
+              <Link
+                href="/home"
+                style={{
+                  fontSize: "0.6875rem",
+                  fontWeight: 600,
+                  color: "var(--color-primary)",
+                  backgroundColor: "var(--color-surface-sunken)",
+                  padding: "0.1875rem 0.5rem",
+                  borderRadius: "9999px",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.25rem",
+                }}
+              >
+                <Home size={11} />
+                <span>Daily Home</span>
+              </Link>
+            </div>
             <p className={styles.launcherSubtitle}>
-              Choose an operational workspace application to launch.
+              Choose an operational workspace application to launch, or view <Link href="/home" style={{ color: "var(--color-primary)" }}>Daily Home</Link> for recent drafts and action items.
             </p>
           </div>
 
@@ -363,8 +383,12 @@ export default function ApplicationWizardPage() {
 
         {/* Footer with clean space from bottom border */}
         <footer className={styles.launcherFooter}>
-          <div className={styles.footerLeft}>
+          <div className={styles.footerLeft} style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
             <span>UniERP Workspace Atlas • Enterprise Edition</span>
+            <span style={{ color: "var(--color-border)" }}>|</span>
+            <Link href="/home" style={{ color: "var(--color-text-secondary)", textDecoration: "none" }}>Daily Home</Link>
+            <Link href="/setup" style={{ color: "var(--color-text-secondary)", textDecoration: "none" }}>Guided Setup</Link>
+            <Link href="/platforms" style={{ color: "var(--color-text-secondary)", textDecoration: "none" }}>Platform Directory</Link>
           </div>
           <div className={styles.footerRight}>
             <Link href="/auth/logout" className={styles.footerLink}>

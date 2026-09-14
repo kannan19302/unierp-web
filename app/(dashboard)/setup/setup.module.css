@@ -1,0 +1,286 @@
+/* UniERP Application Setup Wizard — Strata Design System */
+
+.setupContainer {
+  min-height: calc(100vh - var(--header-height, 3.75rem));
+  background-color: var(--color-bg, #f8fafc);
+  color: var(--color-text, #0f172a);
+  padding: var(--space-6, 1.5rem) var(--space-8, 2rem) var(--space-10, 2.5rem);
+  max-width: 64rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.setupHeader {
+  margin-bottom: var(--space-6, 1.5rem);
+}
+
+.setupTitle {
+  font-size: var(--text-2xl, 1.625rem);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  color: var(--color-text, #0f172a);
+  margin: 0 0 var(--space-1, 0.25rem);
+}
+
+.setupSubtitle {
+  font-size: var(--text-xs, 0.8125rem);
+  color: var(--color-text-secondary, #64748b);
+  margin: 0;
+}
+
+/* Stepper Progress Bar */
+.stepperNav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  margin-bottom: var(--space-6, 1.5rem);
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  background-color: var(--color-surface-elevated, #ffffff);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-lg, 0.75rem);
+  overflow-x: auto;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  font-size: var(--text-xs, 0.8125rem);
+  font-weight: 500;
+  color: var(--color-text-secondary, #64748b);
+  white-space: nowrap;
+}
+
+.stepItemActive {
+  color: var(--color-primary, #2563eb);
+  font-weight: 700;
+}
+
+.stepItemCompleted {
+  color: var(--color-text, #0f172a);
+  font-weight: 600;
+}
+
+.stepBadge {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-2xs, 0.6875rem);
+  border: 1px solid var(--color-border-strong, #94a3b8);
+  background-color: var(--color-surface, #ffffff);
+}
+
+.stepBadgeActive {
+  background-color: var(--color-primary, #2563eb);
+  color: var(--on-primary, #ffffff);
+  border-color: var(--color-primary, #2563eb);
+}
+
+.stepBadgeCompleted {
+  background-color: var(--color-surface-sunken, #f1f5f9);
+  color: var(--color-text, #0f172a);
+  border-color: var(--color-border, #e2e8f0);
+}
+
+.stepDivider {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border, #e2e8f0);
+  min-width: 1.5rem;
+}
+
+/* Card Content */
+.stepCard {
+  background-color: var(--color-surface-elevated, #ffffff);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-lg, 0.75rem);
+  padding: var(--space-6, 1.5rem);
+  box-shadow: var(--elevation-1, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  margin-bottom: var(--space-6, 1.5rem);
+}
+
+.cardHeader {
+  margin-bottom: var(--space-5, 1.25rem);
+}
+
+.cardTitle {
+  font-size: var(--text-base, 1rem);
+  font-weight: 700;
+  color: var(--color-text, #0f172a);
+  margin: 0 0 var(--space-1, 0.25rem);
+}
+
+.cardDesc {
+  font-size: var(--text-xs, 0.8125rem);
+  color: var(--color-text-secondary, #64748b);
+  margin: 0;
+}
+
+/* App Selection List */
+.selectionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3, 0.75rem);
+  margin-bottom: var(--space-5, 1.25rem);
+}
+
+@media (max-width: 650px) {
+  .selectionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.selectionOption {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3, 0.75rem);
+  padding: var(--space-3-5, 0.875rem);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 0.5rem);
+  background-color: var(--color-surface, #ffffff);
+  cursor: pointer;
+  transition: all var(--duration-fast, 150ms) var(--ease-default, ease);
+}
+
+.selectionOption:hover {
+  border-color: var(--color-border-strong, #94a3b8);
+  background-color: var(--color-surface-sunken, #f8fafc);
+}
+
+.selectionOptionSelected {
+  border-color: var(--color-primary, #2563eb);
+  background-color: var(--color-info-light, #eff6ff);
+}
+
+.selectionCheckbox {
+  margin-top: 0.1875rem;
+}
+
+.selectionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.selectionTitle {
+  font-size: var(--text-xs, 0.8125rem);
+  font-weight: 600;
+  color: var(--color-text, #0f172a);
+}
+
+.selectionDesc {
+  font-size: var(--text-2xs, 0.6875rem);
+  color: var(--color-text-secondary, #64748b);
+}
+
+/* Form Fields */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5, 0.375rem);
+  margin-bottom: var(--space-4, 1rem);
+}
+
+.formLabel {
+  font-size: var(--text-xs, 0.8125rem);
+  font-weight: 600;
+  color: var(--color-text, #0f172a);
+}
+
+.formSelect,
+.formInput {
+  width: 100%;
+  height: 2.375rem;
+  padding: 0 var(--space-3, 0.75rem);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 0.5rem);
+  background-color: var(--color-surface, #ffffff);
+  color: var(--color-text, #0f172a);
+  font-size: var(--text-xs, 0.8125rem);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.formSelect:focus,
+.formInput:focus {
+  border-color: var(--color-primary, #2563eb);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* Action Footer */
+.actionFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3, 0.75rem);
+  flex-wrap: wrap;
+}
+
+.footerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+}
+
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 0.75rem);
+}
+
+.backBtn,
+.exitBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5, 0.375rem);
+  padding: var(--space-2, 0.5rem) var(--space-3-5, 0.875rem);
+  font-size: var(--text-xs, 0.8125rem);
+  font-weight: 600;
+  color: var(--color-text-secondary, #475569);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md, 0.5rem);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.backBtn:hover,
+.exitBtn:hover {
+  background-color: var(--color-surface-sunken, #f1f5f9);
+  color: var(--color-text, #0f172a);
+}
+
+.nextBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+  font-size: var(--text-xs, 0.8125rem);
+  font-weight: 600;
+  color: var(--on-primary, #ffffff);
+  background-color: var(--color-primary, #2563eb);
+  border: 1px solid var(--color-primary, #2563eb);
+  border-radius: var(--radius-md, 0.5rem);
+  cursor: pointer;
+  transition: background-color var(--duration-fast, 150ms) var(--ease-default, ease);
+}
+
+.nextBtn:hover {
+  background-color: var(--color-primary-hover, #1d4ed8);
+}
+
+/* Status / Alert Banner inside Step */
+.infoAlert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5, 0.625rem);
+  padding: var(--space-3, 0.75rem) var(--space-3-5, 0.875rem);
+  background-color: var(--color-info-light, #eff6ff);
+  color: var(--color-info-text, #1e40af);
+  border-radius: var(--radius-md, 0.5rem);
+  font-size: var(--text-xs, 0.8125rem);
+  margin-bottom: var(--space-4, 1rem);
+}

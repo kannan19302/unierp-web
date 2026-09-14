@@ -401,6 +401,8 @@ export default function BudgetPlanningPage() {
             </button>
           </div>
 
+          <div className={styles.inspectorSectionHeader}>Growth & Expansion Drivers</div>
+
           <div className={styles.driverGroup}>
             <div className={styles.driverLabelRow}>
               <span>Revenue growth rate</span>
@@ -438,6 +440,8 @@ export default function BudgetPlanningPage() {
               }}
             />
           </div>
+
+          <div className={styles.inspectorSectionHeader}>Inflation & Cost Drivers</div>
 
           <div className={styles.driverGroup}>
             <div className={styles.driverLabelRow}>
