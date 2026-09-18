@@ -380,7 +380,6 @@ export const vendorBillResource = defineResource({
         label: "Approve",
         tone: "default",
         permission: "finance.payables.update",
-        visibleIf: (row: any) => row.status === "DRAFT",
         onClick: async (row: any) => {
           if (row.status !== "DRAFT") return;
           await apiPost(`/finance/vendor-bills/${row.id}/approve`, {});
@@ -391,7 +390,6 @@ export const vendorBillResource = defineResource({
         label: "Void",
         tone: "danger",
         permission: "finance.payables.update",
-        visibleIf: (row: any) => row.status === "DRAFT" || row.status === "APPROVED",
         onClick: async (row: any) => {
           if (row.status === "VOID" || row.status === "PAID") return;
           if (!window.confirm("Void this vendor bill? This cannot be undone."))
