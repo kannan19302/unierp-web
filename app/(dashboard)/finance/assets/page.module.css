@@ -249,7 +249,7 @@
 
 .trSelected {
   background-color: var(--color-primary-subtle, rgba(37, 99, 235, 0.08)) !important;
-  box-shadow: inset 3px 0 0 0 var(--color-primary);
+  box-shadow: inset var(--border-thick, 3px) 0 0 0 var(--color-primary);
 }
 
 .td {

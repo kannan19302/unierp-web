@@ -571,7 +571,7 @@
     z-index: 1200;
     width: 17rem;
     min-width: 17rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-2xl);
     transform: translateX(0);
     transition: transform var(--duration-normal, 200ms) var(--ease-default, cubic-bezier(0.4, 0, 0.2, 1)),
       opacity var(--duration-normal, 200ms) var(--ease-default, cubic-bezier(0.4, 0, 0.2, 1));

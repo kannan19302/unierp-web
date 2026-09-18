@@ -177,7 +177,7 @@
 
 .sectionNavItemActive {
   background-color: var(--color-primary-subtle, rgba(37, 99, 235, 0.08));
-  box-shadow: inset 3px 0 0 0 var(--color-primary);
+  box-shadow: inset var(--border-thick, 3px) 0 0 0 var(--color-primary);
   color: var(--color-primary);
   font-weight: 600;
 }
@@ -330,7 +330,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -2px var(--space-2, 8px) rgba(0, 0, 0, 0.05);
   z-index: 50;
 }
 

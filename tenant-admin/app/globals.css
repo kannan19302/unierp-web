@@ -1,0 +1,26 @@
+/* App-level base.
+   Everything here is a token. Until now this app styled <body> with a literal
+   `backgroundColor: "#0f1117"` inline on the element — and imported NO design
+   system stylesheet at all, so `data-theme` selected nothing and every
+   var(--color-*) in every page resolved to empty. The hardcoded pair was the
+   only reason the app looked dark. */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The page body never scrolls horizontally (UI_UX_BRIEF §9). Wide content
+   scrolls inside its own container. */
+body {
+  overflow-x: hidden;
+}

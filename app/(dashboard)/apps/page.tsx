@@ -276,7 +276,7 @@ export default function ApplicationWizardPage() {
                   color: "var(--color-primary)",
                   backgroundColor: "var(--color-surface-sunken)",
                   padding: "0.1875rem 0.5rem",
-                  borderRadius: "9999px",
+                  borderRadius: "var(--radius-full, 9999px)",
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",

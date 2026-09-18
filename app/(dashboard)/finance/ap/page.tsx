@@ -868,13 +868,13 @@ export default function AccountsPayablePage() {
               <div style={{ marginTop: "var(--space-3)", padding: "var(--space-4)", borderRadius: "var(--radius-sm)", background: "var(--color-bg-sunken)", border: "1px solid var(--color-border-subtle)", textAlign: "center" }}>
                 <FileText size={32} style={{ margin: "0 auto var(--space-2)", color: "var(--color-text-muted)" }} />
                 <div style={{ fontWeight: 600, fontSize: "var(--text-sm)", color: "var(--color-text-primary)" }}>Original PDF Attachment Not Stored</div>
-                <div style={{ fontSize: "var(--text-xs)", color: "var(--color-text-muted)", marginTop: "var(--space-1)", maxWidth: "360px", marginInline: "auto" }}>
+                <div style={{ fontSize: "var(--text-xs)", color: "var(--color-text-muted)", marginTop: "var(--space-1)", maxWidth: "22.5rem", marginInline: "auto" }}>
                   In accordance with UniERP zero-mock financial policy, line items are only extracted from authenticated source documents. Simulated line items are prohibited.
                 </div>
               </div>
 
               <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "var(--space-3)" }}>
-                <div style={{ width: "240px", display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
+                <div style={{ width: "15rem", display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-xs)" }}>
                     <span style={{ color: "var(--color-text-muted)" }}>Recorded Bill Total:</span>
                     <span className={styles.tdMono} style={{ fontWeight: 600, color: "var(--color-text-primary)" }}>
