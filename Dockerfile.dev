@@ -20,9 +20,9 @@ COPY public ./public
 
 ENV NODE_ENV=development
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=4003
+ENV PORT=4002
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-EXPOSE 4003
+EXPOSE 4002
 
 CMD ["pnpm", "dev"]
