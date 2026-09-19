@@ -1,4 +1,8 @@
 <!-- UniERP-Agent-Protocol: 1.1.0 -->
+
+Apply this local guidance under the [repository entrypoint](../../AGENTS.md) and its authority order.
+Implementation examples do not establish runtime proof or override the owning security and contract specifications.
+
 # Tenant Applications — Architectural Governance Standards (10/10 Standard)
 
 Every AI agent and software engineer working in `tenant-apps` (`@kannan19302/web`) MUST read and strictly adhere to these governance standards before designing, implementing, refactoring, or reviewing any frontend code.
