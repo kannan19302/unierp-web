@@ -1,0 +1,548 @@
+/* ── Strata Home v2 — Shared Component Styles ──────────────────────── */
+/* Token values trace ADR-0009 and v2-tokens.css from the design atlas. */
+
+/* ── Page Shell ──────────────────────────────────────────────────── */
+.pageShell {
+  padding: 28px 36px 40px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  align-self: start;
+}
+
+.breadcrumb {
+  color: var(--color-text-secondary, #475569);
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.breadcrumb a {
+  color: var(--color-text-secondary, #475569);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.pageTitle {
+  font: 650 clamp(26px, 2.4vw, 34px) / 1.25 var(--font-display, 'Plus Jakarta Sans', 'Inter Display', system-ui, sans-serif);
+  letter-spacing: -0.8px;
+  margin: 0 0 10px;
+  color: var(--color-text, #0f172a);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-text-secondary, #475569);
+}
+
+.screenNumber {
+  white-space: nowrap;
+  color: var(--color-text-secondary, #475569);
+  font-size: 12px;
+}
+
+/* ── Panel ───────────────────────────────────────────────────────── */
+.panel {
+  background-color: var(--color-bg-surface, #ffffff);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.panelTitle {
+  font: 600 16px var(--font-display, 'Plus Jakarta Sans', 'Inter Display', system-ui, sans-serif);
+  margin: 0 0 20px;
+  color: var(--color-text, #0f172a);
+}
+
+/* ── Split Layout ────────────────────────────────────────────────── */
+.split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.split > .panel {
+  height: calc(100% - 20px);
+}
+
+/* ── Rows ────────────────────────────────────────────────────────── */
+.rows {
+  background-color: var(--color-bg-surface, #ffffff);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.panelRows {
+  border: 0;
+  margin: 0 -8px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  color: var(--color-text, #0f172a);
+  align-items: center;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+  text-decoration: none;
+  transition: background-color 150ms ease;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.row:hover {
+  background-color: var(--color-bg-sunken, #f8fafc);
+}
+
+.rowContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rowTitle {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text, #0f172a);
+}
+
+.rowDetail {
+  display: block;
+  color: var(--color-text-secondary, #475569);
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* ── Badge ───────────────────────────────────────────────────────── */
+.badge {
+  font-size: 11px;
+  color: var(--color-text-secondary, #475569);
+  background-color: var(--color-bg-sunken, #f1f5f9);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 4px;
+  padding: 3px 7px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Banner ──────────────────────────────────────────────────────── */
+.banner {
+  padding: 16px 20px;
+  background-color: var(--color-info-subtle, #f0f9ff);
+  color: var(--color-info-text, #0369a1);
+  border-left: 3px solid var(--color-info-text, #0369a1);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.bannerWarning {
+  background-color: var(--color-warning-light, #fffbeb);
+  color: var(--color-warning-text, #92400e);
+  border-color: var(--color-warning-text, #92400e);
+}
+
+.bannerDanger {
+  background-color: var(--color-danger-light, #fef2f2);
+  color: var(--color-danger-text, #b91c1c);
+  border-color: var(--color-danger-text, #b91c1c);
+}
+
+/* ── App Grid ────────────────────────────────────────────────────── */
+.appGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.appTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 14px 4px;
+  gap: 12px;
+  color: var(--color-text, #0f172a);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+
+.appTile:hover {
+  transform: translateY(-2px);
+}
+
+.appTileLabel {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.appTileDesc {
+  font-size: 11px;
+  color: var(--color-text-secondary, #475569);
+}
+
+.appIcon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-border, #e2e8f0);
+  background-color: var(--color-info-subtle, #f0f9ff);
+  color: var(--color-primary, #2563eb);
+  display: grid;
+  place-items: center;
+  font: 600 24px var(--font-display, 'Plus Jakarta Sans', 'Inter Display', system-ui, sans-serif);
+  border-radius: 8px;
+}
+
+/* ── Buttons / Actions ───────────────────────────────────────────── */
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.btnPrimary {
+  border: 1px solid var(--color-primary, #2563eb);
+  border-radius: 4px;
+  background: var(--color-primary, #2563eb);
+  padding: 10px 16px;
+  color: var(--on-primary, #ffffff);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 150ms ease;
+}
+
+.btnPrimary:hover {
+  background: var(--color-primary-hover, #1d4ed8);
+}
+
+.btnSecondary {
+  border: 1px solid var(--color-border-strong, #94a3b8);
+  border-radius: 4px;
+  background: var(--color-bg-surface, #ffffff);
+  padding: 10px 16px;
+  color: var(--color-text, #0f172a);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 150ms ease;
+}
+
+.btnSecondary:hover {
+  background: var(--color-bg-sunken, #f1f5f9);
+}
+
+/* ── Chips ───────────────────────────────────────────────────────── */
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.chip {
+  padding: 10px 16px;
+  border: 1px solid var(--color-border-strong, #94a3b8);
+  border-radius: 4px;
+  background: var(--color-bg-surface, #ffffff);
+  color: var(--color-text, #0f172a);
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: background-color 150ms ease;
+}
+
+.chip:hover {
+  background: var(--color-bg-sunken, #f1f5f9);
+}
+
+.chipActive {
+  background: var(--color-primary, #2563eb);
+  color: var(--on-primary, #ffffff);
+  border-color: var(--color-primary, #2563eb);
+}
+
+.chipActive:hover {
+  background: var(--color-primary-hover, #1d4ed8);
+}
+
+/* ── Form Fields ─────────────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--color-text, #0f172a);
+}
+
+.fieldInput {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--color-border-strong, #94a3b8);
+  border-radius: 4px;
+  padding: 10px 12px;
+  background-color: var(--color-bg-surface, #ffffff);
+  color: var(--color-text, #0f172a);
+  font-weight: 400;
+  font: inherit;
+}
+
+.fieldInput::placeholder {
+  color: var(--color-text-secondary, #475569);
+  opacity: 1;
+}
+
+.fieldInput:focus {
+  outline: 3px solid var(--color-primary, #2563eb);
+  outline-offset: 3px;
+}
+
+.fieldSelect {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--color-border-strong, #94a3b8);
+  border-radius: 4px;
+  padding: 10px 12px;
+  background-color: var(--color-bg-surface, #ffffff);
+  color: var(--color-text, #0f172a);
+  font-weight: 400;
+  font: inherit;
+}
+
+/* ── Checkbox ────────────────────────────────────────────────────── */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin: 8px 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text, #0f172a);
+}
+
+.check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary, #2563eb);
+}
+
+/* ── Avatar ──────────────────────────────────────────────────────── */
+.avatar {
+  background: var(--color-bg-sunken, #f1f5f9);
+  border: 1px solid var(--color-border, #e2e8f0);
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text, #0f172a);
+}
+
+.avatarLarge {
+  width: 64px;
+  height: 64px;
+  font-size: 22px;
+}
+
+/* ── Steps ───────────────────────────────────────────────────────── */
+.steps {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  gap: 10px;
+  margin: 0 0 28px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--color-text-secondary, #475569);
+}
+
+.stepNumber {
+  border: 1px solid var(--color-border-strong, #94a3b8);
+  border-radius: 50%;
+  width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+}
+
+.stepActive {
+  color: var(--color-primary-hover, #1d4ed8);
+  font-weight: 700;
+}
+
+.stepActive .stepNumber {
+  background: var(--color-primary, #2563eb);
+  color: var(--on-primary, #ffffff);
+  border-color: var(--color-primary, #2563eb);
+}
+
+/* ── Scope Card ──────────────────────────────────────────────────── */
+.scope {
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 12px;
+  margin-top: 30px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #0f172a);
+}
+
+.scopeDetail {
+  display: block;
+  color: var(--color-text-secondary, #475569);
+  font-weight: 400;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ── Toast ───────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 16px;
+  background: var(--color-text, #0f172a);
+  color: var(--on-primary, #ffffff);
+  border-radius: 6px;
+  max-width: 90vw;
+  z-index: 10;
+  font-size: 14px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (min-width: 1600px) {
+  .pageShell {
+    padding-top: 40px;
+  }
+  .panel {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .pageShell {
+    padding: 24px;
+  }
+  .appGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .split > .panel {
+    height: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .pageShell {
+    padding: 20px 16px 32px;
+  }
+  .heading {
+    margin-bottom: 22px;
+  }
+  .screenNumber {
+    display: none;
+  }
+  .panel {
+    padding: 18px;
+  }
+  .row {
+    padding: 16px 12px;
+    gap: 10px;
+  }
+  .badge {
+    max-width: 100px;
+    white-space: normal;
+  }
+  .appGrid {
+    gap: 6px;
+  }
+  .appTile {
+    font-size: 12px;
+  }
+  .appTileDesc {
+    display: none;
+  }
+  .actions {
+    flex-direction: column;
+  }
+  .actions .btnPrimary,
+  .actions .btnSecondary {
+    width: 100%;
+  }
+  .steps {
+    gap: 8px;
+  }
+  .step {
+    font-size: 10px;
+  }
+  .stepNumber {
+    width: 20px;
+    height: 20px;
+  }
+  .pageTitle {
+    font-size: 27px;
+  }
+  .breadcrumb {
+    margin-bottom: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageShell * {
+    scroll-behavior: auto !important;
+  }
+  .appTile:hover {
+    transform: none;
+  }
+}

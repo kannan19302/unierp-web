@@ -1,0 +1,110 @@
+/* ── Home Sidebar — Strata v2 Design ─────────────────────────────── */
+
+.sidebar {
+  background-color: var(--color-bg-surface, #ffffff);
+  border-right: 1px solid var(--color-border, #e2e8f0);
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 236px;
+  min-width: 236px;
+  min-height: calc(100vh - 72px);
+  box-sizing: border-box;
+}
+
+.nav {
+  display: grid;
+  gap: 6px;
+}
+
+.navLink {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  color: var(--color-text-secondary, #475569);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 150ms ease;
+}
+
+.navLink:hover {
+  background-color: var(--color-bg-sunken, #f8fafc);
+  color: var(--color-text, #0f172a);
+}
+
+.navLinkActive {
+  background-color: var(--color-info-subtle, #f0f9ff);
+  color: var(--color-primary-hover, #1d4ed8);
+  box-shadow: inset 3px 0 var(--color-primary, #2563eb);
+  font-weight: 600;
+}
+
+.separator {
+  border: 0;
+  border-top: 1px solid var(--color-border, #e2e8f0);
+  width: 100%;
+  margin: 18px 0;
+}
+
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scope {
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 12px;
+  margin-top: 30px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text, #0f172a);
+}
+
+.scopeDetail {
+  display: block;
+  color: var(--color-text-secondary, #475569);
+  font-weight: 400;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.navIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────── */
+@media (max-width: 650px) {
+  .sidebar {
+    display: none;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border, #e2e8f0);
+    width: 100%;
+    min-width: unset;
+    min-height: unset;
+    padding: 16px;
+  }
+
+  .sidebarOpen {
+    display: flex;
+  }
+
+  .scope {
+    display: none;
+  }
+}
+
+@media (max-width: 1050px) {
+  .sidebar {
+    width: 204px;
+    min-width: 204px;
+  }
+}

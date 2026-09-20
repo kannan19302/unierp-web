@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useMemo, useState, useRef, useEffect } from "react";
+import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import {
-  Search,
-  X,
-  SlidersHorizontal,
-  Home,
+  PieChart,
   CreditCard,
   Users,
   Contact,
@@ -20,16 +18,17 @@ import {
   Shield,
   Folder,
   MessageCircle,
-  PieChart,
   Sparkles,
   Activity,
   GraduationCap,
   Building2,
-  LogOut,
   Workflow,
 } from "lucide-react";
-import Link from "next/link";
-import styles from "./apps-wizard.module.css";
+import { StrataPageShell } from "@/components/shell/StrataPageShell";
+import { StrataPanel } from "@/components/shell/StrataPanel";
+import { StrataAppGrid, type AppTile } from "@/components/shell/StrataAppGrid";
+import { StrataBanner } from "@/components/shell/StrataBanner";
+import s from "@/components/shell/strata-home.module.css";
 
 export interface AppIconConfig {
   id: string;
@@ -41,363 +40,123 @@ export interface AppIconConfig {
 }
 
 export const APPS_CATALOG: AppIconConfig[] = [
-  // Row 1 (Core ERP - 7 apps)
-  {
-    id: "analytics",
-    name: "Analytics",
-    displayName: "Analytics",
-    category: "core",
-    icon: PieChart,
-    href: "/analytics",
-  },
-  {
-    id: "finance",
-    name: "Finance",
-    displayName: "Finance",
-    category: "core",
-    icon: CreditCard,
-    href: "/finance",
-  },
-  {
-    id: "hr",
-    name: "HR",
-    displayName: "HR",
-    category: "core",
-    icon: Users,
-    href: "/hr",
-  },
-  {
-    id: "crm",
-    name: "CRM",
-    displayName: "CRM",
-    category: "core",
-    icon: Contact,
-    href: "/crm",
-  },
-  {
-    id: "inventory",
-    name: "Inventory",
-    displayName: "Inventory",
-    category: "core",
-    icon: Box,
-    href: "/inventory",
-  },
-  {
-    id: "procurement",
-    name: "Procurement",
-    displayName: "Procurement",
-    category: "core",
-    icon: ShoppingCart,
-    href: "/procurement",
-  },
-  {
-    id: "sales",
-    name: "Sales",
-    displayName: "Sales",
-    category: "core",
-    icon: ClipboardList,
-    href: "/sales",
-  },
+  // Core ERP (9 apps)
+  { id: "analytics", name: "Analytics", displayName: "Analytics", category: "core", icon: PieChart, href: "/analytics" },
+  { id: "finance", name: "Finance", displayName: "Finance", category: "core", icon: CreditCard, href: "/finance" },
+  { id: "hr", name: "HR", displayName: "HR", category: "core", icon: Users, href: "/hr" },
+  { id: "crm", name: "CRM", displayName: "CRM", category: "core", icon: Contact, href: "/crm" },
+  { id: "inventory", name: "Inventory", displayName: "Inventory", category: "core", icon: Box, href: "/inventory" },
+  { id: "procurement", name: "Procurement", displayName: "Procurement", category: "core", icon: ShoppingCart, href: "/procurement" },
+  { id: "sales", name: "Sales", displayName: "Sales", category: "core", icon: ClipboardList, href: "/sales" },
+  { id: "projects", name: "Projects", displayName: "Projects", category: "core", icon: Columns3, href: "/projects" },
+  { id: "manufacturing", name: "Manufacturing", displayName: "Manufacturing", category: "core", icon: Sun, href: "/manufacturing" },
 
-  // Row 2 (Core ERP & Operations - 7 apps)
-  {
-    id: "projects",
-    name: "Projects",
-    displayName: "Projects",
-    category: "core",
-    icon: Columns3,
-    href: "/projects",
-  },
-  {
-    id: "manufacturing",
-    name: "Manufacturing",
-    displayName: "Manufacturing",
-    category: "core",
-    icon: Sun,
-    href: "/manufacturing",
-  },
-  {
-    id: "supply-chain",
-    name: "Supply Chain",
-    displayName: "Supply Chain",
-    category: "operations",
-    icon: Network,
-    href: "/supply-chain",
-  },
-  {
-    id: "field-service",
-    name: "Field Service",
-    displayName: "Field Service",
-    category: "operations",
-    icon: Wrench,
-    href: "/field-service",
-  },
-  {
-    id: "pos",
-    name: "POS",
-    displayName: "POS",
-    category: "operations",
-    icon: Store,
-    href: "/pos",
-  },
-  {
-    id: "blockchain",
-    name: "Blockchain",
-    displayName: "Blockchain",
-    category: "operations",
-    icon: Shield,
-    href: "/blockchain",
-  },
-  {
-    id: "drive",
-    name: "Drive",
-    displayName: "Drive",
-    category: "productivity",
-    icon: Folder,
-    href: "/drive",
-  },
+  // Operations (4 apps)
+  { id: "supply-chain", name: "Supply Chain", displayName: "Supply Chain", category: "operations", icon: Network, href: "/supply-chain" },
+  { id: "field-service", name: "Field Service", displayName: "Field Service", category: "operations", icon: Wrench, href: "/field-service" },
+  { id: "pos", name: "POS", displayName: "POS", category: "operations", icon: Store, href: "/pos" },
+  { id: "blockchain", name: "Blockchain", displayName: "Blockchain", category: "operations", icon: Shield, href: "/blockchain" },
 
-  // Row 3 (Productivity & Verticals - 6 apps)
-  {
-    id: "communication",
-    name: "Connect",
-    displayName: "Connect",
-    category: "productivity",
-    icon: MessageCircle,
-    href: "/connect",
-  },
-  {
-    id: "workflow",
-    name: "Workflow",
-    displayName: "Workflow",
-    category: "productivity",
-    icon: Workflow,
-    href: "/workflow",
-  },
-  {
-    id: "ai",
-    name: "AI Copilot",
-    displayName: "AI Copilot",
-    category: "productivity",
-    icon: Sparkles,
-    href: "/ai",
-  },
-  {
-    id: "healthcare",
-    name: "Healthcare",
-    displayName: "Healthcare",
-    category: "verticals",
-    icon: Activity,
-    href: "/healthcare",
-  },
-  {
-    id: "education",
-    name: "Education",
-    displayName: "Education",
-    category: "verticals",
-    icon: GraduationCap,
-    href: "/education",
-  },
-  {
-    id: "real-estate",
-    name: "Real Estate",
-    displayName: "Real Estate",
-    category: "verticals",
-    icon: Building2,
-    href: "/real-estate",
-  },
+  // Productivity (4 apps)
+  { id: "drive", name: "Drive", displayName: "Drive", category: "productivity", icon: Folder, href: "/drive" },
+  { id: "communication", name: "Connect", displayName: "Connect", category: "productivity", icon: MessageCircle, href: "/connect" },
+  { id: "workflow", name: "Workflow", displayName: "Workflow", category: "productivity", icon: Workflow, href: "/workflow" },
+  { id: "ai", name: "AI Copilot", displayName: "AI Copilot", category: "productivity", icon: Sparkles, href: "/ai" },
+
+  // Verticals (3 apps)
+  { id: "healthcare", name: "Healthcare", displayName: "Healthcare", category: "verticals", icon: Activity, href: "/healthcare" },
+  { id: "education", name: "Education", displayName: "Education", category: "verticals", icon: GraduationCap, href: "/education" },
+  { id: "real-estate", name: "Real Estate", displayName: "Real Estate", category: "verticals", icon: Building2, href: "/real-estate" },
 ];
 
-type CategoryFilter = "all" | "core" | "operations" | "productivity" | "verticals";
-
-const CATEGORIES: Array<{ id: CategoryFilter; label: string; count: number }> = [
-  { id: "all", label: "All", count: 20 },
-  { id: "core", label: "Core ERP", count: 9 },
-  { id: "operations", label: "Operations", count: 4 },
-  { id: "productivity", label: "Productivity", count: 4 },
-  { id: "verticals", label: "Industry", count: 3 },
+const ALL_APPS: AppTile[] = [
+  { icon: "F", name: "Finance", description: "Ledger & cash", href: "/finance" },
+  { icon: "C", name: "CRM", description: "Customers & pipeline", href: "/crm" },
+  { icon: "I", name: "Inventory", description: "Stock & fulfillment", href: "/inventory" },
+  { icon: "S", name: "Sales", description: "Orders & revenue", href: "/sales" },
+  { icon: "P", name: "Projects", description: "Plans & delivery", href: "/projects" },
+  { icon: "A", name: "Analytics", description: "Reports & insights", href: "/analytics" },
 ];
 
-export default function ApplicationWizardPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [category, setCategory] = useState<CategoryFilter>("all");
+type FilterType = "all" | "ready" | "setup";
 
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
-  // Keyboard shortcut '/' or 'Cmd/Ctrl+K' to focus search
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        (e.key === "/" || (e.ctrlKey && e.key === "k") || (e.metaKey && e.key === "k")) &&
-        document.activeElement?.tagName !== "INPUT" &&
-        document.activeElement?.tagName !== "TEXTAREA"
-      ) {
-        e.preventDefault();
-        searchInputRef.current?.focus();
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+export default function ApplicationsPage() {
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<FilterType>("all");
 
   const filteredApps = useMemo(() => {
-    return APPS_CATALOG.filter((app) => {
-      // Category filter
-      if (category !== "all" && app.category !== category) {
-        return false;
-      }
-
-      // Search query filter
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const nameMatch = app.name.toLowerCase().includes(q);
-        const displayMatch = app.displayName.toLowerCase().includes(q);
-        const idMatch = app.id.toLowerCase().includes(q);
-        if (!nameMatch && !displayMatch && !idMatch) return false;
-      }
-
-      return true;
-    });
-  }, [category, searchQuery]);
+    let apps = ALL_APPS;
+    if (search) {
+      const lower = search.toLowerCase();
+      apps = apps.filter(
+        (a) =>
+          a.name.toLowerCase().includes(lower) ||
+          a.description.toLowerCase().includes(lower),
+      );
+    }
+    // Synthetic filter: "Needs setup" only shows Finance (requires fiscal calendar)
+    if (filter === "setup") {
+      apps = apps.filter((a) => a.name === "Finance");
+    } else if (filter === "ready") {
+      apps = apps.filter((a) => a.name !== "Finance");
+    }
+    return apps;
+  }, [search, filter]);
 
   return (
-    <div className={styles.launcherBackdrop}>
-      <main className={styles.launcherCard}>
-        {/* Top Hero Section: Left Title/Subtitle & Right Search Bar */}
-        <section className={styles.heroSection}>
-          <div className={styles.heroLeft}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>
-              <h1 className={styles.launcherTitle}>Select an app to continue</h1>
-              <Link
-                href="/home"
-                style={{
-                  fontSize: "0.6875rem",
-                  fontWeight: 600,
-                  color: "var(--color-primary)",
-                  backgroundColor: "var(--color-surface-sunken)",
-                  padding: "0.1875rem 0.5rem",
-                  borderRadius: "var(--radius-full, 9999px)",
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.25rem",
-                }}
-              >
-                <Home size={11} />
-                <span>Daily Home</span>
-              </Link>
-            </div>
-            <p className={styles.launcherSubtitle}>
-              Choose an operational workspace application to launch, or view <Link href="/home" style={{ color: "var(--color-primary)" }}>Daily Home</Link> for recent drafts and action items.
-            </p>
-          </div>
+    <StrataPageShell
+      breadcrumb="UniERP Home / Home"
+      breadcrumbHref="/home"
+      title="Applications"
+      subtitle="Your organization's tools, ready when you are."
+      screenNumber="V2 / 03"
+      actions={
+        <>
+          <Link href="/setup" className={s.btnPrimary}>
+            Set up applications
+          </Link>
+          <Link href="/finance" className={s.btnSecondary}>
+            Review Finance
+          </Link>
+        </>
+      }
+    >
+      {/* Search */}
+      <label className={s.field}>
+        Find an application
+        <input
+          type="search"
+          placeholder="Search by name or category"
+          className={s.fieldInput}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </label>
 
-          {/* Compact Search Bar with '/' Shortcut */}
-          <div className={styles.searchWrap}>
-            <Search size={14} className={styles.searchIcon} aria-hidden="true" />
-            <input
-              ref={searchInputRef}
-              type="text"
-              className={styles.searchInput}
-              placeholder="Search apps — Finance, CRM, Payroll..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              aria-label="Search applications"
-            />
-            {searchQuery ? (
-              <button
-                type="button"
-                className={styles.clearBtn}
-                onClick={() => {
-                  setSearchQuery("");
-                  searchInputRef.current?.focus();
-                }}
-                aria-label="Clear search"
-              >
-                <X size={11} />
-              </button>
-            ) : (
-              <kbd className={styles.searchKbdShortcut} title="Press '/' to focus search">
-                /
-              </kbd>
-            )}
-          </div>
-        </section>
+      {/* Filters */}
+      <div className={s.chips}>
+        {(["all", "ready", "setup"] as FilterType[]).map((f) => (
+          <button
+            key={f}
+            type="button"
+            className={`${s.chip} ${filter === f ? s.chipActive : ""}`}
+            aria-pressed={filter === f}
+            onClick={() => setFilter(f)}
+          >
+            {f === "all" ? "All apps" : f === "ready" ? "Ready to use" : "Needs setup"}
+          </button>
+        ))}
+      </div>
 
-        {/* Category Tabs Filter Bar */}
-        <div className={styles.tabsBar} role="tablist" aria-label="Application categories">
-          {CATEGORIES.map((c) => (
-            <button
-              key={c.id}
-              role="tab"
-              aria-selected={category === c.id}
-              className={`${styles.tabBtn} ${category === c.id ? styles.tabBtnActive : ""}`}
-              onClick={() => setCategory(c.id)}
-            >
-              <span className={styles.tabLabel}>{c.label}</span>
-              <span className={styles.tabCount}>{c.count}</span>
-            </button>
-          ))}
-        </div>
+      {/* App Grid */}
+      <StrataPanel title="Business applications">
+        <StrataAppGrid apps={filteredApps} />
+      </StrataPanel>
 
-        {/* App Icons Grid (7 columns per row) */}
-        {filteredApps.length === 0 ? (
-          <div className={styles.emptyState}>
-            <SlidersHorizontal size={20} className={styles.emptyIcon} />
-            <p className={styles.emptyText}>No applications matching &ldquo;{searchQuery}&rdquo;</p>
-            <button
-              type="button"
-              className={styles.resetBtn}
-              onClick={() => {
-                setSearchQuery("");
-                setCategory("all");
-              }}
-            >
-              Reset filters
-            </button>
-          </div>
-        ) : (
-          <div className={styles.appGrid} role="list">
-            {filteredApps.map((app) => {
-              const Icon = app.icon;
-
-              return (
-                <Link
-                  key={app.id}
-                  href={app.href}
-                  className={styles.appTile}
-                  role="listitem"
-                  data-app={app.id}
-                  title={`Launch ${app.name}`}
-                >
-                  <div className={styles.iconSquircle}>
-                    <Icon size={20} className={styles.iconGlyph} strokeWidth={2} />
-                  </div>
-
-                  <span className={styles.appName}>{app.displayName}</span>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Footer with clean space from bottom border */}
-        <footer className={styles.launcherFooter}>
-          <div className={styles.footerLeft} style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-            <span>UniERP Workspace Atlas • Enterprise Edition</span>
-            <span style={{ color: "var(--color-border)" }}>|</span>
-            <Link href="/home" style={{ color: "var(--color-text-secondary)", textDecoration: "none" }}>Daily Home</Link>
-            <Link href="/setup" style={{ color: "var(--color-text-secondary)", textDecoration: "none" }}>Guided Setup</Link>
-            <Link href="/platforms" style={{ color: "var(--color-text-secondary)", textDecoration: "none" }}>Platform Directory</Link>
-          </div>
-          <div className={styles.footerRight}>
-            <Link href="/auth/logout" className={styles.footerLink}>
-              <LogOut size={11} />
-              <span>Logout</span>
-            </Link>
-          </div>
-        </footer>
-      </main>
-    </div>
+      <StrataBanner>
+        Finance needs a confirmed fiscal calendar before posting. You can still
+        browse your workspace.
+      </StrataBanner>
+    </StrataPageShell>
   );
 }

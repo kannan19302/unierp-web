@@ -60,6 +60,7 @@ import {
 import { PermissionProvider } from "@/components/PermissionProvider";
 import { AppSidebar } from "@/components/shell/AppSidebar";
 import { AppHeader } from "@/components/shell/AppHeader";
+import { HomeSidebar } from "@/components/shell/HomeSidebar";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 import { AICopilot } from "@/components/shell/AICopilot";
 import { useApiClient } from "@kannan19302/framework";
@@ -552,18 +553,31 @@ export default function DashboardLayout({
     }
   };
 
-  const isAppsLanding = pathname === "/apps" || pathname === "/home" || pathname === "/setup" || pathname === "/platforms" || pathname === "/account";
+  const isAppsLanding =
+    pathname === "/apps" ||
+    pathname === "/home" ||
+    pathname === "/setup" ||
+    pathname === "/platforms" ||
+    pathname === "/account" ||
+    pathname === "/notifications" ||
+    pathname === "/profile";
   const isAppsSection = pathname.startsWith("/apps");
   const isHomeSection = pathname === "/home" || pathname.startsWith("/home/");
   const isSetupSection = pathname === "/setup" || pathname.startsWith("/setup/");
   const isPlatformsSection = pathname === "/platforms" || pathname.startsWith("/platforms/");
   const isAccountSection = pathname === "/account" || pathname.startsWith("/account/");
-  const isLandingWorkspace = isAppsSection || isHomeSection || isSetupSection || isPlatformsSection || isAccountSection;
+  const isNotificationsSection = pathname === "/notifications" || pathname.startsWith("/notifications/");
+  const isProfileSection = pathname === "/profile" || pathname.startsWith("/profile/");
+  const isLandingWorkspace =
+    isAppsSection ||
+    isHomeSection ||
+    isSetupSection ||
+    isPlatformsSection ||
+    isAccountSection ||
+    isNotificationsSection ||
+    isProfileSection;
 
-  const hideSidebar =
-    isLandingWorkspace ||
-    pathname === "/profile" ||
-    pathname.startsWith("/profile/");
+  const hideSidebar = isLandingWorkspace;
   const appNav =
     pathname.startsWith("/app/") &&
     dynamicAppNav &&
@@ -660,7 +674,13 @@ export default function DashboardLayout({
     <PermissionProvider>
       <div suppressHydrationWarning className={styles.s2}>
         {/* Sidebar Component */}
-        {!hideSidebar && !isFinance && (
+        {isLandingWorkspace && !isFinance && (
+          <HomeSidebar
+            tenantName={currentTenant?.name || "Acme Corp"}
+            environment="Production"
+          />
+        )}
+        {!hideSidebar && !isFinance && !isLandingWorkspace && (
           <AppSidebar
             collapsed={collapsed}
             setCollapsed={setCollapsed}
