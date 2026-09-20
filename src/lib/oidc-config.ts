@@ -10,7 +10,7 @@ export const oidcConfig: OidcClientConfig = {
   issuer: process.env.NEXT_PUBLIC_OIDC_ISSUER || "http://localhost:3005",
   clientId: "unierp-tenant-apps",
   redirectUri:
-    (typeof window !== "undefined" ? window.location.origin : "http://localhost:4003") +
+    (typeof window !== "undefined" ? window.location.origin : "http://localhost:4002") +
     "/auth/callback",
   scope: ["openid", "profile", "email", "tenant", "offline_access", "erp.read", "erp.write"],
 };
