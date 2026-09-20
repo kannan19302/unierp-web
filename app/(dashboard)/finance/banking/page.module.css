@@ -161,7 +161,8 @@
   font-size: var(--font-size-xl);
   font-weight: 600;
   color: var(--color-text-primary);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 .accountMeta {
@@ -273,7 +274,9 @@
 
 .tdRight {
   text-align: right;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: var(--weight-medium, 500);
 }
 
 .badgeMatch {

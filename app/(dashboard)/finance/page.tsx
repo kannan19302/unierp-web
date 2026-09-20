@@ -17,7 +17,10 @@ import {
   RefreshCw,
   Database,
   ArrowRight,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
+import { Button, Badge } from "@kannan19302/ui/primitives";
 import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
 import styles from "./page.module.css";
 
@@ -448,9 +451,9 @@ export default function FinanceOverviewPage() {
             buttonLabel="Export Briefing"
           />
 
-          <button
-            type="button"
-            className={styles.btnPrimary}
+          <Button
+            variant="primary"
+            size="sm"
             onClick={() => {
               openAppTab({
                 href: "/finance/advanced/close-tasks",
@@ -459,7 +462,7 @@ export default function FinanceOverviewPage() {
             }}
           >
             Review close
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -523,7 +526,12 @@ export default function FinanceOverviewPage() {
                         : styles.deltaNegative
                     }
                   >
-                    {(revKpi?.deltaPct ?? 0) >= 0 ? "↑ +" : "↓ "}
+                    {(revKpi?.deltaPct ?? 0) >= 0 ? (
+                      <ArrowUp size={11} strokeWidth={2.2} />
+                    ) : (
+                      <ArrowDown size={11} strokeWidth={2.2} />
+                    )}
+                    {(revKpi?.deltaPct ?? 0) >= 0 ? "+" : ""}
                     {revKpi?.deltaPct ?? 0}%
                   </span>
                   <span>
@@ -561,7 +569,12 @@ export default function FinanceOverviewPage() {
                         : styles.deltaNegative
                     }
                   >
-                    {(cfKpi?.deltaPct ?? 0) >= 0 ? "↑ +" : "↓ "}
+                    {(cfKpi?.deltaPct ?? 0) >= 0 ? (
+                      <ArrowUp size={11} strokeWidth={2.2} />
+                    ) : (
+                      <ArrowDown size={11} strokeWidth={2.2} />
+                    )}
+                    {(cfKpi?.deltaPct ?? 0) >= 0 ? "+" : ""}
                     {cfKpi?.deltaPct ?? 0}%
                   </span>
                   <span>
@@ -598,7 +611,12 @@ export default function FinanceOverviewPage() {
                         : styles.deltaNegative
                     }
                   >
-                    {(ebitdaKpi?.deltaPp ?? 0) >= 0 ? "↑ +" : "↓ "}
+                    {(ebitdaKpi?.deltaPp ?? 0) >= 0 ? (
+                      <ArrowUp size={11} strokeWidth={2.2} />
+                    ) : (
+                      <ArrowDown size={11} strokeWidth={2.2} />
+                    )}
+                    {(ebitdaKpi?.deltaPp ?? 0) >= 0 ? "+" : ""}
                     {ebitdaKpi?.deltaPp ?? 0} pp
                   </span>
                   <span>
@@ -635,7 +653,12 @@ export default function FinanceOverviewPage() {
                         : styles.deltaNegative
                     }
                   >
-                    {(dsoKpi?.deltaDays ?? 0) <= 0 ? "↓ " : "↑ +"}
+                    {(dsoKpi?.deltaDays ?? 0) <= 0 ? (
+                      <ArrowDown size={11} strokeWidth={2.2} />
+                    ) : (
+                      <ArrowUp size={11} strokeWidth={2.2} />
+                    )}
+                    {(dsoKpi?.deltaDays ?? 0) > 0 ? "+" : ""}
                     {dsoKpi?.deltaDays ?? 0} days
                   </span>
                   <span>
@@ -849,9 +872,9 @@ export default function FinanceOverviewPage() {
           <div className={styles.cardHeader}>
             <div className={styles.cardTitleWrap}>
               <h2 className={styles.cardTitle}>Exceptions</h2>
-              <span className={styles.badgeAttention}>
+              <Badge variant="danger" size="sm">
                 {attentionCount} need attention
-              </span>
+              </Badge>
             </div>
           </div>
 

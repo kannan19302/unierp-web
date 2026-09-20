@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -17,6 +17,8 @@ import {
   Trash2,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { PageHeader, StatCardRow, type StatCardItem } from "@kannan19302/ui/layout";
+import { Button, Badge } from "@kannan19302/ui/primitives";
 import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
 import { useFinanceScope } from "@/components/shell/FinanceScopeContext";
 import { FinanceErrorState } from "@/components/finance/FinanceErrorBoundary";
@@ -216,64 +218,103 @@ export default function GeneralLedgerPage() {
       }
     : data?.inspector;
 
+  const statItems: StatCardItem[] = useMemo(() => [
+    {
+      label: "Total debits",
+      value: isLoading
+        ? "..."
+        : isError
+        ? "Unavailable"
+        : `USD ${Number(data?.kpis.totalDebits ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      icon: <ArrowUpRight size={16} strokeWidth={1.75} />,
+      color: "var(--color-primary)",
+      loading: isLoading,
+    },
+    {
+      label: "Total credits",
+      value: isLoading
+        ? "..."
+        : isError
+        ? "Unavailable"
+        : `USD ${Number(data?.kpis.totalCredits ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      changeLabel: !isError && data && data.kpis.inBalance && (data.kpis.totalDebits ?? 0) > 0 ? "In balance" : undefined,
+      icon: <Check size={16} strokeWidth={1.75} />,
+      color: "var(--color-success)",
+      loading: isLoading,
+    },
+    {
+      label: "Unposted journals",
+      value: isLoading ? "..." : isError ? "Unavailable" : (data?.kpis.unpostedJournals ?? 0),
+      changeLabel: !isError && data && (data.kpis.unpostedJournals ?? 0) > 0 ? "Review required" : "Up to date",
+      icon: <AlertCircle size={16} strokeWidth={1.75} />,
+      color: (data?.kpis.unpostedJournals ?? 0) > 0 ? "var(--color-warning)" : "var(--color-success)",
+      loading: isLoading,
+    },
+    {
+      label: "Active accounts",
+      value: isLoading ? "..." : (data?.kpis.activeAccounts ?? 0),
+      changeLabel: "In chart of accounts",
+      icon: <BookOpen size={16} strokeWidth={1.75} />,
+      color: "var(--color-neutral-muted)",
+      loading: isLoading,
+    },
+  ], [data, isLoading, isError]);
+
   return (
     <div className={styles.pageContainer}>
-      {/* Header */}
-      <div className={styles.headerRow}>
-        <div className={styles.headerLeft}>
-          <h1 className={styles.title}>General ledger</h1>
-          <p className={styles.subtitle}>
-            Review account balances, journal entries, and reconciliation status.
-          </p>
-        </div>
+      {/* Strata PageHeader */}
+      <PageHeader
+        title="General ledger"
+        description="Review account balances, journal entries, and reconciliation status."
+        actions={
+          <div className={styles.headerRight}>
+            <div className={styles.liveBadge}>
+              {!isError && data ? (
+                <>
+                  <div className={styles.liveDot} />
+                  <span>Live database</span>
+                </>
+              ) : isError ? (
+                <>
+                  <div className={styles.liveDot} style={{ background: "var(--color-danger, #ef4444)" }} />
+                  <span>Connection error</span>
+                </>
+              ) : (
+                <>
+                  <div className={styles.liveDot} style={{ background: "var(--color-warning, #f59e0b)" }} />
+                  <span>Connecting...</span>
+                </>
+              )}
+              <button
+                type="button"
+                className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
+                onClick={() => refetch()}
+                title="Refresh ledger"
+                aria-label="Refresh data"
+              >
+                <RefreshCw size={13} />
+              </button>
+            </div>
 
-        <div className={styles.headerRight}>
-          <div className={styles.liveBadge}>
-            {!isError && data ? (
-              <>
-                <div className={styles.liveDot} />
-                <span>Live database</span>
-              </>
-            ) : isError ? (
-              <>
-                <div className={styles.liveDot} style={{ background: "var(--color-danger, #ef4444)" }} />
-                <span>Connection error</span>
-              </>
-            ) : (
-              <>
-                <div className={styles.liveDot} style={{ background: "var(--color-warning, #f59e0b)" }} />
-                <span>Connecting...</span>
-              </>
-            )}
-            <button
-              type="button"
-              className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
-              onClick={() => refetch()}
-              title="Refresh ledger"
-              aria-label="Refresh data"
+            <ExportMenu
+              filename="general-ledger"
+              title="General Ledger Report"
+              columns={exportColumns}
+              data={exportRows}
+              buttonLabel="Export ledger"
+            />
+
+            <Button
+              variant="primary"
+              size="sm"
+              leftIcon={<Plus size={14} strokeWidth={2} />}
+              onClick={() => setShowCreateModal(true)}
             >
-              <RefreshCw size={13} />
-            </button>
+              Create journal entry
+            </Button>
           </div>
-
-          <ExportMenu
-            filename="general-ledger"
-            title="General Ledger Report"
-            columns={exportColumns}
-            data={exportRows}
-            buttonLabel="Export ledger"
-          />
-
-          <button
-            type="button"
-            className={styles.btnPrimary}
-            onClick={() => setShowCreateModal(true)}
-          >
-            <Plus size={14} />
-            <span>Create journal entry</span>
-          </button>
-        </div>
-      </div>
+        }
+      />
 
       {/* Inline Error State for service or query failure (FIN-01, FIN-13) */}
       {isError && (
@@ -285,62 +326,9 @@ export default function GeneralLedgerPage() {
         />
       )}
 
-      {/* KPI Strip */}
-      <div className={styles.kpiStrip}>
-        <div className={styles.kpiCard}>
-          <span className={styles.kpiLabel}>Total debits</span>
-          <div className={styles.kpiValueRow}>
-            <span className={styles.kpiValue}>
-              {isLoading
-                ? "..."
-                : isError
-                ? "Unavailable"
-                : `USD ${Number(data?.kpis.totalDebits ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-            </span>
-          </div>
-        </div>
-
-        <div className={styles.kpiCard}>
-          <span className={styles.kpiLabel}>Total credits</span>
-          <div className={styles.kpiValueRow}>
-            <span className={styles.kpiValue}>
-              {isLoading
-                ? "..."
-                : isError
-                ? "Unavailable"
-                : `USD ${Number(data?.kpis.totalCredits ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-            </span>
-            {!isError && data && data.kpis.inBalance && (data.kpis.totalDebits ?? 0) > 0 && (
-              <span className={styles.kpiBadgeSuccess}>
-                <Check size={11} /> In balance
-              </span>
-            )}
-          </div>
-        </div>
-
-        <div className={styles.kpiCard}>
-          <span className={styles.kpiLabel}>Unposted journals</span>
-          <div className={styles.kpiValueRow}>
-            <span className={styles.kpiValue}>
-              {isLoading ? "..." : isError ? "Unavailable" : (data?.kpis.unpostedJournals ?? 0)}
-            </span>
-            {!isError && data && (data.kpis.unpostedJournals ?? 0) > 0 && (
-              <span className={styles.kpiBadgeWarning}>Review required</span>
-            )}
-            {!isError && data && (data.kpis.unpostedJournals ?? 0) === 0 && (
-              <span className={styles.kpiBadgeSuccess}>Up to date</span>
-            )}
-          </div>
-        </div>
-
-        <div className={styles.kpiCard}>
-          <span className={styles.kpiLabel}>Active accounts</span>
-          <div className={styles.kpiValueRow}>
-            <span className={styles.kpiValue}>
-              {isLoading ? "..." : (data?.kpis.activeAccounts ?? 0)}
-            </span>
-          </div>
-        </div>
+      {/* Strata StatCardRow */}
+      <div style={{ marginBlock: "var(--space-3)" }}>
+        <StatCardRow stats={statItems} columns={4} />
       </div>
 
       {/* Split Workspace */}
@@ -412,9 +400,9 @@ export default function GeneralLedgerPage() {
                           {row.credit > 0 ? row.credit.toLocaleString("en-US", { minimumFractionDigits: 2 }) : "—"}
                         </td>
                         <td className={styles.td}>
-                          <span className={row.status === "POSTED" ? styles.badgePosted : styles.badgeDraft}>
+                          <Badge variant={row.status === "POSTED" ? "success" : "default"} size="sm">
                             {row.status}
-                          </span>
+                          </Badge>
                         </td>
                         <td className={`${styles.td} ${styles.tdMono}`} style={{ color: "var(--color-text-muted)" }}>
                           {row.reference}
@@ -440,9 +428,9 @@ export default function GeneralLedgerPage() {
           <div className={styles.inspectorField}>
             <span className={styles.inspectorFieldLabel}>Status</span>
             <span className={styles.inspectorFieldValue}>
-              <span className={styles.badgeDraft}>
+              <Badge variant={activeInspectorEntry?.status === "POSTED" ? "success" : "default"} size="sm">
                 {activeInspectorEntry?.status || "—"}
-              </span>
+              </Badge>
             </span>
           </div>
 
@@ -502,22 +490,22 @@ export default function GeneralLedgerPage() {
           </div>
 
           <div className={styles.inspectorActions}>
-            <button
-              type="button"
-              className={styles.btnPrimary}
-              style={{ flex: 1, justifyContent: "center" }}
-              disabled={isPosting || !activeInspectorEntry || activeInspectorEntry.status === "POSTED"}
+            <Button
+              variant="primary"
+              size="sm"
               onClick={handleApproveAndPost}
+              disabled={isPosting || !activeInspectorEntry || activeInspectorEntry.status === "POSTED"}
+              isLoading={isPosting}
             >
-              {isPosting ? "Posting..." : activeInspectorEntry?.status === "POSTED" ? "Posted ✓" : "Approve & post"}
-            </button>
-            <button
-              type="button"
-              className={styles.btnSecondary}
+              {activeInspectorEntry?.status === "POSTED" ? "Posted ✓" : "Approve & post"}
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={() => refetch()}
             >
               Refresh
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -718,20 +706,22 @@ export default function GeneralLedgerPage() {
               </div>
 
               <div className={styles.modalFooter}>
-                <button
-                  type="button"
-                  className={styles.btnSecondary}
+                <Button
+                  variant="secondary"
+                  size="sm"
                   onClick={() => setShowCreateModal(false)}
                 >
                   Cancel
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
                   type="submit"
-                  className={styles.btnPrimary}
                   disabled={isSubmitting || !isModalBalanced}
+                  isLoading={isSubmitting}
                 >
-                  {isSubmitting ? "Posting..." : "Post to General Ledger"}
-                </button>
+                  Post to General Ledger
+                </Button>
               </div>
             </form>
           </div>

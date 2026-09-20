@@ -318,7 +318,9 @@
 
 .tdRight {
   text-align: right;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: var(--weight-medium, 500);
 }
 
 .badgeDraft {

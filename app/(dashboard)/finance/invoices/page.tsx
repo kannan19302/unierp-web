@@ -4,11 +4,13 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Modal } from "@kannan19302/ui";
+import { PageHeader, StatCardRow, type StatCardItem } from "@kannan19302/ui/layout";
+import { Button } from "@kannan19302/ui/primitives";
 import { FormView, ListView, RouteGuard, useResourceList } from "@kannan19302/framework";
 import { invoiceResource } from "@/modules/finance";
 import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
 import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
-import { Plus, FileSpreadsheet, FileText, BarChart3 } from "lucide-react";
+import { Plus, FileText, BarChart3, AlertCircle, CheckCircle2 } from "lucide-react";
 import styles from "./page.module.css";
 
 interface InvoiceRecord {
@@ -98,114 +100,111 @@ export default function InvoicesPage() {
     }));
   }, [invoices]);
 
+  const statItems: StatCardItem[] = useMemo(() => [
+    {
+      label: "Total Invoiced",
+      value: `$${metrics.totalInvoiced.toLocaleString()}`,
+      changeLabel: `${metrics.count} total invoices`,
+      icon: <FileText size={16} strokeWidth={1.75} />,
+      color: "var(--color-neutral-muted)",
+      loading: isLoading,
+    },
+    {
+      label: "Open Receivables",
+      value: `$${metrics.outstanding.toLocaleString()}`,
+      changeLabel: "Outstanding balance",
+      icon: <BarChart3 size={16} strokeWidth={1.75} />,
+      color: "var(--color-primary)",
+      loading: isLoading,
+    },
+    {
+      label: "Overdue Invoices",
+      value: metrics.overdueCount,
+      changeLabel: metrics.overdueCount > 0 ? "Requires action" : "All current",
+      icon: <AlertCircle size={16} strokeWidth={1.75} />,
+      color: metrics.overdueCount > 0 ? "var(--color-danger)" : "var(--color-success)",
+      loading: isLoading,
+    },
+    {
+      label: "Collections Rate",
+      value: metrics.totalInvoiced > 0
+        ? `${Math.round((metrics.totalPaid / metrics.totalInvoiced) * 100)}%`
+        : "N/A",
+      changeLabel: "Settled volume",
+      icon: <CheckCircle2 size={16} strokeWidth={1.75} />,
+      color: "var(--color-success)",
+      loading: isLoading,
+    },
+  ], [metrics, isLoading]);
+
   return (
     <RouteGuard permission="finance.invoice.read">
       <div className={styles.container}>
-        {/* Strata 2.0 Header */}
-        <div className={styles.workbenchHeader}>
-          <div>
-            <h1 className={styles.headerTitle}>Invoices Workbench</h1>
-            <p className={styles.headerDesc}>
-              Issue customer invoices, track collections, monitor DSO, and manage billing lifecycles
-            </p>
-          </div>
-
-          <div className={styles.headerActions}>
-            <Link
-              href="/finance/ar"
-              className={styles.btnSecondary}
-              onClick={(e) => {
-                e.preventDefault();
-                openAppTab({ href: "/finance/ar", title: "Accounts Receivable" });
-              }}
-            >
-              <BarChart3 size={13} />
-              <span>AR Aging Hub</span>
-            </Link>
-
-            <Link
-              href="/finance/advanced/customer-statement"
-              className={styles.btnSecondary}
-              onClick={(e) => {
-                e.preventDefault();
-                openAppTab({
-                  href: "/finance/advanced/customer-statement",
-                  title: "Customer Statements",
-                });
-              }}
-            >
-              <FileText size={13} />
-              <span>Statements</span>
-            </Link>
-
-            <ExportMenu
-              filename="customer-invoices-register"
-              title="Customer Invoices Register"
-              columns={exportColumns}
-              data={exportData}
-              buttonLabel="Export Invoices"
-            />
-
-            <button
-              type="button"
-              className={styles.btnPrimary}
-              onClick={() => setShowCreate(true)}
-            >
-              <Plus size={14} />
-              <span>New Invoice</span>
-            </button>
-          </div>
-        </div>
-
-        {/* KPI Strip */}
-        <div className={styles.kpiStrip}>
-          <div className={styles.kpiCard}>
-            <span className={styles.kpiLabel}>Total Invoiced</span>
-            <div className={styles.kpiValueRow}>
-              <span className={styles.kpiValue}>
-                {isLoading ? "..." : `$${metrics.totalInvoiced.toLocaleString()}`}
-              </span>
-              <span className={styles.kpiSubtext}>{metrics.count} total</span>
-            </div>
-          </div>
-
-          <div className={styles.kpiCard}>
-            <span className={styles.kpiLabel}>Open Receivables</span>
-            <div className={styles.kpiValueRow}>
-              <span className={styles.kpiValue} style={{ color: "var(--color-primary)" }}>
-                {isLoading ? "..." : `$${metrics.outstanding.toLocaleString()}`}
-              </span>
-              <span className={styles.kpiSubtext}>Outstanding</span>
-            </div>
-          </div>
-
-          <div className={styles.kpiCard}>
-            <span className={styles.kpiLabel}>Overdue Invoices</span>
-            <div className={styles.kpiValueRow}>
-              <span
-                className={styles.kpiValue}
-                style={{ color: metrics.overdueCount > 0 ? "var(--color-danger)" : "inherit" }}
+        {/* Strata 2.0 PageHeader */}
+        <PageHeader
+          title="Invoices Workbench"
+          description="Issue customer invoices, track collections, monitor DSO, and manage billing lifecycles"
+          actions={
+            <div className={styles.headerActions}>
+              <Button
+                variant="secondary"
+                size="sm"
+                leftIcon={<BarChart3 size={13} strokeWidth={1.75} />}
+                asChild
               >
-                {isLoading ? "..." : metrics.overdueCount}
-              </span>
-              <span className={styles.kpiSubtext}>Needs action</span>
-            </div>
-          </div>
+                <Link
+                  href="/finance/ar"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openAppTab({ href: "/finance/ar", title: "Accounts Receivable" });
+                  }}
+                >
+                  AR Aging Hub
+                </Link>
+              </Button>
 
-          <div className={styles.kpiCard}>
-            <span className={styles.kpiLabel}>Collections Rate</span>
-            <div className={styles.kpiValueRow}>
-              <span className={styles.kpiValue} style={{ color: "var(--color-success)" }}>
-                {isLoading
-                  ? "..."
-                  : metrics.totalInvoiced > 0
-                  ? `${Math.round((metrics.totalPaid / metrics.totalInvoiced) * 100)}%`
-                  : "N/A"}
-              </span>
-              <span className={styles.kpiSubtext}>Settled</span>
+              <Button
+                variant="secondary"
+                size="sm"
+                leftIcon={<FileText size={13} strokeWidth={1.75} />}
+                asChild
+              >
+                <Link
+                  href="/finance/advanced/customer-statement"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openAppTab({
+                      href: "/finance/advanced/customer-statement",
+                      title: "Customer Statements",
+                    });
+                  }}
+                >
+                  Statements
+                </Link>
+              </Button>
+
+              <ExportMenu
+                filename="customer-invoices-register"
+                title="Customer Invoices Register"
+                columns={exportColumns}
+                data={exportData}
+                buttonLabel="Export Invoices"
+              />
+
+              <Button
+                variant="primary"
+                size="sm"
+                leftIcon={<Plus size={14} strokeWidth={2} />}
+                onClick={() => setShowCreate(true)}
+              >
+                New Invoice
+              </Button>
             </div>
-          </div>
-        </div>
+          }
+        />
+
+        {/* Canonical Strata StatCardRow */}
+        <StatCardRow stats={statItems} columns={4} />
 
         {/* Resource-backed High-Density ListView */}
         <div className={styles.listWrapper}>

@@ -20,6 +20,8 @@ import {
   ArrowDown,
 } from "lucide-react";
 import { useApiClient } from "@kannan19302/framework";
+import { PageHeader } from "@kannan19302/ui/layout";
+import { Button, Badge } from "@kannan19302/ui/primitives";
 import { ExportMenu, type ExportColumn } from "@/components/export/ExportMenu";
 import { RowContextMenu, type ContextMenuAction } from "@/components/finance/RowContextMenu";
 import { useFinanceTabs } from "@/components/shell/FinanceTabContext";
@@ -232,84 +234,86 @@ export default function BankingTreasuryPage() {
 
   return (
     <div className={styles.pageContainer}>
-      {/* Header */}
-      <div className={styles.headerRow}>
-        <div className={styles.headerLeft}>
-          <h1 className={styles.title}>Banking & treasury</h1>
-          <p className={styles.subtitle}>
-            Bank account reconciliations, feeds, and 13-week cash forecasting.
-          </p>
-        </div>
-
-        <div className={styles.headerRight}>
-          <div className={styles.liveBadge}>
-            <div
-              className={styles.liveDot}
-              style={{
-                background: error
-                  ? "var(--color-danger)"
+      {/* Strata PageHeader */}
+      <PageHeader
+        title="Banking & treasury"
+        description="Bank account reconciliations, feeds, and 13-week cash forecasting."
+        actions={
+          <div className={styles.headerRight}>
+            <div className={styles.liveBadge}>
+              <div
+                className={styles.liveDot}
+                style={{
+                  background: error
+                    ? "var(--color-danger)"
+                    : isLoading
+                    ? "var(--color-warning)"
+                    : "var(--color-success)",
+                }}
+              />
+              <span>
+                {error
+                  ? "Connection error"
                   : isLoading
-                  ? "var(--color-warning)"
-                  : "var(--color-success)",
-              }}
+                  ? "Connecting..."
+                  : isFetching
+                  ? "Refreshing..."
+                  : "Live database"}
+              </span>
+              <button
+                type="button"
+                className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
+                onClick={() => refetch()}
+                title="Refresh banking"
+                aria-label="Refresh data"
+              >
+                <RefreshCw size={13} />
+              </button>
+            </div>
+
+            <ExportMenu
+              filename="bank-reconciliations"
+              title="Bank Account Reconciliations Report"
+              columns={exportColumns}
+              data={exportData}
+              buttonLabel="Export banking"
             />
-            <span>
-              {error
-                ? "Connection error"
-                : isLoading
-                ? "Connecting..."
-                : isFetching
-                ? "Refreshing..."
-                : "Live database"}
-            </span>
-            <button
-              type="button"
-              className={`${styles.refreshBtn} ${isFetching ? styles.refreshSpin : ""}`}
-              onClick={() => refetch()}
-              title="Refresh banking"
-              aria-label="Refresh data"
+
+            <Button
+              variant="secondary"
+              size="sm"
+              asChild
             >
-              <RefreshCw size={13} />
-            </button>
+              <Link
+                href="/finance/advanced/bank-feeds"
+                onClick={(e) => {
+                  e.preventDefault();
+                  openAppTab({
+                    href: "/finance/advanced/bank-feeds",
+                    title: "Bank Feeds",
+                  });
+                }}
+              >
+                Import statement
+              </Link>
+            </Button>
+
+            <Button
+              variant="primary"
+              size="sm"
+              leftIcon={<Upload size={14} strokeWidth={2} />}
+              onClick={() => {
+                setImportAccountId(accounts[0]?.id || "");
+                setImportFilename("");
+                setImportStatementDate("");
+                setShowImportModal(true);
+              }}
+            >
+              Quick upload
+            </Button>
           </div>
-
-          <ExportMenu
-            filename="bank-reconciliations"
-            title="Bank Account Reconciliations Report"
-            columns={exportColumns}
-            data={exportData}
-            buttonLabel="Export banking"
-          />
-
-          <Link
-            href="/finance/advanced/bank-feeds"
-            className={styles.btnSecondary}
-            onClick={(e) => {
-              e.preventDefault();
-              openAppTab({
-                href: "/finance/advanced/bank-feeds",
-                title: "Bank Feeds",
-              });
-            }}
-          >
-            <span>Import statement</span>
-          </Link>
-
-          <button
-            type="button"
-            className={styles.btnPrimary}
-            onClick={() => {
-              setImportAccountId(accounts[0]?.id || "");
-              setImportFilename("");
-              setImportStatementDate("");
-              setShowImportModal(true);
-            }}
-          >
-            <Upload size={14} />
-            <span>Quick upload</span>
-          </button>
-        </div>
-      </div>
+        }
+      />
 
       {error && (
         <FinanceErrorState
@@ -337,9 +341,9 @@ export default function BankingTreasuryPage() {
             </div>
 
             <div className={styles.accountMeta}>
-              <span className={acc.status === "LIVE" ? styles.statusLive : styles.statusDelayed}>
+              <Badge variant={acc.status === "LIVE" ? "success" : "warning"} size="sm">
                 <Clock size={11} /> {acc.lastSync}
-              </span>
+              </Badge>
               <span>{acc.currency}</span>
             </div>
           </div>
@@ -448,21 +452,22 @@ export default function BankingTreasuryPage() {
                           {row.ledgerAmount !== 0 ? `$${row.ledgerAmount.toLocaleString("en-US", { minimumFractionDigits: 2 })}` : "—"}
                         </td>
                         <td className={styles.td}>
-                          <span
-                            className={
+                          <Badge
+                            variant={
                               row.status === "MATCHED"
-                                ? styles.badgeReconciled
+                                ? "success"
                                 : row.status === "NEEDS_ENTRY"
-                                ? styles.badgeNeedsEntry
-                                : styles.badgeMatch
+                                ? "danger"
+                                : "warning"
                             }
+                            size="sm"
                           >
                             {row.status === "MATCHED"
                               ? "Matched ✓"
                               : row.status === "NEEDS_ENTRY"
                               ? "Needs entry"
                               : "Suggested match"}
-                          </span>
+                          </Badge>
                         </td>
                       </tr>
                     );
@@ -529,16 +534,17 @@ export default function BankingTreasuryPage() {
               matchSuccess ||
               (selectedRow ? selectedRow.status === "MATCHED" : data?.selectedMatch?.isReconciled);
             return (
-              <button
-                type="button"
-                className={styles.btnPrimary}
+              <Button
+                variant="primary"
+                size="sm"
                 style={{ width: "100%", justifyContent: "center" }}
                 disabled={isMatching || isAlreadyReconciled}
+                isLoading={isMatching}
+                leftIcon={<Check size={14} strokeWidth={2} />}
                 onClick={handleConfirmMatch}
               >
-                <Check size={14} />
-                <span>{isMatching ? "Confirming..." : isAlreadyReconciled ? "Matched ✓" : "Confirm match"}</span>
-              </button>
+                {isAlreadyReconciled ? "Matched ✓" : "Confirm match"}
+              </Button>
             );
           })()}
         </div>
@@ -697,21 +703,23 @@ export default function BankingTreasuryPage() {
               </div>
 
               <div className={styles.modalFooter}>
-                <button
-                  type="button"
-                  className={styles.btnSecondary}
+                <Button
+                  variant="secondary"
+                  size="sm"
                   onClick={() => setShowImportModal(false)}
                   disabled={isImporting}
                 >
                   Cancel
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
                   type="submit"
-                  className={styles.btnPrimary}
                   disabled={isImporting}
+                  isLoading={isImporting}
                 >
-                  {isImporting ? "Processing feed..." : "Ingest & Reconcile"}
-                </button>
+                  Ingest & Reconcile
+                </Button>
               </div>
             </form>
           </div>
