@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "@kannan19302/shared/auth-client/react";
 import { StrataPageShell } from "@/components/shell/StrataPageShell";
@@ -113,6 +113,33 @@ export default function DailyHomePage() {
     }).format(new Date());
   }, []);
 
+  const [showSetupBanner, setShowSetupBanner] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const isDismissed = localStorage.getItem("unierp_setup_banner_dismissed");
+        const isCompleted = localStorage.getItem("unierp_setup_completed");
+        if (!isDismissed && !isCompleted) {
+          setShowSetupBanner(true);
+        }
+      } catch {
+        // Ignore localStorage error
+      }
+    }
+  }, []);
+
+  const handleDismissSetupBanner = () => {
+    setShowSetupBanner(false);
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("unierp_setup_banner_dismissed", "true");
+      } catch {
+        // Ignore localStorage error
+      }
+    }
+  };
+
   return (
     <StrataPageShell
       breadcrumb="UniERP Home / Home"
@@ -131,6 +158,55 @@ export default function DailyHomePage() {
         </>
       }
     >
+      {/* Onboarding / Setup Wizard Banner */}
+      {showSetupBanner && (
+        <StrataBanner tone="info">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "0.75rem",
+            }}
+          >
+            <div>
+              <strong>Welcome to your new UniERP workspace!</strong>
+              <span style={{ marginLeft: "0.5rem" }}>
+                Complete guided setup to configure your financial calendar, default warehouse, and team access.
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+              <Link
+                href="/setup"
+                style={{
+                  fontWeight: 600,
+                  textDecoration: "underline",
+                  color: "var(--color-primary, #2563eb)",
+                }}
+              >
+                Complete guided setup →
+              </Link>
+              <button
+                type="button"
+                onClick={handleDismissSetupBanner}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "var(--color-text-secondary, #64748b)",
+                  fontSize: "0.875rem",
+                  padding: "0.25rem",
+                }}
+                aria-label="Dismiss setup reminder"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        </StrataBanner>
+      )}
+
       {/* Pinned Applications */}
       <StrataPanel title="Pinned applications">
         <StrataAppGrid />

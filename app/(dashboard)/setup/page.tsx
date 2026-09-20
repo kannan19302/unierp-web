@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Check,
   ChevronRight,
@@ -20,7 +20,12 @@ import {
   ShieldCheck,
   Building2,
   Sparkles,
+  X,
+  Globe,
+  Briefcase,
 } from "lucide-react";
+import { Spinner } from "@kannan19302/ui";
+import { useApiClient } from "@kannan19302/framework";
 import styles from "./setup.module.css";
 
 const STEPS = [
@@ -70,8 +75,14 @@ const AVAILABLE_APPS = [
   },
 ];
 
-export default function ApplicationSetupPage() {
+function SetupWizardContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const client = useApiClient();
+
+  const isWelcomeQuery = searchParams.get("welcome") === "true";
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState(isWelcomeQuery);
+
   const [currentStep, setCurrentStep] = useState(0);
 
   // Step 0: Selected apps
@@ -82,10 +93,13 @@ export default function ApplicationSetupPage() {
     "sales",
   ]);
 
-  // Step 2: Configuration
+  // Step 2: Configuration defaults
+  const [companyName, setCompanyName] = useState("Acme Corp");
+  const [industry, setIndustry] = useState("manufacturing");
   const [fiscalStart, setFiscalStart] = useState("April");
   const [chartOfAccounts, setChartOfAccounts] = useState("standard");
   const [currency, setCurrency] = useState("USD");
+  const [timezone, setTimezone] = useState("America/New_York");
 
   // Step 3: Team invites
   const [inviteEmail, setInviteEmail] = useState("");
@@ -97,6 +111,20 @@ export default function ApplicationSetupPage() {
   // Step 4: Activation state
   const [isActivating, setIsActivating] = useState(false);
   const [isActivated, setIsActivated] = useState(false);
+
+  // Load saved state from localStorage if available
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const savedCompany = localStorage.getItem("unierp_tenant_company_name");
+        if (savedCompany) setCompanyName(savedCompany);
+        const savedCurrency = localStorage.getItem("unierp_tenant_currency");
+        if (savedCurrency) setCurrency(savedCurrency);
+      } catch {
+        // Ignore localStorage errors
+      }
+    }
+  }, []);
 
   const toggleAppSelection = (id: string) => {
     setSelectedApps((prev) =>
@@ -115,21 +143,77 @@ export default function ApplicationSetupPage() {
     }
   };
 
-  const handleActivate = () => {
+  const handleActivate = async () => {
     setIsActivating(true);
+
+    try {
+      if (client) {
+        await Promise.allSettled([
+          client.put("/auth/onboarding/complete/app", {}),
+          client.put("/auth/onboarding/complete/profile", {}),
+          ...(invitedMembers.length > 0
+            ? [client.put("/auth/onboarding/complete/invite", {})]
+            : []),
+        ]);
+      }
+    } catch {
+      // Non-blocking in sandbox / offline mode
+    }
+
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("unierp_setup_completed", "true");
+        localStorage.setItem("unierp_tenant_company_name", companyName);
+        localStorage.setItem("unierp_tenant_currency", currency);
+      } catch {
+        // Ignore localStorage error
+      }
+    }
+
     setTimeout(() => {
       setIsActivating(false);
       setIsActivated(true);
-    }, 1200);
+    }, 1100);
   };
 
   return (
     <div className={styles.setupContainer}>
+      {/* Welcome Announcement (when redirected from first login or onboarding) */}
+      {showWelcomeBanner && (
+        <div
+          className={styles.welcomeBanner}
+          role="region"
+          aria-label="Welcome announcement"
+        >
+          <div className={styles.welcomeBannerContent}>
+            <div className={styles.welcomeBannerIcon}>
+              <Sparkles size={20} />
+            </div>
+            <div>
+              <h2 className={styles.welcomeBannerTitle}>
+                Welcome to UniERP! Your account is verified.
+              </h2>
+              <p className={styles.welcomeBannerText}>
+                Let’s take 2 minutes to configure your organization defaults and business modules. You can save your progress and return anytime.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            className={styles.welcomeBannerDismiss}
+            onClick={() => setShowWelcomeBanner(false)}
+            aria-label="Dismiss banner"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
       {/* Setup Top Header */}
       <header className={styles.setupHeader}>
         <h1 className={styles.setupTitle}>Application Setup Guide</h1>
         <p className={styles.setupSubtitle}>
-          Configure your core business applications for Acme Corp. You can save your progress and resume anytime from Home.
+          Configure core business applications for {companyName}. You can save your progress and resume anytime from Home.
         </p>
       </header>
 
@@ -256,7 +340,9 @@ export default function ApplicationSetupPage() {
             <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem", border: "1px solid var(--color-border)", borderRadius: "0.5rem", alignItems: "center" }}>
               <div>
                 <strong>Tenant Identity & Working Defaults</strong>
-                <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>Legal entity: Acme Corp · Registered country: United States</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>
+                  Legal entity: {companyName} · Timezone: {timezone}
+                </div>
               </div>
               <span style={{ color: "var(--color-success)", display: "flex", alignItems: "center", gap: "0.25rem", fontSize: "0.75rem", fontWeight: 600 }}>
                 <CheckCircle2 size={14} /> Confirmed
@@ -266,17 +352,21 @@ export default function ApplicationSetupPage() {
             <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem", border: "1px solid var(--color-border)", borderRadius: "0.5rem", alignItems: "center" }}>
               <div>
                 <strong>Finance Calendar & Chart of Accounts</strong>
-                <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>Requires fiscal start month and account hierarchy template</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>
+                  Fiscal start: {fiscalStart} · Currency: {currency}
+                </div>
               </div>
               <span style={{ color: "var(--color-warning)", display: "flex", alignItems: "center", gap: "0.25rem", fontSize: "0.75rem", fontWeight: 600 }}>
-                <Clock size={14} /> Pending next step
+                <Clock size={14} /> Ready to review
               </span>
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem", border: "1px solid var(--color-border)", borderRadius: "0.5rem", alignItems: "center" }}>
               <div>
                 <strong>Default Primary Warehouse</strong>
-                <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>Automatic default: Main Central Warehouse (WH-01)</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>
+                  Automatic default: Main Central Warehouse (WH-01)
+                </div>
               </div>
               <span style={{ color: "var(--color-success)", display: "flex", alignItems: "center", gap: "0.25rem", fontSize: "0.75rem", fontWeight: 600 }}>
                 <CheckCircle2 size={14} /> Ready
@@ -318,50 +408,101 @@ export default function ApplicationSetupPage() {
           <div className={styles.cardHeader}>
             <h2 className={styles.cardTitle}>Configure Working Defaults</h2>
             <p className={styles.cardDesc}>
-              These settings shape your general ledger, currency formatting, and inventory tracking.
+              These settings shape your organization identity, general ledger, currency formatting, and operating schedule.
             </p>
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.formLabel}>Fiscal Year Starts In</label>
-            <select
-              value={fiscalStart}
-              onChange={(e) => setFiscalStart(e.target.value)}
-              className={styles.formSelect}
-            >
-              <option value="January">January 1st (Calendar Year)</option>
-              <option value="April">April 1st (UK / India / Japan Fiscal)</option>
-              <option value="July">July 1st (Australian / Mid-Year Fiscal)</option>
-              <option value="October">October 1st (US Federal Fiscal)</option>
-            </select>
+          <div className={styles.formGrid2}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Organization Display Name</label>
+              <input
+                type="text"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                className={styles.formInput}
+                placeholder="e.g. Acme Corporation"
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Industry Sector</label>
+              <select
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+                className={styles.formSelect}
+              >
+                <option value="manufacturing">Manufacturing & Industrial</option>
+                <option value="retail">Retail, Wholesale & E-Commerce</option>
+                <option value="services">Professional Services & Consulting</option>
+                <option value="tech">Software, Cloud & Technology</option>
+                <option value="healthcare">Healthcare & Life Sciences</option>
+                <option value="finance">Financial Services & Real Estate</option>
+              </select>
+            </div>
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.formLabel}>Chart of Accounts Template</label>
-            <select
-              value={chartOfAccounts}
-              onChange={(e) => setChartOfAccounts(e.target.value)}
-              className={styles.formSelect}
-            >
-              <option value="standard">Standard Commercial & Manufacturing (GAAP / IFRS)</option>
-              <option value="services">Professional Services & Consulting</option>
-              <option value="retail">Retail & E-Commerce Point of Sale</option>
-            </select>
+          <div className={styles.formGrid2}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Base Operating Currency</label>
+              <select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                className={styles.formSelect}
+              >
+                <option value="USD">USD — United States Dollar ($)</option>
+                <option value="EUR">EUR — Euro (€)</option>
+                <option value="GBP">GBP — British Pound (£)</option>
+                <option value="INR">INR — Indian Rupee (₹)</option>
+                <option value="SGD">SGD — Singapore Dollar (S$)</option>
+              </select>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Primary Operational Timezone</label>
+              <select
+                value={timezone}
+                onChange={(e) => setTimezone(e.target.value)}
+                className={styles.formSelect}
+              >
+                <option value="America/New_York">Eastern Time (US / New York)</option>
+                <option value="America/Chicago">Central Time (US / Chicago)</option>
+                <option value="America/Los_Angeles">Pacific Time (US / Los Angeles)</option>
+                <option value="Europe/London">Greenwich Mean Time (UK / London)</option>
+                <option value="Europe/Berlin">Central European Time (Berlin / Paris)</option>
+                <option value="Asia/Kolkata">India Standard Time (IST / Kolkata)</option>
+                <option value="Asia/Singapore">Singapore Time (SGT / Singapore)</option>
+                <option value="UTC">Coordinated Universal Time (UTC)</option>
+              </select>
+            </div>
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.formLabel}>Base Operating Currency</label>
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              className={styles.formSelect}
-            >
-              <option value="USD">USD — United States Dollar ($)</option>
-              <option value="EUR">EUR — Euro (€)</option>
-              <option value="GBP">GBP — British Pound (£)</option>
-              <option value="INR">INR — Indian Rupee (₹)</option>
-              <option value="SGD">SGD — Singapore Dollar (S$)</option>
-            </select>
+          <div className={styles.formGrid2}>
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Fiscal Year Starts In</label>
+              <select
+                value={fiscalStart}
+                onChange={(e) => setFiscalStart(e.target.value)}
+                className={styles.formSelect}
+              >
+                <option value="January">January 1st (Calendar Year)</option>
+                <option value="April">April 1st (UK / India / Japan Fiscal)</option>
+                <option value="July">July 1st (Australian / Mid-Year Fiscal)</option>
+                <option value="October">October 1st (US Federal Fiscal)</option>
+              </select>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Chart of Accounts Template</label>
+              <select
+                value={chartOfAccounts}
+                onChange={(e) => setChartOfAccounts(e.target.value)}
+                className={styles.formSelect}
+              >
+                <option value="standard">Standard Commercial & Manufacturing (GAAP / IFRS)</option>
+                <option value="services">Professional Services & Consulting</option>
+                <option value="retail">Retail & E-Commerce Point of Sale</option>
+              </select>
+            </div>
           </div>
 
           <div className={styles.actionFooter}>
@@ -402,7 +543,15 @@ export default function ApplicationSetupPage() {
             </p>
           </div>
 
-          <form onSubmit={handleAddInvite} style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+          <form
+            onSubmit={handleAddInvite}
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              marginBottom: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
             <input
               type="email"
               placeholder="colleague@company.com"
@@ -428,7 +577,14 @@ export default function ApplicationSetupPage() {
           </form>
 
           {invitedMembers.length > 0 && (
-            <div style={{ marginBottom: "1.5rem", border: "1px solid var(--color-border)", borderRadius: "0.5rem", overflow: "hidden" }}>
+            <div
+              style={{
+                marginBottom: "1.5rem",
+                border: "1px solid var(--color-border)",
+                borderRadius: "0.5rem",
+                overflow: "hidden",
+              }}
+            >
               {invitedMembers.map((m, i) => (
                 <div
                   key={i}
@@ -436,12 +592,22 @@ export default function ApplicationSetupPage() {
                     display: "flex",
                     justifyContent: "space-between",
                     padding: "0.625rem 0.875rem",
-                    borderBottom: i < invitedMembers.length - 1 ? "1px solid var(--color-border)" : "none",
+                    borderBottom:
+                      i < invitedMembers.length - 1
+                        ? "1px solid var(--color-border)"
+                        : "none",
                     fontSize: "0.8125rem",
                   }}
                 >
                   <span>{m.email}</span>
-                  <span style={{ color: "var(--color-text-secondary)", fontWeight: 600 }}>{m.role}</span>
+                  <span
+                    style={{
+                      color: "var(--color-text-secondary)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {m.role}
+                  </span>
                 </div>
               ))}
             </div>
@@ -489,14 +655,49 @@ export default function ApplicationSetupPage() {
             </p>
           </div>
 
-          <div style={{ marginBottom: "1.5rem", border: "1px solid var(--color-border)", borderRadius: "0.5rem", padding: "1rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-              <strong>Selected Applications:</strong>
-              <span>{selectedApps.length} modules selected ({selectedApps.join(", ")})</span>
+          <div
+            style={{
+              marginBottom: "1.5rem",
+              border: "1px solid var(--color-border)",
+              borderRadius: "0.5rem",
+              padding: "1rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <strong>Organization:</strong>
+              <span>
+                {companyName} ({industry})
+              </span>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-              <strong>Fiscal Period:</strong>
-              <span>Begins in {fiscalStart} · Currency {currency}</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <strong>Selected Applications:</strong>
+              <span>
+                {selectedApps.length} modules ({selectedApps.join(", ")})
+              </span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <strong>Fiscal Period & Currency:</strong>
+              <span>
+                Begins in {fiscalStart} · {currency} · {timezone}
+              </span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <strong>Queued Invitations:</strong>
@@ -506,28 +707,78 @@ export default function ApplicationSetupPage() {
 
           {isActivating ? (
             <div style={{ padding: "2rem", textAlign: "center" }}>
-              <Sparkles size={28} className="animate-spin" style={{ color: "var(--color-primary)", margin: "0 auto 1rem" }} />
-              <strong style={{ display: "block", marginBottom: "0.5rem" }}>Activating selected applications…</strong>
-              <span style={{ fontSize: "0.8125rem", color: "var(--color-text-secondary)" }}>
+              <Sparkles
+                size={28}
+                className="animate-spin"
+                style={{
+                  color: "var(--color-primary)",
+                  margin: "0 auto 1rem",
+                }}
+              />
+              <strong style={{ display: "block", marginBottom: "0.5rem" }}>
+                Activating selected applications…
+              </strong>
+              <span
+                style={{
+                  fontSize: "0.8125rem",
+                  color: "var(--color-text-secondary)",
+                }}
+              >
                 Applying approved configurations to tenant outbox. You can safely leave this page.
               </span>
             </div>
           ) : isActivated ? (
-            <div style={{ padding: "2rem", textAlign: "center", backgroundColor: "var(--color-info-light)", borderRadius: "0.5rem", marginBottom: "1.5rem" }}>
-              <CheckCircle2 size={36} style={{ color: "var(--color-success, #16a34a)", margin: "0 auto 0.75rem" }} />
-              <h3 style={{ margin: "0 0 0.5rem", fontSize: "1.125rem" }}>Your applications are ready!</h3>
-              <p style={{ margin: "0 0 1rem", fontSize: "0.8125rem", color: "var(--color-text-secondary)" }}>
-                Finance, CRM, and Inventory are now fully active and ready for business transactions.
-              </p>
-              <button
-                type="button"
-                className={styles.nextBtn}
-                style={{ margin: "0 auto" }}
-                onClick={() => router.push("/home")}
+            <div
+              style={{
+                padding: "2rem",
+                textAlign: "center",
+                backgroundColor: "var(--color-info-light, #eff6ff)",
+                borderRadius: "0.5rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <CheckCircle2
+                size={36}
+                style={{
+                  color: "var(--color-success, #16a34a)",
+                  margin: "0 auto 0.75rem",
+                }}
+              />
+              <h3 style={{ margin: "0 0 0.5rem", fontSize: "1.125rem" }}>
+                Your applications are ready!
+              </h3>
+              <p
+                style={{
+                  margin: "0 0 1rem",
+                  fontSize: "0.8125rem",
+                  color: "var(--color-text-secondary)",
+                }}
               >
-                <span>Go to Daily Home</span>
-                <ArrowRight size={14} />
-              </button>
+                {selectedApps.join(", ")} are now initialized and ready for business operations.
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.75rem",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  type="button"
+                  className={styles.nextBtn}
+                  onClick={() => router.push("/home")}
+                >
+                  <span>Go to Daily Home</span>
+                  <ArrowRight size={14} />
+                </button>
+                <Link
+                  href="/apps"
+                  className={styles.exitBtn}
+                  style={{ display: "inline-flex", alignItems: "center" }}
+                >
+                  Explore All Apps
+                </Link>
+              </div>
             </div>
           ) : (
             <div className={styles.actionFooter}>
@@ -556,5 +807,26 @@ export default function ApplicationSetupPage() {
         </section>
       )}
     </div>
+  );
+}
+
+export default function ApplicationSetupPage() {
+  return (
+    <Suspense
+      fallback={
+        <div
+          style={{
+            minHeight: "50vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Spinner size="lg" />
+        </div>
+      }
+    >
+      <SetupWizardContent />
+    </Suspense>
   );
 }
